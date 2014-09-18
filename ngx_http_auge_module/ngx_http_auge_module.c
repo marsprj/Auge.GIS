@@ -3,7 +3,10 @@
 #include <ngx_http.h>
 #include <string.h>
 
-int g_auge = 0;
+#include "ngx_auge_database.h"
+
+PGconn *pgConn = NULL;
+
 
 static char* ngx_http_auge(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
 static void* ngx_http_auge_create_loc_conf(ngx_conf_t *cf);
@@ -60,7 +63,9 @@ ngx_module_t ngx_http_auge_module = {
 static ngx_int_t
 ngx_http_auge_handler(ngx_http_request_t *r)
 {
-	ngx_int_t rc;
+	return auge_db_query(pgConn, "cities", r);
+
+/*	ngx_int_t rc;
 	ngx_buf_t *b;
 	ngx_chain_t out[2];
 
@@ -92,6 +97,7 @@ ngx_http_auge_handler(ngx_http_request_t *r)
 
 
 	return rc;
+*/
 }
 
 static void*
@@ -138,6 +144,9 @@ static ngx_int_t
 ngx_http_auge_init_process(ngx_cycle_t *cycle)
 {
 	ngx_log_error(NGX_LOG_DEBUG, cycle->log, 0, "init auge process");
+
+	auge_db_connect(&pgConn, "127.0.0.1","5432","gisdb","postgres","qwer1234");
+
 	return 0;
 }
 
@@ -145,6 +154,8 @@ static void
 ngx_http_auge_exit_process(ngx_cycle_t *cycle)
 {
 	ngx_log_error(NGX_LOG_DEBUG, cycle->log, 0, "exit auge process");
+
+	auge_db_close(pgConn);
 }
 
 
