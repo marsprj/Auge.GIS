@@ -9,6 +9,11 @@ static char* ngx_http_auge(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
 static void* ngx_http_auge_create_loc_conf(ngx_conf_t *cf);
 static char* ngx_http_auge_merge_loc_conf(ngx_conf_t *cf, void* parent, void *child);
 
+/* init auge process handler */
+static ngx_int_t ngx_http_auge_init_process(ngx_cycle_t *cycle);
+/* exit auge process handler */
+static void ngx_http_auge_exit_process(ngx_cycle_t *cycle);
+
 typedef struct{
 	ngx_str_t output_words;
 }ngx_http_auge_loc_conf_t;
@@ -44,10 +49,10 @@ ngx_module_t ngx_http_auge_module = {
 	NGX_HTTP_MODULE,
 	NULL,
 	NULL,
+	ngx_http_auge_init_process,
 	NULL,
 	NULL,
-	NULL,
-	NULL,
+	ngx_http_auge_exit_process,
 	NULL,
 	NGX_MODULE_V1_PADDING
 };
@@ -127,6 +132,19 @@ ngx_http_auge(ngx_conf_t *cf, ngx_command_t *cmd, void* conf)
 	ngx_conf_set_str_slot(cf, cmd, conf);
 	
 	return NGX_CONF_OK;
+}
+
+static ngx_int_t 
+ngx_http_auge_init_process(ngx_cycle_t *cycle)
+{
+	ngx_log_error(NGX_LOG_DEBUG, cycle->log, 0, "init auge process");
+	return 0;
+}
+
+static void 
+ngx_http_auge_exit_process(ngx_cycle_t *cycle)
+{
+	ngx_log_error(NGX_LOG_DEBUG, cycle->log, 0, "exit auge process");
 }
 
 
