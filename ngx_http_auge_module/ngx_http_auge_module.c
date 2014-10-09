@@ -19,6 +19,7 @@ static ngx_command_t ngx_http_auge_commands[] = {
 
 static ngx_http_module_t ngx_http_auge_module_ctx = {
 	NULL,					/* preconfiguration */
+//	NULL,					/* postconfiguration */
 	ngx_http_auge_init,			/* postconfiguration */
 	NULL,					/* create main configuration */
 	NULL,					/* init main configuration */
@@ -78,15 +79,15 @@ ngx_http_auge_handler(ngx_http_request_t *r)
 	return rc;
 }
 
-static ngx_int_t ngx_http_auge_init(ngx_conf_t *cf)
+static ngx_int_t 
+ngx_http_auge_init(ngx_conf_t *cf)
 {
-	ngx_http_handler_pt 		*h = NULL;
-	ngx_http_core_main_conf_t	*cmcf=NULL;
+	ngx_http_handler_pt        *h;
+	ngx_http_core_main_conf_t  *cmcf;
 
-	cmcf  = ngx_http_conf_get_module_loc_conf(cf, ngx_http_core_module);
+	cmcf = ngx_http_conf_get_module_main_conf(cf, ngx_http_core_module);
 	h = ngx_array_push(&cmcf->phases[NGX_HTTP_CONTENT_PHASE].handlers);
-	if(h==NULL)
-	{
+	if (h == NULL) {
 		return NGX_ERROR;
 	}
 
@@ -127,14 +128,7 @@ ngx_http_auge_name(ngx_conf_t *cf, ngx_command_t *cmd, void* conf)
 	ngx_http_core_loc_conf_t *clcf;
 	clcf  = conf;
 	char* rv = ngx_conf_set_str_slot(cf, cmd,conf);
-
 	ngx_conf_log_error(NGX_LOG_EMERG, cf, 0, "[Auge Name]:%s",clcf->name.data);
-	
-/*	clcf = ngx_http_conf_get_module_loc_conf(cf, ngx_http_core_module);
-	clcf->handler = ngx_http_auge_handler;
-	
-	ngx_conf_set_str_slot(cf, cmd, conf);
-*/	
 	return rv;
 }
 
