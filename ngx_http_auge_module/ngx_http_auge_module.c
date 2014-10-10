@@ -8,8 +8,6 @@ typedef struct{
 	ngx_str_t 	stock[6];
 }ngx_http_auge_ctx_t;
 
-static ngx_int_t ngx_auge_subrequest_post_handler(ngx_http_request_t* r, void* data, ngx_int_t rc);
-static void ngx_auge_post_handler(ngx_http_request_t* r);
 
 static ngx_command_t ngx_http_auge_commands[] = {
 	{
