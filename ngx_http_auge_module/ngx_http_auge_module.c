@@ -8,8 +8,8 @@ typedef struct{
 	ngx_str_t 	stock[6];
 }ngx_http_auge_ctx_t;
 
-/*static ngx_int_t ngx_auge_subrequest_post_handler(ngx_http_request_t* r, void* data, ngx_int_t rc);
-static void ngx_auge_post_handler(ngx_http_request_t* r);*/
+static ngx_int_t ngx_auge_subrequest_post_handler(ngx_http_request_t* r, void* data, ngx_int_t rc);
+static void ngx_auge_post_handler(ngx_http_request_t* r);
 
 static ngx_command_t ngx_http_auge_commands[] = {
 	{
@@ -50,7 +50,7 @@ ngx_module_t ngx_http_auge_module = {
 	NGX_MODULE_V1_PADDING
 };
 
-/*static ngx_int_t
+static ngx_int_t
 ngx_http_auge_handler(ngx_http_request_t *r)
 {
 	ngx_int_t rc;
@@ -93,16 +93,16 @@ ngx_http_auge_handler(ngx_http_request_t *r)
 
 	return NGX_DONE;
 }
-*/
-static ngx_int_t
+
+/*static ngx_int_t
 ngx_http_auge_handler(ngx_http_request_t *r)
 {
 	ngx_int_t rc;
 	ngx_buf_t *b;
 	ngx_chain_t out[2];
-/*	ngx_http_auge_loc_conf_t* lcf;
-	lcf = ngx_http_get_module_loc_conf(r, ngx_http_auge_module);
-*/
+//	ngx_http_auge_loc_conf_t* lcf;
+//	lcf = ngx_http_get_module_loc_conf(r, ngx_http_auge_module);
+
 	ngx_log_error(NGX_LOG_EMERG, r->connection->log, 0, "ngx_http_auge_handler is called!");
 
 	u_char str[] = "Hello Auge";
@@ -131,7 +131,7 @@ ngx_http_auge_handler(ngx_http_request_t *r)
 	
 	rc = ngx_http_output_filter(r, &out[0]);
 	return rc;
-}
+}*/
 
 static ngx_int_t 
 ngx_http_auge_init(ngx_conf_t *cf)
@@ -198,7 +198,7 @@ ngx_http_auge_exit_process(ngx_cycle_t *cycle)
 {
 	ngx_log_error(NGX_LOG_DEBUG, cycle->log, 0, "exit auge process");
 }
-/*
+
 static ngx_int_t 
 ngx_auge_subrequest_post_handler(ngx_http_request_t* r, void* data, ngx_int_t rc)
 {
@@ -268,4 +268,4 @@ ngx_auge_post_handler(ngx_http_request_t* r)
 
 	 ngx_http_finalize_request(r, ret);
 
-}*/
+}
