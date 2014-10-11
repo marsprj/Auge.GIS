@@ -13,3 +13,6 @@ static ngx_int_t ngx_http_auge_init(ngx_conf_t *cf);
 static ngx_int_t ngx_http_auge_init_process(ngx_cycle_t *cycle);
 /* exit auge process handler */
 static void ngx_http_auge_exit_process(ngx_cycle_t *cycle);
+
+static ngx_int_t auge_process_status_line(ngx_http_request_t *r);
+static ngx_int_t auge_process_header(ngx_http_request_t *r);

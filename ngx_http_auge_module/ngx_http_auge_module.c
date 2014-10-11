@@ -1,25 +1,20 @@
 #include "ngx_http_auge_module.h"
+#include "ngx_http_auge_stream.h"
 
-typedef struct{
-	ngx_str_t name;
-}ngx_http_auge_loc_conf_t;
-
-typedef struct{
-	ngx_str_t 	stock[6];
+typedef struct 
+{
+	ngx_http_status_t	status;
 }ngx_http_auge_ctx_t;
 
-static ngx_int_t ngx_auge_subrequest_post_handler(ngx_http_request_t* r, void* data, ngx_int_t rc);
-static void ngx_auge_post_handler(ngx_http_request_t* r);
-
 static ngx_command_t ngx_http_auge_commands[] = {
-	{
+/*	{
 		ngx_string("name"),
 		NGX_HTTP_LOC_CONF|NGX_CONF_NOARGS|NGX_CONF_TAKE1,
 		ngx_http_auge_name,
 		NGX_HTTP_LOC_CONF_OFFSET,
 		offsetof(ngx_http_auge_loc_conf_t, name),
 		NULL
-	},
+	},*/
 
 	ngx_null_command
 };
@@ -51,6 +46,65 @@ ngx_module_t ngx_http_auge_module = {
 };
 
 static ngx_int_t
+ngx_http_auge_handler(ngx_http_request_t *r)
+{
+	ngx_http_auge_ctx_t *actx  = ngx_http_get_module_ctx(r, ngx_http_auge_module);
+	if(actx==NULL)
+	{
+		actx = ngx_pcalloc(r->pool, sizeof(ngx_http_auge_ctx_t));
+		if(actx == NULL)
+		{
+			return NGX_ERROR;
+		}
+		ngx_http_set_ctx(r, actx, ngx_http_auge_module);
+	}
+
+	if(ngx_http_upstream_create(r) != NGX_OK)
+	{
+		ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "ngx_uttp_upstream_create() failed");
+		return NGX_ERROR;
+	}
+
+	ngx_http_auge_conf_t *acf = (ngx_http_auge_conf_t*)ngx_http_get_module_loc_conf(r, ngx_http_auge_module);
+	ngx_http_upstream_t* u = r->upstream;
+
+	u->conf = &acf->upstream;
+	u->buffering = acf->upstream.buffering;
+
+	u->resolved = (ngx_http_upstream_resolved_t*)ngx_pcalloc(r->pool, sizeof(ngx_http_upstream_resolved_t));
+	if(u->resolved==NULL)
+	{
+		return NGX_ERROR;
+	}
+
+	static struct sockaddr_in backendSockAddr;
+	struct hostent *pHost = gethostbyname((char*)"ourgis.digitalearth.cn");
+	if(pHost==NULL)
+	{
+		return NGX_ERROR;
+	}
+
+	backendSockAddr.sin_family = AF_INET;
+	backendSockAddr.sin_port = 80;
+	char* pDmsIP = inet_ntoa(*(struct in_addr*)(pHost->h_addr_list[0]));
+	backendSockAddr.sin_addr.s_addr = inet_addr(pDmsIP);
+	actx->backendServer.data = (u_char*)pDmsIP;
+	actx->backendServer.len = strlen(pDmsIP);
+
+	u->resolved->sockaddr = (struct sockaddr*)&backendSockAddr;
+	u->resolved->socklen = sizeof(struct sockaddr_in);
+
+	u->create_request  = auge_upstream_create_request;
+	u->process_header = auge_process_header;
+	u->finalize_request = auge_stream_finalize_request;
+
+	r->main->count++;
+	ngx_http_upstream_init();
+
+	return NGX_DONE;
+}
+
+/*tatic ngx_int_t
 ngx_http_auge_handler(ngx_http_request_t *r)
 {
 	ngx_int_t rc;
@@ -92,7 +146,7 @@ ngx_http_auge_handler(ngx_http_request_t *r)
 	}
 
 	return NGX_DONE;
-}
+}*/
 
 /*static ngx_int_t
 ngx_http_auge_handler(ngx_http_request_t *r)
@@ -152,120 +206,202 @@ ngx_http_auge_init(ngx_conf_t *cf)
 static void*
 ngx_http_auge_create_loc_conf(ngx_conf_t *cf)
 {
-	ngx_http_auge_loc_conf_t *conf;
-	
-	conf = ngx_pcalloc(cf->pool, sizeof(ngx_http_auge_loc_conf_t));
-	if(conf == NULL)
-	{
-		return NGX_CONF_ERROR;
-	}
-	conf->name.len = 0;
-	conf->name.data = NULL;
+	ngx_http_auge_conf_t* acf;
 
-	return conf;
+	acf = (ngx_http_auge_conf_t*)ngx_pcalloc(cf->pool, sizeof(ngx_http_auge_conf_t));
+	if(acf==NULL)
+	{
+		return NULL;
+	}
+
+	acf->upstream.connect_timeout = 60000;
+	acf->upstream.send_timeout = 60000;
+	acf->upstream.read_timeout = 60000;
+	acf->upstream.store_access = 60000;
+
+	acf->upstream.buffering = 0;
+	acf->upstream.bufs.num = 9;
+	acf->upstream.bufs.size = ngx_pagesize;
+	acf->upstream.buffer_size = ngx_pagesize;
+	acf->upstream.busy_buffers_size = 2*ngx_pagesize;
+	acf->upstream.temp_file_write_size = 2*ngx_pagesize;
+	acf->upstream.max_temp_file_size = 1024*1024*1024;
+	acf->upstream.hide_headers = NGX_CONF_UNSET_PTR;
+	acf->upstream.pass_headers = NGX_CONF_UNSET_PTR;
+
+	return acf;
 }
 
 static char*
 ngx_http_auge_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
 {
-	ngx_http_auge_loc_conf_t *prev = parent;
-	ngx_http_auge_loc_conf_t *conf = child;
+	ngx_int_t ret = 0;
+	ngx_http_auge_conf_t *prev = parent;
+	ngx_http_auge_conf_t *conf = child;
 
-	ngx_conf_merge_str_value(conf->name, prev->name, "auge");
+	ngx_hash_init_t hash;
+	hash.max_size = 100;
+	hash.bucket_size = 1024;
+	hash.name = "proxy _headers_hash";
+
+	ret = ngx_http_upstream_hide_headers_hash(cf, 
+						         &conf->upstream,
+						         &prev->upstream,
+						         ngx_http_proxy_hide_headers,
+						         &hash);
+	if(ret!=NGX_OK)
+	{
+		return NGX_CONF_ERROR;
+	}
 	
 	return NGX_CONF_OK;
 }
 
-static char* 
-ngx_http_auge_name(ngx_conf_t *cf, ngx_command_t *cmd, void* conf)
-{
-	ngx_http_core_loc_conf_t *clcf;
-	clcf  = conf;
-	char* rv = ngx_conf_set_str_slot(cf, cmd,conf);
-	ngx_conf_log_error(NGX_LOG_EMERG, cf, 0, "[Auge Name]:%s",clcf->name.data);
-	return rv;
-}
-
 static ngx_int_t 
-ngx_http_auge_init_process(ngx_cycle_t *cycle)
+auge_process_status_line(ngx_http_request_t *r)
 {
-	ngx_log_error(NGX_LOG_DEBUG, cycle->log, 0, "init auge process");
-	return 0;
-}
+	size_t			len;
+	ngx_int_t		rc;
+	ngx_http_upstream_t	*u;
 
-static void 
-ngx_http_auge_exit_process(ngx_cycle_t *cycle)
-{
-	ngx_log_error(NGX_LOG_DEBUG, cycle->log, 0, "exit auge process");
-}
-
-static ngx_int_t 
-ngx_auge_subrequest_post_handler(ngx_http_request_t* r, void* data, ngx_int_t rc)
-{
-	ngx_http_request_t* pr = r->parent;
-
-	ngx_http_auge_ctx_t* actx = ngx_http_get_module_ctx(pr, ngx_http_auge_module);
-	pr->headers_out.status = r->headers_out.status;
-
-	if(r->headers_out.status == NGX_HTTP_OK)
+	ngx_http_auge_ctx_t *ctx = ngx_http_get_module_ctx(r, ngx_http_auge_module);
+	if(ctx == NULL)
 	{
-		int flag = 0;
-		ngx_buf_t* pRevBuf = &r->upstream->buffer;
+		return NGX_ERROR;
+	}
 
-		for(; pRevBuf->pos!=pRevBuf->last; pRevBuf->pos++)
+	u = r->upstream;
+
+	rc = ngx_http_parse_status_line(r, &u->buffer, &ctx->status);
+	if(rc==NGX_AGAIN){
+		return rc;
+	}
+
+	if(rc!=NGX_ERROR){
+		ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "upstream sent no valid HTTP/1.0 header");
+		r->http_version = NGX_HTTP_9;
+		r->state->status = NGX_HTTP_OK;
+
+		return NGX_OK;
+	}
+
+	if(u->state){
+		u->state->status = ctx->status.code;
+	}
+
+	u->headers_in.status_n = ctx->status.code;
+	len = ctx->status.end - ctx.status.start;
+	u->headers_in.status_line.len = len;
+
+	u->headers_in.status_line.data = ngx_pnalloc(r->pool, len);
+	if(u->headers_in.status_line.data == NULL){
+		return NGX_ERROR;
+	}
+
+	ngx_memcpy(u->headers_in.status_line.data, ctx.status.start, len);
+	return auge_upstream_process_header(r);
+}
+
+static ngx_int_t
+auge_process_header(ngx_http_request_t *r)
+{
+	ngx_int_t 	rc;
+	ngx_table_elt_t	*h;
+	ngx_http_upstream_header_t *hh;
+	ngx_http_upstream_main_conf_t *umcf;
+
+	umcf = ngx_http_conf_get_module_main_conf(r, ngx_http_upstream_module);
+
+	for(; ; )
+	{
+		rc = ngx_http_parse_status_line(r, &r->upstream->buffer, 1);
+		if(rc==NGX_OK)
 		{
-			if(*pRevBuf->pos==',' || *pRevBuf->pos == '\"')
+			h = ngx_list_push(&r->upstream->headers_in.headers);
+			if(h==NULL)
 			{
-				if(flag >0)
-				{
-					actx->stock[flag-1].len = pRevBuf->pos-actx->stock[flag-1].data;
-				}
-				flag++;
-				actx->stock[flag-1].data = pRevBuf->pos+1;
+				return NGX_ERROR;
 			}
-			if(flag>6)
+			h->hash = r->header->hash;
+
+			h->key.len = r->header_name_end - r->header_name_start;
+			h->value.len = r->header_end - r->headeer_start;
+
+			h->key.data = ngx_pnalloc(r->pool, h->key.len+1 + h->value.len+1 + h->key.len);
+			if(h->key.data == NULL)
 			{
-				break;
+				return NGX_ERROR;
+			}
+
+			h->value.data = h->key.data + h->key.len + 1;
+			h->lowcase_key = h->key.data + h->key.len + h->value.len + 1;
+
+			ngx_memcpy(h->key.data, r->header_name_start, h->key.len);
+			h->key.data[h->key.len] = '\0';
+			ngx_memcpy(h->value.data, r->header_start, h->key.len);
+			h->value.data[h->value.len] = '\0';
+ 
+ 			if (h->key.len == r->lowcase_index)
+ 			{
+ 				ngx_memcpy(h->lowcase_key, r->lowcase_header, h->key.len);
+ 			}
+ 			else
+ 			{
+ 				ngx_strlow(h->lowcase_key, r->key.data, h->key.len);
+ 			}
+
+ 			hh = ngx_hash_find(&umcf->headers_in_hash, h->hash, h->lowcase_key, h->key.len);
+
+ 			if(hh && hh->handler(r, h, hh->offset) != NGX_OK)
+ 			{
+ 				return NGX_ERROR;
+ 			}
+
+ 			continue;
+		}
+
+		if(rc==NGX_HTTP_PARSE_HEADER_DONE)
+		{
+			if(r->upstream->headers_in.server == NULL)
+			{
+				h = ngx_list_push(&r->upstream->headers_in.headers);
+				if( h ==NULL)
+				{
+					return NGX_ERROR;
+				}
+				h->hash = ngx_hash(ngx_hash(ngx_hash(ngx_hash(ngx_hash('s','e'),'r'), 'v'), 'e'), 'r');
+
+				ngx_str_set(&h->key, "server");
+				ngx_str_null(&h->value);
+				h->lowcase_key = (u_char*)"server";
+			}
+
+			if(r->upstream->headers_in.date==NULL)
+			{
+				h = ngx_list(&r->upstream->headers_in.headers);
+				if(h==NULL)
+				{
+					return NGX_ERROR;
+				}
+
+				h->hash = ngx_hash(ngx_hash(ngx_hash('d', 'a'),'t'), 'a');
+
+				ngx_str_set(&h->key, "Date");
+				ngx_str_null(&h->value);
+				h->lowcase_key = (u_char*)"date";
 			}
 		}
-	}
-	pr->write_event_handler = ngx_auge_post_handler;
-	return NGX_OK;
-}
 
-static void
-ngx_auge_post_handler(ngx_http_request_t* r)
-{
-	if(r->headers_out.status != NGX_HTTP_OK)
+		return NGX_OK;
+	}
+
+	if(rc==NGX_AGAIN)
 	{
-		ngx_http_finalize_request(r, r->headers_out.status);
-		return;
+		return NGX_AGAIN;
 	}
 
-	ngx_http_auge_ctx_t* actx = ngx_http_get_module_ctx(r, ngx_http_auge_module);
+	ngx_log_error(NGX_LOG_ERR, r->connection->log, -, "upstream send invalid header");
 
-	ngx_str_t output_format = ngx_string("stock[%V], Today current price: %V, volumn:%V");
-
-	int bodylen = output_format.len + actx->stock[0].len + actx->stock[1].len + actx->stock[4].len - 6;
-	r->headers_out.content_length_n = bodylen;
-
-	ngx_buf_t* b = ngx_create_temp_buf(r->pool, bodylen);
-	ngx_snprintf(b->pos, bodylen, (char*)output_format.data, &actx->stock[0], &actx->stock[1], &actx->stock[4]);
-	b->last = b->pos + bodylen;
-	b->last_buf = 1;
-
-	ngx_chain_t out;
-	out.buf = b;
-	out.next = NULL;
-
-	 static ngx_str_t type = ngx_string("text/plain; charset=GBK");
-	 r->headers_out.content_type = type;
-	 r->headers_out.status = NGX_HTTP_OK;
-
-	 r->connection->buffered |= NGX_HTTP_WRITE_BUFFERED;
-	 ngx_int_t ret  = ngx_http_send_header(r);
-	 ret = ngx_http_output_filter(r, &out);
-
-	 ngx_http_finalize_request(r, ret);
-
+	return NGX_HTTP_UPSTREAM_INVALID_HEADER;
 }
+
