@@ -3,7 +3,6 @@
 #include <ngx_http.h>
 #include <string.h>
 
-static char* ngx_http_auge_name(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
 static void* ngx_http_auge_create_loc_conf(ngx_conf_t *cf);
 static char* ngx_http_auge_merge_loc_conf(ngx_conf_t *cf, void* parent, void *child);
 

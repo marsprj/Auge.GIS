@@ -2,7 +2,8 @@ addon_name=ngx_http_auge_module
 HTTP_MODULES="$HTTP_MODULES ngx_http_auge_module"
 NGX_ADDON_SRCS="$NGX_ADDON_SRCS 
 		$ngx_addon_dir/ngx_http_auge_module.c
-		$ngx_addon_dir/ngx_auge_database.c" 
+		$ngx_addon_dir/ngx_http_auge_handler.c
+		$ngx_addon_dir/ngx_http_auge_upstream.c" 
 CORE_INCS="$CORE_INCS 
 		/opt/pgsql-9.1.2/include
 		/usr/include/libxml2"
