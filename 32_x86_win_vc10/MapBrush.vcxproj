@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Base.h" />
+    <ClInclude Include="..\src\Canvas.h" />
+    <ClInclude Include="..\src\Color.h" />
+    <ClInclude Include="..\src\Connection.h" />
+    <ClInclude Include="..\src\Enum.h" />
+    <ClInclude Include="..\src\Envelope.h" />
+    <ClInclude Include="..\src\Feature.h" />
+    <ClInclude Include="..\src\FeatureLayer.h" />
+    <ClInclude Include="..\src\FeatureSet.h" />
+    <ClInclude Include="..\src\FeatureType.h" />
+    <ClInclude Include="..\src\Field.h" />
+    <ClInclude Include="..\src\Filter.h" />
+    <ClInclude Include="..\src\Geometry.h" />
+    <ClInclude Include="..\src\Layer.h" />
+    <ClInclude Include="..\src\LineSymbolizer.h" />
+    <ClInclude Include="..\src\Map.h" />
+    <ClInclude Include="..\src\MapBrush.h" />
+    <ClInclude Include="..\src\PointSymbolizer.h" />
+    <ClInclude Include="..\src\PolygonSymbolizer.h" />
+    <ClInclude Include="..\src\RasterLayer.h" />
+    <ClInclude Include="..\src\Renderer.h" />
+    <ClInclude Include="..\src\Rule.h" />
+    <ClInclude Include="..\src\Style.h" />
+    <ClInclude Include="..\src\Symbolizer.h" />
+    <ClInclude Include="..\src\TextSymbolizer.h" />
+    <ClInclude Include="..\src\Transformation.h" />
+    <ClInclude Include="..\src\Util.h" />
+    <ClInclude Include="..\src\Viewer.h" />
+    <ClInclude Include="..\src\Workspace.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Canvas.cpp" />
+    <ClCompile Include="..\src\Connection.cpp" />
+    <ClCompile Include="..\src\Envelope.cpp" />
+    <ClCompile Include="..\src\Feature.cpp" />
+    <ClCompile Include="..\src\FeatureLayer.cpp" />
+    <ClCompile Include="..\src\FeatureSet.cpp" />
+    <ClCompile Include="..\src\FeatureType.cpp" />
+    <ClCompile Include="..\src\Field.cpp" />
+    <ClCompile Include="..\src\Filter.cpp" />
+    <ClCompile Include="..\src\Layer.cpp" />
+    <ClCompile Include="..\src\LineSymbolizer.cpp" />
+    <ClCompile Include="..\src\Map.cpp" />
+    <ClCompile Include="..\src\PointSymbolizer.cpp" />
+    <ClCompile Include="..\src\PolygonSymbolizer.cpp" />
+    <ClCompile Include="..\src\RasterLayer.cpp" />
+    <ClCompile Include="..\src\Renderer.cpp" />
+    <ClCompile Include="..\src\Rule.cpp" />
+    <ClCompile Include="..\src\Style.cpp" />
+    <ClCompile Include="..\src\Symbolizer.cpp" />
+    <ClCompile Include="..\src\TextSymbolizer.cpp" />
+    <ClCompile Include="..\src\Transformation.cpp" />
+    <ClCompile Include="..\src\Util.cpp" />
+    <ClCompile Include="..\src\Viewer.cpp" />
+    <ClCompile Include="..\src\Workspace.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FFF2A03F-3B6F-45AC-AD05-120C6422F5C5}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>MapBrush</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Program Files (x86)\PostgreSQL\9.1\include;E:\DevEnv\cairo-dev_1.10.2-2_win32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Program Files (x86)\PostgreSQL\9.1\lib;E:\DevEnv\cairo-dev_1.10.2-2_win32\lib;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)D</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;MAPBRUSH_EXPORTS;MAP_BRUSH_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libpq.lib;cairo.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)\MapBrushD.dll ..\bin
+copy $(OutDir)\MapBrushD.lib ..\lib</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;MAPBRUSH_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
