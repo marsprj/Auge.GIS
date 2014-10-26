@@ -13,6 +13,7 @@ namespace auge
 		Cleanup();
 	}
 
+
 	int	Map::SetName(const char* szName)
 	{
 		if(szName==NULL)

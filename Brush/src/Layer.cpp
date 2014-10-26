@@ -1,9 +1,11 @@
 #include "Layer.h"
+#include "Map.h"
 
 namespace auge
 {
 
-	Layer::Layer()
+	Layer::Layer():
+	m_pMap(NULL)
 	{
 
 	}
@@ -11,6 +13,16 @@ namespace auge
 	Layer::~Layer()
 	{
 
+	}
+
+	Map* Layer::GetMap()
+	{
+		return m_pMap;
+	}
+
+	void Layer::SetMap(Map* pMap)
+	{
+		m_pMap = pMap;
 	}
 
 	const char* Layer::GetName()

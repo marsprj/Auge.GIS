@@ -3,6 +3,7 @@
 
 #include "Base.h"
 #include <vector>
+#include <string>
 
 namespace auge
 {
@@ -15,6 +16,9 @@ namespace auge
 		virtual ~Style();
 
 	public:
+		const char*			GetName();
+		int					SetName(const char* szName);
+
 		std::vector<Rule*>& GetRules();
 		uint				GetRuleCount();
 
@@ -24,6 +28,7 @@ namespace auge
 		void				CleanupRules();
 		
 	private:
+		std::string			m_name;
 		std::vector<Rule*>	m_rules;
 	};
 

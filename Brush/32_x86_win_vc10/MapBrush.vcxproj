@@ -28,6 +28,7 @@
     <ClInclude Include="..\src\LineSymbolizer.h" />
     <ClInclude Include="..\src\Map.h" />
     <ClInclude Include="..\src\MapBrush.h" />
+    <ClInclude Include="..\src\MapManager.h" />
     <ClInclude Include="..\src\PointSymbolizer.h" />
     <ClInclude Include="..\src\PolygonSymbolizer.h" />
     <ClInclude Include="..\src\RasterLayer.h" />
@@ -54,6 +55,7 @@
     <ClCompile Include="..\src\Layer.cpp" />
     <ClCompile Include="..\src\LineSymbolizer.cpp" />
     <ClCompile Include="..\src\Map.cpp" />
+    <ClCompile Include="..\src\MapManager.cpp" />
     <ClCompile Include="..\src\PointSymbolizer.cpp" />
     <ClCompile Include="..\src\PolygonSymbolizer.cpp" />
     <ClCompile Include="..\src\RasterLayer.cpp" />

@@ -14,6 +14,21 @@ namespace auge
 		CleanupRules();
 	}
 
+	const char* Style::GetName()
+	{
+		return m_name.c_str();
+	}
+
+	int	Style::SetName(const char* szName)
+	{
+		if(szName==NULL)
+		{
+			return AG_FAILURE;
+		}
+		m_name = szName;
+		return AG_SUCCESS;
+	}
+
 	std::vector<Rule*>& Style::GetRules()
 	{
 		return m_rules;

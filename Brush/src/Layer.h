@@ -15,6 +15,8 @@ namespace auge
 		augeLayerRaster
 	}LayerType;
 
+	class Map;
+
 	class AUGE_API Layer
 	{
 	public:
@@ -24,8 +26,10 @@ namespace auge
 	public:
 		const char*		GetName();
 		int				SetName(const char* szName);
-		
 
+		Map*			GetMap();
+		void			SetMap(Map* pMap);
+		
 	public:
 		virtual LayerType		GetType();
 		virtual Envelope&		GetExtent();
@@ -34,6 +38,7 @@ namespace auge
 
 	private:
 		std::string		m_name;
+		Map*			m_pMap;
 	};
 
 }//namespace

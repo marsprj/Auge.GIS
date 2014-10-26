@@ -49,8 +49,6 @@ namespace auge
 
 	void Renderer::DrawMap(Map* pMap, Transformation* pTransformation)
 	{	
-		//Create(pTransformation->m_canvas_width, pTransformation->m_canvas_height);
-
 		std::vector<Layer*>& layers = pMap->GetLayers();
 		std::vector<Layer*>::iterator iter;
 

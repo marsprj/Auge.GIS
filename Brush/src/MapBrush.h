@@ -25,6 +25,7 @@
 #include "PointSymbolizer.h"
 #include "PolygonSymbolizer.h"
 #include "TextSymbolizer.h"
+#include "MapManager.h"
 
 
 #endif __MAP_BRUSH_H__

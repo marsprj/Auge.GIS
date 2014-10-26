@@ -83,12 +83,18 @@ typedef unsigned long long      uint64;
 #	define AUGE_API
 #endif
 
+#include <stdlib.h>
+
 namespace auge
 {
 	class AUGE_API Base
 	{
 	public:
-		Base():m_ref(1){}
+		Base()
+		{
+			m_ref = 1;
+			m_id = -1;
+		}
 
 		virtual ~Base(){}
 
@@ -105,8 +111,19 @@ namespace auge
 			}
 		}
 
+		uint GetID()
+		{
+			return m_id;
+		}
+
+		void SetID(uint id)
+		{
+			m_id = id;
+		}
+
 	private:
-		int	m_ref;
+		uint m_id;
+		int	 m_ref;
 	};
 }
 

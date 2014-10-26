@@ -11,13 +11,13 @@ namespace auge
 {
 	class Layer;
 
-	class AUGE_API Map
+	class AUGE_API Map : public Base
 	{
 	public:
 		Map();
 		virtual ~Map();
 
-	public:
+	public:		
 		const char*		GetName();
 		int				SetName(const char* szName);
 
@@ -41,7 +41,6 @@ namespace auge
 		void	Cleanup();
 
 	private:
-
 		std::string		m_name;
 		vector<Layer*>	m_layers;
 		Envelope		m_extent;

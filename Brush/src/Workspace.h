@@ -14,6 +14,7 @@ namespace auge
 	class AUGE_API Workspace : public Base
 	{
 		friend class FeatureType;
+		friend class MapManager;
 
 	public:
 		Workspace();
