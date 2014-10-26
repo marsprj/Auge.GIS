@@ -11,6 +11,12 @@ typedef struct{
 }ngx_http_auge_ctx_t;
 
 static ngx_command_t ngx_http_auge_commands[] = {
+	 { ngx_string("postgres_server"),
+	   NGX_HTTP_UPS_CONF|NGX_CONF_1MORE,
+	   ngx_postgres_conf_server,
+	   NGX_HTTP_SRV_CONF_OFFSET,
+	   0,
+	   NULL },
 	ngx_null_command
 };
 
@@ -19,7 +25,7 @@ static ngx_http_module_t ngx_http_auge_module_ctx = {
 	ngx_http_auge_init,			/* postconfiguration */
 	NULL,					/* create main configuration */
 	NULL,					/* init main configuration */
-	NULL,					/* create server configuration */
+	ngx_postgres_create_upstream_srv_conf,/* create server configuration */
 	NULL,					/* merge server configuration */
 	ngx_http_auge_create_loc_conf,	/* create location configuration */
 	ngx_http_auge_merge_loc_conf		/* merge location configuration */
@@ -232,6 +238,42 @@ ngx_http_auge_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
 	return NGX_CONF_OK;
 }
 
+void *
+ngx_postgres_create_upstream_srv_conf(ngx_conf_t *cf)
+{
+    ngx_postgres_upstream_srv_conf_t  *conf;
+//    ngx_pool_cleanup_t                *cln;
+
+    conf = ngx_pcalloc(cf->pool, sizeof(ngx_postgres_upstream_srv_conf_t));
+    if (conf == NULL) {
+        return NULL;
+    }
+
+    /*
+     * set by ngx_pcalloc():
+     *
+     *     conf->peers = NULL
+     *     conf->current = 0
+     *     conf->servers = NULL
+     *     conf->free = { NULL, NULL }
+     *     conf->cache = { NULL, NULL }
+     *     conf->active_conns = 0
+     *     conf->reject = 0
+     */
+
+    conf->pool = cf->pool;
+
+    /* enable keepalive (single) by default */
+    conf->max_cached = 10;
+    conf->single = 1;
+
+    //cln = ngx_pool_cleanup_add(cf->pool, 0);
+    //cln->handler = ngx_postgres_keepalive_cleanup;
+    //cln->data = conf;
+
+    return conf;
+}
+
 static ngx_int_t 
 ngx_http_auge_init_process(ngx_cycle_t *cycle)
 {
@@ -243,4 +285,22 @@ static void
 ngx_http_auge_exit_process(ngx_cycle_t *cycle)
 {
 	ngx_log_error(NGX_LOG_DEBUG, cycle->log, 0, "exit auge process");
+}
+
+char *
+ngx_postgres_conf_server(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
+{
+/*    ngx_str_t                         *value = cf->args->elts;
+    ngx_postgres_upstream_srv_conf_t  *pgscf = conf;
+    ngx_postgres_upstream_server_t    *pgs;
+    ngx_http_upstream_srv_conf_t      *uscf;
+    ngx_url_t                          u;
+    ngx_uint_t                         i;
+*/
+//    ngx_http_upstream_srv_conf_t      *uscf;
+
+//    uscf = ngx_http_conf_get_module_srv_conf(cf, ngx_http_upstream_module);
+
+
+    return NGX_CONF_OK;
 }

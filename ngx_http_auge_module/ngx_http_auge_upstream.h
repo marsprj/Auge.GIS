@@ -11,4 +11,4 @@ ngx_int_t ngx_postgres_upstream_init_peer(ngx_http_request_t *r, ngx_http_upstre
 ngx_int_t ngx_postgres_upstream_get_peer(ngx_peer_connection_t *pc, void *data);
 void ngx_postgres_upstream_free_peer(ngx_peer_connection_t *pc, void *data, ngx_uint_t state);
 
-#endif _NGX_HTTP_AUGE_UPSTREAM_H_
+#endif //_NGX_HTTP_AUGE_UPSTREAM_H_

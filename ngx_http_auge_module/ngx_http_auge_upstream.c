@@ -1,17 +1,17 @@
-#include "ngx_http_auge_stream.h"
+#include "ngx_http_auge_upstream.h"
 
 ngx_int_t
 ngx_postgres_upstream_init(ngx_conf_t *cf, ngx_http_upstream_srv_conf_t *uscf)
 {
 	uscf->peer.init = ngx_postgres_upstream_init_peer;
 
-	return NG_OK;
+	return NGX_OK;
 }
 
 ngx_int_t
 ngx_postgres_upstream_init_peer(ngx_http_request_t *r, ngx_http_upstream_srv_conf_t *uscf)
 {
-	ngx_log_error(NGX_LOG_ERR, r->log, 0, "ngx_postgres_upstream_get_peer");
+	ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "ngx_postgres_upstream_get_peer");
 
 	ngx_http_upstream_t	*u;
 
