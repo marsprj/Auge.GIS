@@ -262,7 +262,10 @@ namespace auge
 		ag_snprintf(sql, size, "select ");
 		for(iter=fields.begin(); iter!=fields.end(); iter++)
 		{
-			b ? (b = false) : strcat(sql, ",");
+			if(b)
+				b = false;
+			else
+				 strcat(sql, ",");
 
 			f = *iter;
 			fname = f->GetName();
@@ -316,7 +319,10 @@ namespace auge
 		ag_snprintf(sql, size, "select ");
 		for(iter=fields.begin(); iter!=fields.end(); iter++)
 		{
-			b ? (b = false) : strcat(sql, ",");
+			if(b)
+				b = false;
+			else
+				 strcat(sql, ",");
 
 			f = *iter;
 			fname = f->GetName();

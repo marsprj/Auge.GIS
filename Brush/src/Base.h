@@ -84,6 +84,7 @@ typedef unsigned long long      uint64;
 #endif
 
 #include <stdlib.h>
+#include <string.h>
 
 namespace auge
 {
