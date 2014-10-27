@@ -17,7 +17,7 @@ namespace auge
 
 	class Map;
 
-	class AUGE_API Layer
+	class AUGE_API Layer : public Base
 	{
 	public:
 		Layer();

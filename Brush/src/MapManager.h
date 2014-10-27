@@ -8,6 +8,7 @@ namespace auge
 {
 	class Map;
 	class Layer;
+	class FeatureLayer;
 	class Workspace;
 
 	class AUGE_API MapManager
@@ -29,9 +30,13 @@ namespace auge
 
 		int					AddMap(Map* pMap);
 		int					RemoveMap(const char* szName);
-		bool				FindMap(const char* szName);	
+		bool				FindMap(const char* szName);
+		int					GetMapID(const char* szName);
 
 		int					AddLayer(Layer* pLayer);
+		int					RemoveLayer(Layer* pLayer);
+		int					RemoveLayer(int mapID, const char* szLayerName);
+		int					RemoveLayer(const char* szMapName, const char* szLayerName);
 
 		int					Initialize();
 		void				SetConnection(Workspace* pConnection);
@@ -39,6 +44,8 @@ namespace auge
 	private:
 
 		int					CreateMap(Map* pMap);
+		int					AddLayer(FeatureLayer* pLayer);
+		int					RemoveLayers(int mapID);
 
 		bool				Initialized();
 		void				Cleanup();

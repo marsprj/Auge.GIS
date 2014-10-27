@@ -112,18 +112,18 @@ namespace auge
 			}
 		}
 
-		uint GetID()
+		int GetID()
 		{
 			return m_id;
 		}
 
-		void SetID(uint id)
+		void SetID(int id)
 		{
 			m_id = id;
 		}
 
 	private:
-		uint m_id;
+		int  m_id;
 		int	 m_ref;
 	};
 }

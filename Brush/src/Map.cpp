@@ -90,6 +90,7 @@ namespace auge
 		{
 			m_extent.Union(pLayer->GetExtent());
 		}
+		pLayer->SetMap(this);
 		m_layers.push_back(pLayer);
 			
 		return AG_FAILURE;

@@ -1,6 +1,7 @@
 #include "MapManager.h"
 #include "Map.h"
 #include "FeatureLayer.h"
+#include "FeatureType.h"
 
 #include "Workspace.h"
 
@@ -88,7 +89,7 @@ namespace auge
 		}
 
 		char sql[PATH_MAX] = {0};
-		sprintf(sql, "insert into ag_map (name) values('%s') return id", pMap->GetName());
+		sprintf(sql, "insert into ag_map (name) values('%s') returning id", pMap->GetName());
 
 		PGresult* pgResult = NULL;
 		pgResult = PQexec(m_pConnection->m_pgConnection, sql);
@@ -121,13 +122,57 @@ namespace auge
 			PQclear(pgResult);
 			return 0;
 		}
-		int n = PQntuples(pgResult);
+		int n = atoi(PQgetvalue(pgResult, 0, 0));
 		PQclear(pgResult);
 		return (n>0);
 	}
 
+	int MapManager::GetMapID(const char* szName)
+	{
+		if(szName==NULL)
+		{
+			return -1;
+		}
+		char sql[PATH_MAX] = {0};
+		sprintf(sql, "select id from ag_map where name='%s'", szName);
+
+		PGresult* pgResult = NULL;
+		pgResult = PQexec(m_pConnection->m_pgConnection, sql);
+		if(PQresultStatus(pgResult)!=PGRES_TUPLES_OK)
+		{
+			PQclear(pgResult);
+			return 0;
+		}
+		int n = PQntuples(pgResult);
+		if(n==0)
+		{
+			PQclear(pgResult);
+			return -1;
+		}
+		n = atoi(PQgetvalue(pgResult, 0, 0));
+		PQclear(pgResult);
+		return n;
+	}
+
 	int	MapManager::RemoveMap(const char* szName)
 	{
+		int mid = GetMapID(szName);
+		if(mid<0)
+		{
+			return AG_FAILURE;
+		}
+		RemoveLayers(mid);
+
+		char sql[PATH_MAX] = {0};
+		sprintf(sql, "delete from ag_map where name='%s'", szName);
+		PGresult* pgResult = NULL;
+		pgResult = PQexec(m_pConnection->m_pgConnection, sql);
+		if(PQresultStatus(pgResult)!=PGRES_COMMAND_OK)
+		{
+			PQclear(pgResult);
+			return AG_FAILURE;
+		}
+		PQclear(pgResult);
 		return AG_FAILURE;
 	}
 
@@ -137,16 +182,130 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
-
 		Map* pMap = pLayer->GetMap();
-		uint mid = pMap->GetID();
+		if(pMap==NULL)
+		{
+			return AG_FAILURE;
+		}
+		if(pMap->GetID()<0)
+		{
+			return AG_FAILURE;
+		}
+
+		int ret = AG_FAILURE;
+		switch(pLayer->GetType())
+		{
+		case augeLayerFeature:
+			ret = AddLayer(static_cast<FeatureLayer*>(pLayer));
+			break;
+		case augeLayerRaster:
+			break;
+		}
+
+		return ret;
+	}
+
+	int	MapManager::AddLayer(FeatureLayer* pLayer)
+	{
+		int ret = AG_FAILURE;
+		Map *pMap = pLayer->GetMap();
+		int mid = pMap->GetID();
+		FeatureType* ft = pLayer->GetFeatureType();
+		if(ft==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* lname = pLayer->GetName();
+		const char* fname = ft->GetName();
+		
+		char sql[PATH_MAX] = {0};
+		sprintf(sql, "insert into ag_layer (name, table_name, mid) values('%s','%s',%d) returning id", lname, fname,mid);
+
+		PGresult* pgResult = NULL;
+		pgResult = PQexec(m_pConnection->m_pgConnection, sql);
+		if(PQresultStatus(pgResult)!=PGRES_TUPLES_OK)
+		{
+			PQclear(pgResult);
+			return AG_FAILURE;
+		}
+
+		int id = atoi(PQgetvalue(pgResult,0,0));		
+		pLayer->SetID(id);
+		PQclear(pgResult);
+
+		return AG_SUCCESS;
+	}
+
+	int MapManager::RemoveLayer(Layer* pLayer)
+	{
+		if(pLayer==NULL)
+		{
+			return AG_FAILURE;
+		}
+		Map* pMap = pLayer->GetMap();
+		if(pMap==NULL)
+		{
+			return AG_FAILURE;
+		}
+		return RemoveLayer(pMap->GetID(), pLayer->GetName());
+	}
+
+	int MapManager::RemoveLayer(int mapID, const char* szLayerName)
+	{
+		if((mapID<0) || (szLayerName==NULL))
+		{
+			return AG_FAILURE;
+		}
+
+		char sql[PATH_MAX] = {0};
+		sprintf(sql, "delete from ag_layer where mid=%d and name='%s'", mapID, szLayerName);
+		PGresult* pgResult = NULL;
+		pgResult = PQexec(m_pConnection->m_pgConnection, sql);
+		if(PQresultStatus(pgResult)!=PGRES_COMMAND_OK)
+		{
+			PQclear(pgResult);
+			return AG_FAILURE;
+		}
+		PQclear(pgResult);
+
+		return AG_SUCCESS;
+	}
+
+	int MapManager::RemoveLayer(const char* szMapName, const char* szLayerName)
+	{
+		if((szMapName==NULL) || (szLayerName==NULL))
+		{
+			return AG_FAILURE;
+		}
+		int mid = GetMapID(szMapName);
+		return RemoveLayer(mid, szLayerName);
+	}
+
+	int MapManager::RemoveLayers(int mapID)
+	{
+		if(mapID<0)
+		{
+			return AG_FAILURE;
+		}
+
+		char sql[PATH_MAX] = {0};
+		sprintf(sql, "delete from ag_layer where mid=%d", mapID);
+		PGresult* pgResult = NULL;
+		pgResult = PQexec(m_pConnection->m_pgConnection, sql);
+		if(PQresultStatus(pgResult)!=PGRES_COMMAND_OK)
+		{
+			PQclear(pgResult);
+			return AG_FAILURE;
+		}
+		PQclear(pgResult);
 
 		return AG_SUCCESS;
 	}
 
 	int	MapManager::Initialize()
 	{
-		const char* sql_map = "create table ag_map (id serial, name character varying(32), owner character varying(32), constraint mid_uk unique(id))";
+		const char* sql_map = "create table ag_map (id serial, name character varying(32), owner character varying(32), constraint mid_uk unique(id), constraint mn_uk unique(name))";
 		PGresult* pgResult = NULL;
 		pgResult = PQexec(m_pConnection->m_pgConnection, sql_map);
 		if(PQresultStatus(pgResult)!=PGRES_COMMAND_OK)

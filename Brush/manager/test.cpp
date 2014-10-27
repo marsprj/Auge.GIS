@@ -36,9 +36,14 @@ int main()
 	pManager = MapManager::GetInstance();
 	pManager->SetConnection(pWorkspace);
 	pManager->Initialize();
+	
+	pManager->RemoveMap(pMap->GetName());
 
-	pManager->AddMap(pMap);
-
+	if(!pManager->FindMap(pMap->GetName()))
+	{
+		pManager->AddMap(pMap);
+	}
+	
 	pMap->Release();
 
 	pWorkspace->Close();
