@@ -3,6 +3,7 @@
 
 #include "Base.h"
 #include "Color.h"
+#include "Symbolizer.h"
 #include <string>
 
 namespace auge

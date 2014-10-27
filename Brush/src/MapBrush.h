@@ -26,6 +26,14 @@
 #include "PolygonSymbolizer.h"
 #include "TextSymbolizer.h"
 #include "MapManager.h"
+#include "StyleIO.h"
+
+#include <libpq-fe.h>
+#include <libxml/tree.h>
+#ifndef WIN32
+#include <cairo/cairo-win32.h>
+#else
+#endif
 
 
 #endif __MAP_BRUSH_H__

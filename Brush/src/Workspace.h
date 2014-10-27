@@ -15,6 +15,7 @@ namespace auge
 	{
 		friend class FeatureType;
 		friend class MapManager;
+		friend class StyleIO;
 
 	public:
 		Workspace();

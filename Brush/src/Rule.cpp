@@ -3,6 +3,7 @@
 #include "PointSymbolizer.h"
 #include "LineSymbolizer.h"
 #include "PolygonSymbolizer.h"
+#include "TextSymbolizer.h"
 #include "Filter.h"
 
 namespace auge
@@ -10,6 +11,7 @@ namespace auge
 
 	Rule::Rule():
 	m_pSymbolizer(NULL),
+	m_pTextSymbolizer(NULL),
 	m_pFilter(NULL)
 	{
 
@@ -21,6 +23,11 @@ namespace auge
 		{
 			m_pSymbolizer->Release();
 			m_pSymbolizer = NULL;
+		}
+		if(m_pTextSymbolizer!=NULL)
+		{
+			m_pTextSymbolizer->Release();
+			m_pTextSymbolizer = NULL;
 		}
 		if(m_pFilter!=NULL)
 		{
@@ -37,6 +44,16 @@ namespace auge
 	void Rule::SetSymbolizer(Symbolizer *pSymbolizer)
 	{
 		m_pSymbolizer = pSymbolizer;
+	}
+
+	TextSymbolizer*	Rule::GetTextSymbolizer()
+	{
+		return m_pTextSymbolizer;
+	}
+
+	void Rule::SetTextSymbolizer(TextSymbolizer *pSymbolizer)
+	{
+		m_pTextSymbolizer = pSymbolizer;
 	}
 
 	Filter*	Rule::GetFilter()

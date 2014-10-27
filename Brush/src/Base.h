@@ -43,7 +43,11 @@ typedef unsigned long		ulong;
 #endif
 
 #ifndef PATH_MAX
-#define PATH_MAX 1024
+#	define PATH_MAX 1024
+#endif
+
+#ifndef NAME_MAX
+#	define NAME_MAX	256
 #endif
 
 #ifndef ag_stricmp
@@ -85,6 +89,7 @@ typedef unsigned long long      uint64;
 
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 namespace auge
 {

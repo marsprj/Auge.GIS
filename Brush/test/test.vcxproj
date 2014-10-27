@@ -39,8 +39,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../src;D:\Program Files %28x86%29\PostgreSQL\9.1\include;E:\DevEnv\cairo-dev_1.10.2-2_win32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>../lib;E:\DevEnv\cairo-dev_1.10.2-2_win32\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>../src;D:\Program Files %28x86%29\PostgreSQL\9.1\include;E:\DevEnv\cairo-dev_1.10.2-2_win32\include;E:\DevEnv\GnuWin32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>../lib;E:\DevEnv\cairo-dev_1.10.2-2_win32\lib;E:\DevEnv\GnuWin32\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

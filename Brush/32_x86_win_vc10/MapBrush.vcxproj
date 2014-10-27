@@ -35,6 +35,7 @@
     <ClInclude Include="..\src\Renderer.h" />
     <ClInclude Include="..\src\Rule.h" />
     <ClInclude Include="..\src\Style.h" />
+    <ClInclude Include="..\src\StyleIO.h" />
     <ClInclude Include="..\src\Symbolizer.h" />
     <ClInclude Include="..\src\TextSymbolizer.h" />
     <ClInclude Include="..\src\Transformation.h" />
@@ -62,6 +63,7 @@
     <ClCompile Include="..\src\Renderer.cpp" />
     <ClCompile Include="..\src\Rule.cpp" />
     <ClCompile Include="..\src\Style.cpp" />
+    <ClCompile Include="..\src\StyleIO.cpp" />
     <ClCompile Include="..\src\Symbolizer.cpp" />
     <ClCompile Include="..\src\TextSymbolizer.cpp" />
     <ClCompile Include="..\src\Transformation.cpp" />
@@ -98,8 +100,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Program Files (x86)\PostgreSQL\9.1\include;E:\DevEnv\cairo-dev_1.10.2-2_win32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Program Files (x86)\PostgreSQL\9.1\lib;E:\DevEnv\cairo-dev_1.10.2-2_win32\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Program Files (x86)\PostgreSQL\9.1\include;E:\DevEnv\cairo-dev_1.10.2-2_win32\include;E:\DevEnv\GnuWin32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Program Files (x86)\PostgreSQL\9.1\lib;E:\DevEnv\cairo-dev_1.10.2-2_win32\lib;E:\DevEnv\GnuWin32\lib;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)D</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -116,7 +118,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libpq.lib;cairo.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cairo.lib;libpq.lib;libxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PostBuildEvent>

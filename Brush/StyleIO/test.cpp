@@ -2,9 +2,6 @@
 
 using namespace auge;
 
-void showFeatures(FeatureType* pFeatureType);
-
-Map* CreateMap(Workspace *pWorkspace);
 Style* CreateStylePoint();
 Style* CreateStyleLine();
 Style* CreateStylePolygon();
@@ -18,8 +15,9 @@ int main()
 	Map	*pMap = NULL;
 	MapManager* pManager = NULL;
 	StyleIO*	pStyleIO = NULL;
+	Style*		pStyle = NULL;
 	Workspace *pWorkspace = NULL;
-	
+
 	int ret = AG_SUCCESS;
 	//const char* constr = "hostaddr=192.168.111.159 port=5432 dbname=gisdb user=postgres password=qwer1234";
 	const char* constr = "hostaddr=127.0.0.1 port=5432 dbname=gisdb user=postgres password=qwer1234";
@@ -32,78 +30,27 @@ int main()
 		return -1;
 	}
 
-	pMap = CreateMap(pWorkspace);
-
 	pStyleIO = StyleIO::GetInstance();
 	pStyleIO->SetConnection(pWorkspace);
 	pStyleIO->Initialize();
 
-	pManager = MapManager::GetInstance();
-	pManager->SetConnection(pWorkspace);
-	pManager->Initialize();
-	
-	pManager->RemoveMap(pMap->GetName());
+	const char* name = "cities";
+	pStyle = CreateStylePoint();	
+	//pStyle = CreateStyleLine();
+	//pStyle = CreateStylePolygon();
+	pStyle->SetName(name);
 
-	if(!pManager->FindMap(pMap->GetName()))
-	{
-		pManager->AddMap(pMap);
-	}
-	
-	pMap->Release();
+	pStyleIO->Save(pStyle);
+	pStyle->Release();
+
+	pStyle = pStyleIO->Read(name);
+	pStyle->Release();
 
 	pWorkspace->Close();
 	pWorkspace->Release();
 
 	return 0;
 }
-
-Map* CreateMap(Workspace *pWorkspace)
-{
-	Map				*pMap = NULL;
-	FeatureLayer	*pLayer = NULL;
-	FeatureType		*pType = NULL;
-	Style			*pStyle = NULL;
-	const char		*typeName = NULL;
-
-	pMap = new Map();
-	pMap->SetName("world");
-
-	typeName = "cities";
-	pType = pWorkspace->OpenFeatureType(typeName);
-	//showFeatures(pType);
-	//pType->GetFields();
-	pLayer = new FeatureLayer();
-	pLayer->SetName(typeName);
-	pLayer->SetFeatureType(pType);
-	pStyle = CreateStylePoint();
-	pLayer->SetStyle(pStyle);
-	pMap->AddLayer(pLayer);
-
-	typeName = "rivers";
-	pType = pWorkspace->OpenFeatureType(typeName);
-	//showFeatures(pType);
-	//pType->GetFields();
-	pLayer = new FeatureLayer();
-	pLayer->SetName(typeName);
-	pLayer->SetFeatureType(pType);
-	pStyle = CreateStyleLine();
-	pLayer->SetStyle(pStyle);
-	pMap->AddLayer(pLayer);
-
-	typeName = "country";
-	pType = pWorkspace->OpenFeatureType(typeName);
-	//showFeatures(pType);
-	//pType->GetFields();
-	pLayer = new FeatureLayer();
-	pLayer->SetName(typeName);
-	pLayer->SetFeatureType(pType);
-	pStyle = CreateStylePolygon();
-	pLayer->SetStyle(pStyle);
-	pMap->AddLayer(pLayer);
-
-	return pMap;
-}
-
 Style* CreateStylePoint()
 {
 	Style	*pStyle = NULL;
@@ -111,7 +58,6 @@ Style* CreateStylePoint()
 	Symbolizer* pSymbolzier = NULL;
 
 	pStyle	= new Style();
-	pStyle->SetName("cities");
 	pRule	= new Rule();
 	pSymbolzier = CreatePointSymbolizer();
 	pRule->SetSymbolizer(pSymbolzier);
@@ -120,7 +66,11 @@ Style* CreateStylePoint()
 	pRule	= new Rule();
 	pSymbolzier = CreateTextSymbolizer();
 	pRule->SetSymbolizer(pSymbolzier);
+	pRule->SetTextSymbolizer(CreateTextSymbolizer());
 	pStyle->AddRule(pRule);
+
+	pRule	= new Rule();
+	
 
 	return pStyle;
 }
@@ -132,7 +82,6 @@ Style* CreateStyleLine()
 	Symbolizer* pSymbolzier = NULL;
 
 	pStyle	= new Style();
-	pStyle->SetName("rivers");
 	pRule	= new Rule();
 	pSymbolzier = CreateLineSymbolizer();
 	pRule->SetSymbolizer(pSymbolzier);
@@ -148,7 +97,6 @@ Style* CreateStylePolygon()
 	Symbolizer* pSymbolzier = NULL;
 
 	pStyle	= new Style();
-	pStyle->SetName("country");
 	pRule	= new Rule();
 	pSymbolzier = CreatePolygonSymbolizer();
 	pRule->SetSymbolizer(pSymbolzier);
@@ -179,7 +127,7 @@ LineSymbolizer* CreateLineSymbolizer()
 {
 	LineSymbolizer* pSymbol = NULL;
 	pSymbol = new LineSymbolizer();
-	
+
 	pSymbol->outline_color = Color(0,255,0,255);
 	pSymbol->outline_width = 1.0f;
 	pSymbol->outline_cap = augeRoundCap;
@@ -225,31 +173,4 @@ TextSymbolizer* CreateTextSymbolizer()
 	pSymbol->offset_y = -10.0f;
 
 	return pSymbol;
-}
-
-void showFeatures(FeatureType* pFeatureType)
-{
-	byte* wkb = NULL;
-	FeatureSet* pSet = NULL;
-	pSet = pFeatureType->Query();
-
-	Envelope& extent = pFeatureType->GetExtent();
-
-	pSet->Reset();
-	while(!pSet->IsEOF())
-	{
-		Feature& f = pSet->Next();
-		std::vector<Field*>& fields = f.GetFields();
-		int num = fields.size()-1;
-		for(int i=0; i<num; i++)
-		{
-			char* sz = f.GetValueAsString(i);
-			printf("%s\n",sz);
-		}
-
-		printf("------------------------------------------------------------\n");
-		//byte* wkb = f.GetBytes(9);
-	}
-
-	pSet->Release();
 }

@@ -2,17 +2,18 @@
 #include "Map.h"
 #include "FeatureLayer.h"
 #include "FeatureType.h"
-
 #include "Workspace.h"
+#include "Style.h"
+#include "StyleIO.h"
 
 #include <libpq-fe.h>
 
 namespace auge
 {
-	MapManager* MapManager::m_pManager = new MapManager();
+	MapManager* MapManager::m_pInstance = new MapManager();
 	MapManager* MapManager::GetInstance()
 	{		
-		return m_pManager;
+		return m_pInstance;
 	}
 
 	MapManager::MapManager():
@@ -24,6 +25,11 @@ namespace auge
 	MapManager::~MapManager()
 	{
 		Cleanup();
+		if(m_pInstance!=NULL)
+		{
+			delete m_pInstance;
+			m_pInstance = NULL;
+		}
 	}
 
 	std::vector<Map*>& MapManager::GetMaps()
@@ -196,7 +202,9 @@ namespace auge
 		switch(pLayer->GetType())
 		{
 		case augeLayerFeature:
-			ret = AddLayer(static_cast<FeatureLayer*>(pLayer));
+			{
+				ret = AddLayer(static_cast<FeatureLayer*>(pLayer));
+			}
 			break;
 		case augeLayerRaster:
 			break;
@@ -207,9 +215,29 @@ namespace auge
 
 	int	MapManager::AddLayer(FeatureLayer* pLayer)
 	{
+		Style* pStyle = NULL;
+		pStyle = pLayer->GetStyle();
+		if(pStyle!=NULL)
+		{
+			StyleIO* sio = StyleIO::GetInstance();
+			sio->Save(pStyle);
+		}
+
+		return WriteLayer(pLayer);
+	}
+
+	int	MapManager::WriteLayer(FeatureLayer* pLayer)
+	{
 		int ret = AG_FAILURE;
 		Map *pMap = pLayer->GetMap();
-		int mid = pMap->GetID();
+		Style *pStyle= pLayer->GetStyle();
+		int mid=-1,sid=-1;
+		mid = pMap->GetID();
+		if(pStyle!=NULL)
+		{
+			sid = pStyle->GetID();
+		}
+
 		FeatureType* ft = pLayer->GetFeatureType();
 		if(ft==NULL)
 		{
@@ -218,9 +246,9 @@ namespace auge
 
 		const char* lname = pLayer->GetName();
 		const char* fname = ft->GetName();
-		
+
 		char sql[PATH_MAX] = {0};
-		sprintf(sql, "insert into ag_layer (name, table_name, mid) values('%s','%s',%d) returning id", lname, fname,mid);
+		sprintf(sql, "insert into ag_layer (name, table_name, mid, sid) values('%s','%s',%d,%d) returning id", lname, fname,mid,sid);
 
 		PGresult* pgResult = NULL;
 		pgResult = PQexec(m_pConnection->m_pgConnection, sql);
@@ -308,16 +336,6 @@ namespace auge
 		const char* sql_map = "create table ag_map (id serial, name character varying(32), owner character varying(32), constraint mid_uk unique(id), constraint mn_uk unique(name))";
 		PGresult* pgResult = NULL;
 		pgResult = PQexec(m_pConnection->m_pgConnection, sql_map);
-		if(PQresultStatus(pgResult)!=PGRES_COMMAND_OK)
-		{
-			//PQclear(pgResult);
-			//return AG_FAILURE;
-		}
-		PQclear(pgResult);
-
-		const char* sql_style = "create table ag_style (id serial, name character varying(32), style character varying(4096), constraint sid_uk unique(id))";
-								
-		pgResult = PQexec(m_pConnection->m_pgConnection, sql_style);
 		if(PQresultStatus(pgResult)!=PGRES_COMMAND_OK)
 		{
 			//PQclear(pgResult);

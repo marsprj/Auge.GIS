@@ -6,31 +6,32 @@ AM_CPPFLAGS=-I$(PGHOME)/include
 
 libmapbrush_la_LDFLAGS=-L$(PGHOME)/lib
 
-libmapbrush_la_LIBADD=-lpq
+libmapbrush_la_LIBADD=-lpq \
+		      -xml2
 
-libmapbrush_la_SOURCES= Canvas.cpp \
-			Feature.cpp \
-			FeatureType.cpp \
-			Layer.cpp \
-			MapManager.cpp \
-			RasterLayer.cpp \
-			Style.cpp \
-			Transformation.cpp \
-			Workspace.cpp \
-			Connection.cpp \
-			FeatureLayer.cpp \
-			Field.cpp \
-			LineSymbolizer.cpp \
-			PointSymbolizer.cpp \
-			Renderer.cpp \
-			Symbolizer.cpp 
-			Util.cpp \
+libmapbrush_la_SOURCES= Workspace.cpp \
 			Envelope.cpp \
+			Field.cpp \
+			Feature.cpp \
 			FeatureSet.cpp \
-		   	Filter.cpp \
+			FeatureType.cpp \
+			Filter.cpp \
 			Map.cpp \
+			Layer.cpp \
+			RasterLayer.cpp \
+			FeatureLayer.cpp \
+			Symbolizer.cpp \
+			PointSymbolizer.cpp \
+			LineSymbolizer.cpp \
 			PolygonSymbolizer.cpp \
+			TextSymbolizer.cpp \
+			Style.cpp \
 			Rule.cpp \
-			TextSymbolizer.cpp\
-			Viewer.cpp
+			Canvas.cpp \
+			Viewer.cpp \
+			Transformation.cpp \
+			Renderer.cpp \
+			MapManager.cpp \
+			StyleIO.cpp \
+			Util.cpp
 

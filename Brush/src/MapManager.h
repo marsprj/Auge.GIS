@@ -21,7 +21,7 @@ namespace auge
 	public:
 		static MapManager*	GetInstance();
 	private:
-		static MapManager*	m_pManager;
+		static MapManager*	m_pInstance;
 
 	public:
 		std::vector<Map*>&	GetMaps();
@@ -45,6 +45,7 @@ namespace auge
 
 		int					CreateMap(Map* pMap);
 		int					AddLayer(FeatureLayer* pLayer);
+		int					WriteLayer(FeatureLayer* pLayer);
 		int					RemoveLayers(int mapID);
 
 		bool				Initialized();

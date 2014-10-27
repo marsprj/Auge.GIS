@@ -5,8 +5,9 @@
 
 namespace auge
 {
-	class Symbolizer;
 	class Filter;
+	class Symbolizer;
+	class TextSymbolizer;
 
 	class AUGE_API Rule : public Base
 	{
@@ -18,11 +19,15 @@ namespace auge
 		Symbolizer*		GetSymbolizer();
 		void			SetSymbolizer(Symbolizer *pSymbolizer);
 
+		TextSymbolizer*	GetTextSymbolizer();
+		void			SetTextSymbolizer(TextSymbolizer *pSymbolizer);
+
 		Filter*			GetFilter();
 		void			SetFilter(Filter* pFilter);
 
 	private:
 		Symbolizer*		m_pSymbolizer;
+		TextSymbolizer*	m_pTextSymbolizer;
 		Filter*			m_pFilter;
 	};
 
