@@ -7,7 +7,7 @@ AM_CPPFLAGS=-I$(PGHOME)/include
 libmapbrush_la_LDFLAGS=-L$(PGHOME)/lib
 
 libmapbrush_la_LIBADD=-lpq \
-		      -xml2
+		      -lxml2
 
 libmapbrush_la_SOURCES= Workspace.cpp \
 			Envelope.cpp \
