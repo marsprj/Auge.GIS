@@ -114,7 +114,7 @@ namespace auge
 
 	int StyleIO::Save(Style* pStyle)
 	{
-		char*  text = "style";//NULL;
+		char*  text = NULL;
 		int    size = 0;
 		int ret = AG_FAILURE;
 

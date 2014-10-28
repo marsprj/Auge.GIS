@@ -455,7 +455,7 @@ namespace auge
 		if(PQresultStatus(pgResult)!=PGRES_TUPLES_OK)
 		{
 			PQclear(pgResult);
-			return false;
+			return NULL;
 		}
 		int n = PQntuples(pgResult);
 		if(n==0)

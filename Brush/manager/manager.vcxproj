@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>../src;E:\DevEnv\cairo-dev_1.10.2-2_win32\include;D:\Program Files %28x86%29\PostgreSQL\9.1\include;E:\DevEnv\GnuWin32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>../lib;D:\Program Files %28x86%29\PostgreSQL\9.1\lib;E:\DevEnv\cairo-dev_1.10.2-2_win32\lib;E:\DevEnv\GnuWin32\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>../../lib;D:\Program Files %28x86%29\PostgreSQL\9.1\lib;E:\DevEnv\cairo-dev_1.10.2-2_win32\lib;E:\DevEnv\GnuWin32\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -62,7 +62,7 @@
       <AdditionalDependencies>MapBrushD.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\manager.exe ..\bin</Command>
+      <Command>copy $(OutDir)\manager.exe ..\..\bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

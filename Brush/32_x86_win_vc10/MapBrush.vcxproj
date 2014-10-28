@@ -122,8 +122,8 @@
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\MapBrushD.dll ..\bin
-copy $(OutDir)\MapBrushD.lib ..\lib</Command>
+      <Command>copy $(OutDir)\MapBrushD.dll ..\..\bin
+copy $(OutDir)\MapBrushD.lib ..\..\lib</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
