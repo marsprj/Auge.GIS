@@ -7,11 +7,17 @@
 
 #include <libxml/parser.h>
 #include <libxml/tree.h>
+#include <libxml/xpath.h>
 
 namespace auge
 {
 	class Style;
+	class Rule;
 	class Symbolizer;
+	class PointSymbolizer;
+	class LineSymbolizer;
+	class PolygonSymbolizer;
+	class TextSymbolizer;
 	class Workspace;
 
 	class AUGE_API StyleIO
@@ -43,10 +49,30 @@ namespace auge
 	private:
 		void				BuildSymbolizer(Symbolizer* pSymbolizer, xmlNodePtr pxmlRule, xmlNsPtr pnsSLD, xmlNsPtr pnsOGC);
 		void				BuildFillColor(Color& color, xmlNodePtr pxmlParent, xmlNsPtr pnsSLD);
-		void				BuildStrokeColor(Color& colorr, xmlNodePtr pxmlParent, xmlNsPtr pnsSLD);
+		void				BuildStrokeColor(Color& color, xmlNodePtr pxmlParent, xmlNsPtr pnsSLD);
+
+		Rule*				ParseRule(xmlNodePtr pxmlRule, xmlDocPtr pxmlDoc);
+		PointSymbolizer*	ParsePointSymbolizer(xmlNodePtr pxmlN, xmlDocPtr pxmlDoc);
+		LineSymbolizer*		ParseLineSymbolizer(xmlNodePtr pxmlN, xmlDocPtr pxmlDoc);
+		PolygonSymbolizer*	ParsePolygonSymbolizer(xmlNodePtr pxmlN, xmlDocPtr pxmlDoc);
+		TextSymbolizer*		ParseTextSymbolizer(xmlNodePtr pxmlN, xmlDocPtr pxmlDoc);
+
+		int					ParseFill(PointSymbolizer* s,xmlNodePtr pxmlN, xmlDocPtr pxmlDoc);
+		int					ParseStroke(PointSymbolizer* s,xmlNodePtr pxmlN, xmlDocPtr pxmlDoc);
+		int					ParseStroke(LineSymbolizer* s,xmlNodePtr pxmlN);
+		int					ParseFill(PolygonSymbolizer* s,xmlNodePtr pxmlN);
+		int					ParseStroke(PolygonSymbolizer* s,xmlNodePtr pxmlNc);
+		int					ParseFill(TextSymbolizer* s,xmlNodePtr pxmlN);
+		int					ParseStroke(TextSymbolizer* s,xmlNodePtr pxmlN);
+		int					ParseFont(TextSymbolizer* s,xmlNodePtr pxmlN);
+		int					ParseLabel(TextSymbolizer* s,xmlNodePtr pxmlN);
+
+		xmlXPathObjectPtr	XSearch(xmlChar* xpath,xmlDocPtr pxmlDoc,xmlNodePtr pxmlCurNode=NULL);
 
 		const char*			EncodeFontStyle(FontStyle s);
 		const char*			EncodeFontWeight(FontWeight w);
+		FontStyle			ParseFontStyle(const char* s);
+		FontWeight			ParseFontWeight(const char* w);
 
 		bool				Initialized();
 		void				Cleanup();

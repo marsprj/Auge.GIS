@@ -12,6 +12,7 @@
 
 #include <libxml/parser.h>
 #include <libxml/tree.h>
+#include <libxml/xpath.h>
 
 namespace auge
 {
@@ -44,7 +45,7 @@ namespace auge
 		}
 
 		char sql[PATH_MAX] = {0};
-		sprintf(sql, "select id,name,style from ag_ag_style where id='%s'", sid);
+		sprintf(sql, "select id,name,style from ag_style where id=%d", sid);
 
 		PGresult* pgResult = NULL;
 		pgResult = PQexec(m_pConnection->m_pgConnection, sql);
@@ -100,7 +101,7 @@ namespace auge
 		int id = atoi(PQgetvalue(pgResult,0,0));
 		char* text = PQgetvalue(pgResult,0,2);
 		Style* pStyle = NULL;
-		pStyle = DeSerialize(text,0);
+		pStyle = DeSerialize(text,strlen(text));
 		if(pStyle!=NULL)
 		{
 			pStyle->SetID(id);
@@ -164,10 +165,10 @@ namespace auge
 		const char* encoding = "UTF-8";
 
 		// create namespace
-		pnsR   = xmlNewNs(NULL, BAD_CAST"http://www.opengis.net/sld", NULL);
-		pnsSLD = xmlNewNs(NULL, BAD_CAST"http://www.opengis.net/sld", BAD_CAST"sld");
-		pnsOGC = xmlNewNs(NULL, BAD_CAST"http://www.opengis.net/ogc", BAD_CAST"ogc");
-		pnsGML = xmlNewNs(NULL, BAD_CAST"http://www.opengis.net/gml", BAD_CAST"gml");
+		//pnsR   = xmlNewNs(NULL, BAD_CAST"http://www.opengis.net/sld", NULL);
+		//pnsSLD = xmlNewNs(NULL, BAD_CAST"http://www.opengis.net/sld", BAD_CAST"sld");
+		//pnsOGC = xmlNewNs(NULL, BAD_CAST"http://www.opengis.net/ogc", BAD_CAST"ogc");
+		//pnsGML = xmlNewNs(NULL, BAD_CAST"http://www.opengis.net/gml", BAD_CAST"gml");
 
 		// create xml doc
 		pxmlDoc = xmlNewDoc(BAD_CAST"1.0");
@@ -377,38 +378,6 @@ namespace auge
 		}
 	}
 
-	const char* StyleIO::EncodeFontStyle(FontStyle s)
-	{
-		const char* sz = "";
-		switch(s)
-		{
-		case augeFontStyleNormal:
-			sz = "normal";
-			break;
-		case augeFontStyleItalic:
-			sz = "italic";
-			break;
-		case augeFontStyleOblique:
-			sz = "oblique";
-			break;
-		}
-		return sz;
-	}
-
-	const char* StyleIO::EncodeFontWeight(FontWeight w)
-	{
-		const char* sz = "";
-		switch(w)
-		{
-		case augeFontWeightNormal:
-			sz = "normal";
-			break;
-		case augeFontWeightBold:
-			sz = "bold";
-			break;
-		}
-		return sz;
-	}
 
 	void StyleIO::BuildFillColor(Color& color, xmlNodePtr pxmlParent, xmlNsPtr pnsSLD)
 	{
@@ -430,11 +399,11 @@ namespace auge
 		// color
 		ag_snprintf(str,NAME_MAX,"#%02x%02x%02x",(int)color.GetRed(),(int)color.GetGreen(),(int)color.GetBlue());
 		pxmlParam = xmlNewChild(pxmlParent, pnsSLD, BAD_CAST"CssParameter", BAD_CAST str);
-		xmlNewProp(pxmlParam, BAD_CAST"name",BAD_CAST"stoke");
+		xmlNewProp(pxmlParam, BAD_CAST"name",BAD_CAST"stroke");
 		// alpha
 		ag_snprintf(str,NAME_MAX,"%f",color.GetAlpha()/255.0f);
 		pxmlParam = xmlNewChild(pxmlParent, pnsSLD, BAD_CAST"CssParameter", BAD_CAST str);
-		xmlNewProp(pxmlParam, BAD_CAST"name",BAD_CAST"stoke-opacity");
+		xmlNewProp(pxmlParam, BAD_CAST"name",BAD_CAST"stroke-opacity");
 	}
 
 	Style* StyleIO::DeSerialize(char* text, int size)
@@ -442,14 +411,479 @@ namespace auge
 		xmlDocPtr pxmlDoc = NULL;
 
 		xmlKeepBlanksDefault(0);
-		xmlParseMemory(text, size);
+		pxmlDoc = xmlParseMemory(text, size);
+		if(pxmlDoc==NULL)
+		{
+			return NULL;
+		}
 
+		xmlChar *xpath = BAD_CAST("//Rule");
+		xmlXPathContextPtr	pxmlCtx = NULL;   
+		xmlXPathObjectPtr	pxmlXRules = NULL;
+		xmlNodeSetPtr		pxmlRules = NULL;
+		xmlNodePtr			pxmlRule = NULL;
 
+		pxmlCtx= xmlXPathNewContext(pxmlDoc);
+		pxmlXRules = xmlXPathEvalExpression(xpath, pxmlCtx);
+		xmlXPathFreeContext(pxmlCtx);
+		if(pxmlXRules==NULL)
+		{
+			xmlFreeDoc(pxmlDoc);
+			return NULL;
+		}
 
+		Rule* r = NULL;
+		Style* s = new Style();
+		pxmlRules = pxmlXRules->nodesetval;
+		for(int i=0; i<pxmlRules->nodeNr; i++)
+		{
+			pxmlRule = pxmlRules->nodeTab[i];
+			r = ParseRule(pxmlRule, pxmlDoc);
+			if(r!=NULL)
+			{
+				s->AddRule(r);
+			}
+		}
+
+		xmlXPathFreeObject(pxmlXRules); 
 		xmlFreeDoc(pxmlDoc);
 
-		Style* pStyle = new Style();
-		return pStyle;
+		return s;
+	}
+
+	Rule* StyleIO::ParseRule(xmlNodePtr pxmlRule, xmlDocPtr pxmlDoc)
+	{
+		Rule *r = new Rule();
+		Symbolizer* s = NULL;
+		xmlNodePtr pxmlN = pxmlRule->children;
+		while(pxmlN != NULL)
+		{
+			if(ag_stricmp((char*)pxmlN->name, "PointSymbolizer")==0)
+			{
+				s = ParsePointSymbolizer(pxmlN, pxmlDoc);
+				if(s!=NULL)
+					r->SetSymbolizer(s);
+			}
+			else if(ag_stricmp((char*)pxmlN->name, "LineSymbolizer")==0)
+			{
+				s = ParseLineSymbolizer(pxmlN, pxmlDoc);
+				if(s!=NULL)
+					r->SetSymbolizer(s);
+			}
+			else if(ag_stricmp((char*)pxmlN->name, "PolygonSymbolizer")==0)
+			{
+				s = ParsePolygonSymbolizer(pxmlN, pxmlDoc);
+				if(s!=NULL)
+					r->SetSymbolizer(s);
+			}
+			else if(ag_stricmp((char*)pxmlN->name, "TextSymbolizer")==0)
+			{
+				s = ParseTextSymbolizer(pxmlN, pxmlDoc);
+				if(r->GetSymbolizer()==NULL)
+					r->SetSymbolizer(s);
+				else
+					r->SetTextSymbolizer(static_cast<TextSymbolizer*>(s));
+			}
+
+			pxmlN = pxmlN->next;
+		}
+		return r;
+	}
+
+	PointSymbolizer* StyleIO::ParsePointSymbolizer(xmlNodePtr pxmlN, xmlDocPtr pxmlDoc)
+	{
+		PointSymbolizer* s = new PointSymbolizer();
+		ParseFill(s,pxmlN, pxmlDoc);
+		ParseStroke(s,pxmlN, pxmlDoc);
+		return s;
+	}
+
+	LineSymbolizer* StyleIO::ParseLineSymbolizer(xmlNodePtr pxmlN, xmlDocPtr pxmlDoc)
+	{
+		LineSymbolizer* s = new LineSymbolizer();
+		xmlNodePtr nc = pxmlN->children;
+		while(nc!=NULL)
+		{
+			if(ag_stricmp((char*)nc->name, "stroke")==0)
+			{
+				ParseStroke(s,nc);
+			}
+
+			nc = nc->next;
+		}
+		return s;
+	}
+
+	PolygonSymbolizer* StyleIO::ParsePolygonSymbolizer(xmlNodePtr pxmlN, xmlDocPtr pxmlDoc)
+	{
+		PolygonSymbolizer* s = new PolygonSymbolizer();
+		xmlNodePtr nc = pxmlN->children;
+		while(nc!=NULL)
+		{
+			if(ag_stricmp((char*)nc->name, "fill")==0)
+			{
+				ParseFill(s,nc);
+			}
+			else if(ag_stricmp((char*)nc->name, "stroke")==0)
+			{
+				ParseStroke(s,nc);
+			}
+
+			nc = nc->next;
+		}
+		return s;
+	}
+
+	TextSymbolizer* StyleIO::ParseTextSymbolizer(xmlNodePtr pxmlN, xmlDocPtr pxmlDoc)
+	{
+		TextSymbolizer* s = new TextSymbolizer();
+		xmlNodePtr nc = pxmlN->children;
+		while(nc!=NULL)
+		{
+			if(ag_stricmp((char*)nc->name, "fill")==0)
+			{
+				ParseFill(s,nc);
+			}
+			else if(ag_stricmp((char*)nc->name, "stroke")==0)
+			{
+				ParseStroke(s,nc);
+			}
+			else if(ag_stricmp((char*)nc->name, "font")==0)
+			{
+				ParseFont(s,nc);
+			}
+			else if(ag_stricmp((char*)nc->name, "Label")==0)
+			{
+				ParseLabel(s,nc);
+			}
+
+			nc = nc->next;
+		}
+		return s;
+	}
+
+	int StyleIO::ParseFill(PointSymbolizer* s,xmlNodePtr pxmlN, xmlDocPtr pxmlDoc)
+	{
+		xmlXPathContextPtr	pxmlCtx = NULL;   
+		xmlXPathObjectPtr	pxmlXRules = NULL;
+
+		char xpath[NAME_MAX];
+		sprintf(xpath, "//%s//Fill",pxmlN->name);
+		xmlXPathObjectPtr pxmlXObj = XSearch(BAD_CAST xpath,pxmlDoc,pxmlN);
+		if(xmlXPathNodeSetIsEmpty(pxmlXObj->nodesetval))
+		{
+			s->fill = false;
+			return AG_FAILURE;
+		}
+
+		s->fill = true;
+		const char* name  = NULL;
+		const char* value = NULL;
+		xmlNodePtr nf = pxmlXObj->nodesetval->nodeTab[0];
+		xmlNodePtr nc = nf->children;
+		int r=0,g=0,b=0,a=255;
+		while(nc!=NULL)
+		{			
+			name  = (const char*)xmlGetProp(nc, BAD_CAST"name");
+			if(name!=NULL)
+			{
+				value = (const char*)xmlNodeGetContent(nc);
+				if(ag_stricmp(name, "fill")==0)
+				{	
+					sscanf(value+1,"%2x%2x%2x",&r,&g,&b);
+				}
+				else if(ag_stricmp(name, "fill-opacity")==0)
+				{
+					a = (int)(atof(value) * 255);
+				}
+			}			
+			nc = nc->next;
+		}
+		s->fill_color = Color((byte)r,(byte)g,(byte)b,(byte)a);
+		byte ss = s->fill_color.GetGreen();
+
+		return AG_SUCCESS;
+	}
+
+	int StyleIO::ParseStroke(PointSymbolizer* s,xmlNodePtr pxmlN, xmlDocPtr pxmlDoc)
+	{
+		xmlXPathContextPtr	pxmlCtx = NULL;   
+		xmlXPathObjectPtr	pxmlXRules = NULL;
+
+
+		char xpath[NAME_MAX];
+		sprintf(xpath, "//%s//Stroke",pxmlN->name);
+		xmlXPathObjectPtr pxmlXObj = XSearch(BAD_CAST xpath,pxmlDoc,pxmlN);
+		if(xmlXPathNodeSetIsEmpty(pxmlXObj->nodesetval))
+		{
+			s->outline = false;
+			return AG_FAILURE;
+		}
+		s->outline = true;
+		const char* name  = NULL;
+		const char* value = NULL;		
+		xmlNodePtr nf = pxmlXObj->nodesetval->nodeTab[0];
+		xmlNodePtr nc = nf->children;
+		int r=0,g=0,b=0,a=255;
+		while(nc!=NULL)
+		{
+			
+			name  = (const char*)xmlGetProp(nc, BAD_CAST"name");
+			if(name!=NULL)
+			{
+				value = (const char*)xmlNodeGetContent(nc);
+				if(ag_stricmp(name, "stroke")==0)
+				{	
+					sscanf(value+1,"%2x%2x%2x",&r,&g,&b);
+				}
+				else if(ag_stricmp(name, "stroke-opacity")==0)
+				{
+					a = (int)(atof(value) * 255);
+				}
+				else if(ag_stricmp(name, "stroke-width")==0)
+				{
+					double width = atof(value);
+					s->outline_width = width;
+				}
+			}
+			nc = nc->next;
+		}
+		s->outline_color = Color((byte)r,(byte)g,(byte)b,(byte)a);
+
+		return AG_SUCCESS;
+	}
+
+	int	StyleIO::ParseStroke(LineSymbolizer* s,xmlNodePtr pxmlN)
+	{
+		const char* name  = NULL;
+		const char* value = NULL;
+		xmlNodePtr nc = pxmlN->children;
+		int r=0,g=0,b=0,a=255;
+		while(nc!=NULL)
+		{
+			name  = (const char*)xmlGetProp(nc, BAD_CAST"name");
+			if(name!=NULL)
+			{
+				value = (const char*)xmlNodeGetContent(nc);
+				if(ag_stricmp(name, "stroke")==0)
+				{	
+					sscanf(value+1,"%2x%2x%2x",&r,&g,&b);
+				}
+				else if(ag_stricmp(name, "stroke-opacity")==0)
+				{
+					a = (int)(atof(value) * 255);
+				}
+				else if(ag_stricmp(name, "stroke-width")==0)
+				{
+					double width = atof(value);
+					s->outline_width = width;
+				}
+			}
+			nc = nc->next;
+		}
+		s->outline_color = Color((byte)r,(byte)g,(byte)b,(byte)a);
+
+		return AG_SUCCESS;
+	}
+
+	int	StyleIO::ParseFill(PolygonSymbolizer* s,xmlNodePtr pxmlN)
+	{
+		const char* name  = NULL;
+		const char* value = NULL;
+		xmlNodePtr nc = pxmlN->children;
+		int r=0,g=0,b=0,a=255;
+		while(nc!=NULL)
+		{	
+			name  = (const char*)xmlGetProp(nc, BAD_CAST"name");
+			if(name!=NULL)
+			{
+				value = (const char*)xmlNodeGetContent(nc);
+				if(ag_stricmp(name, "fill")==0)
+				{	
+					sscanf(value+1,"%2x%2x%2x",&r,&g,&b);
+				}
+				else if(ag_stricmp(name, "fill-opacity")==0)
+				{
+					a = (int)(atof(value) * 255);
+				}
+			}
+			nc = nc->next;
+		}
+		s->fill_color = Color((byte)r,(byte)g,(byte)b,(byte)a);
+		s->fill = true;
+		return AG_SUCCESS;
+	}
+
+	int	StyleIO::ParseStroke(PolygonSymbolizer* s,xmlNodePtr pxmlN)
+	{
+		
+		const char* name  = NULL;
+		const char* value = NULL;
+		xmlNodePtr nc = pxmlN->children;
+		int r=0,g=0,b=0,a=255;
+		while(nc!=NULL)
+		{	
+			name  = (const char*)xmlGetProp(nc, BAD_CAST"name");
+			if(name!=NULL)
+			{
+				value = (const char*)xmlNodeGetContent(nc);
+				if(ag_stricmp(name, "stroke")==0)
+				{	
+					sscanf(value+1,"%2x%2x%2x",&r,&g,&b);
+				}
+				else if(ag_stricmp(name, "stroke-opacity")==0)
+				{
+					a = (int)(atof(value) * 255);
+				}
+				else if(ag_stricmp(name, "stroke-width")==0)
+				{
+					double width = atof(value);
+					s->outline_width = width;
+				}
+			}
+			nc = nc->next;
+		}
+		s->outline_color = Color((byte)r,(byte)g,(byte)b,(byte)a);
+		s->outline = true;
+
+		return AG_SUCCESS;
+	}
+
+	int	StyleIO::ParseFill(TextSymbolizer* s,xmlNodePtr pxmlN)
+	{
+		const char* name  = NULL;
+		const char* value = NULL;
+		xmlNodePtr nc = pxmlN->children;
+		int r=0,g=0,b=0,a=255;
+		while(nc!=NULL)
+		{
+			name  = (const char*)xmlGetProp(nc, BAD_CAST"name");
+			if(name!=NULL)
+			{
+				value = (const char*)xmlNodeGetContent(nc);
+				if(ag_stricmp(name, "fill")==0)
+				{	
+					sscanf(value+1,"%2x%2x%2x",&r,&g,&b);
+				}
+				else if(ag_stricmp(name, "fill-opacity")==0)
+				{
+					a = (int)(atof(value) * 255);
+				}
+			}
+			
+			nc = nc->next;
+		}
+		s->color = Color((byte)r,(byte)g,(byte)b,(byte)a);
+		s->fill = true;
+
+		return AG_SUCCESS;
+	}
+
+	int	StyleIO::ParseStroke(TextSymbolizer* s,xmlNodePtr pxmlN)
+	{
+		s->outline = true;
+		const char* name  = NULL;
+		const char* value = NULL;
+		xmlNodePtr nc = pxmlN->children;
+		int r=0,g=0,b=0,a=255;
+		while(nc!=NULL)
+		{	
+			name  = (const char*)xmlGetProp(nc, BAD_CAST"name");
+			if(name!=NULL)
+			{
+				value = (const char*)xmlNodeGetContent(nc);
+				if(ag_stricmp(name, "stroke")==0)
+				{	
+					sscanf(value+1,"%2x%2x%2x",&r,&g,&b);
+				}
+				else if(ag_stricmp(name, "stroke-opacity")==0)
+				{
+					a = (int)(atof(value) * 255);
+				}
+				else if(ag_stricmp(name, "stroke-width")==0)
+				{
+					double width = atof(value);
+					s->outline_width = width;
+				}
+			}
+			nc = nc->next;
+		}
+		s->outline_color = Color((byte)r,(byte)g,(byte)b,(byte)a);
+
+		return AG_SUCCESS;
+	}
+
+	int	StyleIO::ParseFont(TextSymbolizer* s,xmlNodePtr pxmlN)
+	{
+		const char* name  = NULL;
+		const char* value = NULL;
+		xmlNodePtr nc = pxmlN->children;
+		int r=0,g=0,b=0,a=255;
+		while(nc!=NULL)
+		{	
+			name  = (const char*)xmlGetProp(nc, BAD_CAST"name");
+			if(name!=NULL)
+			{
+				value = (const char*)xmlNodeGetContent(nc);
+				if(ag_stricmp(name, "font-family")==0)
+				{	
+					s->font = value;
+				}
+				else if(ag_stricmp(name, "font-size")==0)
+				{
+					s->size = atoi(value);
+				}
+				else if(ag_stricmp(name, "font-style")==0)
+				{
+					s->slant = ParseFontStyle(value);
+				}
+				else if(ag_stricmp(name, "font-weight")==0)
+				{
+					s->weight = ParseFontWeight(value);
+				}
+			}
+			
+			nc = nc->next;
+		}
+		s->color = Color((byte)r,(byte)g,(byte)b,(byte)a);
+
+		return AG_SUCCESS;
+	}
+
+	int	StyleIO::ParseLabel(TextSymbolizer* s,xmlNodePtr pxmlN)
+	{
+		const char* name  = NULL;
+		const char* value = NULL;
+		xmlNodePtr nc = pxmlN->children;
+		if(nc!=NULL)
+		{
+			if(ag_stricmp((const char*)nc->name,"PropertyName")==0)
+			{
+				value = (char*)xmlNodeGetContent(nc);
+				if(value!=NULL)
+				{
+					s->field = value;
+				}
+			}
+		}
+		
+		return AG_SUCCESS;
+	}
+
+	xmlXPathObjectPtr StyleIO::XSearch(xmlChar* xpath,xmlDocPtr pxmlDoc, xmlNodePtr pxmlCurNode)
+	{
+		xmlXPathContextPtr	pxmlCtx = NULL;   
+		xmlXPathObjectPtr	pxmlXObject = NULL;
+		xmlNodeSetPtr		pxmlRules = NULL;
+		xmlNodePtr			pxmlRule = NULL;
+
+		Rule* r = NULL;
+
+		pxmlCtx= xmlXPathNewContext(pxmlDoc);
+		pxmlCtx->node = pxmlCurNode;
+		pxmlXObject = xmlXPathEvalExpression(xpath, pxmlCtx);
+		xmlXPathFreeContext(pxmlCtx);
+		return pxmlXObject;
 	}
 
 	int	StyleIO::Initialize()
@@ -486,5 +920,70 @@ namespace auge
 	void StyleIO::SetConnection(Workspace* pConnection)
 	{
 		m_pConnection = pConnection;
+	}
+
+	const char* StyleIO::EncodeFontStyle(FontStyle s)
+	{
+		const char* sz = "";
+		switch(s)
+		{
+		case augeFontStyleNormal:
+			sz = "normal";
+			break;
+		case augeFontStyleItalic:
+			sz = "italic";
+			break;
+		case augeFontStyleOblique:
+			sz = "oblique";
+			break;
+		}
+		return sz;
+	}
+
+	const char* StyleIO::EncodeFontWeight(FontWeight w)
+	{
+		const char* sz = "";
+		switch(w)
+		{
+		case augeFontWeightNormal:
+			sz = "normal";
+			break;
+		case augeFontWeightBold:
+			sz = "bold";
+			break;
+		}
+		return sz;
+	}
+
+	FontStyle StyleIO::ParseFontStyle(const char* s)
+	{
+		if(s==NULL)
+		{
+			return augeFontStyleNormal;
+		}
+
+		FontStyle ret = augeFontStyleNormal;
+		if(ag_stricmp(s,"Italic")==0)
+		{
+			ret = augeFontStyleItalic;
+		}
+		else if(ag_stricmp(s, "Oblique")==0)
+		{
+			ret = augeFontStyleOblique;
+		}
+		return ret;
+	}
+
+	FontWeight StyleIO::ParseFontWeight(const char* w)
+	{
+		if(w==NULL)
+		{
+			return augeFontWeightNormal;
+		}
+		if(ag_stricmp(w,"bold")==0)
+		{
+			return augeFontWeightBold;
+		}
+		return augeFontWeightNormal;
 	}
 }

@@ -43,7 +43,15 @@ namespace auge
 		{
 			return NULL;
 		}
-		return NULL;
+		Map* pMap = NULL;
+		pMap = GetMap2(szName);
+		if(pMap==NULL)
+		{
+			return NULL;
+		}
+		GetLayers(pMap);
+
+		return pMap;
 	}
 
 	uint MapManager::GetMapCount()
@@ -248,7 +256,7 @@ namespace auge
 		const char* fname = ft->GetName();
 
 		char sql[PATH_MAX] = {0};
-		sprintf(sql, "insert into ag_layer (name, table_name, mid, sid) values('%s','%s',%d,%d) returning id", lname, fname,mid,sid);
+		sprintf(sql, "insert into ag_layer (name, type,table_name, mid, sid) values('%s','feature','%s',%d,%d) returning id", lname, fname,mid,sid);
 
 		PGresult* pgResult = NULL;
 		pgResult = PQexec(m_pConnection->m_pgConnection, sql);
@@ -343,7 +351,7 @@ namespace auge
 		}
 		PQclear(pgResult);
 
-		const char* sql_layer = "create table ag_layer (id serial, name character varying(32), table_name character varying(32), mid integer, sid integer," \
+		const char* sql_layer = "create table ag_layer (id serial, name character varying(32), type character varying(16), table_name character varying(32), mid integer, sid integer," \
 								"CONSTRAINT mid_fk FOREIGN KEY(mid) REFERENCES ag_map  (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION," \
 								"CONSTRAINT sid_fk FOREIGN KEY(sid) REFERENCES ag_style(id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION)";
 //								"constraint mid_fk foreign key(mid) references ag_map  (id) match simple on update on action on delete on action," \
@@ -389,5 +397,111 @@ namespace auge
 			m->Release();
 		}
 		m_maps.clear();
+	}
+
+	/************************************************************************/
+	/* Map IO                                                               */
+	/************************************************************************/
+	Map* MapManager::GetMap2(const char* szName)
+	{
+		Map* pMap = NULL;
+		char sql[PATH_MAX];
+		sprintf(sql, "select id,name,owner from ag_map where name='%s'", szName);
+		PGresult* pgResult = NULL;
+		pgResult = PQexec(m_pConnection->m_pgConnection, sql);
+		if(PQresultStatus(pgResult)!=PGRES_TUPLES_OK)
+		{
+			PQclear(pgResult);
+			return false;
+		}
+		int n = PQntuples(pgResult);
+		if(n==0)
+		{
+			PQclear(pgResult);
+			return NULL;
+		}
+		
+		const char* id = PQgetvalue(pgResult, 0, 0);
+		const char* name = PQgetvalue(pgResult, 0, 1);
+		const char* owner = PQgetvalue(pgResult, 0, 2);
+
+		pMap = new Map();
+		pMap->SetID(atoi(id));
+		pMap->SetName(szName);
+
+		PQclear(pgResult);
+
+		return pMap;
+	}
+
+	int	MapManager::GetLayers(Map* pMap)
+	{
+		char sql[PATH_MAX];
+		sprintf(sql, "select id,name,type,table_name,sid from ag_layer where mid=%d", pMap->GetID());
+
+		PGresult* pgResult = NULL;
+		pgResult = PQexec(m_pConnection->m_pgConnection, sql);
+		if(PQresultStatus(pgResult)!=PGRES_TUPLES_OK)
+		{
+			PQclear(pgResult);
+			return AG_FAILURE;
+		}
+
+		//const char* id = NULL;
+		//const char* nm = NULL;
+		//const char* tp = NULL;
+		//const char* tn = NULL;
+		//const char* sid = NULL;
+		Layer* l = NULL;
+		int n = PQntuples(pgResult);
+		for(int i=0; i<n; i++)
+		{
+			const char* id = PQgetvalue(pgResult, i, 0);
+			const char* nm = PQgetvalue(pgResult, i, 1);
+			const char* tp = PQgetvalue(pgResult, i, 2);
+			const char* tn = PQgetvalue(pgResult, i, 3);
+			const char* sid= PQgetvalue(pgResult, i, 4);
+
+			if(strcmp(tp,"feature")==0)
+			{
+				l = ReadFeatureLayer(atoi(id),nm, tn, atoi(sid));
+			}
+
+			if(l!=NULL)
+			{
+				pMap->AddLayer(l);
+			}
+		}
+		return AG_SUCCESS;
+	}
+
+	FeatureLayer* MapManager::ReadFeatureLayer(int id, const char* name, const char* fname, int sid)
+	{
+		FeatureLayer* l = NULL;
+		FeatureType*  f = NULL;
+		Workspace* c = m_pConnection;
+		Style* s = NULL;
+		StyleIO* sio = StyleIO::GetInstance();
+
+		s = sio->Read(sid);
+		if(s==NULL)
+		{
+			return NULL;
+		}
+
+		f = c->OpenFeatureType(fname);
+		if(f==NULL)
+		{
+			s->Release();
+			return NULL;
+		}
+
+		l = new FeatureLayer();
+		l->SetID(id);
+		l->SetName(name);
+		l->SetFeatureType(f);
+		l->SetStyle(s);
+
+		return l;
 	}
 }

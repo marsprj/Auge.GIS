@@ -13,12 +13,24 @@ LineSymbolizer* CreateLineSymbolizer();
 PolygonSymbolizer* CreatePolygonSymbolizer();
 TextSymbolizer* CreateTextSymbolizer();
 
+void SaveMap();
+void DrawMap();
+
 int main()
 {	
+	SaveMap();
+	DrawMap();
+	
+	return 0;
+}
+
+void DrawMap()
+{
 	Map	*pMap = NULL;
 	MapManager* pManager = NULL;
 	StyleIO*	pStyleIO = NULL;
 	Workspace *pWorkspace = NULL;
+	const char* path = "g:\\temp\\map.png";
 	
 	int ret = AG_SUCCESS;
 	//const char* constr = "hostaddr=192.168.111.159 port=5432 dbname=gisdb user=postgres password=qwer1234";
@@ -29,7 +41,45 @@ int main()
 	if(ret!=AG_SUCCESS)
 	{
 		pWorkspace->Release();
-		return -1;
+	}
+
+	pStyleIO = StyleIO::GetInstance();
+	pStyleIO->SetConnection(pWorkspace);
+	pStyleIO->Initialize();
+
+	pManager = MapManager::GetInstance();
+	pManager->SetConnection(pWorkspace);
+	pManager->Initialize();
+	
+	pMap = pManager->GetMap("world");
+
+	Canvas canvas(pMap, 1600,1200);
+	canvas.Draw(pMap->GetExtent());
+	canvas.Save(path);
+	
+	pMap->Release();
+
+	pWorkspace->Close();
+	pWorkspace->Release();
+
+}
+
+void SaveMap()
+{
+	Map	*pMap = NULL;
+	MapManager* pManager = NULL;
+	StyleIO*	pStyleIO = NULL;
+	Workspace *pWorkspace = NULL;
+
+	int ret = AG_SUCCESS;
+	//const char* constr = "hostaddr=192.168.111.159 port=5432 dbname=gisdb user=postgres password=qwer1234";
+	const char* constr = "hostaddr=127.0.0.1 port=5432 dbname=gisdb user=postgres password=qwer1234";
+
+	pWorkspace = new Workspace();
+	ret = pWorkspace->Open(constr);
+	if(ret!=AG_SUCCESS)
+	{
+		pWorkspace->Release();
 	}
 
 	pMap = CreateMap(pWorkspace);
@@ -41,20 +91,19 @@ int main()
 	pManager = MapManager::GetInstance();
 	pManager->SetConnection(pWorkspace);
 	pManager->Initialize();
-	
+
 	pManager->RemoveMap(pMap->GetName());
 
 	if(!pManager->FindMap(pMap->GetName()))
 	{
 		pManager->AddMap(pMap);
 	}
-	
+
 	pMap->Release();
 
 	pWorkspace->Close();
 	pWorkspace->Release();
 
-	return 0;
 }
 
 Map* CreateMap(Workspace *pWorkspace)

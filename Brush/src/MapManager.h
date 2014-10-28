@@ -48,6 +48,10 @@ namespace auge
 		int					WriteLayer(FeatureLayer* pLayer);
 		int					RemoveLayers(int mapID);
 
+		Map*				GetMap2(const char* szName);
+		int					GetLayers(Map* pMap);
+		FeatureLayer*		ReadFeatureLayer(int id, const char* name, const char* fname, int sid);
+
 		bool				Initialized();
 		void				Cleanup();
 

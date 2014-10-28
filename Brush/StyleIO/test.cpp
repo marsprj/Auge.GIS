@@ -61,12 +61,13 @@ Style* CreateStylePoint()
 	pRule	= new Rule();
 	pSymbolzier = CreatePointSymbolizer();
 	pRule->SetSymbolizer(pSymbolzier);
+	pRule->SetTextSymbolizer(CreateTextSymbolizer());
 	pStyle->AddRule(pRule);
 
 	pRule	= new Rule();
 	pSymbolzier = CreateTextSymbolizer();
 	pRule->SetSymbolizer(pSymbolzier);
-	pRule->SetTextSymbolizer(CreateTextSymbolizer());
+	
 	pStyle->AddRule(pRule);
 
 	pRule	= new Rule();

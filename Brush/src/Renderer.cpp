@@ -178,6 +178,10 @@ namespace auge
 		if(pSymbolizer->fill)
 		{
 			Color& c = pSymbolizer->fill_color;
+			int r = c.GetRed();
+			int g = c.GetGreen();
+			int b = c.GetBlue();
+			int a = c.GetAlpha();
 			cairo_set_source_rgba(m_cairo,NORMAILZE(c.GetRed()), NORMAILZE(c.GetGreen()), NORMAILZE(c.GetBlue()), NORMAILZE(c.GetAlpha()));
 			pSymbolizer->outline ? cairo_fill_preserve(m_cairo) : cairo_fill(m_cairo);
 		}
@@ -213,6 +217,12 @@ namespace auge
 				cairo_line_to(m_cairo, sx, sy);
 			}
 		}
+		LineSymbolizer* s = pSymbolizer;
+		Color& c = s->outline_color;
+		cairo_set_source_rgba(m_cairo,NORMAILZE(c.GetRed()), NORMAILZE(c.GetGreen()), NORMAILZE(c.GetBlue()), NORMAILZE(c.GetAlpha()));			
+		cairo_set_line_cap(m_cairo, (cairo_line_cap_t)(s->outline_cap));
+		cairo_set_line_join(m_cairo, (cairo_line_join_t)(s->outline_join));
+		cairo_set_line_width(m_cairo, s->outline_width);
 		cairo_stroke(m_cairo);
 	}
 
@@ -300,6 +310,16 @@ namespace auge
 			}
 			pWKBLineString = (WKBLineString*)(pt);
 		}
+		LineSymbolizer* s = pSymbolizer;
+		Color& c = s->outline_color;
+		int r = c.GetRed();
+		int g = c.GetGreen();
+		int b = c.GetBlue();
+		int a = c.GetAlpha();
+		cairo_set_source_rgba(m_cairo,NORMAILZE(c.GetRed()), NORMAILZE(c.GetGreen()), NORMAILZE(c.GetBlue()), NORMAILZE(c.GetAlpha()));			
+		cairo_set_line_cap(m_cairo, (cairo_line_cap_t)(s->outline_cap));
+		cairo_set_line_join(m_cairo, (cairo_line_join_t)(s->outline_join));
+		cairo_set_line_width(m_cairo, s->outline_width);
 		cairo_stroke(m_cairo);
 	}
 
@@ -348,6 +368,10 @@ namespace auge
 		if(pSymbolizer->fill)
 		{
 			Color& c = pSymbolizer->fill_color;
+			int r = c.GetRed();
+			int g = c.GetGreen();
+			int b = c.GetBlue();
+			int a = c.GetAlpha();
 			cairo_set_source_rgba(m_cairo,NORMAILZE(c.GetRed()), NORMAILZE(c.GetGreen()), NORMAILZE(c.GetBlue()), NORMAILZE(c.GetAlpha()));
 			pSymbolizer->outline ? cairo_fill_preserve(m_cairo) : cairo_fill(m_cairo);
 		}
