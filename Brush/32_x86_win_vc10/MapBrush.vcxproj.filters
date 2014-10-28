@@ -102,10 +102,10 @@
     <ClInclude Include="..\src\Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\MapManager.h">
+    <ClInclude Include="..\src\StyleIO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\StyleIO.h">
+    <ClInclude Include="..\src\MapIO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -182,10 +182,10 @@
     <ClCompile Include="..\src\Filter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\MapManager.cpp">
+    <ClCompile Include="..\src\StyleIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\StyleIO.cpp">
+    <ClCompile Include="..\src\MapIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

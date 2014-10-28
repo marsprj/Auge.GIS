@@ -31,7 +31,7 @@ libmapbrush_la_SOURCES= Workspace.cpp \
 			Viewer.cpp \
 			Transformation.cpp \
 			Renderer.cpp \
-			MapManager.cpp \
+			MapIO.cpp \
 			StyleIO.cpp \
 			Util.cpp
 

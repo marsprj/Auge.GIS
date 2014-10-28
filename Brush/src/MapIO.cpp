@@ -1,4 +1,4 @@
-#include "MapManager.h"
+#include "MapIO.h"
 #include "Map.h"
 #include "FeatureLayer.h"
 #include "FeatureType.h"
@@ -10,19 +10,19 @@
 
 namespace auge
 {
-	MapManager* MapManager::m_pInstance = new MapManager();
-	MapManager* MapManager::GetInstance()
+	MapIO* MapIO::m_pInstance = new MapIO();
+	MapIO* MapIO::GetInstance()
 	{		
 		return m_pInstance;
 	}
 
-	MapManager::MapManager():
+	MapIO::MapIO():
 	m_pConnection(NULL)
 	{
 
 	}
 
-	MapManager::~MapManager()
+	MapIO::~MapIO()
 	{
 		Cleanup();
 		if(m_pInstance!=NULL)
@@ -32,12 +32,12 @@ namespace auge
 		}
 	}
 
-	std::vector<Map*>& MapManager::GetMaps()
+	std::vector<Map*>& MapIO::GetMaps()
 	{
 		return m_maps;
 	}
 
-	Map* MapManager::GetMap(const char* szName)
+	Map* MapIO::LoadMap(const char* szName)
 	{
 		if(szName==NULL)
 		{
@@ -49,12 +49,12 @@ namespace auge
 		{
 			return NULL;
 		}
-		GetLayers(pMap);
+		LoadLayers(pMap);
 
 		return pMap;
 	}
 
-	uint MapManager::GetMapCount()
+	uint MapIO::GetMapCount()
 	{
 		const char* sql_map = "select count(*) from ag_map";
 		PGresult* pgResult = NULL;
@@ -69,7 +69,7 @@ namespace auge
 		return n;
 	}
 
-	int	MapManager::AddMap(Map* pMap)
+	int	MapIO::SaveMap(Map* pMap)
 	{
 		if(pMap==NULL)
 		{
@@ -89,13 +89,13 @@ namespace auge
 		for(iter=layers.begin(); iter!=layers.end(); iter++)
 		{
 			pLayer = *iter;
-			AddLayer(pLayer);
+			SaveLayer(pLayer);
 		}
 		
 		return AG_SUCCESS;
 	}
 
-	int MapManager::CreateMap(Map* pMap)
+	int MapIO::CreateMap(Map* pMap)
 	{
 		if(pMap==NULL)
 		{
@@ -120,7 +120,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	bool MapManager::FindMap(const char* szName)
+	bool MapIO::HasMap(const char* szName)
 	{
 		if(szName==NULL)
 		{
@@ -141,7 +141,7 @@ namespace auge
 		return (n>0);
 	}
 
-	int MapManager::GetMapID(const char* szName)
+	int MapIO::GetMapID(const char* szName)
 	{
 		if(szName==NULL)
 		{
@@ -168,7 +168,7 @@ namespace auge
 		return n;
 	}
 
-	int	MapManager::RemoveMap(const char* szName)
+	int	MapIO::RemoveMap(const char* szName)
 	{
 		int mid = GetMapID(szName);
 		if(mid<0)
@@ -190,7 +190,50 @@ namespace auge
 		return AG_FAILURE;
 	}
 
-	int	MapManager::AddLayer(Layer* pLayer)
+	Layer* MapIO::LoadLayer(int mapID, const char* szLayerName)
+	{
+		if((mapID<0) || (szLayerName==NULL))
+		{
+			return NULL;
+		}
+
+		char sql[PATH_MAX];
+		sprintf(sql, "select id,name,type,table_name,sid from ag_layer where mid=%d and name='%s'", mapID, szLayerName);
+
+		PGresult* pgResult = NULL;
+		pgResult = PQexec(m_pConnection->m_pgConnection, sql);
+		if(PQresultStatus(pgResult)!=PGRES_TUPLES_OK)
+		{
+			PQclear(pgResult);
+			return NULL;
+		}
+
+		if(PQntuples(pgResult)==0)
+		{
+			PQclear(pgResult);
+			return NULL;
+		}
+		
+		const char* id = PQgetvalue(pgResult, 0, 0);
+		const char* nm = PQgetvalue(pgResult, 0, 1);
+		const char* tp = PQgetvalue(pgResult, 0, 2);
+		const char* tn = PQgetvalue(pgResult, 0, 3);
+		const char* sid= PQgetvalue(pgResult, 0, 4);
+
+		Layer* l = NULL;
+		if(strcmp(tp,"feature")==0)
+		{
+			l = LoadFeatureLayer(atoi(id),nm, tn, atoi(sid));
+		}
+
+		//if(l!=NULL)
+		//{
+		//	pMap->AddLayer(l);
+		//}
+		return l;
+	}
+
+	int	MapIO::SaveLayer(Layer* pLayer)
 	{
 		if(pLayer==NULL)
 		{
@@ -211,7 +254,7 @@ namespace auge
 		{
 		case augeLayerFeature:
 			{
-				ret = AddLayer(static_cast<FeatureLayer*>(pLayer));
+				ret = SaveLayer(static_cast<FeatureLayer*>(pLayer));
 			}
 			break;
 		case augeLayerRaster:
@@ -221,7 +264,7 @@ namespace auge
 		return ret;
 	}
 
-	int	MapManager::AddLayer(FeatureLayer* pLayer)
+	int	MapIO::SaveLayer(FeatureLayer* pLayer)
 	{
 		Style* pStyle = NULL;
 		pStyle = pLayer->GetStyle();
@@ -234,7 +277,7 @@ namespace auge
 		return WriteLayer(pLayer);
 	}
 
-	int	MapManager::WriteLayer(FeatureLayer* pLayer)
+	int	MapIO::WriteLayer(FeatureLayer* pLayer)
 	{
 		int ret = AG_FAILURE;
 		Map *pMap = pLayer->GetMap();
@@ -273,7 +316,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	int MapManager::RemoveLayer(Layer* pLayer)
+	int MapIO::RemoveLayer(Layer* pLayer)
 	{
 		if(pLayer==NULL)
 		{
@@ -287,7 +330,7 @@ namespace auge
 		return RemoveLayer(pMap->GetID(), pLayer->GetName());
 	}
 
-	int MapManager::RemoveLayer(int mapID, const char* szLayerName)
+	int MapIO::RemoveLayer(int mapID, const char* szLayerName)
 	{
 		if((mapID<0) || (szLayerName==NULL))
 		{
@@ -308,7 +351,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	int MapManager::RemoveLayer(const char* szMapName, const char* szLayerName)
+	int MapIO::RemoveLayer(const char* szMapName, const char* szLayerName)
 	{
 		if((szMapName==NULL) || (szLayerName==NULL))
 		{
@@ -318,7 +361,7 @@ namespace auge
 		return RemoveLayer(mid, szLayerName);
 	}
 
-	int MapManager::RemoveLayers(int mapID)
+	int MapIO::RemoveLayers(int mapID)
 	{
 		if(mapID<0)
 		{
@@ -339,7 +382,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	int	MapManager::Initialize()
+	int	MapIO::Initialize()
 	{
 		const char* sql_map = "create table ag_map (id serial, name character varying(32), owner character varying(32), constraint mid_uk unique(id), constraint mn_uk unique(name))";
 		PGresult* pgResult = NULL;
@@ -367,7 +410,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	bool MapManager::Initialized()
+	bool MapIO::Initialized()
 	{
 		const char* sql = "select oid from pg_class where realname='ag_map'";
 		PGresult* pgResult = NULL;
@@ -382,12 +425,12 @@ namespace auge
 		return (n>0);
 	}
 
-	void MapManager::SetConnection(Workspace* pConnection)
+	void MapIO::SetConnection(Workspace* pConnection)
 	{
 		m_pConnection = pConnection;
 	}
 
-	void MapManager::Cleanup()
+	void MapIO::Cleanup()
 	{
 		Map* m = NULL;
 		std::vector<Map*>::iterator iter;
@@ -402,7 +445,7 @@ namespace auge
 	/************************************************************************/
 	/* Map IO                                                               */
 	/************************************************************************/
-	Map* MapManager::GetMap2(const char* szName)
+	Map* MapIO::GetMap2(const char* szName)
 	{
 		Map* pMap = NULL;
 		char sql[PATH_MAX];
@@ -434,7 +477,7 @@ namespace auge
 		return pMap;
 	}
 
-	int	MapManager::GetLayers(Map* pMap)
+	int	MapIO::LoadLayers(Map* pMap)
 	{
 		char sql[PATH_MAX];
 		sprintf(sql, "select id,name,type,table_name,sid from ag_layer where mid=%d", pMap->GetID());
@@ -464,7 +507,7 @@ namespace auge
 
 			if(strcmp(tp,"feature")==0)
 			{
-				l = ReadFeatureLayer(atoi(id),nm, tn, atoi(sid));
+				l = LoadFeatureLayer(atoi(id),nm, tn, atoi(sid));
 			}
 
 			if(l!=NULL)
@@ -475,7 +518,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	FeatureLayer* MapManager::ReadFeatureLayer(int id, const char* name, const char* fname, int sid)
+	FeatureLayer* MapIO::LoadFeatureLayer(int id, const char* name, const char* fname, int sid)
 	{
 		FeatureLayer* l = NULL;
 		FeatureType*  f = NULL;

@@ -25,7 +25,7 @@
 #include "PointSymbolizer.h"
 #include "PolygonSymbolizer.h"
 #include "TextSymbolizer.h"
-#include "MapManager.h"
+#include "MapIO.h"
 #include "StyleIO.h"
 
 #include <libpq-fe.h>

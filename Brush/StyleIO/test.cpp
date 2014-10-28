@@ -13,7 +13,7 @@ TextSymbolizer* CreateTextSymbolizer();
 int main()
 {	
 	Map	*pMap = NULL;
-	MapManager* pManager = NULL;
+	MapIO* pMapIO = NULL;
 	StyleIO*	pStyleIO = NULL;
 	Style*		pStyle = NULL;
 	Workspace *pWorkspace = NULL;

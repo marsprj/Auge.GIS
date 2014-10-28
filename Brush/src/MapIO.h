@@ -11,46 +11,51 @@ namespace auge
 	class FeatureLayer;
 	class Workspace;
 
-	class AUGE_API MapManager
+	class AUGE_API MapIO
 	{	
 	public:
-		~MapManager();
+		~MapIO();
 
 	private:
-		MapManager();
+		MapIO();
 	public:
-		static MapManager*	GetInstance();
+		static MapIO*		GetInstance();
 	private:
-		static MapManager*	m_pInstance;
+		static MapIO*		m_pInstance;
 
 	public:
-		std::vector<Map*>&	GetMaps();
-		Map*				GetMap(const char* szName);
-		uint				GetMapCount();
-
-		int					AddMap(Map* pMap);
+		/* Map IO */
+		Map*				LoadMap(const char* szName);
+		int					SaveMap(Map* pMap);
 		int					RemoveMap(const char* szName);
-		bool				FindMap(const char* szName);
+
+		std::vector<Map*>&	GetMaps();		
+		uint				GetMapCount();
+		bool				HasMap(const char* szName);
 		int					GetMapID(const char* szName);
 
-		int					AddLayer(Layer* pLayer);
+		/* Layer IO */
+		Layer*				LoadLayer(int mapID, const char* szLayerName);
+		int					SaveLayer(Layer* pLayer);
 		int					RemoveLayer(Layer* pLayer);
 		int					RemoveLayer(int mapID, const char* szLayerName);
 		int					RemoveLayer(const char* szMapName, const char* szLayerName);
 
+	public:
 		int					Initialize();
 		void				SetConnection(Workspace* pConnection);
 
 	private:
 
 		int					CreateMap(Map* pMap);
-		int					AddLayer(FeatureLayer* pLayer);
-		int					WriteLayer(FeatureLayer* pLayer);
-		int					RemoveLayers(int mapID);
-
 		Map*				GetMap2(const char* szName);
-		int					GetLayers(Map* pMap);
-		FeatureLayer*		ReadFeatureLayer(int id, const char* name, const char* fname, int sid);
+
+		int					SaveLayer(FeatureLayer* pLayer);
+		int					WriteLayer(FeatureLayer* pLayer);
+		FeatureLayer*		LoadFeatureLayer(int id, const char* name, const char* fname, int sid);
+		
+		int					LoadLayers(Map* pMap);
+		int					RemoveLayers(int mapID);
 
 		bool				Initialized();
 		void				Cleanup();

@@ -27,7 +27,7 @@ int main()
 void DrawMap()
 {
 	Map	*pMap = NULL;
-	MapManager* pManager = NULL;
+	MapIO* pMapIO = NULL;
 	StyleIO*	pStyleIO = NULL;
 	Workspace *pWorkspace = NULL;
 	const char* path = "g:\\temp\\map.png";
@@ -47,11 +47,11 @@ void DrawMap()
 	pStyleIO->SetConnection(pWorkspace);
 	pStyleIO->Initialize();
 
-	pManager = MapManager::GetInstance();
-	pManager->SetConnection(pWorkspace);
-	pManager->Initialize();
+	pMapIO = MapIO::GetInstance();
+	pMapIO->SetConnection(pWorkspace);
+	pMapIO->Initialize();
 	
-	pMap = pManager->GetMap("world");
+	pMap = pMapIO->LoadMap("world");
 
 	Canvas canvas(pMap, 1600,1200);
 	canvas.Draw(pMap->GetExtent());
@@ -67,7 +67,7 @@ void DrawMap()
 void SaveMap()
 {
 	Map	*pMap = NULL;
-	MapManager* pManager = NULL;
+	MapIO* pManager = NULL;
 	StyleIO*	pStyleIO = NULL;
 	Workspace *pWorkspace = NULL;
 
@@ -88,15 +88,15 @@ void SaveMap()
 	pStyleIO->SetConnection(pWorkspace);
 	pStyleIO->Initialize();
 
-	pManager = MapManager::GetInstance();
+	pManager = MapIO::GetInstance();
 	pManager->SetConnection(pWorkspace);
 	pManager->Initialize();
 
 	pManager->RemoveMap(pMap->GetName());
 
-	if(!pManager->FindMap(pMap->GetName()))
+	if(!pManager->HasMap(pMap->GetName()))
 	{
-		pManager->AddMap(pMap);
+		pManager->SaveMap(pMap);
 	}
 
 	pMap->Release();
