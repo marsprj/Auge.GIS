@@ -4,7 +4,7 @@ using namespace auge;
 
 void showFeatures(FeatureType* pFeatureType);
 
-Map* CreateMap(Workspace *pWorkspace);
+Map* CreateMap(Connection *pConnection);
 Style* CreateStylePoint();
 Style* CreateStyleLine();
 Style* CreateStylePolygon();
@@ -29,26 +29,26 @@ void DrawMap()
 	Map	*pMap = NULL;
 	MapIO* pMapIO = NULL;
 	StyleIO*	pStyleIO = NULL;
-	Workspace *pWorkspace = NULL;
+	Connection *pConnection = NULL;
 	const char* path = "g:\\temp\\map.png";
 	
 	int ret = AG_SUCCESS;
 	//const char* constr = "hostaddr=192.168.111.159 port=5432 dbname=gisdb user=postgres password=qwer1234";
 	const char* constr = "hostaddr=127.0.0.1 port=5432 dbname=gisdb user=postgres password=qwer1234";
 
-	pWorkspace = new Workspace();
-	ret = pWorkspace->Open(constr);
+	pConnection = new Connection();
+	ret = pConnection->Open(constr);
 	if(ret!=AG_SUCCESS)
 	{
-		pWorkspace->Release();
+		pConnection->Release();
 	}
 
 	pStyleIO = StyleIO::GetInstance();
-	pStyleIO->SetConnection(pWorkspace);
+	pStyleIO->SetConnection(pConnection);
 	pStyleIO->Initialize();
 
 	pMapIO = MapIO::GetInstance();
-	pMapIO->SetConnection(pWorkspace);
+	pMapIO->SetConnection(pConnection);
 	pMapIO->Initialize();
 	
 	pMap = pMapIO->LoadMap("world");
@@ -59,8 +59,8 @@ void DrawMap()
 	
 	pMap->Release();
 
-	pWorkspace->Close();
-	pWorkspace->Release();
+	pConnection->Close();
+	pConnection->Release();
 
 }
 
@@ -69,27 +69,27 @@ void SaveMap()
 	Map	*pMap = NULL;
 	MapIO* pManager = NULL;
 	StyleIO*	pStyleIO = NULL;
-	Workspace *pWorkspace = NULL;
+	Connection *pConnection = NULL;
 
 	int ret = AG_SUCCESS;
 	//const char* constr = "hostaddr=192.168.111.159 port=5432 dbname=gisdb user=postgres password=qwer1234";
 	const char* constr = "hostaddr=127.0.0.1 port=5432 dbname=gisdb user=postgres password=qwer1234";
 
-	pWorkspace = new Workspace();
-	ret = pWorkspace->Open(constr);
+	pConnection = new Connection();
+	ret = pConnection->Open(constr);
 	if(ret!=AG_SUCCESS)
 	{
-		pWorkspace->Release();
+		pConnection->Release();
 	}
 
-	pMap = CreateMap(pWorkspace);
+	pMap = CreateMap(pConnection);
 
 	pStyleIO = StyleIO::GetInstance();
-	pStyleIO->SetConnection(pWorkspace);
+	pStyleIO->SetConnection(pConnection);
 	pStyleIO->Initialize();
 
 	pManager = MapIO::GetInstance();
-	pManager->SetConnection(pWorkspace);
+	pManager->SetConnection(pConnection);
 	pManager->Initialize();
 
 	pManager->RemoveMap(pMap->GetName());
@@ -101,12 +101,12 @@ void SaveMap()
 
 	pMap->Release();
 
-	pWorkspace->Close();
-	pWorkspace->Release();
+	pConnection->Close();
+	pConnection->Release();
 
 }
 
-Map* CreateMap(Workspace *pWorkspace)
+Map* CreateMap(Connection *pConnection)
 {
 	Map				*pMap = NULL;
 	FeatureLayer	*pLayer = NULL;
@@ -118,7 +118,7 @@ Map* CreateMap(Workspace *pWorkspace)
 	pMap->SetName("world");
 
 	typeName = "cities";
-	pType = pWorkspace->OpenFeatureType(typeName);
+	pType = pConnection->OpenFeatureType(typeName);
 	//showFeatures(pType);
 	//pType->GetFields();
 	pLayer = new FeatureLayer();
@@ -129,7 +129,7 @@ Map* CreateMap(Workspace *pWorkspace)
 	pMap->AddLayer(pLayer);
 
 	typeName = "rivers";
-	pType = pWorkspace->OpenFeatureType(typeName);
+	pType = pConnection->OpenFeatureType(typeName);
 	//showFeatures(pType);
 	//pType->GetFields();
 	pLayer = new FeatureLayer();
@@ -140,7 +140,7 @@ Map* CreateMap(Workspace *pWorkspace)
 	pMap->AddLayer(pLayer);
 
 	typeName = "country";
-	pType = pWorkspace->OpenFeatureType(typeName);
+	pType = pConnection->OpenFeatureType(typeName);
 	//showFeatures(pType);
 	//pType->GetFields();
 	pLayer = new FeatureLayer();

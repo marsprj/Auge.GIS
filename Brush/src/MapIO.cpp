@@ -425,7 +425,7 @@ namespace auge
 		return (n>0);
 	}
 
-	void MapIO::SetConnection(Workspace* pConnection)
+	void MapIO::SetConnection(Connection* pConnection)
 	{
 		m_pConnection = pConnection;
 	}
@@ -522,7 +522,7 @@ namespace auge
 	{
 		FeatureLayer* l = NULL;
 		FeatureType*  f = NULL;
-		Workspace* c = m_pConnection;
+		Connection* c = m_pConnection;
 		Style* s = NULL;
 		StyleIO* sio = StyleIO::GetInstance();
 

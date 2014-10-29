@@ -18,7 +18,7 @@ namespace auge
 	class LineSymbolizer;
 	class PolygonSymbolizer;
 	class TextSymbolizer;
-	class Workspace;
+	class Connection;
 
 	class AUGE_API StyleIO
 	{	
@@ -44,7 +44,7 @@ namespace auge
 
 	public:
 		int					Initialize();
-		void				SetConnection(Workspace* pConnection);
+		void				SetConnection(Connection* pConnection);
 
 	private:
 		void				BuildSymbolizer(Symbolizer* pSymbolizer, xmlNodePtr pxmlRule, xmlNsPtr pnsSLD, xmlNsPtr pnsOGC);
@@ -78,7 +78,7 @@ namespace auge
 		void				Cleanup();
 
 	private:
-		Workspace* m_pConnection;
+		Connection* m_pConnection;
 	};
 }
 

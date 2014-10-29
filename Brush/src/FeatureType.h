@@ -11,14 +11,14 @@
 namespace auge
 {
 	class Field;
-	class Workspace;
+	class Connection;
 	class FeatureSet;
 
 	class AUGE_API FeatureType : public Base
 	{
 		
 	public:
-		FeatureType(Workspace* pWorkspace);
+		FeatureType(Connection* pWorkspace);
 		virtual ~FeatureType();
 		
 	public:
@@ -54,7 +54,7 @@ namespace auge
 		int			 m_srid;
 		GeometryType m_geom_type;
 		Envelope	 m_extent;
-		Workspace*	 m_pWorkspace;
+		Connection*	 m_pWorkspace;
 
 		std::vector<Field*>	m_fields;
 	};

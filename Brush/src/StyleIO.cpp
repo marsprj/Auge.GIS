@@ -917,7 +917,7 @@ namespace auge
 		return (n>0);
 	}
 
-	void StyleIO::SetConnection(Workspace* pConnection)
+	void StyleIO::SetConnection(Connection* pConnection)
 	{
 		m_pConnection = pConnection;
 	}

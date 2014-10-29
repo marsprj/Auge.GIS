@@ -93,7 +93,7 @@ typedef unsigned long long      uint64;
 
 namespace auge
 {
-	class AUGE_API Base
+	class Base
 	{
 	public:
 		Base()

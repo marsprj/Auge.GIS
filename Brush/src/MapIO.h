@@ -9,7 +9,7 @@ namespace auge
 	class Map;
 	class Layer;
 	class FeatureLayer;
-	class Workspace;
+	class Connection;
 
 	class AUGE_API MapIO
 	{	
@@ -43,7 +43,7 @@ namespace auge
 
 	public:
 		int					Initialize();
-		void				SetConnection(Workspace* pConnection);
+		void				SetConnection(Connection* pConnection);
 
 	private:
 
@@ -63,7 +63,7 @@ namespace auge
 	private:
 		std::vector<Map*>	m_maps;
 
-		Workspace* m_pConnection;
+		Connection* m_pConnection;
 
 	};
 }

@@ -7,7 +7,7 @@
 namespace auge
 {
 
-	FeatureType::FeatureType(Workspace* pWorkspace):
+	FeatureType::FeatureType(Connection* pWorkspace):
 	m_pWorkspace(pWorkspace)
 	{
 

@@ -15,6 +15,7 @@
     <ClInclude Include="..\src\Canvas.h" />
     <ClInclude Include="..\src\Color.h" />
     <ClInclude Include="..\src\Connection.h" />
+    <ClInclude Include="..\src\DataSourceManager.h" />
     <ClInclude Include="..\src\Enum.h" />
     <ClInclude Include="..\src\Envelope.h" />
     <ClInclude Include="..\src\Feature.h" />
@@ -41,11 +42,11 @@
     <ClInclude Include="..\src\Transformation.h" />
     <ClInclude Include="..\src\Util.h" />
     <ClInclude Include="..\src\Viewer.h" />
-    <ClInclude Include="..\src\Workspace.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Canvas.cpp" />
     <ClCompile Include="..\src\Connection.cpp" />
+    <ClCompile Include="..\src\DataSourceManager.cpp" />
     <ClCompile Include="..\src\Envelope.cpp" />
     <ClCompile Include="..\src\Feature.cpp" />
     <ClCompile Include="..\src\FeatureLayer.cpp" />
@@ -69,7 +70,6 @@
     <ClCompile Include="..\src\Transformation.cpp" />
     <ClCompile Include="..\src\Util.cpp" />
     <ClCompile Include="..\src\Viewer.cpp" />
-    <ClCompile Include="..\src\Workspace.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FFF2A03F-3B6F-45AC-AD05-120C6422F5C5}</ProjectGuid>

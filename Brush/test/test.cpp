@@ -4,7 +4,7 @@ using namespace auge;
 
 void showFeatures(FeatureType* pFeatureType);
 
-Map* CreateMap(Workspace *pWorkspace);
+Map* CreateMap(Connection *pConnection);
 Style* CreateStylePoint();
 Style* CreateStyleLine();
 Style* CreateStylePolygon();
@@ -16,7 +16,7 @@ TextSymbolizer* CreateTextSymbolizer();
 int main()
 {	
 	Map	*pMap = NULL;
-	Workspace *pWorkspace = NULL;
+	Connection *pConnection = NULL;
 	
 	const char* path = "g:\\temp\\map.png";
 
@@ -24,15 +24,15 @@ int main()
 	//const char* constr = "hostaddr=192.168.111.159 port=5432 dbname=gisdb user=postgres password=qwer1234";
 	const char* constr = "hostaddr=127.0.0.1 port=5432 dbname=gisdb user=postgres password=qwer1234";
 
-	pWorkspace = new Workspace();
-	ret = pWorkspace->Open(constr);
+	pConnection = new Connection();
+	ret = pConnection->Open(constr);
 	if(ret!=AG_SUCCESS)
 	{
-		pWorkspace->Release();
+		pConnection->Release();
 		return -1;
 	}
 
-	pMap = CreateMap(pWorkspace);
+	pMap = CreateMap(pConnection);
 
 	Canvas canvas(pMap, 1600,1200);
 	canvas.Draw(pMap->GetExtent());
@@ -40,13 +40,13 @@ int main()
 
 	pMap->Release();
 
-	pWorkspace->Close();
-	pWorkspace->Release();
+	pConnection->Close();
+	pConnection->Release();
 
 	return 0;
 }
 
-Map* CreateMap(Workspace *pWorkspace)
+Map* CreateMap(Connection *pConnection)
 {
 	Map				*pMap = NULL;
 	FeatureLayer	*pLayer = NULL;
@@ -58,7 +58,7 @@ Map* CreateMap(Workspace *pWorkspace)
 	pMap->SetName("world");
 
 	typeName = "cities";
-	pType = pWorkspace->OpenFeatureType(typeName);
+	pType = pConnection->OpenFeatureType(typeName);
 	//showFeatures(pType);
 	//pType->GetFields();
 	pLayer = new FeatureLayer();
@@ -69,7 +69,7 @@ Map* CreateMap(Workspace *pWorkspace)
 	pMap->AddLayer(pLayer);
 
 	typeName = "rivers";
-	pType = pWorkspace->OpenFeatureType(typeName);
+	pType = pConnection->OpenFeatureType(typeName);
 	//showFeatures(pType);
 	//pType->GetFields();
 	pLayer = new FeatureLayer();
@@ -80,7 +80,7 @@ Map* CreateMap(Workspace *pWorkspace)
 	pMap->AddLayer(pLayer);
 
 	typeName = "country";
-	pType = pWorkspace->OpenFeatureType(typeName);
+	pType = pConnection->OpenFeatureType(typeName);
 	//showFeatures(pType);
 	//pType->GetFields();
 	pLayer = new FeatureLayer();

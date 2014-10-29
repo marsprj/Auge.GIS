@@ -16,22 +16,22 @@ int main()
 	MapIO* pMapIO = NULL;
 	StyleIO*	pStyleIO = NULL;
 	Style*		pStyle = NULL;
-	Workspace *pWorkspace = NULL;
+	Connection *pConnection = NULL;
 
 	int ret = AG_SUCCESS;
 	//const char* constr = "hostaddr=192.168.111.159 port=5432 dbname=gisdb user=postgres password=qwer1234";
 	const char* constr = "hostaddr=127.0.0.1 port=5432 dbname=gisdb user=postgres password=qwer1234";
 
-	pWorkspace = new Workspace();
-	ret = pWorkspace->Open(constr);
+	pConnection = new Connection();
+	ret = pConnection->Open(constr);
 	if(ret!=AG_SUCCESS)
 	{
-		pWorkspace->Release();
+		pConnection->Release();
 		return -1;
 	}
 
 	pStyleIO = StyleIO::GetInstance();
-	pStyleIO->SetConnection(pWorkspace);
+	pStyleIO->SetConnection(pConnection);
 	pStyleIO->Initialize();
 
 	const char* name = "cities";
@@ -46,8 +46,8 @@ int main()
 	pStyle = pStyleIO->Read(name);
 	pStyle->Release();
 
-	pWorkspace->Close();
-	pWorkspace->Release();
+	pConnection->Close();
+	pConnection->Release();
 
 	return 0;
 }
