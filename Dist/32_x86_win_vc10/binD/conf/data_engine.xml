@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<Engines><Engine description="PostgreSQL Data Engine" path="" id="Postgres"/><Engine description="Shape file Data Engine" path="" id="Shape"/></Engines>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<StyledLayerDescriptor version="1.0.0" 
+  xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd" 
+  xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <NamedLayer>
+    <Name>Bank</Name>
+    <UserStyle>
+      <Name>Bank Styler</Name>
+      <FeatureTypeStyle>
+           <Rule>
+            <ogc:Filter >
+                <ogc:PropertyIsEqualTo >
+                   <ogc:PropertyName >TYPE</ogc:PropertyName>
+                   <ogc:Literal >B1</ogc:Literal>                        <!-- B1 -->
+                 </ogc:PropertyIsEqualTo>
+             </ogc:Filter>
+          <PointSymbolizer> <!-- ÕâÀïÊÇ¶¨ÒåµãµÄÑùÊ½ -->
+            <Graphic>
+              <ExternalGraphic>
+                <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080/boomgis/images/china_Bank.png"/>
+                <Format>image/png</Format>
+              </ExternalGraphic>
+              <Size><ogc:Literal>20</ogc:Literal></Size>
+            </Graphic>
+          </PointSymbolizer>
+        </Rule>
+          <Rule>
+            <ogc:Filter >
+                <ogc:PropertyIsEqualTo >
+                   <ogc:PropertyName >TYPE</ogc:PropertyName>
+                   <ogc:Literal >B2</ogc:Literal>                        <!-- B2 -->
+                 </ogc:PropertyIsEqualTo>
+             </ogc:Filter>
+          <PointSymbolizer> <!-- ÕâÀïÊÇ¶¨ÒåµãµÄÑùÊ½ -->
+            <Graphic>
+              <ExternalGraphic>    
+                <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080/boomgis/images/ICBC.png"/>
+                <Format>image/png</Format>
+              </ExternalGraphic>
+              <Size><ogc:Literal>20</ogc:Literal></Size>
+            </Graphic>
+          </PointSymbolizer>
+        </Rule>
+       <Rule>
+         <ogc:Filter >
+                <ogc:PropertyIsEqualTo >
+                   <ogc:PropertyName >TYPE</ogc:PropertyName>
+                   <ogc:Literal >B3</ogc:Literal>                        <!-- B3 -->
+                 </ogc:PropertyIsEqualTo>
+             </ogc:Filter>
+          <PointSymbolizer> <!-- ÕâÀïÊÇ¶¨ÒåµãµÄÑùÊ½ -->
+            <Graphic>
+              <ExternalGraphic>    
+                <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080/boomgis/images/construction_Bank.png"/>
+                <Format>image/png</Format>
+              </ExternalGraphic>
+              <Size><ogc:Literal>20</ogc:Literal></Size>
+            </Graphic>
+          </PointSymbolizer>
+        </Rule>
+        <Rule>
+         <ogc:Filter >
+                <ogc:PropertyIsEqualTo >
+                   <ogc:PropertyName >TYPE</ogc:PropertyName>
+                   <ogc:Literal >B4</ogc:Literal>                        <!-- B4 -->
+                 </ogc:PropertyIsEqualTo>
+             </ogc:Filter>
+          <PointSymbolizer> <!-- ÕâÀïÊÇ¶¨ÒåµãµÄÑùÊ½ -->
+            <Graphic>
+              <ExternalGraphic>    
+                <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080/boomgis/images/commercial_Bank.png"/>
+                <Format>image/png</Format>
+              </ExternalGraphic>
+              <Size><ogc:Literal>20</ogc:Literal></Size>
+            </Graphic>
+          </PointSymbolizer>
+        </Rule>
+         <Rule>
+         <ogc:Filter >
+                <ogc:PropertyIsEqualTo >
+                   <ogc:PropertyName >TYPE</ogc:PropertyName>
+                   <ogc:Literal >B5</ogc:Literal>                        <!-- B5 -->
+                 </ogc:PropertyIsEqualTo>
+             </ogc:Filter>
+          <PointSymbolizer> <!-- ÕâÀïÊÇ¶¨ÒåµãµÄÑùÊ½ -->
+            <Graphic>
+              <ExternalGraphic>    
+                <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080/boomgis/images/agriculture_Bank.png"/>
+                <Format>image/png</Format>
+              </ExternalGraphic>
+              <Size><ogc:Literal>20</ogc:Literal></Size>
+            </Graphic>
+          </PointSymbolizer>
+        </Rule>
+         <Rule>
+         <ogc:Filter >
+                <ogc:PropertyIsEqualTo >
+                   <ogc:PropertyName >TYPE</ogc:PropertyName>
+                   <ogc:Literal >B6</ogc:Literal>                        <!-- B6 -->
+                 </ogc:PropertyIsEqualTo>
+             </ogc:Filter>
+          <PointSymbolizer> <!-- ÕâÀïÊÇ¶¨ÒåµãµÄÑùÊ½ -->
+            <Graphic>
+              <ExternalGraphic>    
+                <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080/boomgis/images/post_Bank.png"/>
+                <Format>image/png</Format>
+              </ExternalGraphic>
+              <Size><ogc:Literal>20</ogc:Literal></Size>
+            </Graphic>
+          </PointSymbolizer>
+        </Rule>
+         <Rule>
+         <ogc:Filter >
+                <ogc:PropertyIsEqualTo >
+                   <ogc:PropertyName >TYPE</ogc:PropertyName>
+                   <ogc:Literal >B7</ogc:Literal>                        <!-- B7 -->
+                 </ogc:PropertyIsEqualTo>
+             </ogc:Filter>
+          <PointSymbolizer> <!-- ÕâÀïÊÇ¶¨ÒåµãµÄÑùÊ½ -->
+            <Graphic>
+              <ExternalGraphic>    
+                <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080/boomgis/images/traffic_Bank.png"/>
+                <Format>image/png</Format>
+              </ExternalGraphic>
+              <Size><ogc:Literal>20</ogc:Literal></Size>
+            </Graphic>
+          </PointSymbolizer>
+        </Rule>
+   <Rule>
+      <TextSymbolizer>
+        <Label>
+      <ogc:PropertyName>NAME</ogc:PropertyName>
+        </Label>
+        <Font>                                    <!-- ×ÖÌå×å¡¢ÑùÊ½¡¢´óÐ¡¡¢ÏßÌõ¿í¶È --> 
+      <CssParameter name="font-family">Fixedsys</CssParameter>
+      <CssParameter name="font-style">Normal</CssParameter>
+      <CssParameter name="font-size">10</CssParameter>
+      <CssParameter name="font-weight">normal</CssParameter>
+        </Font>
+                 <!-- ÉèÖÃÏÔÊ¾×ÖÌåµÄÏÔÊ¾Ãªµã¡¢Î»ÖÃ¡¢Ðý×ª --> 
+        <LabelPlacement>
+              <PointPlacement>
+                   <AnchorPoint>
+                        <AnchorPointX>
+                            <ogc:Literal>0</ogc:Literal>
+                         </AnchorPointX>
+                         <AnchorPointY>
+                           <ogc:Literal>0</ogc:Literal>
+                        </AnchorPointY>
+                        </AnchorPoint>
+                        <Displacement>
+                        <DisplacementX>
+                          <ogc:Literal>10</ogc:Literal>
+                     </DisplacementX>
+                      <DisplacementY>
+                          <ogc:Literal>-5</ogc:Literal>
+                     </DisplacementY>
+                    </Displacement>
+                   <Rotation>
+                      <ogc:Literal>0.0</ogc:Literal>
+                  </Rotation>
+             </PointPlacement>
+         </LabelPlacement>
+        <Halo>
+          <Radius>                        <!-- ¹â»·ÒõÓ°µÄ´óÐ¡ --> 
+            <ogc:Literal>0.5</ogc:Literal>
+          </Radius>
+          <Fill>                          <!-- ×ÖÌå¹â»·µÄÑÕÉ«ºÍÍ¸Ã÷¶È --> 
+            <CssParameter name="fill">#FFFFFF</CssParameter>
+            <CssParameter name="fill-opacity">1</CssParameter>
+          </Fill> 
+        </Halo>
+        <Fill>                           <!-- ×ÖÌåÑÕÉ«--> 
+      <CssParameter name="fill">#000000</CssParameter>
+      <CssParameter name="fill-opacity">1</CssParameter>
+        </Fill>
+  </TextSymbolizer>
+    </Rule>
+      </FeatureTypeStyle>
+    </UserStyle>
+
+    </NamedLayer>
+
+</StyledLayerDescriptor>

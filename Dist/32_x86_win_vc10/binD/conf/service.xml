@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Config>
+	<Store>
+		<Engine>Postgres</Engine>
+		<URI>SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234</URI>
+	</Store>
+</Config>

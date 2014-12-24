@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="GBK"?>
+<Auge>
+	<Configuration>
+		<Server>127.0.0.1</Server>
+		<Instance>5432</Instance>
+		<Database>auge</Database>
+		<User>auge</User>
+		<Password>auge</Password>
+		<Engine>AgPostgres</Engine>
+	</Configuration>
+	<DataEngine>
+		<Engine id="AgPostgres" path="E:\Research\Auge\Dist\32_x86_win_vc6\binD"/>
+		<Engine id="AgArcSDE" path="E:\Research\Auge\Dist\32_x86_win_vc6\binD"/>
+		<Engine id="AgOracle" path="E:\Research\Auge\Dist\32_x86_win_vc6\binD"/>
+		<Engine id="AgShape" path="E:\Research\Auge\Dist\32_x86_win_vc6\binD"/>
+		<Engine id="AgDbRemote" path="E:\Research\Auge\Dist\32_x86_win_vc6\binD"/>
+		<!--<Driver id="AgRaster" type="raster" formats="png"/>-->
+	</DataEngine>
+	<DataSources>
+		<Repository>
+			<Server>127.0.0.1</Server>
+			<Instance>5432</Instance>
+			<Database>auge</Database>
+			<User>auge</User>
+			<Password>auge</Password>
+			<Engine>auge</Engine>
+		</Repository>
+	</DataSources>
+</Auge>
