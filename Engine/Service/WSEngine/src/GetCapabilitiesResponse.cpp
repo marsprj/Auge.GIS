@@ -132,17 +132,19 @@ namespace auge
 		XElement	*pxServices = NULL;
 		XElement	*pxService  = NULL;
 		pxServices = pxRoot->AddChild("Services", NULL);
-		
-		pServices = pServiceManager->GetServices();
-		pServices->Reset();
-		pServices->Release();
+		 
+		//pServices = pServiceManager->GetServices();
+		//pServices->Reset();
+		//pServices->Release();
 		pServices = pServiceManager->GetServices();
 		pServices->Reset();
 
+		const char* name = NULL;
 		while((pService=pServices->Next())!=NULL)
 		{
+			name = pService->GetName();
 			pxService = pxServices->AddChild("Service", NULL);
-			pxService->SetAttribute("name", pService->GetName(), NULL);
+			pxService->SetAttribute("name", name, NULL);
 		}
 		pServices->Release();
 		

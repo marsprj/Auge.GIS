@@ -181,7 +181,7 @@ namespace auge
 		char capa_path[AUGE_PATH_MAX];
 		auge_make_path(capa_path, NULL, cache_path, "wms_capabilities_1_3_0","xml");
 		
-		if(access(capa_path,4))
+		//if(access(capa_path,4))
 		{
 			WriteCapabilities(pRequest->GetVersion(), pWebContext, pMap);
 		}

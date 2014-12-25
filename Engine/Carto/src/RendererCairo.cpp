@@ -98,22 +98,52 @@ namespace auge
 		switch(WKBTYPE(wkb))
 		{
 		case wkbPoint:
-			DrawPoint((WKBPoint*)wkb, (PointSymbolizer*)pSymbolizer, pTransformation);
+			{
+				if(pSymbolizer->GetType()==augeSymbolPoint)
+				{
+					DrawPoint((WKBPoint*)wkb, (PointSymbolizer*)pSymbolizer, pTransformation);
+				}
+			}
 			break;
 		case wkbMultiPoint:
-			DrawPoint((WKBMultiPoint*)wkb, (PointSymbolizer*)pSymbolizer, pTransformation);
+			{
+				if(pSymbolizer->GetType()==augeSymbolPoint)
+				{
+					DrawPoint((WKBMultiPoint*)wkb, (PointSymbolizer*)pSymbolizer, pTransformation);
+				}
+			}
 			break;
 		case wkbLineString:
-			DrawLine((WKBLineString*)wkb, (LineSymbolizer*)pSymbolizer, pTransformation);
+			{
+				if(pSymbolizer->GetType()==augeSymbolLine)
+				{
+					DrawLine((WKBLineString*)wkb, (LineSymbolizer*)pSymbolizer, pTransformation);
+				}
+			}
 			break;
 		case wkbMultiLineString:
-			DrawLine((WKBMultiLineString*)wkb, (LineSymbolizer*)pSymbolizer, pTransformation);
+			{
+				if(pSymbolizer->GetType()==augeSymbolLine)
+				{
+					DrawLine((WKBMultiLineString*)wkb, (LineSymbolizer*)pSymbolizer, pTransformation);
+				}
+			}
 			break;
 		case wkbPolygon:
-			DrawPolygon((WKBPolygon*)wkb, (PolygonSymbolizer*)pSymbolizer, pTransformation);
+			{
+				if(pSymbolizer->GetType()==augeSymbolPolygon)
+				{
+					DrawPolygon((WKBPolygon*)wkb, (PolygonSymbolizer*)pSymbolizer, pTransformation);
+				}
+			}
 			break;
 		case wkbMultiPolygon:
-			DrawPolygon((WKBMultiPolygon*)wkb, (PolygonSymbolizer*)pSymbolizer, pTransformation);
+			{
+				if(pSymbolizer->GetType()==augeSymbolPolygon)
+				{
+					DrawPolygon((WKBMultiPolygon*)wkb, (PolygonSymbolizer*)pSymbolizer, pTransformation);
+				}
+			}
 			break;
 		}
 	}
