@@ -114,6 +114,11 @@ namespace auge
 		return NULL;
 	}
 
+	WebResponse* WebMapEngine::Execute(WebRequest* pWebRequest)
+	{
+		return NULL;
+	}
+
 	WebResponse* WebMapEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
 	{
 		WebResponse		*pWebResponse = NULL;

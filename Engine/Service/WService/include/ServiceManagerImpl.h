@@ -15,11 +15,14 @@ namespace auge
 	public:
 		virtual g_uint			GetCount();
 		virtual Service*		GetService(const char* szName);
+		virtual EnumService*	GetServices();
 
 		virtual RESULTCODE		Register(const char* szName);
 		virtual RESULTCODE		Unregister(const char* szName);
 
 		virtual RESULTCODE		RegisterMap(g_uint s_id, g_uint m_id);
+
+		virtual RESULTCODE		Unload();
 
 	public:
 		virtual RESULTCODE		Initialize(GConnection* pConnection);

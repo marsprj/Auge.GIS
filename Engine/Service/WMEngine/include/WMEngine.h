@@ -16,6 +16,7 @@ namespace auge
 		virtual ~WebMapEngine();
 
 	public:
+		virtual WebResponse*	Execute(WebRequest* pWebRequest);
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 
 		virtual WebRequest*		ParseRequest(const char* url);

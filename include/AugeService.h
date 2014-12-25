@@ -35,6 +35,16 @@ namespace auge
 		virtual RESULTCODE		Shutdown() = 0;
 	};
 
+	class EnumService : public GObject
+	{
+	protected:
+		EnumService(){}
+		virtual ~EnumService(){}
+	public:
+		virtual void			Reset() = 0;
+		virtual	Service*		Next() = 0;
+	};
+
 	class ServiceManager
 	{
 	protected:
@@ -43,6 +53,7 @@ namespace auge
 	public:
 		virtual g_uint			GetCount() = 0;
 		virtual Service*		GetService(const char* szName) = 0;
+		virtual EnumService*	GetServices() = 0;
 
 		virtual RESULTCODE		Register(const char* szName) = 0;
 		virtual RESULTCODE		Unregister(const char* szName) = 0;
@@ -51,6 +62,7 @@ namespace auge
 
 	public:
 		virtual RESULTCODE		Initialize(GConnection* pConnection) = 0;
+		virtual RESULTCODE		Unload() = 0;
 	};
 
 	class WebEngineManager

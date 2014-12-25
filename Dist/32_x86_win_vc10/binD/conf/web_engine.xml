@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
 <Engines>
+	<Engine description="Auge Web Service Manager" path="" id="WSEngine"/>
 	<Engine description="Web Map Sevice" path="" id="WMEngine"/>
 </Engines>

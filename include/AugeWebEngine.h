@@ -51,6 +51,7 @@ namespace auge
 		virtual ~WebEngine(){}
 
 	public:
+		virtual WebResponse*	Execute(WebRequest* pWebRequest) = 0;
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap) = 0;
 		virtual WebRequest*		ParseRequest(const char* url) = 0;
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc) = 0;

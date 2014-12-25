@@ -1,5 +1,6 @@
 #include "ServiceImpl.h"
 #include "ServiceManagerImpl.h"
+#include "EnumServiceImpl.h"
 
 #include "AugeData.h"
 
@@ -18,7 +19,7 @@ namespace auge
 
 	ServiceManagerImpl::~ServiceManagerImpl()
 	{
-		Cleanup();
+		Unload();
 	}
 
 	RESULTCODE ServiceManagerImpl::Initialize(GConnection* pConnection)
@@ -69,6 +70,12 @@ namespace auge
 		//}
 	}
 
+	RESULTCODE ServiceManagerImpl::Unload()
+	{
+		Cleanup();
+		return AG_SUCCESS;
+	}
+
 	g_uint ServiceManagerImpl::GetCount()
 	{
 		return m_services.size();
@@ -96,6 +103,40 @@ namespace auge
 			m_services.push_back(pService);
 		}
 		return pService;
+	}
+
+	EnumService* ServiceManagerImpl::GetServices()
+	{
+		EnumServiceImpl* pServices = new EnumServiceImpl();
+
+		if(m_pConnection!=NULL)
+		{
+			g_uint count = 0;
+			const char* name = NULL;
+			GResultSet* pResult = NULL;
+			const char* sql = "select s_name from g_service order by gid";
+
+			pResult = m_pConnection->ExecuteQuery(sql);
+			
+			Service* pService = NULL;
+			count = pResult->GetCount();
+			for(g_uint i=0; i<count; i++)
+			{
+				name = pResult->GetString(0,0);
+				if(name!=NULL)
+				{
+					pService = GetService(name);
+					if(pService!=NULL)
+					{
+						pServices->Add(pService);
+					}
+				}
+			}
+
+
+			AUGE_SAFE_RELEASE(pResult);
+		}
+		return pServices;
 	}
 
 	Service* ServiceManagerImpl::LoadService(const char* szName)
