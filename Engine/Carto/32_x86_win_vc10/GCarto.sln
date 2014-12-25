@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "..\test\test.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDEngine", "..\..\Data\GDEngine\32_x86_win_vc10\GDEngine.vcxproj", "{07AF14F1-448D-4018-80BF-0298C9A7D022}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GFilter", "..\..\Filter\32_x86_win_vc10\GFilter.vcxproj", "{075E99AE-8CDC-452A-BDD8-3E789ED20A7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -37,6 +39,10 @@ Global
 		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Debug|Win32.Build.0 = Debug|Win32
 		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Release|Win32.ActiveCfg = Release|Win32
 		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Release|Win32.Build.0 = Release|Win32
+		{075E99AE-8CDC-452A-BDD8-3E789ED20A7A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{075E99AE-8CDC-452A-BDD8-3E789ED20A7A}.Debug|Win32.Build.0 = Debug|Win32
+		{075E99AE-8CDC-452A-BDD8-3E789ED20A7A}.Release|Win32.ActiveCfg = Release|Win32
+		{075E99AE-8CDC-452A-BDD8-3E789ED20A7A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -83,6 +83,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\AugeWebEngine.h" />
+    <ClInclude Include="..\include\CreateMapRequest.h" />
+    <ClInclude Include="..\include\CreateMapResponse.h" />
     <ClInclude Include="..\include\GetCapabilitiesRequest.h" />
     <ClInclude Include="..\include\GetCapabilitiesResponse.h" />
     <ClInclude Include="..\include\GetMapRequest.h" />

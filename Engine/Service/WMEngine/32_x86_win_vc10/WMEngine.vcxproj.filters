@@ -33,6 +33,12 @@
     <ClInclude Include="..\include\GetCapabilitiesResponse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\CreateMapRequest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CreateMapResponse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\WMEngine.cpp">
