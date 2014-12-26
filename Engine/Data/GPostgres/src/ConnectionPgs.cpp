@@ -211,6 +211,26 @@ namespace auge
 		return oid;
 	}
 
+	Oid	ConnectionPgs::GetPgTableOid(const char* name)
+	{
+		char sql[AUGE_NAME_MAX] = {0};
+		g_snprintf(sql, AUGE_NAME_MAX, "select oid from pg_class where relname='%s'", name);
+		PGresult* pgResult = NULL;
+		pgResult = PgExecute(sql);
+		if(pgResult==NULL)
+		{
+			return -1;
+		}
+
+		if(PQntuples(pgResult)==0)
+		{
+			return -1;
+		}
+		Oid oid = atoi(PQgetvalue(pgResult, 0 ,0));
+		PQclear(pgResult);
+		return oid;
+	}
+
 	augeFieldType ConnectionPgs::GetFieldType(Oid oid)
 	{
 		if(oid==m_geom_oid)

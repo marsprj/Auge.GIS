@@ -19,7 +19,7 @@ void MapTest::setUp()
 	pEngineManager->Load();
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -286,11 +286,11 @@ void MapTest::CreateLayer()
 	pMap = pCartoManager->LoadMap("world");
 
 	auge::Layer *pLayer = NULL;
-	pLayer = pCartoManager->CreateLayer("cities",auge::augeLayerFeature, "cities", pMap->GetID(), pWorkspace->GetID(),-1);
+	pLayer = pCartoManager->CreateLayer("cities",auge::augeLayerFeature, "cities", pMap->GetID(), pWorkspace->GetID(),1);
 	pMap->AddLayer(pLayer);
-	pLayer = pCartoManager->CreateLayer("rivers",auge::augeLayerFeature, "rivers", pMap->GetID(), pWorkspace->GetID(),-1);
+	pLayer = pCartoManager->CreateLayer("rivers",auge::augeLayerFeature, "rivers", pMap->GetID(), pWorkspace->GetID(),3);
 	pMap->AddLayer(pLayer);
-	pLayer = pCartoManager->CreateLayer("country",auge::augeLayerFeature, "country", pMap->GetID(), pWorkspace->GetID(),-1);
+	pLayer = pCartoManager->CreateLayer("country",auge::augeLayerFeature, "country", pMap->GetID(), pWorkspace->GetID(),4);
 	pMap->AddLayer(pLayer);
 
 	//AUGE_SAFE_RELEASE(pMap);

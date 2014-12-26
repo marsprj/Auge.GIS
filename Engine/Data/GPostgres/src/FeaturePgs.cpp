@@ -8,6 +8,7 @@ namespace auge
 	m_pGeometry(NULL),
 	m_pgResult(NULL),
 	m_fid(-1),
+	m_geom_findex(-1),
 	m_index(-1)
 	{
 
@@ -41,10 +42,11 @@ namespace auge
 		}
 	}
 
-	bool FeaturePgs::Create(g_uint index, PGresult* pgResult, FeatureClassPgs* pFeatureClass)
+	bool FeaturePgs::Create(g_uint index, g_int geom_findex, PGresult* pgResult, FeatureClassPgs* pFeatureClass)
 	{
 		m_fid = -1;
 		m_index = index;
+		m_geom_findex = geom_findex;
 		m_pgResult = pgResult;
 		m_pFeatureClass = pFeatureClass;
 		m_pFeatureClass->AddRef();
@@ -54,9 +56,12 @@ namespace auge
 
 	Geometry* FeaturePgs::CreateGeometry()
 	{
+		if(m_geom_findex<0)
+		{
+			return NULL;
+		}
 		Geometry* pGeometry = NULL;
-		int gfindex = 0;
-		g_char* value = PQgetvalue(m_pgResult, m_index, gfindex);
+		g_char* value = PQgetvalue(m_pgResult, m_index, m_geom_findex);
 		if(value!=NULL)
 		{
 			size_t numBytes = 0;

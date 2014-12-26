@@ -23,6 +23,8 @@ namespace auge
 	class FeatureClass;
 	class Feature;
 	class FeatureCursor;
+	class GField;
+	class GFields;
 
 	typedef enum augeCursorType
 	{
@@ -46,6 +48,9 @@ namespace auge
 		virtual ~FeatureClass(){}
 	public:
 		virtual const char*			GetName() = 0;
+		virtual GFields*			GetFields() = 0;
+		virtual GField*				GetField(const char* name) = 0;
+		
 		virtual FeatureCursor*		Query(augeCursorType type=augeStaticCursor) = 0;
 	};
 

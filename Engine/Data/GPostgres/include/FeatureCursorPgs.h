@@ -24,8 +24,10 @@ namespace auge
 		FeatureClassPgs *m_pFeatureClass;
 		PGresult		*m_pgResult;
 
-		int				m_cursor;
-		int				m_count;
+		g_int			m_cursor;
+		g_int			m_count;
+
+		g_int			m_geom_findex;
 	};
 }
 

@@ -218,8 +218,9 @@ namespace auge
 		GeometryFactory(){}
 		virtual ~GeometryFactory(){}
 	public:
-		virtual	Geometry*	CreateGeometryFromWKB(g_uchar* wkb, bool attach=false) = 0;
-		virtual Geometry*	CreateGeometryFromWKT(const char* wkt) = 0;
+		virtual	Geometry*			CreateGeometryFromWKB(g_uchar* wkb, bool attach=false) = 0;
+		virtual Geometry*			CreateGeometryFromWKT(const char* wkt) = 0;
+		virtual augeGeometryType	DecodeGeometryType(const char* type) = 0;
 	};
 
 	class GeometryUtil

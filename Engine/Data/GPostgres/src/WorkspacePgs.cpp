@@ -54,7 +54,7 @@ namespace auge
 
 	FeatureClass* WorkspacePgs::OpenFeatureClass(const char* name)
 	{
-		if(name==NULL)
+		if((name==NULL)||(!m_pgConnection.IsOpen()))
 		{
 			return NULL;
 		}

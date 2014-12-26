@@ -7,7 +7,7 @@ class ServiceTest : public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(ServiceTest);
 	//CPPUNIT_TEST(ManagerTest);
-	//CPPUNIT_TEST(RegisterService);
+	CPPUNIT_TEST(RegisterService);
 	//CPPUNIT_TEST(UnRegisterService);
 	//CPPUNIT_TEST(RegisterMap);
 	//CPPUNIT_TEST(DoGetMap);

@@ -2,6 +2,8 @@
 #define __AUGE_FEATURECLASS_PGS_H__
 
 #include "AugeFeature.h"
+#include "AugeField.h"
+#include "AugeCore.h"
 #include <libpq-fe.h>
 
 namespace auge
@@ -17,18 +19,31 @@ namespace auge
 		virtual ~FeatureClassPgs();
 	public:
 		virtual const char*			GetName();
+		virtual GFields*			GetFields();
+		virtual GField*				GetField(const char* name);
+
 		virtual FeatureCursor*		Query(augeCursorType type=augeStaticCursor);
 
 		virtual void				Release();
 
 	public:
-		bool	Create(const char* szName, WorkspacePgs* pWorkspace);
+		bool	Create(const char* name, WorkspacePgs* pWorkspace);
+		GField*	CreateField(int col, PGresult* pgResult);
+		bool	CreateFields();
+		bool	GetMetaData();
 
 	private:
 
 	private:
-		std::string		m_name;
-		WorkspacePgs	*m_pWorkspace;
+		Oid					m_oid;
+		g_uint				m_srid;
+		g_uint				m_dimension;
+		std::string			m_name;
+		std::string			m_schema;
+		std::string			m_geom_filed_name;
+		augeGeometryType	m_geom_type;
+		WorkspacePgs*		m_pWorkspace;
+		GFields*			m_pFields;
 	};
 }
 

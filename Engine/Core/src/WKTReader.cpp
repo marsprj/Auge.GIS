@@ -32,7 +32,6 @@ g_uchar* WKTReader::Read(const char* wkt)
 		return NULL;
 	}
 
-	
 	wkb = (g_uchar*)malloc(sizeof(g_uchar)*wkb_size);
 	memset(wkb, 0, wkb_size);
 
@@ -109,10 +108,6 @@ int	WKTReader::cal_wkb_polygon_size(const char* text)
 {
 	std::string data = text;
 	StringTokenizer::Remove(data,"(",")");
-
-#ifdef _DEBUG
-	printf("%s\n",text);
-#endif
 
 	StringTokenizer st(data.c_str(),',');
 	int iCount = st.GetCount();

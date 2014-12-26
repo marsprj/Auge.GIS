@@ -21,15 +21,17 @@ namespace auge
 		virtual void		Release();
 
 	public:
-		bool		Create(g_uint index, PGresult* pgResult, FeatureClassPgs* pFeatureClass);
+		bool		Create(g_uint index, g_int geom_findex, PGresult* pgResult, FeatureClassPgs* pFeatureClass);
 		Geometry*	CreateGeometry();
 
 	private:
+		g_uint			m_index;
+		g_int			m_fid;
+		g_int			m_geom_findex;
 		FeatureClassPgs	*m_pFeatureClass;
 		Geometry		*m_pGeometry;
 		PGresult		*m_pgResult;
-		g_uint			m_index;
-		g_int			m_fid;
+		
 	};
 }
 

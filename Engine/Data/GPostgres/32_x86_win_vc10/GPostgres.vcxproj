@@ -39,8 +39,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../include;%AUGE_GIS_HOME%/include;D:\Program Files %28x86%29\PostgreSQL\9.4\include;$(IncludePath)</IncludePath>
-    <LibraryPath>%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;D:\Program Files %28x86%29\PostgreSQL\9.4\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>../include;%AUGE_GIS_HOME%/include;D:\Program Files %28x86%29\PostgreSQL\9.4\include;D:\Program Files %28x86%29\PostgreSQL\9.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;D:\Program Files %28x86%29\PostgreSQL\9.4\lib;D:\Program Files %28x86%29\PostgreSQL\9.1\lib;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)D</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -90,6 +90,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\FeatureCursorPgs.h" />
     <ClInclude Include="..\include\FeaturePgs.h" />
     <ClInclude Include="..\include\ResultSetPgs.h" />
+    <ClInclude Include="..\include\SQLBuilder.h" />
     <ClInclude Include="..\include\WorkspacePgs.h" />
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +100,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\FeatureCursorPgs.cpp" />
     <ClCompile Include="..\src\FeaturePgs.cpp" />
     <ClCompile Include="..\src\ResultSetPgs.cpp" />
+    <ClCompile Include="..\src\SQLBuilder.cpp" />
     <ClCompile Include="..\src\WorkspacePgs.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -143,10 +143,11 @@ namespace auge
 		while((pFeature=pCursor->NextFeature())!=NULL)
 		{	
 			pGeometry = pFeature->GetGeometry();
-			wkb = pGeometry->AsBinary();
-
-			m_pRenderer->Draw(wkb, pSymbolizer, &m_transform);
-
+			if(pGeometry!=NULL)
+			{
+				wkb = pGeometry->AsBinary();
+				m_pRenderer->Draw(wkb, pSymbolizer, &m_transform);
+			}
 			pFeature->Release();
 		}
 		pCursor->Release();
@@ -164,17 +165,20 @@ namespace auge
 		auge::Geometry	*pGeometry = NULL;
 		auge::Feature	*pFeature = NULL;
 		while((pFeature=pCursor->NextFeature())!=NULL)
-		{	
-			label_text = pSymbolizer->GetLabelText();
-			if((label_text==NULL)||(strlen(label_text)==0))
-			{
-				label_text = "多发点";//pSymbolizer->GetLabel();
-			}
+		{
 
 			pGeometry = pFeature->GetGeometry();
-			wkb = pGeometry->AsBinary();
-		
-			LabelGeometry(wkb, pSymbolizer, label_text);
+			if(pGeometry!=NULL)
+			{
+				label_text = pSymbolizer->GetLabelText();
+				if((label_text==NULL)||(strlen(label_text)==0))
+				{
+					label_text = "多发点";//pSymbolizer->GetLabel();
+				}
+
+				wkb = pGeometry->AsBinary();
+				LabelGeometry(wkb, pSymbolizer, label_text);
+			}
 
 			pFeature->Release();
 		}

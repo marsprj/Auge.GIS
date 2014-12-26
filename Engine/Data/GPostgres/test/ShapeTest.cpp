@@ -23,7 +23,7 @@ void ShapeTest::ReadTest()
 	pDataEngine = auge::augeGetDataEngineInstance();
 
 	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = pDataEngine->CreateFeatureWorkspace();
+	pWorkspace = (auge::FeatureWorksapce*)pDataEngine->CreateWorkspace();
 	pWorkspace->SetConnectionString(path);
 
 	rc = pWorkspace->Open();

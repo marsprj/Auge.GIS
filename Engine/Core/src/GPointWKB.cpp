@@ -1,5 +1,6 @@
 #include "GPointWKB.h"
 #include "AugeCore.h"
+#include "WKTWriter.h"
 
 namespace auge
 {
@@ -35,6 +36,11 @@ namespace auge
 
 	const char*	GPointWKB::AsText()
 	{
+		if(m_wkt.empty())
+		{
+			WKTWriter writer;
+			writer.Write(m_wkt, (g_uchar*)m_pWKBPoint);
+		}
 		return m_wkt.c_str();
 	}
 

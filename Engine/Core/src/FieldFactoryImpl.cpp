@@ -4,6 +4,12 @@
 
 namespace auge
 {
+	FieldFactory* augeGetFieldFactoryInstance()
+	{
+		static FieldFactoryImpl g_field_factory;
+		return &g_field_factory;
+	}
+
 	FieldFactoryImpl::FieldFactoryImpl()
 	{
 

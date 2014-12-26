@@ -2,6 +2,6 @@
 <Config>
 	<Store>
 		<Engine>Postgres</Engine>
-		<URI>SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234</URI>
+		<URI>SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234</URI>
 	</Store>
 </Config>

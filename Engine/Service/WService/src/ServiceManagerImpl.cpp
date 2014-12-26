@@ -179,6 +179,7 @@ namespace auge
 
 		pService = new ServiceImpl();
 		pService->SetID(s_id);
+		pService->SetName(szName);
 		if(m_id>0)
 		{
 			Map* pMap = NULL;

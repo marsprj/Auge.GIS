@@ -9,6 +9,7 @@ typedef unsigned char		g_byte;
 typedef short				g_int16;
 typedef unsigned short		g_uint16;
 typedef int					g_int;
+typedef int					g_int32;
 typedef unsigned int		g_uint;
 typedef unsigned long		g_ulong;
 

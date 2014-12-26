@@ -11,8 +11,10 @@ namespace auge
 		GeometryFactoryImpl();
 		virtual ~GeometryFactoryImpl();
 	public:
-		virtual Geometry*	CreateGeometryFromWKB(g_uchar* wkb, bool attach=false);
-		virtual Geometry*	CreateGeometryFromWKT(const char* wkt);
+		virtual Geometry*			CreateGeometryFromWKB(g_uchar* wkb, bool attach=false);
+		virtual Geometry*			CreateGeometryFromWKT(const char* wkt);
+
+		virtual augeGeometryType	DecodeGeometryType(const char* type);
 	};
 }
 

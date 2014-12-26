@@ -29,6 +29,7 @@ namespace auge
 	public:
 		PGresult*		PgExecute(const char* sql);
 		Oid				GetPgTypeOid(const char* type);
+		Oid				GetPgTableOid(const char* name);
 
 	public:
 		augeFieldType	GetFieldType(Oid oid);

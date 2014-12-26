@@ -1,5 +1,6 @@
 #include "GMultiPointWKB.h"
 #include "AugeCore.h"
+#include "WKTWriter.h"
 
 namespace auge
 {
@@ -35,6 +36,11 @@ const GEnvelope* GMultiPointWKB::Envelope() const
 
 const char*	GMultiPointWKB::AsText()
 {
+	if(m_wkt.empty())
+	{
+		WKTWriter writer;
+		writer.Write(m_wkt, (g_uchar*)m_pWKBMultiPoint);
+	}
 	return m_wkt.c_str();
 }
 

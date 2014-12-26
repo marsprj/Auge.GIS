@@ -125,4 +125,36 @@ namespace auge
 		}
 		return CreateGeometryFromWKB(wkb,true);
 	}
+
+	augeGeometryType GeometryFactoryImpl::DecodeGeometryType(const char* type)
+	{
+		augeGeometryType g_type = augeGTNull;
+
+		if(!g_stricmp(type,	"POINT"))
+		{
+			g_type = augeGTPoint;
+		}
+		else if(!g_stricmp(type, "LINESTRING"))
+		{
+			g_type = augeGTLineString;
+		}
+		else if(!g_stricmp(type, "POLYGON"))
+		{
+			g_type = augeGTPolygon;
+		}
+		else if(!g_stricmp(type, "MULTIPOINT"))
+		{
+			g_type = augeGTMultiPoint;
+		}
+		else if(!g_stricmp(type, "MULTILINESTRING"))
+		{
+			g_type = augeGTMultiLineString;
+		}
+		else if(!g_stricmp(type, "MULTIPOLYGON"))
+		{
+			g_type = augeGTMultiPolygon;
+		}
+
+		return g_type;
+	}
 }

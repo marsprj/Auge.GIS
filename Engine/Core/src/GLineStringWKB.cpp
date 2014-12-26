@@ -1,5 +1,6 @@
 #include "GLineStringWKB.h"
 #include "AugeCore.h"
+#include "WKTWriter.h"
 
 namespace auge
 {
@@ -35,6 +36,11 @@ const GEnvelope* GLineStringWKB::Envelope() const
 
 const char*	GLineStringWKB::AsText()
 {
+	if(m_wkt.empty())
+	{
+		WKTWriter writer;
+		writer.Write(m_wkt, (g_uchar*)m_pWKBLineString);
+	}
 	return m_wkt.c_str();
 }
 

@@ -1,5 +1,6 @@
 #include "GMultiPolygonWKB.h"
 #include "AugeCore.h"
+#include "WKTWriter.h"
 
 namespace auge
 {
@@ -34,6 +35,11 @@ const GEnvelope* GMultiPolygonWKB::Envelope() const
 
 const char*	GMultiPolygonWKB::AsText()
 {
+	if(m_wkt.empty())
+	{
+		WKTWriter writer;
+		writer.Write(m_wkt, (g_uchar*)m_pWKBMultiPolygon);
+	}
 	return m_wkt.c_str();
 }
 

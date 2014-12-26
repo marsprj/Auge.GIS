@@ -13,7 +13,7 @@ namespace auge
 		ServiceImpl();
 		virtual ~ServiceImpl();
 	public:
-		virtual const char*		GetName();
+		virtual const char*		GetName();		
 		virtual WebResponse*	Execute(WebRequest* pRequest);
 
 		virtual	RESULTCODE		Start();
@@ -25,6 +25,7 @@ namespace auge
 		Map*	GetMap();
 		void	SetMap(Map* pMap);
 		void	SetMapName(const char* name);
+		void	SetName(const char* name);
 		
 
 	private:

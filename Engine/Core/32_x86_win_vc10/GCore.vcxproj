@@ -106,6 +106,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GPolygonWKB.h" />
     <ClInclude Include="..\include\StringTokenizer.h" />
     <ClInclude Include="..\include\WKTReader.h" />
+    <ClInclude Include="..\include\WKTWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\FieldFactoryImpl.cpp" />
@@ -128,6 +129,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GPropertySet.cpp" />
     <ClCompile Include="..\src\StringTokenizer.cpp" />
     <ClCompile Include="..\src\WKTReader.cpp" />
+    <ClCompile Include="..\src\WKTWriter.cpp" />
     <ClCompile Include="..\src\XAttribute.cpp" />
     <ClCompile Include="..\src\XCdataNode.cpp" />
     <ClCompile Include="..\src\XCommentNode.cpp" />

@@ -21,6 +21,15 @@ namespace auge
 		return m_name.c_str();
 	}
 
+	void ServiceImpl::SetName(const char* name)
+	{
+		if(name==NULL)
+		{
+			m_name.clear();
+		}
+		m_name = name;
+	}
+
 	WebResponse* ServiceImpl::Execute(WebRequest* pRequest)
 	{
 		const char* engine = pRequest->GetEngine();
