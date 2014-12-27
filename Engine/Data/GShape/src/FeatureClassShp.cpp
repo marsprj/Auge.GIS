@@ -10,6 +10,7 @@ namespace auge
 	m_pWorkspace(NULL),
 	m_pSHPHandle(NULL),
 	m_pDBFHandle(NULL),
+	m_srid(4326),
 	m_feature_count(0)
 	{
 		FieldFactory* pFactory = augeGetFieldFactoryInstance();
@@ -25,6 +26,16 @@ namespace auge
 	const char*	FeatureClassShp::GetName()
 	{
 		return m_name.c_str();
+	}
+
+	g_uint FeatureClassShp::GetSRID()
+	{
+		return m_srid;
+	}
+
+	GEnvelope& FeatureClassShp::GetExtent()
+	{
+		return m_extent;
 	}
 
 	GFields* FeatureClassShp::GetFields()

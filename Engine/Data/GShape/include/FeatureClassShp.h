@@ -20,6 +20,9 @@ namespace auge
 		virtual ~FeatureClassShp();
 	public:
 		virtual const char*			GetName();
+		virtual g_uint				GetSRID();
+		virtual GEnvelope&			GetExtent();
+
 		virtual GFields*			GetFields();
 		virtual GField*				GetField(const char* name);
 
@@ -51,6 +54,7 @@ namespace auge
 		augeGeometryType	m_geom_type;
 		GFields*			m_pFields;
 		GEnvelope			m_extent;
+		g_uint				m_srid;
 		g_int				m_feature_count;
 	};
 }

@@ -39,6 +39,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)D</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -55,6 +58,11 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)\$(TargetName).dll %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\binD
+copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -74,6 +82,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\DescribeFeatureTypeRequest.cpp" />
+    <ClCompile Include="..\src\DescribeFeatureTypeResponse.cpp" />
+    <ClCompile Include="..\src\GetCapabilitiesRequest.cpp" />
+    <ClCompile Include="..\src\GetCapabilitiesResponse.cpp" />
+    <ClCompile Include="..\src\WFEngine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\DescribeFeatureTypeRequest.h" />
+    <ClInclude Include="..\include\DescribeFeatureTypeResponse.h" />
+    <ClInclude Include="..\include\GetCapabilitiesRequest.h" />
+    <ClInclude Include="..\include\GetCapabilitiesResponse.h" />
+    <ClInclude Include="..\include\WFEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

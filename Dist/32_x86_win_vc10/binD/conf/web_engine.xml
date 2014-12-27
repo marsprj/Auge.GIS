@@ -2,4 +2,5 @@
 <Engines>
 	<Engine description="Auge Web Service Manager" path="" id="WSEngine"/>
 	<Engine description="Web Map Sevice" path="" id="WMEngine"/>
+	<Engine description="Web Feature Sevice" path="" id="WFEngine"/>
 </Engines>

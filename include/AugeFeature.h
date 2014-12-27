@@ -52,6 +52,9 @@ namespace auge
 		virtual ~FeatureClass(){}
 	public:
 		virtual const char*			GetName() = 0;
+		virtual g_uint				GetSRID() = 0;
+		virtual GEnvelope&			GetExtent() = 0;
+
 		virtual GFields*			GetFields() = 0;
 		virtual GField*				GetField(const char* name) = 0;
 		

@@ -15,6 +15,7 @@ namespace auge
 	m_pFields(NULL),
 	m_schema("public"),
 	m_geom_type(augeGTNull),
+	m_srid(4326),
 	m_dimension(2)
 	{
 		FieldFactory* pFactory = augeGetFieldFactoryInstance();
@@ -29,6 +30,31 @@ namespace auge
 	const char*	FeatureClassPgs::GetName()
 	{
 		return m_name.c_str();
+	}
+
+	g_uint FeatureClassPgs::GetSRID()
+	{
+		return m_srid;
+	}
+
+	GEnvelope& FeatureClassPgs::GetExtent()
+	{
+		if(!m_extent.IsValid())
+		{
+			char sql[AUGE_SQL_MAX];
+			g_snprintf(sql, AUGE_SQL_MAX, "select st_extent(%s) from %s", m_geom_filed_name.c_str(), m_name.c_str());
+
+			PGresult* pgResult = NULL;
+			pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql);
+			if(PQresultStatus(pgResult)==PGRES_TUPLES_OK)
+			{
+				const char* value = PQgetvalue(pgResult, 0, 0);
+				double xmin, ymin, xmax,ymax;
+				sscanf(value, "BOX(%lf %lf,%lf %lf)", &m_extent.m_xmin,&m_extent.m_ymin,&m_extent.m_xmax,&m_extent.m_ymax);
+			}
+			PQclear(pgResult);
+		}
+		return m_extent;
 	}
 
 	GFields* FeatureClassPgs::GetFields()

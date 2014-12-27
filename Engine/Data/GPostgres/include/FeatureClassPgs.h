@@ -20,6 +20,9 @@ namespace auge
 		virtual ~FeatureClassPgs();
 	public:
 		virtual const char*			GetName();
+		virtual g_uint				GetSRID();
+		virtual GEnvelope&			GetExtent();
+
 		virtual GFields*			GetFields();
 		virtual GField*				GetField(const char* name);
 
@@ -41,6 +44,7 @@ namespace auge
 		Oid					m_oid;
 		g_uint				m_srid;
 		g_uint				m_dimension;
+		GEnvelope			m_extent;
 		std::string			m_name;
 		std::string			m_schema;
 		std::string			m_geom_filed_name;

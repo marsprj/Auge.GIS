@@ -187,11 +187,15 @@ auge::WebRequest* CreateWebRequest_Get(rude::CGI& cgi)
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetCapabilities";
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=&bbox=-180,-90,180,90&width=800&height=600&transparent=true&bgcolor=#e01356";
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=&bbox=-180,-90,180,90&width=800&height=600&transparent=true&bgcolor=#e01356";
-		query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=&bbox=-180,-90,180,90&width=800&height=600&transparent=false&bgcolor=#ff0000";
+		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=&bbox=-180,-90,180,90&width=800&height=600&transparent=false&bgcolor=#ff0000";
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=country,cities,rivers&styles=&bbox=-180,-90,180,90&width=800&height=600&transparent=false&bgcolor=#ff0000";
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=country&styles=country_red&bbox=-180,-90,180,90&width=800&height=600&transparent=true&bgcolor=#ff0000";
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=rivers,country&styles=,polygon_red&bbox=-180,-90,180,90&width=800&height=600&transparent=true&bgcolor=#e01356";
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities&styles=&bbox=-180,-90,180,90&width=800&height=600&transparent=false&bgcolor=#ff0000";
+
+		//query_string = "servicename=world&service=wfs&version=1.1.0&request=getcapabilities";
+		query_string = "servicename=world&service=WFS&version=1.1.0&request=DescribeFeatureType&typeName=radi:rivers";
+		
 	}
 	pLogger->Debug(query_string);
 	pRequest = pEngine->ParseRequest(query_string);
