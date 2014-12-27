@@ -1,7 +1,7 @@
 #include "ShapeTest.h"
 #include "AugeFeature.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(ShapeTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(ShapeTest);
 
 void ShapeTest::setUp() 
 {

@@ -34,7 +34,7 @@ namespace auge
 		return &m_extent;
 	}
 
-	const char*	GPointWKB::AsText()
+	const char*	GPointWKB::AsText(bool multi/*=false*/)
 	{
 		if(m_wkt.empty())
 		{

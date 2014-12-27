@@ -20,6 +20,11 @@ namespace auge
 		AUGE_SAFE_RELEASE(m_pGeometry);
 	}
 
+	FeatureClass* FeaturePgs::GetFeatureClass() const
+	{
+		return m_pFeatureClass;
+	}
+
 	g_int FeaturePgs::GetFID()
 	{
 		return m_fid;
@@ -78,5 +83,146 @@ namespace auge
 
 		
 		return pGeometry;
+	}
+
+	GValue*	FeaturePgs::GetValue(g_int i) const
+	{
+		return NULL;
+	}
+
+	bool FeaturePgs::GetBool(g_int i) const
+	{
+		return true;
+	}
+
+	char FeaturePgs::GetChar(g_int i) const
+	{
+		return 0;
+	}
+
+	short FeaturePgs::GetShort(g_int i) const
+	{
+		return 0;
+	}
+
+	int	FeaturePgs::GetInt(g_int i) const
+	{
+		return 0;
+	}
+
+	long FeaturePgs::GetLong(g_int i) const
+	{
+		return 0;
+	}
+
+	float FeaturePgs::GetFloat(g_int i) const
+	{
+		return 0;
+	}
+
+	double FeaturePgs::GetDouble(g_int i) const
+	{
+		return 0;
+	}
+
+	int64 FeaturePgs::GetInt64(g_int i)	const
+	{
+		return 0;
+	}
+
+	const char*	FeaturePgs::GetString(g_int i)	const
+	{
+		return NULL;
+	}
+
+	GValue*	FeaturePgs::GetValue(const char* name) const
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+		return NULL;
+	}
+
+	bool FeaturePgs::GetBool(const char* name) const
+	{
+		if(name==NULL)
+		{
+			return false;
+		}
+		
+		return true;
+	}
+
+	char FeaturePgs::GetChar(const char* name) const
+	{
+		if(name==NULL)
+		{
+			return -1;
+		}
+		return 0;
+	}
+
+	short FeaturePgs::GetShort(const char* name) const
+	{
+		if(name==NULL)
+		{
+			return -1;
+		}
+		return 0;
+	}
+
+	int	FeaturePgs::GetInt(const char* name) const
+	{
+		if(name==NULL)
+		{
+			return -1;
+		}
+		return 0;
+	}
+
+	long FeaturePgs::GetLong(const char* name) const
+	{
+		if(name==NULL)
+		{
+			return -1;
+		}
+		return 0;
+	}
+
+	float FeaturePgs::GetFloat(const char* name) const
+	{
+		if(name==NULL)
+		{
+			return -1;
+		}
+		return 0;
+	}
+
+	double FeaturePgs::GetDouble(const char* name) const
+	{
+		if(name==NULL)
+		{
+			return -1;
+		}
+		return 0;
+	}
+
+	int64 FeaturePgs::GetInt64(const char* name)	const
+	{
+		if(name==NULL)
+		{
+			return -1;
+		}
+		return 0;
+	}
+
+	const char*	FeaturePgs::GetString(const char* name)	const
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+		return NULL;
 	}
 }

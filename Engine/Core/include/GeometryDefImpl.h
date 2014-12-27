@@ -17,13 +17,15 @@ namespace auge
 		virtual	bool			 IsDefault() const;
 		virtual augeGeometryType GeometryType()	const;
 		virtual bool			 GetExtent(GEnvelope& extent) const;
+		virtual g_uint			 GetDimension();
 
 		virtual	void			 SetSRID(int nSRID);
 		virtual	void			 SetZ(bool bHasZ);
 		virtual	void			 SetM(bool bHasM);
 		virtual	void			 SetDefault(bool bIsDefault);
 		virtual void			 SetGeometryType(augeGeometryType type);	
-		virtual bool			 SetExtent(const GEnvelope& extent);	
+		virtual bool			 SetExtent(const GEnvelope& extent);
+		virtual void			 SetDimension(g_uint value);
 
 		virtual GeometryDef*	 GetGeometryDef();
 		virtual GeometryDef_2*	 GetGeometryDef_2();
@@ -32,6 +34,7 @@ namespace auge
 	private:
 		g_int				m_srid;
 		g_uint				m_tag;	
+		g_uint				m_dimension;
 		augeGeometryType	m_geometry_type;
 		GEnvelope			m_extent;	
 	};

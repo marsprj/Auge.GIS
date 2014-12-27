@@ -100,7 +100,7 @@ namespace auge
 	
 		//! @brief	复制字段
 		//! @return	复制后的Field指针
-		virtual GField*			Clone() const = 0;
+		virtual GField*				Clone() const = 0;
 
 		//! @brief	获取该字段的可编辑对象指针
 		//! @return	可编辑对象指针
@@ -188,6 +188,8 @@ namespace auge
 		//! @param	extent	[OUT]	空间范围
 		//! @return	true/false
 		virtual bool			 GetExtent(GEnvelope& extent) const = 0;
+
+		virtual g_uint			 GetDimension() = 0;
 			
 		//! @brief	获取可写GeometryDef指针
 		//! @return	可写GeometryDef指针
@@ -224,6 +226,8 @@ namespace auge
 		//! @brief	设置空间范围
 		//! @param	extent
 		virtual bool			SetExtent(const GEnvelope& extent) = 0;
+
+		virtual void			SetDimension(g_uint value) = 0;
 
 		//! @brief	获取只读类型空间数据元数据指针
 		//virtual GeometryDef*	GeometryDef() = 0;

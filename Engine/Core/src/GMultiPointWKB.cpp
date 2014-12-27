@@ -34,7 +34,7 @@ const GEnvelope* GMultiPointWKB::Envelope() const
 	return &m_extent;
 }
 
-const char*	GMultiPointWKB::AsText()
+const char*	GMultiPointWKB::AsText(bool multi/*=false*/)
 {
 	if(m_wkt.empty())
 	{

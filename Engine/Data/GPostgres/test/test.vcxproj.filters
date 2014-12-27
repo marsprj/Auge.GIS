@@ -21,9 +21,15 @@
     <ClCompile Include="ShapeTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Transfer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShapeTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transfer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

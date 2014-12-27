@@ -100,4 +100,14 @@ namespace auge
 
 		return pFeatureClass;
 	}
+
+	RESULTCODE WorkspaceShp::CreateFeatureClass(const char* name, GFields* pFields)
+	{
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE WorkspaceShp::RemoveFeatureClass(const char* name)
+	{
+		return AG_SUCCESS;
+	}
 }

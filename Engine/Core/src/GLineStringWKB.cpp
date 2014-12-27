@@ -34,12 +34,12 @@ const GEnvelope* GLineStringWKB::Envelope() const
 	return &m_extent;
 }
 
-const char*	GLineStringWKB::AsText()
+const char*	GLineStringWKB::AsText(bool multi/*=false*/)
 {
 	if(m_wkt.empty())
 	{
 		WKTWriter writer;
-		writer.Write(m_wkt, (g_uchar*)m_pWKBLineString);
+		writer.Write(m_wkt, (g_uchar*)m_pWKBLineString, multi);
 	}
 	return m_wkt.c_str();
 }

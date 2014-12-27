@@ -24,8 +24,9 @@ namespace auge
 
 	GeometryDefImpl::GeometryDefImpl():
 	m_srid(4326),
-		m_tag(augeGeometryDefNone),
-		m_geometry_type(augeGTNull)
+	m_dimension(2),
+	m_tag(augeGeometryDefNone),
+	m_geometry_type(augeGTNull)
 	{
 
 	}
@@ -117,6 +118,16 @@ namespace auge
 	{
 		m_extent = extent;
 		return true;
+	}
+
+	void GeometryDefImpl::SetDimension(g_uint value)
+	{
+		m_dimension = value;
+	}
+
+	g_uint GeometryDefImpl::GetDimension()
+	{
+		return m_dimension;
 	}
 
 	GeometryDef* GeometryDefImpl::GetGeometryDef()

@@ -157,4 +157,24 @@ namespace auge
 
 		return g_type;
 	}
+
+	const char*	GeometryFactoryImpl::Encode(augeGeometryType type)
+	{
+		switch(type)
+		{
+		case augeGTPoint:
+			return "POINT";
+		case augeGTMultiPoint:
+			return "MULTIPOINT";
+		case augeGTLineString:
+			return "LINESTRING";
+		case augeGTMultiLineString:
+			return "MULTILINESTRING";
+		case augeGTPolygon:
+			return "POLYGON";
+		case augeGTMultiPolygon:
+			return "MULTIPOLYGON";
+		}
+		return "";
+	}
 }

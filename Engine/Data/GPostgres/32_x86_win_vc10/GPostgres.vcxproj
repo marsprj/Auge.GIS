@@ -88,6 +88,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\DataEngineImpl.h" />
     <ClInclude Include="..\include\FeatureClassPgs.h" />
     <ClInclude Include="..\include\FeatureCursorPgs.h" />
+    <ClInclude Include="..\include\FeatureInsertCommandPgs.h" />
     <ClInclude Include="..\include\FeaturePgs.h" />
     <ClInclude Include="..\include\ResultSetPgs.h" />
     <ClInclude Include="..\include\SQLBuilder.h" />
@@ -98,6 +99,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\DataEngineImpl.cpp" />
     <ClCompile Include="..\src\FeatureClassPgs.cpp" />
     <ClCompile Include="..\src\FeatureCursorPgs.cpp" />
+    <ClCompile Include="..\src\FeatureInsertCommandPgs.cpp" />
     <ClCompile Include="..\src\FeaturePgs.cpp" />
     <ClCompile Include="..\src\ResultSetPgs.cpp" />
     <ClCompile Include="..\src\SQLBuilder.cpp" />

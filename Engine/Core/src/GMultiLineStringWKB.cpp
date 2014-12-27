@@ -21,7 +21,6 @@ GMultiLineStringWKB::~GMultiLineStringWKB()
 			m_pWKBMultiLineString = NULL;
 		}
 	}
-
 }
 
 augeGeometryType GMultiLineStringWKB::GeometryType()
@@ -34,12 +33,12 @@ const GEnvelope* GMultiLineStringWKB::Envelope() const
 	return &m_extent;
 }
 
-const char*	GMultiLineStringWKB::AsText()
+const char*	GMultiLineStringWKB::AsText(bool multi/*=false*/)
 {
 	if(m_wkt.empty())
 	{
 		WKTWriter writer;
-		writer.Write(m_wkt, (g_uchar*)m_pWKBMultiLineString);
+		writer.Write(m_wkt, (g_uchar*)m_pWKBMultiLineString,multi);
 	}
 	return m_wkt.c_str();
 }

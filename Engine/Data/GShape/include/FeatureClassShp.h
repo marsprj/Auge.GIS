@@ -25,6 +25,8 @@ namespace auge
 
 		virtual FeatureCursor*		Query(augeCursorType type=augeStaticCursor);
 
+		virtual FeatureInsertCommand* CreateInsertCommand();
+
 		virtual void				Release();
 
 	public:

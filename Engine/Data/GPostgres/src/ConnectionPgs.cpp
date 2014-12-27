@@ -26,6 +26,15 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	const char*	ConnectionPgs::GetDatabase()
+	{
+		if(m_pgConnection==NULL)
+		{
+			return NULL;
+		}
+		return PQdb(m_pgConnection);
+	}
+
 	RESULTCODE ConnectionPgs::Open()
 	{
 		if(m_pgConnection!=NULL)

@@ -13,6 +13,7 @@ namespace auge
 	class FeatureClassPgs : public FeatureClass
 	{
 		friend class FeaturePgs;
+		friend class FeatureInsertCommandPgs;
 
 	public:
 		FeatureClassPgs();
@@ -23,6 +24,8 @@ namespace auge
 		virtual GField*				GetField(const char* name);
 
 		virtual FeatureCursor*		Query(augeCursorType type=augeStaticCursor);
+
+		virtual FeatureInsertCommand* CreateInsertCommand();
 
 		virtual void				Release();
 

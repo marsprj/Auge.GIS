@@ -2,6 +2,7 @@
 #include "ConnectionPgs.h"
 #include "FeatureCursorPgs.h"
 #include "FeatureClassPgs.h"
+#include "FeatureInsertCommandPgs.h"
 
 #include "SQLBuilder.h"
 
@@ -205,5 +206,10 @@ namespace auge
 		PQclear(pgResult);
 
 		return true;
+	}
+
+	FeatureInsertCommand* FeatureClassPgs::CreateInsertCommand()
+	{
+		return (new FeatureInsertCommandPgs(this));
 	}
 }

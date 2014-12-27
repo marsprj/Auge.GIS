@@ -48,7 +48,7 @@ namespace auge
 		virtual const GEnvelope*	Envelope()            const =0;		// : Gometry
 		//virtual       GEnvelope*	Envelope(bool refresh=false)=0;		// : Gometry
 		//virtual		  bool			Envelope(GEnvelope& envelope) =0;	// : Gometry
-		virtual       const char*	AsText()					=0;		// : String.Release
+		virtual       const char*	AsText(bool multi=false)					=0;		// : String.Release
 		virtual       g_uchar*		AsBinary()            const =0;		// : Binary.
 	};
 
@@ -221,6 +221,7 @@ namespace auge
 		virtual	Geometry*			CreateGeometryFromWKB(g_uchar* wkb, bool attach=false) = 0;
 		virtual Geometry*			CreateGeometryFromWKT(const char* wkt) = 0;
 		virtual augeGeometryType	DecodeGeometryType(const char* type) = 0;
+		virtual const char*			Encode(augeGeometryType type) = 0;
 	};
 
 	class GeometryUtil

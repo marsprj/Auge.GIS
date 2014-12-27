@@ -34,12 +34,12 @@ const GEnvelope* GPolygonWKB::Envelope() const
 	return &m_extent;
 }
 
-const char*	GPolygonWKB::AsText()
+const char*	GPolygonWKB::AsText(bool multi/*=false*/)
 {
 	if(m_wkt.empty())
 	{
 		WKTWriter writer;
-		writer.Write(m_wkt, (g_uchar*)m_pWKBPolygon);
+		writer.Write(m_wkt, (g_uchar*)m_pWKBPolygon, multi);
 	}
 	return m_wkt.c_str();
 }

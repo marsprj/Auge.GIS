@@ -27,6 +27,8 @@ namespace auge
 		virtual bool			IsOpen();
 
 		virtual	FeatureClass*	OpenFeatureClass(const char* name);
+		virtual RESULTCODE		CreateFeatureClass(const char* name, GFields* pFields);
+		virtual RESULTCODE		RemoveFeatureClass(const char* name);
 
 	private:
 		std::string	m_connstring;

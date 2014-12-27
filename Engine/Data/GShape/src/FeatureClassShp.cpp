@@ -47,7 +47,15 @@ namespace auge
 		m_name = name;
 		m_pWorkspace = pWorkspace;
 
-		CreateFields();
+		if(!GetMetaData())
+		{
+			return false;
+		}
+
+		if(!CreateFields())
+		{
+			return false;
+		}
 
 		return true;
 	}
@@ -221,5 +229,10 @@ namespace auge
 		}
 
 		return augeFieldTypeNone;
+	}
+
+	FeatureInsertCommand* FeatureClassShp::CreateInsertCommand()
+	{
+		return NULL;
 	}
 }

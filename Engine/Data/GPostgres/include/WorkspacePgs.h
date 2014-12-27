@@ -11,7 +11,9 @@ namespace auge
 {
 	class WorkspacePgs : public FeatureWorksapce
 	{
+		friend class FeaturePgs;
 		friend class FeatureClassPgs;
+		friend class FeatureInsertCommandPgs;
 
 	public:
 		WorkspacePgs();
@@ -28,11 +30,26 @@ namespace auge
 		virtual void			Close();
 		virtual bool			IsOpen();
 
+		// FeatureClass
 		virtual	FeatureClass*	OpenFeatureClass(const char* name);
+		virtual RESULTCODE		CreateFeatureClass(const char* name, GFields* pFields);
+		virtual RESULTCODE		RemoveFeatureClass(const char* name);
+
+	private:
+		RESULTCODE				CreateTable(const char* name, GFields* pFields);
+		RESULTCODE				RemoveTable(const char* name);
+
+		bool					UnRegisterLayer(long lid);
+		//RESULTCODE				RegiseterGeometryColumns(const char* szName, AgField* pGeomField);
+
+		RESULTCODE				AddGeometryColumn(const char* name, GField* pField);
+		RESULTCODE				RegiseterGeometryColumn(const char* name, GField* pField);
+		RESULTCODE				UnRegiseterGeometryColumn(const char* name);
 		
 	private:
 		ConnectionPgs	m_pgConnection;
 		std::string		m_name;
+		std::string		m_schema;
 	};
 }
 

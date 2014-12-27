@@ -53,6 +53,7 @@ void ShapeTest::ReadTest()
 		//auge::WKBPoint* pWKBPoint = (auge::WKBPoint*)wkb;
 		//printf("[%d]:%f,%f\n", pFeature->GetFID(),pWKBPoint->point.x, pWKBPoint->point.y);
 
+		printf("[name]:%s\n", pFeature->GetString("name"));
 		printf("[%d]:%s\n", pFeature->GetFID(),pGeometry->AsText());
 		
 

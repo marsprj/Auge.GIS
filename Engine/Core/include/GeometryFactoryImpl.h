@@ -15,6 +15,7 @@ namespace auge
 		virtual Geometry*			CreateGeometryFromWKT(const char* wkt);
 
 		virtual augeGeometryType	DecodeGeometryType(const char* type);
+		virtual const char*			Encode(augeGeometryType type);
 	};
 }
 

@@ -14,7 +14,7 @@ namespace auge
 	public:
 		virtual augeGeometryType	GeometryType();
 		virtual const GEnvelope*	Envelope() const;
-		virtual const char*			AsText();
+		virtual const char*			AsText(bool multi=false);
 		virtual g_uchar*			AsBinary() const;
 		virtual void				Release();
 

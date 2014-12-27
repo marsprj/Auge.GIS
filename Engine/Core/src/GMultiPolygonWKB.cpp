@@ -33,7 +33,7 @@ const GEnvelope* GMultiPolygonWKB::Envelope() const
 	return &m_extent;
 }
 
-const char*	GMultiPolygonWKB::AsText()
+const char*	GMultiPolygonWKB::AsText(bool multi/*=false*/)
 {
 	if(m_wkt.empty())
 	{
