@@ -18,18 +18,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ShapeTest.cpp">
+    <ClCompile Include="Transfer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Transfer.cpp">
+    <ClCompile Include="PgsTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ShapeTest.h">
+    <ClInclude Include="Transfer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Transfer.h">
+    <ClInclude Include="PgsTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

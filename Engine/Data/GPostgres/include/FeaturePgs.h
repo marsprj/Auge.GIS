@@ -21,19 +21,19 @@ namespace auge
 		virtual Geometry*		GetGeometry();
 		virtual void			Release();
 
-		virtual GValue*			GetValue(g_int)			const;
-		virtual bool			GetBool(g_int i)		const;
-		virtual char			GetChar(g_int i)		const;
-		virtual short			GetShort(g_int i)		const;
-		virtual int				GetInt(g_int i)			const;
-		virtual long			GetLong(g_int i)		const;
-		virtual float			GetFloat(g_int i)		const;
-		virtual double			GetDouble(g_int i)		const;
-		virtual int64			GetInt64(g_int i)		const;
-		virtual const char*		GetString(g_int i)		const;
-		//virtual const AgString*	GetString(g_int i)		const;
-		//virtual const AgBlob*	GetBlob(g_int i)		const;
-		//virtual const TIME_STRU*GetTime(g_int i)		const;
+		virtual GValue*			GetValue(g_uint i)			const;
+		virtual bool			GetBool(g_uint i)		const;
+		virtual char			GetChar(g_uint i)		const;
+		virtual short			GetShort(g_uint i)		const;
+		virtual int				GetInt(g_uint i)			const;
+		virtual long			GetLong(g_uint i)		const;
+		virtual float			GetFloat(g_uint i)		const;
+		virtual double			GetDouble(g_uint i)		const;
+		virtual int64			GetInt64(g_uint i)		const;
+		virtual const char*		GetString(g_uint i)		const;
+		//virtual const AgString*	GetString(g_uint i)		const;
+		//virtual const AgBlob*	GetBlob(g_uint i)		const;
+		//virtual const TIME_STRU*GetTime(g_uint i)		const;
 
 		virtual GValue*			GetValue(const char* name)		const;
 		virtual bool			GetBool(const char* name)		const;
@@ -55,9 +55,11 @@ namespace auge
 
 	private:
 		g_uint			m_index;
+		g_uint			m_nfield;
 		g_int			m_fid;
 		g_int			m_geom_findex;
 		FeatureClassPgs	*m_pFeatureClass;
+		GFields			*m_pFields;
 		Geometry		*m_pGeometry;
 		PGresult		*m_pgResult;
 		

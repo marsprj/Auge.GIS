@@ -72,19 +72,19 @@ namespace auge
 		virtual g_int				GetFID() = 0;
 		virtual Geometry*			GetGeometry() = 0;
 
-		virtual GValue*				GetValue(g_int i)		const = 0;
-		virtual bool				GetBool(g_int i)		const = 0;
-		virtual char				GetChar(g_int i)		const = 0;
-		virtual short				GetShort(g_int i)		const = 0;
-		virtual int					GetInt(g_int i)			const = 0;
-		virtual long				GetLong(g_int i)		const = 0;
-		virtual float				GetFloat(g_int i)		const = 0;
-		virtual double				GetDouble(g_int i)		const = 0;
-		virtual int64				GetInt64(g_int i)		const = 0;
-		virtual const char*			GetString(g_int i)		const = 0;
-		//virtual const AgString*	GetString(g_int i)		const = 0;
-		//virtual const AgBlob*	GetBlob(g_int i)		const = 0;
-		//virtual const TIME_STRU*GetTime(g_int i)		const = 0;
+		virtual GValue*				GetValue(g_uint i)		const = 0;
+		virtual bool				GetBool(g_uint i)		const = 0;
+		virtual char				GetChar(g_uint i)		const = 0;
+		virtual short				GetShort(g_uint i)		const = 0;
+		virtual int					GetInt(g_uint i)		const = 0;
+		virtual long				GetLong(g_uint i)		const = 0;
+		virtual float				GetFloat(g_uint i)		const = 0;
+		virtual double				GetDouble(g_uint i)		const = 0;
+		virtual int64				GetInt64(g_uint i)		const = 0;
+		virtual const char*			GetString(g_uint i)		const = 0;
+		//virtual const AgString*	GetString(g_uint i)		const = 0;
+		//virtual const AgBlob*	GetBlob(g_uint i)		const = 0;
+		//virtual const TIME_STRU*GetTime(g_uint i)		const = 0;
 
 		virtual GValue*				GetValue(const char* name)		const = 0;
 		virtual bool				GetBool(const char* name)		const = 0;

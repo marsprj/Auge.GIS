@@ -1,19 +1,19 @@
-#include "ShapeTest.h"
+#include "PgsTest.h"
 #include "AugeFeature.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(ShapeTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
 
-void ShapeTest::setUp() 
+void PgsTest::setUp() 
 {
 	printf("setUp\n");
 }
 
-void ShapeTest::tearDown()
+void PgsTest::tearDown()
 {
 	printf("tearDown\n");
 }
 
-void ShapeTest::ReadTest()
+void PgsTest::ReadTest()
 {
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=GISDB;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
@@ -43,10 +43,11 @@ void ShapeTest::ReadTest()
 	while((pFeature=pCursor->NextFeature())!=NULL)
 	{	
 		pGeometry = pFeature->GetGeometry();
-		wkb = pGeometry->AsBinary();
+		//wkb = pGeometry->AsBinary();
 
-		auge::WKBPoint* pWKBPoint = (auge::WKBPoint*)wkb;
-		printf("[%d]:%f,%f\n", pFeature->GetFID(),pWKBPoint->point.x, pWKBPoint->point.y);
+		printf("[Name]:%s\n", pFeature->GetString("name"));
+		//auge::WKBPoint* pWKBPoint = (auge::WKBPoint*)wkb;
+		//printf("[%d]:%f,%f\n", pFeature->GetFID(),pWKBPoint->point.x, pWKBPoint->point.y);
 
 		pFeature->Release();
 	}

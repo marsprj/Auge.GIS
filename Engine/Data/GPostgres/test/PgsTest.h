@@ -3,9 +3,9 @@
 
 #include "cppunit/extensions/HelperMacros.h" 
 
-class ShapeTest : public CppUnit::TestFixture 
+class PgsTest : public CppUnit::TestFixture 
 {
-	CPPUNIT_TEST_SUITE(ShapeTest);
+	CPPUNIT_TEST_SUITE(PgsTest);
 	CPPUNIT_TEST(ReadTest);
 	CPPUNIT_TEST_SUITE_END();
 public:

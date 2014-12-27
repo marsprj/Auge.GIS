@@ -9,7 +9,8 @@ namespace auge
 	m_pgResult(NULL),
 	m_fid(-1),
 	m_geom_findex(-1),
-	m_index(-1)
+	m_index(-1),
+	m_pFields(NULL)
 	{
 
 	}
@@ -51,11 +52,12 @@ namespace auge
 	{
 		m_fid = -1;
 		m_index = index;
+		m_nfield = PQnfields(pgResult);
 		m_geom_findex = geom_findex;
 		m_pgResult = pgResult;
 		m_pFeatureClass = pFeatureClass;
 		m_pFeatureClass->AddRef();
-
+		m_pFields = m_pFeatureClass->GetFields();
 		return true;
 	}
 
@@ -85,54 +87,145 @@ namespace auge
 		return pGeometry;
 	}
 
-	GValue*	FeaturePgs::GetValue(g_int i) const
+	GValue*	FeaturePgs::GetValue(g_uint i) const
 	{
+
 		return NULL;
 	}
 
-	bool FeaturePgs::GetBool(g_int i) const
+	bool FeaturePgs::GetBool(g_uint i) const
 	{
+		if(i>=m_nfield)
+		{
+			return false;
+		}
+		GField* pField = m_pFields->GetField(i);
+		if(pField->GetType()!=augeFieldTypeBool)
+		{
+			return false;
+		}
+		const char* value = PQgetvalue(m_pgResult, m_index, i);
+
 		return true;
 	}
 
-	char FeaturePgs::GetChar(g_int i) const
+	char FeaturePgs::GetChar(g_uint i) const
 	{
+		if(i>=m_nfield)
+		{
+			return false;
+		}
+		GField* pField = m_pFields->GetField(i);
+		if(pField->GetType()!=augeFieldTypeChar)
+		{
+			return false;
+		}
+		const char* value = PQgetvalue(m_pgResult, m_index, i);
 		return 0;
 	}
 
-	short FeaturePgs::GetShort(g_int i) const
+	short FeaturePgs::GetShort(g_uint i) const
 	{
-		return 0;
+		if(i>=m_nfield)
+		{
+			return false;
+		}
+		GField* pField = m_pFields->GetField(i);
+		if(pField->GetType()!=augeFieldTypeShort)
+		{
+			return 0;
+		}
+		const char* value = PQgetvalue(m_pgResult, m_index, i);
+		return atoi(value);
 	}
 
-	int	FeaturePgs::GetInt(g_int i) const
+	int	FeaturePgs::GetInt(g_uint i) const
 	{
-		return 0;
+		if(i>=m_nfield)
+		{
+			return false;
+		}
+		GField* pField = m_pFields->GetField(i);
+		if(pField->GetType()!=augeFieldTypeInt)
+		{
+			return 0;
+		}
+		const char* value = PQgetvalue(m_pgResult, m_index, i);
+		return atoi(value);
 	}
 
-	long FeaturePgs::GetLong(g_int i) const
+	long FeaturePgs::GetLong(g_uint i) const
 	{
-		return 0;
+		if(i>=m_nfield)
+		{
+			return false;
+		}
+		GField* pField = m_pFields->GetField(i);
+		if(pField->GetType()!=augeFieldTypeLong)
+		{
+			return 0;
+		}
+		const char* value = PQgetvalue(m_pgResult, m_index, i);
+		return atoi(value);
 	}
 
-	float FeaturePgs::GetFloat(g_int i) const
+	float FeaturePgs::GetFloat(g_uint i) const
 	{
-		return 0;
+		if(i>=m_nfield)
+		{
+			return false;
+		}
+		GField* pField = m_pFields->GetField(i);
+		if(pField->GetType()!=augeFieldTypeFloat)
+		{
+			return 0;
+		}
+		const char* value = PQgetvalue(m_pgResult, m_index, i);
+		return atof(value);
 	}
 
-	double FeaturePgs::GetDouble(g_int i) const
+	double FeaturePgs::GetDouble(g_uint i) const
 	{
-		return 0;
+		if(i>=m_nfield)
+		{
+			return false;
+		}
+		GField* pField = m_pFields->GetField(i);
+		if(pField->GetType()!=augeFieldTypeDouble)
+		{
+			return 0;
+		}
+		const char* value = PQgetvalue(m_pgResult, m_index, i);
+		return atof(value);
 	}
 
-	int64 FeaturePgs::GetInt64(g_int i)	const
+	int64 FeaturePgs::GetInt64(g_uint i)	const
 	{
-		return 0;
+		if(i>=m_nfield)
+		{
+			return false;
+		}
+		GField* pField = m_pFields->GetField(i);
+		if(pField->GetType()!=augeFieldTypeInt64)
+		{
+			return 0;
+		}
+		const char* value = PQgetvalue(m_pgResult, m_index, i);
+		return atof(value);
 	}
 
-	const char*	FeaturePgs::GetString(g_int i)	const
+	const char*	FeaturePgs::GetString(g_uint i)	const
 	{
-		return NULL;
+		if(i>=m_nfield)
+		{
+			return false;
+		}
+		GField* pField = m_pFields->GetField(i);
+		if(pField->GetType()!=augeFieldTypeString)
+		{
+			return 0;
+		}
+		return PQgetvalue(m_pgResult, m_index, i);
 	}
 
 	GValue*	FeaturePgs::GetValue(const char* name) const
@@ -141,80 +234,79 @@ namespace auge
 		{
 			return NULL;
 		}
-		return NULL;
+		return GetValue(PQfnumber(m_pgResult, name));
 	}
 
 	bool FeaturePgs::GetBool(const char* name) const
 	{
 		if(name==NULL)
 		{
-			return false;
+			return NULL;
 		}
-		
-		return true;
+		return GetBool(PQfnumber(m_pgResult, name));
 	}
 
 	char FeaturePgs::GetChar(const char* name) const
 	{
 		if(name==NULL)
 		{
-			return -1;
+			return NULL;
 		}
-		return 0;
+		return GetChar(PQfnumber(m_pgResult, name));
 	}
 
 	short FeaturePgs::GetShort(const char* name) const
 	{
 		if(name==NULL)
 		{
-			return -1;
+			return NULL;
 		}
-		return 0;
+		return GetShort(PQfnumber(m_pgResult, name));
 	}
 
 	int	FeaturePgs::GetInt(const char* name) const
 	{
 		if(name==NULL)
 		{
-			return -1;
+			return NULL;
 		}
-		return 0;
+		return GetInt(PQfnumber(m_pgResult, name));
 	}
 
 	long FeaturePgs::GetLong(const char* name) const
 	{
 		if(name==NULL)
 		{
-			return -1;
+			return NULL;
 		}
-		return 0;
+		return GetLong(PQfnumber(m_pgResult, name));
 	}
 
 	float FeaturePgs::GetFloat(const char* name) const
 	{
 		if(name==NULL)
 		{
-			return -1;
+			return NULL;
 		}
-		return 0;
+		return GetFloat(PQfnumber(m_pgResult, name));
 	}
 
 	double FeaturePgs::GetDouble(const char* name) const
 	{
 		if(name==NULL)
 		{
-			return -1;
+			return NULL;
 		}
-		return 0;
+		return GetDouble(PQfnumber(m_pgResult, name));
 	}
 
 	int64 FeaturePgs::GetInt64(const char* name)	const
 	{
 		if(name==NULL)
 		{
-			return -1;
+			return NULL;
 		}
-		return 0;
+		return GetInt64(PQfnumber(m_pgResult, name));
 	}
 
 	const char*	FeaturePgs::GetString(const char* name)	const
@@ -223,6 +315,6 @@ namespace auge
 		{
 			return NULL;
 		}
-		return NULL;
+		return GetString(PQfnumber(m_pgResult, name));
 	}
 }

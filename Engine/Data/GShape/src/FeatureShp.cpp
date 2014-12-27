@@ -111,12 +111,12 @@ namespace auge
 		return pGeometry;
 	}
 	
-	GValue*	FeatureShp::GetValue(g_int i) const
+	GValue*	FeatureShp::GetValue(g_uint i) const
 	{
 		return NULL;
 	}
 
-	bool FeatureShp::GetBool(g_int i) const
+	bool FeatureShp::GetBool(g_uint i) const
 	{
 		GField* pField = m_pFields->GetField(i);
 		if(pField==NULL)
@@ -131,7 +131,7 @@ namespace auge
 		return g_stricmp(val, "F");
 	}
 
-	char FeatureShp::GetChar(g_int i) const
+	char FeatureShp::GetChar(g_uint i) const
 	{
 		GField* pField = m_pFields->GetField(i);
 		if(pField==NULL)
@@ -147,7 +147,7 @@ namespace auge
 		return 'a';
 	}
 
-	short FeatureShp::GetShort(g_int i) const
+	short FeatureShp::GetShort(g_uint i) const
 	{
 		GField* pField = m_pFields->GetField(i);
 		if(pField==NULL)
@@ -161,7 +161,7 @@ namespace auge
 		return ::DBFReadIntegerAttribute(m_pDBFHandle, m_fid, i);
 	}
 
-	int	FeatureShp::GetInt(g_int i) const
+	int	FeatureShp::GetInt(g_uint i) const
 	{
 		GField* pField = m_pFields->GetField(i);
 		if(pField==NULL)
@@ -175,7 +175,7 @@ namespace auge
 		return ::DBFReadIntegerAttribute(m_pDBFHandle, m_fid, i);
 	}
 
-	long FeatureShp::GetLong(g_int i) const
+	long FeatureShp::GetLong(g_uint i) const
 	{
 		GField* pField = m_pFields->GetField(i);
 		if(pField==NULL)
@@ -189,7 +189,7 @@ namespace auge
 		return ::DBFReadIntegerAttribute(m_pDBFHandle, m_fid, i);
 	}
 
-	float FeatureShp::GetFloat(g_int i) const
+	float FeatureShp::GetFloat(g_uint i) const
 	{
 		GField* pField = m_pFields->GetField(i);
 		if(pField==NULL)
@@ -203,7 +203,7 @@ namespace auge
 		return ::DBFReadFloatAttribute(m_pDBFHandle, m_fid, i);
 	}
 
-	double FeatureShp::GetDouble(g_int i) const
+	double FeatureShp::GetDouble(g_uint i) const
 	{
 		GField* pField = m_pFields->GetField(i);
 		if(pField==NULL)
@@ -217,7 +217,7 @@ namespace auge
 		return ::DBFReadDoubleAttribute(m_pDBFHandle, m_fid, i);
 	}
 
-	int64 FeatureShp::GetInt64(g_int i)	const
+	int64 FeatureShp::GetInt64(g_uint i)	const
 	{
 		GField* pField = m_pFields->GetField(i);
 		if(pField==NULL)
@@ -231,7 +231,7 @@ namespace auge
 		return ::DBFReadDoubleAttribute(m_pDBFHandle, m_fid, i);
 	}
 
-	const char*	FeatureShp::GetString(g_int i)	const
+	const char*	FeatureShp::GetString(g_uint i)	const
 	{
 		GField* pField = m_pFields->GetField(i);
 		if(pField==NULL)
