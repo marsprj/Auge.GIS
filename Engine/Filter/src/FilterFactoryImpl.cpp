@@ -1,4 +1,13 @@
 #include "FilterFactoryImpl.h"
+#include "LiteralImpl.h"
+#include "BBoxFilterImpl.h"
+#include "IsBetweenFilterImpl.h"
+#include "IDFilterImpl.h"
+#include "BinaryComparisonFilterImpl.h"
+#include "BinaryLogicFilterImpl.h"
+#include "PropertyNameImpl.h"
+#include "LiteralImpl.h"
+#include "QueryImpl.h"
 
 namespace auge
 {
@@ -18,58 +27,86 @@ namespace auge
 
 	}
 
-	GLiteral* FilterFactoryImpl::CreateLiteral()
+	Literal* FilterFactoryImpl::CreateLiteral()
 	{
-		return NULL;
+		return (new LiteralImpl());
 	}
 
-	GLiteral* FilterFactoryImpl::CreateLiteral(GValue* pValue)
+	Literal* FilterFactoryImpl::CreateLiteral(GValue* pValue)
 	{
-		return NULL;
+		if(pValue==NULL)
+		{
+			return NULL;
+		}
+		LiteralImpl *pLiteral = new LiteralImpl();
+		pLiteral->SetValue(pValue);
+		return pLiteral;
 	}
 
-	GPropertyName* FilterFactoryImpl::CreatePropertyName(const char* szName)
+	PropertyName* FilterFactoryImpl::CreatePropertyName(const char* szName)
 	{
-		return NULL;
+		if(szName==NULL)
+		{
+			return NULL;
+		}
+
+		PropertyNameImpl *pPropertyName = new PropertyNameImpl();
+		pPropertyName->SetName(szName);
+		return pPropertyName;
 	}
 
-	GBBoxFilter* FilterFactoryImpl::CreateBBoxFilter()
+	BBoxFilter* FilterFactoryImpl::CreateBBoxFilter()
 	{
-		return NULL;
+		return (new BBoxFilterImpl());
 	}
 
-	GBBoxFilter* FilterFactoryImpl::CreateBBoxFilter(GExpression* pPropertyName, GEnvelope& bbox)
+	BBoxFilter* FilterFactoryImpl::CreateBBoxFilter(Expression* pPropertyName, GEnvelope& bbox)
 	{
-		return NULL;
+		BBoxFilterImpl* pBBoxFilter = NULL;
+		pBBoxFilter = new BBoxFilterImpl();
+		pBBoxFilter->SetPropertyName(pPropertyName);
+		pBBoxFilter->SetExtent(bbox);
+
+		return pBBoxFilter;
 	}
 
-	GIDFilter* FilterFactoryImpl::CreateIDFilter()
+	IDFilter* FilterFactoryImpl::CreateIDFilter()
 	{
-		return NULL;
+		return (new IDFilterImpl());
 	}
 
-	GIsBetweenFilter* FilterFactoryImpl::CreateIsBetweenFilter()
+	IsBetweenFilter* FilterFactoryImpl::CreateIsBetweenFilter()
 	{
-		return NULL;
+		return (new IsBetweenFilterImpl());
 	}
 
-	GIsBetweenFilter* FilterFactoryImpl::CreateIsBetweenFilter(GExpression* pPropertyName,GExpression* pLowerBound,GExpression* pUpperBound)
+	IsBetweenFilter* FilterFactoryImpl::CreateIsBetweenFilter(Expression* pPropertyName,Expression* pLowerBound,Expression* pUpperBound)
 	{
-		return NULL;
+		if(pLowerBound==NULL||pLowerBound==NULL||pUpperBound==NULL)
+		{
+			return NULL;
+		}
+
+		IsBetweenFilterImpl* pIsBetween = new IsBetweenFilterImpl();
+		pIsBetween->SetExpression(pPropertyName);
+		pIsBetween->SetLowerBound(pLowerBound);
+		pIsBetween->SetUpperBound(pUpperBound);
+
+		return pIsBetween;
 	}
 
-	GBinaryComparisonFilter* FilterFactoryImpl::CreateBinaryComparisonFilter()
+	BinaryComparisonFilter* FilterFactoryImpl::CreateBinaryComparisonFilter()
 	{
-		return NULL;
+		return (new BinaryComparisonFilterImpl());
 	}
 
-	GBinaryLogicFilter*	FilterFactoryImpl::CreateBinaryLogicFilter()
+	BinaryLogicFilter*	FilterFactoryImpl::CreateBinaryLogicFilter()
 	{
-		return NULL;
+		return (new BinaryLogicFilterImpl());
 	}
 
 	GQuery*	FilterFactoryImpl::CreateQuery()
 	{
-		return NULL;
+		return (new GQueryImpl());
 	}
 }

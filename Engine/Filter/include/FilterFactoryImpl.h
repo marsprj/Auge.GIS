@@ -13,22 +13,22 @@ namespace auge
 	public:
 		//---------------------------------------------------------------
 		// Expression
-		virtual	GLiteral*				CreateLiteral();
-		virtual	GLiteral*				CreateLiteral(GValue* pValue);
-		virtual GPropertyName*			CreatePropertyName(const char* szName);
+		virtual	Literal*				CreateLiteral();
+		virtual	Literal*				CreateLiteral(GValue* pValue);
+		virtual PropertyName*			CreatePropertyName(const char* szName);
 
 		//---------------------------------------------------------------
 		// Filter
-		virtual	GBBoxFilter*			CreateBBoxFilter();
-		virtual	GBBoxFilter*			CreateBBoxFilter(GExpression* pPropertyName, GEnvelope& bbox);
+		virtual	BBoxFilter*				CreateBBoxFilter();
+		virtual	BBoxFilter*				CreateBBoxFilter(Expression* pPropertyName, GEnvelope& bbox);
 
-		virtual GIDFilter*				CreateIDFilter();
+		virtual IDFilter*				CreateIDFilter();
 
-		virtual GIsBetweenFilter*		CreateIsBetweenFilter();
-		virtual GIsBetweenFilter*		CreateIsBetweenFilter(GExpression* pPropertyName,GExpression* pLowerBound,GExpression* pUpperBound);
+		virtual IsBetweenFilter*		CreateIsBetweenFilter();
+		virtual IsBetweenFilter*		CreateIsBetweenFilter(Expression* pPropertyName,Expression* pLowerBound,Expression* pUpperBound);
 
-		virtual GBinaryComparisonFilter*	CreateBinaryComparisonFilter();
-		virtual GBinaryLogicFilter*			CreateBinaryLogicFilter();
+		virtual BinaryComparisonFilter*	CreateBinaryComparisonFilter();
+		virtual BinaryLogicFilter*			CreateBinaryLogicFilter();
 
 		virtual GQuery*					CreateQuery();
 	};

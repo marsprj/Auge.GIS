@@ -33,32 +33,6 @@ enum augeFilterType
 	augeFilterComparison					= 1,
 	augeFilterLogic							= 2,
 	augeFilterSpatial						= 3
-
-// 	augeFilterUnknown						= 0,
-// 	augeFilterSQL							= 1,	// SQL≤È—Ø
-// 	augeFilterExtent						= 2,	// æÿ–Œ∑∂Œß≤È—Ø
-// 	augeFilterIds							= 3,	// ∏˘æ›fid≤È—Ø
-// 	augeFilterDistance						= 4,	// æ‡¿Î≤È—Ø
-// 	augeFilterIdentical						= 5,
-// 	augeFilterDWithin						= 6,
-// 	augeFilterWithin						= 7,
-// 	augeFilterContain						= 8,
-// 	augeFilterIntersects					= 9,
-// 	augeFilterDIntersects					= 10,
-// 	augeFilterExpression					= 11,
-// 
-// 	augeFilterBinaryLogical					= 12,
-// 	augeFilterBinaryComparison				= 13,
-// 	augeFilterRectangle						= 14,	// æÿ–Œ∑∂Œß≤È—Ø
-// 	augeFilterBinarySpatial					= 15,
-// 
-// 	augeFilterBetween,
-// 	augeFilterIsNull,
-// 	augeFilterLike,
-// 	augeFilterPropertyName,
-// 	augeFilterLiteral
-
-	
 };	
 
 /**
@@ -131,13 +105,13 @@ typedef enum augeExpressionType
 //========================================================================
 // Filter
 //========================================================================
-class GOrderBy;
+class OrderBy;
 class GFilter;
-class GExpression;
-class GLiteral;
-class GEnumExpression;
-class GEnumFilter;
-class GFilterFactory;
+class Expression;
+class Literal;
+class EnumExpression;
+class EnumFilter;
+class FilterFactory;
 
 /*
  * GFilter
@@ -154,13 +128,13 @@ public:
 
 //------------------------------------------------------------------------
 /**
- * GComparisionFilter
+ * ComparisionFilter
  */
-class GComparisionFilter : public GFilter
+class ComparisionFilter : public GFilter
 {
 public:
-	GComparisionFilter(){}
-	virtual ~GComparisionFilter(){}
+	ComparisionFilter(){}
+	virtual ~ComparisionFilter(){}
 public:
 	virtual		augeComparisonOperator	GetOperator() = 0;
 };
@@ -168,23 +142,23 @@ public:
 /**
  * GLogicFilter
  */
-class GLogicFilter : public GFilter
+class LogicFilter : public GFilter
 {
 public:
-	GLogicFilter(){}
-	virtual ~GLogicFilter(){}
+	LogicFilter(){}
+	virtual ~LogicFilter(){}
 public:
 	virtual		augeLogicalOperator	GetOperator() = 0;
 };
 
 /**
- * GSpatialFilter
+ * SpatialFilter
  */
-class GSpatialFilter : public GFilter
+class SpatialFilter : public GFilter
 {
 public:
-	GSpatialFilter(){}
-	virtual ~GSpatialFilter(){}
+	SpatialFilter(){}
+	virtual ~SpatialFilter(){}
 public:
 	virtual		augeSpatialOperator	GetOperator() = 0;
 };
@@ -194,66 +168,66 @@ public:
 /* Comparison Filter Begin                                              */
 /************************************************************************/
 /**
- * GIsBetweenFilter
+ * IsBetweenFilter
  */
-class GIsBetweenFilter : public GComparisionFilter
+class IsBetweenFilter : public ComparisionFilter
 {
 public:
-	GIsBetweenFilter(){}
-	virtual ~GIsBetweenFilter(){}
+	IsBetweenFilter(){}
+	virtual ~IsBetweenFilter(){}
 
 public:	
-	virtual		GExpression*		GetExpression()	= 0;
-	virtual		bool				SetExpression(GExpression* pExpression)	= 0;
+	virtual		Expression*			GetExpression()	= 0;
+	virtual		bool				SetExpression(Expression* pExpression)	= 0;
 
-	virtual		GExpression*		GetLowerBound()	= 0;
-	virtual		bool				SetLowerBound(GExpression* pLowerBound)	= 0;
+	virtual		Expression*			GetLowerBound()	= 0;
+	virtual		bool				SetLowerBound(Expression* pLowerBound)	= 0;
 
-	virtual		GExpression*		GetUpperBound()	= 0;
-	virtual		bool				SetUpperBound(GExpression* pUpperBound)	= 0;
+	virtual		Expression*			GetUpperBound()	= 0;
+	virtual		bool				SetUpperBound(Expression* pUpperBound)	= 0;
 };
 
 /**
- * GIsLikeFilter
+ * IsLikeFilter
  */
-class GIsLikeFilter : public GComparisionFilter
+class IsLikeFilter : public ComparisionFilter
 {
 public:
-	GIsLikeFilter(){}
-	virtual ~GIsLikeFilter(){}
+	IsLikeFilter(){}
+	virtual ~IsLikeFilter(){}
 
 public:	
-	virtual		GExpression*		GetPropertyName()	= 0;
-	virtual		GLiteral*			GetLiteral()	= 0;
+	virtual		Expression*			GetPropertyName()	= 0;
+	virtual		Literal*			GetLiteral()	= 0;
 	virtual		const char*			GetWildCard() = 0;
 	virtual		const char*			GetSingleChar() = 0;
 	virtual		const char*			GetEscapeChar() = 0;
 };
 
 /**
- * GIsNullFilter
+ * IsNullFilter
  */
-class GIsNullFilter : public GComparisionFilter
+class IsNullFilter : public ComparisionFilter
 {
 public:
-	GIsNullFilter(){}
-	virtual ~GIsNullFilter(){}
+	IsNullFilter(){}
+	virtual ~IsNullFilter(){}
 
 public:	
-	virtual		GExpression*		GetPropertyName()	= 0;
+	virtual		Expression*		GetPropertyName()	= 0;
 };
 
-class GBinaryComparisonFilter : public GComparisionFilter
+class BinaryComparisonFilter : public ComparisionFilter
 {
 public:
-	GBinaryComparisonFilter(){}
-	virtual ~GBinaryComparisonFilter(){}
+	BinaryComparisonFilter(){}
+	virtual ~BinaryComparisonFilter(){}
 public:
 	virtual		augeComparisonOperator	GetOperator()	= 0;
-	virtual		GExpression*			GetExpression1()	= 0;
-	virtual		GExpression*			GetExpression2()	= 0;
-	virtual		void					SetExpression1(GExpression* pExpression)	= 0;
-	virtual		void					SetExpression2(GExpression* pExpression)	= 0;
+	virtual		Expression*				GetExpression1()	= 0;
+	virtual		Expression*				GetExpression2()	= 0;
+	virtual		void					SetExpression1(Expression* pExpression)	= 0;
+	virtual		void					SetExpression2(Expression* pExpression)	= 0;
 	virtual		bool					IsMatchCase()		= 0;
 };
 
@@ -265,28 +239,28 @@ public:
 /* Logic Filter      Begin                                              */
 /************************************************************************/
 /**
- * GBinaryLogicFilter
+ * BinaryLogicFilter
  */
-class GBinaryLogicFilter : public GLogicFilter
+class BinaryLogicFilter : public LogicFilter
 {
 public:
-	GBinaryLogicFilter(){}
-	virtual ~GBinaryLogicFilter(){}
+	BinaryLogicFilter(){}
+	virtual ~BinaryLogicFilter(){}
 public:
 	virtual		void				SetOperator(augeLogicalOperator	oper) = 0;
 	virtual		augeLogicalOperator	GetOperator() = 0;
 	virtual		bool				AddFilter(GFilter* pFilter) = 0;
-	virtual		GEnumFilter*		GetFilters() = 0;
+	virtual		EnumFilter*		GetFilters() = 0;
 };
 
 /**
- * GUnaryLogicFilter
+ * UnaryLogicFilter
  */
-class GUnaryLogicFilter :  public GLogicFilter
+class UnaryLogicFilter :  public LogicFilter
 {
 public:
-	GUnaryLogicFilter(){}
-	virtual ~GUnaryLogicFilter(){}
+	UnaryLogicFilter(){}
+	virtual ~UnaryLogicFilter(){}
 public:
 	virtual		GFilter*			GetFilter() = 0;
 };
@@ -298,16 +272,17 @@ public:
 /**
  * GIDLogicFilter
  */
-class GIDFilter : public GFilter
+class IDFilter : public GFilter
 {
 public:
-	GIDFilter(){}
-	virtual ~GIDFilter(){}
+	IDFilter(){}
+	virtual ~IDFilter(){}
 public:
-	virtual		void				AddID(int id) = 0;
-//	virtual		GEnumID*			GetIDs() = 0;
+	virtual		void					Add(g_uint id) = 0;
+	virtual		g_uint					GetID(g_uint i) = 0;
+	virtual		g_uint					Count() = 0;
 	virtual		augeComparisonOperator	GetOperator() = 0;
-	virtual		void				SetOperator(augeComparisonOperator oper) = 0;
+	virtual		void					SetOperator(augeComparisonOperator oper) = 0;
 };
 
 /************************************************************************/
@@ -317,15 +292,15 @@ public:
 /**
  * BBoxFilter
  */
-class GBBoxFilter : public GSpatialFilter
+class BBoxFilter : public SpatialFilter
 {
 public:
-	GBBoxFilter(){}
-	virtual ~GBBoxFilter(){}
+	BBoxFilter(){}
+	virtual ~BBoxFilter(){}
 public:
 	
-	virtual		GExpression*		GetPropertyName() = 0;
-	virtual		bool				SetPropertyName(GExpression* pPropertyName) = 0;
+	virtual		Expression*			GetPropertyName() = 0;
+	virtual		bool				SetPropertyName(Expression* pPropertyName) = 0;
 
 	virtual		bool				GetExtent(GEnvelope& extent) = 0;
 	virtual		void				SetExtent(GEnvelope& extent) = 0;
@@ -333,27 +308,27 @@ public:
 };
 
 /**
- * GBinarySpatialFilter
+ * BinarySpatialFilter
  */
-class GBinarySpatialFilter : public GSpatialFilter
+class BinarySpatialFilter : public SpatialFilter
 {
 public:
-	GBinarySpatialFilter(){}
-	virtual ~GBinarySpatialFilter(){}
+	BinarySpatialFilter(){}
+	virtual ~BinarySpatialFilter(){}
 public:
-	virtual		GExpression*		GetPropertyName() = 0;
+	virtual		Expression*		GetPropertyName() = 0;
 	virtual		bool				GetExtent(GEnvelope& extent) = 0;
 	virtual		Geometry*			GetGeometry() = 0;
 	virtual		augeSpatialOperator	GetOperator() = 0;
 };
 
-class GDistanceBufferFilter : public GSpatialFilter
+class DistanceBufferFilter : public SpatialFilter
 {
 public:
-	GDistanceBufferFilter(){}
-	virtual ~GDistanceBufferFilter(){}
+	DistanceBufferFilter(){}
+	virtual ~DistanceBufferFilter(){}
 public:
-	virtual		GExpression*		GetPropertyName() = 0;
+	virtual		Expression*		GetPropertyName() = 0;
 	virtual		bool				GetExtent(GEnvelope& extent) = 0;
 	virtual		Geometry*			GetGeometry() = 0;
 
@@ -367,83 +342,83 @@ public:
 
 //------------------------------------------------------------------------
 /**
- * GExpression
+ * Expression
  */
-class GExpression : public GObject
+class Expression : public GObject
 {
 public:
-	GExpression(){}
-	virtual ~GExpression(){}
+	Expression(){}
+	virtual ~Expression(){}
 public:
 	virtual		augeExpressionType	GetType() = 0;
 	virtual		void				Release() = 0;
 };
 
 /**
- * GLiteral
+ * Literal
  */
-class GLiteral : public GExpression
+class Literal : public Expression
 {
 public:
-	GLiteral(){}
-	virtual ~GLiteral(){}
+	Literal(){}
+	virtual ~Literal(){}
 public:
 	virtual		bool				SetValue(GValue* pValue) = 0;
 	virtual		GValue*				GetValue() = 0;
 };
 
 /**
- * GFunction
+ * Function
  */
-class GFunction : public GExpression
+class Function : public Expression
 {
 public:
-	GFunction(){}
-	virtual ~GFunction(){}
+	Function(){}
+	virtual ~Function(){}
 public:
-	virtual		bool				AddExpression(GExpression* pExpression) = 0;
-	virtual		GEnumExpression*	GetExpressions() = 0;
+	virtual		bool				AddExpression(Expression* pExpression) = 0;
+	virtual		EnumExpression*		GetExpressions() = 0;
 	virtual		const char*			GetName() = 0;
 };
 
-class GPropertyName : public GExpression
+class PropertyName : public Expression
 {
 public:
-	GPropertyName(){}
-	virtual ~GPropertyName(){}
+	PropertyName(){}
+	virtual ~PropertyName(){}
 public:
 	virtual		const char*			GetName() = 0;
 };
 
-class GArithmeticExpression : public GExpression
+class ArithmeticExpression : public Expression
 {
 public:
-	GArithmeticExpression(){}
-	virtual ~GArithmeticExpression(){}
+	ArithmeticExpression(){}
+	virtual ~ArithmeticExpression(){}
 public:
 	virtual		augeArithmeticOperator	GetOperator() = 0;
-	virtual		GExpression*			GetLeft() = 0;
-	virtual		GExpression*			GetRight() = 0;
+	virtual		Expression*			GetLeft() = 0;
+	virtual		Expression*			GetRight() = 0;
 };
 
 //------------------------------------------------------------------------
 
-class GEnumExpression : public GObject
+class EnumExpression : public GObject
 {
 public:
-	GEnumExpression(){}
-	virtual ~GEnumExpression(){}
+	EnumExpression(){}
+	virtual ~EnumExpression(){}
 public:
-	virtual		GExpression*		Next() = 0;
+	virtual		Expression*			Next() = 0;
 	virtual		void				Reset() = 0;
 	virtual		void				Release() = 0;
 };
 
-class GEnumFilter : public GObject
+class EnumFilter : public GObject
 {
 public:
-	GEnumFilter(){}
-	virtual ~GEnumFilter(){}
+	EnumFilter(){}
+	virtual ~EnumFilter(){}
 public:
 	virtual		GFilter*			Next() = 0;
 	virtual		void				Reset() = 0;
@@ -478,8 +453,8 @@ public:
     virtual const GFilter*   GetFilter() const = 0;
 
 	// Order
-	virtual		  RESULTCODE  SetOrderBy(GOrderBy* pOrderBy) = 0;
-	virtual		  GOrderBy*  GetOrderBy() = 0;
+	virtual		  RESULTCODE  SetOrderBy(OrderBy* pOrderBy) = 0;
+	virtual		  OrderBy*  GetOrderBy() = 0;
 
 	// SetSQL
 	virtual bool			  SetSQL(const char* szsql) = 0;
@@ -491,15 +466,15 @@ public:
 //------------------------------------------------------------------------
 
 /**
- * GOrderBy
+ * OrderBy
  *
  * Query ≈≈–Ú
  */
-class GOrderBy : public GObject
+class OrderBy : public GObject
 {
 protected:
-	GOrderBy(){}
-	virtual ~GOrderBy(){}
+	OrderBy(){}
+	virtual ~OrderBy(){}
 public:
 	virtual	RESULTCODE			AddField(const char* szFieldName) = 0;
 	virtual const char*			GetField(g_uint i) = 0;
@@ -522,24 +497,24 @@ protected:
 public:
 	//---------------------------------------------------------------
 	// Expression
-	virtual	GLiteral*				CreateLiteral() = 0;
-	virtual	GLiteral*				CreateLiteral(GValue* pValue) = 0;
-	virtual GPropertyName*			CreatePropertyName(const char* szName) = 0;
+	virtual	Literal*				CreateLiteral() = 0;
+	virtual	Literal*				CreateLiteral(GValue* pValue) = 0;
+	virtual PropertyName*			CreatePropertyName(const char* szName) = 0;
 
 	//---------------------------------------------------------------
 	// Filter
-	virtual	GBBoxFilter*			CreateBBoxFilter() = 0;
-	virtual	GBBoxFilter*			CreateBBoxFilter(GExpression* pPropertyName, GEnvelope& bbox) = 0;
+	virtual	BBoxFilter*				CreateBBoxFilter() = 0;
+	virtual	BBoxFilter*				CreateBBoxFilter(Expression* pPropertyName, GEnvelope& bbox) = 0;
 
-	virtual GIDFilter*				CreateIDFilter() = 0;
+	virtual IDFilter*				CreateIDFilter() = 0;
 
-	virtual GIsBetweenFilter*		CreateIsBetweenFilter() = 0;
-	virtual GIsBetweenFilter*		CreateIsBetweenFilter(GExpression* pPropertyName,
-														  GExpression* pLowerBound,
-														  GExpression* pUpperBound) = 0;
+	virtual IsBetweenFilter*		CreateIsBetweenFilter() = 0;
+	virtual IsBetweenFilter*		CreateIsBetweenFilter(Expression* pPropertyName,
+														  Expression* pLowerBound,
+														  Expression* pUpperBound) = 0;
 
-	virtual GBinaryComparisonFilter*	CreateBinaryComparisonFilter() = 0;
-	virtual GBinaryLogicFilter*			CreateBinaryLogicFilter() = 0;
+	virtual BinaryComparisonFilter*	CreateBinaryComparisonFilter() = 0;
+	virtual BinaryLogicFilter*		CreateBinaryLogicFilter() = 0;
 
 	virtual GQuery*					CreateQuery() = 0;
 };

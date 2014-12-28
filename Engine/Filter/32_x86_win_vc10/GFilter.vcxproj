@@ -83,10 +83,46 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\AugeFilter.h" />
+    <ClInclude Include="..\include\ArithmeticExpressionImpl.h" />
+    <ClInclude Include="..\include\BBoxFilterImpl.h" />
+    <ClInclude Include="..\include\BinaryComparisonFilterImpl.h" />
+    <ClInclude Include="..\include\BinaryLogicFilterImpl.h" />
+    <ClInclude Include="..\include\BinarySpatialFilterImpl.h" />
+    <ClInclude Include="..\include\DistanceBufferFilterImpl.h" />
+    <ClInclude Include="..\include\EnumExpressionImpl.h" />
+    <ClInclude Include="..\include\EnumFilterImpl.h" />
     <ClInclude Include="..\include\FilterFactoryImpl.h" />
+    <ClInclude Include="..\include\FunctionImpl.h" />
+    <ClInclude Include="..\include\IDFilterImpl.h" />
+    <ClInclude Include="..\include\IsBetweenFilterImpl.h" />
+    <ClInclude Include="..\include\IsLikeFilterImpl.h" />
+    <ClInclude Include="..\include\IsNullFilterImpl.h" />
+    <ClInclude Include="..\include\LiteralImpl.h" />
+    <ClInclude Include="..\include\OrderByImpl.h" />
+    <ClInclude Include="..\include\PropertyNameImpl.h" />
+    <ClInclude Include="..\include\QueryImpl.h" />
+    <ClInclude Include="..\include\UnaryLogicFilterImpl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\ArithmeticExpressionImpl.cpp" />
+    <ClCompile Include="..\src\BBoxFilterImpl.cpp" />
+    <ClCompile Include="..\src\BinaryComparisonFilterImpl.cpp" />
+    <ClCompile Include="..\src\BinaryLogicFilterImpl.cpp" />
+    <ClCompile Include="..\src\BinarySpatialFilterImpl.cpp" />
+    <ClCompile Include="..\src\DistanceBufferFilterImpl.cpp" />
+    <ClCompile Include="..\src\EnumExpressionImpl.cpp" />
+    <ClCompile Include="..\src\EnumFilterImpl.cpp" />
     <ClCompile Include="..\src\FilterFactoryImpl.cpp" />
+    <ClCompile Include="..\src\FunctionImpl.cpp" />
+    <ClCompile Include="..\src\IDFilterImpl.cpp" />
+    <ClCompile Include="..\src\IsBetweenFilterImpl.cpp" />
+    <ClCompile Include="..\src\IsLikeFilterImpl.cpp" />
+    <ClCompile Include="..\src\IsNullFilterImpl.cpp" />
+    <ClCompile Include="..\src\LiteralImpl.cpp" />
+    <ClCompile Include="..\src\OrderByImpl.cpp" />
+    <ClCompile Include="..\src\PropertyNameImpl.cpp" />
+    <ClCompile Include="..\src\QueryImpl.cpp" />
+    <ClCompile Include="..\src\UnaryLogicFilterImpl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
