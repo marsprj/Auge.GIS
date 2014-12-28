@@ -14,8 +14,9 @@ namespace auge
 		FeatureCursorShp();
 		virtual ~FeatureCursorShp();
 	public:
-		virtual Feature*	NextFeature();
-		virtual void		Release();
+		virtual Feature*		NextFeature();
+		virtual FeatureClass*	GetFeatureClass();
+		virtual void			Release();
 
 	public:
 		bool	Create(FeatureClassShp* pFeatureClass, SHPHandle pSHPHandle, DBFHandle pDBFHandle);

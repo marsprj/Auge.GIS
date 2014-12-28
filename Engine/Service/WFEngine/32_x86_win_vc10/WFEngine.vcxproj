@@ -86,6 +86,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\DescribeFeatureTypeResponse.cpp" />
     <ClCompile Include="..\src\GetCapabilitiesRequest.cpp" />
     <ClCompile Include="..\src\GetCapabilitiesResponse.cpp" />
+    <ClCompile Include="..\src\GetFeatureRequest.cpp" />
+    <ClCompile Include="..\src\GetFeatureResponse.cpp" />
     <ClCompile Include="..\src\WFEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +95,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\DescribeFeatureTypeResponse.h" />
     <ClInclude Include="..\include\GetCapabilitiesRequest.h" />
     <ClInclude Include="..\include\GetCapabilitiesResponse.h" />
+    <ClInclude Include="..\include\GetFeatureRequest.h" />
+    <ClInclude Include="..\include\GetFeatureResponse.h" />
     <ClInclude Include="..\include\WFEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -28,6 +28,10 @@ namespace auge
 
 	g_int FeaturePgs::GetFID()
 	{
+		if(m_fid<0)
+		{
+			m_fid = GetInt("gid");
+		}
 		return m_fid;
 	}
 
@@ -58,6 +62,7 @@ namespace auge
 		m_pFeatureClass = pFeatureClass;
 		m_pFeatureClass->AddRef();
 		m_pFields = m_pFeatureClass->GetFields();
+		
 		return true;
 	}
 

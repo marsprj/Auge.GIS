@@ -3,6 +3,8 @@
 #include "GetCapabilitiesResponse.h"
 #include "DescribeFeatureTypeRequest.h"
 #include "DescribeFeatureTypeResponse.h"
+#include "GetFeatureRequest.h"
+#include "GetFeatureResponse.h"
 
 #include "AugeCore.h"
 #include "AugeField.h"
@@ -100,19 +102,22 @@ namespace auge
 		}
 		else if(g_stricmp(request, "GetFeature")==0)
 		{
-			//GetMapRequest* pRequest = new GetMapRequest();
-
-			//if(!pRequest->Create(props))
-			//{
-			//	GLogger* pLogger = augeGetLoggerInstance();
-			//	pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
-			//	pRequest->Release();
-			//	pRequest = NULL;
-			//}
-			//pWebRequest = pRequest;
+			GetFeatureRequest* pRequest = new GetFeatureRequest();
+			if(!pRequest->Create(props))
+			{
+				GLogger* pLogger = augeGetLoggerInstance();
+				pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+				pRequest->Release();
+				pRequest = NULL;
+			}
+			pWebRequest = pRequest;
 
 		}
 		else if(g_stricmp(request, "GetFeatureInfo")==0)
+		{
+
+		}
+		else if(g_stricmp(request, "Transaction")==0)
 		{
 
 		}
@@ -163,15 +168,8 @@ namespace auge
 		}
 		else if(g_stricmp(request, "GetFeature")==0)
 		{
-			//char msg[AUGE_MSG_MAX];
-			//g_sprintf(msg, "WFS doesn't Request [%s].", request);
-
-			//GLogger* pLogger = augeGetLoggerInstance();
-			//pLogger->Error(msg);
-
-			//WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
-			//pExpResopnse->SetMessage(msg);
-			//pWebResponse = pExpResopnse;
+			GetFeatureRequest* pRequest = static_cast<GetFeatureRequest*>(pWebRequest);
+			pWebResponse = GetFeature(pRequest, pWebContext, pMap);
 		}
 
 		return pWebResponse;
@@ -667,6 +665,85 @@ namespace auge
 		pxDoc->Release();
 
 		return true;
+	}
+
+	WebResponse* WebFeatureEngine::GetFeature(GetFeatureRequest* pRequest, WebContext* pWebContext, Map* pMap)
+	{
+		const char* typeName = NULL;
+		Layer* pLayer = NULL;
+		GLogger *pLogger = augeGetLoggerInstance();
+
+		typeName = pRequest->GetTypeName();
+		pLayer = pMap->GetLayer(typeName);
+		if(pLayer==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Service %s has not FeatureType %s,",pWebContext->GetService(), typeName);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+			pExpResopnse->SetMessage(msg);
+			return pExpResopnse;
+		}
+
+		if(pLayer->GetType()!=augeLayerFeature)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "%s is not a Feature Layer",typeName);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+			pExpResopnse->SetMessage(msg);
+			return pExpResopnse;
+		}
+
+		FeatureClass* pFeatureClass = NULL;
+		FeatureLayer* pFLayer = static_cast<FeatureLayer*>(pLayer);
+		pFeatureClass = pFLayer->GetFeatureClass();
+		if(pFeatureClass==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Cannot Get FeatureType %s",typeName);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+			pExpResopnse->SetMessage(msg);
+			return pExpResopnse;
+		}
+
+		const char* version = pRequest->GetVersion();
+		WebResponse* pWebResponse = NULL;
+		if(strcmp(version, "1.0.0")==0)
+		{
+			pWebResponse = GetFeature_1_1_0(pRequest, pWebContext, typeName, pFeatureClass);
+		}
+		else if(strcmp(version, "1.1.0")==0)
+		{
+			pWebResponse = GetFeature_1_1_0(pRequest, pWebContext, typeName, pFeatureClass);
+		}
+		else
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Unsupported Version %s", version);
+
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+			pExpResopnse->SetMessage(msg);
+			pWebResponse = pExpResopnse;
+		}
+		return pWebResponse;
+	}
+	
+	WebResponse* WebFeatureEngine::GetFeature_1_1_0(GetFeatureRequest* pRequest,WebContext* pWebContext, const char* typeName, FeatureClass* pFeatureClass)
+	{
+		FeatureCursor* pCursor = NULL;
+		pCursor = pFeatureClass->Query();
+
+		GetFeatureResponse *pResponse = new GetFeatureResponse(pRequest);
+		pResponse->Create(pCursor);
+		return pResponse;
 	}
 
 	const char* WebFeatureEngine::GetOgcFieldType(augeFieldType type)

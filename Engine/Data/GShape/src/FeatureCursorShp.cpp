@@ -20,6 +20,11 @@ namespace auge
 		AUGE_SAFE_RELEASE(m_pFeatureClass);
 	}
 
+	FeatureClass* FeatureCursorShp::GetFeatureClass()
+	{
+		return m_pFeatureClass;
+	}
+
 	Feature* FeatureCursorShp::NextFeature()
 	{
 		if(m_Cursor<0||(unsigned)m_Cursor>=m_Count)
@@ -31,7 +36,6 @@ namespace auge
 		FeatureShp* pFeatureShp = new FeatureShp();
 		if(pFeatureShp!=NULL)
 		{
-			//index = (m_bIsAll) ? m_Cursor : m_SHPIDs[m_Cursor];
 			index = m_Cursor;
 			if(!pFeatureShp->Create(index, m_pFeatureClass))
 			{

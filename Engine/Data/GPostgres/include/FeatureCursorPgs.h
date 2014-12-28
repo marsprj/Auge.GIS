@@ -14,8 +14,9 @@ namespace auge
 		FeatureCursorPgs();
 		virtual ~FeatureCursorPgs();
 	public:
-		virtual Feature*	NextFeature();
-		virtual void		Release();
+		virtual Feature*		NextFeature();
+		virtual FeatureClass*	GetFeatureClass();
+		virtual void			Release();
 
 	public:
 		bool	Create(FeatureClassPgs* pFeatureClass, PGresult* pgResult);

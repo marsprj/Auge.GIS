@@ -110,7 +110,8 @@ namespace auge
 		FeatureCursor(){}
 		virtual ~FeatureCursor(){}
 	public:
-		virtual Feature*	NextFeature() = 0;
+		virtual Feature*		NextFeature() = 0;
+		virtual FeatureClass*	GetFeatureClass() = 0;
 	};
 
 	class FeatureInsertCommand : public GObject

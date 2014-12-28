@@ -11,6 +11,7 @@ namespace auge
 	class GetMapRequest;
 	class GetCapabilitiesRequest;
 	class DescribeFeatureTypeRequest;
+	class GetFeatureRequest;
 
 	class WebFeatureEngine : public WebEngine
 	{
@@ -39,12 +40,15 @@ namespace auge
 		bool					Support(const char* request);
 		WebResponse*			GetCapabilities(GetCapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
 		WebResponse*			DescribeFeatureType(DescribeFeatureTypeRequest* pRequest, WebContext* pWebContext, Map* pMap);
+		WebResponse*			GetFeature(GetFeatureRequest* pRequest, WebContext* pWebContext, Map* pMap);
 
 		bool					WriteCapabilities(const char* version,WebContext* pWebContext, Map* pMap);
 		bool					WriteCapabilities_1_1_0(WebContext* pWebContext, Map* pMap);
 
 		bool					WriteDescribeFeatureType(const char* version,WebContext* pWebContext, const char* typeName, FeatureClass* pFeatureClass);
 		bool					WriteDescribeFeatureType_1_1_0(WebContext* pWebContext, const char* typeName, FeatureClass* pFeatureClass);
+
+		WebResponse*			GetFeature_1_1_0(GetFeatureRequest* pRequest, WebContext* pWebContext, const char* typeName, FeatureClass* pFeatureClass);
 
 		const char*				GetOgcFieldType(augeFieldType type);
 		const char*				GetOgcGeometryType(augeGeometryType type);

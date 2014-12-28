@@ -23,6 +23,11 @@ namespace auge
 		AUGE_SAFE_RELEASE(m_pFeatureClass);
 	}
 
+	FeatureClass* FeatureCursorPgs::GetFeatureClass()
+	{
+		return m_pFeatureClass;
+	}
+
 	Feature* FeatureCursorPgs::NextFeature()
 	{
 		if(m_cursor<0||(unsigned)m_cursor>=m_count)
@@ -34,7 +39,6 @@ namespace auge
 		FeaturePgs* pFeature = new FeaturePgs();
 		if(pFeature!=NULL)
 		{
-			//index = (m_bIsAll) ? m_cursor : m_SHPIDs[m_cursor];
 			index = m_cursor;
 			if(!pFeature->Create(index, m_geom_findex, m_pgResult, m_pFeatureClass))
 			{
