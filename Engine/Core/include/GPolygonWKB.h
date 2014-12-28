@@ -16,6 +16,7 @@ namespace auge
 		virtual const GEnvelope*	Envelope() const;
 		virtual const char*			AsText(bool multi=false);
 		virtual g_uchar*			AsBinary() const;
+		virtual Geometry*			Clone() const;
 		virtual void				Release();
 
 	public:

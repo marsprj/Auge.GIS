@@ -201,6 +201,16 @@ namespace auge
 		return pCursor;
 	}
 
+	FeatureCursor* FeatureClassShp::Query(GEnvelope& extent, augeCursorType type/*=augeStaticCursor*/)
+	{
+		return Query();
+	}
+
+	FeatureCursor* FeatureClassShp::Query(GFilter* pFilter, augeCursorType type/*=augeStaticCursor*/)
+	{
+		return Query();
+	}
+
 	augeGeometryType FeatureClassShp::GetGeometryType(int shpType)
 	{
 		switch(shpType)

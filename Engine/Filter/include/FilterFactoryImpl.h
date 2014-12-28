@@ -28,9 +28,13 @@ namespace auge
 		virtual IsBetweenFilter*		CreateIsBetweenFilter(Expression* pPropertyName,Expression* pLowerBound,Expression* pUpperBound);
 
 		virtual BinaryComparisonFilter*	CreateBinaryComparisonFilter();
-		virtual BinaryLogicFilter*			CreateBinaryLogicFilter();
+		virtual BinaryLogicFilter*		CreateBinaryLogicFilter();
 
 		virtual GQuery*					CreateQuery();
+
+		virtual const char*				AsString(augeLogicalOperator oper);
+		virtual const char*				AsString(augeComparisonOperator oper);
+		virtual const char*				AsString(augeArithmeticOperator oper);
 	};
 
 }

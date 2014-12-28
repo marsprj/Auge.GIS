@@ -1,7 +1,7 @@
 #include "Transfer.h"
 #include "AugeFeature.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(TransferTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(TransferTest);
 
 void TransferTest::setUp() 
 {

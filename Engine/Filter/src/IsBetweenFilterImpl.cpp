@@ -38,6 +38,11 @@ namespace auge
 		return augeComOprIsBetween;
 	}
 
+	void IsBetweenFilterImpl::SetOperator(augeComparisonOperator oper)
+	{
+		
+	}
+
 	Expression* IsBetweenFilterImpl::GetExpression()
 	{
 		return m_pExpression;

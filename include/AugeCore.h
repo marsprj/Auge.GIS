@@ -30,6 +30,8 @@ namespace auge
 		GreenShift		= 8,
 		BlueShift		= 0
 	};
+
+	class Geometry;
 	
 	class AUGE_API GColor
 	{
@@ -88,11 +90,157 @@ namespace auge
 		std::map<std::string, std::string> m_props;
 	};
 
-	class GValue : public GObject
+	class GBlob : public GObject
 	{
 	protected:
-		GValue(){}
-		virtual ~GValue(){}
+		GBlob(){}
+		virtual ~GBlob(){}
+	};
+
+	class AUGE_API GValue : public GObject
+	{
+	public:
+		GValue();
+		GValue(augeValueType vt);
+		GValue(bool    val);
+		GValue(char    val);
+		GValue(short   val);
+		GValue(int     val);
+		GValue(long    val);
+		GValue(int64 val);
+		GValue(float   val);
+		GValue(double  val);
+		GValue(const char* val);
+		//GValue(AgString*   val,bool copy = false);
+		//GValue(const char*   val,bool copy = false);
+		GValue(GBlob*     val,bool copy = false);
+		GValue(TIME_STRU* val,bool copy = false);
+		GValue(Geometry*  val,bool copy = false);
+		//GValue(const AgString*   val);
+		GValue(const GBlob*     val);
+		GValue(const TIME_STRU* val);
+		GValue(const Geometry*  val);
+		GValue(const GValue& other);
+		GValue(const GValue* other);
+		virtual ~GValue();
+	public:
+		augeValueType	GetType() const;
+		void			Clear();
+		bool			IsNull() const;
+		void			SetType(augeValueType vt);
+		bool			GetBool()		const;
+		char			GetChar()		const;
+		short			GetShort()		const;
+		int				GetInt()		const;
+		long			GetLong()		const;
+		float			GetFloat()		const;
+		double			GetDouble()		const;
+		int64			GetInt64()		const;
+		//const AgString*	GetString()		const;
+		const const char*	GetString()		const;
+		const GBlob*	GetBlob()		const;
+		const TIME_STRU*GetTime()		const;
+		const Geometry*	GetGeometry()	const;
+		//AgString*		GetString();
+		const char*		GetString();
+		GBlob*			GetBlob();
+		TIME_STRU*		GetTime();
+		Geometry*		GetGeometry();
+		long			SetBool(bool val);
+		long			SetChar(char val);
+		long			SetShort(short val);
+		long			SetInt(int val);
+		long			SetLong(long val);
+		long			SetFloat(float val);
+		long			SetDouble(double val);
+		long			SetInt64(int64 val);
+		//long			SetString  (AgString*   val,bool copy = false);
+		long			SetString  (const char* val,bool copy = false);
+		long			SetBlob    (GBlob*     val,bool copy = false);
+		long			SetTime    (TIME_STRU* val,bool copy = false);
+		long			SetGeometry(Geometry*  val,bool copy = false);
+		long			SetValue(const GValue& rValue);
+		long			SetValue(const GValue* rValue);
+		bool			Equals(const GValue* pValue) const;
+		bool			Equals(const GValue& rValue) const;
+		//AgString		ToString() const;
+
+		void            SetModified(bool modified);
+		bool            IsModified() const;
+	public: // operator functions
+		GValue& operator=(const GValue& other);
+		GValue& operator=(bool val);
+		GValue& operator=(char val);
+		GValue& operator=(short val);
+		GValue& operator=(int val);
+		GValue& operator=(long val);
+		GValue& operator=(int64 val);
+		GValue& operator=(float val);
+		GValue& operator=(double val);
+
+		GValue& operator=(const char* val); //LiuDL
+
+		//GValue& operator=(const AgString* val);
+		GValue& operator=(const GBlob* val);
+		GValue& operator=(const TIME_STRU* val);
+		GValue& operator=(const Geometry* val);
+
+		//GValue& operator=(AgString* val);
+		GValue& operator=(GBlob* val);
+		GValue& operator=(TIME_STRU* val);
+		GValue& operator=(Geometry* val);
+
+		// Literal comparison. Types and values must match.
+		bool	operator==(const GValue& other) const;
+		bool	operator!=(const GValue& other) const;
+		bool	operator< (const GValue& other) const;
+		bool	operator<=(const GValue& other) const;
+		bool	operator> (const GValue& other) const;
+		bool	operator>=(const GValue& other) const;
+
+		operator char* () const;
+		operator bool    () const;
+		operator char    () const;
+		operator int     () const;
+		operator int64 () const;
+		operator float   () const;
+		operator double  () const;
+
+	public: // Serialization functions
+		long	SerializeSize() const;
+		void	Serialize(char* pBytes,long lBytesSize) const;
+		bool	Deserialize(const char* pBytes, long lByteSize);
+
+		// 外部管理对象，此处不负责释放
+		void	Release();
+
+	private:
+		typedef struct  tagVARIANT_STRU
+		{
+			short vt;
+			union
+			{
+				char       chrVal;
+				bool       blrVal;
+				short      shtVal;
+				int        intVal;
+				long       lngVal;
+				int64	   i64Val;
+
+				float      fltVal;
+				double     dblVal;
+
+				char*	   strVal;
+				GBlob*	   blbVal;
+				TIME_STRU* timVal;
+				Geometry*  gmtVal;
+			};
+			bool m_isModified;
+		} VARIANT_STRU;
+	private:
+		void InitVariant(VARIANT_STRU& val);
+	private:
+		VARIANT_STRU  m_Variant;
 	};
 
 	class GError

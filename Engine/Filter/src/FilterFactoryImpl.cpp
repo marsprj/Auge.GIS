@@ -109,4 +109,71 @@ namespace auge
 	{
 		return (new GQueryImpl());
 	}
+
+
+	const char*	FilterFactoryImpl::AsString(augeLogicalOperator oper)
+	{
+		const char* szoper = "AND";
+		switch(oper)
+		{
+		case augeLogOprAnd:
+			szoper = "AND";
+			break;
+		case augeLogOprOr:
+			szoper = "OR";
+			break;
+		case augeLogOprNot:
+			szoper = "NOT";
+			break;
+		}
+		return szoper;
+	}
+
+	const char*	FilterFactoryImpl::AsString(augeComparisonOperator oper)
+	{
+		const char* szoper = "=";
+		switch(oper)
+		{
+		case augeComOprEqual:
+			szoper = "=";
+			break;
+		case augeComOprNotEqual:
+			szoper = "<>";
+			break;
+		case augeComOprLessThan:
+			szoper = "<";
+			break;
+		case augeComOprGreaterThan:
+			szoper = ">";
+			break;
+		case augeComOprLessThanOrEqalTo:
+			szoper = "<=";
+			break;
+		case augeComOprGreaterThanOrEqalTo:
+			szoper = ">=";
+			break;
+		}
+		return szoper;
+	}
+
+	const char*	FilterFactoryImpl::AsString(augeArithmeticOperator oper)
+	{
+		const char* szoper = "+";
+		switch(oper)
+		{
+		case augeAriOprAdd:
+			szoper = "+";
+			break;
+		case augeAriOprSub:
+			szoper = "-";
+			break;
+		case augeAriOprMul:
+			szoper = "*";
+			break;
+		case augeAriOprDiv:
+			szoper = "/";
+			break;
+		}
+		return szoper;
+	}
 }

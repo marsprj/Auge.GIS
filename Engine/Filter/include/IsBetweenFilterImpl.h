@@ -15,6 +15,7 @@ namespace auge
 	public:	
 		virtual		augeFilterType		GetType();
 		virtual		augeComparisonOperator	GetOperator();
+		virtual		void				SetOperator(augeComparisonOperator oper);
 
 		virtual		Expression*			GetExpression();
 		virtual		bool				SetExpression(Expression* pExpression);

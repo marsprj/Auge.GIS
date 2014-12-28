@@ -50,6 +50,7 @@ namespace auge
 		//virtual		  bool			Envelope(GEnvelope& envelope) =0;	// : Gometry
 		virtual       const char*	AsText(bool multi=false)					=0;		// : String.Release
 		virtual       g_uchar*		AsBinary()            const =0;		// : Binary.
+		virtual	Geometry*			Clone()				  const =0;
 	};
 
 	class GPoint : public Geometry

@@ -133,6 +133,36 @@ typedef enum augeFieldType
 	augeFieldTypeSerial	  = 16
 
 }augeFieldType;
+
+typedef enum augeValueType_e
+{
+	augeValueTypeNone			= 0,
+	augeValueTypeBool			= 1,
+	augeValueTypeChar			= 2,
+	augeValueTypeShort			= 3,
+	augeValueTypeInt			= 4,
+	augeValueTypeLong			= 5,
+	augeValueTypeInt64			= 6,
+	augeValueTypeFloat			= 7,
+	augeValueTypeDouble			= 8,
+	augeValueTypeString			= 9,
+	augeValueTypeTime			= 10,
+	augeValueTypeBLOB			= 11,
+	augeValueTypeGeometry		= 12
+} augeValueType;
+
+typedef struct  tagTIME_STRU
+{
+	unsigned short usYear;
+	unsigned short usMonth;
+	unsigned short usDayOfWeek;
+	unsigned short usDay;
+	unsigned short usHour;
+	unsigned short usMinute;
+	unsigned short usSecond;
+	unsigned short usMilliseconds;
+} TIME_STRU;
+
 //==============================================================================
 
 #define AUGE_SAFE_RELEASE(p) {if((p)!=NULL){(p)->Release(); (p)=NULL;}} 

@@ -26,6 +26,7 @@ namespace auge
 	class GField;
 	class GFields;
 	class FeatureInsertCommand;
+	class GFilter;
 
 	typedef enum augeCursorType
 	{
@@ -54,11 +55,13 @@ namespace auge
 		virtual const char*			GetName() = 0;
 		virtual g_uint				GetSRID() = 0;
 		virtual GEnvelope&			GetExtent() = 0;
-
+	
 		virtual GFields*			GetFields() = 0;
 		virtual GField*				GetField(const char* name) = 0;
 		
 		virtual FeatureCursor*		Query(augeCursorType type=augeStaticCursor) = 0;
+		virtual FeatureCursor*		Query(GEnvelope& extent, augeCursorType type=augeStaticCursor) = 0;
+		virtual FeatureCursor*		Query(GFilter* pFilter, augeCursorType type=augeStaticCursor) = 0;
 		
 		virtual FeatureInsertCommand* CreateInsertCommand() = 0;
 	};

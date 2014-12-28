@@ -35,6 +35,11 @@ namespace auge
 		return m_operator;
 	}
 
+	void BinaryComparisonFilterImpl::SetOperator(augeComparisonOperator oper)
+	{
+		m_operator = oper;
+	}
+
 	Expression* BinaryComparisonFilterImpl::GetExpression1()
 	{
 		return m_pExpression1;

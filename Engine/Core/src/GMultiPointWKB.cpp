@@ -5,62 +5,66 @@
 namespace auge
 {
 	GMultiPointWKB::GMultiPointWKB():
-m_pWKBMultiPoint(NULL),
-	m_attach(false)
-{
-
-}
-
-GMultiPointWKB::~GMultiPointWKB()
-{
-	if(m_attach)
+	m_pWKBMultiPoint(NULL),
+		m_attach(false)
 	{
-		if(m_pWKBMultiPoint!=NULL)
+
+	}
+
+	GMultiPointWKB::~GMultiPointWKB()
+	{
+		if(m_attach)
 		{
-			auge_free(m_pWKBMultiPoint);
-			m_pWKBMultiPoint = NULL;
+			if(m_pWKBMultiPoint!=NULL)
+			{
+				auge_free(m_pWKBMultiPoint);
+				m_pWKBMultiPoint = NULL;
+			}
+		}
+
+	}
+
+	augeGeometryType GMultiPointWKB::GeometryType()
+	{
+		return augeGTPoint;
+	}
+
+	const GEnvelope* GMultiPointWKB::Envelope() const
+	{
+		return &m_extent;
+	}
+
+	const char*	GMultiPointWKB::AsText(bool multi/*=false*/)
+	{
+		if(m_wkt.empty())
+		{
+			WKTWriter writer;
+			writer.Write(m_wkt, (g_uchar*)m_pWKBMultiPoint);
+		}
+		return m_wkt.c_str();
+	}
+
+	g_uchar* GMultiPointWKB::AsBinary() const
+	{
+		return (g_uchar*)m_pWKBMultiPoint;
+	}
+
+	void GMultiPointWKB::Release()
+	{
+		if(!ReleaseRef())
+		{
+			delete this;
 		}
 	}
 
-}
-
-augeGeometryType GMultiPointWKB::GeometryType()
-{
-	return augeGTPoint;
-}
-
-const GEnvelope* GMultiPointWKB::Envelope() const
-{
-	return &m_extent;
-}
-
-const char*	GMultiPointWKB::AsText(bool multi/*=false*/)
-{
-	if(m_wkt.empty())
+	bool GMultiPointWKB::Create(g_uchar *wkb, bool attach)
 	{
-		WKTWriter writer;
-		writer.Write(m_wkt, (g_uchar*)m_pWKBMultiPoint);
+		m_pWKBMultiPoint = (WKBMultiPoint*)wkb;
+		m_attach = attach;
+		return true;
 	}
-	return m_wkt.c_str();
-}
-
-g_uchar* GMultiPointWKB::AsBinary() const
-{
-	return (g_uchar*)m_pWKBMultiPoint;
-}
-
-void GMultiPointWKB::Release()
-{
-	if(!ReleaseRef())
+	Geometry* GMultiPointWKB::Clone() const
 	{
-		delete this;
+		return NULL;
 	}
-}
-
-bool GMultiPointWKB::Create(g_uchar *wkb, bool attach)
-{
-	m_pWKBMultiPoint = (WKBMultiPoint*)wkb;
-	m_attach = attach;
-	return true;
-}
 }

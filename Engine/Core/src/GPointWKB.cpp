@@ -63,4 +63,9 @@ namespace auge
 		m_attach = attach;
 		return true;
 	}
+
+	Geometry* GPointWKB::Clone() const
+	{
+		return NULL;
+	}
 }

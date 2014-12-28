@@ -3,7 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDEngine", "GDEngine.vcxproj", "{07AF14F1-448D-4018-80BF-0298C9A7D022}"
 	ProjectSection(ProjectDependencies) = postProject
-		{C17AA319-6571-48F3-BFD6-111B3B0445C5} = {C17AA319-6571-48F3-BFD6-111B3B0445C5}
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698} = {5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}
 	EndProjectSection
 EndProject
@@ -15,8 +14,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCore", "..\..\..\Core\32_x86_win_vc10\GCore.vcxproj", "{175ED294-86C6-45A1-9E7A-770AE765EB23}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GPostgres", "..\..\GPostgres\32_x86_win_vc10\GPostgres.vcxproj", "{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GShape", "..\..\GShape\32_x86_win_vc10\GShape.vcxproj", "{C17AA319-6571-48F3-BFD6-111B3B0445C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,10 +37,6 @@ Global
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Debug|Win32.Build.0 = Debug|Win32
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Release|Win32.ActiveCfg = Release|Win32
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Release|Win32.Build.0 = Release|Win32
-		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Debug|Win32.ActiveCfg = Debug|Win32
-		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Debug|Win32.Build.0 = Debug|Win32
-		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Release|Win32.ActiveCfg = Release|Win32
-		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

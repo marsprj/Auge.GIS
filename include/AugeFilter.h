@@ -136,7 +136,8 @@ public:
 	ComparisionFilter(){}
 	virtual ~ComparisionFilter(){}
 public:
-	virtual		augeComparisonOperator	GetOperator() = 0;
+	virtual	augeComparisonOperator	GetOperator() = 0;
+	virtual	void					SetOperator(augeComparisonOperator oper) = 0;
 };
 
 /**
@@ -250,7 +251,7 @@ public:
 	virtual		void				SetOperator(augeLogicalOperator	oper) = 0;
 	virtual		augeLogicalOperator	GetOperator() = 0;
 	virtual		bool				AddFilter(GFilter* pFilter) = 0;
-	virtual		EnumFilter*		GetFilters() = 0;
+	virtual		EnumFilter*			GetFilters() = 0;
 };
 
 /**
@@ -316,7 +317,7 @@ public:
 	BinarySpatialFilter(){}
 	virtual ~BinarySpatialFilter(){}
 public:
-	virtual		Expression*		GetPropertyName() = 0;
+	virtual		Expression*			GetPropertyName() = 0;
 	virtual		bool				GetExtent(GEnvelope& extent) = 0;
 	virtual		Geometry*			GetGeometry() = 0;
 	virtual		augeSpatialOperator	GetOperator() = 0;
@@ -328,7 +329,7 @@ public:
 	DistanceBufferFilter(){}
 	virtual ~DistanceBufferFilter(){}
 public:
-	virtual		Expression*		GetPropertyName() = 0;
+	virtual		Expression*			GetPropertyName() = 0;
 	virtual		bool				GetExtent(GEnvelope& extent) = 0;
 	virtual		Geometry*			GetGeometry() = 0;
 
@@ -437,8 +438,8 @@ protected:
 	virtual ~GQuery(){}
 public:
     //--------------------------------------------------------------------------
-    virtual const char*       GetFeatureClassName() const = 0;
-    virtual       RESULTCODE  SetFeatureClassName(const char* szClassName) = 0;
+    virtual const char*			GetFeatureClassName() const = 0;
+    virtual       RESULTCODE	SetFeatureClassName(const char* szClassName) = 0;
     //--------------------------------------------------------------------------
 	// SubField
     virtual       int         GetSubFieldCount() const = 0;
@@ -449,18 +450,18 @@ public:
 	virtual		  bool		  IsStarFields() = 0;
 
 	// Filter
-    virtual       bool        SetFilter(GFilter* pFilter) = 0;     
-    virtual const GFilter*   GetFilter() const = 0;
+    virtual       bool			SetFilter(GFilter* pFilter) = 0;     
+    virtual const GFilter*		GetFilter() const = 0;
 
 	// Order
-	virtual		  RESULTCODE  SetOrderBy(OrderBy* pOrderBy) = 0;
-	virtual		  OrderBy*  GetOrderBy() = 0;
+	virtual		  RESULTCODE	SetOrderBy(OrderBy* pOrderBy) = 0;
+	virtual		  OrderBy*		GetOrderBy() = 0;
 
 	// SetSQL
-	virtual bool			  SetSQL(const char* szsql) = 0;
-    virtual const char*       GetSQL() const = 0;
+	virtual bool				SetSQL(const char* szsql) = 0;
+    virtual const char*			GetSQL() const = 0;
 
-    virtual       void        Release() = 0;
+    virtual       void			Release() = 0;
 };
 
 //------------------------------------------------------------------------
@@ -517,6 +518,10 @@ public:
 	virtual BinaryLogicFilter*		CreateBinaryLogicFilter() = 0;
 
 	virtual GQuery*					CreateQuery() = 0;
+
+	virtual const char*				AsString(augeLogicalOperator oper) = 0;
+	virtual const char*				AsString(augeComparisonOperator oper) = 0;
+	virtual const char*				AsString(augeArithmeticOperator oper) = 0;
 };
 
 

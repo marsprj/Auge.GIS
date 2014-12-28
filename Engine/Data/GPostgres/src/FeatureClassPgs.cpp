@@ -49,7 +49,6 @@ namespace auge
 			if(PQresultStatus(pgResult)==PGRES_TUPLES_OK)
 			{
 				const char* value = PQgetvalue(pgResult, 0, 0);
-				double xmin, ymin, xmax,ymax;
 				sscanf(value, "BOX(%lf %lf,%lf %lf)", &m_extent.m_xmin,&m_extent.m_ymin,&m_extent.m_xmax,&m_extent.m_ymax);
 			}
 			PQclear(pgResult);
@@ -104,8 +103,48 @@ namespace auge
 	{
 		std::string sql;
 		SQLBuilder::BuildQuery(sql,this);
-		//sql = "select st_asbinary(the_geom) as the_geom from ";
-		//sql.append(m_name);
+
+		PGresult* pgResult = NULL;
+		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		if(pgResult==NULL)
+		{
+			return NULL;
+		}
+
+		FeatureCursorPgs* pCursor = new FeatureCursorPgs();
+		if(!pCursor->Create(this, pgResult))
+		{
+			pCursor->Release();
+			pCursor = NULL;
+		}
+		return pCursor;
+	}
+
+	FeatureCursor* FeatureClassPgs::Query(GEnvelope& extent, augeCursorType type/*=augeStaticCursor*/)
+	{
+		std::string sql;
+		SQLBuilder::BuildQuery(sql,extent,this);
+
+		PGresult* pgResult = NULL;
+		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		if(pgResult==NULL)
+		{
+			return NULL;
+		}
+
+		FeatureCursorPgs* pCursor = new FeatureCursorPgs();
+		if(!pCursor->Create(this, pgResult))
+		{
+			pCursor->Release();
+			pCursor = NULL;
+		}
+		return pCursor;
+	}
+
+	FeatureCursor* FeatureClassPgs::Query(GFilter* pFilter, augeCursorType type/*=augeStaticCursor*/)
+	{
+		std::string sql;
+		SQLBuilder::BuildQuery(sql,pFilter,this);
 
 		PGresult* pgResult = NULL;
 		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
