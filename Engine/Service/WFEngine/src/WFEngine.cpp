@@ -742,7 +742,7 @@ namespace auge
 		pCursor = pFeatureClass->Query();
 
 		GetFeatureResponse *pResponse = new GetFeatureResponse(pRequest);
-		pResponse->Create(pCursor);
+		pResponse->SetFeatureCursor(pCursor);
 		return pResponse;
 	}
 

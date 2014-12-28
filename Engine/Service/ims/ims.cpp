@@ -194,7 +194,8 @@ auge::WebRequest* CreateWebRequest_Get(rude::CGI& cgi)
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities&styles=&bbox=-180,-90,180,90&width=800&height=600&transparent=false&bgcolor=#ff0000";
 
 		//query_string = "servicename=world&service=wfs&version=1.1.0&request=getcapabilities";
-		query_string = "servicename=world&service=WFS&version=1.1.0&request=DescribeFeatureType&typeName=radi:rivers";
+		//query_string = "servicename=world&service=WFS&version=1.1.0&request=DescribeFeatureType&typeName=radi:rivers";
+		query_string = "servicename=world&service=WFS&version=1.1.0&request=GetFeature&typeName=radi:rivers";
 		
 	}
 	pLogger->Debug(query_string);
