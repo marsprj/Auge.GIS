@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc"><ogc:Beyond><ogc:PropertyName>Shape</ogc:PropertyName><ogc:Geometry>POINT (1 2)</ogc:Geometry><Distance unit="meters">5.0</Distance></ogc:Beyond></ogc:Filter>

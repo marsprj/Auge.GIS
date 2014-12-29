@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc"><ogc:And><ogc:PropertyIsGreaterThan><ogc:PropertyName>population</ogc:PropertyName><ogc:Literal>100</ogc:Literal></ogc:PropertyIsGreaterThan><ogc:PropertyIsLessThan><ogc:PropertyName>population</ogc:PropertyName><ogc:Literal>300</ogc:Literal></ogc:PropertyIsLessThan><ogc:Not><ogc:PropertyIsEqualTo><ogc:PropertyName>Region</ogc:PropertyName><ogc:Literal>Asia</ogc:Literal></ogc:PropertyIsEqualTo></ogc:Not></ogc:And></ogc:Filter>

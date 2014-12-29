@@ -18,24 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Transfer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PgsTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OgcFilterTest.cpp">
+    <ClCompile Include="FilterTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Transfer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PgsTest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OgcFilterTest.h">
+    <ClInclude Include="FilterTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

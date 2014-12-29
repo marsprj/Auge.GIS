@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc"><ogc:PropertyIsBetween><ogc:LowerBoundary><ogc:Literal>100</ogc:Literal></ogc:LowerBoundary><ogc:UpperBoundary><ogc:Literal>300</ogc:Literal></ogc:UpperBoundary><ogc:PropertyName>population</ogc:PropertyName></ogc:PropertyIsBetween></ogc:Filter>

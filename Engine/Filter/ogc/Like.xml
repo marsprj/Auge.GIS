@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc"><ogc:PropertyIsLike wildCard="*" singleChar="#" escapeChar="!"><ogc:PropertyName>name</ogc:PropertyName><ogc:Literal>*aa##</ogc:Literal></ogc:PropertyIsLike></ogc:Filter>

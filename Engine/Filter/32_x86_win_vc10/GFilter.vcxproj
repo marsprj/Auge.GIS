@@ -39,7 +39,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../include;%AUGE_GIS_HOME%/include;$(IncludePath)</IncludePath>
+    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;$(IncludePath)</IncludePath>
     <LibraryPath>%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)D</TargetName>
   </PropertyGroup>
@@ -92,6 +92,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\EnumExpressionImpl.h" />
     <ClInclude Include="..\include\EnumFilterImpl.h" />
     <ClInclude Include="..\include\FilterFactoryImpl.h" />
+    <ClInclude Include="..\include\FilterReaderImpl.h" />
     <ClInclude Include="..\include\FunctionImpl.h" />
     <ClInclude Include="..\include\IDFilterImpl.h" />
     <ClInclude Include="..\include\IsBetweenFilterImpl.h" />
@@ -113,6 +114,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\EnumExpressionImpl.cpp" />
     <ClCompile Include="..\src\EnumFilterImpl.cpp" />
     <ClCompile Include="..\src\FilterFactoryImpl.cpp" />
+    <ClCompile Include="..\src\FilterReaderImpl.cpp" />
     <ClCompile Include="..\src\FunctionImpl.cpp" />
     <ClCompile Include="..\src\IDFilterImpl.cpp" />
     <ClCompile Include="..\src\IsBetweenFilterImpl.cpp" />

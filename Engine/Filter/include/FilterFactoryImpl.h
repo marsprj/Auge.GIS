@@ -29,12 +29,15 @@ namespace auge
 
 		virtual BinaryComparisonFilter*	CreateBinaryComparisonFilter();
 		virtual BinaryLogicFilter*		CreateBinaryLogicFilter();
+		virtual UnaryLogicFilter*		CreateUnaryLogicFilter();
 
 		virtual GQuery*					CreateQuery();
 
 		virtual const char*				AsString(augeLogicalOperator oper);
 		virtual const char*				AsString(augeComparisonOperator oper);
 		virtual const char*				AsString(augeArithmeticOperator oper);
+
+		virtual FilterReader*			CreateFilerReader(GFields* pFields);
 	};
 
 }

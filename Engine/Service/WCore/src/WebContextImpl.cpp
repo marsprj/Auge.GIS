@@ -251,14 +251,14 @@ namespace auge
 		auge_make_path(cache_home, NULL, pdir, "cache", NULL);
 #endif
 		m_cache_path = cache_home;
-		if(access(cache_home, 4))
+		if(g_access(cache_home, 4))
 		{
 			auge_mkdir(cache_home);
 		}
 
 		char cache_protocol[AUGE_PATH_MAX];
 		auge_make_path(cache_protocol, NULL, cache_home, "protocol", NULL);
-		if(access(cache_protocol, 4))
+		if(g_access(cache_protocol, 4))
 		{
 			auge_mkdir(cache_protocol);
 		}
@@ -266,7 +266,7 @@ namespace auge
 
 		char cache_map[AUGE_PATH_MAX];
 		auge_make_path(cache_map, NULL, cache_home, "map", NULL);
-		if(access(cache_map, 4))
+		if(g_access(cache_map, 4))
 		{
 			auge_mkdir(cache_map);
 		}

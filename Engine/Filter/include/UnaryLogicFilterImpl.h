@@ -13,7 +13,10 @@ public:
 	virtual ~UnaryLogicFilterImpl();
 
 public:	
-	virtual		GFilter*			GetFilter() = 0;
+	virtual augeFilterType			GetType();
+	virtual		augeLogicalOperator	GetOperator();
+	virtual		GFilter*			GetFilter();
+	virtual		void				SetFilter(GFilter* pFilter);
 	virtual		void				Release();
 
 private:

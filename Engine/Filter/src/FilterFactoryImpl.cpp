@@ -5,9 +5,12 @@
 #include "IDFilterImpl.h"
 #include "BinaryComparisonFilterImpl.h"
 #include "BinaryLogicFilterImpl.h"
+#include "UnaryLogicFilterImpl.h"
 #include "PropertyNameImpl.h"
 #include "LiteralImpl.h"
 #include "QueryImpl.h"
+#include "FilterReaderImpl.h"
+#include "AugeField.h"
 
 namespace auge
 {
@@ -105,6 +108,11 @@ namespace auge
 		return (new BinaryLogicFilterImpl());
 	}
 
+	UnaryLogicFilter* FilterFactoryImpl::CreateUnaryLogicFilter()
+	{
+		return (new UnaryLogicFilterImpl());
+	}
+
 	GQuery*	FilterFactoryImpl::CreateQuery()
 	{
 		return (new GQueryImpl());
@@ -175,5 +183,14 @@ namespace auge
 			break;
 		}
 		return szoper;
+	}
+
+	FilterReader* FilterFactoryImpl::CreateFilerReader(GFields* pFields)
+	{
+		if(pFields==NULL)
+		{
+			//return NULL;
+		}
+		return (new FilterReaderImpl(pFields));
 	}
 }

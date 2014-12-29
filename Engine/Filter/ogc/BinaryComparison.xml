@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc"><ogc:PropertyIsGreaterThan><ogc:Function name="SIN"><ogc:PropertyName>DISPERSION_ANGLE</ogc:PropertyName></ogc:Function></ogc:PropertyIsGreaterThan></ogc:Filter>

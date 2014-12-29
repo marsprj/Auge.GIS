@@ -18,9 +18,30 @@ namespace auge
 		}
 	}
 
+
+	augeFilterType UnaryLogicFilterImpl::GetType()
+	{
+		return augeFilterLogic;
+	}
+
+	augeLogicalOperator	UnaryLogicFilterImpl::GetOperator()
+	{
+		return augeLogOprOr;
+	}
+
 	GFilter* UnaryLogicFilterImpl::GetFilter()
 	{
 		return m_pFilter;
+	}
+
+	void UnaryLogicFilterImpl::SetFilter(GFilter* pFilter)
+	{
+		if(m_pFilter!=NULL)
+		{
+			m_pFilter->Release();
+			m_pFilter = NULL;
+		}
+		m_pFilter = pFilter;
 	}
 
 	void UnaryLogicFilterImpl::Release()

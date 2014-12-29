@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc"><ogc:And><ogc:PropertyIsGreaterThan><ogc:PropertyName>population</ogc:PropertyName><ogc:Literal>100</ogc:Literal></ogc:PropertyIsGreaterThan><ogc:PropertyIsLessThan><ogc:PropertyName>population</ogc:PropertyName><ogc:Literal>300</ogc:Literal></ogc:PropertyIsLessThan><ogc:Not><ogc:Intersects><ogc:PropertyName>Shape</ogc:PropertyName><ogc:Geometry>LINESTRING (0 0, 10 10, 20 20)</ogc:Geometry></ogc:Intersects></ogc:Not></ogc:And></ogc:Filter>

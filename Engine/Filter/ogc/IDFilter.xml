@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc"><ogc:GmlObjectId xmlns:gml="http://www.opengis.net/gml" gml:id="cities.1"/><ogc:GmlObjectId xmlns:gml="http://www.opengis.net/gml" gml:id="cities.2"/><ogc:GmlObjectId xmlns:gml="http://www.opengis.net/gml" gml:id="cities.3"/></ogc:Filter>

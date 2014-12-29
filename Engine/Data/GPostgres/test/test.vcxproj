@@ -39,7 +39,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\DevEnv\cppunit-1.13.2\include;%AUGE_GIS_HOME%/include;$(IncludePath)</IncludePath>
+    <IncludePath>E:\DevEnv\cppunit-1.13.2\include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;$(IncludePath)</IncludePath>
     <LibraryPath>E:\DevEnv\cppunit-1.13.2\lib;%AUGE_GIS_HOME%/Dist\32_x86_win_vc10\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -81,10 +81,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="OgcFilterTest.cpp" />
     <ClCompile Include="PgsTest.cpp" />
     <ClCompile Include="Transfer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="OgcFilterTest.h" />
     <ClInclude Include="PgsTest.h" />
     <ClInclude Include="Transfer.h" />
   </ItemGroup>

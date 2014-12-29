@@ -75,6 +75,9 @@
     <ClInclude Include="..\include\UnaryLogicFilterImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\FilterReaderImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\FilterFactoryImpl.cpp">
@@ -132,6 +135,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\UnaryLogicFilterImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\FilterReaderImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

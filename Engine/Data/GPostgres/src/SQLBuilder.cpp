@@ -173,7 +173,9 @@ namespace auge
 		if(pFilter!=NULL)
 		{
 			sql.append(" where ");
-			BuildFilter(sql, pFeatureClass, pFilter);
+			std::string where = "";
+			BuildFilter(where, pFeatureClass, pFilter);
+			sql.append(where);
 		}
 	}
 

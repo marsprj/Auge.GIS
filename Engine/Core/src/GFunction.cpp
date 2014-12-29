@@ -114,7 +114,7 @@ namespace auge
 		char* ptr  = (char*)str + pos;
 		while(pos>=0)
 		{
-			if((*ptr) == ch)
+			if((*ptr--) == ch)
 			{
 				break;
 			}

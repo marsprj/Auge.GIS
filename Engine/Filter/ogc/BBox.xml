@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc"><ogc:BBOX><ogc:PropertyName>shape</ogc:PropertyName><gml:Envelope xmlns:gml="http://www.opengis.net/gml"><gml:lowerCorner>0.0 90.0</gml:lowerCorner><gml:upperCorner>0.0 180.0</gml:upperCorner></gml:Envelope></ogc:BBOX></ogc:Filter>

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc"><ogc:PropertyIsGreaterThan><ogc:Add><ogc:PropertyName>Population</ogc:PropertyName><ogc:Literal>100</ogc:Literal></ogc:Add><ogc:Literal>1600</ogc:Literal></ogc:PropertyIsGreaterThan></ogc:Filter>
