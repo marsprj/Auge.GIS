@@ -288,7 +288,7 @@ top_build_prefix = ../../
 top_builddir = ../..
 top_srcdir = ../..
 AUTOMAKE_OPTION = foreign
-SUBDIRS = GDEngine GPostgres #GShape
+SUBDIRS = GDEngine GPostgres GShape
 all: all-recursive
 
 .SUFFIXES:

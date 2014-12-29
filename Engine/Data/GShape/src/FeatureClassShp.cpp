@@ -82,8 +82,8 @@ namespace auge
 		_makepath(shp_path, NULL, dir, name, "shp");
 		_makepath(dbf_path, NULL, dir, name, "dbf");
 #else
-		sprintf(szSHPPath, "%s/%s.%s", szDir, name, szExt);
-		sprintf(szDBFPath, "%s/%s.%s", szDir, name, "DBF");
+		sprintf(shp_path, "%s/%s.%s", dir, name, "shp");
+		sprintf(dbf_path, "%s/%s.%s", dir, name, "dbf");
 #endif
 
 		CloseSHPFile();

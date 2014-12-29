@@ -20,7 +20,6 @@ libgpostgres_la_SOURCES=\
 		FeatureCursorPgs.cpp \
 		FeatureInsertCommandPgs.cpp \
 		FeaturePgs.cpp \
-		Makefile.am
 		ResultSetPgs.cpp \
 		SQLBuilder.cpp \
 		WorkspacePgs.cpp

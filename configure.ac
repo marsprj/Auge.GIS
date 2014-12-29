@@ -12,6 +12,7 @@ AC_PROG_LIBTOOL
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
+AC_PROG_RANLIB
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-lxml2':
@@ -40,6 +41,8 @@ AC_CONFIG_FILES([Engine/Core/Makefile
                  Engine/Data/GDEngine/src/Makefile
 		 Engine/Data/GPostgres/Makefile
                  Engine/Data/GPostgres/src/Makefile
+                 Engine/Data/GShape/Makefile
+                 Engine/Data/GShape/src/Makefile
                  Makefile
                  include/Makefile])
 AC_OUTPUT
