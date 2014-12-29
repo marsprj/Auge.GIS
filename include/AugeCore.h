@@ -137,7 +137,7 @@ namespace auge
 		double			GetDouble()		const;
 		int64			GetInt64()		const;
 		//const AgString*	GetString()		const;
-		const const char*	GetString()		const;
+		const char*	GetString()		const;
 		const GBlob*	GetBlob()		const;
 		const TIME_STRU*GetTime()		const;
 		const Geometry*	GetGeometry()	const;

@@ -242,4 +242,5 @@ namespace auge
 }
 
 
-#endif __AUGE_GEOMETRY_H__
+#endif //__AUGE_GEOMETRY_H__
+

@@ -89,9 +89,17 @@ typedef unsigned long		g_ulong;
 #	define	g_access	access
 #endif
 
+#define g_max(a,b)    (((a) > (b)) ? (a) : (b))
+#define g_min(a,b)    (((a) < (b)) ? (a) : (b))
+
 #define	RESULTCODE	g_int
 #define AG_SUCCESS	 0
 #define AG_FAILURE	-1
+
+#ifndef TRUE
+#	define	TRUE	1
+#	define	FALSE	0
+#endif
 
 typedef enum augeUnitType
 {
@@ -188,9 +196,10 @@ typedef unsigned long long      uint64;
 #	include <windows.h>
 #	include <io.h>
 #else
-#	include "unistd.h"
-#	include "sys/types.h"
-#	include "dirent.h"
+#	include <unistd.h>
+#	include <sys/types.h>
+#	include <sys/stat.h> 
+#	include <dirent.h>
 #endif
 
 #endif //__AUGE_TYPE_H__

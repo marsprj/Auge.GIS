@@ -1,7 +1,9 @@
 #include "AugeCore.h"
 #include <iconv.h>
+#ifdef WIN32
 #include <direct.h>
 //#include "uuid.h"
+#endif
 
 #ifdef WIN32
 #	include "process.h"
@@ -102,7 +104,11 @@ namespace auge
 		{
 			return -1;
 		}
+#ifdef WIN32
 		return mkdir(path);
+#else
+		return mkdir(path,S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+#endif
 	}
 
 	g_int auge_find_last_char(const char *str, char ch)
@@ -216,7 +222,7 @@ namespace auge
 #ifdef WIN32
 		ptr = ::GetProcAddress((HINSTANCE)handler,fname);
 #else
-		ptr = dlsym(handle, fname);
+		ptr = dlsym(handler, fname);
 #endif
 		if(ptr==NULL)
 		{
@@ -394,14 +400,14 @@ namespace auge
 		{
 			if(fname)
 			{
-				len = ag_min(((char*)dot-(char*)path)/sizeof(char), (AUGE_FNAME_MAX - 1));
+				len = g_min(((char*)dot-(char*)path)/sizeof(char), (AUGE_NAME_MAX - 1));
 				strncpy(fname, path, len);
 				*(fname + len) = '\0';
 			}
 
 			if(ext)
 			{
-				len = ag_min(((char*)p - (char*)dot) / sizeof(char), (AUGE_EXT_MAX - 1));
+				len = g_min(((char*)p - (char*)dot) / sizeof(char), (AUGE_EXT_MAX - 1));
 				strncpy(ext, dot, len);
 				*(ext+len)='\0';
 			}
@@ -410,7 +416,7 @@ namespace auge
 		{
 			if(fname)
 			{
-				len = ag_min(((char*)p - (char*) path) /sizeof(char), (AUGE_FNAME_MAX - 1));
+				len = g_min(((char*)p - (char*) path) /sizeof(char), (AUGE_NAME_MAX - 1));
 				strncpy(fname, path, len);
 				*(fname+len)='\0';
 			}
