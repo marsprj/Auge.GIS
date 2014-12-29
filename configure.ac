@@ -43,6 +43,8 @@ AC_CONFIG_FILES([Engine/Core/Makefile
                  Engine/Data/GPostgres/src/Makefile
                  Engine/Data/GShape/Makefile
                  Engine/Data/GShape/src/Makefile
+		 Engine/Carto/Makefile
+                 Engine/Carto/src/Makefile
                  Makefile
                  include/Makefile])
 AC_OUTPUT
