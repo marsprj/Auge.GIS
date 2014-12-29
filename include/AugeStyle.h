@@ -88,7 +88,7 @@ namespace auge
 	{
 		augeStyleFeature	= 0,
 		augeStyleRaster		= 1
-	};
+	}augeStyleType;
 
 	class Rule;
 	class Graphic;

@@ -279,10 +279,10 @@ namespace auge
 	extern "C"
 	{
 		AUGE_API g_int		auge_get_pid();
-		AUGE_API void*		auge_malloc(size_t size, size_t count);
+		AUGE_API void*	auge_malloc(size_t size, size_t count);
 		AUGE_API void		auge_free(void *ptr);
 
-		AUGE_API void		auge_get_cwd(char* path, g_uint size);
+		AUGE_API void		auge_get_cwd(char* path, size_t size);
 		AUGE_API bool		auge_get_parent_dir(char* dir, char* pdir, g_uint size);
 		AUGE_API void		auge_make_path(char* path, const char* drv, const char* dir, const char* file, const char* ext);
 		AUGE_API void		auge_split_path( const char *path, char *drive, char *dir, char *fname, char *ext);
@@ -295,12 +295,12 @@ namespace auge
 		AUGE_API void		auge_generate_uuid(char* uuid, size_t size);
 		AUGE_API g_int		auge_get_image_suffix(const char* mime_type, char* suffix, size_t size);
 	
-		AUGE_API void*		auge_load_library(const char* path);
+		AUGE_API void*	auge_load_library(const char* path);
 		AUGE_API void		auge_free_library(void* handler);
-		AUGE_API void*		auge_get_function_pointer(void* handler, const char* fname);
+		AUGE_API void*	auge_get_function_pointer(void* handler, const char* fname);
 
-		AUGE_API const char* auge_encoding_convert(const char* from, const char* to, const char* instr, size_t instrlen);
-		AUGE_API size_t		auge_encoding_convert_2(const char* from, const char* to, const char* instr, size_t instrlen, char* outstr, size_t* outlen);
+		AUGE_API const char*	auge_encoding_convert(const char* from, const char* to, const char* instr, size_t instrlen);
+		AUGE_API size_t	auge_encoding_convert_2(const char* from, const char* to, const char* instr, size_t instrlen, char* outstr, size_t* outlen);
 	}
 }
 

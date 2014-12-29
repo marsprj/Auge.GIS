@@ -11,10 +11,27 @@ AC_PROG_LIBTOOL
 
 # Checks for programs.
 AC_PROG_CXX
+AC_PROG_AWK
 AC_PROG_CC
+AC_PROG_CPP
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
 AC_PROG_RANLIB
 
 # Checks for libraries.
+# FIXME: Replace `main' with a function in `-lcairo':
+AC_CHECK_LIB([cairo], [main])
+# FIXME: Replace `main' with a function in `-lgcarto':
+AC_CHECK_LIB([gcarto], [main])
+# FIXME: Replace `main' with a function in `-lgcore':
+AC_CHECK_LIB([gcore], [main])
+# FIXME: Replace `main' with a function in `-lgfilter':
+AC_CHECK_LIB([gfilter], [main])
+# FIXME: Replace `main' with a function in `-lpq':
+AC_CHECK_LIB([pq], [main])
+# FIXME: Replace `main' with a function in `-lwcore':
+AC_CHECK_LIB([wcore], [main])
 # FIXME: Replace `main' with a function in `-lxml2':
 AC_CHECK_LIB([xml2], [main])
 
@@ -45,6 +62,19 @@ AC_CONFIG_FILES([Engine/Core/Makefile
                  Engine/Data/GShape/src/Makefile
 		 Engine/Carto/Makefile
                  Engine/Carto/src/Makefile
+                 Engine/Service/Makefile
+                 Engine/Service/WCore/Makefile
+                 Engine/Service/WCore/src/Makefile
+		 Engine/Service/WService/Makefile
+                 Engine/Service/WService/src/Makefile
+		 Engine/Service/WFEngine/Makefile
+                 Engine/Service/WFEngine/src/Makefile
+		 Engine/Service/WMEngine/Makefile
+                 Engine/Service/WMEngine/src/Makefile
+		 Engine/Service/WSEngine/Makefile
+                 Engine/Service/WSEngine/src/Makefile
+		 Engine/Service/ims/Makefile
+		 Engine/Service/mgr/Makefile
                  Makefile
                  include/Makefile])
 AC_OUTPUT

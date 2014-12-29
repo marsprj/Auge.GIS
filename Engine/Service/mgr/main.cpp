@@ -66,7 +66,7 @@ int main()
 		{
 			const char* msg = pError->GetLastError();
 			pLogger->Error(msg, __FILE__, __LINE__);
-			return NULL;
+			return 0;
 		}
 		
 		pWebRequest = CreateWebRequest(pEngine, cgi);

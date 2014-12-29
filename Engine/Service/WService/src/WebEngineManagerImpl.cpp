@@ -291,7 +291,7 @@ namespace auge
 		if(auge_get_parent_dir(pdir, lib_dir, AUGE_PATH_MAX))
 		{
 			auge_make_path(sdir, NULL, pdir, "lib", NULL);
-			auge_make_path(libpath, NULL, sdir, id, "so);
+			auge_make_path(libpath, NULL, sdir, id, "so");
 		}
 #endif
 
