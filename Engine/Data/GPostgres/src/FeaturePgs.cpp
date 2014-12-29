@@ -223,12 +223,12 @@ namespace auge
 	{
 		if(i>=m_nfield)
 		{
-			return false;
+			return NULL;
 		}
 		GField* pField = m_pFields->GetField(i);
 		if(pField->GetType()!=augeFieldTypeString)
 		{
-			return 0;
+			return NULL;
 		}
 		return PQgetvalue(m_pgResult, m_index, i);
 	}
@@ -255,7 +255,7 @@ namespace auge
 	{
 		if(name==NULL)
 		{
-			return NULL;
+			return '0';
 		}
 		return GetChar(PQfnumber(m_pgResult, name));
 	}
@@ -264,7 +264,7 @@ namespace auge
 	{
 		if(name==NULL)
 		{
-			return NULL;
+			return 0;
 		}
 		return GetShort(PQfnumber(m_pgResult, name));
 	}
@@ -273,7 +273,7 @@ namespace auge
 	{
 		if(name==NULL)
 		{
-			return NULL;
+			return 0;
 		}
 		return GetInt(PQfnumber(m_pgResult, name));
 	}
@@ -282,7 +282,7 @@ namespace auge
 	{
 		if(name==NULL)
 		{
-			return NULL;
+			return 0;
 		}
 		return GetLong(PQfnumber(m_pgResult, name));
 	}
@@ -291,7 +291,7 @@ namespace auge
 	{
 		if(name==NULL)
 		{
-			return NULL;
+			return 0.0f;
 		}
 		return GetFloat(PQfnumber(m_pgResult, name));
 	}
@@ -300,7 +300,7 @@ namespace auge
 	{
 		if(name==NULL)
 		{
-			return NULL;
+			return 0.0f;
 		}
 		return GetDouble(PQfnumber(m_pgResult, name));
 	}
@@ -309,7 +309,7 @@ namespace auge
 	{
 		if(name==NULL)
 		{
-			return NULL;
+			return 0;
 		}
 		return GetInt64(PQfnumber(m_pgResult, name));
 	}

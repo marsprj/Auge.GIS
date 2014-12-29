@@ -35,6 +35,11 @@ AC_CONFIG_FILES([Engine/Core/Makefile
                  Engine/Makefile
  		 Engine/Filter/Makefile
                  Engine/Filter/src/Makefile
+		 Engine/Data/Makefile
+		 Engine/Data/GDEngine/Makefile
+                 Engine/Data/GDEngine/src/Makefile
+		 Engine/Data/GPostgres/Makefile
+                 Engine/Data/GPostgres/src/Makefile
                  Makefile
                  include/Makefile])
 AC_OUTPUT

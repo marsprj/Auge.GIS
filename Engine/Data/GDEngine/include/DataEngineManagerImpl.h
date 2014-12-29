@@ -37,4 +37,4 @@ namespace auge
 	};
 }
 
-#endif __AUGE_DATA_ENGINE_IMPL_H__
+#endif //__AUGE_DATA_ENGINE_IMPL_H__

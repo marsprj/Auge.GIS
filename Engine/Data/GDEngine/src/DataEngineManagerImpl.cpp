@@ -302,7 +302,7 @@ namespace auge
 			char sid[AUGE_NAME_MAX]  = {0};
 			g_sprintf(sid, "G%s", id);
 			auge_make_path(sdir, NULL, pdir, "lib", NULL);
-			auge_make_path(libpath, NULL, sdir, sid, "so);
+			auge_make_path(libpath, NULL, sdir, sid, "so");
 		}
 #endif
 
