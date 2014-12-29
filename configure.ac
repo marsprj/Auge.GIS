@@ -33,6 +33,8 @@ AC_CHECK_FUNCS([floor getcwd memset mkdir strchr strdup strrchr strstr])
 AC_CONFIG_FILES([Engine/Core/Makefile
                  Engine/Core/src/Makefile
                  Engine/Makefile
+ 		 Engine/Filter/Makefile
+                 Engine/Filter/src/Makefile
                  Makefile
                  include/Makefile])
 AC_OUTPUT

@@ -1,2 +1,2 @@
 AUTOMAKE_OPTION=foreign
-SUBDIRS=Core #Filter Data Carto Service
+SUBDIRS=Core Filter #Data Carto Service
