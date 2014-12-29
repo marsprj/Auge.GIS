@@ -9,7 +9,7 @@ libgcarto_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
 		-L$(top_srcdir)/Engine/Filter/src
 
-libgcarto_la_LIBADD=-lgcore -lgfilter
+libgcarto_la_LIBADD=-lgcore -lgfilter -lcairo
 
 libgcarto_la_SOURCES=\
 		CanvasImpl.cpp \
