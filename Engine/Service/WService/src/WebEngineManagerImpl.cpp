@@ -277,9 +277,9 @@ namespace auge
 			auge_get_cwd(lib_dir, AUGE_PATH_MAX);
 		}
 
+		char sid[AUGE_NAME_MAX];
 #ifdef WIN32
 #	ifdef _DEBUG
-		char sid[AUGE_NAME_MAX];
 		g_sprintf(sid, "%sD", id);
 		auge_make_path(libpath, NULL, lib_dir, sid, "dll");
 #	else
@@ -288,10 +288,11 @@ namespace auge
 #else
 		char pdir[AUGE_PATH_MAX] = {0};
 		char sdir[AUGE_PATH_MAX] = {0};
-		if(auge_get_parent_dir(pdir, lib_dir, AUGE_PATH_MAX))
+		if(auge_get_parent_dir(lib_dir, pdir, AUGE_PATH_MAX))
 		{
+			g_sprintf(sid, "lib%s", id);
 			auge_make_path(sdir, NULL, pdir, "lib", NULL);
-			auge_make_path(libpath, NULL, sdir, id, "so");
+			auge_make_path(libpath, NULL, dir, sid, "so");
 		}
 #endif
 

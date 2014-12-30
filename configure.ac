@@ -82,6 +82,7 @@ AC_CONFIG_FILES([Engine/Core/Makefile
 		 Dist/32_x86_win_vc10/Makefile
                  Dist/32_x86_win_vc10/binD/Makefile
                  Dist/32_x86_win_vc10/binD/conf/Makefile
+		 Engine/Service/testcgi/Makefile
                  Makefile
                  include/Makefile])
 AC_OUTPUT

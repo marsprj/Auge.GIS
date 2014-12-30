@@ -37,7 +37,7 @@ namespace auge
 	{
 	public:
 		GColor();
-		explicit GColor(g_ulong color);
+		explicit GColor(g_uint color);
 		GColor(g_byte r, g_byte g, g_byte b, g_byte a);
 		virtual ~GColor();
 	public:
@@ -56,11 +56,11 @@ namespace auge
 		void		SetGreen(g_byte g);
 		void		SetBlue(g_byte b);
 
-		void		Set(g_ulong color);
+		void		Set(g_uint color);
 		void		Set(g_byte r, g_byte g, g_byte b, g_byte a);
 		void		Set(GColor &color);
 	private:
-		g_ulong		m_color;
+		g_uint		m_color;
 		float		m_r, m_g, m_b, m_a;
 	};
 

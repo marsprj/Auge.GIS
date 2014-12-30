@@ -3,12 +3,12 @@
 
 namespace auge
 {
-	unsigned long MakeARGB(unsigned char r,unsigned char g, unsigned char b, unsigned char a)
+	g_uint MakeARGB(unsigned char r,unsigned char g, unsigned char b, unsigned char a)
 	{
-		return (((unsigned long) (b) <<  BlueShift) |
-			((unsigned long) (g) << GreenShift) |
-			((unsigned long) (r) <<   RedShift) |
-			((unsigned long) (a) << AlphaShift));
+		return (((g_uint) (b) <<  BlueShift) |
+			((g_uint) (g) << GreenShift) |
+			((g_uint) (r) <<   RedShift) |
+			((g_uint) (a) << AlphaShift));
 	}
 
 	int rands(int s)
@@ -35,7 +35,7 @@ namespace auge
 		m_a = a / 255.0f;
 	}
 
-	GColor::GColor(g_ulong color)
+	GColor::GColor(g_uint color)
 	{
 
 	}
@@ -100,7 +100,7 @@ namespace auge
 	}
 
 
-	void GColor::Set(g_ulong color)
+	void GColor::Set(g_uint color)
 	{
 		m_color = color;
 	}
