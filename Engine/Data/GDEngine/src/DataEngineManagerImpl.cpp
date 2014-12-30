@@ -258,7 +258,7 @@ namespace auge
 			return NULL;
 		}
 
-		DataEngine* pEngine = (*fp)();
+		DataEngine* pEngine = (*fp)();;
 		if(GetEngine(pEngine->GetID())!=NULL)
 		{
 			char msg[AUGE_MSG_MAX];

@@ -16,7 +16,7 @@ void TransferTest::setUp()
 	pEngineManager->Load();
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pwsPGS = (auge::FeatureWorksapce*)pEngine->CreateWorkspace();
-	m_pwsPGS->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=testdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pwsPGS->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pwsPGS->Open();
 
 	pEngine = pEngineManager->GetEngine("Shape");
@@ -42,8 +42,9 @@ void TransferTest::tearDown()
 
 void TransferTest::Transfer()
 {
-	const char* className = "cities";
+	//const char* className = "cities";
 	//const char* className = "rivers";
+	const char* className = "country";
 
 	auge::FeatureClass* pFeatureClass = NULL;
 	pFeatureClass = m_pwsSHP->OpenFeatureClass(className);
