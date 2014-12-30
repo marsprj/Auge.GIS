@@ -1,7 +1,7 @@
 #include "Transfer.h"
 #include "AugeFeature.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(TransferTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(TransferTest);
 
 void TransferTest::setUp() 
 {
@@ -21,7 +21,8 @@ void TransferTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Shape");
 	m_pwsSHP = (auge::FeatureWorksapce*)pEngine->CreateWorkspace();
-	m_pwsSHP->SetConnectionString("DATABASE=D:\\GeoBeans\\data\\world");
+	//m_pwsSHP->SetConnectionString("DATABASE=D:\\GeoBeans\\data\\world");
+	m_pwsSHP->SetConnectionString("DATABASE=/home/auge/world");
 	m_pwsSHP->Open();
 
 }
@@ -41,8 +42,8 @@ void TransferTest::tearDown()
 
 void TransferTest::Transfer()
 {
-	//const char* className = "cities";
-	const char* className = "rivers";
+	const char* className = "cities";
+	//const char* className = "rivers";
 
 	auge::FeatureClass* pFeatureClass = NULL;
 	pFeatureClass = m_pwsSHP->OpenFeatureClass(className);

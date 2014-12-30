@@ -74,7 +74,7 @@ namespace auge
 		{
 			memset(pdir, 0, size);
 			g_strncpy(pdir, dir, pos);
-			return false;
+			return true;
 		}
 		else if(pos==0)
 		{
@@ -87,7 +87,7 @@ namespace auge
 			{
 				memset(pdir, 0, size);
 				g_strncpy(pdir, dir, pos);
-				return false;
+				return true;
 			}
 			else if(pos==0)
 			{

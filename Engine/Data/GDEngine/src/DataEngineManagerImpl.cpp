@@ -297,10 +297,10 @@ namespace auge
 #else
 		char pdir[AUGE_PATH_MAX] = {0};
 		char sdir[AUGE_PATH_MAX] = {0};
-		if(auge_get_parent_dir(pdir, lib_dir, AUGE_PATH_MAX))
+		if(auge_get_parent_dir(lib_dir, pdir, AUGE_PATH_MAX))
 		{
 			char sid[AUGE_NAME_MAX]  = {0};
-			g_sprintf(sid, "G%s", id);
+			g_sprintf(sid, "libG%s", id);
 			auge_make_path(sdir, NULL, pdir, "lib", NULL);
 			auge_make_path(libpath, NULL, sdir, sid, "so");
 		}
