@@ -4,4 +4,4 @@ data_DATA=auge.xml \
 	data_engine.xml \
 	service.xml \
 	web_engine.xml \
-	aglogger.properties
+	glogger.properties
