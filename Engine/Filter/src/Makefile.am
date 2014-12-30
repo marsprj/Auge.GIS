@@ -26,7 +26,6 @@ libgfilter_la_SOURCES=\
 		IsLikeFilterImpl.cpp \
 		IsNullFilterImpl.cpp \
 		LiteralImpl.cpp \
-		Makefile.am
 		OrderByImpl.cpp \
 		PropertyNameImpl.cpp \
 		QueryImpl.cpp \

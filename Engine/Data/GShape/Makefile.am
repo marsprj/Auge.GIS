@@ -1,2 +1,2 @@
 AUTOMAKE_OPTION=foreign
-SUBDIRS=src
+SUBDIRS=src test

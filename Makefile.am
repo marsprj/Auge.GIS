@@ -1,2 +1,2 @@
 AUTOMAKE_OPTION=foreign
-SUBDIRS=Engine include
+SUBDIRS=Engine include Dist

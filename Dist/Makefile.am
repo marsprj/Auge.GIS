@@ -1,2 +1,2 @@
 AUTOMAKE_OPTION=foreign
-SUBDIRS=src test
+SUBDIRS=32_x86_win_vc10

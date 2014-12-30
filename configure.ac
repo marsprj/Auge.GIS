@@ -75,6 +75,12 @@ AC_CONFIG_FILES([Engine/Core/Makefile
                  Engine/Service/WSEngine/src/Makefile
 		 Engine/Service/ims/Makefile
 		 Engine/Service/mgr/Makefile
+		 Engine/Data/GShape/test/Makefile
+		 Engine/Data/GPostgres/test/Makefile
+		 Dist/Makefile
+		 Dist/32_x86_win_vc10/Makefile
+                 Dist/32_x86_win_vc10/binD/Makefile
+                 Dist/32_x86_win_vc10/binD/conf/Makefile
                  Makefile
                  include/Makefile])
 AC_OUTPUT

@@ -50,4 +50,5 @@ namespace auge
 	};
 }
 
-#endif __AUGE_SQL_BUILDER_PGS_H__
+#endif //__AUGE_SQL_BUILDER_PGS_H__
+

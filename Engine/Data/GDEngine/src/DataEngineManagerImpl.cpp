@@ -4,7 +4,7 @@
 
 namespace auge
 {
-	DataEngineManager*	augeGetDataEngineManagerInstance()
+	DataEngineManager* augeGetDataEngineManagerInstance()
 	{
 		static DataEngineManagerImpl g_DataEngineManager;
 		return &g_DataEngineManager;

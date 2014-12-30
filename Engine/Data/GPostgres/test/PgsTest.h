@@ -10,8 +10,8 @@ class PgsTest : public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(PgsTest);
 	CPPUNIT_TEST(ReadTest);
-	CPPUNIT_TEST(QueryExent);
-	CPPUNIT_TEST(QueryBinaryComparision);
+//	CPPUNIT_TEST(QueryExent);
+//	CPPUNIT_TEST(QueryBinaryComparision);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
