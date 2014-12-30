@@ -47,23 +47,28 @@ void StyleTest::CreateSLD()
 	auge::Style* pStyle = NULL;	
 	auge::CartoManager* pCartoManager = auge::augeGetCartoManagerInstance();
 	
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_4.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_4.xml");
+	pStyle = LoadSLD("/home/renyc/code/auge.gis/Engine/Carto/sld/point_user_4.xml");
 	id = pCartoManager->CreateStyle("point", pStyle);
 	printf("[Style ID]:%d\n", id);
 
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\cities_label.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\cities_label.xml");
+	pStyle = LoadSLD("/home/renyc/code/auge.gis/Engine/Carto/sld/cities_label.xml");
 	id = pCartoManager->CreateStyle("cities_label", pStyle);
 	printf("[Style ID]:%d\n", id);
 
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line.xml");
+	pStyle = LoadSLD("/home/renyc/code/auge.gis/Engine/Carto/sld/line.xml");
 	id = pCartoManager->CreateStyle("line", pStyle);
 	printf("[Style ID]:%d\n", id);
 
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_2.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_2.xml");
+	pStyle = LoadSLD("/home/renyc/code/auge.gis/Engine/Carto/sld/polygon_2.xml");
 	id = pCartoManager->CreateStyle("polygon", pStyle);
 	printf("[Style ID]:%d\n", id);
 
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_red.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_red.xml");
+	pStyle = LoadSLD("/home/renyc/code/auge.gis/Engine/Carto/sld/polygon_red.xml");
 	id = pCartoManager->CreateStyle("polygon_red", pStyle);
 	printf("[Style ID]:%d\n", id);
 
@@ -76,7 +81,8 @@ void StyleTest::UpdateSLD()
 	auge::CartoManager* pCartoManager = auge::augeGetCartoManagerInstance();
 	g_uint gid;
 
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_4.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_4.xml");
+	pStyle = LoadSLD("/home/renyc/code/auge.gis/Engine/Carto/sld/point_user_4.xml");
 
 	//pCartoManager->GetStyle();
 	//id = pCartoManager->UpdateStyle("s1", pStyle);
@@ -96,7 +102,8 @@ void StyleTest::ReadSLD()
 {
 	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_6.xml";
 	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon.xml";
-	const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line.xml";
+	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line.xml";
+	const char* path = "/home/renyc/code/auge.gis/Engine/Carto/sld/line.xml";
 
 	auge::CartoFactory* pCartoFactory = NULL;
 	pCartoFactory = auge::augeGetCartoFactoryInstance();
@@ -118,7 +125,8 @@ void StyleTest::ReadSLD()
 	pxDoc = writer->Write(pStyle);
 	writer->Release();
 
-	pxDoc->Save("g:\\temp\\map\\sld.xml", "GBK", 1);
+	//pxDoc->Save("g:\\temp\\map\\sld.xml", "GBK", 1);
+	pxDoc->Save("/home/renyc/map/sld.xml", "GBK", 1);
 	pxDoc->Release();
 
 	AUGE_SAFE_RELEASE(pStyle);

@@ -99,7 +99,8 @@ void MapTest::DrawMap()
 	pMap = pCartoManager->LoadMap("world");
 
 	pCanvas->Draw(pMap);
-	pCanvas->Save("g:\\temp\\map\\map.png");
+	//pCanvas->Save("g:\\temp\\map\\map.png");
+	pCanvas->Save("/home/renyc/map/map.png");
 
 	//m_pConnection->Close();
 	//AUGE_SAFE_RELEASE(m_pConnection);
@@ -222,7 +223,8 @@ void MapTest::Draw_Map_Point_Label()
 	pMap = pCartoManager->LoadMap("city_label");
 
 	pCanvas->Draw(pMap);
-	pCanvas->Save("g:\\temp\\map\\map.png");
+	//pCanvas->Save("g:\\temp\\map\\map.png");
+	pCanvas->Save("/home/renyc/map/map.png");
 
 	//m_pConnection->Close();
 	//AUGE_SAFE_RELEASE(m_pConnection);
@@ -367,7 +369,8 @@ auge::Map* CreateMapObj()
 
 auge::Map* CreateMapObj_SLD()
 {
-	const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\cities_1.xml";
+	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\cities_1.xml";
+	const char* path = "/home/renyc/auge.gis/Engine/Carto/sld/cities_1.xml";
 
 	auge::Workspace *pWorkspace = NULL;
 	auge::FeatureWorksapce* pFWorkspace = NULL;
@@ -412,7 +415,8 @@ auge::Map* CreateMapObj_SLD()
 	pxDoc = writer->Write(pStyle,"1.0.0");
 	writer->Release();
 
-	pxDoc->Save("g:\\temp\\map\\sld.xml", "GBK");
+	//pxDoc->Save("g:\\temp\\map\\sld.xml", "GBK");
+	pxDoc->Save("/home/renyc/map/sld.xml", "GBK");
 	pxDoc->Release();
 
 	return pMap;
