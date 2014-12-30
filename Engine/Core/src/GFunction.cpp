@@ -116,11 +116,10 @@ namespace auge
 		if(str==NULL)
 			return -1;
 
-		size_t pos = strlen(str) - 1;
-		char* ptr  = (char*)str + pos;
-		while(pos>=0)
+		g_int pos = strlen(str) - 1;		
+		for(char* ptr=(char*)str+pos; pos>=0; pos--,ptr--)
 		{
-			if((*ptr--) == ch)
+			if((*ptr) == ch)
 			{
 				break;
 			}

@@ -92,6 +92,8 @@ namespace auge
 			auge_get_cwd(cdir, AUGE_PATH_MAX);
 
 #ifdef WIN32
+			char pdir[AUGE_PATH_MAX] = {0};
+			auge_get_parent_dir(cdir, pdir, AUGE_PATH_MAX);
 			auge_make_path(log_path, NULL, cdir, "conf\\glogger", "properties");
 #else
 			char pdir[AUGE_PATH_MAX] = {0};
