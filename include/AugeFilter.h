@@ -493,12 +493,13 @@ namespace auge
 		virtual void				Release() = 0;
 	};
 
-	class FilterReader
+	class FilterReader : public GObject
 	{
 	protected:
 		FilterReader(){}
 		virtual ~FilterReader(){}
 	public:
+		virtual GFilter*			Read(const char* xml) = 0;
 		virtual GFilter*			Read(XElement* pxFilter) = 0;
 	};
 

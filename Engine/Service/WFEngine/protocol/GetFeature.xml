@@ -1,0 +1,18 @@
+<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" xmlns:world="http://www.digitalearth.cn/world" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instanc" service="WFS" version="1.1.0" outputFormat="WKT" maxFeatures="100">
+	<wfs:Query typeName="world:cnty">
+		<wfs:PropertyName>NAME</wfs:PropertyName>
+		<wfs:Filter>
+			<wfs:BBOX>
+				<wfs:PropertyName>shape</wfs:PropertyName>
+				<gml:Envelope xmlns:gml="http://www.opengis.net/gml">
+					<gml:lowerCorner>0.0 0.0</gml:lowerCorner>
+					<gml:upperCorner>180.0 90.0</gml:upperCorner>
+				</gml:Envelope>
+			</wfs:BBOX>
+		</wfs:Filter>
+		<wfs:OrderBy>
+			<wfs:Property Name="ID" Order="Asc"/>
+		</wfs:OrderBy>
+	</wfs:Query>
+</wfs:GetFeature>
+
