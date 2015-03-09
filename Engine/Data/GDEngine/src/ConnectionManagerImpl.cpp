@@ -21,7 +21,7 @@ namespace auge
 
 	g_int ConnectionManagerImpl::GetCount()
 	{
-		return 0;
+		return m_connections.size();
 	}
 
 	Workspace* ConnectionManagerImpl::GetWorkspace(g_uint i)
@@ -104,6 +104,46 @@ namespace auge
 	RESULTCODE ConnectionManagerImpl::Unregister(const char* name)
 	{
 		return AG_SUCCESS;
+	}
+
+	bool ConnectionManagerImpl::Has(const char* name)
+	{
+		if(name==NULL)
+		{
+			return false;
+		}
+
+		char sql[AUGE_NAME_MAX];
+		g_snprintf(sql, AUGE_NAME_MAX, "select count(*) from g_data_source where name='%s'", name);
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if( !pResult )
+		{
+			return false;
+		}
+		int count = pResult->GetInt(0,0);
+		pResult->Release();
+
+		return count;
+	}
+
+	g_int ConnectionManagerImpl::GetID(const char* name)
+	{
+		if(name==NULL)
+		{
+			return -1;
+		}
+
+		char sql[AUGE_NAME_MAX];
+		g_snprintf(sql, AUGE_NAME_MAX, "select gid from g_data_source where name='%s'", name);
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if( !pResult )
+		{
+			return -1;
+		}
+		int id = pResult->GetInt(0,0);
+		pResult->Release();
+
+		return id;
 	}
 
 	RESULTCODE ConnectionManagerImpl::Initialize(GConnection* pConnection)

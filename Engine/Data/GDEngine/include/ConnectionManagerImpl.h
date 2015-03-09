@@ -19,6 +19,9 @@ namespace auge
 		virtual RESULTCODE			Register(const char* name, const char* engine, const char* constr);
 		virtual RESULTCODE			Unregister(const char* name);
 
+		virtual bool				Has(const char* name);
+		virtual g_int				GetID(const char* name);
+
 		virtual RESULTCODE			Initialize(GConnection* pConnection);
 		virtual void				Unload();
 

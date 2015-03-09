@@ -122,7 +122,7 @@ namespace auge
 			count = pResult->GetCount();
 			for(g_uint i=0; i<count; i++)
 			{
-				name = pResult->GetString(0,0);
+				name = pResult->GetString(i,0);
 				if(name!=NULL)
 				{
 					pService = GetService(name);
@@ -212,7 +212,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX] = {0};
 		g_sprintf(sql, "insert into g_service (s_name) values('%s')", szName);
-		return (m_pConnection->ExecuteSQL(sql)==AG_SUCCESS);
+		return (m_pConnection->ExecuteSQL(sql));
 	}
 
 	RESULTCODE ServiceManagerImpl::Unregister(const char* szName)
@@ -223,8 +223,8 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_sprintf(sql, "delete from g_service where s_name='%s'", szName);
-		return (m_pConnection->ExecuteSQL(sql)==AG_SUCCESS);
+		g_sprintf(sql, "delete from g_service where s_name='%s'", szName); 
+		return (m_pConnection->ExecuteSQL(sql));
 	}
 
 	RESULTCODE ServiceManagerImpl::RegisterMap(g_uint s_id, g_uint m_id)

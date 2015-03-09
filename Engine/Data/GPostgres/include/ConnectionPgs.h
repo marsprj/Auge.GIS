@@ -14,6 +14,7 @@ namespace auge
 		virtual ~ConnectionPgs();
 	public:
 		virtual	RESULTCODE		SetConnectionString(const char* conn_string);
+		virtual const char*		GetConnectionString();
 		virtual	const char*		GetDatabase();
 
 		virtual RESULTCODE		Open();

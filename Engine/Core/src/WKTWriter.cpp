@@ -180,7 +180,7 @@ namespace auge
 		numLinearRing = pwkbPolygon->numRings;
 		pLineRing = (LinearRing*)(&(pwkbPolygon->rings[0]));
 
-		wkt = "NULTIPOLYGON((";
+		wkt = "MULTIPOLYGON((";
 		for(i=0; i<numLinearRing; i++)
 		{
 			if(comma_started)

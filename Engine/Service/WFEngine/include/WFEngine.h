@@ -24,6 +24,7 @@ namespace auge
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 
 		virtual WebRequest*		ParseRequest(const char* url);
+		virtual WebRequest*		ParseRequest(rude::CGI& cgi);
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc);
 
 	public:

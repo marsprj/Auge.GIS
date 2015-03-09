@@ -22,8 +22,14 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
+		m_connstring = conn_string;
 		m_props.Parse(conn_string);		
 		return AG_SUCCESS;
+	}
+
+	const char*	ConnectionPgs::GetConnectionString()
+	{
+		return m_connstring.c_str();
 	}
 
 	const char*	ConnectionPgs::GetDatabase()

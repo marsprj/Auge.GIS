@@ -104,4 +104,14 @@ namespace auge
 	{
 		return m_srid; 
 	}
+
+	void MapImpl::SetExtent(double xmin, double ymin, double xmax, double ymax)
+	{
+		m_exent.Set(xmin,ymin,xmax,ymax);
+	}
+	
+	void MapImpl::SetSRID(g_int srid)
+	{
+		m_srid = srid;
+	}
 }

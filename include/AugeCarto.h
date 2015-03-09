@@ -43,8 +43,11 @@ namespace auge
 	public:
 		virtual const char*	GetName() = 0;
 		virtual RESULTCODE	SetName(const char* szName) = 0;
+
 		virtual GEnvelope&	GetExtent() = 0;
+		virtual void		SetExtent(double xmin, double ymin, double xmax, double ymax) = 0;
 		virtual g_int		GetSRID() = 0;
+		virtual void		SetSRID(g_int srid) = 0;
 
 		virtual g_uint		GetLayerCount() = 0;		
 		virtual Layer*		GetLayer(g_uint i) = 0;
@@ -168,6 +171,17 @@ namespace auge
 		virtual GEnvelope&		GetViewer() = 0;
 	};
 
+	class EnumStyle
+	{
+	protected:
+		EnumStyle(){}
+		virtual ~EnumStyle(){}
+	public:
+		virtual	void			Reset() = 0;
+		virtual Style*			Next() = 0;
+		virtual void			Release() = 0;
+	};
+
 	class CartoManager
 	{
 	protected:
@@ -181,18 +195,31 @@ namespace auge
 		virtual Map*			LoadMap(const char* name) = 0;
 
 		virtual Map*			CreateMap(const char* name) = 0;
-		virtual Map*			RemoveMap(const char* name) = 0;
+		virtual Map*			CreateMap(const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax) = 0;
+		virtual RESULTCODE		RemoveMap(const char* name) = 0;
+		virtual g_int			GetMapID(const char* name) = 0;
 
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_i, g_uint style_id) = 0;
+		virtual g_int			GetLayerID(const char* layerName, const char* mapName) = 0;
 
 		virtual g_uint			GetStyleCount() = 0;
 		virtual Style*			GetStyle(g_uint id) = 0;
 		virtual Style*			GetStyle(const char* name) = 0;
+
+		virtual char*			GetStyleText(g_uint id) = 0;
+		virtual char*			GetStyleText(const char* name) = 0;
+
+		virtual EnumStyle*		GetStyles() = 0;
+
 		virtual g_int			CreateStyle(const char* name, Style* pStyle) = 0;
 		virtual bool			HasStyle(g_uint id) = 0;
 		virtual bool			HasStyle(const char* name) = 0;
 		virtual RESULTCODE		UpdateStyle(const char* name, Style* pStyle) = 0;
 		virtual RESULTCODE		RemoveStyle(const char* name) = 0;
+		virtual g_int			GetStyleID(const char* name) = 0;
+
+		//ÐÞ¸Ä
+		virtual RESULTCODE		SetStyle(g_uint layerID, g_uint styleID) = 0;
 
 	public:
 		virtual	RESULTCODE		Initialize(GConnection* pConnection) = 0;

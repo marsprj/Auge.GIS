@@ -39,7 +39,7 @@ namespace auge
 
 		Geometry* pGeometry = NULL;
 		g_uchar* wkbd = NULL;
-
+		
 		if(attach)
 		{
 			wkbd = wkb;
@@ -62,47 +62,47 @@ namespace auge
 			return NULL;
 		}
 
-		switch(WKBTYPE(wkb))
+		switch(WKBTYPE(wkbd))
 		{
 		case wkbPoint:
 			{
 				GPointWKB* ptr = new GPointWKB();
-				ptr->Create(wkb, attach);
+				ptr->Create(wkbd, attach);
 				pGeometry = ptr;
 			}
 			break;
 		case wkbLineString:
 			{
 				GLineStringWKB* ptr = new GLineStringWKB();
-				ptr->Create(wkb, attach);
+				ptr->Create(wkbd, attach);
 				pGeometry = ptr;
 			}
 			break;
 		case wkbPolygon:
 			{
 				GPolygonWKB* ptr = new GPolygonWKB();
-				ptr->Create(wkb, attach);
+				ptr->Create(wkbd, attach);
 				pGeometry = ptr;
 			}
 			break;
 		case wkbMultiPoint:
 			{
 				GMultiPointWKB* ptr = new GMultiPointWKB();
-				ptr->Create(wkb, attach);
+				ptr->Create(wkbd, attach);
 				pGeometry = ptr;
 			}
 			break;
 		case wkbMultiLineString:
 			{
 				GMultiLineStringWKB* ptr = new GMultiLineStringWKB();
-				ptr->Create(wkb, attach);
+				ptr->Create(wkbd, attach);
 				pGeometry = ptr;
 			}
 			break;
 		case wkbMultiPolygon:
 			{
 				GMultiPolygonWKB* ptr = new GMultiPolygonWKB();
-				ptr->Create(wkb, attach);
+				ptr->Create(wkbd, attach);
 				pGeometry = ptr;
 			}
 			break;

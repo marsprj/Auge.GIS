@@ -112,7 +112,7 @@ int main()
 		}
 		clock_t t_e = clock();
 		char temp[AUGE_MSG_MAX];
-		g_sprintf(temp, "[%s]:%.3fºÁÃë", pWebRequest->GetRequest() , (double) (t_e - t_s) / (double) CLOCKS_PER_SEC);
+		g_sprintf(temp, "[%s]:%.3fms", pWebRequest->GetRequest() , (double) (t_e - t_s) / (double) CLOCKS_PER_SEC);
 		pLogger->Info(temp);
 
 		AUGE_SAFE_RELEASE(pWebRequest);
@@ -131,9 +131,6 @@ auge::WebRequest* CreateWebRequest(rude::CGI& cgi)
 	auge::GError	*pError = auge::augeGetErrorInstance();
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
 
-	//pRequest = CreateWebRequest_Post(cgi);
-	//return pRequest;
-
 	const char* method = getenv("REQUEST_METHOD");
 	if(method==NULL)
 	{
@@ -147,10 +144,6 @@ auge::WebRequest* CreateWebRequest(rude::CGI& cgi)
 		if(g_stricmp(content_type, "text/xml")==0)
 		{
 			pRequest = CreateWebRequest_Post(cgi);
-		}
-		else
-		{
-			pRequest = CreateWebRequest_Get(cgi);
 		}
 	}
 	else// if(g_stricmp(method), "GET")==0)
@@ -189,10 +182,10 @@ auge::WebRequest* CreateWebRequest_Get(rude::CGI& cgi)
 	const char* query_string = getenv("QUERY_STRING");
 	if(query_string==NULL)
 	{
+
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=&bbox=-180,-90,180,90&width=800&height=600&transparent=true&bgcolor=#e01356";
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=point,line,polygon&bbox=-180,-90,180,90&width=800&height=600&transparent=true&bgcolor=#e01356";
-		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetCapabilities";
-		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=&bbox=-180,-90,180,90&width=800&height=600&transparent=true";
+		query_string = "servicename=world&service=wms&version=1.3.0&request=GetCapabilities";
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=&bbox=-180,-90,180,90&width=800&height=600&transparent=true&bgcolor=#e01356";
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=&bbox=-180,-90,180,90&width=800&height=600&transparent=true&bgcolor=#e01356";
 		//query_string = "servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=&bbox=-180,-90,180,90&width=800&height=600&transparent=false&bgcolor=#ff0000";
@@ -204,7 +197,6 @@ auge::WebRequest* CreateWebRequest_Get(rude::CGI& cgi)
 		//query_string = "servicename=world&service=wfs&version=1.1.0&request=getcapabilities";
 		//query_string = "servicename=world&service=WFS&version=1.1.0&request=DescribeFeatureType&typeName=radi:rivers";
 		//query_string = "servicename=world&service=WFS&version=1.1.0&request=GetFeature&typeName=radi:rivers";
-		query_string = "servicename=world&service=WFS&version=1.1.0&request=GetFeature&typeName=radi:cities&filter=servicename=world&service=WFS&version=1.1.0&request=GetFeature&typeName=radi:cities&filter=<?xml version=\"1.0\" encoding=\"UTF-8\"?><ogc:Filter xmlns:ogc=\"http://www.opengis.net/ogc\"><ogc:BBOX><ogc:PropertyName>shape</ogc:PropertyName><gml:Envelope xmlns:gml=\"http://www.opengis.net/gml\"><gml:lowerCorner>0.0 90.0</gml:lowerCorner><gml:upperCorner>0.0 180.0</gml:upperCorner></gml:Envelope></ogc:BBOX></ogc:Filter>";
 		
 	}
 	pLogger->Debug(query_string);
@@ -219,8 +211,7 @@ auge::WebRequest* CreateWebRequest_Post(rude::CGI& cgi)
 	auge::GError	 *pError = auge::augeGetErrorInstance();
 	auge::GLogger	 *pLogger = auge::augeGetLoggerInstance();
 
-	//const char* xml = cgi["xml"];
-	const char* xml = "<wfs:GetFeature xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:world=\"http://www.digitalearth.cn/world\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instanc\" service=\"WFS\" version=\"1.1.0\" outputFormat=\"WKT\" maxFeatures=\"100\"><wfs:Query typeName=\"world:cities\"><wfs:PropertyName>NAME</wfs:PropertyName><wfs:Filter><wfs:BBOX><wfs:PropertyName>shape</wfs:PropertyName><gml:Envelope xmlns:gml=\"http://www.opengis.net/gml\"><gml:lowerCorner>0.0 0.0</gml:lowerCorner><gml:upperCorner>180.0 90.0</gml:upperCorner></gml:Envelope></wfs:BBOX></wfs:Filter><wfs:OrderBy><wfs:Property Name=\"ID\" Order=\"Asc\"/></wfs:OrderBy></wfs:Query></wfs:GetFeature>";
+	const char* xml = cgi["xml"];
 	if(xml==NULL)
 	{
 		const char* msg = "Parameter [xml] is NULL";

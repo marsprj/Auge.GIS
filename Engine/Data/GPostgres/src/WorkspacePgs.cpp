@@ -38,6 +38,11 @@ namespace auge
 	{
 		return m_pgConnection.SetConnectionString(conn_string);
 	}
+	
+	const char*	WorkspacePgs::GetConnectionString()
+	{
+		return m_pgConnection.GetConnectionString();
+	}
 
 	RESULTCODE WorkspacePgs::Open()
 	{

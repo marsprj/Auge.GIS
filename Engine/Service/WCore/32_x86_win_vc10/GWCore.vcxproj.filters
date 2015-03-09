@@ -24,6 +24,9 @@
     <ClCompile Include="..\src\WebContextImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\WebSuccessResponseImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\WebExceptionResponseImpl.h">
@@ -39,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\AugeType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\WebSuccessResponseImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

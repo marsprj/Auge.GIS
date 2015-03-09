@@ -13,6 +13,7 @@
 
 #include "AugeObject.h"
 #include "AugeType.h"
+#include <rude/cgi.h>
 
 namespace auge
 {
@@ -43,6 +44,18 @@ namespace auge
 	public:
 		virtual	RESULTCODE		Write(WebWriter* pWriter) = 0;
 	};
+	
+	class WebHandler : public GObject
+	{
+	protected:
+		WebHandler(){}
+		virtual ~WebHandler(){}
+	public:
+		virtual const char*		GetName() = 0;
+		virtual WebRequest*		ParseRequest(rude::CGI& cgi) = 0;
+		virtual WebRequest*		ParseRequest(XDocument* pxDoc) = 0;
+		virtual WebResponse*	Execute(WebRequest* pWebRequest) = 0;
+	};
 
 	class WebEngine
 	{
@@ -54,6 +67,7 @@ namespace auge
 		virtual WebResponse*	Execute(WebRequest* pWebRequest) = 0;
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap) = 0;
 		virtual WebRequest*		ParseRequest(const char* url) = 0;
+		virtual WebRequest*		ParseRequest(rude::CGI& cgi) = 0;
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc) = 0;
 
 	public:

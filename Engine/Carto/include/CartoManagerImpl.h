@@ -18,19 +18,28 @@ namespace auge
 		virtual Map*			LoadMap(const char* name);
 
 		virtual Map*			CreateMap(const char* name);
-		virtual Map*			RemoveMap(const char* name);
+		virtual Map*			CreateMap(const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax);
+		virtual RESULTCODE		RemoveMap(const char* name);
+		virtual g_int			GetMapID(const char* name);
 
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_id, g_uint style_id);
+		virtual g_int			GetLayerID(const char* layerName, const char* mapName);
 
 		virtual bool			HasStyle(g_uint id);
 		virtual bool			HasStyle(const char* name);
 		virtual g_uint			GetStyleCount();
 		virtual Style*			GetStyle(g_uint id);
 		virtual Style*			GetStyle(const char* name);
+		virtual char*			GetStyleText(g_uint id);
+		virtual char*			GetStyleText(const char* name);
+		virtual EnumStyle*		GetStyles();
 		virtual g_int			CreateStyle(const char* name, Style* pStyle);
 		virtual RESULTCODE		UpdateStyle(const char* name, Style* pStyle);
 		virtual RESULTCODE		RemoveStyle(const char* name);
-		
+		virtual g_int			GetStyleID(const char* name);
+
+		virtual RESULTCODE		SetStyle(g_uint layerID, g_uint styleID);
+			
 	public:
 		virtual	RESULTCODE		Initialize(GConnection* pConnection);
 		virtual void			Cleanup();

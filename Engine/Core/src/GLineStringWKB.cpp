@@ -13,7 +13,7 @@ namespace auge
 
 	GLineStringWKB::~GLineStringWKB()
 	{
-		if(m_attach)
+		if(!m_attach)
 		{
 			if(m_pWKBLineString!=NULL)
 			{

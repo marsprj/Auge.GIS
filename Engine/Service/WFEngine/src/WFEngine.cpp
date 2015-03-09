@@ -113,7 +113,68 @@ namespace auge
 			pWebRequest = pRequest;
 
 		}
-		else if(g_stricmp(request, "GetGmlObject")==0)
+		else if(g_stricmp(request, "GetFeatureInfo")==0)
+		{
+
+		}
+		else if(g_stricmp(request, "Transaction")==0)
+		{
+
+		}
+
+
+		return pWebRequest;
+	}
+
+	WebRequest*	WebFeatureEngine::ParseRequest(rude::CGI& cgi)
+	{
+		const char* request = cgi["request"];
+		if(request==NULL)
+		{
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			return NULL;
+		}
+
+		WebRequest* pWebRequest = NULL;
+		if(g_stricmp(request, "GetCapabilities")==0)
+		{
+			GetCapabilitiesRequest* pRequest = new GetCapabilitiesRequest();
+			//if(!pRequest->Create(props))
+			//{
+			//	GLogger* pLogger = augeGetLoggerInstance();
+			//	pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			//	pRequest->Release();
+			//	pRequest = NULL;
+			//}
+			pWebRequest = pRequest;
+		}
+		else if(g_stricmp(request, "DescribeFeatureType")==0)
+		{
+			DescribeFeatureTypeRequest* pRequest = new DescribeFeatureTypeRequest();
+			//if(!pRequest->Create(props))
+			//{
+			//	GLogger* pLogger = augeGetLoggerInstance();
+			//	pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			//	pRequest->Release();
+			//	pRequest = NULL;
+			//}
+			pWebRequest = pRequest;
+		}
+		else if(g_stricmp(request, "GetFeature")==0)
+		{
+			GetFeatureRequest* pRequest = new GetFeatureRequest();
+			//if(!pRequest->Create(props))
+			//{
+			//	GLogger* pLogger = augeGetLoggerInstance();
+			//	pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			//	pRequest->Release();
+			//	pRequest = NULL;
+			//}
+			pWebRequest = pRequest;
+
+		}
+		else if(g_stricmp(request, "GetFeatureInfo")==0)
 		{
 
 		}
@@ -128,45 +189,9 @@ namespace auge
 
 	WebRequest*	WebFeatureEngine::ParseRequest(XDocument* pxDoc)
 	{
-		WebRequest* pWebRequest = NULL;
 		GError* pError = augeGetErrorInstance();
-		//pError->SetError("WFS do not support xml request");
-
-		const char* request = NULL;
-		XElement* pxRoot = pxDoc->GetRootNode();
-		
-		request = pxRoot->GetName();
-		if(g_stricmp(request, "GetCapabilities")==0)
-		{
-			return NULL;
-		}
-		else if(g_stricmp(request, "DescribeFeatureType")==0)
-		{
-			return NULL;
-		}
-		else if(g_stricmp(request, "GetFeature")==0)
-		{
-			GetFeatureRequest* pRequest = new GetFeatureRequest();
-			if(!pRequest->Create(pxRoot))
-			{
-				GLogger* pLogger = augeGetLoggerInstance();
-				pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
-				pRequest->Release();
-				pRequest = NULL;
-			}
-			pWebRequest = pRequest;
-
-		}
-		else if(g_stricmp(request, "GetGmlObject")==0)
-		{
-
-		}
-		else if(g_stricmp(request, "Transaction")==0)
-		{
-
-		}
-
-		return pWebRequest;
+		pError->SetError("WFS do not support xml request");
+		return NULL;
 	}
 
 	WebResponse* WebFeatureEngine::Execute(WebRequest* pWebRequest)
@@ -774,17 +799,9 @@ namespace auge
 	
 	WebResponse* WebFeatureEngine::GetFeature_1_1_0(GetFeatureRequest* pRequest,WebContext* pWebContext, const char* typeName, FeatureClass* pFeatureClass)
 	{
-		GFilter* pFilter = NULL;
 		FeatureCursor* pCursor = NULL;
-		pFilter = pRequest->GetFilter();
-		if(pFilter==NULL)
-		{
-			pCursor = pFeatureClass->Query();
-		}
-		else
-		{
-			pCursor = pFeatureClass->Query(pFilter);
-		}
+		pCursor = pFeatureClass->Query();
+
 		GetFeatureResponse *pResponse = new GetFeatureResponse(pRequest);
 		pResponse->SetFeatureCursor(pCursor);
 		return pResponse;

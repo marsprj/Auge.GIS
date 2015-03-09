@@ -17,6 +17,7 @@ namespace auge
 	public:
 		virtual	g_uint			GetCount();
 		virtual g_int			GetInt(g_uint row, g_uint col);
+		virtual double			GetDouble(g_uint row, g_uint col);
 		virtual const char*		GetString(g_uint row, g_uint col);
 		virtual void			Release();
 

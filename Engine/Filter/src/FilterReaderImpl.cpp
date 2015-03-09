@@ -15,40 +15,6 @@ namespace auge
 
 	}
 
-	void FilterReaderImpl::Release()
-	{
-		if(!ReleaseRef())
-		{
-			delete this;
-		}
-	}
-
-	GFilter* FilterReaderImpl::Read(const char* xml)
-	{
-		if(xml==NULL)
-		{
-			return NULL;
-		}
-
-		XDocument* pxDoc = NULL;
-		XParser parser;
-
-		pxDoc = parser.ParseMemory(xml);
-		if(pxDoc==NULL)
-		{
-			return NULL;
-		}
-
-		XElement* pxFilter = NULL;
-		pxFilter = pxDoc->GetRootNode();
-
-		GFilter* pFilter = Read(pxFilter);
-		pxDoc->Close();
-		pxDoc->Release();
-
-		return pFilter;
-	}
-
 	GFilter* FilterReaderImpl::Read(XElement* pxFilter)
 	{
 		if(pxFilter==NULL)

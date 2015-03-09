@@ -25,6 +25,7 @@ namespace auge
 	public:
 		/* DATABASE=d:\\data\\world */
 		virtual	RESULTCODE		SetConnectionString(const char* conn_string);
+		virtual const char*		GetConnectionString();
 
 		virtual RESULTCODE		Open();
 		virtual void			Close();

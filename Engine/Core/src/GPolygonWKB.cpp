@@ -13,11 +13,11 @@ namespace auge
 
 	GPolygonWKB::~GPolygonWKB()
 	{
-		if(m_attach)
+		if(!m_attach)
 		{
 			if(m_pWKBPolygon!=NULL)
 			{
-				auge_free(m_pWKBPolygon);
+				auge_free((g_uchar*)m_pWKBPolygon);
 				m_pWKBPolygon = NULL;
 			}
 		}

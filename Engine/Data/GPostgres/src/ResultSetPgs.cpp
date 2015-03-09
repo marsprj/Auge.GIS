@@ -28,6 +28,11 @@ namespace auge
 		return atoi(PQgetvalue(m_pgResult,row, col));
 	}
 
+	double ResultSetPgs::GetDouble(g_uint row, g_uint col)
+	{
+		return atof(PQgetvalue(m_pgResult,row, col));
+	}
+
 	const char*	ResultSetPgs::GetString(g_uint row, g_uint col)
 	{
 		return PQgetvalue(m_pgResult, row, col);

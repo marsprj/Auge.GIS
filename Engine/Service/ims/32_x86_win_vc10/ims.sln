@@ -35,6 +35,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GFilter", "..\..\..\Filter\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WFEngine", "..\..\WFEngine\32_x86_win_vc10\WFEngine.vcxproj", "{66FBB22B-F45F-4421-9CAD-B6AEC0EF0625}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WSEngine", "..\..\WSEngine\32_x86_win_vc10\WSEngine.vcxproj", "{CAE58710-19DC-4512-A7BC-48B5EEFE3003}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -81,6 +83,10 @@ Global
 		{66FBB22B-F45F-4421-9CAD-B6AEC0EF0625}.Debug|Win32.Build.0 = Debug|Win32
 		{66FBB22B-F45F-4421-9CAD-B6AEC0EF0625}.Release|Win32.ActiveCfg = Release|Win32
 		{66FBB22B-F45F-4421-9CAD-B6AEC0EF0625}.Release|Win32.Build.0 = Release|Win32
+		{CAE58710-19DC-4512-A7BC-48B5EEFE3003}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CAE58710-19DC-4512-A7BC-48B5EEFE3003}.Debug|Win32.Build.0 = Debug|Win32
+		{CAE58710-19DC-4512-A7BC-48B5EEFE3003}.Release|Win32.ActiveCfg = Release|Win32
+		{CAE58710-19DC-4512-A7BC-48B5EEFE3003}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -111,10 +111,10 @@ namespace auge
 		//GLogger* pLogger = augeGetLoggerInstance();
 		//pLogger->Info(temp, __FILE__, __LINE__);
 
-		char temp[AUGE_NAME_MAX];
-		g_sprintf(temp, "[BgColor]:Red=%f,Green=%f,Blue=%f,Alpha=%f",m_bgColor.GetRedF(), m_bgColor.GetGreenF(), m_bgColor.GetBlueF(), m_bgColor.GetAlphaF());
-		GLogger* pLogger = augeGetLoggerInstance();
-		pLogger->Info(temp, __FILE__, __LINE__);
+		//char temp[AUGE_NAME_MAX];
+		//g_sprintf(temp, "[BgColor]:Red=%f,Green=%f,Blue=%f,Alpha=%f",m_bgColor.GetRedF(), m_bgColor.GetGreenF(), m_bgColor.GetBlueF(), m_bgColor.GetAlphaF());
+		//GLogger* pLogger = augeGetLoggerInstance();
+		//pLogger->Info(temp, __FILE__, __LINE__);
 
 
 		return true;
@@ -266,10 +266,13 @@ namespace auge
 		{
 			return;
 		}
-		g_byte r,g,b,a=255;
+		g_byte r=0,g=0,b=0,a=255;
 		sscanf(value,"#%02x%02x%02x",&r,&g,&b);
 		//sscanf(value,"#%02x%02x%02x%02x",&r,&g,&b,&a);
 		m_bgColor.Set(r,g,b,a);
+		float r_f = m_bgColor.GetRedF();
+		int i=0;
+		i=i+1;
 	}
 
 	void GetMapRequest::SetTransparent(const char* value)

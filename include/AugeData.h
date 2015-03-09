@@ -30,6 +30,7 @@ namespace auge
 		virtual ~GConnection(){}
 	public:
 		virtual	RESULTCODE		SetConnectionString(const char* conn_string) = 0;
+		virtual const char*		GetConnectionString() = 0;
 
 		virtual RESULTCODE		Open() = 0;
 		virtual void			Close() = 0;
@@ -49,6 +50,7 @@ namespace auge
 	public:
 		virtual	g_uint			GetCount() = 0;
 		virtual g_int			GetInt(g_uint row, g_uint col) = 0;
+		virtual double			GetDouble(g_uint row, g_uint col) = 0;
 		virtual const char*		GetString(g_uint row, g_uint col) = 0;
 	};
 
@@ -62,6 +64,7 @@ namespace auge
 		virtual void			SetName(const char* name) = 0;
 
 		virtual	RESULTCODE		SetConnectionString(const char* conn_string) = 0;
+		virtual const char*		GetConnectionString() = 0;
 		virtual RESULTCODE		Open() = 0;
 		virtual void			Close() = 0;
 		virtual bool			IsOpen() = 0;
@@ -99,6 +102,9 @@ namespace auge
 		virtual Workspace*			GetWorkspaceById(g_uint id) = 0;
 		virtual RESULTCODE			Register(const char* name, const char* engine, const char* constr) = 0;
 		virtual RESULTCODE			Unregister(const char* name) = 0;
+
+		virtual bool				Has(const char* name) = 0;
+		virtual g_int				GetID(const char* name) = 0;
 
 		virtual RESULTCODE			Initialize(GConnection* pConnection) = 0;
 		virtual void				Unload() = 0;

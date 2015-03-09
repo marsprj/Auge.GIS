@@ -15,8 +15,11 @@ namespace auge
 	public:
 		virtual const char*	GetName();
 		virtual RESULTCODE	SetName(const char* szName);
+		
 		virtual GEnvelope&	GetExtent();
+		virtual void		SetExtent(double xmin, double ymin, double xmax, double ymax);
 		virtual g_int		GetSRID();
+		virtual void		SetSRID(g_int srid);
 
 		virtual g_uint		GetLayerCount();		
 		virtual Layer*		GetLayer(g_uint i);

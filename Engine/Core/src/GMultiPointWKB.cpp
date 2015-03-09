@@ -13,7 +13,7 @@ namespace auge
 
 	GMultiPointWKB::~GMultiPointWKB()
 	{
-		if(m_attach)
+		if(!m_attach)
 		{
 			if(m_pWKBMultiPoint!=NULL)
 			{

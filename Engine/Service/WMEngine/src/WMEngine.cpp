@@ -107,6 +107,52 @@ namespace auge
 		return pWebRequest;
 	}
 
+	WebRequest* WebMapEngine::ParseRequest(rude::CGI& cgi)
+	{
+		const char* request = cgi["request"];
+		if(request==NULL)
+		{
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			return NULL;
+		}
+
+		WebRequest* pWebRequest = NULL;
+		if(g_stricmp(request, "GetCapabilities")==0)
+		{
+			GetCapabilitiesRequest* pRequest = new GetCapabilitiesRequest();
+			//if(!pRequest->Create(props))
+			//{
+			//	GLogger* pLogger = augeGetLoggerInstance();
+			//	pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			//	pRequest->Release();
+			//	pRequest = NULL;
+			//}
+			pWebRequest = pRequest;
+		}
+		else if(g_stricmp(request, "GetMap")==0)
+		{
+			GetMapRequest* pRequest = new GetMapRequest();
+
+			//if(!pRequest->Create(props))
+			//{
+			//	GLogger* pLogger = augeGetLoggerInstance();
+			//	pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			//	pRequest->Release();
+			//	pRequest = NULL;
+			//}
+			pWebRequest = pRequest;
+
+		}
+		else if(g_stricmp(request, "GetFeatureInfo")==0)
+		{
+
+		}
+
+
+		return pWebRequest;
+	}
+
 	WebRequest*	WebMapEngine::ParseRequest(XDocument* pxDoc)
 	{
 		GError* pError = augeGetErrorInstance();

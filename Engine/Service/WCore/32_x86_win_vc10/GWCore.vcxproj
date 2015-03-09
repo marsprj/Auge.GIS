@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\WebContextImpl.cpp" />
     <ClCompile Include="..\src\WebExceptionResponseImpl.cpp" />
+    <ClCompile Include="..\src\WebSuccessResponseImpl.cpp" />
     <ClCompile Include="..\src\WebWriterImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -20,6 +21,7 @@
     <ClInclude Include="..\..\..\..\include\AugeWebCore.h" />
     <ClInclude Include="..\include\WebContextImpl.h" />
     <ClInclude Include="..\include\WebExceptionResponseImpl.h" />
+    <ClInclude Include="..\include\WebSuccessResponseImpl.h" />
     <ClInclude Include="..\include\WebWriterImpl.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

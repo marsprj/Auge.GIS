@@ -13,7 +13,7 @@ namespace auge
 
 	GMultiPolygonWKB::~GMultiPolygonWKB()
 	{
-		if(m_attach)
+		if(!m_attach)
 		{
 			if(m_pWKBMultiPolygon!=NULL)
 			{

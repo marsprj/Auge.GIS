@@ -17,6 +17,17 @@
 namespace auge
 {
 	class GConnection;
+
+	class WebSuccessResponse : public WebResponse
+	{
+	protected:
+		WebSuccessResponse(){}
+		virtual ~WebSuccessResponse(){}
+	public:
+		virtual	RESULTCODE		SetRequest(const char* request) = 0;
+		virtual	const char*		GetRequest() = 0;
+	};
+
 	class WebExceptionResponse : public WebResponse
 	{
 	protected:
@@ -71,6 +82,7 @@ namespace auge
 	extern "C"
 	{
 		AUGE_WEB_CORE_API WebWriter*			augeCreateWebWriter();
+		AUGE_WEB_CORE_API WebSuccessResponse*	augeCreateWebSuccessResponse();
 		AUGE_WEB_CORE_API WebExceptionResponse*	augeCreateWebExceptionResponse();
 		AUGE_WEB_CORE_API WebContext*			augeGetWebContextInstance();
 	}

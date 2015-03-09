@@ -13,7 +13,7 @@ namespace auge
 
 	GPointWKB::~GPointWKB()
 	{
-		if(m_attach)
+		if(!m_attach)
 		{
 			if(m_pWKBPoint!=NULL)
 			{
