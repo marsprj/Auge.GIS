@@ -81,29 +81,7 @@ namespace auge
 			cgi.finish();
 		}
 	}
-
-	//void GServer::Run()
-	//{
-	//	m_counter = 0;
-
-	//	WebWriter  *pWebWriter = augeCreateWebWriter();
-
-	//	while(AUGE_FCGI_ACCEPT>=0)
-	//	{
-	//		AUGE_RUDE_CGI;
-
-	//		printf("Content-type: text/html\r\n"
-	//			"\r\n"
-	//			"<br>"
-	//			"[User]:%s<br>"
-	//			"[ServiceName]:%s<br>",cgi["user"],cgi["servicename"]);
-
-	//		
-	//		cgi.finish();
-	//	}
-	//}
 	
-
 	WebResponse* GServer::DoGet(Service* pService, rude::CGI& cgi)
 	{
 		const char	*szService = NULL;

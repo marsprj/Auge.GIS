@@ -330,7 +330,7 @@ namespace auge
 
 		char str[AUGE_MSG_MAX];
 		char capa_path[AUGE_PATH_MAX];
-		auge_make_path(capa_path, NULL, cache_path, "wms_capabilities_1_0_0","xml");
+		auge_make_path(capa_path, NULL, cache_path, "wms_capabilities_1_3_0","xml");
 
 		XElement  *pxNode = NULL;
 		XElement  *pxRoot = NULL;
