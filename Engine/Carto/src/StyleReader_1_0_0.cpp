@@ -742,7 +742,7 @@ namespace auge
 		pxNodeSet = pxStrokeNode->GetChildren();
 		if(pxNodeSet==NULL)
 		{
-			return false;
+			return NULL;
 		}
 
 		pxNodeSet->Reset();
