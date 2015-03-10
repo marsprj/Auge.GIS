@@ -8,8 +8,8 @@ namespace auge
 	CapabilitiesRequest::CapabilitiesRequest():
 	m_version("1.0.0"),
 	m_mime_type("text/xml"),
-	m_host("127.0.0.1"),
-	m_request_method(DEFAULT_HOST)
+	m_host(DEFAULT_HOST),
+	m_request_method(DEFAULT_METHOD)
 	{
 		
 	}

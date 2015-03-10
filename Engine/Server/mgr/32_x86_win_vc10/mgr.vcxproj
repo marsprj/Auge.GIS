@@ -10,6 +10,13 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\GServer.cpp" />
+    <ClCompile Include="..\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\GServer.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C315E5BD-713B-4812-9B05-8A0F6475DAB0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -57,7 +64,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libfcgi.lib;rudecgi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gsimsD.lib;libfcgi.lib;rudecgi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(OutDir)\$(TargetName).exe %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\binD\mgr.cgi</Command>
@@ -80,81 +87,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\CapabilitiesHandler.cpp" />
-    <ClCompile Include="..\src\CapabilitiesRequest.cpp" />
-    <ClCompile Include="..\src\CapabilitiesResponse.cpp" />
-    <ClCompile Include="..\src\CreateMapHandler.cpp" />
-    <ClCompile Include="..\src\CreateMapRequest.cpp" />
-    <ClCompile Include="..\src\CreateServiceHandler.cpp" />
-    <ClCompile Include="..\src\CreateServiceRequest.cpp" />
-    <ClCompile Include="..\src\CreateServiceResponse.cpp" />
-    <ClCompile Include="..\src\GetDataSourceHandler.cpp" />
-    <ClCompile Include="..\src\GetDataSourceRequest.cpp" />
-    <ClCompile Include="..\src\GetDataSourceResponse.cpp" />
-    <ClCompile Include="..\src\GetMapHandler.cpp" />
-    <ClCompile Include="..\src\GetMapRequest.cpp" />
-    <ClCompile Include="..\src\GetMapResponse.cpp" />
-    <ClCompile Include="..\src\GetServiceHandler.cpp" />
-    <ClCompile Include="..\src\GetServiceRequest.cpp" />
-    <ClCompile Include="..\src\GetServiceResponse.cpp" />
-    <ClCompile Include="..\src\GetStyleHandler.cpp" />
-    <ClCompile Include="..\src\GetStyleRequest.cpp" />
-    <ClCompile Include="..\src\GetStyleResponse.cpp" />
-    <ClCompile Include="..\src\GServer.cpp" />
-    <ClCompile Include="..\src\main.cpp" />
-    <ClCompile Include="..\src\RegisterDataSourceHandler.cpp" />
-    <ClCompile Include="..\src\RegisterDataSourceRequest.cpp" />
-    <ClCompile Include="..\src\RegisterLayerHandler.cpp" />
-    <ClCompile Include="..\src\RegisterLayerRequest.cpp" />
-    <ClCompile Include="..\src\RemoveMapHandler.cpp" />
-    <ClCompile Include="..\src\RemoveMapRequest.cpp" />
-    <ClCompile Include="..\src\RemoveServiceHandler.cpp" />
-    <ClCompile Include="..\src\RemoveServiceRequest.cpp" />
-    <ClCompile Include="..\src\RemoveServiceResponse.cpp" />
-    <ClCompile Include="..\src\SetStyleHandler.cpp" />
-    <ClCompile Include="..\src\SetStyleRequest.cpp" />
-    <ClCompile Include="..\src\UnregisterDataSourceHandler.cpp" />
-    <ClCompile Include="..\src\UnregisterDataSourceRequest.cpp" />
-    <ClCompile Include="..\src\WEngine.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\include\CapabilitiesHandler.h" />
-    <ClInclude Include="..\include\CapabilitiesRequest.h" />
-    <ClInclude Include="..\include\CapabilitiesResponse.h" />
-    <ClInclude Include="..\include\CreateMapHandler.h" />
-    <ClInclude Include="..\include\CreateMapRequest.h" />
-    <ClInclude Include="..\include\CreateServiceHandler.h" />
-    <ClInclude Include="..\include\CreateServiceRequest.h" />
-    <ClInclude Include="..\include\CreateServiceResponse.h" />
-    <ClInclude Include="..\include\GetDataSourceHandler.h" />
-    <ClInclude Include="..\include\GetDataSourceRequest.h" />
-    <ClInclude Include="..\include\GetDataSourceResponse.h" />
-    <ClInclude Include="..\include\GetMapHandler.h" />
-    <ClInclude Include="..\include\GetMapRequest.h" />
-    <ClInclude Include="..\include\GetMapResponse.h" />
-    <ClInclude Include="..\include\GetServiceHandler.h" />
-    <ClInclude Include="..\include\GetServiceRequest.h" />
-    <ClInclude Include="..\include\GetServiceResponse.h" />
-    <ClInclude Include="..\include\GetStyleHandler.h" />
-    <ClInclude Include="..\include\GetStyleRequest.h" />
-    <ClInclude Include="..\include\GetStyleResponse.h" />
-    <ClInclude Include="..\include\GServer.h" />
-    <ClInclude Include="..\include\RegisterDataSourceHandler.h" />
-    <ClInclude Include="..\include\RegisterDataSourceRequest.h" />
-    <ClInclude Include="..\include\RegisterLayerHandler.h" />
-    <ClInclude Include="..\include\RegisterLayerRequest.h" />
-    <ClInclude Include="..\include\RemoveMapHandler.h" />
-    <ClInclude Include="..\include\RemoveMapRequest.h" />
-    <ClInclude Include="..\include\RemoveServiceHandler.h" />
-    <ClInclude Include="..\include\RemoveServiceRequest.h" />
-    <ClInclude Include="..\include\RemoveServiceResponse.h" />
-    <ClInclude Include="..\include\SetStyleHandler.h" />
-    <ClInclude Include="..\include\SetStyleRequest.h" />
-    <ClInclude Include="..\include\UnregisterDataSourceHandler.h" />
-    <ClInclude Include="..\include\UnregisterDataSourceRequest.h" />
-    <ClInclude Include="..\include\WEngine.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

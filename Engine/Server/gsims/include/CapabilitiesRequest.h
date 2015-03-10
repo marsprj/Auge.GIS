@@ -17,20 +17,35 @@ namespace auge
 		virtual ~CapabilitiesRequest();
 
 	public:
+		virtual const char*		GetUser();
 		virtual const char*		GetEngine();
 		virtual const char*		GetVersion();
 		virtual const char*		GetRequest();
 		virtual const char*		GetMimeType();
 
+		virtual const char*		GetHost();
+		virtual const char*		GetRequestMethod();
+
 	public:
-		void		SetVersion(const char* value);
 		bool		Create(rude::CGI& cgi);
+		void		SetUser(const char* user);
+		void		SetVersion(const char* value);
+		
+		void		SetHost(const char* host);
+		void		SetRequestMethod(const char* method);
 
 	private:
+		std::string m_user;
 		std::string m_version;
 		std::string m_mime_type;
+		std::string m_host;
+		std::string m_request_method;
 
 		std::string m_name;
+
+	private:
+		static std::string	DEFAULT_HOST;
+		static std::string	DEFAULT_METHOD;
 	};
 
 }

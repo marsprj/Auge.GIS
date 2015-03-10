@@ -16,6 +16,8 @@ namespace auge
 
 	class WEngine : public WebEngine
 	{
+		friend class CapabilitiesResponse;
+
 	public:
 		WEngine();
 		virtual ~WEngine();
