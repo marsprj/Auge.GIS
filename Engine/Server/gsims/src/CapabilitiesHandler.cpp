@@ -29,6 +29,7 @@ namespace auge
 			pRequest->Release();
 			pRequest = NULL;
 		}
+		pRequest->Debug();
 		return pRequest;
 	}
 

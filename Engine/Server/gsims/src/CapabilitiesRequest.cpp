@@ -114,4 +114,22 @@ namespace auge
 	{
 		return m_host.c_str();
 	}
+
+	void CapabilitiesRequest::Debug()
+	{
+		GLogger* pLogger = augeGetLoggerInstance();
+		char str[AUGE_MSG_MAX];
+		const char* value = GetUser();
+		g_sprintf(str,"\t[%s]:%s", "User", (value==NULL)?"":value);
+		pLogger->Debug(str);
+		g_sprintf(str,"\t[%s]:%s", "Service", "ims");
+		pLogger->Debug(str);
+		value = GetVersion();
+		g_sprintf(str,"\t[%s]:%s", "Version", (value==NULL)?"":value);
+		pLogger->Debug(str);
+		value = GetRequest();
+		g_sprintf(str,"\t[%s]:%s", "Request", (value==NULL)?"":value);
+		pLogger->Debug(str);
+	}
+
 }
