@@ -52,9 +52,9 @@ namespace auge
 		{
 			AUGE_RUDE_CGI;
 
-			//printf("Content-type: text/html\r\n"
-			//	"\r\n"
-			//	"%d",m_counter++);
+//			printf("Content-type: text/html\r\n"
+//				"\r\n"
+//				"%d",m_counter++);
 
 
 			WebResponse* pWebResponse = NULL;

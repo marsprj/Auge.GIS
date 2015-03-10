@@ -1,2 +1,2 @@
 AUTOMAKE_OPTION=foreign
-SUBDIRS=gswfs gswms ims mgr
+SUBDIRS=gswfs gswms gsims ims mgr
