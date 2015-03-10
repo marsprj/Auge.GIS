@@ -1,0 +1,51 @@
+AUTOMAKE_OPTION=foreign
+lib_LTLIBRARIES=libgsims.la
+AM_CXXFLAGS=-D_LINUX
+
+AM_CPPFLAGS=-I../include \
+		-I$(top_srcdir)/include
+
+libgsims_la_LDFLAGS=\
+		-L$(top_srcdir)/Engine/Core/src \
+		-L$(top_srcdir)/Engine/Carto/src \
+		-L$(top_srcdir)/Engine/Service/WCore/src \
+		-L$(top_srcdir)/Engine/Service/WService/src
+
+libgsims_la_LIBADD=-lgcore -lgcarto -lwcore -lwservice
+
+libgsims_la_SOURCES=\
+		    CapabilitiesHandler.cpp \
+		    CapabilitiesRequest.cpp \
+		    CapabilitiesResponse.cpp \
+		    CreateMapHandler.cpp \
+		    CreateMapRequest.cpp \
+		    CreateServiceHandler.cpp \
+		    CreateServiceRequest.cpp \
+		    CreateServiceResponse.cpp \
+		    GetDataSourceHandler.cpp \
+		    GetDataSourceRequest.cpp \
+		    GetDataSourceResponse.cpp \
+		    GetMapHandler.cpp \
+		    GetMapRequest.cpp \
+		    GetMapResponse.cpp \
+		    GetServiceHandler.cpp \
+		    GetServiceRequest.cpp \
+		    GetServiceResponse.cpp \
+		    GetStyleHandler.cpp \
+		    GetStyleRequest.cpp \
+		    GetStyleResponse.cpp \
+		    RegisterDataSourceHandler.cpp \
+		    RegisterDataSourceRequest.cpp \
+		    RegisterLayerHandler.cpp \
+		    RegisterLayerRequest.cpp \
+		    RemoveMapHandler.cpp \
+		    RemoveMapRequest.cpp \
+		    RemoveServiceHandler.cpp \
+		    RemoveServiceRequest.cpp \
+		    RemoveServiceResponse.cpp \
+		    SetStyleHandler.cpp \
+		    SetStyleRequest.cpp \
+		    UnRegisterDataSourceHandler.cpp \
+		    UnRegisterDataSourceRequest.cpp \
+		    WEngine.cpp
+

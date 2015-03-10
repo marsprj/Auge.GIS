@@ -1,13 +1,11 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.69])
 AC_INIT([Auge.GIS], [0.1.0], [admin@mapcloud.org])
 AC_CONFIG_SRCDIR([include/wkb.h])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
 AC_PROG_LIBTOOL
-
 
 # Checks for programs.
 AC_PROG_CXX
@@ -86,17 +84,28 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Filter/src/Makefile
                  Engine/Makefile
                  Engine/Server/Makefile
+                 Engine/Server/gsims/Makefile
+                 Engine/Server/gsims/src/Makefile
                  Engine/Server/gswfs/Makefile
                  Engine/Server/gswfs/src/Makefile
                  Engine/Server/gswms/Makefile
                  Engine/Server/gswms/src/Makefile
                  Engine/Server/ims/Makefile
+                 Engine/Server/mgr/Makefile
                  Engine/Service/Makefile
                  Engine/Service/WCore/Makefile
                  Engine/Service/WCore/src/Makefile
+                 Engine/Service/WFEngine/Makefile
+                 Engine/Service/WFEngine/src/Makefile
+                 Engine/Service/WMEngine/Makefile
+                 Engine/Service/WMEngine/src/Makefile
+                 Engine/Service/WSEngine/Makefile
+                 Engine/Service/WSEngine/src/Makefile
                  Engine/Service/WService/Makefile
                  Engine/Service/WService/src/Makefile
                  Engine/Service/ims/Makefile
+                 Engine/Service/mgr/Makefile
+                 Engine/Service/testcgi/Makefile
                  Makefile
                  include/Makefile])
 AC_OUTPUT

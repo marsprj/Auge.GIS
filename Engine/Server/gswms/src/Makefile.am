@@ -23,3 +23,4 @@ libgswms_la_SOURCES=\
 		GetMapRequest.cpp \
 		GetMapResponse.cpp \
 		WMapEngine.cpp
+
