@@ -44,18 +44,17 @@ namespace auge
 	//========================================================================
 	void GServer::Run()
 	{
-		m_counter = 0;
-
 		WebWriter  *pWebWriter = augeCreateWebWriter();
 
 		while(AUGE_FCGI_ACCEPT>=0)
 		{
 			AUGE_RUDE_CGI;
+			cgi.setCaseSensitive(false);
 
 			Service* pService = NULL;
 			WebResponse* pWebResponse = NULL;
 
-			const char* szServiceName = cgi["ServiceName"];
+			const char* szServiceName = cgi["servicename"];
 			pService = m_pServiceManager->GetService(szServiceName);
 			if(pService==NULL)
 			{
@@ -82,6 +81,28 @@ namespace auge
 			cgi.finish();
 		}
 	}
+
+	//void GServer::Run()
+	//{
+	//	m_counter = 0;
+
+	//	WebWriter  *pWebWriter = augeCreateWebWriter();
+
+	//	while(AUGE_FCGI_ACCEPT>=0)
+	//	{
+	//		AUGE_RUDE_CGI;
+
+	//		printf("Content-type: text/html\r\n"
+	//			"\r\n"
+	//			"<br>"
+	//			"[User]:%s<br>"
+	//			"[ServiceName]:%s<br>",cgi["user"],cgi["servicename"]);
+
+	//		
+	//		cgi.finish();
+	//	}
+	//}
+	
 
 	WebResponse* GServer::DoGet(Service* pService, rude::CGI& cgi)
 	{
@@ -198,10 +219,14 @@ namespace auge
 		OpenServerBase();		
 		LoadServerConfig();
 
+		LoadConnectionPool();
+		LoadCartoPool();
+		LoadServicePool();
+
 		m_pLogger->Info("-----------------------------------------------------------");
 		m_pLogger->Info("Internet Map Server Started.");
 		m_pLogger->Info("-----------------------------------------------------------");
-		
+
 		return true;
 	}
 	

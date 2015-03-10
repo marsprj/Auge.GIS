@@ -42,6 +42,10 @@ typedef unsigned long		g_ulong;
 #define DOUBLE_ZERO         (+2.2250738585072014e-308)
 #endif
 
+#ifndef AUGE_VIRTUAL_NAME
+#	define AUGE_VIRTUAL_NAME	"ows"
+#endif
+
 #define	AUGE_PATH_MAX	1024
 #define	AUGE_NAME_MAX	256
 #define	AUGE_EXT_MAX	8

@@ -49,5 +49,4 @@ namespace auge
 		SetVersion(val);
 		return true;
 	}
-
 }

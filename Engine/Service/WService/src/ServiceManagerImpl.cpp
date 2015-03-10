@@ -80,7 +80,7 @@ namespace auge
 	{
 		return m_services.size();
 	}
-
+	
 	Service* ServiceManagerImpl::GetService(const char* szName)
 	{
 		if(szName==NULL)

@@ -82,7 +82,7 @@ namespace auge
 		WebRequest	*pWebRequest = NULL;
 		WebResponse	*pWebResponse = NULL;
 		
-		szService = cgi["service"];
+		szService = cgi["servicename"];
 		pWebEngine = augeGetWebEngineInstance();
 		if(pWebEngine==NULL)
 		{

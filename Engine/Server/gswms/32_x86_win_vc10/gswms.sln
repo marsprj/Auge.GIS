@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswms", "gswms.vcxproj", "{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ims", "..\..\ims\32_x86_win_vc10\ims.vcxproj", "{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A} = {A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GWCore", "..\..\..\Service\WCore\32_x86_win_vc10\GWCore.vcxproj", "{6B5F6426-BEF5-4FF2-A271-5FB02340A49D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GService", "..\..\..\Service\WService\32_x86_win_vc10\GService.vcxproj", "{82377DD6-A133-4E62-B74E-1DDEF01B830F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Debug|Win32.Build.0 = Debug|Win32
+		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Release|Win32.ActiveCfg = Release|Win32
+		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Release|Win32.Build.0 = Release|Win32
+		{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}.Debug|Win32.Build.0 = Debug|Win32
+		{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}.Release|Win32.ActiveCfg = Release|Win32
+		{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}.Release|Win32.Build.0 = Release|Win32
+		{6B5F6426-BEF5-4FF2-A271-5FB02340A49D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6B5F6426-BEF5-4FF2-A271-5FB02340A49D}.Debug|Win32.Build.0 = Debug|Win32
+		{6B5F6426-BEF5-4FF2-A271-5FB02340A49D}.Release|Win32.ActiveCfg = Release|Win32
+		{6B5F6426-BEF5-4FF2-A271-5FB02340A49D}.Release|Win32.Build.0 = Release|Win32
+		{82377DD6-A133-4E62-B74E-1DDEF01B830F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{82377DD6-A133-4E62-B74E-1DDEF01B830F}.Debug|Win32.Build.0 = Debug|Win32
+		{82377DD6-A133-4E62-B74E-1DDEF01B830F}.Release|Win32.ActiveCfg = Release|Win32
+		{82377DD6-A133-4E62-B74E-1DDEF01B830F}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

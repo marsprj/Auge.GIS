@@ -55,6 +55,7 @@ namespace auge
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi) = 0;
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc) = 0;
 		virtual WebResponse*	Execute(WebRequest* pWebRequest) = 0;
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap) = 0;
 	};
 
 	class WebEngine

@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>gsims</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>$(ProjectName)D</TargetName>
+    <IncludePath>../include;../../Depends/include/;../../Depends/include/fcgi;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
+    <LibraryPath>../../Depends/lib;%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;E:\DevEnv\GnuWin32\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GSWMS_EXPORTS;AUGE_WEB_ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>rudecgi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)\$(TargetName).dll %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\binD
+copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GSWMS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\CapabilitiesHandler.cpp" />
+    <ClCompile Include="..\src\CapabilitiesRequest.cpp" />
+    <ClCompile Include="..\src\CapabilitiesResponse.cpp" />
+    <ClCompile Include="..\src\CreateMapHandler.cpp" />
+    <ClCompile Include="..\src\CreateMapRequest.cpp" />
+    <ClCompile Include="..\src\CreateServiceHandler.cpp" />
+    <ClCompile Include="..\src\CreateServiceRequest.cpp" />
+    <ClCompile Include="..\src\CreateServiceResponse.cpp" />
+    <ClCompile Include="..\src\GetDataSourceHandler.cpp" />
+    <ClCompile Include="..\src\GetDataSourceRequest.cpp" />
+    <ClCompile Include="..\src\GetDataSourceResponse.cpp" />
+    <ClCompile Include="..\src\GetMapHandler.cpp" />
+    <ClCompile Include="..\src\GetMapRequest.cpp" />
+    <ClCompile Include="..\src\GetMapResponse.cpp" />
+    <ClCompile Include="..\src\GetServiceHandler.cpp" />
+    <ClCompile Include="..\src\GetServiceRequest.cpp" />
+    <ClCompile Include="..\src\GetServiceResponse.cpp" />
+    <ClCompile Include="..\src\GetStyleHandler.cpp" />
+    <ClCompile Include="..\src\GetStyleRequest.cpp" />
+    <ClCompile Include="..\src\GetStyleResponse.cpp" />
+    <ClCompile Include="..\src\RegisterDataSourceHandler.cpp" />
+    <ClCompile Include="..\src\RegisterDataSourceRequest.cpp" />
+    <ClCompile Include="..\src\RegisterLayerHandler.cpp" />
+    <ClCompile Include="..\src\RegisterLayerRequest.cpp" />
+    <ClCompile Include="..\src\RemoveMapHandler.cpp" />
+    <ClCompile Include="..\src\RemoveMapRequest.cpp" />
+    <ClCompile Include="..\src\RemoveServiceHandler.cpp" />
+    <ClCompile Include="..\src\RemoveServiceRequest.cpp" />
+    <ClCompile Include="..\src\RemoveServiceResponse.cpp" />
+    <ClCompile Include="..\src\SetStyleHandler.cpp" />
+    <ClCompile Include="..\src\SetStyleRequest.cpp" />
+    <ClCompile Include="..\src\UnregisterDataSourceHandler.cpp" />
+    <ClCompile Include="..\src\UnregisterDataSourceRequest.cpp" />
+    <ClCompile Include="..\src\WEngine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\CapabilitiesHandler.h" />
+    <ClInclude Include="..\include\CapabilitiesRequest.h" />
+    <ClInclude Include="..\include\CapabilitiesResponse.h" />
+    <ClInclude Include="..\include\CreateMapHandler.h" />
+    <ClInclude Include="..\include\CreateMapRequest.h" />
+    <ClInclude Include="..\include\CreateServiceHandler.h" />
+    <ClInclude Include="..\include\CreateServiceRequest.h" />
+    <ClInclude Include="..\include\CreateServiceResponse.h" />
+    <ClInclude Include="..\include\GetDataSourceHandler.h" />
+    <ClInclude Include="..\include\GetDataSourceRequest.h" />
+    <ClInclude Include="..\include\GetDataSourceResponse.h" />
+    <ClInclude Include="..\include\GetMapHandler.h" />
+    <ClInclude Include="..\include\GetMapRequest.h" />
+    <ClInclude Include="..\include\GetMapResponse.h" />
+    <ClInclude Include="..\include\GetServiceHandler.h" />
+    <ClInclude Include="..\include\GetServiceRequest.h" />
+    <ClInclude Include="..\include\GetServiceResponse.h" />
+    <ClInclude Include="..\include\GetStyleHandler.h" />
+    <ClInclude Include="..\include\GetStyleRequest.h" />
+    <ClInclude Include="..\include\GetStyleResponse.h" />
+    <ClInclude Include="..\include\RegisterDataSourceHandler.h" />
+    <ClInclude Include="..\include\RegisterDataSourceRequest.h" />
+    <ClInclude Include="..\include\RegisterLayerHandler.h" />
+    <ClInclude Include="..\include\RegisterLayerRequest.h" />
+    <ClInclude Include="..\include\RemoveMapHandler.h" />
+    <ClInclude Include="..\include\RemoveMapRequest.h" />
+    <ClInclude Include="..\include\RemoveServiceHandler.h" />
+    <ClInclude Include="..\include\RemoveServiceRequest.h" />
+    <ClInclude Include="..\include\RemoveServiceResponse.h" />
+    <ClInclude Include="..\include\SetStyleHandler.h" />
+    <ClInclude Include="..\include\SetStyleRequest.h" />
+    <ClInclude Include="..\include\UnregisterDataSourceHandler.h" />
+    <ClInclude Include="..\include\UnregisterDataSourceRequest.h" />
+    <ClInclude Include="..\include\WEngine.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
