@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswfs", "gswfs.vcxproj", "{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswfs", "gswfs.vcxproj", "{685A4C3A-5188-487A-AC43-376EBCEC73C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Debug|Win32.Build.0 = Debug|Win32
-		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Release|Win32.ActiveCfg = Release|Win32
-		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Release|Win32.Build.0 = Release|Win32
+		{685A4C3A-5188-487A-AC43-376EBCEC73C6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{685A4C3A-5188-487A-AC43-376EBCEC73C6}.Debug|Win32.Build.0 = Debug|Win32
+		{685A4C3A-5188-487A-AC43-376EBCEC73C6}.Release|Win32.ActiveCfg = Release|Win32
+		{685A4C3A-5188-487A-AC43-376EBCEC73C6}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,7 +16,16 @@ libgswms_la_SOURCES=\
 		CapabilitiesHandler.cpp \
 		CapabilitiesRequest.cpp \
 		CapabilitiesResponse.cpp \
-		GetMapHandler.cpp \
-		GetMapRequest.cpp \
-		GetMapResponse.cpp \
-		WMapEngine.cpp
+		DescribeFeatureTypeHandler.cpp \
+		DescribeFeatureTypeRequest.cpp \
+		DescribeFeatureTypeResponse.cpp \
+		GetFeatureHandler.cpp \
+		GetFeatureRequest.cpp \
+		GetFeatureResponse.cpp \
+		GetGmlObjectHandler.cpp \
+		GetGmlObjectRequest.cpp \
+		GetGmlObjectResponse.cpp \
+		TransactionHandler.cpp \
+		TransactionRequest.cpp \
+		TransactionResponse.cpp \
+		WFeatureEngine.cpp

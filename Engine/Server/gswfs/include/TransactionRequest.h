@@ -1,5 +1,5 @@
-#ifndef __AUGE_WFS_GET_FEATURE_REQUEST_H__
-#define __AUGE_WFS_GET_FEATURE_REQUEST_H__
+#ifndef __AUGE_WFS_TRANSACTION_REQUEST_H__
+#define __AUGE_WFS_TRANSACTION_REQUEST_H__
 
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
@@ -10,11 +10,11 @@
 
 namespace auge
 {
-	class GetFeatureRequest : public WebRequest
+	class TransactionRequest : public WebRequest
 	{
 	public:
-		GetFeatureRequest();
-		virtual ~GetFeatureRequest();
+		TransactionRequest();
+		virtual ~TransactionRequest();
 
 	public:
 		virtual const char*		GetEngine();
@@ -36,14 +36,14 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_WFS_GET_FEATURE_REQUEST_H__
+#endif //__AUGE_WFS_TRANSACTION_REQUEST_H__
 
 /************************************************************************
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities
-user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities
-http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities
+service=wfs&version=1.0.0&request=Transaction&typeName=world:cities
+user=user1&servicename=world&service=wfs&version=1.0.0&request=Transaction&typeName=world:cities
+http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=Transaction&typeName=world:cities
 
 ************************************************************************/

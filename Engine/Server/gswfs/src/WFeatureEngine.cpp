@@ -7,6 +7,8 @@
 #include "CapabilitiesHandler.h"
 #include "DescribeFeatureTypeHandler.h"
 #include "GetFeatureHandler.h"
+#include "GetGmlObjectHandler.h"
+#include "TransactionHandler.h"
 
 namespace auge
 {
@@ -23,6 +25,8 @@ namespace auge
 		m_handlers.push_back(new CapabilitiesHandler());
 		m_handlers.push_back(new DescribeFeatureTypeHandler());
 		m_handlers.push_back(new GetFeatureHandler());
+		m_handlers.push_back(new GetGmlObjectHandler());
+		m_handlers.push_back(new TransactionHandler());
 	}
 
 	WFeatureEngine::~WFeatureEngine()

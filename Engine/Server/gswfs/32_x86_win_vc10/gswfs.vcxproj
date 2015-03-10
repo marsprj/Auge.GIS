@@ -92,6 +92,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetFeatureHandler.cpp" />
     <ClCompile Include="..\src\GetFeatureRequest.cpp" />
     <ClCompile Include="..\src\GetFeatureResponse.cpp" />
+    <ClCompile Include="..\src\GetGmlObjectHandler.cpp" />
+    <ClCompile Include="..\src\GetGmlObjectRequest.cpp" />
+    <ClCompile Include="..\src\GetGmlObjectResponse.cpp" />
+    <ClCompile Include="..\src\TransactionHandler.cpp" />
+    <ClCompile Include="..\src\TransactionRequest.cpp" />
+    <ClCompile Include="..\src\TransactionResponse.cpp" />
     <ClCompile Include="..\src\WFeatureEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +110,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetFeatureHandler.h" />
     <ClInclude Include="..\include\GetFeatureRequest.h" />
     <ClInclude Include="..\include\GetFeatureResponse.h" />
+    <ClInclude Include="..\include\GetGmlObjectHandler.h" />
+    <ClInclude Include="..\include\GetGmlObjectRequest.h" />
+    <ClInclude Include="..\include\GetGmlObjectResponse.h" />
+    <ClInclude Include="..\include\TransactionHandler.h" />
+    <ClInclude Include="..\include\TransactionRequest.h" />
+    <ClInclude Include="..\include\TransactionResponse.h" />
     <ClInclude Include="..\include\WFeatureEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

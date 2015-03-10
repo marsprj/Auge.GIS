@@ -86,6 +86,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\CapabilitiesHandler.cpp" />
     <ClCompile Include="..\src\CapabilitiesRequest.cpp" />
     <ClCompile Include="..\src\CapabilitiesResponse.cpp" />
+    <ClCompile Include="..\src\GetFeatureInfoHandler.cpp" />
+    <ClCompile Include="..\src\GetFeatureInfoRequest.cpp" />
+    <ClCompile Include="..\src\GetFeatureInfoResponse.cpp" />
     <ClCompile Include="..\src\GetMapHandler.cpp" />
     <ClCompile Include="..\src\GetMapRequest.cpp" />
     <ClCompile Include="..\src\GetMapResponse.cpp" />
@@ -95,6 +98,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\CapabilitiesHandler.h" />
     <ClInclude Include="..\include\CapabilitiesRequest.h" />
     <ClInclude Include="..\include\CapabilitiesResponse.h" />
+    <ClInclude Include="..\include\GetFeatureInfoHandler.h" />
+    <ClInclude Include="..\include\GetFeatureInfoRequest.h" />
+    <ClInclude Include="..\include\GetFeatureInfoResponse.h" />
     <ClInclude Include="..\include\GetMapHandler.h" />
     <ClInclude Include="..\include\GetMapRequest.h" />
     <ClInclude Include="..\include\GetMapResponse.h" />
