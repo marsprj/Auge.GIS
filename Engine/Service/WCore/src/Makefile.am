@@ -13,4 +13,5 @@ libwcore_la_SOURCES=\
 		WebContextImpl.cpp \
 		WebEngineImpl.cpp \
 		WebExceptionResponseImpl.cpp \
+		WebSuccessResponseImpl.cpp \
 		WebWriterImpl.cpp
