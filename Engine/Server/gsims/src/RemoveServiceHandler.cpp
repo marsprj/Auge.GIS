@@ -70,4 +70,9 @@ namespace auge
 		pSusResponse->SetRequest("RemoveService");
 		return pSusResponse;
 	}
+
+	WebResponse* RemoveServiceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		return NULL;
+	}
 }

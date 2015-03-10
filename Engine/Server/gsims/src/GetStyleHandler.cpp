@@ -79,4 +79,9 @@ namespace auge
 		}
 		return pWebResponse;
 	}
+
+	WebResponse* GetStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		return NULL;
+	}
 }

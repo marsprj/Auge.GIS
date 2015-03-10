@@ -87,4 +87,9 @@ namespace auge
 		pSusResponse->SetRequest("CreateMap");
 		return pSusResponse;
 	}
+
+	WebResponse* CreateMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		return NULL;
+	}
 }

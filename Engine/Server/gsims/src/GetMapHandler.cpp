@@ -43,4 +43,9 @@ namespace auge
 	{
 		return new GetMapResponse(static_cast<GetMapRequest*>(pWebRequest));
 	}
+
+	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		return NULL;
+	}
 }

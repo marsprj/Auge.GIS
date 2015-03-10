@@ -68,4 +68,9 @@ namespace auge
 		pSusResponse->SetRequest("RemoveMap");
 		return pSusResponse;
 	}
+
+	WebResponse* RemoveMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		return NULL;
+	}
 }

@@ -65,4 +65,9 @@ namespace auge
 		pSusResponse->SetRequest(pRequest->GetRequest());
 		return pSusResponse;
 	}
+
+	WebResponse* RegisterDataSourceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		return NULL;
+	}
 }

@@ -119,4 +119,9 @@ namespace auge
 		pSusResponse->SetRequest(pRequest->GetRequest());
 		return pSusResponse;
 	}
+
+	WebResponse* SetStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		return NULL;
+	}
 }

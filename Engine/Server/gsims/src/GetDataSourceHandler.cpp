@@ -43,4 +43,9 @@ namespace auge
 	{
 		return new GetDataSourceResponse(static_cast<GetDataSourceRequest*>(pWebRequest));
 	}
+
+	WebResponse* GetDataSourceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		return NULL;
+	}
 }

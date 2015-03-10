@@ -49,4 +49,9 @@ namespace auge
 	{
 		return new CapabilitiesResponse(static_cast<CapabilitiesRequest*>(pWebRequest));
 	}
+
+	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		return NULL;
+	}
 }

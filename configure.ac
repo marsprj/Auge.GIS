@@ -66,18 +66,13 @@ AC_CONFIG_FILES([Engine/Core/Makefile
                  Engine/Service/WCore/Makefile
                  Engine/Service/WCore/src/Makefile
 		 Engine/Service/WService/Makefile
-                 Engine/Service/WService/src/Makefile
-		 Engine/Service/WFEngine/Makefile
-                 Engine/Service/WFEngine/src/Makefile
-		 Engine/Service/WMEngine/Makefile
-                 Engine/Service/WMEngine/src/Makefile
-		 Engine/Service/WSEngine/Makefile
-                 Engine/Service/WSEngine/src/Makefile
-		 Engine/Service/ims/Makefile
-		 Engine/Service/mgr/Makefile
-		 Engine/Data/GShape/test/Makefile
-		 Engine/Data/GPostgres/test/Makefile
-		 Engine/Carto/test/Makefile
+                 Engine/Service/WService/src/Makefile		 
+		 Engine/Server/gswfs/Makefile
+                 Engine/Server/gswfs/src/Makefile
+		 Engine/Server/gswms/Makefile
+                 Engine/Server/gswms/src/Makefile
+		 Engine/Server/ims/Makefile
+		 Engine/Server/mgr/Makefile
 		 Dist/Makefile
 		 Dist/32_x86_win_vc10/Makefile
                  Dist/32_x86_win_vc10/binD/Makefile

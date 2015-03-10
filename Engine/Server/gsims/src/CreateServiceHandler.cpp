@@ -70,4 +70,9 @@ namespace auge
 		pSusResponse->SetRequest("CreateService");
 		return pSusResponse;
 	}
+
+	WebResponse* CreateServiceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		return NULL;
+	}
 }

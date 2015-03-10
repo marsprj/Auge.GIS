@@ -108,4 +108,9 @@ namespace auge
 		pSusResponse->SetRequest(pRequest->GetRequest());
 		return pSusResponse;
 	}
+
+	WebResponse* RegisterLayerHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		return NULL;
+	}
 }
