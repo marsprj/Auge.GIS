@@ -53,6 +53,11 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	const char*	WorkspaceShp::GetConnectionString()
+	{
+		return m_connstring.c_str();
+	}
+
 	RESULTCODE WorkspaceShp::Open()
 	{
 		GError* pError = augeGetErrorInstance();
