@@ -39,4 +39,5 @@ libgcarto_la_SOURCES=\
 		StyleWriter_1_0_0.cpp \
 		StyleWriterImpl.cpp \
 		TextSymbolizerImpl.cpp \
-		TransformImpl.cpp
+		TransformImpl.cpp \
+		EnumStyleImpl.cpp

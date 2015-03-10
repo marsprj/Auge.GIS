@@ -53,7 +53,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	const char*	WorkspaceShp::GetConnectionString()
+	const char* WorkspaceShp::GetConnectionString()
 	{
 		return m_connstring.c_str();
 	}
