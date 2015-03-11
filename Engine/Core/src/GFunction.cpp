@@ -1,8 +1,7 @@
 #include "AugeCore.h"
 #include <iconv.h>
 #ifdef WIN32
-#include <direct.h>
-//#include "uuid.h"
+#	include <direct.h>
 #endif
 
 #ifdef WIN32
@@ -11,6 +10,7 @@
 #	include <sys/types.h>
 #	include <unistd.h>
 #	include <time.h>
+#	include <uuid/uuid.h>
 #endif
 
 namespace auge
@@ -257,6 +257,9 @@ namespace auge
 		int len = strlen((char*)buffer);
 		memcpy(uuid, buffer, len);
 #else
+		uuid_t uid;
+	       	uuid_generate(uid);
+		uuid_unparse(uid, uuid);
 		
 #endif
 	}

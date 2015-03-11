@@ -7,7 +7,7 @@ AM_CPPFLAGS=-I../include \
 
 libgcore_la_LDFLAGS=
 
-libgcore_la_LIBADD=-lxml2 -llog4cplus
+libgcore_la_LIBADD=-lxml2 -llog4cplus -luuid
 
 libgcore_la_SOURCES=\
 		FieldFactoryImpl.cpp \

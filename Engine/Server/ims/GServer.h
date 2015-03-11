@@ -58,6 +58,7 @@ namespace auge
 		WebResponse* DoPost(Service *pService, rude::CGI& cgi);
 
 		augeHttpMethodType	GetMethod();
+		void                    WriteTime(g_ulong ts, g_ulong te);
 
 		void		DoGet_2(rude::CGI& cgi);
 		

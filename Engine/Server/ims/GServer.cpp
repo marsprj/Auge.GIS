@@ -51,6 +51,8 @@ namespace auge
 			AUGE_RUDE_CGI;
 			cgi.setCaseSensitive(false);
 
+			g_ulong ts = auge_get_time();
+
 			Service* pService = NULL;
 			WebResponse* pWebResponse = NULL;
 
@@ -77,6 +79,9 @@ namespace auge
 			}
 			pWebResponse->Write(pWebWriter);
 			AUGE_SAFE_RELEASE(pWebResponse);
+
+			g_ulong te = auge_get_time();
+                        WriteTime(ts, te);
 
 			cgi.finish();
 		}
@@ -358,5 +363,14 @@ namespace auge
 		}
 
 		m_pLogger->Info("===========================================================");
+	}
+
+	inline
+        void GServer::WriteTime(g_ulong ts, g_ulong te)
+        {
+		char msg[AUGE_MSG_MAX] = {0};
+                //g_sprintf(msg, "[%d]:[%d]", te,ts);
+		g_sprintf(msg, "[Time]:%3f ms", ((float)(te-ts))/1000.0f);
+		m_pLogger->Debug(msg);
 	}
 }

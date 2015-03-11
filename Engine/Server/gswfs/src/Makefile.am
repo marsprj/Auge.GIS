@@ -21,5 +21,10 @@ libgswfs_la_SOURCES=\
 		GetFeatureHandler.cpp \
 		GetFeatureRequest.cpp \
 		GetFeatureResponse.cpp \
+		GetGmlObjectHandler.cpp \
+		GetGmlObjectRequest.cpp \
+		GetGmlObjectResponse.cpp \
+		TransactionHandler.cpp \
+		TransactionRequest.cpp \
+		TransactionResponse.cpp \
 		WFeatureEngine.cpp
-
