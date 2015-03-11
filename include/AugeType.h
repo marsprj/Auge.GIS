@@ -11,6 +11,7 @@ typedef unsigned short		g_uint16;
 typedef int					g_int;
 typedef int					g_int32;
 typedef unsigned int		g_uint;
+typedef long				g_long;
 typedef unsigned long		g_ulong;
 
 #ifndef PI

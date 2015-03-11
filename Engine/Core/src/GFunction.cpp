@@ -10,6 +10,7 @@
 #else
 #	include <sys/types.h>
 #	include <unistd.h>
+#	include <time.h>
 #endif
 
 namespace auge
@@ -465,5 +466,14 @@ namespace auge
 		}	
 	}
 #endif
+
+	g_ulong auge_get_time()
+	{
+#ifdef WIN32
+		return (g_ulong)GetTickCount();
+#else
+		return (g_ulong)time();
+#endif
+	}
 
 }

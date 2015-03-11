@@ -106,7 +106,7 @@ namespace auge
 		pWriter->Write(buffer, len);
 		pWriter->WriteTail();
 
-		pLogger->Info((g_char*)buffer);
+		pLogger->Trace((g_char*)buffer);
 
 		pxDoc->Close();
 		AUGE_SAFE_RELEASE(pxDoc);

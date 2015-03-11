@@ -34,7 +34,7 @@ namespace auge
 		void		SetHost(const char* host);
 		void		SetRequestMethod(const char* method);
 		
-		void		Debug();
+		void		Info();
 
 	private:
 		std::string m_user;

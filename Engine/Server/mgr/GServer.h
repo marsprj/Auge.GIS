@@ -54,11 +54,13 @@ namespace auge
 		RESULTCODE	LoadServicePool();
 
 	private:
-		WebResponse* DoGet(rude::CGI& cgi);
-		WebResponse* DoPost(rude::CGI& cgi);
-		WebResponse* Execute(WebRequest* pWebRequest);
+		WebResponse*	DoGet(rude::CGI& cgi);
+		WebResponse*	DoPost(rude::CGI& cgi);
+		WebResponse*	Execute(WebRequest* pWebRequest);
 
 		augeHttpMethodType	GetMethod();
+
+		void			WriteTime(g_ulong ts, g_ulong te);
 		
 	private:
 		GError				*m_pError;

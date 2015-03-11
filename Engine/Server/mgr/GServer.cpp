@@ -59,6 +59,8 @@ namespace auge
 
 			WebResponse* pWebResponse = NULL;
 
+			g_ulong ts = auge_get_time();
+
 			switch(GetMethod())
 			{
 			case augeHttpGet:
@@ -70,7 +72,10 @@ namespace auge
 
 			pWebResponse->Write(pWebWriter);
 			AUGE_SAFE_RELEASE(pWebResponse);
-
+			
+			g_ulong te = auge_get_time();
+			WriteTime(ts, te);
+			
 			cgi.finish();
 		}
 	}
@@ -172,6 +177,16 @@ namespace auge
 			return augeHttpPost;
 		}
 		return augeHttpGet;
+	}
+
+	inline
+	void GServer::WriteTime(g_ulong ts, g_ulong te)
+	{
+		char msg[AUGE_MSG_MAX] = {0};
+		g_sprintf(msg, "[%d]:[%d]", te,ts);
+		augeGetLoggerInstance()->Debug(msg);
+		g_sprintf(msg, "[Time]:%3fºÁÃë", ((float)(te-ts))/1000.0f);
+		augeGetLoggerInstance()->Debug(msg);
 	}
 
 	//========================================================================

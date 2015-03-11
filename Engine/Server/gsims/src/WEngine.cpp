@@ -255,8 +255,6 @@ namespace auge
 
 	WebResponse* WEngine::Execute(WebRequest* pWebRequest)
 	{
-		WebResponse	*pWebResponse = NULL;
-
 		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
 		if(handler == NULL)
@@ -264,6 +262,7 @@ namespace auge
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Request %s is not supported", request);
 		}
+				
 		return handler->Execute(pWebRequest);
 	}
 
