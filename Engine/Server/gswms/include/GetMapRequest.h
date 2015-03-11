@@ -65,7 +65,7 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-service=wms&version=1.0.0&request=GetCapabilities
+servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=point,line,polygon&bbox=-180,-90,180,90&width=800&height=600&transparent=true
 user=user1&servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=point,line,polygon&bbox=-180,-90,180,90&width=800&height=600&transparent=true
 
 http://127.0.0.1:8088/ows/user1/world/ims?service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=point,line,polygon&bbox=-180,-90,180,90&width=800&height=600&transparent=true
