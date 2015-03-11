@@ -472,7 +472,7 @@ namespace auge
 #ifdef WIN32
 		return (g_ulong)GetTickCount();
 #else
-		return (g_ulong)time();
+		return (g_ulong)time(NULL);
 #endif
 	}
 

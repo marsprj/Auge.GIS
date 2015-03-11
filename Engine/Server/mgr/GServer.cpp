@@ -47,6 +47,7 @@ namespace auge
 		m_counter = 0;
 
 		WebWriter  *pWebWriter = augeCreateWebWriter();
+		GLogger* pLogger = augeGetLoggerInstance();
 
 		while(AUGE_FCGI_ACCEPT>=0)
 		{
@@ -56,6 +57,7 @@ namespace auge
 //				"\r\n"
 //				"%d",m_counter++);
 
+			pLogger->Info("--------------------------------------------------------");
 
 			WebResponse* pWebResponse = NULL;
 
@@ -183,10 +185,9 @@ namespace auge
 	void GServer::WriteTime(g_ulong ts, g_ulong te)
 	{
 		char msg[AUGE_MSG_MAX] = {0};
-		g_sprintf(msg, "[%d]:[%d]", te,ts);
-		augeGetLoggerInstance()->Debug(msg);
-		g_sprintf(msg, "[Time]:%3fºÁÃë", ((float)(te-ts))/1000.0f);
-		augeGetLoggerInstance()->Debug(msg);
+		//g_sprintf(msg, "[%d]:[%d]", te,ts);
+		g_sprintf(msg, "[Time]:%3f ms", ((float)(te-ts))/1000.0f);
+		m_pLogger->Debug(msg);
 	}
 
 	//========================================================================
