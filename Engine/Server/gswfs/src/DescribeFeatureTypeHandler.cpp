@@ -145,7 +145,7 @@ namespace auge
 	{
 		if(strcmp(version, "1.0.0")==0)
 		{
-			return false;
+			return WriteDescribeFeatureType_1_1_0(pWebContext, typeName, pFeatureClass);
 		}
 		else if(strcmp(version, "1.1.0")==0)
 		{
