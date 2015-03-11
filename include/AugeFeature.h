@@ -62,8 +62,12 @@ namespace auge
 		virtual FeatureCursor*		Query(augeCursorType type=augeStaticCursor) = 0;
 		virtual FeatureCursor*		Query(GEnvelope& extent, augeCursorType type=augeStaticCursor) = 0;
 		virtual FeatureCursor*		Query(GFilter* pFilter, augeCursorType type=augeStaticCursor) = 0;
+
+		virtual RESULTCODE			RemoveFeature(GFilter* pFilter) = 0;
 		
 		virtual FeatureInsertCommand* CreateInsertCommand() = 0;
+
+		virtual Feature*			NewFeature() = 0;
 	};
 
 	class Feature : public GObject
@@ -105,6 +109,8 @@ namespace auge
 		//virtual const AgString*	GetString(const char* name)		const = 0;
 		//virtual const AgBlob*	GetBlob(const char* name)		const = 0;
 		//virtual const TIME_STRU*GetTime(const char* name)		const = 0;
+
+		virtual RESULTCODE			SetValue(const char* name, GValue *pValue)=0;
 	};
 
 	class FeatureCursor : public GObject

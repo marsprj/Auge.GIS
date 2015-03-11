@@ -18,13 +18,19 @@ namespace auge
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 
 	public:
-		void	SetFeatureCursor(FeatureCursor* pCursor);
+		
+		void	SetInsertCount(g_uint count);
+		void	SetUpdateCount(g_uint count);
+		void	SetDeleteCount(g_uint count);
 
 	private:
 		TransactionRequest	*m_pRequest;
-		FeatureCursor		*m_pCursor;
-
 		std::string			m_encoding;
+
+		g_uint m_num_insert;
+		g_uint m_num_update;
+		g_uint m_num_delete;
+
 	};
 }
 

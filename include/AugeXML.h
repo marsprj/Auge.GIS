@@ -12,6 +12,7 @@
 #endif
 
 #include <AugeType.h>
+#include <AugeCore.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <string>
@@ -31,7 +32,7 @@ namespace auge
 	class XNodeSet;
 	class XParser;
 
-	class AUGE_XML_API XNonCopyable
+	class AUGE_XML_API XNonCopyable : public GObject
 	{
 	protected:
 		XNonCopyable(){}
@@ -42,7 +43,7 @@ namespace auge
 	//	XNonCopyable& operator=(const XNonCopyable&);
 	};
 
-	class AUGE_XML_API XDocument : XNonCopyable
+	class AUGE_XML_API XDocument : public XNonCopyable
 	{
 		class Init
 		{

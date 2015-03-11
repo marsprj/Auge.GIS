@@ -294,4 +294,9 @@ namespace auge
 	{
 		return GetString(m_pFields->FindField(name));
 	}
+
+	RESULTCODE FeatureShp::SetValue(const char* name, GValue *pValue)
+	{
+		return AG_FAILURE;
+	}
 }

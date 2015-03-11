@@ -24,10 +24,10 @@ namespace auge
 		return "GetFeature";
 	}
 	
-	WebRequest*	GetFeatureHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	GetFeatureHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		GetFeatureRequest* pRequest = new GetFeatureRequest();
-		if(!pRequest->Create(cgi))
+		if(!pRequest->Create(cgi, pMap))
 		{
 			GLogger* pLogger = augeGetLoggerInstance();
 			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
@@ -37,10 +37,10 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetFeatureHandler::ParseRequest(XDocument* pxDoc)
+	WebRequest*	GetFeatureHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		GetFeatureRequest* pRequest = new GetFeatureRequest();
-		if(!pRequest->Create(pxDoc))
+		if(!pRequest->Create(pxDoc, pMap))
 		{
 			GLogger* pLogger = augeGetLoggerInstance();
 			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);

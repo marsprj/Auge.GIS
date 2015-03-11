@@ -24,7 +24,7 @@ namespace auge
 		return "GetGmlObject";
 	}
 	
-	WebRequest*	GetGmlObjectHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	GetGmlObjectHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		GetGmlObjectRequest* pRequest = new GetGmlObjectRequest();
 		if(!pRequest->Create(cgi))
@@ -37,7 +37,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetGmlObjectHandler::ParseRequest(XDocument* pxDoc)
+	WebRequest*	GetGmlObjectHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		GetGmlObjectRequest* pRequest = new GetGmlObjectRequest();
 		//if(!pRequest->Create(cgi))

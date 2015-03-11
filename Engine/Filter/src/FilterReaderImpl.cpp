@@ -55,7 +55,7 @@ namespace auge
 		{
 			pFilter = ReadUnaryLogic(pxFilter);
 		}
-		else if(!g_stricmp(type, "GmlObjectId"))
+		else if((!g_stricmp(type, "GmlObjectId"))||(!g_stricmp(type, "FeatureId")))
 		{
 			pFilter = ReadIdFilter(pxFilter);
 		}
@@ -242,6 +242,10 @@ namespace auge
 		while(pxNode!=NULL)
 		{
 			pxAttr = ((XElement*)pxNode)->GetAttribute("id",NULL);
+			if(pxAttr==NULL)
+			{
+				pxAttr = ((XElement*)pxNode)->GetAttribute("fid",NULL);
+			}
 			if(pxAttr!=NULL)
 			{
 				str = pxAttr->GetValue();
@@ -249,7 +253,7 @@ namespace auge
 				pos = auge_find_last_char(str,'.');
 				if(pos>0)
 				{
-					pFilter->Add(atoi(str+pos));
+					pFilter->Add(atoi(str+pos+1));
 				}
 				
 				pxNode = pxNode->GetSibling();

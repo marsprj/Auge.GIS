@@ -23,7 +23,7 @@ namespace auge
 		return "GetCapabilities";
 	}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
 		if(!pRequest->Create(cgi))
@@ -38,7 +38,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(XDocument* pxDoc)
+	WebRequest*	CapabilitiesHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
 		//if(!pRequest->Create(cgi))

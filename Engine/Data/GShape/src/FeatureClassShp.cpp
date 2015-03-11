@@ -256,4 +256,14 @@ namespace auge
 	{
 		return NULL;
 	}
+
+	RESULTCODE FeatureClassShp::RemoveFeature(GFilter* pFilter)
+	{
+		return AG_FAILURE;
+	}
+
+	Feature* FeatureClassShp::NewFeature()
+	{
+		return NULL;
+	}
 }

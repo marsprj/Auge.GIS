@@ -30,6 +30,9 @@ namespace auge
 		virtual WebResponse*	Execute(WebRequest* pRequest) = 0;
 
 		virtual void			SetMap(Map* pMap) = 0;
+		virtual Map*			GetMap() = 0;
+
+		virtual WebContext*		GetWebContext() = 0;
 
 		virtual	RESULTCODE		Start() = 0;
 		virtual RESULTCODE		Shutdown() = 0;

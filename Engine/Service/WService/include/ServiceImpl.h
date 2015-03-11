@@ -16,14 +16,17 @@ namespace auge
 		virtual const char*		GetName();		
 		virtual WebResponse*	Execute(WebRequest* pRequest);
 
+		virtual Map*			GetMap();
+		virtual void			SetMap(Map* pMap);
+		virtual WebContext*		GetWebContext();
+
 		virtual	RESULTCODE		Start();
 		virtual RESULTCODE		Shutdown();
 
 		virtual void			Release();
 
 	public:
-		Map*	GetMap();
-		void	SetMap(Map* pMap);
+		
 		void	SetMapName(const char* name);
 		void	SetName(const char* name);
 		

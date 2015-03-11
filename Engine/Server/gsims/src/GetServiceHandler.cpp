@@ -20,7 +20,7 @@ namespace auge
 		return "GetService";
 	}
 
-	WebRequest*	GetServiceHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	GetServiceHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		GetServiceRequest* pRequest = new GetServiceRequest();
 
@@ -34,7 +34,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetServiceHandler::ParseRequest(XDocument* pxDoc)
+	WebRequest*	GetServiceHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		return NULL;
 	}

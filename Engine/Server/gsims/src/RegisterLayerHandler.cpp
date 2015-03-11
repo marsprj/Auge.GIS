@@ -21,7 +21,7 @@ namespace auge
 		return "RegisterLayer";
 	}
 
-	WebRequest*	RegisterLayerHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	RegisterLayerHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		RegisterLayerRequest* pRequest = new RegisterLayerRequest();
 
@@ -35,7 +35,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	RegisterLayerHandler::ParseRequest(XDocument* pxDoc)
+	WebRequest*	RegisterLayerHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		return NULL;
 	}

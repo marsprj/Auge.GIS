@@ -12,14 +12,13 @@ namespace auge
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
 		m_encoding = "GBK";
+		m_num_insert = 0;
+		m_num_update = 0;
+		m_num_delete = 0;
 	}
 
 	TransactionResponse::~TransactionResponse()
 	{
-		if(m_pCursor!=NULL)
-		{
-			AUGE_SAFE_RELEASE(m_pCursor);
-		}
 	}
 
 	RESULTCODE TransactionResponse::Write(WebWriter* pWriter)
@@ -37,128 +36,29 @@ namespace auge
 		XElement  *pxRoot = NULL;
 		XDocument *pxDoc = new XDocument();
 		// FeatureCollection
-		pxRoot = pxDoc->CreateRootNode("FeatureCollection", "http://www.opengis.net/wfs", "wfs");
+		pxRoot = pxDoc->CreateRootNode("TransactionResponse", "http://www.opengis.net/wfs", "wfs");
 		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/wfs",NULL);
 		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/ows","ows");
 		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/gml","gml");
 		pxRoot->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
 		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
 		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema","xsd");		
-		pxRoot->SetAttribute("version", "1.1.0", NULL);
+		pxRoot->SetAttribute("version", m_pRequest->GetVersion(), NULL);
 
-		// FeatureCollection-->boundedBy
-		XElement* pxBoundedBy = pxRoot->AddChild("boundedBy","gml");
-		pxNode = pxBoundedBy->AddChild("null", "gml");
-		pxNode->SetAttribute("null", "unknown", NULL);
+		XElement* pxSummary = pxRoot->AddChild("TransactionSummary","wfs");
 
-		XElement	*pxMember = NULL;
-		XElement	*pxFeature= NULL;
-		XElement	*pxValue  = NULL;
+		char text[AUGE_BUFFER_MAX];
+		g_sprintf(text,"%d", m_num_insert);
+		pxNode = pxSummary->AddChild("totalInserted","wfs");
+		pxNode->AddChildText(text);
 
-		Feature		*pFeature = NULL;
-		FeatureClass *pFeatureClass = m_pCursor->GetFeatureClass();
-		GFields		*pFields = pFeatureClass->GetFields();
-		GField		*pField  = NULL;
-		g_uint		fcount = pFields->Count();
+		g_sprintf(text,"%d", m_num_update);
+		pxNode = pxSummary->AddChild("totalUpdated","wfs");
+		pxNode->AddChildText(text);
 
-		while((pFeature=m_pCursor->NextFeature())!=NULL)
-		{
-			// FeatureCollection-->featureMember
-			pxMember = pxRoot->AddChild("featureMember","gml");
-			// FeatureCollection-->feature
-			pxFeature = pxMember->AddChild(typeName,"gml");
-			pxFeature->AddChild(typeName,NULL);
-			g_sprintf(str,"%s.%d", typeName, pFeature->GetFID());
-			pxFeature->SetAttribute("fid",str, NULL);
-			
-			for(g_uint i=0; i<fcount; i++)
-			{
-				pField = pFields->GetField(i);
-				// FeatureCollection-->feature->value
-				pxValue = pxFeature->AddChild(pField->GetName(),NULL);
-
-				switch(pField->GetType())
-				{					 
-				case augeFieldTypeShort:
-					{
-						g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetShort(i));
-						pxValue->AddChildText(str);
-					}
-					break;
-				case augeFieldTypeInt:
-					{
-						g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetInt(i));
-						pxValue->AddChildText(str);
-					}
-					break;
-				case augeFieldTypeLong:
-					{
-						g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetLong(i));
-						pxValue->AddChildText(str);
-					}
-					break;
-				case augeFieldTypeInt64:
-					{
-						g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetInt64(i));
-						pxValue->AddChildText(str);
-					}
-					break;
-				case augeFieldTypeFloat:
-					{
-						g_snprintf(str, AUGE_BUFFER_MAX,"%f",pFeature->GetFloat(i));
-						pxValue->AddChildText(str);
-					}
-					break;
-				case augeFieldTypeDouble:
-					{
-						g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetDouble(i));
-						pxValue->AddChildText(str);
-					}
-					break;
-				case augeFieldTypeChar:			 
-					{
-						g_snprintf(str, AUGE_BUFFER_MAX,"'%c'",pFeature->GetChar(i));
-						pxValue->AddChildText(str);
-					}
-					break;
-				case augeFieldTypeString:
-					{
-						pxValue->AddChildText(pFeature->GetString(i));
-					}
-					break;
-				case augeFieldTypeTime:	
-					{
-
-					}
-					break;
-				case augeFieldTypeBool:			 
-					{
-
-					}
-					break;
-				case augeFieldTypeBLOB:			 
-					{
-
-					}
-					break;
-				case augeFieldTypeGeometry:
-					{
-						GeometryDef* pGeometryDef = pField->GetGeometryDef();
-						Geometry *pGeometry = pFeature->GetGeometry();
-						if(pGeometry!=NULL)
-						{
-							const char* wkt = pGeometry->AsText(true);
-							if(wkt!=NULL)
-							{
-								g_snprintf(str, AUGE_BUFFER_MAX,"%d",pGeometryDef->GetSRID());	
-								pxValue->AddChildText(wkt);
-							}
-						}
-					}
-					break;
-				}//switch
-			}//for
-		}
+		g_sprintf(text,"%d", m_num_delete);
+		pxNode = pxSummary->AddChild("totalDeleted","wfs");
+		pxNode->AddChildText(text);
 
 		int len = 0;
 		g_uchar* buffer = NULL;
@@ -172,9 +72,18 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void TransactionResponse::SetFeatureCursor(FeatureCursor* pCursor)
+	void TransactionResponse::SetInsertCount(g_uint count)
 	{
-		m_pCursor = pCursor;
+		m_num_insert = count;
 	}
 
+	void TransactionResponse::SetUpdateCount(g_uint count)
+	{
+		m_num_update = count;
+	}
+
+	void TransactionResponse::SetDeleteCount(g_uint count)
+	{
+		m_num_delete = count;
+	}
 }

@@ -20,7 +20,7 @@ namespace auge
 		return "RemoveService";
 	}
 
-	WebRequest*	RemoveServiceHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	RemoveServiceHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		RemoveServiceRequest* pRequest = new RemoveServiceRequest();
 
@@ -34,7 +34,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	RemoveServiceHandler::ParseRequest(XDocument* pxDoc)
+	WebRequest*	RemoveServiceHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		return NULL;
 	}

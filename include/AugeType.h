@@ -47,13 +47,13 @@ typedef unsigned long		g_ulong;
 #	define AUGE_VIRTUAL_NAME	"ows"
 #endif
 
-#define	AUGE_PATH_MAX	1024
-#define	AUGE_NAME_MAX	256
-#define	AUGE_EXT_MAX	8
-#define	AUGE_MSG_MAX	256
+#define	AUGE_PATH_MAX		1024
+#define	AUGE_NAME_MAX		256
+#define	AUGE_EXT_MAX		8
+#define	AUGE_MSG_MAX		256
 #define	AUGE_MSG_LONG_MAX	1024
-#define AUGE_BUFFER_MAX	4096
-#define AUGE_SQL_MAX	1024
+#define AUGE_BUFFER_MAX		4096
+#define AUGE_SQL_MAX		1024
 #define AUGE_SQL_LONG_MAX	8192
 
 #ifndef PATH_MAX
@@ -63,6 +63,7 @@ typedef unsigned long		g_ulong;
 #ifndef NAME_MAX
 #	define NAME_MAX	256
 #endif
+
 
 
 #define AUGE_DB_SERVER		"SERVER"

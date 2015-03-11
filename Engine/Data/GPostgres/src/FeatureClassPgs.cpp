@@ -3,6 +3,7 @@
 #include "FeatureCursorPgs.h"
 #include "FeatureClassPgs.h"
 #include "FeatureInsertCommandPgs.h"
+#include "FeatureObj.h"
 
 #include "SQLBuilder.h"
 
@@ -160,6 +161,30 @@ namespace auge
 			pCursor = NULL;
 		}
 		return pCursor;
+	}
+
+	RESULTCODE FeatureClassPgs::RemoveFeature(GFilter* pFilter)
+	{
+		RESULTCODE rc = AG_FAILURE;
+		std::string sql;
+		SQLBuilder::BuildDeleteFeature(sql, pFilter, this);
+		PGresult* pgResult = NULL;
+		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		if(pgResult==NULL)
+		{
+			return AG_FAILURE;
+		}
+		if(PQresultStatus(pgResult)!=PGRES_COMMAND_OK)
+		{
+			rc = AG_FAILURE;
+		}
+		PQclear(pgResult);
+		return AG_SUCCESS;
+	}
+
+	Feature* FeatureClassPgs::NewFeature()
+	{
+		return (new FeatureObj(this));
 	}
 
 	//////////////////////////////////////////////////////////////////////////

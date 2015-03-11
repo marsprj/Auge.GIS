@@ -30,7 +30,11 @@ namespace auge
 		virtual FeatureCursor*		Query(GEnvelope& extent, augeCursorType type=augeStaticCursor);
 		virtual FeatureCursor*		Query(GFilter* pFilter, augeCursorType type=augeStaticCursor);
 
+		virtual RESULTCODE			RemoveFeature(GFilter* pFilter);
+
 		virtual FeatureInsertCommand* CreateInsertCommand();
+
+		virtual Feature*			NewFeature();
 
 		virtual void				Release();
 

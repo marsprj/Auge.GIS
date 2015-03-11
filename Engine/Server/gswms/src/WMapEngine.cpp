@@ -132,7 +132,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebRequest* WMapEngine::ParseRequest(rude::CGI& cgi)
+	WebRequest* WMapEngine::ParseRequest(rude::CGI& cgi, WebContext* pWebContext, Map* pMap)
 	{
 		const char* request = cgi["request"];
 		if(request==NULL)
@@ -159,7 +159,7 @@ namespace auge
 		return handler->ParseRequest(cgi);
 	}
 
-	WebRequest*	WMapEngine::ParseRequest(XDocument* pxDoc)
+	WebRequest*	WMapEngine::ParseRequest(XDocument* pxDoc, WebContext* pWebContext, Map* pMap)
 	{
 		GError* pError = augeGetErrorInstance();
 		pError->SetError("WMS do not support xml request");

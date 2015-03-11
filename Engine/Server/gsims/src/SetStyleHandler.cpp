@@ -21,7 +21,7 @@ namespace auge
 		return "SetStyle";
 	}
 
-	WebRequest*	SetStyleHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	SetStyleHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		SetStyleRequest* pRequest = new SetStyleRequest();
 
@@ -35,7 +35,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	SetStyleHandler::ParseRequest(XDocument* pxDoc)
+	WebRequest*	SetStyleHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		return NULL;
 	}

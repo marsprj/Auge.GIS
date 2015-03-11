@@ -99,6 +99,11 @@ namespace auge
 		}
 	}
 
+	WebContext*	ServiceImpl::GetWebContext()
+	{
+		return m_pContext;
+	}
+
 	void ServiceImpl::SetMap(Map* pMap)
 	{
 		m_pMap = pMap;

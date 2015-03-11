@@ -138,7 +138,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebRequest* WFeatureEngine::ParseRequest(rude::CGI& cgi)
+	WebRequest* WFeatureEngine::ParseRequest(rude::CGI& cgi, WebContext* pWebContext, Map* pMap)
 	{
 		const char* request = cgi["request"];
 		if(request==NULL)
@@ -162,10 +162,10 @@ namespace auge
 
 			return NULL;
 		}
-		return handler->ParseRequest(cgi);
+		return handler->ParseRequest(cgi, pWebContext, pMap);
 	}
 
-	WebRequest*	WFeatureEngine::ParseRequest(XDocument* pxDoc)
+	WebRequest*	WFeatureEngine::ParseRequest(XDocument* pxDoc,WebContext* pWebContext, Map* pMap)
 	{
 		XElement	*pxRoot = pxDoc->GetRootNode();
 		const char* request = pxRoot->GetName();
@@ -182,7 +182,7 @@ namespace auge
 
 			return NULL;
 		}
-		return handler->ParseRequest(pxDoc);
+		return handler->ParseRequest(pxDoc, pWebContext, pMap);
 	}
 
 	WebResponse* WFeatureEngine::Execute(WebRequest* pWebRequest)

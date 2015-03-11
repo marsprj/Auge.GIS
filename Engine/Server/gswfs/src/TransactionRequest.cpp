@@ -1,4 +1,5 @@
 #include "TransactionRequest.h"
+#include "AugeXML.h"
 
 namespace auge
 {
@@ -6,11 +7,17 @@ namespace auge
 	{
 		m_version = "1.1.0";
 		m_mime_type = "text/xml";
+		m_pxDoc = NULL;
 	}
 
 	TransactionRequest::~TransactionRequest()
 	{
-
+		if(m_pxDoc!=NULL)
+		{
+			m_pxDoc->Close();
+			m_pxDoc->Release();
+			m_pxDoc = NULL;
+		}
 	}
 
 	const char*	TransactionRequest::GetEngine()
@@ -58,10 +65,29 @@ namespace auge
 		return m_mime_type.c_str();
 	}
 
-	bool TransactionRequest::Create(rude::CGI& cgi)
+	XDocument* TransactionRequest::GetXmlDoc()
 	{
-		SetVersion(cgi["version"]);
-		SetTypeName(cgi["typeName"]);
+		return m_pxDoc;
+	}
+
+	bool TransactionRequest::Create(XDocument* pxDoc)
+	{
+		m_pxDoc = pxDoc;
+		if(m_pxDoc!=NULL)
+		{
+			m_pxDoc->AddRef();
+		}
+		
+		XElement	*pxRoot = NULL;
+		XAttribute	*pxAttr = NULL;
+
+		pxRoot = pxDoc->GetRootNode();
+		pxAttr = pxRoot->GetAttribute("version");
+		if(pxAttr!=NULL)
+		{
+			SetVersion(pxAttr->GetValue());
+		}
+
 		return true;
 	}
 

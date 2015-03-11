@@ -1,4 +1,6 @@
 #include "GetFeatureRequest.h"
+#include "AugeData.h"
+#include "AugeCarto.h"
 #include "AugeXML.h"
 #include "AugeFilter.h"
 
@@ -143,6 +145,10 @@ namespace auge
 		{
 			m_bbox.clear();
 		}
+		else if(!strlen(bbox))
+		{
+			m_bbox.clear();
+		}
 		else
 		{
 			double xmin, ymin, xmax, ymax;
@@ -156,7 +162,57 @@ namespace auge
 		return m_pFilter;
 	}
 
-	bool GetFeatureRequest::Create(rude::CGI& cgi)
+	void GetFeatureRequest::SetFilter(const char* filter, const char* typeName, Map* pMap)
+	{
+		XParser parser;
+		XDocument* pxDoc = NULL;
+		if(typeName==NULL||pMap==NULL)
+		{
+			return;
+		}
+
+		GFilter* pFilter = NULL;
+		FilterReader* reader = NULL;
+		FilterFactory *factory = augeGetFilterFactoryInstance();
+
+		Layer* pLayer = pMap->GetLayer(typeName);
+		if(pLayer==NULL)
+		{
+			return;
+		}
+		//augeLayerType ltype = pLayer->GetType();
+		//if(ltype!=augeLayerFeature);
+		//{
+		//	return;
+		//}
+
+		FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+		if(pFeatureClass==NULL)
+		{
+			return;
+		}
+
+		pxDoc = parser.ParseMemory(filter);
+		if(pxDoc==NULL)
+		{
+			return;
+		}
+
+		reader = factory->CreateFilerReader(pFeatureClass->GetFields());
+		pFilter = reader->Read(pxDoc->GetRootNode());
+		pxDoc->Close();
+		pxDoc->Release();
+
+		if(m_pFilter!=NULL)
+		{
+			m_pFilter->Release();
+			m_pFilter = NULL;
+		}
+		m_pFilter = pFilter;
+	}
+
+	bool GetFeatureRequest::Create(rude::CGI& cgi, Map* pMap)
 	{
 		SetVersion(cgi["version"]);
 		SetTypeName(cgi["typeName"]);
@@ -164,10 +220,11 @@ namespace auge
 		SetMaxFeatures(cgi["maxFeatures"]);
 		SetOffset(cgi["offset"]);
 		SetBBox(cgi["bbox"]);
+		SetFilter(cgi["filter"], GetTypeName(), pMap);
 		return true;
 	}
 
-	bool GetFeatureRequest::Create(XDocument* pxDoc)
+	bool GetFeatureRequest::Create(XDocument* pxDoc,Map* pMap)
 	{
 		XElement	*pxRoot = NULL;
 		XAttribute	*pxAttr = NULL;

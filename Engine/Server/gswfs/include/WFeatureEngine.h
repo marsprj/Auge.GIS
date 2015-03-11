@@ -23,8 +23,8 @@ namespace auge
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 
 		virtual WebRequest*		ParseRequest(const char* url);
-		virtual WebRequest*		ParseRequest(rude::CGI& cgi);
-		virtual WebRequest*		ParseRequest(XDocument* pxDoc);
+		virtual WebRequest*		ParseRequest(rude::CGI& cgi, WebContext* pWebContext=NULL, Map* pMap=NULL);
+		virtual WebRequest*		ParseRequest(XDocument* pxDoc, WebContext* pWebContext=NULL, Map* pMap=NULL);
 		 
 	public:
 		virtual const char*		GetID();

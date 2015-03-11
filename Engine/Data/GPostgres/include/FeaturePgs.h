@@ -49,6 +49,8 @@ namespace auge
 		//virtual const AgBlob*	GetBlob(const char* name)		const;
 		//virtual const TIME_STRU*GetTime(const char* name)		const;
 
+		virtual RESULTCODE		SetValue(const char* name, GValue *pValue);
+
 	public:
 		bool		Create(g_uint index, g_int geom_findex, PGresult* pgResult, FeatureClassPgs* pFeatureClass);
 		Geometry*	CreateGeometry();

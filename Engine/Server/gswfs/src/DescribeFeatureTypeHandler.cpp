@@ -25,7 +25,7 @@ namespace auge
 		return "DescribeFeatureType";
 	}
 
-	WebRequest*	DescribeFeatureTypeHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	DescribeFeatureTypeHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		DescribeFeatureTypeRequest* pRequest = new DescribeFeatureTypeRequest();
 		if(!pRequest->Create(cgi))
@@ -38,7 +38,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	DescribeFeatureTypeHandler::ParseRequest(XDocument* pxDoc)
+	WebRequest*	DescribeFeatureTypeHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		DescribeFeatureTypeRequest* pRequest = new DescribeFeatureTypeRequest();
 		//if(!pRequest->Create(cgi))

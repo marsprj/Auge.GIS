@@ -48,9 +48,7 @@ namespace auge
 		{
 			return NULL;
 		}
-		XNode* pagNode = *m_iter;	
-		m_iter++;
-		return pagNode;
+		return *(m_iter++);
 	}
 
 	void XNodeSet::Reset()

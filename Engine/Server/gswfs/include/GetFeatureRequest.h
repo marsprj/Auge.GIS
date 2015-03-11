@@ -10,6 +10,7 @@
 
 namespace auge
 {
+	class Map;
 	class GFilter;
 	class XDocument;
 
@@ -40,9 +41,10 @@ namespace auge
 		void		SetMaxFeatures(const char* maxFeatures);
 		void		SetOffset(const char* offset);
 		void		SetBBox(const char* bbox);
+		void		SetFilter(const char* filter, const char* typeName, Map* pMap);
 
-		bool		Create(rude::CGI& cgi);
-		bool		Create(XDocument* pxDoc);
+		bool		Create(rude::CGI& cgi, Map* pMap);
+		bool		Create(XDocument* pxDoc, Map* pMap);
 
 	public:
 		void		Info();
@@ -70,6 +72,7 @@ namespace auge
 -------------------------------------------------------------------------
 service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities
+user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&filter=<ogc:Filter xmlns:wfs="http://www.opengis.net/wfs" xmlns:ogc="http://www.opengis.net/ogc"><ogc:FeatureId fid="world.3"/></ogc:Filter>
 http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&bbox=0,0,10,10
 http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&bbox=0,0,10,10

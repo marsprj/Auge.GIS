@@ -20,7 +20,7 @@ namespace auge
 		return "RegisterDataSource";
 	}
 
-	WebRequest*	RegisterDataSourceHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	RegisterDataSourceHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		RegisterDataSourceRequest* pRequest = new RegisterDataSourceRequest();
 
@@ -34,7 +34,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	RegisterDataSourceHandler::ParseRequest(XDocument* pxDoc)
+	WebRequest*	RegisterDataSourceHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		return NULL;
 	}

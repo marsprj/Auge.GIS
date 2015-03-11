@@ -156,7 +156,10 @@ namespace auge
 
 	void XDocument::Release()
 	{
-		delete this;
+		if(!ReleaseRef())
+		{
+			delete this;
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////

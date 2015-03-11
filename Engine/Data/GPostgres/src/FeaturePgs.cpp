@@ -322,4 +322,9 @@ namespace auge
 		}
 		return GetString(PQfnumber(m_pgResult, name));
 	}
+
+	RESULTCODE FeaturePgs::SetValue(const char* name, GValue *pValue)
+	{
+		return AG_SUCCESS;
+	}
 }

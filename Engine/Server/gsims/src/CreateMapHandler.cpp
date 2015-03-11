@@ -20,7 +20,7 @@ namespace auge
 		return "CreateMap";
 	}
 
-	WebRequest*	CreateMapHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	CreateMapHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		CreateMapRequest* pRequest = new CreateMapRequest();
 
@@ -34,7 +34,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	CreateMapHandler::ParseRequest(XDocument* pxDoc)
+	WebRequest*	CreateMapHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		return NULL;
 	}

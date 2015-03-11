@@ -755,13 +755,29 @@ namespace auge
 		return rc;
 	}
 
+	void SQLBuilder::BuildDeleteFeature(std::string& sql, GFilter* pFilter, FeatureClassPgs* pFeatureClass)
+	{
+		sql = "delete ";		
+		sql.append(" from ");
+		sql.append(pFeatureClass->GetName());
+
+		if(pFilter!=NULL)
+		{
+			sql.append(" where ");
+			std::string where = "";
+			BuildFilter(where, pFeatureClass, pFilter);
+			sql.append(where);
+		}
+	}
+
 	void SQLBuilder::BuildInsertFeature(std::string& sql, const char* className, Feature* pFeature, g_uint srid)
 	{
 		std::string fields = "";
 		std::string values = "";
-		
+
 		GField	*pField = NULL;
 		GFields	*pFields= pFeature->GetFeatureClass()->GetFields();
+		GValue	*pValue = NULL;
 		g_uint   fcount = pFields->Count();
 		const char* fname= NULL;
 		augeFieldType type = augeFieldTypeNone;
@@ -778,6 +794,11 @@ namespace auge
 				continue;
 			}
 
+			pValue = pFeature->GetValue(i);
+			if(pValue==NULL)
+			{
+				continue;
+			}
 
 			if(first)
 			{
@@ -851,7 +872,7 @@ namespace auge
 				break;
 			case augeFieldTypeTime:	
 				{
-					
+
 				}
 				break;
 			case augeFieldTypeBool:			 
@@ -861,7 +882,7 @@ namespace auge
 				break;
 			case augeFieldTypeBLOB:			 
 				{
-					
+
 				}
 				break;
 			case augeFieldTypeGeometry:
@@ -886,6 +907,8 @@ namespace auge
 				}
 				break;
 			}//switch
+
+			pValue->Release();
 		}
 
 		// construct sdesql
@@ -893,10 +916,153 @@ namespace auge
 		sql.append(className);
 		sql.append(" (");
 		sql.append(fields);
-		sql.append(") VALUES (");
+		sql.append(") values (");
 		sql.append(values);
 		sql.append(")");
 	}
+
+	//void SQLBuilder::BuildInsertFeature(std::string& sql, const char* className, Feature* pFeature, g_uint srid)
+	//{
+	//	std::string fields = "";
+	//	std::string values = "";
+	//	
+	//	GField	*pField = NULL;
+	//	GFields	*pFields= pFeature->GetFeatureClass()->GetFields();
+	//	g_uint   fcount = pFields->Count();
+	//	const char* fname= NULL;
+	//	augeFieldType type = augeFieldTypeNone;
+	//	char str[AUGE_BUFFER_MAX]; 
+
+	//	bool first = true;		
+	//	for(g_uint i=0; i<fcount; i++)
+	//	{
+	//		pField = pFields->GetField(i);
+	//		fname = pField->GetName();
+
+	//		if(!g_stricmp(fname, "gid"))
+	//		{
+	//			continue;
+	//		}
+
+
+	//		if(first)
+	//		{
+	//			first = false;
+	//		}
+	//		else
+	//		{
+	//			fields.append(",");
+	//			values.append(",");
+	//		}
+
+	//		type = pField->GetType();
+	//		switch(type)
+	//		{					 
+	//		case augeFieldTypeShort:
+	//			{
+	//				g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetShort(i));
+	//				fields.append(fname);
+	//				values.append(str);
+	//			}
+	//			break;
+	//		case augeFieldTypeInt:
+	//			{
+	//				g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetInt(i));
+	//				fields.append(fname);
+	//				values.append(str);
+	//			}
+	//			break;
+	//		case augeFieldTypeLong:
+	//			{
+	//				g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetLong(i));
+	//				fields.append(fname);
+	//				values.append(str);
+	//			}
+	//			break;
+	//		case augeFieldTypeInt64:
+	//			{
+	//				g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetInt64(i));
+	//				fields.append(fname);
+	//				values.append(str);
+	//			}
+	//			break;
+	//		case augeFieldTypeFloat:
+	//			{
+	//				g_snprintf(str, AUGE_BUFFER_MAX,"%f",pFeature->GetFloat(i));
+	//				fields.append(fname);
+	//				values.append(str);
+	//			}
+	//			break;
+	//		case augeFieldTypeDouble:
+	//			{
+	//				g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetDouble(i));
+	//				fields.append(fname);
+	//				values.append(str);
+	//			}
+	//			break;
+	//		case augeFieldTypeChar:			 
+	//			{
+	//				g_snprintf(str, AUGE_BUFFER_MAX,"'%c'",pFeature->GetChar(i));
+	//				fields.append(fname);
+	//				values.append(str);
+	//			}
+	//			break;
+	//		case augeFieldTypeString:
+	//			{
+	//				fields.append(fname);
+	//				values.append("'");
+	//				values.append(pFeature->GetString(i));
+	//				values.append("'");
+	//			}
+	//			break;
+	//		case augeFieldTypeTime:	
+	//			{
+	//				
+	//			}
+	//			break;
+	//		case augeFieldTypeBool:			 
+	//			{
+
+	//			}
+	//			break;
+	//		case augeFieldTypeBLOB:			 
+	//			{
+	//				
+	//			}
+	//			break;
+	//		case augeFieldTypeGeometry:
+	//			{
+	//				Geometry *pGeometry = pFeature->GetGeometry();
+	//				if(pGeometry!=NULL)
+	//				{
+	//					const char* wkt = pGeometry->AsText(true);
+	//					if(wkt!=NULL)
+	//					{
+	//						g_snprintf(str, AUGE_BUFFER_MAX,"%d",srid);
+
+	//						fields.append(fname);
+	//						values.append("st_geomfromtext(");
+	//						values.append("'");
+	//						values.append(wkt);
+	//						values.append("',");
+	//						values.append(str);
+	//						values.append(")");
+	//					}
+	//				}
+	//			}
+	//			break;
+	//		}//switch
+	//	}
+
+	//	// construct sdesql
+	//	sql.append("insert into ");
+	//	sql.append(className);
+	//	sql.append(" (");
+	//	sql.append(fields);
+	//	sql.append(") VALUES (");
+	//	sql.append(values);
+	//	sql.append(")");
+	//}
 
 	const char* SQLBuilder::GetPgFieldType(augeFieldType type)
 	{

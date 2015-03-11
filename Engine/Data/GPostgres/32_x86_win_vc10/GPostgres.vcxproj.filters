@@ -45,6 +45,9 @@
     <ClInclude Include="..\include\FeatureInsertCommandPgs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\FeatureObj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DataEngineImpl.cpp">
@@ -72,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\FeatureInsertCommandPgs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\FeatureObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

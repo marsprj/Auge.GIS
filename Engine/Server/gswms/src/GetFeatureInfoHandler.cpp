@@ -23,7 +23,7 @@ namespace auge
 		return "GetFeatureInfo";
 	}
 
-	WebRequest*	GetFeatureInfoHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	GetFeatureInfoHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		GetFeatureInfoRequest* pRequest = new GetFeatureInfoRequest();
 		if(!pRequest->Create(cgi))
@@ -36,7 +36,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetFeatureInfoHandler::ParseRequest(XDocument* pxDoc)
+	WebRequest*	GetFeatureInfoHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		GetFeatureInfoRequest* pRequest = new GetFeatureInfoRequest();
 		//if(!pRequest->Create(cgi))

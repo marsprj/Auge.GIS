@@ -45,6 +45,7 @@ namespace auge
 		static RESULTCODE BuildFunctitonExpression(std::string &sql, FeatureClassPgs* pFeatureClass, Function* pExpression);
 
 		static void BuildInsertFeature(std::string& sql, const char* className, Feature* pFeature, g_uint srid);
+		static void BuildDeleteFeature(std::string& sql, GFilter* pFilter, FeatureClassPgs* pFeatureClass);
 
 		static const char* GetPgFieldType(augeFieldType type);
 	};
