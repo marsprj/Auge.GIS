@@ -119,6 +119,10 @@ namespace auge
 		GError	*pError  = augeGetErrorInstance();
 		GLogger	*pLogger = augeGetLoggerInstance();
 
+		char msg[AUGE_MSG_MAX];
+		g_sprintf(msg, "[WebEngine]:%s.",path);
+		pLogger->Debug(path);
+
 		void* handler = NULL;
 		handler = auge_load_library(path);
 		if(handler==NULL)
@@ -287,12 +291,14 @@ namespace auge
 		auge_make_path(libpath, NULL, lib_dir, id, "dll");
 #	endif
 #else
+		char sid[AUGE_PATH_MAX] = {0};
 		char pdir[AUGE_PATH_MAX] = {0};
 		char sdir[AUGE_PATH_MAX] = {0};
-		if(auge_get_parent_dir(pdir, lib_dir, AUGE_PATH_MAX))
+		g_sprintf(sid, "lib%s", id);
+		if(auge_get_parent_dir(lib_dir, pdir, AUGE_PATH_MAX))
 		{
 			auge_make_path(sdir, NULL, pdir, "lib", NULL);
-			auge_make_path(libpath, NULL, sdir, id, "so");
+			auge_make_path(libpath, NULL, sdir, sid, "so");
 		}
 #endif
 
