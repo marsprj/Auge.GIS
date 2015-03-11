@@ -132,13 +132,49 @@ namespace auge
 
 	WebResponse* GServer::DoPost(Service* pService, rude::CGI& cgi)
 	{
-		const char	*szService = NULL;
+		const char	*service = NULL;
 		WebEngine	*pWebEngine = NULL;
 		WebRequest	*pWebRequest = NULL;
 		WebResponse	*pWebResponse = NULL;
 
-		szService = cgi["service"];
-		pWebEngine = m_pWebEngineManager->GetEngine(szService);
+		const char* xml_string = cgi["xml"];
+		//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\"	xmlns:topp=\"http://www.openplans.org/topp\"	xmlns:wfs=\"http://www.opengis.net/wfs\"	xmlns:ogc=\"http://www.opengis.net/ogc\"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"	xsi:schemaLocation=\"http://www.opengis.net/wfs	http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\">	<wfs:Query typeName=\"world:cities\">		<ogc:Filter>			<ogc:FeatureId fid=\"world.3\"/>		</ogc:Filter>	</wfs:Query></wfs:GetFeature>";
+		m_pLogger->Debug("[Request]",__FILE__, __LINE__);
+		m_pLogger->Debug(xml_string,__FILE__, __LINE__);
+
+		XParser parser;
+		XDocument* pxDoc = parser.ParseMemory(xml_string);
+		if(pxDoc==NULL)
+		{	
+			const char* msg = "Bad xml document.";
+			WebExceptionResponse *pExpResponse = NULL;
+			GError* pError = augeGetErrorInstance();
+			pExpResponse = auge::augeCreateWebExceptionResponse();
+			pError->SetError(msg);
+			pExpResponse->SetMessage(m_pError->GetLastError());
+			pWebResponse = pExpResponse;
+			return pWebResponse;
+		}
+
+		XElement* pxRoot = pxDoc->GetRootNode();
+		XAttribute* pxAttr = pxRoot->GetAttribute("service");
+		if(pxAttr==NULL)
+		{
+			pxDoc->Close();
+			pxDoc->Release();
+
+			const char* msg = "Parameter Service is not defined";
+			WebExceptionResponse *pExpResponse = NULL;
+			GError* pError = augeGetErrorInstance();
+			pExpResponse = auge::augeCreateWebExceptionResponse();
+			pError->SetError(msg);
+			pExpResponse->SetMessage(m_pError->GetLastError());
+			pWebResponse = pExpResponse;
+			return pWebResponse;
+		}
+
+		service = pxAttr->GetValue();
+		pWebEngine = m_pWebEngineManager->GetEngine(service);
 		if(pWebEngine==NULL)
 		{
 			// wrong service engine
@@ -148,10 +184,13 @@ namespace auge
 			pWebResponse = pExpResponse;
 			return pWebResponse;
 		}
-
-		pWebRequest = pWebEngine->ParseRequest(cgi["xml"]);
+		
+		pWebRequest = pWebEngine->ParseRequest(pxDoc);
 		if(pWebRequest==NULL)
 		{
+			pxDoc->Close();
+			pxDoc->Release();
+
 			// wrong service engine
 			auge::WebExceptionResponse *pExpResponse = NULL;
 			pExpResponse = auge::augeCreateWebExceptionResponse();
@@ -159,6 +198,9 @@ namespace auge
 			pWebResponse = pExpResponse;
 			return pWebResponse;
 		}
+
+		pxDoc->Close();
+		pxDoc->Release();
 
 		pWebResponse = pService->Execute(pWebRequest);
 		pWebRequest->Release();

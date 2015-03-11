@@ -40,13 +40,13 @@ namespace auge
 	WebRequest*	GetFeatureHandler::ParseRequest(XDocument* pxDoc)
 	{
 		GetFeatureRequest* pRequest = new GetFeatureRequest();
-		//if(!pRequest->Create(cgi))
-		//{
-		//	GLogger* pLogger = augeGetLoggerInstance();
-		//	pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
-		//	pRequest->Release();
-		//	pRequest = NULL;
-		//}
+		if(!pRequest->Create(pxDoc))
+		{
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			pRequest->Release();
+			pRequest = NULL;
+		}
 		return pRequest;
 	}
 
@@ -101,7 +101,21 @@ namespace auge
 			return pExpResopnse;
 		}
 
-		FeatureCursor *pCursor = pFeatureClass->Query();
+		FeatureCursor *pCursor = NULL;
+		GFilter* pFilter = pRequest->GetFilter();
+		if(pFilter!=NULL)
+		{
+			pCursor = pFeatureClass->Query(pFilter);
+		}
+		else
+		{
+			GEnvelope& bbox = pRequest->GetBBox();
+			if(bbox.IsValid())
+			{
+				pCursor = pFeatureClass->Query(bbox);
+			}
+		}
+		
 		GetFeatureResponse *pResponse = new GetFeatureResponse(pRequest);
 		pResponse->SetFeatureCursor(pCursor);
 		return pResponse;

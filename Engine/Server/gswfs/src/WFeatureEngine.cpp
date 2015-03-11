@@ -167,9 +167,22 @@ namespace auge
 
 	WebRequest*	WFeatureEngine::ParseRequest(XDocument* pxDoc)
 	{
-		GError* pError = augeGetErrorInstance();
-		pError->SetError("WMS do not support xml request");
-		return NULL;
+		XElement	*pxRoot = pxDoc->GetRootNode();
+		const char* request = pxRoot->GetName();
+
+		WebHandler* handler = GetHandler(request);
+		if(handler == NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "%s doesn't support request [%s]", GetType(), request);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
+			return NULL;
+		}
+		return handler->ParseRequest(pxDoc);
 	}
 
 	WebResponse* WFeatureEngine::Execute(WebRequest* pWebRequest)

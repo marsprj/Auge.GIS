@@ -27,13 +27,18 @@ namespace auge
 	{
 		g_uchar* ptr = data;
 		int nbytes = 0;
+		int buffer_size = size<4096?size:4096;
 		size_t rbytes = size;
 
 		while(rbytes>0)
 		{
-			nbytes = fwrite(ptr, sizeof(g_uchar), rbytes, stdout);
+			nbytes = fwrite(ptr, sizeof(g_uchar), buffer_size, stdout);
 			ptr += nbytes;
 			rbytes -= nbytes;
+			if(rbytes<buffer_size)
+			{
+				buffer_size = rbytes;
+			}
 		}
 		
 		return AG_SUCCESS;

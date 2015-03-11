@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}</ProjectGuid>
+    <ProjectGuid>{C6045F1B-77E7-4716-84F1-E8E0B8A70290}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>gswms</RootNamespace>
   </PropertyGroup>

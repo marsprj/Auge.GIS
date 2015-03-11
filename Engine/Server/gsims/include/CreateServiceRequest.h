@@ -43,7 +43,7 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-service=ims&version=1.0.0&request=CreateService&name=world
+user=user1&service=ims&version=1.0.0&request=CreateService&name=world
 
 [ HTTP Post ]
 -------------------------------------------------------------------------
