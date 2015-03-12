@@ -17,6 +17,7 @@ libGShape_la_SOURCES=\
 		FeatureClassShp.cpp \
 		FeatureCursorShp.cpp \
 		FeatureShp.cpp \
+		FeatureObj.cpp \
 		shpopen.cpp \
 		ShpUtil.cpp \
 		WorkspaceShp.cpp
