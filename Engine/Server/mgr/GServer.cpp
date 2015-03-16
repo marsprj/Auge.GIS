@@ -59,6 +59,8 @@ namespace auge
 
 			pLogger->Info("--------------------------------------------------------");
 
+			//DebugCGI(cgi);
+
 			WebResponse* pWebResponse = NULL;
 
 			g_ulong ts = auge_get_time();
@@ -136,8 +138,28 @@ namespace auge
 			pWebResponse = pExpResponse;
 			return pWebResponse;
 		}
-
-		pWebRequest = pWebEngine->ParseRequest(cgi["xml"]);
+		
+		const char* conent_type = getenv("CONTENT_TYPE"); 
+		if(conent_type==NULL)
+		{
+			pWebRequest = pWebEngine->ParseRequest(cgi);
+		}
+		else
+		{
+			char msg[AUGE_MSG_MAX] = {0};
+			g_sprintf(msg, "[Conent-Type]:%s", conent_type);
+			GLogger *pLogger = augeGetLoggerInstance();
+			pLogger->Debug(msg, __FILE__, __LINE__);
+			if(!g_stricmp(conent_type,"text/xml"))
+			{
+				pWebRequest = pWebEngine->ParseRequest(cgi["xml"]);
+			}
+			else
+			{
+				pWebRequest = pWebEngine->ParseRequest(cgi);
+			}
+		}
+		
 		if(pWebRequest==NULL)
 		{
 			// wrong service engine
@@ -361,7 +383,7 @@ namespace auge
 		{
 			m_pWebEngineManager->Unload();
 		}
-
+		 
 		m_pLogger->Info("Unload Data Engine");
 		if(m_pDataEngineManager!=NULL)
 		{
@@ -369,5 +391,24 @@ namespace auge
 		}
 
 		m_pLogger->Info("===========================================================");
+	}
+
+	void GServer::DebugCGI(rude::CGI& cgi)
+	{
+		
+		char msg[AUGE_MSG_MAX];
+		GLogger* pLogger = augeGetLoggerInstance();
+		pLogger->Debug("************************************************************");
+
+		int num = cgi.numValues();
+		g_sprintf(msg, "[fielc count]:%d", num);
+		pLogger->Debug(msg);
+		for(int i=0; i<num; i++)
+		{
+			//g_sprintf("[%s]:%s", cgi.fieldnameAt(i), cgi[cgi.fieldnameAt(i)]);
+			g_sprintf(msg,"[%s]", cgi.fieldnameAt(i));
+			pLogger->Debug(msg);
+		}
+		g_sprintf(msg, "************************************************************");
 	}
 }

@@ -16,6 +16,9 @@
 #include "SetStyleHandler.h"
 
 #include "GetStyleHandler.h"
+#include "AddStyleHandler.h"
+#include "UpdateStyleHandler.h"
+#include "RemoveStyleHandler.h"
 
 #include "AugeCore.h"
 #include "AugeCarto.h"
@@ -50,6 +53,9 @@ namespace auge
 		m_handlers.push_back(new SetStyleHandler());
 
 		m_handlers.push_back(new GetStyleHandler());
+		m_handlers.push_back(new AddStyleHandler());
+		m_handlers.push_back(new UpdateStyleHandler());
+		m_handlers.push_back(new RemoveStyleHandler());
 		
 	}
 
