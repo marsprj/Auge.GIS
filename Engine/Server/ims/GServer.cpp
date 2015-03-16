@@ -85,6 +85,8 @@ namespace auge
 
 			cgi.finish();
 		}
+
+		AUGE_SAFE_RELEASE(pWebWriter);
 	}
 	
 	WebResponse* GServer::DoGet(Service* pService, rude::CGI& cgi)

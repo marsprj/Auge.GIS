@@ -95,7 +95,7 @@ namespace auge
 //------------------------------------------------------------------------------
 #ifdef WIN32
 #	ifndef AUGE_WEB_CORE_EXPORTS
-#		define AUGE_WEB_CORE_NAME "GWCore"
+#		define AUGE_WEB_CORE_NAME "gscore"
 #		if defined(_DEBUG)
 #			if defined(_UNICODE)
 //#				define _AUGE_FILTER_CONFIGURATION "UD"
