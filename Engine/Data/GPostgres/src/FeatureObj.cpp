@@ -318,7 +318,7 @@ namespace auge
 		}
 
 		std::string strName = name;
-		std::map<std::string, GValue*>::const_iterator iter;
+		std::map<std::string, GValue*>::iterator iter;
 		iter = m_values.find(strName);
 		if(iter==m_values.end())
 		{

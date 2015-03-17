@@ -20,6 +20,7 @@ libGPostgres_la_SOURCES=\
 		FeatureCursorPgs.cpp \
 		FeatureInsertCommandPgs.cpp \
 		FeaturePgs.cpp \
+		FeatureObj.cpp \
 		ResultSetPgs.cpp \
 		SQLBuilder.cpp \
 		WorkspacePgs.cpp

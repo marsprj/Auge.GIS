@@ -721,7 +721,7 @@ namespace auge
 			pError->SetError(msg);
 
 			pxDoc->Release();
-			return NULL;
+			return rc;
 		}
 
 		std::string sql;
@@ -736,7 +736,7 @@ namespace auge
 		if(pResult==NULL)
 		{
 			pxDoc->Release();
-			return NULL;
+			return rc;
 		}
 		
 		g_uint gid = pResult->GetInt(0,0);
@@ -777,7 +777,7 @@ namespace auge
 			pError->SetError(msg);
 
 			pxDoc->Release();
-			return NULL;
+			return rc;
 		}
 
 		char sql[AUGE_SQL_LONG_MAX] = {0};

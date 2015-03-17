@@ -7,9 +7,10 @@ AM_CPPFLAGS=-I../include \
 
 libgswfs_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
+		-L$(top_srcdir)/Engine/Filter/src \
 		-L$(top_srcdir)/Engine/Service/WCore/src
 
-libgswfs_la_LIBADD=-lgcore -lwcore
+libgswfs_la_LIBADD=-lgcore -lwcore -lgfilter
 
 libgswfs_la_SOURCES=\
 		CapabilitiesHandler.cpp \

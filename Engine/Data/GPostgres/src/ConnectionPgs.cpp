@@ -77,7 +77,7 @@ namespace auge
 
 			PQfinish(m_pgConnection);
 			m_pgConnection = NULL;
-			return NULL;
+			return AG_FAILURE;
 		}
 		PQsetClientEncoding(m_pgConnection, m_client_encoding.c_str());
 		m_geom_oid = GetPgTypeOid("geometry");
