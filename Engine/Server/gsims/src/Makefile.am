@@ -8,10 +8,10 @@ AM_CPPFLAGS=-I../include \
 libgsims_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
 		-L$(top_srcdir)/Engine/Carto/src \
-		-L$(top_srcdir)/Engine/Service/WCore/src \
-		-L$(top_srcdir)/Engine/Service/WService/src
+		-L$(top_srcdir)/Engine/Server/gscore/src \
+		-L$(top_srcdir)/Engine/Server/gsvrs/src
 
-libgsims_la_LIBADD=-lgcore -lgcarto -lwcore -lwservice
+libgsims_la_LIBADD=-lgcore -lgcarto -lgscore -lgsvrs
 
 libgsims_la_SOURCES=\
 		    CapabilitiesHandler.cpp \

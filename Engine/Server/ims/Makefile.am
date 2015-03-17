@@ -7,14 +7,14 @@ ims_cgi_LDFLAGS= \
  		-L$(top_srcdir)/Engine/Core/src \
 		-L$(top_srcdir)/Engine/Data/GDEngine/src \
 		-L$(top_srcdir)/Engine/Carto/src \
-		-L$(top_srcdir)/Engine/Service/WCore/src \
-		-L$(top_srcdir)/Engine/Service/WService/src
+		-L$(top_srcdir)/Engine/Server/gscore/src \
+		-L$(top_srcdir)/Engine/Server/gsvrs/src
 	
 ims_cgi_LDADD=	-lgcore \
 		-lgdengine \
 		-lgcarto \
-		-lwcore \
-		-lwservice \
+		-lgscore \
+		-lgsvrs \
 		-lfcgi \
 		-lrudecgi
 
