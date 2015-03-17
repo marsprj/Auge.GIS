@@ -2,6 +2,7 @@
 #include "GetServiceResponse.h"
 #include "AugeService.h"
 #include "AugeXML.h"
+#include "AugeCarto.h"
 
 namespace auge
 {
@@ -43,9 +44,11 @@ namespace auge
 
 			while((pService=pServices->Next())!=NULL)
 			{
-				name = pService->GetName();
+				/*name = pService->GetName();
 				pxService = pxRoot->AddChild("Service", NULL);
-				pxService->SetAttribute("name", name, NULL);
+				pxService->SetAttribute("name", name, NULL);*/
+
+				AddServiceNode(pxRoot, pService);
 			}
 			pServices->Release();
 		}
@@ -54,9 +57,11 @@ namespace auge
 			pService = pServiceManager->GetService(name);
 			if(pService!=NULL)
 			{
-				name = pService->GetName();
+				/*name = pService->GetName();
 				pxService = pxRoot->AddChild("Service", NULL);
-				pxService->SetAttribute("name", name, NULL);
+				pxService->SetAttribute("name", name, NULL);*/
+
+				AddServiceNode(pxRoot, pService);
 			}
 		}
 
@@ -73,5 +78,27 @@ namespace auge
 		pxDoc->Close();
 		AUGE_SAFE_RELEASE(pxDoc);
 		return AG_SUCCESS;
+	}
+
+	bool GetServiceResponse::AddServiceNode(XElement* pxParent, Service* pService)
+	{
+		const char* name = pService->GetName();
+		XElement* pxService = pxParent->AddChild("Service", NULL);
+		pxService->SetAttribute("name", name, NULL);
+
+		AddMapNode(pxService, pService->GetMap());
+
+		return true;
+	}
+
+	bool GetServiceResponse::AddMapNode(XElement* pxService, Map* pMap)
+	{
+		XElement* pxMap = pxService->AddChild("Map", NULL);
+		if(pMap!=NULL)
+		{
+			const char* name = pMap->GetName();
+			pxMap->SetAttribute("name", name, NULL);
+		}
+		return true;
 	}
 }

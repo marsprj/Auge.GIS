@@ -6,8 +6,10 @@
 
 namespace auge
 {
+	class Map;
 	class Service;
 	class GetServiceRequest;
+	class XElement;
 
 	class GetServiceResponse : public WebResponse
 	{
@@ -17,6 +19,10 @@ namespace auge
 	public:
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 		
+	private:
+		bool	AddServiceNode(XElement* pxParent, Service* pService);
+		bool	AddMapNode(XElement* pxService, Map* pMap);
+
 	private:
 		GetServiceRequest *m_pRequest;	
 	};
