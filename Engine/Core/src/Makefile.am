@@ -44,4 +44,5 @@ libgcore_la_SOURCES=\
 		XNodeSet.cpp \
 		XParser.cpp \
 		XProcessingInstructionNode.cpp \
-		XTestNode.cpp
+		XTestNode.cpp \
+		GMLWriterImpl.cpp

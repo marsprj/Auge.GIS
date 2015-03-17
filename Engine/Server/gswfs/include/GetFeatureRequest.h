@@ -10,6 +10,9 @@
 
 namespace auge
 {
+	#define AUGE_WFS_OUTPUT_FORMAT_WKT		"WKT"
+	#define AUGE_WFS_OUTPUT_FORMAT_GML2		"GML2"
+
 	class Map;
 	class GFilter;
 	class XDocument;

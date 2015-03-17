@@ -5,12 +5,12 @@
 #include "AugeFilter.h"
 
 namespace auge
-{
+{	
 	GetFeatureRequest::GetFeatureRequest()
 	{
 		m_version = "1.1.0";
 		m_mime_type = "text/xml";
-		m_output_format = "GML2";
+		m_output_format = AUGE_WFS_OUTPUT_FORMAT_GML2;
 		m_max_features = 10;
 		m_offset = 0;
 
@@ -90,11 +90,7 @@ namespace auge
 	{
 		if(format==NULL)
 		{
-			m_output_format = "GML2";
-		}
-		else if(format==NULL)
-		{
-			m_output_format = "GML2";
+			m_output_format = AUGE_WFS_OUTPUT_FORMAT_GML2;
 		}
 		else
 		{

@@ -99,6 +99,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GFieldsImpl.h" />
     <ClInclude Include="..\include\GLineStringWKB.h" />
     <ClInclude Include="..\include\GLoggerImpl.h" />
+    <ClInclude Include="..\include\GMLWriterImpl.h" />
     <ClInclude Include="..\include\GMultiLineStringWKB.h" />
     <ClInclude Include="..\include\GMultiPointWKB.h" />
     <ClInclude Include="..\include\GMultiPolygonWKB.h" />
@@ -121,6 +122,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GFunction.cpp" />
     <ClCompile Include="..\src\GLineStringWKB.cpp" />
     <ClCompile Include="..\src\GLoggerImpl.cpp" />
+    <ClCompile Include="..\src\GMLWriterImpl.cpp" />
     <ClCompile Include="..\src\GMultiLineStringWKB.cpp" />
     <ClCompile Include="..\src\GMultiPointWKB.cpp" />
     <ClCompile Include="..\src\GMultiPolygonWKB.cpp" />

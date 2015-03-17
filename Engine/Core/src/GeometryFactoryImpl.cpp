@@ -10,6 +10,8 @@
 #include "GeometryUtilImpl.h"
 #include "WKTReader.h"
 
+#include "GMLWriterImpl.h"
+
 #include "AugeCore.h"
 
 namespace auge
@@ -176,5 +178,10 @@ namespace auge
 			return "MULTIPOLYGON";
 		}
 		return "";
+	}
+
+	GMLWriter* GeometryFactoryImpl::CreateGMLWriter()
+	{
+		return (new GMLWriterImpl());
 	}
 }

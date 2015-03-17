@@ -37,6 +37,7 @@ namespace auge
 		const char* type_name = m_pRequest->GetTypeName();
 		const char* service_name = m_pWebContext->GetService();
 		const char* service_uri = m_pWebContext->GetURI();
+		const char* output_format = m_pRequest->GetOutputFormat();
 		char str[AUGE_BUFFER_MAX];
 		GLogger* pLogger = augeGetLoggerInstance();
 
@@ -156,11 +157,24 @@ namespace auge
 							Geometry *pGeometry = pFeature->GetGeometry();
 							if(pGeometry!=NULL)
 							{
-								const char* wkt = pGeometry->AsText(true);
-								if(wkt!=NULL)
+								if(!g_stricmp(output_format, AUGE_WFS_OUTPUT_FORMAT_WKT))
 								{
-									g_snprintf(str, AUGE_BUFFER_MAX,"%d",pGeometryDef->GetSRID());	
-									pxValue->AddChildText(wkt);
+									const char* wkt = pGeometry->AsText(true);
+									if(wkt!=NULL)
+									{
+										g_snprintf(str, AUGE_BUFFER_MAX,"%d",pGeometryDef->GetSRID());	
+										pxValue->AddChildText(wkt);
+									}
+								}
+								else
+								{
+									//GML2
+									GMLWriter* pGMLWriter = NULL;
+									GeometryFactory* pFactory = augeGetGeometryFactoryInstance();
+
+									pGMLWriter = pFactory->CreateGMLWriter();
+									pGMLWriter->Write(pxValue, pGeometry, pGeometryDef->GetSRID(),"2");
+									pGMLWriter->Release();
 								}
 							}
 						}

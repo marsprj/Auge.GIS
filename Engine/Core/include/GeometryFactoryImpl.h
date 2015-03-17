@@ -16,6 +16,8 @@ namespace auge
 
 		virtual augeGeometryType	DecodeGeometryType(const char* type);
 		virtual const char*			Encode(augeGeometryType type);
+
+		virtual	GMLWriter*			CreateGMLWriter();
 	};
 }
 

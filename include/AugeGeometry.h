@@ -30,6 +30,7 @@ namespace auge
 		augeGTTriangle			 = 8
 	}augeGeometryType;
 
+	class XElement;
 	class GEnvelope;
 	class GMultiCurve;
 	
@@ -213,6 +214,17 @@ namespace auge
 		double	m_xmin, m_ymin,m_xmax, m_ymax;
 	};
 
+	class GMLWriter
+	{
+	protected:
+		GMLWriter(){}
+		virtual ~GMLWriter(){}
+	public:
+		virtual RESULTCODE	Write(XElement* pxParent, const g_uchar* wkb,  g_int srid, const char* version) = 0;
+		virtual RESULTCODE	Write(XElement* pxParent, Geometry* pGeometry, g_int srid, const char* version) = 0;
+		virtual void		Release() = 0;
+	};
+
 	class GeometryFactory
 	{
 	protected:
@@ -223,6 +235,8 @@ namespace auge
 		virtual Geometry*			CreateGeometryFromWKT(const char* wkt) = 0;
 		virtual augeGeometryType	DecodeGeometryType(const char* type) = 0;
 		virtual const char*			Encode(augeGeometryType type) = 0;
+
+		virtual	GMLWriter*			CreateGMLWriter() = 0;
 	};
 
 	class GeometryUtil
