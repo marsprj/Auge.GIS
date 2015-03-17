@@ -13,7 +13,10 @@ namespace auge
 		virtual ~WebContextImpl();
 	public:
 		virtual	const char*		GetService();
-		virtual void			SetService(const char* named);
+		virtual void			SetService(const char* name);
+		virtual	const char*		GetURI();
+		virtual void			SetURI(const char* uri);
+
 		virtual const char*		GetCachePath();
 		virtual const char*		GetCacheMapPath();
 		virtual const char*		GetCacheProtocolPath();
@@ -42,6 +45,8 @@ namespace auge
 	private:
 		std::string m_path;
 		std::string m_name;
+		std::string m_uri;
+
 		std::string m_cache_path;
 		std::string m_cache_map_path;
 		std::string m_cache_protocol_path;

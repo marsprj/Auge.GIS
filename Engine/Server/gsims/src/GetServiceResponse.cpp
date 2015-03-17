@@ -83,8 +83,10 @@ namespace auge
 	bool GetServiceResponse::AddServiceNode(XElement* pxParent, Service* pService)
 	{
 		const char* name = pService->GetName();
+		const char* uri  = pService->GetURI();
 		XElement* pxService = pxParent->AddChild("Service", NULL);
 		pxService->SetAttribute("name", name, NULL);
+		pxService->SetAttribute("uri", uri, NULL);
 
 		AddMapNode(pxService, pService->GetMap());
 

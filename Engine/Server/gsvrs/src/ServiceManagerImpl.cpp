@@ -153,7 +153,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX] = {0};
 		//g_sprintf(sql, "select s.gid, m.m_name, s.version, s.state from g_service s, g_map m where s.name='%s' and s.m_id=m.gid", szName);
-		g_sprintf(sql, "select gid, m_id, version, state from g_service where s_name='%s'", szName);
+		g_sprintf(sql, "select gid, m_id, s_uri, version, state from g_service where s_name='%s'", szName);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -172,16 +172,18 @@ namespace auge
 			pLogger->Error(msg, __FILE__, __LINE__);
 
 			pResult->Release();
-			return NULL;
+			return NULL; 
 		}
 
 		ServiceImpl* pService = NULL;
 		g_uint s_id = pResult->GetInt(0,0);
 		g_int m_id = pResult->GetInt(0,1);
+		const char* uri = pResult->GetString(0,2);
 
 		pService = new ServiceImpl();
 		pService->SetID(s_id);
 		pService->SetName(szName);
+		pService->SetURI(uri);
 		if(m_id>0)
 		{
 			Map* pMap = NULL;
@@ -205,15 +207,15 @@ namespace auge
 		return pService;
 	}
 
-	RESULTCODE ServiceManagerImpl::Register(const char* szName)
+	RESULTCODE ServiceManagerImpl::Register(const char* szName, const char* szURI)
 	{
-		if(m_pConnection==NULL||szName==NULL)
+		if(m_pConnection==NULL||szName==NULL||szURI==NULL)
 		{
 			return AG_FAILURE;
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_sprintf(sql, "insert into g_service (s_name) values('%s')", szName);
+		g_sprintf(sql, "insert into g_service (s_name, s_uri) values('%s','%s')", szName, szURI);
 		return (m_pConnection->ExecuteSQL(sql));
 	}
 
@@ -254,7 +256,7 @@ namespace auge
 
 	bool ServiceManagerImpl::CreateServiceTable()
 	{
-		const char* sql = "CREATE TABLE g_service(gid serial NOT NULL,s_name character varying(32) NOT NULL,m_id integer DEFAULT -1,version integer DEFAULT 1,state integer NOT NULL DEFAULT 0,CONSTRAINT g_service_pkey PRIMARY KEY (gid ),CONSTRAINT g_service_s_name_key UNIQUE (s_name ))";
+		const char* sql = "CREATE TABLE g_service(gid serial NOT NULL,s_name character varying(32) NOT NULL,s_uri character varying(128) NOT NULL,m_id integer DEFAULT -1,version integer DEFAULT 1,state integer NOT NULL DEFAULT 0,CONSTRAINT g_service_pkey PRIMARY KEY (gid ),CONSTRAINT g_service_s_name_key UNIQUE (s_name ))";
 		return (m_pConnection->ExecuteSQL(sql)==AG_SUCCESS);
 	}
 

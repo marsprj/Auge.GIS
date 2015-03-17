@@ -22,6 +22,11 @@ namespace auge
 		}
 	}
 
+	void GetFeatureResponse::SetWebContenxt(WebContext* pWebContext)
+	{
+		m_pWebContext = pWebContext;
+	}
+
 	RESULTCODE GetFeatureResponse::Write(WebWriter* pWriter)
 	{
 		if(pWriter==NULL)
@@ -29,7 +34,9 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		const char* typeName = m_pRequest->GetTypeName();
+		const char* type_name = m_pRequest->GetTypeName();
+		const char* service_name = m_pWebContext->GetService();
+		const char* service_uri = m_pWebContext->GetURI();
 		char str[AUGE_BUFFER_MAX];
 		GLogger* pLogger = augeGetLoggerInstance();
 
@@ -43,7 +50,8 @@ namespace auge
 		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/gml","gml");
 		pxRoot->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
 		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
-		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema","xsd");		
+		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema","xsd");
+		pxRoot->SetNamespaceDeclaration(service_uri, service_name);
 		pxRoot->SetAttribute("version", "1.1.0", NULL);
 
 		// FeatureCollection-->boundedBy
@@ -68,16 +76,15 @@ namespace auge
 				// FeatureCollection-->featureMember
 				pxMember = pxRoot->AddChild("featureMember","gml");
 				// FeatureCollection-->feature
-				pxFeature = pxMember->AddChild(typeName,"gml");
-				pxFeature->AddChild(typeName,NULL);
-				g_sprintf(str,"%s.%d", typeName, pFeature->GetFID());
+				pxFeature = pxMember->AddChild(type_name,service_name);
+				g_sprintf(str,"%s.%d", type_name, pFeature->GetFID());
 				pxFeature->SetAttribute("fid",str, NULL);
 
 				for(g_uint i=0; i<fcount; i++)
 				{
 					pField = pFields->GetField(i);
 					// FeatureCollection-->feature->value
-					pxValue = pxFeature->AddChild(pField->GetName(),NULL);
+					pxValue = pxFeature->AddChild(pField->GetName(),service_name);
 
 					switch(pField->GetType())
 					{					 

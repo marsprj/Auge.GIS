@@ -68,7 +68,7 @@ namespace auge
 		if(pLayer==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "Service %s has not FeatureType %s,",pWebContext->GetService(), typeName);
+			g_sprintf(msg, "Service %s has not FeatureType %s,",pRequest->GetServiceName(), typeName);
 			pLogger->Error(msg, __FILE__, __LINE__);
 
 			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
@@ -121,6 +121,7 @@ namespace auge
 		}
 		
 		GetFeatureResponse *pResponse = new GetFeatureResponse(pRequest);
+		pResponse->SetWebContenxt(pWebContext);
 		pResponse->SetFeatureCursor(pCursor);
 		return pResponse;
 	}

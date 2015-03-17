@@ -29,6 +29,9 @@ namespace auge
 		
 	public:
 
+		const char*	GetServiceName();
+		const char* GetServiceURI();
+
 		const char*	GetOutputFormat();
 		g_int		GetMaxFeatures();
 		g_int		GetOffset();
@@ -36,6 +39,8 @@ namespace auge
 		GFilter*	GetFilter();
 
 		void		SetVersion(const char* value);
+		void		SetServiceName(const char* name);
+		void		SetServiceURI(const char* uri);
 		void		SetTypeName(const char* typeName);
 		void		SetOutputFormat(const char* format);
 		void		SetMaxFeatures(const char* maxFeatures);
@@ -51,6 +56,8 @@ namespace auge
 
 	private: 
 		std::string m_version;
+		std::string m_service_name;
+		std::string m_service_uri;
 		std::string m_type_name;
 		std::string m_full_name;
 		std::string m_mime_type;

@@ -57,6 +57,9 @@ namespace auge
 	public:
 		virtual	const char*		GetService() = 0;
 		virtual void			SetService(const char* name) = 0;
+		virtual	const char*		GetURI() = 0;
+		virtual void			SetURI(const char* uri) = 0;
+
 		virtual const char*		GetCachePath() = 0;
 		virtual const char*		GetCacheMapPath() = 0;
 		virtual const char*		GetCacheProtocolPath() = 0;

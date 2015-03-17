@@ -30,6 +30,24 @@ namespace auge
 		m_name = name;
 	}
 
+	const char* ServiceImpl::GetURI()
+	{
+		return m_uri.c_str();
+	}
+
+	void ServiceImpl::SetURI(const char* uri)
+	{
+		if(uri==NULL)
+		{
+
+			m_uri.clear();
+		}
+		else
+		{
+			m_uri = uri;
+		}
+	}
+
 	WebResponse* ServiceImpl::Execute(WebRequest* pRequest)
 	{
 		const char* engine = pRequest->GetEngine();
@@ -61,6 +79,8 @@ namespace auge
 		}
 		
 		WebContext* pWebContext = augeGetWebContextInstance();
+		pWebContext->SetService(GetName());
+		pWebContext->SetURI(GetURI());
 		return pWebEngine->Execute(pRequest, pWebContext, GetMap());
 	}
 
@@ -120,6 +140,16 @@ namespace auge
 	}
 
 	RESULTCODE ServiceImpl::Shutdown()
+	{
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE ServiceImpl::Pause()
+	{
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE ServiceImpl::Resume()
 	{
 		return AG_SUCCESS;
 	}

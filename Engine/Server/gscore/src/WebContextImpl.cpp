@@ -132,13 +132,30 @@ namespace auge
 		return m_name.c_str();
 	}
 
-	void WebContextImpl::SetService(const char* named)
+	void WebContextImpl::SetService(const char* named) 
 	{
 		if(named==NULL)
 		{
 			m_name.clear();
 		}
 		m_name = named;
+	}
+
+	void WebContextImpl::SetURI(const char* uri)
+	{
+		if(uri==NULL)
+		{
+			m_uri.clear();
+		}
+		else
+		{
+			m_uri = uri;
+		}
+	}
+
+	const char* WebContextImpl::GetURI()
+	{
+		return m_uri.c_str();
 	}
 
 	const char*	WebContextImpl::GetCachePath()

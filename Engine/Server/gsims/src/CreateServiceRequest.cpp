@@ -17,6 +17,7 @@ namespace auge
 	{
 		SetVersion(cgi["version"]);
 		SetName(cgi["name"]);
+		SetURI(cgi["uri"]);
 		return true;
 	}
 
@@ -63,10 +64,6 @@ namespace auge
 		{
 			m_name.clear();
 		}
-		else if(strlen(name)==0)
-		{
-			m_name.clear();
-		}
 		else
 		{
 			m_name = name;
@@ -78,4 +75,20 @@ namespace auge
 		return m_name.c_str();
 	}
 
+	void CreateServiceRequest::SetURI(const char* uri)
+	{
+		if(uri==NULL)
+		{
+			m_uri.clear();
+		}
+		else
+		{
+			m_uri = uri;
+		}
+	}
+
+	const char* CreateServiceRequest::GetURI()
+	{
+		return m_uri.c_str();
+	}
 }

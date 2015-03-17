@@ -23,17 +23,20 @@ namespace auge
 		virtual const char*		GetMimeType();
 
 		virtual const char*		GetName();
+		virtual const char*		GetURI();
 	public:
 		bool		Create(rude::CGI& cgi);
 
 		void		SetVersion(const char* value);
 		void		SetName(const char* name);
+		void		SetURI(const char* uri);
 		//bool		Create(GPropertySet& props);
 
 	private:
 		std::string m_version;
 		std::string m_mime_type;
 		std::string m_name;
+		std::string m_uri;
 	};
 }
 

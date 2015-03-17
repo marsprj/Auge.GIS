@@ -46,6 +46,7 @@ namespace auge
 		CreateServiceRequest* pRequest = static_cast<CreateServiceRequest*>(pWebRequest);
 
 		const char* name = pRequest->GetName();
+		const char* uri	 = pRequest->GetURI();
 		pServiceManager = augeGetServiceManagerInstance();
 		pService = pServiceManager->GetService(name);
 		if(pService!=NULL)
@@ -57,7 +58,7 @@ namespace auge
 			return pExpResponse;
 		}
 
-		RESULTCODE rc = pServiceManager->Register(name);
+		RESULTCODE rc = pServiceManager->Register(name,uri);
 		if(rc!=AG_SUCCESS)
 		{
 			GError* pError = augeGetErrorInstance();

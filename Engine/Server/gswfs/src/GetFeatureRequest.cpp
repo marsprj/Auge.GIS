@@ -223,7 +223,7 @@ namespace auge
 		SetFilter(cgi["filter"], GetTypeName(), pMap);
 		return true;
 	}
-
+	
 	bool GetFeatureRequest::Create(XDocument* pxDoc,Map* pMap)
 	{
 		XElement	*pxRoot = NULL;
@@ -275,6 +275,39 @@ namespace auge
 			}
 		}
 		return true;
+	}
+
+	const char*	GetFeatureRequest::GetServiceName()
+	{
+		return m_service_name.c_str();
+	}
+
+	const char* GetFeatureRequest::GetServiceURI()
+	{
+		return m_service_uri.c_str();
+	}
+
+	void GetFeatureRequest::SetServiceName(const char* name)
+	{
+		if(name==NULL)
+		{
+			m_service_name.clear();
+		}
+		else
+		{
+			m_service_name = name;
+		}
+	}
+	void GetFeatureRequest::SetServiceURI(const char* uri)
+	{
+		if(uri==NULL)
+		{
+			m_service_uri.clear();
+		}
+		else
+		{
+			m_service_uri = uri;
+		}
 	}
 
 	void GetFeatureRequest::Info()

@@ -8,6 +8,7 @@ namespace auge
 {
 	class GetFeatureRequest;
 	class FeatureCursor;
+	class WebContext;
 
 	class GetFeatureResponse : public WebResponse
 	{
@@ -18,10 +19,12 @@ namespace auge
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 
 	public:
+		void	SetWebContenxt(WebContext* pWebContext);
 		void	SetFeatureCursor(FeatureCursor* pCursor);
 
 	private:
 		GetFeatureRequest	*m_pRequest;
+		WebContext			*m_pWebContext;
 		FeatureCursor		*m_pCursor;
 
 		std::string			m_encoding;

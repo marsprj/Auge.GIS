@@ -17,7 +17,7 @@ namespace auge
 		virtual Service*		GetService(const char* szName);
 		virtual EnumService*	GetServices();
 
-		virtual RESULTCODE		Register(const char* szName);
+		virtual RESULTCODE		Register(const char* szName, const char* szURI);
 		virtual RESULTCODE		Unregister(const char* szName);
 
 		virtual RESULTCODE		RegisterMap(g_uint s_id, g_uint m_id);

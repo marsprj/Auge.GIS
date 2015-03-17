@@ -20,6 +20,13 @@ namespace auge
 	class WebWriter;
 	class Map;
 
+	typedef enum
+	{
+		augeStateRun	 = 0,
+		augeStateStop		,
+		augeStatePause
+	}augeServiceState;
+
 	class Service : public GObject
 	{
 	protected:
@@ -27,6 +34,8 @@ namespace auge
 		virtual ~Service(){}
 	public:
 		virtual const char*		GetName() = 0;
+		virtual const char*		GetURI() = 0;
+		virtual 
 		virtual WebResponse*	Execute(WebRequest* pRequest) = 0;
 
 		virtual void			SetMap(Map* pMap) = 0;
@@ -36,6 +45,8 @@ namespace auge
 
 		virtual	RESULTCODE		Start() = 0;
 		virtual RESULTCODE		Shutdown() = 0;
+		virtual	RESULTCODE		Pause() = 0;
+		virtual RESULTCODE		Resume() = 0;
 	};
 
 	class EnumService : public GObject
@@ -58,7 +69,7 @@ namespace auge
 		virtual Service*		GetService(const char* szName) = 0;
 		virtual EnumService*	GetServices() = 0;
 
-		virtual RESULTCODE		Register(const char* szName) = 0;
+		virtual RESULTCODE		Register(const char* szName, const char* szURI) = 0;
 		virtual RESULTCODE		Unregister(const char* szName) = 0;
 
 		virtual RESULTCODE		RegisterMap(g_uint s_id, g_uint m_id) = 0;

@@ -13,7 +13,9 @@ namespace auge
 		ServiceImpl();
 		virtual ~ServiceImpl();
 	public:
-		virtual const char*		GetName();		
+		virtual const char*		GetName();
+		virtual const char*		GetURI();
+
 		virtual WebResponse*	Execute(WebRequest* pRequest);
 
 		virtual Map*			GetMap();
@@ -22,6 +24,8 @@ namespace auge
 
 		virtual	RESULTCODE		Start();
 		virtual RESULTCODE		Shutdown();
+		virtual	RESULTCODE		Pause();
+		virtual RESULTCODE		Resume();
 
 		virtual void			Release();
 
@@ -29,6 +33,7 @@ namespace auge
 		
 		void	SetMapName(const char* name);
 		void	SetName(const char* name);
+		void	SetURI(const char* uri);
 		
 
 	private:
@@ -36,6 +41,7 @@ namespace auge
 
 	private:
 		std::string m_name;
+		std::string m_uri;
 		
 		std::string m_engines;
 		WebContext* m_pContext;
