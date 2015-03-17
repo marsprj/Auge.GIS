@@ -36,16 +36,16 @@ AC_CHECK_LIB([gcore], [main])
 AC_CHECK_LIB([gdengine], [main])
 # FIXME: Replace `main' with a function in `-lgfilter':
 AC_CHECK_LIB([gfilter], [main])
+# FIXME: Replace `main' with a function in `-lgsims':
+AC_CHECK_LIB([gsims], [main])
 # FIXME: Replace `main' with a function in `-llog4cplus':
 AC_CHECK_LIB([log4cplus], [main])
 # FIXME: Replace `main' with a function in `-lpq':
 AC_CHECK_LIB([pq], [main])
 # FIXME: Replace `main' with a function in `-lrudecgi':
 AC_CHECK_LIB([rudecgi], [main])
-# FIXME: Replace `main' with a function in `-lwcore':
-AC_CHECK_LIB([wcore], [main])
-# FIXME: Replace `main' with a function in `-lwservice':
-AC_CHECK_LIB([wservice], [main])
+# FIXME: Replace `main' with a function in `-luuid':
+AC_CHECK_LIB([uuid], [main])
 # FIXME: Replace `main' with a function in `-lxml2':
 AC_CHECK_LIB([xml2], [main])
 
@@ -84,8 +84,12 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Filter/src/Makefile
                  Engine/Makefile
                  Engine/Server/Makefile
+                 Engine/Server/gscore/Makefile
+                 Engine/Server/gscore/src/Makefile
                  Engine/Server/gsims/Makefile
                  Engine/Server/gsims/src/Makefile
+                 Engine/Server/gsvrs/Makefile
+                 Engine/Server/gsvrs/src/Makefile
                  Engine/Server/gswfs/Makefile
                  Engine/Server/gswfs/src/Makefile
                  Engine/Server/gswms/Makefile
@@ -93,16 +97,6 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Server/ims/Makefile
                  Engine/Server/mgr/Makefile
                  Engine/Service/Makefile
-                 Engine/Service/WCore/Makefile
-                 Engine/Service/WCore/src/Makefile
-                 Engine/Service/WFEngine/Makefile
-                 Engine/Service/WFEngine/src/Makefile
-                 Engine/Service/WMEngine/Makefile
-                 Engine/Service/WMEngine/src/Makefile
-                 Engine/Service/WSEngine/Makefile
-                 Engine/Service/WSEngine/src/Makefile
-                 Engine/Service/WService/Makefile
-                 Engine/Service/WService/src/Makefile
                  Engine/Service/ims/Makefile
                  Engine/Service/mgr/Makefile
                  Engine/Service/testcgi/Makefile

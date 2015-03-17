@@ -45,6 +45,12 @@ libgsims_la_SOURCES=\
 		    RemoveServiceResponse.cpp \
 		    SetStyleHandler.cpp \
 		    SetStyleRequest.cpp \
+		    AddStyleHandler.cpp \
+		    AddStyleRequest.cpp \
+		    RemoveStyleHandler.cpp \
+		    RemoveStyleRequest.cpp \
+		    UpdateStyleHandler.cpp \
+		    UpdateStyleRequest.cpp \
 		    UnRegisterDataSourceHandler.cpp \
 		    UnRegisterDataSourceRequest.cpp \
 		    WEngine.cpp

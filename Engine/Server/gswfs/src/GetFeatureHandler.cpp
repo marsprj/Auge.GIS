@@ -114,6 +114,10 @@ namespace auge
 			{
 				pCursor = pFeatureClass->Query(bbox);
 			}
+			else
+			{
+				pCursor = pFeatureClass->Query();
+			}
 		}
 		
 		GetFeatureResponse *pResponse = new GetFeatureResponse(pRequest);

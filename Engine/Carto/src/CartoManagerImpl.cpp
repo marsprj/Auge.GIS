@@ -774,7 +774,7 @@ namespace auge
 		pResult = m_pConnection->ExecuteQuery(sql.c_str());
 		if(pResult==NULL)
 		{
-			return NULL;
+			return -1;
 		}
 
 		g_uint gid = pResult->GetInt(0,0);
