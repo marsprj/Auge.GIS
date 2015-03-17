@@ -4,7 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
-#include <string> o
+#include <string>
 #include <vector>
 #include <rude/cgi.h>
 

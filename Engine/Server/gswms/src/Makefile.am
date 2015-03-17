@@ -8,9 +8,9 @@ AM_CPPFLAGS=-I../include \
 libgswms_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
 		-L$(top_srcdir)/Engine/Carto/src \
-		-L$(top_srcdir)/Engine/Service/WCore/src
+		-L$(top_srcdir)/Engine/Server/gscore/src
 
-libgswms_la_LIBADD=-lgcore -lgcarto -lwcore
+libgswms_la_LIBADD=-lgcore -lgcarto -lgscore
 
 libgswms_la_SOURCES=\
 		CapabilitiesHandler.cpp \
