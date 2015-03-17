@@ -98,7 +98,7 @@ namespace auge
 //------------------------------------------------------------------------------
 #ifdef WIN32
 #	ifndef AUGE_SERVICE_EXPORTS
-#		define AUGE_SERVICE_NAME "GService"
+#		define AUGE_SERVICE_NAME "gsvrs"
 #		if defined(_DEBUG)
 #			if defined(_UNICODE)
 //#				define _AUGE_FILTER_CONFIGURATION "UD"

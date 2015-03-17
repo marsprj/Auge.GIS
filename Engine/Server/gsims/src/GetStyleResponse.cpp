@@ -88,9 +88,9 @@ namespace auge
 			g_uchar* buffer = NULL;
 			pxDoc->WriteToString(&buffer, len, "GBK",0);
 
-			pWriter->WriteHead(m_pRequest->GetMimeType());
+			//pWriter->WriteHead(m_pRequest->GetMimeType());
 			pWriter->Write(buffer, len);
-			pWriter->WriteTail();
+			//pWriter->WriteTail();
 
 			pLogger->Info((g_char*)buffer);
 

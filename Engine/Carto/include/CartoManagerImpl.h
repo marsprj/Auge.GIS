@@ -33,8 +33,12 @@ namespace auge
 		virtual char*			GetStyleText(g_uint id);
 		virtual char*			GetStyleText(const char* name);
 		virtual EnumStyle*		GetStyles();
+		
 		virtual g_int			CreateStyle(const char* name, Style* pStyle);
+		virtual RESULTCODE		CreateStyle(const char* name, const char* text);
+
 		virtual RESULTCODE		UpdateStyle(const char* name, Style* pStyle);
+		virtual RESULTCODE		UpdateStyle(const char* name, const char* text);
 		virtual RESULTCODE		RemoveStyle(const char* name);
 		virtual g_int			GetStyleID(const char* name);
 

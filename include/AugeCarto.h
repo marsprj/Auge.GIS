@@ -211,10 +211,12 @@ namespace auge
 
 		virtual EnumStyle*		GetStyles() = 0;
 
-		virtual g_int			CreateStyle(const char* name, Style* pStyle) = 0;
 		virtual bool			HasStyle(g_uint id) = 0;
 		virtual bool			HasStyle(const char* name) = 0;
+		virtual g_int			CreateStyle(const char* name, Style* pStyle) = 0;
+		virtual RESULTCODE		CreateStyle(const char* name, const char* text) = 0;		
 		virtual RESULTCODE		UpdateStyle(const char* name, Style* pStyle) = 0;
+		virtual RESULTCODE		UpdateStyle(const char* name, const char* text) = 0;
 		virtual RESULTCODE		RemoveStyle(const char* name) = 0;
 		virtual g_int			GetStyleID(const char* name) = 0;
 

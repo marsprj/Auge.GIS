@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gscore", "gscore.vcxproj", "{A2755F3E-74F6-400D-A745-6BABA7BC3D05}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gwsvs", "..\..\gwsvs\32_x86_win_vc10\gwsvs.vcxproj", "{D8C7BCA3-AADF-430D-BD10-6F771418F31B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2755F3E-74F6-400D-A745-6BABA7BC3D05}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A2755F3E-74F6-400D-A745-6BABA7BC3D05}.Debug|Win32.Build.0 = Debug|Win32
+		{A2755F3E-74F6-400D-A745-6BABA7BC3D05}.Release|Win32.ActiveCfg = Release|Win32
+		{A2755F3E-74F6-400D-A745-6BABA7BC3D05}.Release|Win32.Build.0 = Release|Win32
+		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Debug|Win32.Build.0 = Debug|Win32
+		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Release|Win32.ActiveCfg = Release|Win32
+		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

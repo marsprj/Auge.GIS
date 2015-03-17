@@ -83,6 +83,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\AddStyleHandler.cpp" />
+    <ClCompile Include="..\src\AddStyleRequest.cpp" />
     <ClCompile Include="..\src\CapabilitiesHandler.cpp" />
     <ClCompile Include="..\src\CapabilitiesRequest.cpp" />
     <ClCompile Include="..\src\CapabilitiesResponse.cpp" />
@@ -112,13 +114,19 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RemoveServiceHandler.cpp" />
     <ClCompile Include="..\src\RemoveServiceRequest.cpp" />
     <ClCompile Include="..\src\RemoveServiceResponse.cpp" />
+    <ClCompile Include="..\src\RemoveStyleHandler.cpp" />
+    <ClCompile Include="..\src\RemoveStyleRequest.cpp" />
     <ClCompile Include="..\src\SetStyleHandler.cpp" />
     <ClCompile Include="..\src\SetStyleRequest.cpp" />
     <ClCompile Include="..\src\UnregisterDataSourceHandler.cpp" />
     <ClCompile Include="..\src\UnregisterDataSourceRequest.cpp" />
+    <ClCompile Include="..\src\UpdateStyleHandler.cpp" />
+    <ClCompile Include="..\src\UpdateStyleRequest.cpp" />
     <ClCompile Include="..\src\WEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\AddStyleHandler.h" />
+    <ClInclude Include="..\include\AddStyleRequest.h" />
     <ClInclude Include="..\include\CapabilitiesHandler.h" />
     <ClInclude Include="..\include\CapabilitiesRequest.h" />
     <ClInclude Include="..\include\CapabilitiesResponse.h" />
@@ -148,10 +156,14 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RemoveServiceHandler.h" />
     <ClInclude Include="..\include\RemoveServiceRequest.h" />
     <ClInclude Include="..\include\RemoveServiceResponse.h" />
+    <ClInclude Include="..\include\RemoveStyleHandler.h" />
+    <ClInclude Include="..\include\RemoveStyleRequest.h" />
     <ClInclude Include="..\include\SetStyleHandler.h" />
     <ClInclude Include="..\include\SetStyleRequest.h" />
     <ClInclude Include="..\include\UnregisterDataSourceHandler.h" />
     <ClInclude Include="..\include\UnregisterDataSourceRequest.h" />
+    <ClInclude Include="..\include\UpdateStyleHandler.h" />
+    <ClInclude Include="..\include\UpdateStyleRequest.h" />
     <ClInclude Include="..\include\WEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

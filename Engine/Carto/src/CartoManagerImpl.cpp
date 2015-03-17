@@ -747,6 +747,43 @@ namespace auge
 		return gid;
 	}
 
+	RESULTCODE CartoManagerImpl::CreateStyle(const char* name, const char* text)
+	{
+		if(name==NULL||text==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		if(HasStyle(name))
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "[%s] already existed.", name);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return AG_FAILURE;
+		}
+
+		std::string sql;
+		sql.append("insert into g_style (s_name, s_text) values('");
+		sql.append(name);
+		sql.append("','");
+		sql.append((char*)text);
+		sql.append("') returning gid");
+
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql.c_str());
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+
+		g_uint gid = pResult->GetInt(0,0);
+
+		pResult->Release();
+		
+		return gid;
+	}
+
 	RESULTCODE CartoManagerImpl::UpdateStyle(const char* name, Style* pStyle)
 	{
 		if(name==NULL||pStyle==NULL)
@@ -779,14 +816,35 @@ namespace auge
 			pxDoc->Release();
 			return rc;
 		}
+		
+		std::string sql;
+		sql.append("update g_style set s_text='");
+		sql.append((char*)buffer);
+		sql.append("' where s_name='");
+		sql.append(name);
+		sql.append("'");
 
-		char sql[AUGE_SQL_LONG_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_LONG_MAX, "update g_style set s_text='%s' where s_name='%s'", "sss",name);
-
-		rc = m_pConnection->ExecuteSQL(sql);
+		rc = m_pConnection->ExecuteSQL(sql.c_str());
 		pxDoc->Release();
 
 		return (rc==AG_SUCCESS);
+	}
+
+	RESULTCODE CartoManagerImpl::UpdateStyle(const char* name, const char* text)
+	{
+		if(name==NULL||text==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		std::string sql;
+		sql.append("update g_style set s_text='");
+		sql.append(text);
+		sql.append("' where s_name='");
+		sql.append(name);
+		sql.append("'");
+
+		return m_pConnection->ExecuteSQL(sql.c_str());
 	}
 
 	RESULTCODE CartoManagerImpl::RemoveStyle(const char* name)

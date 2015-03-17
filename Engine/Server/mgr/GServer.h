@@ -61,7 +61,8 @@ namespace auge
 		augeHttpMethodType	GetMethod();
 
 		void			WriteTime(g_ulong ts, g_ulong te);
-		
+		void			DebugCGI(rude::CGI& cgi);
+
 	private:
 		GError				*m_pError;
 		GLogger				*m_pLogger;
