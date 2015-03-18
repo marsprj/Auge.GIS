@@ -104,6 +104,10 @@ namespace auge
 
 	void CanvasImpl::DrawLayer(FeatureLayer* pLayer, FeatureStyle* pStyle)
 	{
+		if(pStyle==NULL)
+		{
+			return;
+		}
 		Rule* pRule = NULL;
 		g_uint count = pStyle->GetRuleCount();
 		for(g_uint i=0; i<count; i++)

@@ -100,10 +100,10 @@ void StyleTest::RemoveSLD()
 
 void StyleTest::ReadSLD()
 {
-	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_6.xml";
+	const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_6.xml";
 	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon.xml";
 	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line.xml";
-	const char* path = "/home/renyc/code/auge.gis/Engine/Carto/sld/line.xml";
+	//const char* path = "/home/renyc/code/auge.gis/Engine/Carto/sld/line.xml";
 
 	auge::CartoFactory* pCartoFactory = NULL;
 	pCartoFactory = auge::augeGetCartoFactoryInstance();

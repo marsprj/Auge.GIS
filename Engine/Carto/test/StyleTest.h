@@ -8,8 +8,8 @@
 class StyleTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(StyleTest);
-	//CPPUNIT_TEST(ReadSLD);
-	CPPUNIT_TEST(CreateSLD);
+	CPPUNIT_TEST(ReadSLD);
+	//CPPUNIT_TEST(CreateSLD);
 	//CPPUNIT_TEST(UpdateSLD);
 	//CPPUNIT_TEST(RemoveSLD);
 	CPPUNIT_TEST_SUITE_END();

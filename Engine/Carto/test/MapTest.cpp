@@ -99,8 +99,8 @@ void MapTest::DrawMap()
 	pMap = pCartoManager->LoadMap("world");
 
 	pCanvas->Draw(pMap);
-	//pCanvas->Save("g:\\temp\\map\\map.png");
-	pCanvas->Save("/home/renyc/map/map.png");
+	pCanvas->Save("g:\\temp\\map\\map.png");
+	//pCanvas->Save("/home/renyc/map/map.png");
 
 	//m_pConnection->Close();
 	//AUGE_SAFE_RELEASE(m_pConnection);
