@@ -287,17 +287,23 @@ namespace auge
 
 			fname = pQuery->GetSubField(i);
 			pField = pFields->GetField(fname);
-
-			if(pField->GetType()==augeFieldTypeGeometry)
+			if(pField==NULL)
 			{
-				fields.append("st_asbinary(");
-				fields.append(fname);
-				fields.append(") as ");
 				fields.append(fname);
 			}
 			else
 			{
-				fields.append(fname);
+				if(pField->GetType()==augeFieldTypeGeometry)
+				{
+					fields.append("st_asbinary(");
+					fields.append(fname);
+					fields.append(") as ");
+					fields.append(fname);
+				}
+				else
+				{
+					fields.append(fname);
+				}
 			}
 		}
 	}

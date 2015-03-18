@@ -120,9 +120,22 @@ namespace auge
 			}
 		}
 		
-		GetFeatureResponse *pResponse = new GetFeatureResponse(pRequest);
-		pResponse->SetWebContenxt(pWebContext);
-		pResponse->SetFeatureCursor(pCursor);
-		return pResponse;
+		WebResponse* pWebResponse = NULL;
+		if(pCursor!=NULL)
+		{
+			GetFeatureResponse *pResponse = new GetFeatureResponse(pRequest);
+			pResponse->SetWebContenxt(pWebContext);
+			pResponse->SetFeatureCursor(pCursor);
+			pWebResponse = pResponse;
+		}
+		else
+		{
+			GError* pError = augeGetErrorInstance();
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			pWebResponse = pExpResponse;
+		}
+		
+		return pWebResponse;
 	}
 }
