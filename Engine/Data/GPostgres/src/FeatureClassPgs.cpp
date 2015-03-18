@@ -92,6 +92,31 @@ namespace auge
 		return true;
 	}
 
+	bool FeatureClassPgs::Create(const char* name, WorkspacePgs* pWorkspace, PGresult* pgResult)
+	{
+		m_name = name;
+		m_pWorkspace = pWorkspace;
+
+		//ConnectionPgs& pgConnection = pWorkspace->m_pgConnection;
+		//m_oid = pgConnection.GetPgTableOid(name);
+		//if(m_oid==NULL)
+		//{
+		//	return false;
+		//}
+
+		if(!GetMetaData())
+		{
+			return false;
+		}
+
+		if(!CreateFields(pgResult))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	void FeatureClassPgs::Release()
 	{
 		if(!ReleaseRef())
@@ -163,6 +188,36 @@ namespace auge
 		return pCursor;
 	}
 
+	FeatureCursor* FeatureClassPgs::Query(GQuery* pQuery, augeCursorType type/*=augeStaticCursor*/)
+	{
+		std::string sql;
+		SQLBuilder::BuildQuery(sql,pQuery,this);
+
+		PGresult* pgResult = NULL;
+		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		if(pgResult==NULL)
+		{
+			return NULL;
+		}
+
+		FeatureClassPgs* pNewClass = new FeatureClassPgs();
+		pNewClass->Create(GetName(), m_pWorkspace, pgResult);
+		if(pNewClass==NULL)
+		{
+			PQclear(pgResult);
+			return NULL;
+		}
+
+		FeatureCursorPgs* pCursor = new FeatureCursorPgs();
+		if(!pCursor->Create(pNewClass, pgResult))
+		{	
+			pCursor->Release();
+			pCursor = NULL;
+		}
+		pNewClass->Release();
+		return pCursor;
+	}
+
 	RESULTCODE FeatureClassPgs::RemoveFeature(GFilter* pFilter)
 	{
 		RESULTCODE rc = AG_FAILURE;
@@ -200,6 +255,15 @@ namespace auge
 			return false;
 		}
 
+		CreateFields(pgResult);
+
+		PQclear(pgResult);
+
+		return true;
+	}
+
+	bool FeatureClassPgs::CreateFields(PGresult* pgResult)
+	{	
 		m_pFields->Clear();
 
 		GField* pField = NULL;
@@ -213,8 +277,6 @@ namespace auge
 			}
 		}
 
-		PQclear(pgResult);
-
 		return true;
 	}
 
@@ -224,10 +286,18 @@ namespace auge
 		Oid pgType		= PQftype(pgResult, col);
 		const char* name= PQfname(pgResult, col);
 		
-		augeFieldType type = m_pWorkspace->m_pgConnection.GetFieldType(pgType);
-		if(type==augeFieldTypeNone)
+		augeFieldType type = augeFieldTypeNone;
+		if(!g_stricmp(name,m_geom_filed_name.c_str()))
 		{
-			return NULL;
+			type = augeFieldTypeGeometry;
+		}
+		else
+		{
+			type = m_pWorkspace->m_pgConnection.GetFieldType(pgType);
+			if(type==augeFieldTypeNone)
+			{
+				return NULL;
+			}
 		}
 
 		GField	 *pField = NULL;

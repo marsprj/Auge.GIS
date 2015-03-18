@@ -27,6 +27,7 @@ namespace auge
 	class GFields;
 	class FeatureInsertCommand;
 	class GFilter;
+	class GQuery;
 
 	typedef enum augeCursorType
 	{
@@ -62,6 +63,7 @@ namespace auge
 		virtual FeatureCursor*		Query(augeCursorType type=augeStaticCursor) = 0;
 		virtual FeatureCursor*		Query(GEnvelope& extent, augeCursorType type=augeStaticCursor) = 0;
 		virtual FeatureCursor*		Query(GFilter* pFilter, augeCursorType type=augeStaticCursor) = 0;
+		virtual FeatureCursor*		Query(GQuery* pQuery, augeCursorType type=augeStaticCursor) = 0;
 
 		virtual RESULTCODE			RemoveFeature(GFilter* pFilter) = 0;
 		

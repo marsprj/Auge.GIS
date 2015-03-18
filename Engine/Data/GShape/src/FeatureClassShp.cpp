@@ -211,6 +211,11 @@ namespace auge
 		return Query();
 	}
 
+	FeatureCursor* FeatureClassShp::Query(GQuery* pQuery, augeCursorType type/*=augeStaticCursor*/)
+	{
+		return Query();
+	}
+
 	augeGeometryType FeatureClassShp::GetGeometryType(int shpType)
 	{
 		switch(shpType)

@@ -30,6 +30,7 @@ namespace auge
 		virtual FeatureCursor*		Query(augeCursorType type=augeStaticCursor);
 		virtual FeatureCursor*		Query(GEnvelope& extent, augeCursorType type=augeStaticCursor);
 		virtual FeatureCursor*		Query(GFilter* pFilter, augeCursorType type=augeStaticCursor);
+		virtual FeatureCursor*		Query(GQuery* pQuery, augeCursorType type=augeStaticCursor);
 
 		virtual RESULTCODE			RemoveFeature(GFilter* pFilter);
 
@@ -41,8 +42,10 @@ namespace auge
 
 	public:
 		bool	Create(const char* name, WorkspacePgs* pWorkspace);
+		bool	Create(const char* name, WorkspacePgs* pWorkspace, PGresult* pgResult);
 		GField*	CreateField(int col, PGresult* pgResult);
 		bool	CreateFields();
+		bool	CreateFields(PGresult* pgResult);
 		bool	GetMetaData();
 
 	private:

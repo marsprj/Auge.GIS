@@ -2,7 +2,7 @@
 #include "AugeCore.h"
 #include "AugeFeature.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
 
 void PgsTest::setUp() 
 {
@@ -131,4 +131,54 @@ void PgsTest::QueryBinaryComparision()
 	AUGE_SAFE_RELEASE(pFilter);
 	AUGE_SAFE_RELEASE(pCursor);
 	AUGE_SAFE_RELEASE(pFeatureClass);
+}
+
+void PgsTest::QueryTest()
+{
+	
+	auge::FilterFactory* pFilterFactory = auge::augeGetFilterFactoryInstance();
+
+	auge::FeatureClass* pFeatureClass = NULL;
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	CPPUNIT_ASSERT(pFeatureClass!=NULL);
+
+	auge::GQuery	*pQuery = NULL;
+	auge::OrderBy	*pOrderBy = NULL;
+	auge::GFilter	*pFilter = NULL;
+
+	auge::GEnvelope extent(0,0,10,10);
+	auge::PropertyName	*pProp = pFilterFactory->CreatePropertyName("geom");
+	pFilter = pFilterFactory->CreateBBoxFilter(pProp, extent);
+
+	pQuery = pFilterFactory->CreateQuery();
+	pQuery->AddSubField("gid");
+	pQuery->AddSubField("name");
+	pQuery->AddSubField("geom");
+
+	pQuery->SetFilter(pFilter);
+
+	pOrderBy = pFilterFactory->CreateOrderBy();
+	pOrderBy->AddField("name");
+	pOrderBy->SetOrder(auge::augeOrderDesc);
+	pQuery->SetOrderBy(pOrderBy);
+
+	auge::FeatureCursor* pCursor = NULL;
+	pCursor = pFeatureClass->Query(pQuery);
+	CPPUNIT_ASSERT(pCursor!=NULL);
+
+	g_uint i=0;
+	auge::Geometry	*pGeometry = NULL;
+	auge::Feature	*pFeature = NULL;
+	while((pFeature=pCursor->NextFeature())!=NULL)
+	{	
+		const char* name = pFeature->GetString("name");
+		printf("[%d]:%s\n",pFeature->GetFID(), name);
+		pFeature->Release();
+	}
+	printf("\n");
+
+	AUGE_SAFE_RELEASE(pQuery);
+	AUGE_SAFE_RELEASE(pCursor);
+	AUGE_SAFE_RELEASE(pFeatureClass);
+	
 }

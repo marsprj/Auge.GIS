@@ -179,6 +179,74 @@ namespace auge
 		}
 	}
 
+	void SQLBuilder::BuildQuery(std::string& sql, GQuery* pQuery, FeatureClassPgs* pFeatureClass)
+	{
+		GField 	*pField = NULL;
+		GFilter	*pFilter = (GFilter	*)pQuery->GetFilter();
+		GFields	*pFields = pFeatureClass->GetFields();
+		g_uint count = pQuery->GetSubFieldCount();
+		const char* fname  = NULL;
+
+		bool first = true;
+		sql = "select ";
+		for(g_uint i=0; i<count; i++)
+		{
+			if(first)
+			{
+				first = false;
+			}
+			else
+			{
+				sql.append(",");
+			}
+
+			fname = pQuery->GetSubField(i);
+			pField = pFields->GetField(fname);
+
+			if(pField->GetType()==augeFieldTypeGeometry)
+			{
+				sql.append("st_asbinary(");
+				sql.append(fname);
+				sql.append(") as ");
+				sql.append(fname);
+			}
+			else
+			{
+				sql.append(fname);
+			}
+		}
+		sql.append(" from ");
+		sql.append(pFeatureClass->GetName());
+
+		if(pFilter!=NULL)
+		{
+			sql.append(" where ");
+			std::string where = "";
+			BuildFilter(where, pFeatureClass, pFilter);
+			sql.append(where);
+		}
+
+		OrderBy* pOrderBy = pQuery->GetOrderBy();
+		if(pQuery!=NULL)
+		{
+			int count = pOrderBy->GetFieldCount();
+			if(count>0)
+			{
+				sql.append(" order by ");
+				for(int i=0; i<count; i++)
+				{
+					if(i)
+					{
+						sql.append(",");
+					}
+					fname = pOrderBy->GetField(i);
+					sql.append(fname==NULL ? "" : fname);
+				}
+				sql.append(pOrderBy->IsAsc() ? " asc" : " desc");
+			}
+		}
+	}
+
 	RESULTCODE SQLBuilder::BuildFilter(std::string& sql, FeatureClassPgs* pFeatureClass, GFilter* pFilter)
 	{
 		augeFilterType type = pFilter->GetType();

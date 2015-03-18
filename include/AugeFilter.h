@@ -447,12 +447,12 @@ namespace auge
 		virtual       RESULTCODE	SetFeatureClassName(const char* szClassName) = 0;
 		//--------------------------------------------------------------------------
 		// SubField
-		virtual       int         GetSubFieldCount() const = 0;
-		virtual const char*       GetSubField(const int i) const = 0;
-		virtual       RESULTCODE  AddSubField(const char* szName) = 0;
-		virtual       RESULTCODE  RemoveSubField(const char* szName) = 0;
-		virtual       bool		  HasSubField(const char* szName) = 0;
-		virtual		  bool		  IsStarFields() = 0;
+		virtual       int			GetSubFieldCount() const = 0;
+		virtual const char*			GetSubField(const int i) const = 0;
+		virtual       RESULTCODE	AddSubField(const char* szName) = 0;
+		virtual       RESULTCODE	RemoveSubField(const char* szName) = 0;
+		virtual       bool			HasSubField(const char* szName) = 0;
+		virtual		  bool			IsStarFields() = 0;
 
 		// Filter
 		virtual       bool			SetFilter(GFilter* pFilter) = 0;     
@@ -488,7 +488,7 @@ namespace auge
 		virtual void				Clear() = 0;
 
 		virtual void				SetOrder(augeOrderType order) = 0;
-		virtual augeOrderType		GetOrder() = 0;
+		virtual bool				IsAsc() = 0;
 
 		virtual void				Release() = 0;
 	};
@@ -533,6 +533,7 @@ namespace auge
 		virtual UnaryLogicFilter*		CreateUnaryLogicFilter() = 0;
 
 		virtual GQuery*					CreateQuery() = 0;
+		virtual OrderBy*				CreateOrderBy() = 0;
 
 		virtual const char*				AsString(augeLogicalOperator oper) = 0;
 		virtual const char*				AsString(augeComparisonOperator oper) = 0;

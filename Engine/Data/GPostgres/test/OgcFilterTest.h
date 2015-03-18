@@ -18,10 +18,11 @@ class OgcFilterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(ReadBinaryLogical);
 	////CPPUNIT_TEST(ReadBinarySpatial);
 	////CPPUNIT_TEST(ReadDistanceFilter);
-	CPPUNIT_TEST(ReadIDFilter);
+	//CPPUNIT_TEST(ReadIDFilter);
 	////CPPUNIT_TEST(ReadLike);
 	////CPPUNIT_TEST(ReadNull);
-	//CPPUNIT_TEST(ReadSpatialAttribute);
+	CPPUNIT_TEST(ReadSpatialAttribute);
+	
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();

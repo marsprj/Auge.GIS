@@ -69,9 +69,16 @@ namespace auge
 		m_count = PQntuples(m_pgResult);
 		m_cursor = 0;
 
-		GFields* pFields = m_pFeatureClass->GetFields();
-
-		m_geom_findex = pFields->FindField(pFields->GetGeometryField()->GetName());
+		GFields	*pFields = m_pFeatureClass->GetFields();
+		GField	*pField = pFields->GetGeometryField();
+		if(pField==NULL)
+		{
+			m_geom_findex = -1;
+		}
+		else
+		{
+			m_geom_findex = pFields->FindField(pField->GetName());
+		}
 
 		return true;
 	}

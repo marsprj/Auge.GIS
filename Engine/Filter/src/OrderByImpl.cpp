@@ -47,9 +47,10 @@ void OrderByImpl::SetOrder(augeOrderType order)
 	m_order = order;
 }
 
-augeOrderType OrderByImpl::GetOrder()
+
+bool OrderByImpl::IsAsc()
 {
-	return m_order;
+	return (m_order==augeOrderAsc);
 }
 
 void OrderByImpl::Release()

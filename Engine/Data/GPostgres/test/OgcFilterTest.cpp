@@ -582,3 +582,8 @@ void OgcFilterTest::ReadSpatialAttribute()
 	AUGE_SAFE_RELEASE(pxDoc);
 }
 
+void QueryTest()
+{
+
+}
+

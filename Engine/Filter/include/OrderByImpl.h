@@ -19,7 +19,7 @@ namespace auge
 		virtual void				Clear();
 
 		virtual void				SetOrder(augeOrderType order);
-		virtual augeOrderType		GetOrder();
+		virtual bool				IsAsc();
 
 		virtual void				Release();
 

@@ -9,6 +9,7 @@
 #include "PropertyNameImpl.h"
 #include "LiteralImpl.h"
 #include "QueryImpl.h"
+#include "OrderByImpl.h"
 #include "FilterReaderImpl.h"
 #include "AugeField.h"
 
@@ -192,5 +193,10 @@ namespace auge
 			//return NULL;
 		}
 		return (new FilterReaderImpl(pFields));
+	}
+
+	OrderBy* FilterFactoryImpl::CreateOrderBy()
+	{
+		return (new OrderByImpl());
 	}
 }

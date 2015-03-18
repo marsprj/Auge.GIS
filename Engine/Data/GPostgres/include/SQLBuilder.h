@@ -21,6 +21,7 @@ namespace auge
 		static void	BuildQuery(std::string& sql, FeatureClass* pFeatureClass);
 		static void	BuildQuery(std::string& sql, GEnvelope& extent, FeatureClassPgs* pFeatureClass);
 		static void	BuildQuery(std::string& sql, GFilter* pFilter, FeatureClassPgs* pFeatureClass);
+		static void	BuildQuery(std::string& sql, GQuery* pQuery, FeatureClassPgs* pFeatureClass);
 
 		static RESULTCODE BuildFilter(std::string& sql, FeatureClassPgs* pFeatureClass, GFilter* pFilter);
 		static RESULTCODE BuildIDFilter(std::string& sql,FeatureClassPgs* pFeatureClass, IDFilter* pFilter);

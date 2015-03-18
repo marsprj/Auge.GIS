@@ -32,6 +32,7 @@ namespace auge
 		virtual UnaryLogicFilter*		CreateUnaryLogicFilter();
 
 		virtual GQuery*					CreateQuery();
+		virtual OrderBy*				CreateOrderBy();
 
 		virtual const char*				AsString(augeLogicalOperator oper);
 		virtual const char*				AsString(augeComparisonOperator oper);

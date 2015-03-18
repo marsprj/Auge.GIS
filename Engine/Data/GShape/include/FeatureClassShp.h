@@ -29,6 +29,7 @@ namespace auge
 		virtual FeatureCursor*		Query(augeCursorType type=augeStaticCursor);
 		virtual FeatureCursor*		Query(GEnvelope& extent, augeCursorType type=augeStaticCursor);
 		virtual FeatureCursor*		Query(GFilter* pFilter, augeCursorType type=augeStaticCursor);
+		virtual FeatureCursor*		Query(GQuery* pQuery, augeCursorType type=augeStaticCursor);
 
 		virtual RESULTCODE			RemoveFeature(GFilter* pFilter);
 
