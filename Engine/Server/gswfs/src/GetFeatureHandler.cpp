@@ -102,10 +102,10 @@ namespace auge
 		}
 
 		FeatureCursor *pCursor = NULL;
-		GFilter* pFilter = pRequest->GetFilter();
-		if(pFilter!=NULL)
+		GQuery* pQuery = pRequest->GetQuery();
+		if(pQuery!=NULL)
 		{
-			pCursor = pFeatureClass->Query(pFilter);
+			pCursor = pFeatureClass->Query(pQuery);
 		}
 		else
 		{

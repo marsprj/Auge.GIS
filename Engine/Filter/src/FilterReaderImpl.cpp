@@ -502,4 +502,9 @@ namespace auge
 
 		return augeComOprEqual;
 	}
+
+	void FilterReaderImpl::Release()
+	{
+		delete this;
+	}
 }

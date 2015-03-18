@@ -15,6 +15,7 @@ namespace auge
 
 	class Map;
 	class GFilter;
+	class GQuery;
 	class XDocument;
 
 	class GetFeatureRequest : public WebRequest
@@ -39,7 +40,7 @@ namespace auge
 		g_int		GetMaxFeatures();
 		g_int		GetOffset();
 		GEnvelope&	GetBBox();
-		GFilter*	GetFilter();
+		GQuery*		GetQuery();
 
 		void		SetVersion(const char* value);
 		void		SetServiceName(const char* name);
@@ -49,13 +50,17 @@ namespace auge
 		void		SetMaxFeatures(const char* maxFeatures);
 		void		SetOffset(const char* offset);
 		void		SetBBox(const char* bbox);
-		void		SetFilter(const char* filter, const char* typeName, Map* pMap);
+		void		SetQuery(const char* filter, const char* fields, const char* typeName, Map* pMap);
 
 		bool		Create(rude::CGI& cgi, Map* pMap);
 		bool		Create(XDocument* pxDoc, Map* pMap);
 
 	public:
 		void		Info();
+
+	private:
+		void		ParseFieldName(const char* property_name, char* field_name, size_t size);
+		void		SetFields(GQuery* pQuery, const char* fields);
 
 	private: 
 		std::string m_version;
@@ -70,7 +75,8 @@ namespace auge
 		g_int		m_offset;
 		GEnvelope	m_extent;
 
-		GFilter		*m_pFilter;
+		//GFilter		*m_pFilter;
+		GQuery		*m_pQuery;
 	};
 }
 
@@ -86,6 +92,8 @@ user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeNa
 http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&bbox=0,0,10,10
 http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&bbox=0,0,10,10
+
+user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&fields=gid,name,geom&orderby=
 
 
 [ HTTP Post 1.0.0]
@@ -106,16 +114,21 @@ http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetF
 
 [ HTTP Post 1.1.0]
 <wfs:GetFeature service="WFS" version="1.1.0"
-	xmlns:topp="http://www.openplans.org/topp"
+	xmlns:world="http://www.radi.ac.cn/world"
 	xmlns:wfs="http://www.opengis.net/wfs"
 	xmlns:ogc="http://www.opengis.net/ogc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.opengis.net/wfs
 	http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">
 	<wfs:Query typeName="world:cities">
+		<wfs:PropertyName>world:gid</wfs:PropertyName>
+		<wfs:PropertyName>world:name</wfs:PropertyName>
+		<wfs:PropertyName>world:geom</wfs:PropertyName>
+		<!--
 		<ogc:Filter>
 			<ogc:FeatureId fid="world.3"/>
 		</ogc:Filter>
+		-->
 	</wfs:Query>
 </wfs:GetFeature>
 

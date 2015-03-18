@@ -14,16 +14,14 @@ namespace auge
 		m_max_features = 10;
 		m_offset = 0;
 
-		m_pFilter = NULL;
+		//m_pFilter = NULL;
+		m_pQuery = NULL;
 	}
 
 	GetFeatureRequest::~GetFeatureRequest()
 	{
-		if(m_pFilter!=NULL)
-		{
-			m_pFilter->Release();
-			m_pFilter = NULL;
-		}
+		//AUGE_SAFE_RELEASE(m_pFilter);
+		AUGE_SAFE_RELEASE(m_pQuery);
 	}
 
 	const char*	GetFeatureRequest::GetEngine()
@@ -153,12 +151,12 @@ namespace auge
 		}
 	}
 
-	GFilter* GetFeatureRequest::GetFilter()
+	GQuery* GetFeatureRequest::GetQuery()
 	{
-		return m_pFilter;
+		return m_pQuery;
 	}
 
-	void GetFeatureRequest::SetFilter(const char* filter, const char* typeName, Map* pMap)
+	void GetFeatureRequest::SetQuery(const char* filter, const char* fields, const char* typeName, Map* pMap)
 	{
 		XParser parser;
 		XDocument* pxDoc = NULL;
@@ -167,7 +165,8 @@ namespace auge
 			return;
 		}
 
-		GFilter* pFilter = NULL;
+		GQuery	*pQuery = NULL;
+		GFilter	*pFilter = NULL;
 		FilterReader* reader = NULL;
 		FilterFactory *factory = augeGetFilterFactoryInstance();
 
@@ -176,11 +175,6 @@ namespace auge
 		{
 			return;
 		}
-		//augeLayerType ltype = pLayer->GetType();
-		//if(ltype!=augeLayerFeature);
-		//{
-		//	return;
-		//}
 
 		FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
 		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
@@ -189,23 +183,44 @@ namespace auge
 			return;
 		}
 
+		pQuery = factory->CreateQuery();
 		pxDoc = parser.ParseMemory(filter);
-		if(pxDoc==NULL)
+		if(pxDoc!=NULL)
+		{
+			reader = factory->CreateFilerReader(pFeatureClass->GetFields());
+			pFilter = reader->Read(pxDoc->GetRootNode());
+			pQuery->SetFilter(pFilter);
+			pxDoc->Release();
+		}
+
+		SetFields(pQuery, fields);
+
+		if(m_pQuery!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pQuery);
+		}
+		m_pQuery = pQuery;
+	}
+
+	void GetFeatureRequest::SetFields(GQuery* pQuery, const char* fields)
+	{
+		if(fields==NULL)
 		{
 			return;
 		}
 
-		reader = factory->CreateFilerReader(pFeatureClass->GetFields());
-		pFilter = reader->Read(pxDoc->GetRootNode());
-		pxDoc->Close();
-		pxDoc->Release();
-
-		if(m_pFilter!=NULL)
+		char  field[AUGE_NAME_MAX];
+		char* field_c = strdup(fields);
+		char* ptr = strtok(field_c, ",");
+		while(ptr!=NULL)
 		{
-			m_pFilter->Release();
-			m_pFilter = NULL;
+			ParseFieldName(ptr, field, AUGE_NAME_MAX);
+			pQuery->AddSubField(field);
+
+			ptr = strtok(NULL, ",");
 		}
-		m_pFilter = pFilter;
+
+		free(field_c);
 	}
 
 	bool GetFeatureRequest::Create(rude::CGI& cgi, Map* pMap)
@@ -216,7 +231,7 @@ namespace auge
 		SetMaxFeatures(cgi["maxFeatures"]);
 		SetOffset(cgi["offset"]);
 		SetBBox(cgi["bbox"]);
-		SetFilter(cgi["filter"], GetTypeName(), pMap);
+		SetQuery(cgi["filter"],cgi["fields"], GetTypeName(), pMap);
 		return true;
 	}
 	
@@ -250,6 +265,11 @@ namespace auge
 			return false;
 		}
 
+		if(m_pQuery!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pQuery);
+		}
+		
 		pxAttr = pxQuery->GetAttribute("typeName");
 		if(pxAttr==NULL)
 		{
@@ -260,17 +280,69 @@ namespace auge
 		{
 			return false;
 		}
+		
+		Layer* pLayer = NULL;
+		pLayer = pMap->GetLayer(m_type_name.c_str());
+		if(pLayer==NULL)
+		{
+			return false;
+		}
+		if(pLayer->GetType()!=augeLayerFeature)
+		{
+			return false;
+		}
+		FeatureLayer* pFLayer = NULL;
+		FeatureClass* pFeatureClass = NULL;
+		pFLayer = static_cast<FeatureLayer*>(pLayer);
+		pFeatureClass = pFLayer->GetFeatureClass();
+		if(pFeatureClass==NULL)
+		{
+			return false;
+		}
+
+		FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
+		m_pQuery = pFilterFactory->CreateQuery();
 
 		XElement* pxFilter = (XElement*)pxQuery->GetFirstChild("Filter");
 		if(pxFilter!=NULL)
 		{
-			if(m_pFilter!=NULL)
-			{
-				AUGE_SAFE_RELEASE(m_pFilter);
-				//m_pFilter = decode_filter(pxFilter);
-			}
+			GFilter* pFilter = NULL;
+			FilterReader* reader = pFilterFactory->CreateFilerReader(pFeatureClass->GetFields());
+			pFilter = reader->Read(pxFilter);
+			m_pQuery->SetFilter(pFilter);
+			
 		}
+
+		//PropertyName
+		char field_name[AUGE_NAME_MAX];
+		const char* property_name;
+		XNode* pxNode = NULL;
+		XNodeSet* pxNodeSet = pxQuery->GetChildren("PropertyName");
+		pxNodeSet->Reset();
+		while((pxNode=pxNodeSet->Next())!=NULL)
+		{
+			property_name = pxNode->GetContent();
+			ParseFieldName(property_name, field_name, AUGE_NAME_MAX);
+			m_pQuery->AddSubField(field_name);
+			
+		}
+		pxNodeSet->Release();
+
 		return true;
+	}
+
+	// world:name --> name
+	void GetFeatureRequest::ParseFieldName(const char* property_name, char* field_name, size_t size)
+	{
+		const char* ptr = strstr(property_name,":");
+		if(ptr)
+		{
+			g_snprintf(field_name,size,"%s", ptr+1);
+		}
+		else
+		{
+			g_snprintf(field_name,size,"%s", property_name);
+		}
 	}
 
 	const char*	GetFeatureRequest::GetServiceName()

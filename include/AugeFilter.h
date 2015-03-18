@@ -500,6 +500,7 @@ namespace auge
 		virtual ~FilterReader(){}
 	public:
 		virtual GFilter*			Read(XElement* pxFilter) = 0;
+		virtual void				Release() = 0;
 	};
 
 

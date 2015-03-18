@@ -184,37 +184,21 @@ namespace auge
 		GField 	*pField = NULL;
 		GFilter	*pFilter = (GFilter	*)pQuery->GetFilter();
 		GFields	*pFields = pFeatureClass->GetFields();
-		g_uint count = pQuery->GetSubFieldCount();
 		const char* fname  = NULL;
 
+		std::string fields;
+		if(pQuery->GetSubFieldCount())
+		{
+			BuildFields(fields, pQuery, pFeatureClass);
+		}
+		else
+		{
+			BuildFields(fields, pFeatureClass);
+		}
+	
 		bool first = true;
 		sql = "select ";
-		for(g_uint i=0; i<count; i++)
-		{
-			if(first)
-			{
-				first = false;
-			}
-			else
-			{
-				sql.append(",");
-			}
-
-			fname = pQuery->GetSubField(i);
-			pField = pFields->GetField(fname);
-
-			if(pField->GetType()==augeFieldTypeGeometry)
-			{
-				sql.append("st_asbinary(");
-				sql.append(fname);
-				sql.append(") as ");
-				sql.append(fname);
-			}
-			else
-			{
-				sql.append(fname);
-			}
-		}
+		sql.append(fields);
 		sql.append(" from ");
 		sql.append(pFeatureClass->GetName());
 
@@ -227,7 +211,7 @@ namespace auge
 		}
 
 		OrderBy* pOrderBy = pQuery->GetOrderBy();
-		if(pQuery!=NULL)
+		if(pOrderBy!=NULL)
 		{
 			int count = pOrderBy->GetFieldCount();
 			if(count>0)
@@ -243,6 +227,77 @@ namespace auge
 					sql.append(fname==NULL ? "" : fname);
 				}
 				sql.append(pOrderBy->IsAsc() ? " asc" : " desc");
+			}
+		}
+	}
+
+	void SQLBuilder::BuildFields(std::string& fields, FeatureClassPgs* pFeatureClass)
+	{
+		GField 	*pField = NULL;
+		GFields	*pFields = pFeatureClass->GetFields();
+		g_uint count = pFields->Count();
+		const char* fname  = NULL;
+
+		bool first = true;
+		for(g_uint i=0; i<count; i++)
+		{
+			if(first)
+			{
+				first = false;
+			}
+			else
+			{
+				fields.append(",");
+			}
+
+			pField = pFields->GetField(i);
+			fname = pField->GetName();
+			if(pField->GetType()==augeFieldTypeGeometry)
+			{
+				fields.append("st_asbinary(");
+				fields.append(fname);
+				fields.append(") as ");
+				fields.append(fname);
+			}
+			else
+			{
+				fields.append(fname);
+			}
+		}
+	}
+
+	void SQLBuilder::BuildFields(std::string& fields, GQuery* pQuery, FeatureClassPgs* pFeatureClass)
+	{	
+		const char* fname = NULL;
+		GField	*pField  = NULL;
+		GFields *pFields = pFeatureClass->GetFields();
+		int count = pQuery->GetSubFieldCount();
+
+		bool first = true;
+		for(g_uint i=0; i<count; i++)
+		{
+			if(first)
+			{
+				first = false;
+			}
+			else
+			{
+				fields.append(",");
+			}
+
+			fname = pQuery->GetSubField(i);
+			pField = pFields->GetField(fname);
+
+			if(pField->GetType()==augeFieldTypeGeometry)
+			{
+				fields.append("st_asbinary(");
+				fields.append(fname);
+				fields.append(") as ");
+				fields.append(fname);
+			}
+			else
+			{
+				fields.append(fname);
 			}
 		}
 	}

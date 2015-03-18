@@ -14,6 +14,7 @@ namespace auge
 		virtual ~FilterReaderImpl();
 	public:
 		virtual GFilter*	Read(XElement* pxFilter);
+		virtual void		Release();
 
 	private:
 		GFilter*			ReadFilter(XNode* pxFilter);
