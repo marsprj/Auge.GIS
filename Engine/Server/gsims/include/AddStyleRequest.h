@@ -36,6 +36,7 @@ namespace auge
 		void		SetType(const char* type);
 		const char*	GetType();
 
+		void		Info();
 		
 	private:
 		std::string m_version;

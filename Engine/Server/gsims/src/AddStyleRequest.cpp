@@ -114,4 +114,34 @@ namespace auge
 	{
 		return m_type.c_str();
 	}
+
+	void AddStyleRequest::Info()
+	{
+		GLogger* pLogger = augeGetLoggerInstance();
+		char str[AUGE_MSG_MAX];
+		const char* value = GetRequest();
+		pLogger->Debug("[Requet Parameters]");
+		g_sprintf(str,"\t%s:%s", "Request", (value==NULL)?"":value);
+		pLogger->Debug(str);
+		//value = GetUser();
+		//g_sprintf(str,"\t%s:%s", "User", (value==NULL)?"":value);
+		//pLogger->Debug(str);
+		g_sprintf(str,"\t%s:%s", "Service", "ims");
+		pLogger->Debug(str);
+		value = GetVersion();
+		g_sprintf(str,"\t%s:%s", "Version", (value==NULL)?"":value);
+		pLogger->Debug(str);
+
+		value = GetName();
+		g_sprintf(str,"\t%s:%s", "Name", (value==NULL)?"":value);
+		pLogger->Debug(str);
+
+		value = GetType();
+		g_sprintf(str,"\t%s:%s", "Type", (value==NULL)?"":value);
+		pLogger->Debug(str);
+
+		value = GetStyle();
+		g_sprintf(str,"\t%s:%s", "Style", (value==NULL)?"":value);
+		pLogger->Debug(str);
+	}
 }
