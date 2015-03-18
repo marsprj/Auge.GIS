@@ -33,6 +33,16 @@ namespace auge{
 		return augeStyleFeature;
 	}
 
+	augeGeometryType FeatureStyleImpl::GetGeometryType()
+	{
+		return m_geom_type;
+	}
+
+	void FeatureStyleImpl::SetGeometryType(augeGeometryType type)
+	{
+		m_geom_type = type;
+	}
+
 	const char*	FeatureStyleImpl::GetTitle()
 	{
 		return NULL;

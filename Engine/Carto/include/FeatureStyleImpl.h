@@ -30,6 +30,9 @@ namespace auge
 		virtual Rule*			GetRule(int i);
 		virtual bool			AddRule(Rule* pagRule);
 
+		virtual augeGeometryType GetGeometryType();
+		virtual void			SetGeometryType(augeGeometryType type);
+
 		virtual void			Release();
 
 	private:
@@ -38,6 +41,7 @@ namespace auge
 		std::string	m_name;
 		typedef std::vector<Rule*> RULE_VECTOR;
 		RULE_VECTOR m_rules;
+		augeGeometryType		m_geom_type;
 	};
 
 

@@ -67,6 +67,9 @@ namespace auge
 			XDocument	*pxDoc = new XDocument();
 			XElement	*pxRoot = pxDoc->CreateRootNode("Styles", NULL, NULL);
 
+			GeometryFactory* pGeometryFactory = NULL;
+			pGeometryFactory = augeGetGeometryFactoryInstance();
+
 			char str[AUGE_MSG_MAX];
 			Style* pStyle = NULL;
 			GLogger* pLogger = augeGetLoggerInstance();
@@ -79,7 +82,16 @@ namespace auge
 					g_sprintf(str, "%d", pStyle->GetID());
 					pxStyle->SetAttribute("id",str, NULL);
 					pxStyle->SetAttribute("name",pStyle->GetName(), NULL);
-					pxStyle->SetAttribute("type","Point", NULL);
+					switch(pStyle->GetType())
+					{
+					case augeStyleFeature:
+						{
+							FeatureStyle* pFStyle = static_cast<FeatureStyle*>(pStyle);
+							pxStyle->SetAttribute("type",pGeometryFactory->Encode(pFStyle->GetGeometryType()), NULL);
+						}
+						break;
+					}
+					
 
 				}
 			}			

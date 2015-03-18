@@ -54,7 +54,7 @@ namespace auge
 			AUGE_RUDE_CGI;
 
 //			printf("Content-type: text/html\r\n"
-//				"\r\n"
+//				"\r\n" 
 //				"%d",m_counter++);
 
 			pLogger->Info("--------------------------------------------------------");

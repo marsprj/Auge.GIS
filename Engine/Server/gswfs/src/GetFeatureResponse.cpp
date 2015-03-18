@@ -185,11 +185,11 @@ namespace auge
 		}
 		
 
-		int len = 0;
+		int len = 0; 
 		g_uchar* buffer = NULL;
 		pxDoc->WriteToString(&buffer, len,m_encoding.c_str(),1);
 
-		pWriter->WriteHead(m_pRequest->GetMimeType());
+		pWriter->WriteHead(m_pRequest->GetMimeType(),false);
 		pWriter->Write(buffer, len);
 		pWriter->WriteTail();
 		pxDoc->Release();

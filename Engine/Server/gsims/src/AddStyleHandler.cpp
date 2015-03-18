@@ -51,7 +51,25 @@ namespace auge
 
 		const char* name = pRequest->GetName();
 		const char* text = pRequest->GetStyle();
-		RESULTCODE rc = pCartoManager->CreateStyle(name, text);
+		const char* type = pRequest->GetType();
+		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+		augeGeometryType gtype = pGeometryFactory->DecodeGeometryType(type);
+		if(gtype==augeGTNull)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Ivalid Type [%s].", type);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg,__FILE__,__LINE__);
+
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		RESULTCODE rc = pCartoManager->CreateStyle(name, text, gtype);
 		if(rc>0)
 		{
 			WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();

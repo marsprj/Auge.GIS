@@ -538,7 +538,7 @@ namespace auge
 	EnumStyle* CartoManagerImpl::GetStyles()
 	{
 		GResultSet* pResult = NULL;
-		const char* sql = "select gid, s_name,s_text from g_style";
+		const char* sql = "select gid, s_name,s_text,s_type from g_style";
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -554,13 +554,33 @@ namespace auge
 			g_int id = pResult->GetInt(i,0);
 			const char* name = pResult->GetString(i,1);
 			const char* text = pResult->GetString(i,2);
+			const char* type = pResult->GetString(i,3);
 
 			pStyle = reader.Read(text, strlen(text));		
-			if(pStyle!=NULL)
+			if(pStyle==NULL)
 			{
-				pStyle->SetID(id);
-				pStyle->SetName(name);
-				pEnums->Add(pStyle);
+				GLogger* pLogger = augeGetLoggerInstance();
+				pLogger->Error("Bad Style XML Document");
+				pLogger->Debug(text);
+				continue;
+			}
+			pStyle->SetID(id);
+			pStyle->SetName(name);
+			pEnums->Add(pStyle);
+		
+			switch(pStyle->GetType())
+			{
+			case augeStyleFeature:
+				{
+					GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+					augeGeometryType gtype = pGeometryFactory->DecodeGeometryType(type);
+
+					FeatureStyle* pFStyle = static_cast<FeatureStyle*>(pStyle);
+					pFStyle->SetGeometryType(gtype);
+				}
+				break;
+			case augeStyleRaster:
+				break;
 			}
 		}
 		pResult->Release();
@@ -572,7 +592,7 @@ namespace auge
 	{	
 		GResultSet* pResult = NULL;
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX,"select s_name,s_text from g_style where gid=%d", id);
+		g_snprintf(sql, AUGE_SQL_MAX,"select s_name,s_text,s_type from g_style where gid=%d", id);
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -584,6 +604,7 @@ namespace auge
 		}
 		const char* name = pResult->GetString(0,0);
 		const char* text = pResult->GetString(0,1);
+		const char* type = pResult->GetString(0,2);
 
 		Style* pStyle = NULL;
 		StyleReaderImpl reader;
@@ -593,6 +614,21 @@ namespace auge
 		{
 			pStyle->SetID(id);
 			pStyle->SetName(name);
+
+			switch(pStyle->GetType())
+			{
+			case augeStyleFeature:
+				{
+					GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+					augeGeometryType gtype = pGeometryFactory->DecodeGeometryType(type);
+
+					FeatureStyle* pFStyle = static_cast<FeatureStyle*>(pStyle);
+					pFStyle->SetGeometryType(gtype);
+				}
+				break;
+			case augeStyleRaster:
+				break;
+			}
 		}
 		pResult->Release();
 		
@@ -608,7 +644,7 @@ namespace auge
 
 		GResultSet* pResult = NULL;
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX,"select gid,s_text from g_style where s_name='%s'", name);
+		g_snprintf(sql, AUGE_SQL_MAX,"select gid,s_text,s_type from g_style where s_name='%s'", name);
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -620,6 +656,7 @@ namespace auge
 		}
 		g_uint id = pResult->GetInt(0,0);
 		const char* text = pResult->GetString(0,1);
+		const char* type = pResult->GetString(0,2);
 
 		Style* pStyle = NULL;
 		StyleReaderImpl reader;
@@ -630,6 +667,21 @@ namespace auge
 		{
 			pStyle->SetID(id);
 			pStyle->SetName(name);
+
+			switch(pStyle->GetType())
+			{
+			case augeStyleFeature:
+				{
+					GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+					augeGeometryType gtype = pGeometryFactory->DecodeGeometryType(type);
+
+					FeatureStyle* pFStyle = static_cast<FeatureStyle*>(pStyle);
+					pFStyle->SetGeometryType(gtype);
+				}
+				break;
+			case augeStyleRaster:
+				break;
+			}
 		}
 
 		return pStyle;
@@ -643,7 +695,7 @@ namespace auge
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
-			return NULL;
+			return NULL; 
 		}
 		if(!pResult->GetCount())
 		{
@@ -682,7 +734,7 @@ namespace auge
 		return result;
 	}
 
-	g_int CartoManagerImpl::CreateStyle(const char* name, Style* pStyle)
+	g_int CartoManagerImpl::CreateStyle(const char* name, Style* pStyle, augeGeometryType type)
 	{
 		if(name==NULL||pStyle==NULL)
 		{
@@ -723,12 +775,17 @@ namespace auge
 			pxDoc->Release();
 			return rc;
 		}
+		 
+		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+		const char* gtype = pGeometryFactory->Encode(type);
 
 		std::string sql;
-		sql.append("insert into g_style (s_name, s_text) values('");
+		sql.append("insert into g_style (s_name, s_text,s_type) values('");
 		sql.append(name);
 		sql.append("','");
 		sql.append((char*)buffer);
+		sql.append("','");
+		sql.append(gtype);
 		sql.append("') returning gid");
 		
 		GResultSet* pResult = NULL;
@@ -747,7 +804,7 @@ namespace auge
 		return gid;
 	}
 
-	RESULTCODE CartoManagerImpl::CreateStyle(const char* name, const char* text)
+	RESULTCODE CartoManagerImpl::CreateStyle(const char* name, const char* text, augeGeometryType type)
 	{
 		if(name==NULL||text==NULL)
 		{
@@ -770,11 +827,16 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+		const char* gtype = pGeometryFactory->Encode(type);
+
 		std::string sql;
-		sql.append("insert into g_style (s_name, s_text) values('");
+		sql.append("insert into g_style (s_name, s_text, s_type) values('");
 		sql.append(name);
 		sql.append("','");
 		sql.append((char*)text);
+		sql.append("','");
+		sql.append(gtype);
 		sql.append("') returning gid");
 
 		GResultSet* pResult = NULL;
@@ -967,7 +1029,8 @@ namespace auge
 		const char* sql =   "CREATE TABLE g_style (" \
 			"	gid serial NOT NULL," \
 			"	s_name character varying(32) NOT NULL," \
-			"	s_text text," \
+			"	s_text text NOT NULL," \
+			"	s_type character varying(16) NOT NULL," \
 			"	version integer DEFAULT 1," \
 			"   CONSTRAINT g_style_pkey PRIMARY KEY (gid)" \
 			")";

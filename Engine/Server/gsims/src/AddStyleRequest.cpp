@@ -17,7 +17,7 @@ namespace auge
 	{
 		SetVersion(cgi["version"]);
 		SetName(cgi["name"]);
-		SetStyle(cgi["type"]);
+		SetType(cgi["type"]);
 		SetStyle(cgi["style"]);
 		return true;
 	}
@@ -141,7 +141,15 @@ namespace auge
 		pLogger->Debug(str);
 
 		value = GetStyle();
-		g_sprintf(str,"\t%s:%s", "Style", (value==NULL)?"":value);
-		pLogger->Debug(str);
+		if(value==NULL)
+		{
+			g_sprintf(str,"\tStyle:");
+			pLogger->Debug(str);
+		}
+		else
+		{
+			pLogger->Debug(value);
+		}
+		
 	}
 }

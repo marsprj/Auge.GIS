@@ -41,14 +41,22 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE WebWriterImpl::WriteHead(const char* content_type)
+	RESULTCODE WebWriterImpl::WriteHead(const char* content_type, bool gzip/*=false*/)
 	{
 		if(content_type==NULL)
 		{
 			return AG_FAILURE;
 		}
 
-		printf("Content-Type: %s \r\n" "\r\n", content_type);
+		//printf("Content-Type: %s \r\n" "\r\n", content_type);
+		printf("Content-Type: %s \r\n", content_type);
+
+		if(gzip)
+		{
+			printf("Content-Encoding:gzip \r\n");
+		}
+
+		printf("\r\n");
 
 		return AG_SUCCESS;
 	}

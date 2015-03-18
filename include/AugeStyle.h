@@ -113,9 +113,9 @@ namespace auge
 		Style(){}
 		virtual ~Style(){}
 	public:
-		virtual const char*		GetName() = 0;
-		virtual void			SetName(const char* name) = 0;
-		virtual augeStyleType	GetType() = 0;
+		virtual const char*		 GetName() = 0;
+		virtual void			 SetName(const char* name) = 0;
+		virtual augeStyleType	 GetType() = 0;		
 	};
 
 	class FeatureStyle : public Style
@@ -127,6 +127,8 @@ namespace auge
 		virtual int				GetRuleCount() = 0;
 		virtual Rule*			GetRule(int i) = 0;
 		virtual bool			AddRule(Rule* pRule) = 0;
+		virtual augeGeometryType GetGeometryType() = 0;
+		virtual void			SetGeometryType(augeGeometryType type) = 0;
 	};
 
 	class RasterStyle : public Style
