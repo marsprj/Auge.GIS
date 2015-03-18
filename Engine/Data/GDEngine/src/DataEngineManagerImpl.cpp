@@ -188,11 +188,11 @@ namespace auge
 		auge_get_cwd(cdir, AUGE_PATH_MAX);
 
 #ifdef WIN32
-		auge_make_path(path, NULL, cdir, "conf\\data_engine", "xml");
+		auge_make_path(path, NULL, cdir, "conf\\DataEngine", "xml");
 #else
 		char pdir[AUGE_PATH_MAX] = {0};
 		auge_get_parent_dir(cdir, pdir, AUGE_PATH_MAX);
-		auge_make_path(path, NULL, pdir, "conf/data_engine", "xml");
+		auge_make_path(path, NULL, pdir, "conf/DataEngine", "xml");
 #endif
 		m_path = path;
 	}

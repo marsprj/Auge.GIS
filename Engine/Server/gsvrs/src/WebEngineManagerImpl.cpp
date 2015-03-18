@@ -261,11 +261,11 @@ namespace auge
 		auge_get_cwd(cdir, AUGE_PATH_MAX);
 
 #ifdef WIN32
-		auge_make_path(path, NULL, cdir, "conf\\web_engine", "xml");
+		auge_make_path(path, NULL, cdir, "conf\\WebEngine", "xml");
 #else
 		char pdir[AUGE_PATH_MAX] = {0};
 		auge_get_parent_dir(cdir, pdir, AUGE_PATH_MAX);
-		auge_make_path(path, NULL, pdir, "conf/web_engine", "xml");
+		auge_make_path(path, NULL, pdir, "conf/WebEngine", "xml");
 #endif
 		m_path = path;
 	}
