@@ -754,6 +754,13 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		if(!IsValiad(text))
+		{
+			GError* pError = augeGetErrorInstance();
+			pError->SetError("Invalid style xml document");
+			return AG_FAILURE;
+		}
+
 		if(HasStyle(name))
 		{
 			char msg[AUGE_MSG_MAX];
@@ -885,6 +892,18 @@ namespace auge
 		pResult->Release();
 
 		return styleID;
+	}
+
+	bool CartoManagerImpl::IsValiad(const char* text)
+	{
+		XParser parser;
+		XDocument* pxDoc = parser.ParseMemory(text);
+		if(pxDoc==NULL)
+		{
+			return false;
+		}
+		pxDoc->Release();
+		return true;
 	}
 
 	//////////////////////////////////////////////////////////////////////////

@@ -30,8 +30,9 @@ namespace auge
 			GLogger* pLogger = augeGetLoggerInstance();
 			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
 			pRequest->Release();
-			pRequest = NULL;
+			return NULL;
 		}
+		pRequest->Info();
 		return pRequest;
 	}
 
