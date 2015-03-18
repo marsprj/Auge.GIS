@@ -49,27 +49,27 @@ void StyleTest::CreateSLD()
 	
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_4.xml");
 	pStyle = LoadSLD("/home/renyc/code/auge.gis/Engine/Carto/sld/point_user_4.xml");
-	id = pCartoManager->CreateStyle("point", pStyle);
+	id = pCartoManager->CreateStyle("point", pStyle,auge::augeGTPoint);
 	printf("[Style ID]:%d\n", id);
 
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\cities_label.xml");
 	pStyle = LoadSLD("/home/renyc/code/auge.gis/Engine/Carto/sld/cities_label.xml");
-	id = pCartoManager->CreateStyle("cities_label", pStyle);
+	id = pCartoManager->CreateStyle("cities_label", pStyle, auge::augeGTPoint);
 	printf("[Style ID]:%d\n", id);
 
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line.xml");
 	pStyle = LoadSLD("/home/renyc/code/auge.gis/Engine/Carto/sld/line.xml");
-	id = pCartoManager->CreateStyle("line", pStyle);
+	id = pCartoManager->CreateStyle("line", pStyle, auge::augeGTLineString);
 	printf("[Style ID]:%d\n", id);
 
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_2.xml");
 	pStyle = LoadSLD("/home/renyc/code/auge.gis/Engine/Carto/sld/polygon_2.xml");
-	id = pCartoManager->CreateStyle("polygon", pStyle);
+	id = pCartoManager->CreateStyle("polygon", pStyle, auge::augeGTPolygon);
 	printf("[Style ID]:%d\n", id);
 
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_red.xml");
 	pStyle = LoadSLD("/home/renyc/code/auge.gis/Engine/Carto/sld/polygon_red.xml");
-	id = pCartoManager->CreateStyle("polygon_red", pStyle);
+	id = pCartoManager->CreateStyle("polygon_red", pStyle, auge::augeGTPolygon);
 	printf("[Style ID]:%d\n", id);
 
 	pStyle->Release();
