@@ -50,6 +50,7 @@ namespace auge
 [ HTTP Get ]
 -------------------------------------------------------------------------
 service=ims&version=1.0.0&request=RegisterDataSource&name=db221&engine=Postgres&uri=server=127.0.0.1;instance=5432;database=gisdb;user=postgres;password=qwer1234;encoding=GBK
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterDataSource&name=db221&engine=Postgres&uri=server=127.0.0.1;instance=5432;database=gisdb;user=postgres;password=qwer1234;encoding=GBK
 
 [ HTTP Post ]
 -------------------------------------------------------------------------

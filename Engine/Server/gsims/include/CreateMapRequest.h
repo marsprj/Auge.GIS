@@ -51,6 +51,7 @@ namespace auge
 [ HTTP Get ]
 -------------------------------------------------------------------------
 service=ims&version=1.0.0&request=CreateMap&name=world&extent=-180,-90,180,90&srid=4326
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=CreateMap&name=world&extent=-180,-90,180,90&srid=4326
 
 [ HTTP Post ]
 -------------------------------------------------------------------------

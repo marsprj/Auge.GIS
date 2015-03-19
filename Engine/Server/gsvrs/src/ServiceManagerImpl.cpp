@@ -107,6 +107,45 @@ namespace auge
 		return pService;
 	}
 
+	g_int ServiceManagerImpl::GetServiceID(const char* szName)
+	{
+		if(szName==NULL||m_pConnection==NULL)
+		{
+			GLogger	*pLogger = augeGetLoggerInstance();
+			pLogger->Error("Service Name is NULL", __FILE__, __LINE__);
+
+			return -1;
+		}
+
+		char sql[AUGE_SQL_MAX] = {0};
+		//g_sprintf(sql, "select s.gid, m.m_name, s.version, s.state from g_service s, g_map m where s.name='%s' and s.m_id=m.gid", szName);
+		g_sprintf(sql, "select gid from g_service where s_name='%s'", szName);
+
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return -1;
+		}
+
+		if(!pResult->GetCount())
+		{
+			char msg[AUGE_MSG_MAX] = {0};
+			g_sprintf(msg, "Service [%s] not registered.", szName);
+			GError	*pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			GLogger	*pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			pResult->Release();
+			return NULL; 
+		}
+
+		g_uint s_id = pResult->GetInt(0,0);
+		pResult->Release();
+		return s_id;
+	}
+
 	EnumService* ServiceManagerImpl::GetServices()
 	{
 		EnumServiceImpl* pServices = new EnumServiceImpl();

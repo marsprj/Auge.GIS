@@ -201,6 +201,18 @@ namespace auge
 
 	WebResponse* WFeatureEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
 	{
+		if(pMap==NULL)
+		{
+			GLogger* pLogger = augeGetLoggerInstance();
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Empty Service");
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+			pExpResopnse->SetMessage(msg);
+			return pExpResopnse;
+		}
+
 		WebResponse	*pWebResponse = NULL;
 
 		const char* request = pWebRequest->GetRequest();

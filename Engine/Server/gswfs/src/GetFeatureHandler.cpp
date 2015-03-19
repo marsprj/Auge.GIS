@@ -64,16 +64,16 @@ namespace auge
 		GLogger *pLogger = augeGetLoggerInstance();
 		typeName = pRequest->GetTypeName();
 
-		if(pMap==NULL)
-		{
-			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "FeatureType [%s] doesn't exist.",typeName);
-			pLogger->Error(msg, __FILE__, __LINE__);
+		//if(pMap==NULL)
+		//{
+		//	char msg[AUGE_MSG_MAX];
+		//	g_sprintf(msg, "FeatureType [%s] doesn't exist.",typeName);
+		//	pLogger->Error(msg, __FILE__, __LINE__);
 
-			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
-			pExpResopnse->SetMessage(msg);
-			return pExpResopnse;
-		}
+		//	WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+		//	pExpResopnse->SetMessage(msg);
+		//	return pExpResopnse;
+		//}
 
 		pLayer = pMap->GetLayer(typeName);
 		if(pLayer==NULL)

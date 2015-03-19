@@ -1,5 +1,5 @@
-#ifndef __AUGE_IMS_LAYER_SETSTYLE_REQUEST_H__
-#define __AUGE_IMS_LAYER_SETSTYLE_REQUEST_H__
+#ifndef __AUGE_IMS_REGISTER_MAP_REQUEST_H__
+#define __AUGE_IMS_REGISTER_MAP_REQUEST_H__
 
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
@@ -10,11 +10,11 @@
 
 namespace auge
 {
-	class SetStyleRequest : public WebRequest
+	class RegisterMapRequest : public WebRequest
 	{
 	public:
-		SetStyleRequest();
-		virtual ~SetStyleRequest();
+		RegisterMapRequest();
+		virtual ~RegisterMapRequest();
 
 	public:
 		virtual const char*		GetEngine();
@@ -26,42 +26,39 @@ namespace auge
 		bool		Create(rude::CGI& cgi);
 
 		const char*	GetName();
+		const char*	GetServiceName();
 		const char*	GetMapName();
-		const char* GetLayerName();
-		const char* GetStyleName();
 
 		void		SetVersion(const char* value);
-		void		SetMapName(const char* mapName);
-		void		SetLayerName(const char* layerName);
-		void		SetStyleName(const char* styleName);
+		void		SetServiceName(const char* name);
+		void		SetMapName(const char* name);
 
 	private:
 		std::string m_version;
 		std::string m_mime_type;
+		std::string m_servcie_name;
 		std::string m_map_name;
-		std::string m_layer_name;
-		std::string m_style_name;
 	};
 }
 
-#endif //__AUGE_IMS_LAYER_SETSTYLE_REQUEST_H__
+#endif //__AUGE_IMS_REGISTER_MAP_REQUEST_H__
 
 /************************************************************************
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-service=ims&version=1.0.0&request=SetStyle&map=world&&layer=cities2222&style=line
-http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=SetStyle&map=world&&layer=cities&style=point
+service=ims&version=1.0.0&request=RegisterMap&serviceName=world&mapName=world
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterMap&serviceName=world&mapName=world
 
 [ HTP Post ]
 -------------------------------------------------------------------------
 //<?xml version="1.0"?>
-//<SetStyle>
+//<RegisterMap>
 //	<ServiceName>world</ServiceName>
 //	<Handlers>
 //		<Handler name="wms"/>
 //		<Handler name="wfs"/>
 //	</Handlers>
-//</SetStyle>
+//</RegisterMap>
 
 ************************************************************************/

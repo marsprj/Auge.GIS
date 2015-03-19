@@ -53,7 +53,8 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=db221&layerName=cities&tableName=cities
+service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=db1&layerName=cities&tableName=cities
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=db1&layerName=cities&tableName=cities
 
 [ HTP Post ]
 -------------------------------------------------------------------------

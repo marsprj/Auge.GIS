@@ -20,6 +20,8 @@
 #include "UpdateStyleHandler.h"
 #include "RemoveStyleHandler.h"
 
+#include "RegisterMapHandler.h"
+
 #include "AugeCore.h"
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
@@ -56,6 +58,8 @@ namespace auge
 		m_handlers.push_back(new AddStyleHandler());
 		m_handlers.push_back(new UpdateStyleHandler());
 		m_handlers.push_back(new RemoveStyleHandler());
+
+		m_handlers.push_back(new RegisterMapHandler());
 		
 	}
 

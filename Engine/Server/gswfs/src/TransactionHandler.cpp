@@ -61,16 +61,16 @@ namespace auge
 	{
 		GLogger *pLogger = augeGetLoggerInstance();
 
-		if(pMap==NULL)
-		{
-			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "Service is empty");
-			pLogger->Error(msg, __FILE__, __LINE__);
+		//if(pMap==NULL)
+		//{
+		//	char msg[AUGE_MSG_MAX];
+		//	g_sprintf(msg, "Service is empty");
+		//	pLogger->Error(msg, __FILE__, __LINE__);
 
-			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
-			pExpResopnse->SetMessage(msg);
-			return pExpResopnse;
-		}
+		//	WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+		//	pExpResopnse->SetMessage(msg);
+		//	return pExpResopnse;
+		//}
 
 		TransactionRequest* pRequest = static_cast<TransactionRequest*>(pWebRequest);
 
