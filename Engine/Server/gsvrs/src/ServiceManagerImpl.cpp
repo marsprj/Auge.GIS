@@ -207,6 +207,28 @@ namespace auge
 		return pService;
 	}
 
+	bool ServiceManagerImpl::Has(const char* szName)
+	{
+		if(szName==NULL)
+		{
+			return false;
+		}
+
+		char sql[AUGE_SQL_MAX] = {0};
+		g_sprintf(sql, "select count(*) from g_service where s_name='%s'", szName);
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return false;
+		}
+		
+		int count = pResult->GetInt(0,0);
+		pResult->Release();
+		
+		return count;
+	}
+
 	RESULTCODE ServiceManagerImpl::Register(const char* szName, const char* szURI)
 	{
 		if(m_pConnection==NULL||szName==NULL||szURI==NULL)
@@ -228,7 +250,11 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX] = {0};
 		g_sprintf(sql, "delete from g_service where s_name='%s'", szName); 
-		return (m_pConnection->ExecuteSQL(sql));
+		RESULTCODE rc = m_pConnection->ExecuteSQL(sql);
+
+		Remove(szName);
+
+		return rc;
 	}
 
 	RESULTCODE ServiceManagerImpl::RegisterMap(g_uint s_id, g_uint m_id)
@@ -239,7 +265,9 @@ namespace auge
 		}
 		char sql[AUGE_SQL_MAX] = {0};
 		g_sprintf(sql, "update g_service set m_id=%d where gid=%d", m_id,s_id);
-		return (m_pConnection->ExecuteSQL(sql)==AG_SUCCESS);
+		RESULTCODE rc = m_pConnection->ExecuteSQL(sql);
+		
+		return rc;
 	}
 
 	void ServiceManagerImpl::Cleanup()
@@ -260,4 +288,24 @@ namespace auge
 		return (m_pConnection->ExecuteSQL(sql)==AG_SUCCESS);
 	}
 
+	RESULTCODE ServiceManagerImpl::Remove(const char* szName)
+	{
+		if(szName==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		Service* pService = NULL;
+		std::vector<Service*>::iterator iter;
+		for(iter=m_services.begin(); iter!=m_services.end(); iter++)
+		{
+			pService = *iter;
+			if(!strcmp(pService->GetName(), szName))
+			{
+				m_services.erase(iter);
+			}
+		}
+
+		return AG_SUCCESS;
+	}
 }

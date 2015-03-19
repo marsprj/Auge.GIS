@@ -64,6 +64,37 @@ namespace auge
 		float		m_r, m_g, m_b, m_a;
 	};
 
+	class AUGE_API GSize
+	{
+	public:
+		GSize()
+		{
+			m_width  = 0;
+			m_height = 0;
+		}
+		GSize(g_uint w, g_uint h)
+		{
+			m_width  = w;
+			m_height = h;
+		}
+		void Set(g_uint w, g_uint h)
+		{
+			m_width  = w;
+			m_height = h;
+		}
+		g_uint Width()
+		{
+			return m_width;
+		}
+		g_uint Height()
+		{
+			return m_height;
+		}
+	private:
+		g_uint	m_width;
+		g_uint	m_height;
+	};
+
 	class AUGE_API GPropertySet
 	{
 	public:

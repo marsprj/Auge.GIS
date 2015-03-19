@@ -377,6 +377,36 @@ namespace auge
 		{
 			return NULL;
 		}
+
+		if(HasLayer(name, map_id))
+		{
+			char msg[AUGE_MSG_MAX] = {0};
+			g_sprintf(msg, "Layer [%s] already exists.", name);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return NULL;
+		}
+
+		Layer* pLayer = NULL;
+		switch(type)
+		{
+		case augeLayerFeature:
+			{
+				pLayer = CreateFeatureLayer(name, f_name, source_id);
+			}
+			break;
+		case augeLayerRaster:
+			break;
+		}
+		
+		if(pLayer==NULL)
+		{
+			return NULL;
+		}
+
+
 		char sql[AUGE_SQL_MAX] = {0};
 		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_layer (l_name,l_type,f_name,m_id,d_id,s_id) values('%s',%d,'%s',%d,%d,%d) returning gid", name, type, f_name, map_id, source_id,style_id);
 		
@@ -389,23 +419,8 @@ namespace auge
 		int gid = pResult->GetInt(0,0);
 		pResult->Release();
 
-		Layer* pLayer = NULL;
+		pLayer->SetID(gid);
 		
-		switch(type)
-		{
-		case augeLayerFeature:
-			{
-				pLayer = CreateFeatureLayer(name, f_name, source_id);
-			}
-			break;
-		case augeLayerRaster:
-			break;
-		}
-		if(pLayer!=NULL)
-		{
-			pLayer->SetID(gid);
-		}
-
 		return pLayer;
 	}
 
@@ -432,15 +447,35 @@ namespace auge
 		{
 			return -1;
 		}
-		if(!pResult->GetCount())
+		if(pResult->GetCount())
 		{
-			return -1;
+			layer_id = pResult->GetInt(0,0);
 		}
-
-		layer_id = pResult->GetInt(0,0);
 		pResult->Release();
 
 		return layer_id;
+	}
+
+	bool CartoManagerImpl::HasLayer(const char* layerName, int mapID)
+	{
+		if(layerName==NULL)
+		{
+			return false;
+		}
+		
+		g_int layer_id = -1;
+		char sql[AUGE_SQL_MAX] = {0};
+		g_sprintf(sql, "select gid from g_layer where m_id=%d and l_name='%s'", mapID, layerName);
+
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return -1;
+		}
+		bool has = pResult->GetCount();
+		pResult->Release();
+		return has;
 	}
 
 	FeatureLayer* CartoManagerImpl::CreateFeatureLayer(const char* name, const char* f_name, g_uint source_id)
@@ -474,26 +509,33 @@ namespace auge
 	{
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
 
-		FeatureLayer* pFLayer = pCartoFactory->CreateFeatureLayer();
-		pFLayer->SetName(name);
-		pFLayer->SetID(id);
-		pFLayer->SetVersion(version);
-		pFLayer->SetVisiable(visible);
-
 		FeatureWorksapce* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
 		pWorkspace = static_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
-		if(pWorkspace!=NULL)
+		if(pWorkspace==NULL)
 		{
-			FeatureClass* pFeatureClass = NULL;
-			pFeatureClass = pWorkspace->OpenFeatureClass(f_name);
-			if(pFeatureClass!=NULL)
-			{
-				pFLayer->SetFeatureClass(pFeatureClass);
-			}
+			return NULL;
 		}
-
+		FeatureClass* pFeatureClass = NULL;
+		pFeatureClass = pWorkspace->OpenFeatureClass(f_name);
+		if(pFeatureClass==NULL)
+		{
+			return NULL;
+		}
+		
+		FeatureLayer* pFLayer = pCartoFactory->CreateFeatureLayer();
+		if(pFLayer==NULL)
+		{
+			pFeatureClass->Release();
+			return NULL;
+		}
+		pFLayer->SetName(name);
+		pFLayer->SetID(id);
+		pFLayer->SetVersion(version);
+		pFLayer->SetVisiable(visible);
+		pFLayer->SetFeatureClass(pFeatureClass);
+		
 		return pFLayer;
 	}
 

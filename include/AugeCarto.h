@@ -239,10 +239,34 @@ namespace auge
 		virtual Canvas*			CreateCanvas2D(g_uint width, g_uint height) = 0;
 	};
 
+
+	class GSymbol : public GObject
+	{
+	protected:
+		GSymbol(){}
+		virtual ~GSymbol(){}
+	public:
+		virtual g_uint			GetWidth() = 0;
+		virtual g_uint			GetHeight() = 0;
+
+		virtual void			Release() = 0;
+	};
+
+	class SymbolManager
+	{
+	protected:
+		SymbolManager(){}
+		virtual ~SymbolManager(){}
+
+	public:
+		virtual GSymbol*		GetSymbol(g_uint id) = 0;
+	};
+
 	extern "C"
 	{
 		AUGE_CARTO_API CartoFactory*	augeGetCartoFactoryInstance();
 		AUGE_CARTO_API CartoManager*	augeGetCartoManagerInstance();
+		AUGE_CARTO_API SymbolManager*	augeGetSymbolManagerInstance();
 	}
 }
 

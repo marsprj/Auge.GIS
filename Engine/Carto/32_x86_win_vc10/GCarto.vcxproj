@@ -115,6 +115,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\StyleReader_1_0_0.h" />
     <ClInclude Include="..\include\StyleWriterImpl.h" />
     <ClInclude Include="..\include\StyleWriter_1_0_0.h" />
+    <ClInclude Include="..\include\SymbolGeometry.h" />
+    <ClInclude Include="..\include\SymbolManagerImpl.h" />
     <ClInclude Include="..\include\TextSymbolizerImpl.h" />
     <ClInclude Include="..\include\TransformImpl.h" />
   </ItemGroup>
@@ -144,6 +146,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\StyleReader_1_0_0.cpp" />
     <ClCompile Include="..\src\StyleWriterImpl.cpp" />
     <ClCompile Include="..\src\StyleWriter_1_0_0.cpp" />
+    <ClCompile Include="..\src\SymbolGeometry.cpp" />
+    <ClCompile Include="..\src\SymbolManagerImpl.cpp" />
     <ClCompile Include="..\src\TextSymbolizerImpl.cpp" />
     <ClCompile Include="..\src\TransformImpl.cpp" />
   </ItemGroup>

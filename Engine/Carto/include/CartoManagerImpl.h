@@ -51,6 +51,7 @@ namespace auge
 	private:
 		Layer*					CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, g_int source_id, g_int version, bool visible);
 		FeatureLayer*			CreateFeatureLayer(const char* name, const char* f_name,g_uint source_id);
+		bool					HasLayer(const char* layerName, int mapID);
 
 		bool					IsValiad(const char* text);
 

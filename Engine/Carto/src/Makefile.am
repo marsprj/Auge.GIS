@@ -40,4 +40,6 @@ libgcarto_la_SOURCES=\
 		StyleWriterImpl.cpp \
 		TextSymbolizerImpl.cpp \
 		TransformImpl.cpp \
-		EnumStyleImpl.cpp
+		EnumStyleImpl.cpp \
+		SymbolGeometry.cpp \
+		SymbolManagerImpl.cpp

@@ -46,7 +46,7 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-user=user1&service=ims&version=1.0.0&request=CreateService&name=world
+user=user1&service=ims&version=1.0.0&request=CreateService&name=world&uri=http://www.radi.ac.cn/world
 
 [ HTTP Post ]
 -------------------------------------------------------------------------
