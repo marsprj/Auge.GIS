@@ -341,6 +341,14 @@ namespace auge
 
 		if(PQntuples(pgResult)==0)
 		{
+			char msg[AUGE_MSG_MAX];
+			g_snprintf(msg, AUGE_MSG_MAX, "FeatureClass [%s] doesn't exist.", m_name.c_str());
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg,__FILE__, __LINE__);
+
 			PQclear(pgResult);
 			return false;
 		}
