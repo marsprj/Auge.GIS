@@ -79,7 +79,7 @@ namespace auge
 				pWebResponse = pExpResponse;
 			}
 			else
-			{
+			{	
 				switch(GetMethod())
 				{
 				case augeHttpGet:
@@ -120,7 +120,6 @@ namespace auge
 			return pWebResponse;
 		}
 
-		
 		pWebRequest = pWebEngine->ParseRequest(cgi, pService->GetWebContext(), pService->GetMap());
 		if(pWebRequest==NULL)
 		{

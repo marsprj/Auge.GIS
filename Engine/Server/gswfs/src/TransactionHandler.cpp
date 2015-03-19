@@ -59,11 +59,24 @@ namespace auge
 
 	WebResponse* TransactionHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
 	{
+		GLogger *pLogger = augeGetLoggerInstance();
+
+		if(pMap==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Service is empty");
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+			pExpResopnse->SetMessage(msg);
+			return pExpResopnse;
+		}
+
 		TransactionRequest* pRequest = static_cast<TransactionRequest*>(pWebRequest);
 
 		const char* typeName = NULL;
 		Layer* pLayer = NULL;
-		GLogger *pLogger = augeGetLoggerInstance();
+		
 
 		XDocument* pxDoc = NULL;
 		pxDoc = pRequest->GetXmlDoc();
