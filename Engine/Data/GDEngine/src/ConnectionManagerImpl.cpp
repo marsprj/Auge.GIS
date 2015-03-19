@@ -169,7 +169,7 @@ namespace auge
 			if(pResultSet!=NULL)
 			{
 				Workspace* pWorkspace = NULL;
-				int gid = NULL;
+				int gid = -1;
 				const char* name= NULL;
 				const char* engn=NULL;
 				const char* uri = NULL;

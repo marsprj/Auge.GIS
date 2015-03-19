@@ -1,5 +1,5 @@
 #include "WebSuccessResponseImpl.h"
-#include <stdio.h>s
+#include <stdio.h>
 
 namespace auge
 {
