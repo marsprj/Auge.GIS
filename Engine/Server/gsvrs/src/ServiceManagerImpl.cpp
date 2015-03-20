@@ -138,7 +138,7 @@ namespace auge
 			pLogger->Error(msg, __FILE__, __LINE__);
 
 			pResult->Release();
-			return NULL; 
+			return -1; 
 		}
 
 		g_uint s_id = pResult->GetInt(0,0);

@@ -66,6 +66,7 @@ namespace auge
 		xmlDocDumpMemory(m_pxDoc, (xmlChar**)&pmem, &size);
 		printf("%s\n", pmem);
 		int ret = xmlSaveFormatFileEnc(szPath, m_pxDoc, szEncoding, format);
+		xmlFree(pmem);
 		//int ret = xmlSaveFileEnc(szPath, m_pxDoc, szEncoding);
 		return AG_SUCCESS;
 	}

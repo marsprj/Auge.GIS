@@ -7,12 +7,15 @@ namespace auge
 	CapabilitiesResponse::CapabilitiesResponse(CapabilitiesRequest* pRequest)
 	{
 		m_pRequest = pRequest;
-		m_pRequest->AddRef();
+		m_pRequest->AddRef(); 
 	}
 
 	CapabilitiesResponse::~CapabilitiesResponse()
 	{
-
+		if(m_pRequest!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pRequest);
+		}
 	}
 
 	RESULTCODE CapabilitiesResponse::Write(WebWriter* pWriter)
