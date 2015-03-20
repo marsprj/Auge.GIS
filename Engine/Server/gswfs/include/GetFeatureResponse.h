@@ -16,11 +16,13 @@ namespace auge
 		GetFeatureResponse(GetFeatureRequest* pRequest);
 		virtual ~GetFeatureResponse();
 	public:
+		virtual	RESULTCODE		Write();
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 
 	public:
-		void	SetWebContenxt(WebContext* pWebContext);
-		void	SetFeatureCursor(FeatureCursor* pCursor);
+		void		SetWebContenxt(WebContext* pWebContext);
+		void		SetFeatureCursor(FeatureCursor* pCursor);
+		XDocument*	WriteDocument();
 
 	private:
 		GetFeatureRequest	*m_pRequest;

@@ -20,6 +20,10 @@ namespace auge
 		{
 			AUGE_SAFE_RELEASE(m_pCursor);
 		}
+		if(m_pRequest!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pRequest);
+		}
 	}
 
 	void GetFeatureResponse::SetWebContenxt(WebContext* pWebContext)
@@ -34,11 +38,35 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		const char* type_name = m_pRequest->GetTypeName();
+		XDocument* pxDoc = WriteDocument(); 
+		
+		int len = 0; 
+		g_uchar* buffer = NULL; 
+		pxDoc->WriteToString(&buffer, len,m_encoding.c_str(),1);
+
+		pWriter->WriteHead(m_pRequest->GetMimeType(),false);
+		pWriter->Write(buffer, len);
+		//pWriter->Write((g_uchar*)"<a>ddd</a>", 10);
+		pWriter->WriteTail();
+		
+		pxDoc->Release();
+
+		return AG_SUCCESS;
+	}
+
+	void GetFeatureResponse::SetFeatureCursor(FeatureCursor* pCursor)
+	{
+		m_pCursor = pCursor;
+	}
+
+	XDocument* GetFeatureResponse::WriteDocument()
+	{
+		const char* type_name = m_pRequest->GetTypeName(); 
 		const char* service_name = m_pWebContext->GetService();
 		const char* service_uri = m_pWebContext->GetURI();
 		const char* output_format = m_pRequest->GetOutputFormat();
 		char str[AUGE_BUFFER_MAX];
+
 		GLogger* pLogger = augeGetLoggerInstance();
 
 		XElement  *pxNode = NULL;
@@ -181,25 +209,23 @@ namespace auge
 						break;
 					}//switch
 				}//for
+				pFeature->Release();
 			}
 		}
-		
+		return pxDoc; 
+	}
 
+	RESULTCODE GetFeatureResponse::Write()
+	{		
+		XDocument* pxDoc = WriteDocument();
 		int len = 0; 
 		g_uchar* buffer = NULL;
-		pxDoc->WriteToString(&buffer, len,m_encoding.c_str(),1);
 
-		pWriter->WriteHead(m_pRequest->GetMimeType(),false);
-		pWriter->Write(buffer, len);
-		pWriter->WriteTail();
+		pxDoc->WriteToString(&buffer, len,m_encoding.c_str(),1);
 		pxDoc->Release();
 
 		return AG_SUCCESS;
 	}
 
-	void GetFeatureResponse::SetFeatureCursor(FeatureCursor* pCursor)
-	{
-		m_pCursor = pCursor;
-	}
 
 }

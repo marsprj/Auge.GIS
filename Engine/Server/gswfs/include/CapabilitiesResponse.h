@@ -14,6 +14,7 @@ namespace auge
 		CapabilitiesResponse(CapabilitiesRequest* pRequest);
 		virtual ~CapabilitiesResponse();
 	public:
+		virtual	RESULTCODE		Write();
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 
 	public:

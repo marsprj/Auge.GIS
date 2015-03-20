@@ -3,6 +3,8 @@
 #include "AugeCore.h"
 #include "AugeXML.h"
 
+#include <libxml/parser.h>
+
 CPPUNIT_TEST_SUITE_REGISTRATION(GeometryTest);
 
 void GeometryTest::setUp() 
@@ -178,4 +180,26 @@ void GeometryTest::GML_MultiPolygon_Test()
 	printf(buffer);
 
 	pWriter->Release();
+}
+
+void GeometryTest::XML_Create_Test()
+{
+	auge::XElement  *pxNode = NULL;
+	auge::XElement  *pxRoot = NULL;
+	auge::XDocument *pxDoc = new auge::XDocument();
+	// FeatureCollection
+	//pxRoot = pxDoc->CreateRootNode("FeatureCollection", "http://www.opengis.net/wfs", "wfs");
+
+	pxDoc->Release();
+
+}
+
+void GeometryTest::Memory_Test()
+{
+	int counter = 0;
+	while(true)
+	{
+		printf("\r%d",counter++);
+		XML_Create_Test();
+	}
 }

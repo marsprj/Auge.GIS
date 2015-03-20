@@ -15,6 +15,7 @@ namespace auge
 		TransactionResponse(TransactionRequest* pRequest);
 		virtual ~TransactionResponse();
 	public:
+		virtual	RESULTCODE		Write();
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 
 	public:

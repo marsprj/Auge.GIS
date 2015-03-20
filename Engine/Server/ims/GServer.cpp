@@ -82,7 +82,7 @@ namespace auge
 			{	
 				switch(GetMethod())
 				{
-				case augeHttpGet:
+				case augeHttpGet: 
 					pWebResponse = DoGet(pService, cgi);
 					break;
 				case augeHttpPost:

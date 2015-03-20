@@ -14,6 +14,7 @@ namespace auge
 		DescribeFeatureTypeResponse(DescribeFeatureTypeRequest* pRequest);
 		virtual ~DescribeFeatureTypeResponse();
 	public:
+		virtual	RESULTCODE		Write();
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 
 	public:

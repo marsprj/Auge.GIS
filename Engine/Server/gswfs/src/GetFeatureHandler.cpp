@@ -112,16 +112,16 @@ namespace auge
 			return pExpResopnse;
 		}
 
-		FeatureCursor *pCursor = NULL;
-		GQuery* pQuery = pRequest->GetQuery();
+		FeatureCursor *pCursor = NULL; 
+		GQuery* pQuery = pRequest->GetQuery(); 
 		if(pQuery!=NULL)
-		{
+		{ 
 			pCursor = pFeatureClass->Query(pQuery);
 		}
 		else
 		{
-			GEnvelope& bbox = pRequest->GetBBox();
-			if(bbox.IsValid())
+			GEnvelope& bbox = pRequest->GetBBox(); 
+			if(bbox.IsValid()) 
 			{
 				pCursor = pFeatureClass->Query(bbox);
 			}
@@ -130,10 +130,10 @@ namespace auge
 				pCursor = pFeatureClass->Query();
 			}
 		}
-		
-		WebResponse* pWebResponse = NULL;
-		if(pCursor!=NULL)
-		{
+
+		WebResponse* pWebResponse = NULL; 
+		if(pCursor!=NULL) 
+		{ 
 			GetFeatureResponse *pResponse = new GetFeatureResponse(pRequest);
 			pResponse->SetWebContenxt(pWebContext);
 			pResponse->SetFeatureCursor(pCursor);

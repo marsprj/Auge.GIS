@@ -43,6 +43,7 @@ namespace auge
 		virtual ~WebResponse(){}
 
 	public:
+		//virtual	RESULTCODE		Write() = 0;
 		virtual	RESULTCODE		Write(WebWriter* pWriter) = 0;
 	};
 	

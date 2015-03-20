@@ -160,7 +160,8 @@ void PgsTest::QueryTest()
 	pQuery->SetOrderBy(pOrderBy);
 
 	auge::FeatureCursor* pCursor = NULL;
-	pCursor = pFeatureClass->Query(pQuery);
+	//pCursor = pFeatureClass->Query(pQuery);
+	pCursor = pFeatureClass->Query();
 	CPPUNIT_ASSERT(pCursor!=NULL);
 
 	g_uint i=0;
@@ -177,9 +178,7 @@ void PgsTest::QueryTest()
 		pFeature->Release();
 	}
 	AUGE_SAFE_RELEASE(pCursor);
-
-	AUGE_SAFE_RELEASE(pQuery);
-	
+	AUGE_SAFE_RELEASE(pQuery);	
 	AUGE_SAFE_RELEASE(pFeatureClass);
 	
 }

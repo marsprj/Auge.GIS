@@ -231,7 +231,11 @@ namespace auge
 		SetMaxFeatures(cgi["maxFeatures"]);
 		SetOffset(cgi["offset"]);
 		SetBBox(cgi["bbox"]);
-		SetQuery(cgi["filter"],cgi["fields"], GetTypeName(), pMap);
+		if(!m_extent.IsValid())
+		{
+			SetQuery(cgi["filter"],cgi["fields"], GetTypeName(), pMap);
+		}
+		
 		return true;
 	}
 	

@@ -86,4 +86,45 @@ namespace auge
 	{
 		m_num_delete = count;
 	}
+
+	RESULTCODE TransactionResponse::Write()
+	{
+		const char* typeName = m_pRequest->GetTypeName();
+		char str[AUGE_BUFFER_MAX];
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		XElement  *pxNode = NULL;
+		XElement  *pxRoot = NULL;
+		XDocument *pxDoc = new XDocument();
+		// FeatureCollection
+		pxRoot = pxDoc->CreateRootNode("TransactionResponse", "http://www.opengis.net/wfs", "wfs");
+		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/wfs",NULL);
+		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/ows","ows");
+		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/gml","gml");
+		pxRoot->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
+		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
+		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema","xsd");		
+		pxRoot->SetAttribute("version", m_pRequest->GetVersion(), NULL);
+
+		XElement* pxSummary = pxRoot->AddChild("TransactionSummary","wfs");
+
+		char text[AUGE_BUFFER_MAX];
+		g_sprintf(text,"%d", m_num_insert);
+		pxNode = pxSummary->AddChild("totalInserted","wfs");
+		pxNode->AddChildText(text);
+
+		g_sprintf(text,"%d", m_num_update);
+		pxNode = pxSummary->AddChild("totalUpdated","wfs");
+		pxNode->AddChildText(text);
+
+		g_sprintf(text,"%d", m_num_delete);
+		pxNode = pxSummary->AddChild("totalDeleted","wfs");
+		pxNode->AddChildText(text);
+
+		int len = 0;
+		g_uchar* buffer = NULL;
+		pxDoc->WriteToString(&buffer, len,m_encoding.c_str(),1);
+		
+		return AG_SUCCESS;
+	}
 }

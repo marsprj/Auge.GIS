@@ -7,12 +7,13 @@ class GeometryTest : public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(GeometryTest);
 	//CPPUNIT_TEST(WKTTest);
-	CPPUNIT_TEST(GML_Point_Test);
-	CPPUNIT_TEST(GML_LineString_Test);
-	CPPUNIT_TEST(GML_Polygon_Test);
-	CPPUNIT_TEST(GML_MultiPoint_Test);
-	CPPUNIT_TEST(GML_MultiLineString_Test);
-	CPPUNIT_TEST(GML_MultiPolygon_Test);
+	//CPPUNIT_TEST(GML_Point_Test);
+	//CPPUNIT_TEST(GML_LineString_Test);
+	//CPPUNIT_TEST(GML_Polygon_Test);
+	//CPPUNIT_TEST(GML_MultiPoint_Test);
+	//CPPUNIT_TEST(GML_MultiLineString_Test);
+	//CPPUNIT_TEST(GML_MultiPolygon_Test);
+	CPPUNIT_TEST(Memory_Test);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -26,6 +27,10 @@ private:
 	void GML_MultiPoint_Test();
 	void GML_MultiLineString_Test();
 	void GML_MultiPolygon_Test();
+
+	void XML_Create_Test();
+
+	void Memory_Test();
 };
 
 #endif //__AUGE_SERVICE_TEST__H__

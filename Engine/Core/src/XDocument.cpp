@@ -31,9 +31,14 @@ namespace auge
 		m_pBuffer = NULL;
 	}
 
-	XDocument::~XDocument()
+	XDocument::~XDocument() 
 	{
 		Close();
+		if(m_pxDoc!=NULL)
+		{
+			xmlFreeDoc(m_pxDoc);
+			m_pxDoc = NULL;
+		}
 	}
 
 	XDocument::XDocument(xmlDocPtr pxmlDoc):
