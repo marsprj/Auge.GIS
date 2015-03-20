@@ -53,5 +53,7 @@ libgsims_la_SOURCES=\
 		    UpdateStyleRequest.cpp \
 		    UnRegisterDataSourceHandler.cpp \
 		    UnRegisterDataSourceRequest.cpp \
+		    RegisterMapHandler.cpp \
+		    RegisterMapRequest.cpp \
 		    WEngine.cpp
 
