@@ -12,7 +12,8 @@ class PgsTest : public CppUnit::TestFixture
 //	CPPUNIT_TEST(ReadTest);
 //	CPPUNIT_TEST(QueryExent);
 //	CPPUNIT_TEST(QueryBinaryComparision);
-	CPPUNIT_TEST(QueryTest);
+//	CPPUNIT_TEST(QueryTest);
+	CPPUNIT_TEST(QueryTest_2);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -24,6 +25,7 @@ private:
 	void QueryBinaryComparision();
 
 	void QueryTest();
+	void QueryTest_2();
 
 private:
 	auge::FeatureWorksapce* m_pWorkspace;

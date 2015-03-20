@@ -35,10 +35,10 @@ namespace auge
 			m_pPropertyName = NULL;
 		}
 		m_pPropertyName = pPropertyName;
-		if(m_pPropertyName!=NULL)
-		{
-			m_pPropertyName->AddRef();
-		}
+		//if(m_pPropertyName!=NULL)
+		//{
+		//	m_pPropertyName->AddRef();
+		//}
 		return true;
 	}
 

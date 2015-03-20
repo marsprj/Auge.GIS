@@ -92,8 +92,6 @@ void PgsTest::QueryExent()
 
 void PgsTest::QueryBinaryComparision()
 {
-	
-
 	auge::BinaryComparisonFilter* pFilter = NULL;
 	auge::FilterFactory* pFactory = auge::augeGetFilterFactoryInstance();
 
@@ -135,7 +133,6 @@ void PgsTest::QueryBinaryComparision()
 
 void PgsTest::QueryTest()
 {
-	
 	auge::FilterFactory* pFilterFactory = auge::augeGetFilterFactoryInstance();
 
 	auge::FeatureClass* pFeatureClass = NULL;
@@ -149,7 +146,7 @@ void PgsTest::QueryTest()
 	auge::GEnvelope extent(0,0,10,10);
 	auge::PropertyName	*pProp = pFilterFactory->CreatePropertyName("geom");
 	pFilter = pFilterFactory->CreateBBoxFilter(pProp, extent);
-
+	
 	pQuery = pFilterFactory->CreateQuery();
 	pQuery->AddSubField("gid");
 	pQuery->AddSubField("name");
@@ -173,12 +170,26 @@ void PgsTest::QueryTest()
 	{	
 		const char* name = pFeature->GetString("name");
 		printf("[%d]:%s\n",pFeature->GetFID(), name);
+
+		pGeometry = pFeature->GetGeometry();
+		printf(pGeometry->AsText());
+
 		pFeature->Release();
 	}
-	printf("\n");
+	AUGE_SAFE_RELEASE(pCursor);
 
 	AUGE_SAFE_RELEASE(pQuery);
-	AUGE_SAFE_RELEASE(pCursor);
+	
 	AUGE_SAFE_RELEASE(pFeatureClass);
 	
+}
+
+void PgsTest::QueryTest_2()
+{
+	int counter = 1;
+	while(true)
+	{
+		printf("\r%d", counter++);
+		QueryTest();
+	}
 }

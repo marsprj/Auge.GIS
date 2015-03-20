@@ -95,13 +95,16 @@ namespace auge
 
 	RESULTCODE GFieldsImpl::Add(GField* pField)
 	{
-		RESULTCODE rc = AddRef(pField);
-		if(rc!=AG_SUCCESS)
+		if(pField==NULL)
 		{
 			return AG_FAILURE;
 		}
-		GFieldImpl* pagFieldImpl = static_cast<GFieldImpl*>(pField);
-		pagFieldImpl->AddRef();
+		int nIndex = FindField(pField->GetName());
+		if(nIndex>0)
+		{
+			return AG_FAILURE;
+		}
+		m_fields.push_back(pField);
 		return AG_SUCCESS;
 	}
 

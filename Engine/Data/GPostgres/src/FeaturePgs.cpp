@@ -81,9 +81,9 @@ namespace auge
 			g_uchar* pWKB = PQunescapeBytea((const g_uchar*)value, &numBytes);
 			if(pWKB!=NULL)
 			{
-				g_uchar* wkb = (g_uchar*)auge_malloc(sizeof(g_uchar), numBytes);
-				memcpy(wkb, pWKB, numBytes);
-				pGeometry = pGeometryFactory->CreateGeometryFromWKB((g_uchar*)wkb, true);
+				//g_uchar* wkb = (g_uchar*)auge_malloc(sizeof(g_uchar), numBytes);
+				//memcpy(wkb, pWKB, numBytes);
+				pGeometry = pGeometryFactory->CreateGeometryFromWKB((g_uchar*)pWKB, false);
 				PQfreemem(pWKB);
 			}
 		}
