@@ -9,6 +9,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
 
 auge::Map*	CreateMapObj();
 auge::Map*	CreateMapObj_SLD();
+auge::Style* LoadSLD(const char* path);
 
 void MapTest::setUp() 
 {
@@ -263,6 +264,53 @@ void MapTest::Create_Map_Point_Label()
 
 }
 
+void MapTest::Draw_Map_Point_Label_Anchor()
+{
+	auge::DataEngine	*pEngine = NULL;
+	auge::DataEngineManager* pEngineManager = NULL;
+	pEngineManager = auge::augeGetDataEngineManagerInstance();
+	auge::ConnectionManager* pConnManager = NULL;
+	pConnManager = auge::augeGetConnectionManagerInstance();
+	auge::CartoManager* pCartoManager = NULL;
+	pCartoManager = auge::augeGetCartoManagerInstance();
+	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
+
+	auge::Canvas* pCanvas = NULL;
+	auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
+	pCanvas = pCartoFactory->CreateCanvas2D(800, 600);
+	pCanvas->SetViewer(viewer);
+
+	auge::GColor bgColor(255,0,0,0);
+	pCanvas->DrawBackground(bgColor);
+
+	auge::FeatureWorksapce* pWorkspace = NULL;
+	pWorkspace = (auge::FeatureWorksapce*)pConnManager->GetWorkspace("db1");
+	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass("cities");
+
+	auge::Style* pStyle = NULL;
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_label_top_left.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_2.xml");
+
+	auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
+	pLayer->SetName("cities");
+	pLayer->SetFeatureClass(pFeatureClass);
+	pLayer->SetStyle(pStyle);
+
+	auge::Map* pMap = NULL;
+	pMap = pCartoFactory->CreateMap();
+	pMap->AddLayer(pLayer);
+
+	pCanvas->Draw(pMap);
+	pCanvas->Save("g:\\temp\\map\\map.png");
+	//pCanvas->Save("/home/renyc/map/map.png");
+
+	//m_pConnection->Close();
+	//AUGE_SAFE_RELEASE(m_pConnection);
+	AUGE_SAFE_RELEASE(pMap);
+	AUGE_SAFE_RELEASE(pCanvas);
+}
+
 void MapTest::CreateLayer()
 {
 	//auge::GConnection	*m_pConnection = NULL;
@@ -420,4 +468,23 @@ auge::Map* CreateMapObj_SLD()
 	pxDoc->Release();
 
 	return pMap;
+}
+
+auge::Style* MapTest::LoadSLD(const char* path)
+{
+	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_4.xml";
+
+	auge::CartoFactory* pCartoFactory = NULL;
+	pCartoFactory = auge::augeGetCartoFactoryInstance();
+
+	auge::StyleFactory* pStyleFactory = NULL;
+	pStyleFactory = auge::augeGetStyleFactoryInstance();
+
+	auge::StyleReader* reader = NULL;
+	reader = pStyleFactory->CreateStyleReader();
+
+	auge::Style* pStyle = NULL;
+	pStyle = reader->Read(path);
+
+	return pStyle;
 }

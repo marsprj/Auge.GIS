@@ -614,17 +614,17 @@ namespace auge
 
 	bool StyleReader_1_0_0::ReadPlacement(TextSymbolizer* pSymbolizer, XNode* pxPlacementNode)
 	{
-		XNode* pxLinePlacement = pxPlacementNode->GetFirstChild("LabelPlacement");
-		if(pxLinePlacement==NULL)
+		XNode* pxPointPlacement = pxPlacementNode->GetFirstChild("PointPlacement");
+		if(pxPointPlacement==NULL)
 		{
 			return false;
 		}
 
-		XNode* pxPOffset = pxLinePlacement->GetFirstChild("PerpendicularOffset");
-		if(pxPOffset==NULL)
-		{
-			return false;
-		}
+		//XNode* pxPOffset = pxLinePlacement->GetFirstChild("PerpendicularOffset");
+		//if(pxPOffset==NULL)
+		//{
+		//	return false;
+		//}
 		return true;
 	}
 

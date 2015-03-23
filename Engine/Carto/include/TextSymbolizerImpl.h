@@ -36,6 +36,9 @@ namespace auge
 		virtual double		GetAnchorY();
 		virtual void		SetAnchor(double x, double y);
 
+		//virtual g_uint		GetAnchor();
+		//virtual void		SetAnchor(const char *h, const char* v);
+
 		virtual double		GetDisplacementX();
 		virtual double		GetDisplacementY();
 		virtual void		SetDisplacement(double x, double y);
@@ -55,6 +58,7 @@ namespace auge
 
 		double		m_anchor_x;
 		double		m_anchor_y;
+		//g_uint		m_anchor;
 
 		double		m_displace_x;
 		double		m_displace_y;

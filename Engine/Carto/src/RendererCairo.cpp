@@ -281,6 +281,18 @@ namespace auge
 		//cairo_set_font_size(m_cairo, 30.0);
 		cairo_set_font_size(m_cairo, pFont->GetSize());
 
+		//modify anchor
+		cairo_text_extents_t t_extents;
+		cairo_text_extents (m_cairo, utext, &t_extents);
+		double ax = pSymbolizer->GetAnchorX();
+		double ay = pSymbolizer->GetAnchorY();
+		sx -= ax *			t_extents.width;
+		sy += ay * t_extents.height;
+
+		//// modify displacement
+		//sx += pSymbolizer->GetDisplacementX();
+		//sy += pSymbolizer->GetDisplacementY();
+
 		cairo_move_to(m_cairo, sx, sy);
 		cairo_show_text(m_cairo, utext);
 

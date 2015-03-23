@@ -366,9 +366,25 @@ namespace auge
 		virtual const char*	GetLabelText() = 0;
 		virtual bool		SetLabelText(const char* text) = 0;
 		
+		// x --> [0.0, 0.5, 1.0]
+		// y --> [0.0, 0.5, 1.0]
+		// [top,  middle, bottom] --> [0.0, 0.5, 1.0]
+		// [left, center, right ] --> [1.0, 0.5, 0.0]
 		virtual double		GetAnchorX() = 0;
 		virtual double		GetAnchorY() = 0;
 		virtual void		SetAnchor(double x, double y) = 0;
+		// 0 --> [middle, center]
+		// 1 --> [top	, left]
+		// 2 --> [top	, center]
+		// 3 --> [top	, right]
+		// 4 --> [middle, left]
+		// 0 --> [middle, center]
+		// 6 --> [middle, right]
+		// 7 --> [bottom, left]
+		// 8 --> [bottom, center]
+		// 9 --> [bottom, right]
+		//virtual g_uint		GetAnchor() = 0;
+		//virtual void		SetAnchor(const char *h, const char* v) = 0;
 
 		virtual double		GetDisplacementX() = 0;
 		virtual double		GetDisplacementY() = 0;

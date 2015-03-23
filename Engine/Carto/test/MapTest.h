@@ -4,13 +4,15 @@
 #include "cppunit/extensions/HelperMacros.h" 
 
 #include "AugeData.h"
+#include "AugeStyle.h"
 
 class MapTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(MapTest);
-	CPPUNIT_TEST(DrawMap);
+	//CPPUNIT_TEST(DrawMap);
 	//CPPUNIT_TEST(Create_Map_Point_Label);
 	//CPPUNIT_TEST(Draw_Map_Point_Label);
+	CPPUNIT_TEST(Draw_Map_Point_Label_Anchor);
 	//CPPUNIT_TEST(DrawMapObj);	
 	//CPPUNIT_TEST(CreateMap);
 	//CPPUNIT_TEST(CreateLayer);
@@ -27,12 +29,16 @@ private:
 	void		CreateMap();
 
 	void		Draw_Map_Point_Label();
+	void		Draw_Map_Point_Label_Anchor();
 	void		Create_Map_Point_Label();
 
 	void		CreateLayer();
 
 private:
+	auge::Style* MapTest::LoadSLD(const char* path);
+private:
 	auge::GConnection	*m_pConnection;
+
 
 };
 

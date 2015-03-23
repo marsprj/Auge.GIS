@@ -10,8 +10,9 @@ namespace auge
 	m_pFont(new FontImpl),
 	m_pFill(NULL),
 	m_pStroke(NULL),
+	//m_anchor(1),
 	m_anchor_x(0.0f),
-	m_anchor_y(0.0f),
+	m_anchor_y(1.0f),
 	m_displace_x(0.0f),
 	m_displace_y(0.0f),
 	m_rotation(0.0f)
@@ -139,6 +140,11 @@ namespace auge
 		return true;
 	}
 
+	//g_uint TextSymbolizerImpl::GetAnchor()
+	//{
+	//	return m_anchor;
+	//}
+	//
 	double TextSymbolizerImpl::GetAnchorX()
 	{
 		return m_anchor_x;
