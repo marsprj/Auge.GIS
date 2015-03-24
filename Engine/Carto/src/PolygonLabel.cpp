@@ -2,12 +2,17 @@
 
 namespace auge
 {
-	PolygonLabel::PolygonLabel()
+	PolygonLabel::PolygonLabel()	
+	{
+		m_type = augeGTPoint;
+	}
+
+	PolygonLabel::~PolygonLabel()
 	{
 
 	}
 
-	PolygonLabel::~PolygonLabel()
+	void PolygonLabel::Draw(Renderer* pRenderer, Transformation* pTransformation)
 	{
 
 	}

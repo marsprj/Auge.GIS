@@ -1,5 +1,5 @@
-#ifndef __AUGE_POINT_LABEL_H__
-#define __AUGE_POINT_LABEL_H__
+#ifndef __AUGE_POLYGON_LABEL_H__
+#define __AUGE_POLYGON_LABEL_H__
 
 #include "Label.h"
 
@@ -10,8 +10,10 @@ namespace auge
 	public:
 		PolygonLabel();
 		virtual ~PolygonLabel();
-
+	public:
+		virtual void		Draw(Renderer* pRenderer, Transformation* pTransformation);
+		//svirtual bool		IsCollision(GLabel* other);
 	};
 }
 
-#endif //__AUGE_POINT_LABEL_H__
+#endif //__AUGE_POLYGON_LABEL_H__

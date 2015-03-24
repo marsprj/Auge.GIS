@@ -127,7 +127,10 @@ float PointSymbolizerImpl::GetRotation()
 
 void PointSymbolizerImpl::Release()
 {
-	delete this;
+	if(!ReleaseRef())
+	{
+		delete this;
+	}
 }
 
 augeSymbolizerType PointSymbolizerImpl::GetType()

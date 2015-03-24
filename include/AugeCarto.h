@@ -142,6 +142,9 @@ namespace auge
 		virtual void		DrawPolygon(WKBPolygon		*pWKBPolygon,			PolygonSymbolizer* pPolygonSymbolizer, Transformation* pTransformation) = 0;
 		virtual void		DrawPolygon(WKBMultiPolygon	*pWKBMultiPolygon,		PolygonSymbolizer* pPolygonSymbolizer, Transformation* pTransformation) = 0;
 
+		virtual void		DrawText(const	  char* text, int x, int y, TextSymbolizer* pSymbolizer) = 0;
+		virtual void		DrawText(const g_uchar* text, int x, int y, TextSymbolizer* pSymbolizer) = 0;
+
 		virtual void		Label(const char* text, WKBPoint *pWKBPoint, TextSymbolizer* pSymbolizer, Transformation* pTransformation) = 0;
 
 	public:
@@ -150,7 +153,12 @@ namespace auge
 		virtual void		FillRectangle(g_uint x, g_uint y, g_uint width, g_uint height, GColor& color) = 0;
 		virtual	void		DrawRectangle(g_uint x, g_uint y, g_uint width, g_uint height, GColor& color, double border) = 0;
 
-		
+	public:
+		virtual void		SetFont(const char* family, 
+									float size, 
+									augeFontSlant slant=augeFontStyleNormal, 
+									augeFontWeight weight=augeFontWeightNormal) = 0;
+		virtual bool		GetTextExtent(const char* text, GEnvelope& extent) = 0;
 
 		virtual bool		SaveAsImage(const char* path) = 0;
 	};

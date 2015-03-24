@@ -2,6 +2,7 @@
 #define __AUGE_POINT_LABEL_H__
 
 #include "Label.h"
+#include "AugeGeometry.h"
 
 namespace auge
 {
@@ -11,6 +12,14 @@ namespace auge
 		PointLabel();
 		virtual ~PointLabel();
 
+	public:
+		virtual void		Draw(Renderer* pRenderer, Transformation* pTransformation);
+		virtual void		ComputePosition(Renderer* pRenderer, Transformation* pTransform);
+		virtual bool		IsCollision(GLabel* other);
+		
+	private:
+		WKBPoint			m_pos;
+		GEnvelope			m_text_extent;
 	};
 }
 

@@ -15,8 +15,8 @@ namespace auge
 		virtual const char*		GetFamily();
 		virtual bool			SetFamily(const char* szFamily);
 
-		virtual augeFontStyle	GetStyle();
-		virtual void			SetStyle(augeFontStyle style);
+		virtual augeFontSlant	GetStyle();
+		virtual void			SetStyle(augeFontSlant style);
 
 		virtual augeFontWeight	GetWeight();
 		virtual void			SetWeight(augeFontWeight weight);
@@ -28,7 +28,7 @@ namespace auge
 
 	private:
 		std::string		m_family;
-		augeFontStyle	m_style;
+		augeFontSlant	m_style;
 		augeFontWeight	m_weght;
 		float			m_size;
 	};

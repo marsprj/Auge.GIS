@@ -53,7 +53,10 @@ bool LineSymbolizerImpl::SetStroke(Stroke* pStroke)
 
 void LineSymbolizerImpl::Release()
 {
-	delete this;
+	if(!ReleaseRef())
+	{
+		delete this;
+	}
 }
 
 augeSymbolizerType LineSymbolizerImpl::GetType()

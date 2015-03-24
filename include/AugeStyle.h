@@ -68,12 +68,12 @@ namespace auge
 	//========================================================================
 	// augeFontStyle Enum
 	//========================================================================
-	typedef enum augeFontStyle
+	typedef enum augeFontSlant
 	{
 		augeFontStyleNormal	= 0,
 		augeFontStyleItalic	= 1,
 		augeFontStyleOblique= 2,
-	}augeFontStyle;
+	}augeFontSlant;
 
 	//========================================================================
 	// augeFontWeight Enum
@@ -709,8 +709,8 @@ namespace auge
 		virtual const char*		GetFamily() = 0;
 		virtual bool			SetFamily(const char* szFamily) = 0;
 
-		virtual augeFontStyle	GetStyle() = 0;
-		virtual void			SetStyle(augeFontStyle style) = 0;
+		virtual augeFontSlant	GetStyle() = 0;
+		virtual void			SetStyle(augeFontSlant style) = 0;
 
 		virtual augeFontWeight	GetWeight() = 0;
 		virtual void			SetWeight(augeFontWeight weight) = 0;

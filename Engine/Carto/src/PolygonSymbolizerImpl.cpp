@@ -110,7 +110,10 @@ namespace auge
 
 	void PolygonSymbolizerImpl::Release()
 	{
-		delete this;
+		if(!ReleaseRef())
+		{
+			delete this;
+		}
 	}
 
 	augeSymbolizerType PolygonSymbolizerImpl::GetType()

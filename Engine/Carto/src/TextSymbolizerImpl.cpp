@@ -42,7 +42,10 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	void TextSymbolizerImpl::Release()
 	{
-		delete this;
+		if(!ReleaseRef())
+		{
+			delete this;
+		}
 	}
 
 	Font*	TextSymbolizerImpl::GetFont()

@@ -68,4 +68,10 @@ namespace auge
 	{
 		return NULL;
 	}
+
+	void GPointWKB::Centroid(double &x, double &y)
+	{
+		x = m_pWKBPoint->point.x;
+		y = m_pWKBPoint->point.y; 
+	}
 }

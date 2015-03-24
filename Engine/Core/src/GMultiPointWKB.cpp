@@ -67,4 +67,9 @@ namespace auge
 	{
 		return NULL;
 	}
+
+	void GMultiPointWKB::Centroid(double &x, double &y)
+	{
+
+	}
 }

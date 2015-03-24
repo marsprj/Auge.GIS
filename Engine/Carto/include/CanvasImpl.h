@@ -3,10 +3,13 @@
 
 #include "AugeCarto.h"
 #include "TransformImpl.h"
+#include "Maplex.h"
 #include <vector>
 
 namespace auge
 {
+	class GLabel;
+
 	class CanvasImpl : public Canvas
 	{
 	public:
@@ -36,6 +39,9 @@ namespace auge
 		void		LabelGeometry(g_uchar* wkb, TextSymbolizer* pSymbolizer, const char* text);
 		void		LabelPoint(WKBPoint* pWKBPoint, TextSymbolizer* pSymbolizer,const char* text);
 
+		void		LabelLayer(LabelSet* pLabelSet, FeatureLayer* pLayer, TextSymbolizer* pSymbolizer, GFilter* pFilter);
+		GLabel*		CreateLabel(augeGeometryType type);
+
 	private:
 		void		Cleanup();
 
@@ -45,6 +51,8 @@ namespace auge
 		GEnvelope		m_viewer;
 		Renderer		*m_pRenderer;
 		TransformationImpl	m_transform;
+
+		Maplex			m_maplex;
 	};	
 }
 

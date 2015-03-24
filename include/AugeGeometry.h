@@ -51,6 +51,7 @@ namespace auge
 		//virtual		  bool			Envelope(GEnvelope& envelope) =0;	// : Gometry
 		virtual       const char*	AsText(bool multi=false)					=0;		// : String.Release
 		virtual       g_uchar*		AsBinary()            const =0;		// : Binary.
+		virtual void				Centroid(double &x, double &y) = 0;
 		virtual	Geometry*			Clone()				  const =0;
 	};
 
@@ -204,7 +205,13 @@ namespace auge
 
 	public:
 		void	Set(double xmin, double ymin, double xmax, double ymax);
+
 		void	Union(GEnvelope& o);
+		void	Offset(double x, double y);
+		void	MoveTo(double x, double y);
+		bool	Contain(double x, double y);
+		bool	Intersects(GEnvelope& other);
+		void	Inflate(int o);
 
 		double	GetWidth();
 		double	GetHeight();

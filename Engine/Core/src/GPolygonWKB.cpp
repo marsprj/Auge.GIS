@@ -69,4 +69,8 @@ namespace auge
 		return NULL;
 	}
 
+	void GPolygonWKB::Centroid(double &x, double &y)
+	{
+		
+	}
 }

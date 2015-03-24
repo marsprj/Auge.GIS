@@ -10,7 +10,9 @@ namespace auge
 	public:
 		LineLabel();
 		virtual ~LineLabel();
-
+	public:
+		virtual void		Draw(Renderer* pRenderer, Transformation* pTransformation);
+		//virtual bool		IsCollision(GLabel* other);
 	};
 }
 

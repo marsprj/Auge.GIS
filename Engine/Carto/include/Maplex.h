@@ -2,11 +2,14 @@
 #define __AUGE_MAP_LABEL_H__
 
 #include <vector>
+#include "LabelSet.h"
 
 namespace auge
 {
+	class GLabel;
 	class LabelSet;
 	class Renderer;
+	class Transformation;
 
 	class Maplex
 	{
@@ -14,13 +17,25 @@ namespace auge
 		Maplex();
 		virtual ~Maplex();
 	public:
-		void		Draw(Renderer* pRenderer);
+		void		Draw();
 
 		LabelSet*	GetLabelSet(const char* name);
+		bool		AddLabel(const char* set_name, GLabel* pLabel);
+		bool		IsCollision(GLabel* label);
 		void		Cleanup();
+
+		void		SetRenderer(Renderer* m_pRenderer);
+		void		SetTransformation(Transformation* pTransformation);
+
+	private:
+		void		DrawLabelSet(LabelSet* pLabelSet);
 
 	private:
 		std::vector<LabelSet*>	m_labelset;
+		LabelSet	m_labeled;
+		Renderer	*m_pRenderer;
+		Transformation *m_pTransformation;
+
 	};
 }
 

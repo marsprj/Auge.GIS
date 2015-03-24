@@ -38,12 +38,12 @@ bool FontImpl::SetFamily(const char* szFamily)
 	return true;
 }
 
-augeFontStyle FontImpl::GetStyle()
+augeFontSlant FontImpl::GetStyle()
 {
 	return m_style;
 }
 
-void FontImpl::SetStyle(augeFontStyle style)
+void FontImpl::SetStyle(augeFontSlant style)
 {
 	m_style = style;
 }

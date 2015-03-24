@@ -67,4 +67,9 @@ namespace auge
 	{
 		return NULL;
 	}
+
+	void GMultiLineStringWKB::Centroid(double &x, double &y)
+	{
+
+	}
 }

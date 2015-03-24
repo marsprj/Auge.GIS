@@ -1,5 +1,9 @@
 #include "CanvasImpl.h"
 #include "RendererCairo.h"
+#include "LabelSet.h"
+#include "PointLabel.h"
+#include "LineLabel.h"
+#include "PolygonLabel.h"
 
 namespace auge
 {
@@ -10,6 +14,8 @@ namespace auge
 		m_transform.SetCanvas(width, height);
 		m_viewer.Set(-180.0f, -90.0f, 180.0f, 90.0f);
 		m_pRenderer = new RendererCairo(width, height);
+		m_maplex.SetRenderer(m_pRenderer);
+		m_maplex.SetTransformation(&m_transform);
 	}
 
 	CanvasImpl::~CanvasImpl()
@@ -45,6 +51,7 @@ namespace auge
 				}
 			}
 		}
+		m_maplex.Draw();
 	}
 
 	void CanvasImpl::DrawLayer(Layer* pLayer)
@@ -130,7 +137,8 @@ namespace auge
 		pTextSymbolzer = pRule->GetTextSymbolizer();
 		if(pTextSymbolzer!=NULL)
 		{
-			LabelLayer(pLayer, pTextSymbolzer, pRule->GetFilter());
+			LabelSet* pLabelSet = m_maplex.GetLabelSet(pLayer->GetName());
+			LabelLayer(pLabelSet, pLayer, pTextSymbolzer, pRule->GetFilter());
 		}
 	}
 
@@ -157,6 +165,75 @@ namespace auge
 		pCursor->Release();
 	}
 
+	void CanvasImpl::LabelLayer(LabelSet* pLabelSet, FeatureLayer* pLayer, TextSymbolizer* pSymbolizer, GFilter* pFilter)
+	{
+		const char		*name = pLayer->GetName();
+
+		FeatureCursor	*pCursor = NULL;
+		FeatureClass	*pFeatureClass = pLayer->GetFeatureClass();
+		
+		pCursor = pFeatureClass->Query();
+
+		const char* label_text = NULL;
+		g_uchar* wkb = NULL;
+		auge::Geometry	*pGeometry = NULL;
+		auge::Feature	*pFeature = NULL;
+		auge::GLabel	*pLabel = NULL;
+		while((pFeature=pCursor->NextFeature())!=NULL)
+		{
+			pGeometry = pFeature->GetGeometry();
+			if(pGeometry!=NULL)
+			{	
+				pLabel = CreateLabel(pGeometry->GeometryType());
+				pLabel->SetGeometry(pGeometry);
+				pLabel->SetSymbolizer(pSymbolizer);
+				label_text = pSymbolizer->GetLabelText();
+				if((label_text==NULL)||(strlen(label_text)==0))
+				{
+					const char* fname = pSymbolizer->GetLabel();
+					label_text = pFeature->GetString(fname);
+					if(label_text!=NULL)
+					{						
+						pLabel->SetText(label_text);
+					}
+				}
+				else
+				{
+					pLabel->SetText(label_text);
+				}
+				pLabel->ComputePosition(m_pRenderer, &m_transform);
+				if(!m_maplex.IsCollision(pLabel))
+				{
+					m_maplex.AddLabel(name, pLabel);
+				}
+			}
+
+			pFeature->Release();
+		}
+		pCursor->Release();
+	}
+
+	GLabel* CanvasImpl::CreateLabel(augeGeometryType type)
+	{
+		GLabel* pLabel = NULL;
+		switch(type)
+		{
+		case augeGTPoint:
+		case augeGTMultiPoint:
+			pLabel = new PointLabel();
+			break;
+		case augeGTLineString:
+		case augeGTMultiLineString:
+			pLabel = new LineLabel();
+			break;
+		case augeGTPolygon:
+		case augeGTMultiPolygon:
+			pLabel = new PolygonLabel();
+			break;
+		}
+		return pLabel;
+	}
+
 	void CanvasImpl::LabelLayer(FeatureLayer* pLayer, TextSymbolizer* pSymbolizer, GFilter* pFilter)
 	{
 		FeatureCursor	*pCursor = NULL;
@@ -170,7 +247,6 @@ namespace auge
 		auge::Feature	*pFeature = NULL;
 		while((pFeature=pCursor->NextFeature())!=NULL)
 		{
-
 			pGeometry = pFeature->GetGeometry();
 			if(pGeometry!=NULL)
 			{
@@ -197,6 +273,7 @@ namespace auge
 		}
 		pCursor->Release();
 	}
+
 
 	void CanvasImpl::LabelGeometry(g_uchar* wkb, TextSymbolizer* pSymbolizer, const char* text)
 	{

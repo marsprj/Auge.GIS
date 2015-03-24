@@ -313,6 +313,58 @@ namespace auge
 			cairo_stroke(m_cairo);
 		}
 	}
+
+	void RendererCairo::DrawText(const char* text, int x, int y, TextSymbolizer* pSymbolizer)
+	{
+		const g_char* utext = auge_encoding_convert("GBK","UTF-8",text, strlen(text));
+		DrawText((g_uchar*)utext, x, y, pSymbolizer);
+	}
+
+	void RendererCairo::DrawText(const g_uchar* text, int x, int y, TextSymbolizer* pSymbolizer)
+	{
+		g_char* utext = (g_char*)text;
+		Font* pFont = pSymbolizer->GetFont();
+		//cairo_select_font_face(m_cairo, "Sazanami Gothic", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+		cairo_select_font_face(m_cairo, "Microsoft Yahei", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+		//cairo_select_font_face(m_cairo, pFont->GetFamily(), (cairo_font_slant_t)(pFont->GetStyle()), (cairo_font_weight_t)(pFont->GetWeight()));
+		//cairo_set_font_size(m_cairo, 30.0);
+		cairo_set_font_size(m_cairo, pFont->GetSize());
+
+		cairo_move_to(m_cairo, x, y);
+		cairo_text_path(m_cairo, utext);
+
+		Fill	*pFill = pSymbolizer->GetFill();
+		Stroke	*pStroke = pSymbolizer->GetStroke();
+		if(pFill!=NULL)
+		{
+			GColor& color = pFill->GetColor();
+			cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
+			if(pStroke==NULL)
+				cairo_fill(m_cairo);
+			else
+				cairo_fill_preserve(m_cairo);
+		}
+		if(pStroke!=NULL)
+		{
+			set_stroke_style(m_cairo, pStroke);
+			cairo_stroke(m_cairo);
+		}
+	}
+
+	void RendererCairo::SetFont(const char* family, float size, augeFontSlant slant, augeFontWeight weight)
+	{
+		cairo_select_font_face(m_cairo, family, (cairo_font_slant_t)slant, (cairo_font_weight_t)weight);
+		//cairo_select_font_face(m_cairo, "Microsoft Yahei", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+		cairo_set_font_size(m_cairo, size);
+	}
+
+	bool RendererCairo::GetTextExtent(const char* text, GEnvelope& extent)
+	{
+		cairo_text_extents_t caro_extents;
+		cairo_text_extents (m_cairo, text, &caro_extents);
+		extent.Set(0, 0, caro_extents.width, caro_extents.height);
+		return true;
+	}
 }
 
 namespace auge
@@ -456,6 +508,7 @@ namespace auge
 		//…Ë÷√cap
 		cairo_set_line_cap(cairo, CAIRO_LINE_CAP_ROUND);
 	}
+
 	//////////////////////////////////////////////////////////////////////////
 	// Build Path End
 	//////////////////////////////////////////////////////////////////////////

@@ -67,4 +67,9 @@ namespace auge
 	{
 		return NULL;
 	}
+
+	void GMultiPolygonWKB::Centroid(double &x, double &y)
+	{
+
+	}
 }
