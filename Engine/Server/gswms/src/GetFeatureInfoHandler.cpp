@@ -114,9 +114,24 @@ namespace auge
 			pLayer = pMap->GetLayer(lname);
 			if(pLayer!=NULL)
 			{
-				if(strlen(sname)>0)
-				{	// User defined Style
-					pStyle = pCartoManager->GetStyle(sname);
+				if(!strlen(sname))
+				{	// Default Style
+					pCanvas->DrawLayer(pLayer);
+				}
+				else
+				{	
+					switch(pLayer->GetType())
+					{
+					case augeLayerFeature:
+						{
+							FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+							FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+							pStyle = pCartoManager->GetStyle(sname,pFeatureClass);
+						}
+						break;
+					case augeLayerRaster:
+						break;;
+					}
 					if(pStyle!=NULL)
 					{
 						pCanvas->DrawLayer(pLayer, pStyle);
@@ -128,10 +143,6 @@ namespace auge
 						GLogger* pLogger = augeGetLoggerInstance();
 						pLogger->Info(msg, __FILE__, __LINE__);
 					}
-				}
-				else
-				{	// Default Style
-					pCanvas->DrawLayer(pLayer);
 				}
 			}
 		}
