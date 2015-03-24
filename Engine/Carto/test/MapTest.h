@@ -35,7 +35,7 @@ private:
 	void		CreateLayer();
 
 private:
-	auge::Style* MapTest::LoadSLD(const char* path);
+	auge::Style* LoadSLD(const char* path);
 private:
 	auge::GConnection	*m_pConnection;
 
