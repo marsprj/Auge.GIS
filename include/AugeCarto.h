@@ -41,19 +41,19 @@ namespace auge
 		Map(){}
 		virtual ~Map(){}
 	public:
-		virtual const char*	GetName() = 0;
-		virtual RESULTCODE	SetName(const char* szName) = 0;
+		virtual const char*		GetName() = 0;
+		virtual RESULTCODE		SetName(const char* szName) = 0;
 
-		virtual GEnvelope&	GetExtent() = 0;
-		virtual void		SetExtent(double xmin, double ymin, double xmax, double ymax) = 0;
-		virtual g_int		GetSRID() = 0;
-		virtual void		SetSRID(g_int srid) = 0;
+		virtual GEnvelope&		GetExtent() = 0;
+		virtual void			SetExtent(double xmin, double ymin, double xmax, double ymax) = 0;
+		virtual g_int			GetSRID() = 0;
+		virtual void			SetSRID(g_int srid) = 0;
 
-		virtual g_uint		GetLayerCount() = 0;		
-		virtual Layer*		GetLayer(g_uint i) = 0;
-		virtual Layer*		GetLayer(const char* szName) = 0;
+		virtual g_uint			GetLayerCount() = 0;		
+		virtual Layer*			GetLayer(g_uint i) = 0;
+		virtual Layer*			GetLayer(const char* szName) = 0;
 
-		virtual RESULTCODE	AddLayer(Layer* pLayer) = 0;
+		virtual RESULTCODE		AddLayer(Layer* pLayer) = 0;
 
 
 		

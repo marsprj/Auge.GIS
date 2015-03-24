@@ -174,14 +174,23 @@ namespace auge
 			pGeometry = pFeature->GetGeometry();
 			if(pGeometry!=NULL)
 			{
+				wkb = pGeometry->AsBinary();
+
 				label_text = pSymbolizer->GetLabelText();
 				if((label_text==NULL)||(strlen(label_text)==0))
 				{
-					label_text = "¶à·¢µã";//pSymbolizer->GetLabel();
+					//label_text = pSymbolizer->GetLabel();
+					const char* fname = pSymbolizer->GetLabel();
+					label_text = pFeature->GetString(fname);
+					if(label_text!=NULL)
+					{
+						LabelGeometry(wkb, pSymbolizer, label_text);
+					}
 				}
-
-				wkb = pGeometry->AsBinary();
-				LabelGeometry(wkb, pSymbolizer, label_text);
+				else
+				{
+					LabelGeometry(wkb, pSymbolizer, label_text);
+				}
 			}
 
 			pFeature->Release();

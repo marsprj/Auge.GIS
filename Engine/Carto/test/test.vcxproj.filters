@@ -27,6 +27,9 @@
     <ClCompile Include="StyleTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LabelTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CanvasTest.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StyleTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LabelTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

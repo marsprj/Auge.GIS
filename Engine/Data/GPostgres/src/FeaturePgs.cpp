@@ -94,7 +94,6 @@ namespace auge
 
 	GValue*	FeaturePgs::GetValue(g_uint i) const
 	{
-
 		return NULL;
 	}
 
