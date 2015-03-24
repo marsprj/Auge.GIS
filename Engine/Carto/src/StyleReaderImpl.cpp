@@ -2,6 +2,7 @@
 #include "SLDConstant.h"
 #include "StyleReaderImpl.h"
 #include "StyleReader_1_0_0.h"
+#include "AugeFeature.h"
 
 namespace auge
 {
@@ -27,7 +28,7 @@ namespace auge
 		delete this;
 	}
 
-	Style* StyleReaderImpl::Read(const char* szPath)
+	Style* StyleReaderImpl::Read(const char* szPath, FeatureClass* pFeatureClass)
 	{
 		Style* pStyle = NULL;
 
@@ -79,11 +80,11 @@ namespace auge
 		const char* szVersion = pxmlVersionNode->GetValue();
 		if(g_stricmp(szVersion, AUGE_SLD_VERSION_1_0_0)==0)
 		{
-			pStyle = Read_1_0_0(psldRootElement);
+			pStyle = Read_1_0_0(psldRootElement, pFeatureClass);
 		}
 		else if(g_stricmp(szVersion, AUGE_SLD_VERSION_1_0_0)==0)
 		{
-			pStyle = Read_1_1_0(psldRootElement);
+			pStyle = Read_1_1_0(psldRootElement, pFeatureClass);
 		}
 		else
 		{
@@ -97,7 +98,7 @@ namespace auge
 		return pStyle;
 	}
 
-	Style* StyleReaderImpl::Read(const char* buffer, int length)
+	Style* StyleReaderImpl::Read(const char* buffer, int length, FeatureClass* pFeatureClass)
 	{
 		Style* pStyle = NULL;
 
@@ -149,11 +150,11 @@ namespace auge
 		const char* szVersion = pxmlVersionNode->GetValue();
 		if(g_stricmp(szVersion, AUGE_SLD_VERSION_1_0_0)==0)
 		{
-			pStyle = Read_1_0_0(psldRootElement);
+			pStyle = Read_1_0_0(psldRootElement,pFeatureClass);
 		}
 		else if(g_stricmp(szVersion, AUGE_SLD_VERSION_1_0_0)==0)
 		{
-			pStyle = Read_1_1_0(psldRootElement);
+			pStyle = Read_1_1_0(psldRootElement,pFeatureClass);
 		}
 		else
 		{
@@ -170,15 +171,15 @@ namespace auge
 
 	//////////////////////////////////////////////////////////////////////////
 
-	Style* StyleReaderImpl::Read_1_0_0(XElement* pxRoot)
+	Style* StyleReaderImpl::Read_1_0_0(XElement* pxRoot, FeatureClass* pFeatureClass)
 	{
 		Style* pStyle = NULL;
 		StyleReader_1_0_0 reader;
-		pStyle = reader.Read(pxRoot);
+		pStyle = reader.Read(pxRoot, pFeatureClass);
 		return pStyle;
 	}
 
-	Style* StyleReaderImpl::Read_1_1_0(XElement* pxRoot)
+	Style* StyleReaderImpl::Read_1_1_0(XElement* pxRoot, FeatureClass* pFeatureClass)
 	{
 		Style* pStyle = NULL;
 

@@ -28,8 +28,8 @@ namespace auge
 		virtual bool			HasStyle(g_uint id);
 		virtual bool			HasStyle(const char* name);
 		virtual g_uint			GetStyleCount();
-		virtual Style*			GetStyle(g_uint id);
-		virtual Style*			GetStyle(const char* name);
+		virtual Style*			GetStyle(g_uint id, FeatureClass* pFeatureClass);
+		virtual Style*			GetStyle(const char* name, FeatureClass* pFeatureClass);
 		virtual char*			GetStyleText(g_uint id);
 		virtual char*			GetStyleText(const char* name);
 		virtual EnumStyle*		GetStyles();

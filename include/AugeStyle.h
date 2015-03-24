@@ -6,6 +6,7 @@
 #include "AugeXML.h"
 #include "AugeGeometry.h"
 #include "AugeFilter.h"
+#include "AugeFeature.h"
 
 #ifdef WIN32
 #	ifdef AUGE_CARTO_EXPORTS
@@ -736,8 +737,8 @@ namespace auge
 		StyleReader(){}
 		virtual ~StyleReader(){}
 	public:
-		virtual	Style*			Read(const char* path) = 0;
-		virtual	Style*			Read(const char* buffer, int length) = 0;
+		virtual	Style*			Read(const char* path, FeatureClass* pFeatureClass) = 0;
+		virtual	Style*			Read(const char* buffer, int length, FeatureClass* pFeatureClass) = 0;
 	};
 
 	class StyleWriter : public GObject

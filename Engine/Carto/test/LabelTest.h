@@ -19,7 +19,7 @@ private:
 	void DrawMap();
 
 private:
-	auge::Style* LabelTest::LoadSLD(const char* path);
+	auge::Style* LabelTest::LoadSLD(const char* path, auge::FeatureClass* pFeatureClass);
 private:
 	auge::GConnection	*m_pConnection;
 };

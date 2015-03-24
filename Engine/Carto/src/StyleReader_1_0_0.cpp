@@ -23,12 +23,14 @@ namespace auge
 
 	}
 
-	Style* StyleReader_1_0_0::Read(XElement* pxRoot)
+	Style* StyleReader_1_0_0::Read(XElement* pxRoot, FeatureClass* pFeatureClass)
 	{
 		const char	*nodeName = NULL;
 		Style		*pStyle = NULL;
 		XNode		*pxNode    = NULL;
 		XNodeSet	*pxNodeSet = NULL;
+
+		m_pFeatureClass = pFeatureClass;
 
 		pxNodeSet = pxRoot->GetChildren();
 		if(pxNodeSet==NULL)
@@ -258,8 +260,17 @@ namespace auge
 					const char* val = pxNode->GetContent();
 					pRule->SetMaxScale((val==NULL)?-1.0f:atof(val));
 				}
-
-				
+				else if(g_stricmp(nodeName, "Filter")==0)
+				{
+					if(m_pFeatureClass!=NULL)
+					{
+						FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
+						FilterReader* reader = pFilterFactory->CreateFilerReader(m_pFeatureClass->GetFields());
+						pFilter = reader->Read((XElement*)pxNode);
+						AUGE_SAFE_RELEASE(reader);
+						pRule->SetFilter(pFilter);
+					}
+				}
 			}
 		}
 		pxNodeSet->Release();
@@ -269,8 +280,6 @@ namespace auge
 			pRule->Release();
 			return NULL;
 		}
-		pRule->SetFilter(pFilter);
-
 		return pRule;
 	}
 

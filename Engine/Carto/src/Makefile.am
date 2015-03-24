@@ -42,4 +42,10 @@ libgcarto_la_SOURCES=\
 		TransformImpl.cpp \
 		EnumStyleImpl.cpp \
 		SymbolGeometry.cpp \
-		SymbolManagerImpl.cpp
+		SymbolManagerImpl.cpp \
+		PointLabel.cpp \
+		LineLabel.cpp \
+		PolygonLabel.cpp \
+		Label.cpp \
+		LabelSet.cpp \
+		Maplex.cpp

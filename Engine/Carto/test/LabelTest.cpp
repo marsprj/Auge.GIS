@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(LabelTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(LabelTest);
 
 auge::Map*	CreateMapObj();
 auge::Map*	CreateMapObj_SLD();
@@ -79,7 +79,8 @@ void LabelTest::DrawMap()
 	pWorkspace = (auge::FeatureWorksapce*)pConnManager->GetWorkspace("db1");
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass("cities");
 
-	auge::Style* pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_label.xml");
+	const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_label.xml";
+	auge::Style* pStyle = LoadSLD(path, pFeatureClass);
 	auge::FeatureLayer* pFLayer = pCartoFactory->CreateFeatureLayer();
 	pFLayer->SetName("cities");
 	pFLayer->SetFeatureClass(pFeatureClass);
@@ -98,7 +99,7 @@ void LabelTest::DrawMap()
 	AUGE_SAFE_RELEASE(pCanvas);
 }
 
-auge::Style* LabelTest::LoadSLD(const char* path)
+auge::Style* LabelTest::LoadSLD(const char* path, auge::FeatureClass* pFeatureClass)
 {
 	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_4.xml";
 
@@ -112,7 +113,7 @@ auge::Style* LabelTest::LoadSLD(const char* path)
 	reader = pStyleFactory->CreateStyleReader();
 
 	auge::Style* pStyle = NULL;
-	pStyle = reader->Read(path);
+	pStyle = reader->Read(path, pFeatureClass);
 
 	return pStyle;
 }

@@ -115,7 +115,7 @@ void StyleTest::ReadSLD()
 	reader = pStyleFactory->CreateStyleReader();
 
 	auge::Style* pStyle = NULL;
-	pStyle = reader->Read(path);
+	pStyle = reader->Read(path, NULL);
 	CPPUNIT_ASSERT(pStyle!=NULL);
 
 	auge::StyleWriter* writer = NULL;
@@ -148,7 +148,7 @@ auge::Style* LoadSLD(const char* path)
 	reader = pStyleFactory->CreateStyleReader();
 
 	auge::Style* pStyle = NULL;
-	pStyle = reader->Read(path);
+	pStyle = reader->Read(path, NULL);
 	
 	return pStyle;
 }

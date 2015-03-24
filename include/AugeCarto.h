@@ -211,8 +211,8 @@ namespace auge
 		virtual g_int			GetLayerID(const char* layerName, const char* mapName) = 0;
 
 		virtual g_uint			GetStyleCount() = 0;
-		virtual Style*			GetStyle(g_uint id) = 0;
-		virtual Style*			GetStyle(const char* name) = 0;
+		virtual Style*			GetStyle(g_uint id, FeatureClass* pFeatureClass) = 0;
+		virtual Style*			GetStyle(const char* name, FeatureClass* pFeatureClass) = 0;
 
 		virtual char*			GetStyleText(g_uint id) = 0;
 		virtual char*			GetStyleText(const char* name) = 0;

@@ -207,10 +207,20 @@ namespace auge
 			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, version,visible);
 			if(pLayer!=NULL)
 			{
-				Style* pStyle = NULL;
-				pStyle = GetStyle(s_id);
-				pLayer->SetStyle(pStyle);
 				pMap->AddLayer(pLayer);
+				switch(pLayer->GetType())
+				{
+				case augeLayerFeature:
+					{
+						FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+						FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+						Style* pStyle = GetStyle(s_id, pFeatureClass);
+						pLayer->SetStyle(pStyle);
+					}
+					break;
+				}
+				
+				
 			}
 		}
 		pResult->Release();
@@ -263,10 +273,20 @@ namespace auge
 			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, version, visible);
 			if(pLayer!=NULL)
 			{
-				Style* pStyle = NULL;
-				pStyle = GetStyle(s_id);
-				pLayer->SetStyle(pStyle);
 				pMap->AddLayer(pLayer);
+				switch(pLayer->GetType())
+				{
+				case augeLayerFeature:
+					{
+						FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+						FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+						Style* pStyle = GetStyle(s_id, pFeatureClass);
+						pLayer->SetStyle(pStyle);
+					}
+					break;
+				case augeLayerRaster:
+					break;
+				}
 			}
 		}
 		pResult->Release();
@@ -598,7 +618,7 @@ namespace auge
 			const char* text = pResult->GetString(i,2);
 			const char* type = pResult->GetString(i,3);
 
-			pStyle = reader.Read(text, strlen(text));		
+			pStyle = reader.Read(text, strlen(text), NULL);		
 			if(pStyle==NULL)
 			{
 				GLogger* pLogger = augeGetLoggerInstance();
@@ -630,7 +650,7 @@ namespace auge
 		return pEnums;
 	}
 
-	Style* CartoManagerImpl::GetStyle(g_uint id)
+	Style* CartoManagerImpl::GetStyle(g_uint id, FeatureClass* pFeatureClass)
 	{	
 		GResultSet* pResult = NULL;
 		char sql[AUGE_SQL_MAX] = {0};
@@ -650,7 +670,7 @@ namespace auge
 
 		Style* pStyle = NULL;
 		StyleReaderImpl reader;
-		pStyle = reader.Read(text, strlen(text));		
+		pStyle = reader.Read(text, strlen(text), pFeatureClass);		
 
 		if(pStyle!=NULL)
 		{
@@ -677,7 +697,7 @@ namespace auge
 		return pStyle;
 	}
 
-	Style* CartoManagerImpl::GetStyle(const char* name)
+	Style* CartoManagerImpl::GetStyle(const char* name, FeatureClass* pFeatureClass)
 	{
 		if(name==NULL)
 		{
@@ -702,7 +722,7 @@ namespace auge
 
 		Style* pStyle = NULL;
 		StyleReaderImpl reader;
-		pStyle = reader.Read(text, strlen(text));
+		pStyle = reader.Read(text, strlen(text), NULL);
 		pResult->Release();
 
 		if(pStyle!=NULL)

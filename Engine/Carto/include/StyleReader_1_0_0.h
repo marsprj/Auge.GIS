@@ -6,13 +6,15 @@
 
 namespace auge
 {
+	class FeatureClass;
+
 	class StyleReader_1_0_0
 	{
 	public:
 		StyleReader_1_0_0();
 		virtual ~StyleReader_1_0_0();
 	public:
-		Style*				Read(XElement* pxRootElement);
+		Style*				Read(XElement* pxRootElement, FeatureClass* pFeatureClass);
 
 	private:
 		Style*				ReadUserLayer(XNode* pxUserLayer);
@@ -49,6 +51,9 @@ namespace auge
 		Fill*				ReadFill(XNode* pxFillNode);
 
 		//RESULTCODE			ReadLabel(TextSymbolizer *pSymbolizer, XNode *pxNodeLabel);
+
+	private:
+		FeatureClass* m_pFeatureClass;
 	};
 
 }

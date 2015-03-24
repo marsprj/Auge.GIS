@@ -147,7 +147,7 @@ namespace auge
 		FeatureCursor	*pCursor = NULL;
 		FeatureClass	*pFeatureClass = pLayer->GetFeatureClass();
 
-		pCursor = pFeatureClass->Query();
+		pCursor = pFeatureClass->Query(pFilter);
 
 		g_uchar* wkb = NULL;
 		auge::Geometry	*pGeometry = NULL;

@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
 
 auge::Map*	CreateMapObj();
 auge::Map*	CreateMapObj_SLD();
@@ -254,7 +254,7 @@ void MapTest::Create_Map_Point_Label()
 	}
 
 	auge::Style* pStyle = NULL;
-	pStyle = pCartoManager->GetStyle("cities_label");
+	pStyle = pCartoManager->GetStyle("cities_label", NULL);
 
 	auge::Layer *pLayer = NULL;
 	pLayer = pCartoManager->CreateLayer("cities",auge::augeLayerFeature, "cities", pMap->GetID(), pWorkspace->GetID(),pStyle->GetID());
@@ -442,7 +442,7 @@ auge::Map* CreateMapObj_SLD()
 	auge::StyleFactory	*pStyleFactory = auge::augeGetStyleFactoryInstance();
 	auge::StyleReader	*reader = pStyleFactory->CreateStyleReader();
 
-	pStyle = reader->Read(path);
+	pStyle = reader->Read(path, NULL);
 
 	reader->Release();
 
@@ -484,7 +484,7 @@ auge::Style* MapTest::LoadSLD(const char* path)
 	reader = pStyleFactory->CreateStyleReader();
 
 	auge::Style* pStyle = NULL;
-	pStyle = reader->Read(path);
+	pStyle = reader->Read(path, NULL);
 
 	return pStyle;
 }
