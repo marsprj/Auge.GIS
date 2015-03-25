@@ -6,6 +6,7 @@
 #include "StyleReaderImpl.h"
 #include "StyleWriterImpl.h"
 #include "EnumStyleImpl.h"
+#include "EnumMapImpl.h"
 
 namespace auge
 {
@@ -164,6 +165,49 @@ namespace auge
 		pResult->Release();
 
 		return pMap;
+	}
+
+	EnumMap* CartoManagerImpl::GetMaps()
+	{
+		if(m_pConnection==NULL)
+		{
+			return NULL;
+		}
+
+		const char* sql = "select gid, m_name,version,minx,miny,maxx,maxy,srid from g_map";
+
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+
+		EnumMapImpl* pEnumMap = new EnumMapImpl();
+		int count = pResult->GetCount();
+		for(int i=0; i<count; i++)
+		{
+			int mid = pResult->GetInt(i,0);
+			const char* name = pResult->GetString(i,1);
+			g_int version = pResult->GetInt(i,2);
+			double xmin = pResult->GetDouble(i,3);
+			double ymin = pResult->GetDouble(i,4);
+			double xmax = pResult->GetDouble(i,5);
+			double ymax = pResult->GetDouble(i,6);
+			g_int  srid = pResult->GetInt(i,7);
+
+			Map* pMap = new MapImpl();
+			pMap->SetID(mid);
+			pMap->SetName(name);
+			pMap->SetVersion(version);
+			pMap->SetExtent(xmin, ymin,xmax,ymax);
+			pMap->SetSRID(srid);
+
+			pEnumMap->Add(pMap);
+		}
+		
+		pResult->Release();
+		return pEnumMap;
 	}
 
 	Map* CartoManagerImpl::LoadMap(g_uint mid)

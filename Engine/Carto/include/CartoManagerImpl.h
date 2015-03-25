@@ -14,6 +14,7 @@ namespace auge
 		virtual g_uint			GetCount();
 		virtual	Map*			GetMap(g_uint mid);
 		virtual	Map*			GetMap(const char* name);
+		virtual EnumMap*		GetMaps();
 		virtual Map*			LoadMap(g_uint mid);
 		virtual Map*			LoadMap(const char* name);
 

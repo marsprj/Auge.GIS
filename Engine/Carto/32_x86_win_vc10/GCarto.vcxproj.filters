@@ -147,6 +147,9 @@
     <ClInclude Include="..\include\Maplex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\EnumMapImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\CartoFactoryImpl.cpp">
@@ -252,6 +255,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Maplex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EnumMapImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -190,6 +190,17 @@ namespace auge
 		virtual void			Release() = 0;
 	};
 
+	class EnumMap
+	{
+	protected:
+		EnumMap(){}
+		virtual ~EnumMap(){}
+	public:
+		virtual Map*			Next() = 0;
+		virtual void			Reset() = 0;
+		virtual void			Release() = 0;
+	};
+
 	class CartoManager
 	{
 	protected:
@@ -199,6 +210,7 @@ namespace auge
 		virtual g_uint			GetCount() = 0;
 		virtual	Map*			GetMap(g_uint mid) = 0;
 		virtual	Map*			GetMap(const char* name) = 0;
+		virtual EnumMap*		GetMaps() = 0;
 		virtual Map*			LoadMap(g_uint mid) = 0;
 		virtual Map*			LoadMap(const char* name) = 0;
 

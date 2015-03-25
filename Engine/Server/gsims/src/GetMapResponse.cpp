@@ -34,16 +34,13 @@ namespace auge
 		const char* name = m_pRequest->GetName();
 		if(name==NULL)
 		{
-			g_uint count = pCartoManager->GetCount();
-			for(g_uint i=0; i<count; i++)
+			EnumMap* pEnumMap = pCartoManager->GetMaps();
+			pEnumMap->Reset();
+			while((pMap=pEnumMap->Next())!=NULL)
 			{
-				pMap = pCartoManager->LoadMap(i);
-				if(pMap!=NULL)
-				{
-					AddMapNode(pxRoot, pMap);
-					pMap->Release();
-				}
+				AddMapNode(pxRoot, pMap);
 			}
+			pEnumMap->Release();
 		}
 		else
 		{

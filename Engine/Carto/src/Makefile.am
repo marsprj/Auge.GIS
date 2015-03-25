@@ -48,4 +48,5 @@ libgcarto_la_SOURCES=\
 		PolygonLabel.cpp \
 		Label.cpp \
 		LabelSet.cpp \
-		Maplex.cpp
+		Maplex.cpp \
+		EnumMapImpl.cpp

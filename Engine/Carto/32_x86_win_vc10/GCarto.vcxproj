@@ -93,6 +93,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\CartoFactoryImpl.h" />
     <ClInclude Include="..\include\CartoManagerImpl.h" />
     <ClInclude Include="..\include\ColorMapImpl.h" />
+    <ClInclude Include="..\include\EnumMapImpl.h" />
     <ClInclude Include="..\include\EnumStyleImpl.h" />
     <ClInclude Include="..\include\FeatureLayerImpl.h" />
     <ClInclude Include="..\include\FeatureStyleImpl.h" />
@@ -131,6 +132,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\CartoFactoryImpl.cpp" />
     <ClCompile Include="..\src\CartoManagerImpl.cpp" />
     <ClCompile Include="..\src\ColorMapImpl.cpp" />
+    <ClCompile Include="..\src\EnumMapImpl.cpp" />
     <ClCompile Include="..\src\EnumStyleImpl.cpp" />
     <ClCompile Include="..\src\FeatureLayerImpl.cpp" />
     <ClCompile Include="..\src\FeatureStyleImpl.cpp" />
