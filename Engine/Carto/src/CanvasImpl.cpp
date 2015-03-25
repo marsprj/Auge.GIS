@@ -321,4 +321,8 @@ namespace auge
 		return m_pRenderer;
 	}
 	
+	void CanvasImpl::Label()
+	{
+		m_maplex.Draw();
+	}
 }

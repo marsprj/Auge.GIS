@@ -52,6 +52,8 @@ namespace auge
 -------------------------------------------------------------------------
 service=ims&version=1.0.0&request=SetStyle&map=world&&layer=cities2222&style=line
 http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=SetStyle&map=world&&layer=cities&style=point
+http://192.168.111.160:8088/ows/user1/mgr?service=ims&version=1.0.0&request=SetStyle&map=world&&layer=cities&style=point_label
+http://123.57207.198/ows/user1/mgr?service=ims&version=1.0.0&request=SetStyle&map=cities_label&&layer=cities&style=point_label
 
 [ HTP Post ]
 -------------------------------------------------------------------------

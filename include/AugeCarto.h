@@ -119,6 +119,7 @@ namespace auge
 		virtual void			DrawLayer(FeatureLayer* pLayer) = 0;
 		virtual void			DrawLayer(RasterLayer* pLayer) = 0;
 		virtual void			DrawLayer(Layer* pLayer, Style* pStyle) = 0;
+		virtual void			Label() = 0;
 
 		virtual Transformation*	GetTransform() = 0;
 		virtual Renderer*		GetRenderer() = 0;

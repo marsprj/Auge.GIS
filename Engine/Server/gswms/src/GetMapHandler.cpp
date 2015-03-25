@@ -148,6 +148,7 @@ namespace auge
 				}
 			}
 		}
+		pCanvas->Label();
 
 		char img_sfix[AUGE_EXT_MAX] = {0};
 		char img_name[AUGE_NAME_MAX] = {0};

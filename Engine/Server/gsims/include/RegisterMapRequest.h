@@ -49,6 +49,7 @@ namespace auge
 -------------------------------------------------------------------------
 service=ims&version=1.0.0&request=RegisterMap&serviceName=world&mapName=world
 http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterMap&serviceName=world&mapName=world
+http://192.168.111.160:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterMap&serviceName=world&mapName=world
 
 [ HTP Post ]
 -------------------------------------------------------------------------

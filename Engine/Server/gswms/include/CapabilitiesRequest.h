@@ -61,6 +61,7 @@ namespace auge
 -------------------------------------------------------------------------
 service=wms&version=1.0.0&request=GetCapabilities
 user=user1&servicename=world&service=wms&version=1.0.0&request=GetCapabilities
-http://127.0.0.1:8088/user1/world/ims?service=wms&version=1.0.0&request=GetCapabilities
+http://127.0.0.1:8088/ows/user1/world/ims?service=wms&version=1.0.0&request=GetCapabilities
+http://192.168.111.160:8088/ows/user1/world/ims?service=wms&version=1.0.0&request=GetCapabilities
 
 ************************************************************************/
