@@ -51,6 +51,31 @@ namespace auge
 		m_text_extent.Inflate(1);
 	}
 
+	void PointLabel::AdjustPosition(int width, int height)
+	{
+		double offset_x=0.0f, offset_y=0.0f;
+		if(m_text_extent.m_xmin<0)
+		{
+			offset_x = -m_text_extent.m_xmin;
+		}
+		else if(m_text_extent.m_xmax>width)
+		{
+			offset_x = width - m_text_extent.m_xmax - 2;
+		}
+
+		if(m_text_extent.m_ymin<0)
+		{
+			offset_y = -m_text_extent.m_ymin;
+		}
+		else if(m_text_extent.m_ymax>height)
+		{
+			offset_y = height - m_text_extent.m_ymax -2;
+		}
+		m_text_extent.Offset(offset_x, offset_y);
+		m_pos.point.x += offset_x;
+		m_pos.point.y += offset_y;
+	}
+
 	bool PointLabel::IsCollision(GLabel* other)
 	{
 		if(other==NULL)

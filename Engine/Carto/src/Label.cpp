@@ -108,6 +108,11 @@ namespace auge
 		
 	}
 
+	void GLabel::AdjustPosition(int width, int height)
+	{
+
+	}
+
 	bool GLabel::IsCollision(GLabel* other)
 	{
 		return true;

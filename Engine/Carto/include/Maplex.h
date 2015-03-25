@@ -18,6 +18,7 @@ namespace auge
 		virtual ~Maplex();
 	public:
 		void		Draw();
+		void		SetExtent(int width, int height);
 
 		LabelSet*	GetLabelSet(const char* name);
 		bool		AddLabel(const char* set_name, GLabel* pLabel);
@@ -35,6 +36,8 @@ namespace auge
 		LabelSet	m_labeled;
 		Renderer	*m_pRenderer;
 		Transformation *m_pTransformation;
+		int			m_width;
+		int			m_height;
 
 	};
 }

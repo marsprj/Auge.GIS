@@ -14,6 +14,7 @@ namespace auge
 		m_transform.SetCanvas(width, height);
 		m_viewer.Set(-180.0f, -90.0f, 180.0f, 90.0f);
 		m_pRenderer = new RendererCairo(width, height);
+		m_maplex.SetExtent(width, height);
 		m_maplex.SetRenderer(m_pRenderer);
 		m_maplex.SetTransformation(&m_transform);
 	}
@@ -202,6 +203,7 @@ namespace auge
 					pLabel->SetText(label_text);
 				}
 				pLabel->ComputePosition(m_pRenderer, &m_transform);
+				pLabel->AdjustPosition(m_width, m_height);
 				if(!m_maplex.IsCollision(pLabel))
 				{
 					m_maplex.AddLabel(name, pLabel);

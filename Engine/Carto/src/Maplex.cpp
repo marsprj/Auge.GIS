@@ -19,6 +19,12 @@ namespace auge
 		Cleanup();
 	}
 
+	void Maplex::SetExtent(int width, int height)
+	{
+		m_width = width;
+		m_height = height;
+	}
+
 	void Maplex::Draw()
 	{
 		LabelSet* pLabelSet = NULL;

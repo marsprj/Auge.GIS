@@ -24,6 +24,7 @@ namespace auge
 		virtual void			Draw(Renderer* pRenderer, Transformation* pTransformation);
 		virtual bool			IsCollision(GLabel* other);
 		virtual void			ComputePosition(Renderer* pRenderer, Transformation* pTransform);
+		virtual void			AdjustPosition(int width, int height);
 
 		virtual void			SetText(const char* text);
 		virtual void			SetGeometry(Geometry* pGeometry);
