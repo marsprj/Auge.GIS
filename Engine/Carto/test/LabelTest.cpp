@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(LabelTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(LabelTest);
 
 auge::Map*	CreateMapObj();
 auge::Map*	CreateMapObj_SLD();
@@ -79,7 +79,8 @@ void LabelTest::DrawMap()
 	pWorkspace = (auge::FeatureWorksapce*)pConnManager->GetWorkspace("db1");
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass("cities");
 
-	const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_label.xml";
+	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_label.xml";
+	const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_theme_label.xml";
 	auge::Style* pStyle = LoadSLD(path, pFeatureClass);
 	auge::FeatureLayer* pFLayer = pCartoFactory->CreateFeatureLayer();
 	pFLayer->SetName("cities");

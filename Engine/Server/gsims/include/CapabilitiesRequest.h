@@ -59,5 +59,6 @@ namespace auge
 [ HTTP Get ]
 -------------------------------------------------------------------------
 service=ims&version=1.0.0&request=GetCapabilities
+http://123.57.207.198/ows/admin/mgr?service=ims&version=1.0.0&request=GetCapabilities
 
 ************************************************************************/

@@ -429,9 +429,9 @@ namespace auge
 		const char* szoper = pFactory->AsString(pFilter->GetOperator());
 		sql.append("(");
 		sql.append(strLeft);
-		sql.append(") ");
+		sql.append(")");
 		sql.append(szoper);
-		sql.append(" (");
+		sql.append("(");
 		sql.append(strRight);
 		sql.append(")");
 		return rc;
@@ -521,17 +521,42 @@ namespace auge
 	RESULTCODE SQLBuilder::BuildBinaryLogicFilter(std::string& sql,FeatureClassPgs* pFeatureClass, BinaryLogicFilter *pFilter)
 	{
 		RESULTCODE rc = AG_SUCCESS;
-		GFilter* pFilter1 = NULL;
-		GFilter* pFilter2 = NULL;
+		GFilter* pSubFilter = NULL;
 		EnumFilter* pSubFilters = pFilter->GetFilters();
 		FilterFactory* pFactory = augeGetFilterFactoryInstance();
+		const char* oper = pFactory->AsString(pFilter->GetOperator());
+		std::string subsql;
 
 		if(pSubFilters==NULL)
 		{
 			return AG_FAILURE;
 		}
 
-		pFilter1 = pSubFilters->Next();
+		bool first = true;
+		pSubFilters->Reset();
+		sql.append("(");
+		while((pSubFilter=pSubFilters->Next())!=NULL)
+		{
+			subsql.clear();
+			rc = BuildFilter(subsql, pFeatureClass, pSubFilter);
+			if(rc==AG_SUCCESS)
+			{
+				if(first)
+				{
+					first = false;
+				}
+				else
+				{
+					sql.append(") ");
+					sql.append(oper);
+					sql.append(" (");
+				}
+				sql.append(subsql);
+			}
+		}
+		sql.append(")");
+
+		/*pFilter1 = pSubFilters->Next();
 		pFilter2 = pSubFilters->Next();
 		if(pFilter1==NULL||pFilter2==NULL)
 		{
@@ -548,17 +573,60 @@ namespace auge
 			return rc;
 		}
 		sql.append(") ");
-		sql.append(pFactory->AsString(pFilter->GetOperator()));
+		sql.append(oper);
 		sql.append(" (");
 		rc = BuildFilter(strRight, pFeatureClass, pFilter2);
 		if(rc!=AG_SUCCESS)
 		{
 			return rc;
 		}
-		sql.append(")");
+		sql.append(")");*/
 
 		return rc;
 	}
+
+	//RESULTCODE SQLBuilder::BuildBinaryLogicFilter(std::string& sql,FeatureClassPgs* pFeatureClass, BinaryLogicFilter *pFilter)
+	//{
+	//	RESULTCODE rc = AG_SUCCESS;
+	//	GFilter* pFilter1 = NULL;
+	//	GFilter* pFilter2 = NULL;
+	//	EnumFilter* pSubFilters = pFilter->GetFilters();
+	//	FilterFactory* pFactory = augeGetFilterFactoryInstance();
+
+	//	if(pSubFilters==NULL)
+	//	{
+	//		return AG_FAILURE;
+	//	}
+
+	//	pSubFilters->Reset();
+	//	pFilter1 = pSubFilters->Next();
+	//	pFilter2 = pSubFilters->Next();
+	//	if(pFilter1==NULL||pFilter2==NULL)
+	//	{
+	//		pSubFilters->Release();
+	//		return AG_FAILURE;
+	//	}
+
+	//	std::string strLeft;
+	//	std::string strRight;
+	//	sql.append("(");
+	//	rc = BuildFilter(strLeft, pFeatureClass, pFilter1);
+	//	if(rc!=AG_SUCCESS)
+	//	{
+	//		return rc;
+	//	}
+	//	sql.append(") ");
+	//	sql.append(pFactory->AsString(pFilter->GetOperator()));
+	//	sql.append(" (");
+	//	rc = BuildFilter(strRight, pFeatureClass, pFilter2);
+	//	if(rc!=AG_SUCCESS)
+	//	{
+	//		return rc;
+	//	}
+	//	sql.append(")");
+
+	//	return rc;
+	//}
 
 	RESULTCODE SQLBuilder::BuildUnaryLogicFilter(std::string& sql,FeatureClassPgs* pFeatureClass, UnaryLogicFilter *pFilter)
 	{

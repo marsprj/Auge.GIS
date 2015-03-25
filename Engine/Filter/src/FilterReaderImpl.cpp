@@ -184,7 +184,11 @@ namespace auge
 	{
 		BinaryLogicFilter* pBinaryFilter = NULL;
 		FilterFactory* pFactory = augeGetFilterFactoryInstance();
-		pBinaryFilter = pFactory->CreateBinaryLogicFilter();
+		pBinaryFilter = pFactory->CreateBinaryLogicFilter(pxLogical->GetName());
+		if(pBinaryFilter==NULL)
+		{
+			return NULL;
+		}
 
 		XNode* pxNode = NULL;
 		XNodeSet* pxNodeSet = pxLogical->GetChildren();

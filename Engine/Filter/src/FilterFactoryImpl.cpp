@@ -104,9 +104,24 @@ namespace auge
 		return (new BinaryComparisonFilterImpl());
 	}
 
-	BinaryLogicFilter*	FilterFactoryImpl::CreateBinaryLogicFilter()
+	BinaryLogicFilter*	FilterFactoryImpl::CreateBinaryLogicFilter(const char* oper)
 	{
-		return (new BinaryLogicFilterImpl());
+		augeLogicalOperator operc;
+		if(!g_stricmp(oper, "And"))
+		{
+			operc = augeLogOprAnd;
+		}
+		else if(!g_stricmp(oper, "Or"))
+		{
+			operc = augeLogOprOr;
+		}
+		else
+		{
+			return NULL;
+		}
+		BinaryLogicFilterImpl* pFilter = new BinaryLogicFilterImpl();
+		pFilter->SetOperator(operc);
+		return pFilter;
 	}
 
 	UnaryLogicFilter* FilterFactoryImpl::CreateUnaryLogicFilter()

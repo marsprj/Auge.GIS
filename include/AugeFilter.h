@@ -530,7 +530,7 @@ namespace auge
 															  Expression* pUpperBound) = 0;
 
 		virtual BinaryComparisonFilter*	CreateBinaryComparisonFilter() = 0;
-		virtual BinaryLogicFilter*		CreateBinaryLogicFilter() = 0;
+		virtual BinaryLogicFilter*		CreateBinaryLogicFilter(const char* oper) = 0;
 		virtual UnaryLogicFilter*		CreateUnaryLogicFilter() = 0;
 
 		virtual GQuery*					CreateQuery() = 0;
