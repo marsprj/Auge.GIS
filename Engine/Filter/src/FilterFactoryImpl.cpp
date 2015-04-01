@@ -170,10 +170,10 @@ namespace auge
 		case augeComOprGreaterThan:
 			szoper = ">";
 			break;
-		case augeComOprLessThanOrEqalTo:
+		case augeComOprLessThanOrEqualTo:
 			szoper = "<=";
 			break;
-		case augeComOprGreaterThanOrEqalTo:
+		case augeComOprGreaterThanOrEqualTo:
 			szoper = ">=";
 			break;
 		}

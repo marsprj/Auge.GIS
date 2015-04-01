@@ -459,15 +459,15 @@ namespace auge
 	//	augeComOprNotEqual				= 1,	// 不等
 	//	augeComOprLessThan				= 2,	// 小于
 	//	augeComOprGreaterThan			= 3,	// 大于
-	//	augeComOprLessThanOrEqalTo		= 4,	// 小于等于
-	//	augeComOprGreaterThanOrEqalTo	= 5,	// 大于等于
+	//	augeComOprLessThanOrEqualTo		= 4,	// 小于等于
+	//	augeComOprGreaterThanOrEqualTo	= 5,	// 大于等于
 	//	augeComOprIsLike				= 6,
 	//	augecomOprIsNull				= 7,
 	//	augeComOprIsBetween				= 8
 	//}augeComparisonOperator;
 	augeComparisonOperator FilterReaderImpl::ParseComparisonOperator(const char* oper)
 	{
-		if(!g_stricmp(oper, "PropertyIsEqual"))
+		if(!g_stricmp(oper, "PropertyIsEqualTo"))
 		{
 			return augeComOprEqual;
 		}
@@ -483,13 +483,13 @@ namespace auge
 		{
 			return augeComOprGreaterThan;
 		}
-		else if(!g_stricmp(oper, "PropertyIsLessThanOrEqalTo"))
+		else if(!g_stricmp(oper, "PropertyIsLessThanOrEqualTo"))
 		{
-			return augeComOprLessThanOrEqalTo;
+			return augeComOprLessThanOrEqualTo;
 		}
-		else if(!g_stricmp(oper, "PropertyIsGreaterThanOrEqalTo"))
+		else if(!g_stricmp(oper, "PropertyIsGreaterThanOrEqualTo"))
 		{
-			return augeComOprGreaterThanOrEqalTo;
+			return augeComOprGreaterThanOrEqualTo;
 		}
 		else if(!g_stricmp(oper, "PropertyIsIsLike"))
 		{

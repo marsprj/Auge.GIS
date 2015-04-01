@@ -55,8 +55,8 @@ namespace auge
 		augeComOprNotEqual				= 1,	// 不等
 		augeComOprLessThan				= 2,	// 小于
 		augeComOprGreaterThan			= 3,	// 大于
-		augeComOprLessThanOrEqalTo		= 4,	// 小于等于
-		augeComOprGreaterThanOrEqalTo	= 5,	// 大于等于
+		augeComOprLessThanOrEqualTo		= 4,	// 小于等于
+		augeComOprGreaterThanOrEqualTo	= 5,	// 大于等于
 		augeComOprIsLike				= 6,
 		augecomOprIsNull				= 7,
 		augeComOprIsBetween				= 8
