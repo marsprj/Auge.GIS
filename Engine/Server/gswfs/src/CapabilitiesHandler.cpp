@@ -241,7 +241,7 @@ namespace auge
 					{
 						XElement* pxType = pxTypeList->AddChild("FeatureType", NULL);
 						pxNode = pxType->AddChild("Name",NULL);
-						pxNode->SetChildText(pFeatureClass->GetName());
+						pxNode->SetChildText(pFLayer->GetName());
 						pxNode = pxType->AddChild("Name",NULL);
 						pxNode->SetChildText(pFeatureClass->GetName());
 						pxNode = pxType->AddChild("Abstract",NULL);
