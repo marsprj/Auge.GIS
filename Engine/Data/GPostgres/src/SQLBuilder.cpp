@@ -374,8 +374,8 @@ namespace auge
 		case augeComOprNotEqual:
 		case augeComOprLessThan:
 		case augeComOprGreaterThan:
-		case augeComOprLessThanOrEqalTo:
-		case augeComOprGreaterThanOrEqalTo:		
+		case augeComOprLessThanOrEqualTo:
+		case augeComOprGreaterThanOrEqualTo:		
 			{
 				BuildBinaryComparisonFilter(sql, pFeatureClass, static_cast<BinaryComparisonFilter *>(pFilter));
 			}
