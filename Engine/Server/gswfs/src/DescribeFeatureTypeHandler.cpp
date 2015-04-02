@@ -197,9 +197,9 @@ namespace auge
 		XElement* pxComplexContent = pxComplexType->AddChild("complexContent","xsd");
 		// schema-->complexType-->complexContent-->extentsion
 		XElement* pxExtentsion = pxComplexContent->AddChild("extentsion", "xsd");
-		// schema-->complexType-->complexContent-->extentsion-->sequence
-		XElement* pxSequence = pxExtentsion->AddChild("extentsion", "xsd");
 		pxSequence->SetAttribute("base","gml:AbstractFeatureType", NULL);
+		// schema-->complexType-->complexContent-->extentsion-->sequence
+		XElement* pxSequence = pxExtentsion->AddChild("sequence", "xsd");
 
 		GField	*pField  = NULL;
 		GFields	*pFields = pFeatureClass->GetFields();
