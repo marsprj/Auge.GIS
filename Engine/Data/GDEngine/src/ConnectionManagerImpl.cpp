@@ -63,7 +63,7 @@ namespace auge
 		for(iter=m_connections.begin(); iter!=m_connections.end(); iter++)
 		{
 			pWorkspace = *iter;
-			if(pWorkspace->GetID(), id)
+			if(pWorkspace->GetID()==id)
 			{
 				if(!pWorkspace->IsOpen())
 				{
