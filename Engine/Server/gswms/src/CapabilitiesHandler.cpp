@@ -499,6 +499,7 @@ namespace auge
 				if(pStyle!=NULL)
 				{
 					pxNode = pxStyle->AddChild("Name",NULL);
+					pxNode->AddChildText(pStyle->GetName());
 					pxNode = pxStyle->AddChild("Title",NULL);
 					pxNode = pxStyle->AddChild("Abstract",NULL);
 					XElement* pxLegendURL = pxStyle->AddChild("LegendURL",NULL);
