@@ -45,4 +45,5 @@ libgcore_la_SOURCES=\
 		XParser.cpp \
 		XProcessingInstructionNode.cpp \
 		XTestNode.cpp \
-		GMLWriterImpl.cpp
+		GMLWriterImpl.cpp \
+		EnumValueImpl.cpp
