@@ -90,6 +90,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\..\..\include\AugeType.h" />
     <ClInclude Include="..\..\..\include\AugeXML.h" />
     <ClInclude Include="..\..\..\include\wkb.h" />
+    <ClInclude Include="..\include\EnumValueImpl.h" />
     <ClInclude Include="..\include\FieldFactoryImpl.h" />
     <ClInclude Include="..\include\GeometryDefImpl.h" />
     <ClInclude Include="..\include\GeometryFactoryImpl.h" />
@@ -110,6 +111,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\WKTWriter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\EnumValueImpl.cpp" />
     <ClCompile Include="..\src\FieldFactoryImpl.cpp" />
     <ClCompile Include="..\src\GColor.cpp" />
     <ClCompile Include="..\src\GEnvelope.cpp" />

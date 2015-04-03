@@ -95,6 +95,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetGmlObjectHandler.cpp" />
     <ClCompile Include="..\src\GetGmlObjectRequest.cpp" />
     <ClCompile Include="..\src\GetGmlObjectResponse.cpp" />
+    <ClCompile Include="..\src\GetValueHandler.cpp" />
+    <ClCompile Include="..\src\GetValueRequest.cpp" />
+    <ClCompile Include="..\src\GetValueResponse.cpp" />
     <ClCompile Include="..\src\TransactionHandler.cpp" />
     <ClCompile Include="..\src\TransactionRequest.cpp" />
     <ClCompile Include="..\src\TransactionResponse.cpp" />
@@ -113,6 +116,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetGmlObjectHandler.h" />
     <ClInclude Include="..\include\GetGmlObjectRequest.h" />
     <ClInclude Include="..\include\GetGmlObjectResponse.h" />
+    <ClInclude Include="..\include\GetValueHandler.h" />
+    <ClInclude Include="..\include\GetValueRequest.h" />
+    <ClInclude Include="..\include\GetValueResponse.h" />
     <ClInclude Include="..\include\TransactionHandler.h" />
     <ClInclude Include="..\include\TransactionRequest.h" />
     <ClInclude Include="..\include\TransactionResponse.h" />

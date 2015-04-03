@@ -1298,4 +1298,18 @@ namespace auge
 		}
 		return "";
 	}
+
+	RESULTCODE SQLBuilder::BuildGetUniqueValueSQL(std::string& sql, const char* field_name, FeatureClassPgs* pFeatureClass, augeOrderType order)
+	{
+		sql = "select distinct ";
+		sql.append(field_name);
+		sql.append(" as ");
+		sql.append(field_name);
+		sql.append(" from ");
+		sql.append(pFeatureClass->GetName());
+		sql.append(" order by ");
+		sql.append(field_name);
+		sql.append(order==augeOrderAsc?" asc":" desc");
+		return AG_SUCCESS;
+	}
 }

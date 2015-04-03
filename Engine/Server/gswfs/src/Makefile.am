@@ -28,4 +28,7 @@ libgswfs_la_SOURCES=\
 		TransactionHandler.cpp \
 		TransactionRequest.cpp \
 		TransactionResponse.cpp \
+		GetValueHandler.cpp \
+		GetValueRequest.cpp \
+		GetValueResponse.cpp \
 		WFeatureEngine.cpp

@@ -15,6 +15,7 @@
 #include "AugeObject.h"
 #include <map>
 #include <string>
+#include <vector>
 
 #ifdef __linux__
 #	include <dlfcn.h>
@@ -272,6 +273,26 @@ namespace auge
 		void InitVariant(VARIANT_STRU& val);
 	private:
 		VARIANT_STRU  m_Variant;
+	};
+
+	class AUGE_API EnumValue
+	{
+	public:
+		EnumValue();
+		virtual ~EnumValue();
+	public:
+		virtual void	Reset();
+		virtual	GValue*	Next();
+		virtual void	Release();
+
+	public:
+		void	Add(GValue* pValue);
+	private:
+		void	Cleanup();
+
+	private:
+		std::vector<GValue*> m_values;
+		std::vector<GValue*>::iterator m_iter;
 	};
 
 	class GError

@@ -192,3 +192,30 @@ void PgsTest::QueryTest_2()
 		QueryTest();
 	}
 }
+
+void PgsTest::GetUniqueValue()
+{
+	auge::FeatureClass* pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	auge::EnumValue* pEnumValues = pFeatureClass->GetUniqueValue("country");
+
+	auge::GValue* pValue = NULL;
+	pEnumValues->Reset();
+	while((pValue=pEnumValues->Next())!=NULL)
+	{
+		switch(pValue->GetType())
+		{
+		case augeValueTypeInt:
+			printf("%d\n", pValue->GetInt());
+			break;
+		case augeValueTypeDouble:
+			printf("%f\n", pValue->GetDouble());
+			break;
+		case augeValueTypeString:
+			printf("%s\n", pValue->GetString());
+			break;
+		}
+	}
+
+	pEnumValues->Release();
+	pFeatureClass->Release();
+}

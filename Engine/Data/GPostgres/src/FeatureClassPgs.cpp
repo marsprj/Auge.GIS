@@ -380,4 +380,58 @@ namespace auge
 	{
 		return (new FeatureInsertCommandPgs(this));
 	}
+
+	EnumValue* FeatureClassPgs::GetUniqueValue(const char* field, augeOrderType order/*=augeOrderAsc*/)
+	{
+		if(!field)
+		{
+			return NULL;
+		}
+
+		GField* pField = GetFields()->GetField(field);
+		if(pField==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "No field[%s] in FeatureClass [%s]", field, GetName());
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
+			return NULL;
+		}
+
+		std::string sql;
+		SQLBuilder::BuildGetUniqueValueSQL(sql, field, this, order);
+
+		GResultSet*  pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql.c_str());
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+
+		GValue* pValue = NULL;
+		EnumValue* pEnumValue = new EnumValue();
+		int count = pResult->GetCount();
+		for(int i=0; i<count; i++)
+		{
+			switch(pField->GetType())
+			{
+			case augeFieldTypeInt:
+				pValue = new GValue(pResult->GetInt(i,0));
+				break;
+			case augeFieldTypeDouble:
+				pValue = new GValue(pResult->GetDouble(i,0));
+				break;
+			case augeFieldTypeString:
+				pValue = new GValue(pResult->GetString(i,0));
+				break;
+			}
+			if(pValue)
+			{
+				pEnumValue->Add(pValue);
+			}
+		}
+
+		pResult->Release();
+		return pEnumValue;
+	}
 }

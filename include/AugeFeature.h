@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeData.h"
 #include "AugeGeometry.h"
+#include "AugeFilter.h"
 
 #ifdef WIN32
 #	ifdef AUGE_FEATURE_EXPORTS
@@ -64,6 +65,8 @@ namespace auge
 		virtual FeatureCursor*		Query(GEnvelope& extent, augeCursorType type=augeStaticCursor) = 0;
 		virtual FeatureCursor*		Query(GFilter* pFilter, augeCursorType type=augeStaticCursor) = 0;
 		virtual FeatureCursor*		Query(GQuery* pQuery, augeCursorType type=augeStaticCursor) = 0;
+
+		virtual EnumValue*			GetUniqueValue(const char* field, augeOrderType order=augeOrderAsc) = 0;
 
 		virtual RESULTCODE			RemoveFeature(GFilter* pFilter) = 0;
 		

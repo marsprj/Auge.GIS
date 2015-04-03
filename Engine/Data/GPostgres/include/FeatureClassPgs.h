@@ -32,6 +32,8 @@ namespace auge
 		virtual FeatureCursor*		Query(GFilter* pFilter, augeCursorType type=augeStaticCursor);
 		virtual FeatureCursor*		Query(GQuery* pQuery, augeCursorType type=augeStaticCursor);
 
+		virtual EnumValue*			GetUniqueValue(const char* field, augeOrderType order=augeOrderAsc);
+
 		virtual RESULTCODE			RemoveFeature(GFilter* pFilter);
 
 		virtual FeatureInsertCommand* CreateInsertCommand();

@@ -271,4 +271,9 @@ namespace auge
 	{
 		return NULL;
 	}
+
+	EnumValue* FeatureClassShp::GetUniqueValue(const char* filed, augeOrderType order/*=augeOrderAsc*/)
+	{
+		return NULL;
+	}
 }
