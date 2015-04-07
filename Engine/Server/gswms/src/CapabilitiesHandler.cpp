@@ -558,7 +558,9 @@ namespace auge
 			GField* pField = pFeatureClass->GetFields()->GetGeometryField();
 			if(pField!=NULL)
 			{
-				pxGeomType->AddChildText(pField->GetTypeName());
+				GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+				const char* type = pGeometryFactory->Encode(pField->GetGeometryDef()->GeometryType());
+				pxGeomType->AddChildText(type);
 			}
 		}
 	}
