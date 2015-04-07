@@ -5,6 +5,8 @@
 #include "AugeService.h"
 #include "AugeXML.h"
 #include "AugeCarto.h"
+#include "AugeFeature.h"
+#include "AugeField.h"
 
 namespace auge
 {
@@ -246,6 +248,12 @@ namespace auge
 				pxNode = pxLayer_2->AddChild("Abstract",NULL);
 				g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
 				pxNode = pxLayer_2->AddChild("CRS",NULL);
+				switch(pLayer->GetType())
+				{
+				case augeLayerFeature:
+					AddLayerGeomTypeNode(pxLayer_2, static_cast<FeatureLayer*>(pLayer));
+					break;
+				}
 
 				extent = pLayer->GetExtent();
 				if(!extent.IsValid())
@@ -462,6 +470,12 @@ namespace auge
 				pxNode = pxLayer_2->AddChild("Abstract",NULL);
 				g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
 				pxNode = pxLayer_2->AddChild("CRS",NULL);
+				switch(pLayer->GetType())
+				{
+				case augeLayerFeature:
+					AddLayerGeomTypeNode(pxLayer_2, static_cast<FeatureLayer*>(pLayer));
+					break;
+				}
 
 				extent = pLayer->GetExtent();
 				if(!extent.IsValid())
@@ -533,5 +547,19 @@ namespace auge
 		pResponse->SetPath(capa_path);
 
 		return pResponse;
+	}
+
+	void CapabilitiesHandler::AddLayerGeomTypeNode(XElement* pxLayer, FeatureLayer* pFeatureLayer)
+	{
+		XElement* pxGeomType = pxLayer->AddChild("GeometryType", NULL);
+		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+		if(pFeatureClass!=NULL)
+		{
+			GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+			if(pField!=NULL)
+			{
+				pxGeomType->AddChildText(pField->GetTypeName());
+			}
+		}
 	}
 }

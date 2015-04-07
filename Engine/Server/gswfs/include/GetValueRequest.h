@@ -59,8 +59,9 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-service=wfs&version=1.0.0&request=GetValue&typeName=cities&field=country
+service=wfs&version=1.0.0&request=GetValue&typeName=cities&field=country&type=unique
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetValue&typeName=cities&field=country
-http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetValue&typeName=cities&field=country
+http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetValue&typeName=cities&field=country&type=unique
+http://192.168.111.160:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetValue&typeName=cities&field=country&type=unique
 
 ************************************************************************/
