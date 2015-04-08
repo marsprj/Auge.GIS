@@ -240,6 +240,7 @@ namespace auge
 		virtual RESULTCODE		UpdateStyle(const char* name, const char* text) = 0;
 		virtual RESULTCODE		RemoveStyle(const char* name) = 0;
 		virtual g_int			GetStyleID(const char* name) = 0;
+		virtual bool			IsStyleUpdated(Style* pStyle) = 0;
 
 		//ÐÞ¸Ä
 		virtual RESULTCODE		SetStyle(g_uint layerID, g_uint styleID) = 0;

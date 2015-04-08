@@ -35,6 +35,8 @@ namespace auge
 		virtual Geometry*		GetGeometry();
 		virtual TextSymbolizer* GetSymbolizer();
 
+		virtual bool			IsVisible(int view_width, int view_height);
+
 		virtual void			Release();
 
 	protected:

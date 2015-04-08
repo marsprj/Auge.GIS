@@ -13,6 +13,7 @@ namespace auge
 	public:
 		virtual void		Draw(Renderer* pRenderer, Transformation* pTransformation);
 		//svirtual bool		IsCollision(GLabel* other);
+		virtual bool		IsVisible(int view_width, int view_height);
 	};
 }
 

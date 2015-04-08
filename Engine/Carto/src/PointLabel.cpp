@@ -99,4 +99,25 @@ namespace auge
 
 		return true;
 	}
+
+	bool PointLabel::IsVisible(int view_width, int view_height)
+	{
+		if(m_text_extent.m_xmax<0)
+		{
+			return false;
+		}
+		if(m_text_extent.m_xmin>view_width)
+		{
+			return false;
+		}
+		if(m_text_extent.m_ymax<0)
+		{
+			return false;
+		}
+		if(m_text_extent.m_ymin>view_width)
+		{
+			return false;
+		}
+		return true;
+	}
 }

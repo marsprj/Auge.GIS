@@ -116,36 +116,42 @@ namespace auge
 			{
 				if(!strlen(sname))
 				{	// Default Style
-					pCanvas->DrawLayer(pLayer);
-					continue;
+					//pCanvas->DrawLayer(pLayer);
+					Style* pStyle = pLayer->GetStyle();
+					if(pStyle!=NULL)
+					{
+						sname = pStyle->GetName();
+					}
 				}
 
-				switch(pLayer->GetType())
-				{
-				case augeLayerFeature:
-					{
-						FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-						FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-						pStyle = pCartoManager->GetStyle(sname, pFeatureClass);
-					}
-					break;
-				case augeLayerRaster:
-					{
+				DrawNamedLayer(pCanvas, pLayer, sname);
+				//switch(pLayer->GetType())
+				//{
+				//case augeLayerFeature:
+				//	{
+				//		FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+				//		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+				//		pStyle = pCartoManager->GetStyle(sname, pFeatureClass);
+				//	}
+				//	break;
+				//case augeLayerRaster:
+				//	{
 
-					}
-					break;
-				}
-				if(pStyle!=NULL)
-				{
-					pCanvas->DrawLayer(pLayer, pStyle);
-				}
-				else
-				{
-					char msg[AUGE_MSG_MAX];
-					g_sprintf(msg, "Style [%s] Not Defined", sname);
-					GLogger* pLogger = augeGetLoggerInstance();
-					pLogger->Info(msg, __FILE__, __LINE__);
-				}
+				//	}
+				//	break;
+				//}
+				//if(pStyle!=NULL)
+				//{
+				//	pCanvas->DrawLayer(pLayer, pStyle);
+				//}
+				//else
+				//{
+				//	char msg[AUGE_MSG_MAX];
+				//	g_sprintf(msg, "Style [%s] Not Defined", sname);
+				//	GLogger* pLogger = augeGetLoggerInstance();
+				//	pLogger->Info(msg, __FILE__, __LINE__);
+				//}
+				//}				
 			}
 		}
 		pCanvas->Label();
@@ -162,6 +168,39 @@ namespace auge
 		GetMapResponse* pMapResponse = new GetMapResponse(pRequest);
 		pMapResponse->SetPath(img_path);
 		return pMapResponse;
+	}
+
+	void GetMapHandler::DrawNamedLayer(Canvas* pCanvas, Layer* pLayer, const char* style_name)
+	{
+		Style* pStyle = NULL;
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+
+		switch(pLayer->GetType())
+		{
+		case augeLayerFeature:
+			{
+				FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+				FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+				pStyle = pCartoManager->GetStyle(style_name, pFeatureClass);
+			}
+			break;
+		case augeLayerRaster:
+			{
+
+			}
+			break;
+		}
+		if(pStyle!=NULL)
+		{
+			pCanvas->DrawLayer(pLayer, pStyle);
+		}
+		else
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Style [%s] Not Defined", style_name);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Info(msg, __FILE__, __LINE__);
+		}
 	}
 
 }

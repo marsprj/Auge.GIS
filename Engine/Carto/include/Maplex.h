@@ -23,6 +23,7 @@ namespace auge
 		LabelSet*	GetLabelSet(const char* name);
 		bool		AddLabel(const char* set_name, GLabel* pLabel);
 		bool		IsCollision(GLabel* label);
+		bool		IsVisible(GLabel* label);
 		void		Cleanup();
 
 		void		SetRenderer(Renderer* m_pRenderer);

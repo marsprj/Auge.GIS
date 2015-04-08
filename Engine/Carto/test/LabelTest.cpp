@@ -68,7 +68,8 @@ void LabelTest::DrawMap()
 	auge::Canvas* pCanvas = NULL;
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
-	auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
+	//auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
+	auge::GEnvelope viewer(0,0,180.f,90.f);
 	pCanvas = pCartoFactory->CreateCanvas2D(1600, 1200);
 	pCanvas->SetViewer(viewer);
 

@@ -34,6 +34,7 @@ namespace auge
 		virtual char*			GetStyleText(g_uint id);
 		virtual char*			GetStyleText(const char* name);
 		virtual EnumStyle*		GetStyles();
+		virtual bool			IsStyleUpdated(Style* pStyle);
 		
 		virtual g_int			CreateStyle(const char* name, Style* pStyle,    augeGeometryType type);
 		virtual RESULTCODE		CreateStyle(const char* name, const char* text, augeGeometryType type);

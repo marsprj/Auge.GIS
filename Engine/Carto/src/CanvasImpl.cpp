@@ -1,4 +1,5 @@
 #include "CanvasImpl.h"
+#include "AugeField.h"
 #include "RendererCairo.h"
 #include "LabelSet.h"
 #include "PointLabel.h"
@@ -8,7 +9,7 @@
 namespace auge
 {
 	CanvasImpl::CanvasImpl(g_uint width, g_uint height)
-	{
+	{ 
 		m_width = width;
 		m_height = height;
 		m_transform.SetCanvas(width, height);
@@ -30,6 +31,7 @@ namespace auge
 
 	void CanvasImpl::SetViewer(GEnvelope& viewer)
 	{
+		m_viewer = viewer;
 		m_transform.SetViewer(viewer);
 	}
 
@@ -126,12 +128,17 @@ namespace auge
 	}
 
 	void CanvasImpl::DrawLayer(FeatureLayer* pLayer, Rule* pRule)
-	{
+	{	
+		FeatureClass* pFeatureClass = NULL;
+		pFeatureClass = pLayer->GetFeatureClass();
+
+		GFilter* pFilter = CreateViewFilter(pRule->GetFilter(), pFeatureClass);
+
 		Symbolizer* pSymbolizer = NULL;
 		pSymbolizer = pRule->GetSymbolizer();
 		if(pSymbolizer!=NULL)
 		{
-			DrawLayer(pLayer, pSymbolizer, pRule->GetFilter());
+			DrawLayer(pLayer, pSymbolizer, pFilter);
 		}
 		
 		TextSymbolizer* pTextSymbolzer = NULL;
@@ -139,8 +146,61 @@ namespace auge
 		if(pTextSymbolzer!=NULL)
 		{
 			LabelSet* pLabelSet = m_maplex.GetLabelSet(pLayer->GetName());
-			LabelLayer(pLabelSet, pLayer, pTextSymbolzer, pRule->GetFilter());
+			LabelLayer(pLabelSet, pLayer, pTextSymbolzer, pFilter);
 		}
+		pFilter->Release();
+	}
+
+	//GFilter* CanvasImpl::CreateViewFilter(Rule* pRule, FeatureClass* pFeatureClass)
+	//{
+	//	GFilter* pFilter = NULL;
+	//	GFilter* pRuleFilter = NULL;
+	//	FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
+	//	pRuleFilter = pRule->GetFilter();
+	//	if(pRuleFilter==NULL)
+	//	{
+	//		PropertyName* pPropName = pFilterFactory->CreatePropertyName(pFeatureClass->GetFields()->GetGeometryField()->GetName());
+	//		pFilter = pFilterFactory->CreateBBoxFilter(pPropName, m_viewer);
+	//	}
+	//	else
+	//	{
+	//		GFilter* pBoxFilter = NULL;
+	//		PropertyName* pPropName = pFilterFactory->CreatePropertyName(pFeatureClass->GetFields()->GetGeometryField()->GetName());
+	//		pBoxFilter = pFilterFactory->CreateBBoxFilter(pPropName, m_viewer);
+
+	//		BinaryLogicFilter* pLogFilter = pFilterFactory->CreateBinaryLogicFilter("and");
+	//		pLogFilter->AddFilter(pBoxFilter);
+	//		pLogFilter->AddFilter(pRuleFilter);
+	//		pRuleFilter->AddRef();
+	//		pFilter = pLogFilter;
+	//	}
+
+	//	return pFilter;
+	//}
+
+	GFilter* CanvasImpl::CreateViewFilter(GFilter* pSubFilter,FeatureClass* pFeatureClass)
+	{
+		GFilter* pFilter = NULL;
+		FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
+		if(pSubFilter==NULL)
+		{
+			PropertyName* pPropName = pFilterFactory->CreatePropertyName(pFeatureClass->GetFields()->GetGeometryField()->GetName());
+			pFilter = pFilterFactory->CreateBBoxFilter(pPropName, m_viewer);
+		}
+		else
+		{
+			GFilter* pBoxFilter = NULL;
+			PropertyName* pPropName = pFilterFactory->CreatePropertyName(pFeatureClass->GetFields()->GetGeometryField()->GetName());
+			pBoxFilter = pFilterFactory->CreateBBoxFilter(pPropName, m_viewer);
+
+			BinaryLogicFilter* pLogFilter = pFilterFactory->CreateBinaryLogicFilter("and");
+			pLogFilter->AddFilter(pBoxFilter);
+			pLogFilter->AddFilter(pSubFilter);
+			pSubFilter->AddRef();
+			pFilter = pLogFilter;
+		}
+
+		return pFilter;
 	}
 
 	void CanvasImpl::DrawLayer(FeatureLayer* pLayer, Symbolizer* pSymbolizer, GFilter* pFilter)
@@ -172,8 +232,10 @@ namespace auge
 
 		FeatureCursor	*pCursor = NULL;
 		FeatureClass	*pFeatureClass = pLayer->GetFeatureClass();
+
+		GFilter* pViewFilter = CreateViewFilter(pFilter, pFeatureClass);
 		
-		pCursor = pFeatureClass->Query();
+		pCursor = pFeatureClass->Query(pViewFilter);
 
 		const char* label_text = NULL;
 		g_uchar* wkb = NULL;
@@ -202,17 +264,32 @@ namespace auge
 				{
 					pLabel->SetText(label_text);
 				}
-				pLabel->ComputePosition(m_pRenderer, &m_transform);
-				pLabel->AdjustPosition(m_width, m_height);
-				if(!m_maplex.IsCollision(pLabel))
+				pLabel->ComputePosition(m_pRenderer, &m_transform);				
+				//if(pLabel->IsVisible(m_width, m_height))
 				{
-					m_maplex.AddLabel(name, pLabel);
+					pLabel->AdjustPosition(m_width, m_height);
+					if(!m_maplex.IsCollision(pLabel))
+					{
+						m_maplex.AddLabel(name, pLabel);
+					}
+					else
+					{
+						AUGE_SAFE_RELEASE(pLabel);
+					}
 				}
+				/*else
+				{
+					AUGE_SAFE_RELEASE(pLabel);
+				}*/
 			}
 
 			pFeature->Release();
 		}
 		pCursor->Release();
+		if(pViewFilter!=NULL)
+		{
+			AUGE_SAFE_RELEASE(pViewFilter);
+		}
 	}
 
 	GLabel* CanvasImpl::CreateLabel(augeGeometryType type)

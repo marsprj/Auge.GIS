@@ -43,6 +43,9 @@ namespace auge
 		void		LabelLayer(LabelSet* pLabelSet, FeatureLayer* pLayer, TextSymbolizer* pSymbolizer, GFilter* pFilter);
 		GLabel*		CreateLabel(augeGeometryType type);
 
+		//GFilter*	CreateViewFilter(Rule* pRule,FeatureClass* pFeatureClass);
+		GFilter*	CreateViewFilter(GFilter* pSubFilter,FeatureClass* pFeatureClass);
+
 	private:
 		void		Cleanup();
 

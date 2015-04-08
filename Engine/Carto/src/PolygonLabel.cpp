@@ -16,4 +16,9 @@ namespace auge
 	{
 
 	}
+
+	bool PolygonLabel::IsVisible(int view_width, int view_height)
+	{
+		return true;
+	}
 }

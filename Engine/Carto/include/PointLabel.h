@@ -17,7 +17,7 @@ namespace auge
 		virtual void		ComputePosition(Renderer* pRenderer, Transformation* pTransform);
 		virtual void		AdjustPosition(int width, int height);
 		virtual bool		IsCollision(GLabel* other);
-		
+		virtual bool		IsVisible(int view_width, int view_height);
 	private:
 		WKBPoint			m_pos;
 		GEnvelope			m_text_extent;

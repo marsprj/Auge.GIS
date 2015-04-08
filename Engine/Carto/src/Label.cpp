@@ -117,4 +117,9 @@ namespace auge
 	{
 		return true;
 	}
+
+	bool GLabel::IsVisible(int view_width, int view_height)
+	{
+		return false;
+	}
 }

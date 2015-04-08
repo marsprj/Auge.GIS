@@ -14,6 +14,8 @@ namespace auge
 	class WebContext;
 	class GetMapRequest;
 	class GetMapResponse;
+	class Canvas;
+	class Layer; 
 
 	class GetMapHandler : public WebHandler
 	{
@@ -26,6 +28,9 @@ namespace auge
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc, WebContext* pWebContext=NULL, Map* pMap=NULL);
 		virtual WebResponse*	Execute(WebRequest* pWebRequest);
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
+
+	private:
+		void	DrawNamedLayer(Canvas* pCanvas, Layer* pLayer, const char* style_name);
 	};
 }
 

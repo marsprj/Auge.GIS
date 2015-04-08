@@ -1062,6 +1062,18 @@ namespace auge
 		return styleID;
 	}
 
+	bool CartoManagerImpl::IsStyleUpdated(Style* pStyle)
+	{
+		if(pStyle==NULL)
+		{
+			return false;
+		}
+
+
+
+		return false;
+	}
+
 	bool CartoManagerImpl::IsValiad(const char* text)
 	{
 		XParser parser;

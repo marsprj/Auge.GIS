@@ -109,8 +109,8 @@ namespace auge
 		std::vector<GLabel*>& labels = pLabelSet->m_labels;
 		std::vector<GLabel*>::iterator iter=labels.begin();
 
-		GLabel* pLabel = *iter;
-		TextSymbolizer* pSymbolizer = pLabel->GetSymbolizer();
+		GLabel* pLabel = NULL;//*iter;
+		//TextSymbolizer* pSymbolizer = pLabel->GetSymbolizer();
 		for(; iter!=labels.end(); iter++)
 		{
 			pLabel = *iter;
@@ -136,5 +136,16 @@ namespace auge
 		}
 
 		return false;
+	}
+
+	bool Maplex::IsVisible(GLabel* label)
+	{
+		if(!label)
+		{
+			return false;
+		}
+
+
+		return true;
 	}
 }

@@ -16,4 +16,9 @@ namespace auge
 	{
 
 	}
+
+	bool LineLabel::IsVisible(int view_width, int view_height)
+	{
+		return true;
+	}
 }
