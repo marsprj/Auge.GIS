@@ -46,6 +46,12 @@ namespace auge
 		//GFilter*	CreateViewFilter(Rule* pRule,FeatureClass* pFeatureClass);
 		GFilter*	CreateViewFilter(GFilter* pSubFilter,FeatureClass* pFeatureClass);
 
+		void		DrawFeatures(PointSymbolizer* pSymbolizer, FeatureCursor* pCursor);
+		void		DrawFeatures(LineSymbolizer* pSymbolizer, FeatureCursor* pCursor);
+		void		DrawFeatures(PolygonSymbolizer* pSymbolizer, FeatureCursor* pCursor);
+		void		DrawGraphics(PointSymbolizer* pSymbolizer, FeatureCursor* pCursor);
+		void		DrawPoints(PointSymbolizer* pSymbolizer, FeatureCursor* pCursor);
+
 	private:
 		void		Cleanup();
 

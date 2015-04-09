@@ -575,6 +575,20 @@ namespace auge
 		virtual bool		SetExternalGraphic(ExternalGraphic* pExternalGraphic) = 0;
 	};
 
+	class ExternalGraphic : public GObject
+	{
+	protected:
+		ExternalGraphic(){}
+		virtual ~ExternalGraphic(){}
+	public:
+		virtual const char* GetResource() = 0;
+		virtual void		SetResource(const char* resource) = 0;
+
+		virtual const char*	GetFormat() = 0;
+		virtual void		SetFormat(const char* format) = 0;
+
+	};
+
 	//========================================================================
 	// Auge Mark
 	//------------------------------------------------------------------------

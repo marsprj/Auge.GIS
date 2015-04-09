@@ -95,10 +95,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\ColorMapImpl.h" />
     <ClInclude Include="..\include\EnumMapImpl.h" />
     <ClInclude Include="..\include\EnumStyleImpl.h" />
+    <ClInclude Include="..\include\ExternalGraphicImpl.h" />
     <ClInclude Include="..\include\FeatureLayerImpl.h" />
     <ClInclude Include="..\include\FeatureStyleImpl.h" />
     <ClInclude Include="..\include\FillImpl.h" />
     <ClInclude Include="..\include\FontImpl.h" />
+    <ClInclude Include="..\include\GraphicImpl.h" />
     <ClInclude Include="..\include\Label.h" />
     <ClInclude Include="..\include\LabelSet.h" />
     <ClInclude Include="..\include\LineLabel.h" />
@@ -134,10 +136,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\ColorMapImpl.cpp" />
     <ClCompile Include="..\src\EnumMapImpl.cpp" />
     <ClCompile Include="..\src\EnumStyleImpl.cpp" />
+    <ClCompile Include="..\src\ExternalGraphicImpl.cpp" />
     <ClCompile Include="..\src\FeatureLayerImpl.cpp" />
     <ClCompile Include="..\src\FeatureStyleImpl.cpp" />
     <ClCompile Include="..\src\FillImpl.cpp" />
     <ClCompile Include="..\src\FontImpl.cpp" />
+    <ClCompile Include="..\src\GraphicImpl.cpp" />
     <ClCompile Include="..\src\Label.cpp" />
     <ClCompile Include="..\src\LabelSet.cpp" />
     <ClCompile Include="..\src\LineLabel.cpp" />

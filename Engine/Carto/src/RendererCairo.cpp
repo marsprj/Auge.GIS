@@ -150,6 +150,51 @@ namespace auge
 
 	void RendererCairo::DrawPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation)
 	{
+		Graphic* pGraphic = pSymbolizer->GetGraphic();
+		if(pGraphic)
+		{
+			DrawGraphicPoint(pWKBPoint, pSymbolizer, pTransformation);
+		}
+		else
+		{
+			DrawGeometryPoint(pWKBPoint, pSymbolizer, pTransformation);
+		}
+	}
+
+	void RendererCairo::DrawGraphicPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation)
+	{
+		Graphic* pGraphic = pSymbolizer->GetGraphic(); 
+		ExternalGraphic* pExternalGraphic = pGraphic->GetExternalGraphic();
+		if(pExternalGraphic!=NULL)
+		{
+			const char* resource = pExternalGraphic->GetResource();
+			if(resource)
+			{
+				cairo_surface_t *image = cairo_image_surface_create_from_png(resource);
+				if(image!=NULL)
+				{
+					int sx=0, sy=0;
+					float size = pSymbolizer->GetSize();					
+					pTransformation->ToScreenPoint(pWKBPoint->point.x, pWKBPoint->point.y, sx, sy);
+
+					int w = cairo_image_surface_get_width(image);
+					int h = cairo_image_surface_get_height(image);
+
+					cairo_save(m_cairo);
+					cairo_translate(m_cairo, sx, sy);
+					cairo_scale  (m_cairo, size/w, size/h);
+					cairo_set_source_surface(m_cairo, image, 0,0);
+					cairo_paint(m_cairo);
+					cairo_surface_flush(m_cairo_surface);
+					cairo_surface_destroy(image);
+					cairo_restore(m_cairo);
+				}
+			}
+		}
+	}
+
+	void RendererCairo::DrawGeometryPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation)
+	{
 		float radius = pSymbolizer->GetSize();
 		Fill   *pFill = pSymbolizer->GetFill();
 		Stroke *pStroke = pSymbolizer->GetStroke();

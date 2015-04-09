@@ -39,8 +39,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\DevEnv\cppunit-1.13.2\include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\DevEnv\cppunit-1.13.2\lib;%AUGE_GIS_HOME%/Dist\32_x86_win_vc10\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\DevEnv\cppunit-1.13.2\include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;E:\DevEnv\cairo-dev_1.10.2-2_win32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\DevEnv\cppunit-1.13.2\lib;%AUGE_GIS_HOME%/Dist\32_x86_win_vc10\lib;E:\DevEnv\cairo-dev_1.10.2-2_win32\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -56,7 +56,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>cppunitd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cppunitd.lib;cairo.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(OutDir)\$(TargetName).exe %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\binD</Command>
@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CairoTest.cpp" />
     <ClCompile Include="CanvasTest.cpp" />
     <ClCompile Include="LabelTest.cpp" />
     <ClCompile Include="main.cpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="StyleTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CairoTest.h" />
     <ClInclude Include="CanvasTest.h" />
     <ClInclude Include="LabelTest.h" />
     <ClInclude Include="MapTest.h" />

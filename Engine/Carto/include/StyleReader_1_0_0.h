@@ -32,6 +32,7 @@ namespace auge
 		//double				ReadSize(XNode* pxSizeNode);
 		bool				ReadGraphic(PointSymbolizer* pSymbolizer, XNode* pxGraphicNode);		
 		bool				ReadMark(PointSymbolizer* pSymbolizer, XNode* pxMarkNode);
+		bool				ReadExternalGraphic(PointSymbolizer* pSymbolizer, XNode* pxGraphicNode);
 
 		bool				ReadStroke(LineSymbolizer* pSymbolizer, XNode* pxStrokeNode);
 
@@ -49,6 +50,7 @@ namespace auge
 
 		Stroke*				ReadStroke(XNode* pxStrokeNode);
 		Fill*				ReadFill(XNode* pxFillNode);
+		ExternalGraphic*	ReadExternalGraphic(XNode*  pxGraphicNode);
 
 		//RESULTCODE			ReadLabel(TextSymbolizer *pSymbolizer, XNode *pxNodeLabel);
 

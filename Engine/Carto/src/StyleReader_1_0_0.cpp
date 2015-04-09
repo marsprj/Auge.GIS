@@ -9,6 +9,8 @@
 #include "TextSymbolizerImpl.h"
 #include "FillImpl.h"
 #include "StrokeImpl.h"
+#include "GraphicImpl.h"
+#include "ExternalGraphicImpl.h"
 
 namespace auge
 {
@@ -496,6 +498,10 @@ namespace auge
 				{
 					ReadMark(pSymbolizer, pxNode);
 				}
+				else if(g_stricmp(nodeName, AUGE_SLD_EXTERNAL_GRAPHIC)==0)
+				{
+					ReadExternalGraphic(pSymbolizer, pxNode);
+				}
 			}
 		}
 
@@ -547,6 +553,19 @@ namespace auge
 
 		pxNodeSet->Release();
 		return true;
+	}
+
+	bool StyleReader_1_0_0::ReadExternalGraphic(PointSymbolizer* pSymbolizer, XNode* pxGraphicNode)
+	{
+		ExternalGraphic* pExternalGraphic = ReadExternalGraphic(pxGraphicNode);
+		if(pExternalGraphic==NULL)
+		{
+			return false;
+		}
+		GraphicImpl* pGrahic = new GraphicImpl();
+		pGrahic->SetExternalGraphic(pExternalGraphic);
+		pSymbolizer->SetGraphic(pGrahic);
+		return pGrahic;
 	}
 
 	bool StyleReader_1_0_0::ReadStroke(LineSymbolizer* pSymbolizer, XNode* pxStrokeNode)
@@ -851,6 +870,51 @@ namespace auge
 
 		pxNodeSet->Release();
 		return pFill;
+	}
+
+	ExternalGraphic* StyleReader_1_0_0::ReadExternalGraphic(XNode*  pxGraphicNode)
+	{
+		ExternalGraphicImpl* pGrahpic = new ExternalGraphicImpl();
+		
+#ifdef WIN32
+		int offset = 6;
+#else
+		int offset = 5;
+#endif
+		XElement* pxNode = NULL;
+		pxNode = (XElement*)pxGraphicNode->GetFirstChild("OnlineResource");
+		if(pxNode!=NULL)
+		{
+			XAttribute* pxAttr = pxNode->GetAttribute("href");
+			if(pxAttr)
+			{
+				const char* href = pxAttr->GetValue();
+				if(href[0]=='f')
+				{
+					pGrahpic->SetResource(href+offset);
+				}
+			}
+		}
+		pxNode = (XElement*)pxGraphicNode->GetFirstChild("InlineResource");
+		if(pxNode!=NULL)
+		{
+			XAttribute* pxAttr = pxNode->GetAttribute("href");
+			if(pxAttr)
+			{
+				const char* href = pxAttr->GetValue();
+				if(href[0]=='f')
+				{
+					pGrahpic->SetResource(href+offset);
+				}
+			}
+		}
+		pxNode = (XElement*)pxGraphicNode->GetFirstChild("Format");
+		if(pxNode!=NULL)
+		{
+			pGrahpic->SetFormat(pxNode->GetContent());
+		}
+
+		return pGrahpic;
 	}
 
 	//RESULTCODE StyleReader_1_0_0::ReadLabel(TextSymbolizer *pSymbolizer, XNode *pxNodeLabel)

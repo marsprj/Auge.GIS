@@ -204,11 +204,28 @@ namespace auge
 	}
 
 	void CanvasImpl::DrawLayer(FeatureLayer* pLayer, Symbolizer* pSymbolizer, GFilter* pFilter)
-	{
+	{	
 		FeatureCursor	*pCursor = NULL;
 		FeatureClass	*pFeatureClass = pLayer->GetFeatureClass();
-
+		
 		pCursor = pFeatureClass->Query(pFilter);
+
+		//GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		//switch(pField->GetType())
+		//{
+		//case augeGTPoint:
+		//case augeGTMultiPoint:
+		//	DrawFeatures(static_cast<PointSymbolizer*>(pSymbolizer), pCursor);
+		//	break;
+		//case augeGTLineString:
+		//case augeGTMultiLineString:
+		//	DrawFeatures(static_cast<LineSymbolizer*>(pSymbolizer), pCursor);
+		//	break;
+		//case augeGTPolygon:
+		//case augeGTMultiPolygon:
+		//	DrawFeatures(static_cast<PolygonSymbolizer*>(pSymbolizer), pCursor);
+		//	break;
+		//}
 
 		g_uchar* wkb = NULL;
 		auge::Geometry	*pGeometry = NULL;
@@ -224,6 +241,75 @@ namespace auge
 			pFeature->Release();
 		}
 		pCursor->Release();
+	}
+
+	void CanvasImpl::DrawFeatures(PointSymbolizer* pSymbolizer, FeatureCursor* pCursor)
+	{
+		Graphic* pGraphic = pSymbolizer->GetGraphic();
+		if(pGraphic!=NULL)
+		{
+			DrawGraphics(pSymbolizer, pCursor);
+		}
+		else
+		{
+			DrawPoints(pSymbolizer, pCursor);
+		}
+	}
+
+	void CanvasImpl::DrawGraphics(PointSymbolizer* pSymbolizer, FeatureCursor* pCursor)
+	{
+
+	}
+
+	void CanvasImpl::DrawPoints(PointSymbolizer* pSymbolizer, FeatureCursor* pCursor)
+	{
+		g_uchar* wkb = NULL;
+		auge::Geometry	*pGeometry = NULL;
+		auge::Feature	*pFeature = NULL;
+		while((pFeature=pCursor->NextFeature())!=NULL)
+		{	
+			pGeometry = pFeature->GetGeometry();
+			if(pGeometry!=NULL)
+			{
+				wkb = pGeometry->AsBinary();
+				m_pRenderer->Draw(wkb, pSymbolizer, &m_transform);
+			}
+			pFeature->Release();
+		}
+	}
+
+	void CanvasImpl::DrawFeatures(LineSymbolizer* pSymbolizer, FeatureCursor* pCursor)
+	{
+		g_uchar* wkb = NULL;
+		auge::Geometry	*pGeometry = NULL;
+		auge::Feature	*pFeature = NULL;
+		while((pFeature=pCursor->NextFeature())!=NULL)
+		{	
+			pGeometry = pFeature->GetGeometry();
+			if(pGeometry!=NULL)
+			{
+				wkb = pGeometry->AsBinary();
+				m_pRenderer->Draw(wkb, pSymbolizer, &m_transform);
+			}
+			pFeature->Release();
+		}
+	}
+
+	void CanvasImpl::DrawFeatures(PolygonSymbolizer* pSymbolizer, FeatureCursor* pCursor)
+	{
+		g_uchar* wkb = NULL;
+		auge::Geometry	*pGeometry = NULL;
+		auge::Feature	*pFeature = NULL;
+		while((pFeature=pCursor->NextFeature())!=NULL)
+		{	
+			pGeometry = pFeature->GetGeometry();
+			if(pGeometry!=NULL)
+			{
+				wkb = pGeometry->AsBinary();
+				m_pRenderer->Draw(wkb, pSymbolizer, &m_transform);
+			}
+			pFeature->Release();
+		}
 	}
 
 	void CanvasImpl::LabelLayer(LabelSet* pLabelSet, FeatureLayer* pLayer, TextSymbolizer* pSymbolizer, GFilter* pFilter)

@@ -52,6 +52,9 @@ namespace auge
 		void	DrawCircle(int cx, int cy, float radius, Stroke* pStroke);
 		void	FillCircle(int cx, int cy, float radius, Fill* pFill);
 
+		void	DrawGeometryPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation);
+		void	DrawGraphicPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation);
+
 	private:
 		cairo_surface_t	*m_cairo_surface;
 		cairo_t			*m_cairo;
