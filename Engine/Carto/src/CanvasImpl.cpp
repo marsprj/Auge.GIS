@@ -8,7 +8,7 @@
 
 namespace auge
 {
-	CanvasImpl::CanvasImpl(g_uint width, g_uint height)
+	CanvasImpl::CanvasImpl(g_uint width, g_uint height) 
 	{ 
 		m_width = width;
 		m_height = height;
@@ -32,7 +32,7 @@ namespace auge
 	void CanvasImpl::SetViewer(GEnvelope& viewer)
 	{
 		m_transform.SetViewer(viewer);
-		m_viewer = m_transform.m_viewer;
+		m_viewer = m_transform.GetViewer();
 	}
 
 	void CanvasImpl::Draw(Map* pMap)
