@@ -31,6 +31,7 @@ namespace auge
 		PropertyName*		ReadPropertyName(XNode* pxPropertyName);
 		Literal*			ReadLiteral(XNode* pxNode);
 		bool				ReadEnvelope(XNode* pxEnvelope, GEnvelope& extent);
+		bool				ReadBox(XNode* pxBox, GEnvelope& extent);
 
 		augeComparisonOperator	ParseComparisonOperator(const char* oper);
 

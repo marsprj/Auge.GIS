@@ -95,6 +95,14 @@ namespace auge
 					pFilter->SetExtent(extent);
 				}
 			}
+			else if(g_stricmp(nodeName,"Box")==0)
+			{
+				GEnvelope extent;
+				if(ReadBox(pxNode, extent))
+				{
+					pFilter->SetExtent(extent);
+				}
+			}
 			else
 			{
 				Expression* pPropName = ReadExpression(pxNode);
@@ -414,6 +422,10 @@ namespace auge
 		return pLiteral;
 	}
 
+	//<gml:Envelope srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
+	//	<gml:lowerCorner>-75.102613 40.212597</gml:lowerCorner>
+	//	<gml:upperCorner>-72.361859 41.512517</gml:upperCorner>
+	//</gml:Envelope>
 	bool FilterReaderImpl::ReadEnvelope(XNode* pxEnvelope, GEnvelope& extent)
 	{
 		XNode* pxNode = NULL;
@@ -447,10 +459,29 @@ namespace auge
 		coordinate = pxNode->GetContent();
 		sscanf(coordinate, "%lf %lf", &extent.m_xmax, &extent.m_ymax);
 		pxNodeSet->Release();
-
+		
 		return true;
 	}
 
+	//<gml:Box srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
+	//	<gml:coordinates>-75.102613,40.212597 -72.361859,41.512517</gml:coordinates>
+	//</gml:Box>
+	bool FilterReaderImpl::ReadBox(XNode* pxBox, GEnvelope& extent)
+	{
+		XNode* pxNode = NULL;
+		const char* coordinate = NULL;
+
+		pxNode = pxBox->GetFirstChild("coordinates");
+		if(pxNode==NULL)
+		{
+			return false;
+		}
+		coordinate = pxNode->GetContent();
+		sscanf(coordinate, "%lf,%lf %lf,%lf", &extent.m_xmin, &extent.m_ymin, &extent.m_xmax, &extent.m_ymax);
+		pxNode->Release();
+
+		return true;
+	}
 	
 
 	//typedef enum augeComparisonOperator
