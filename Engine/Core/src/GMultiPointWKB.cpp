@@ -70,6 +70,15 @@ namespace auge
 
 	void GMultiPointWKB::Centroid(double &x, double &y)
 	{
-
+		x=0.0f, y=0.0f;
+		int numPoints = m_pWKBMultiPoint->numPoints;
+		WKBPoint* pWKBPoint = (WKBPoint*)(&(m_pWKBMultiPoint->points[0]));
+		for(int i=0; i<numPoints; i++, pWKBPoint++)
+		{
+			x += pWKBPoint->point.x;
+			y += pWKBPoint->point.y;
+		}
+		x = x / numPoints;
+		y = y / numPoints;
 	}
 }

@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(StyleTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(StyleTest);
 
 auge::Map*	CreateMapObj();
 auge::Style* LoadSLD(const char* path);

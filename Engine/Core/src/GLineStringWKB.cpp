@@ -71,6 +71,15 @@ namespace auge
 
 	void GLineStringWKB::Centroid(double &x, double &y)
 	{
-
+		x=0.0f, y=0.0f;
+		int numPoints = m_pWKBLineString->numPoints;
+		auge::Point* pt = (auge::Point*)(&(m_pWKBLineString->points[0]));
+		for(int i=0; i<numPoints; i++, pt++)
+		{
+			x += pt->x;
+			y += pt->y;
+		}
+		x = x / numPoints;
+		y = y / numPoints;
 	}
 }

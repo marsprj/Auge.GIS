@@ -71,6 +71,24 @@ namespace auge
 
 	void GPolygonWKB::Centroid(double &x, double &y)
 	{
-		
+		x=0.0f,y=0.0f;
+		int point_total = 0;
+		Point* pt = NULL;
+		int numRings = m_pWKBPolygon->numRings;
+		LinearRing* pLinearRing = &(m_pWKBPolygon->rings[0]);
+		for(int i=0; i<numRings; i++)
+		{	
+			int numPoints = pLinearRing->numPoints;
+			point_total += numPoints;
+			pt = &(pLinearRing->points[0]);
+			for(int j=0; j<numPoints; j++, pt++)
+			{
+				x += pt->x;
+				y += pt->y;
+			}
+			pLinearRing = (LinearRing*)pt;
+		}
+		x /= point_total;
+		y /= point_total;
 	}
 }

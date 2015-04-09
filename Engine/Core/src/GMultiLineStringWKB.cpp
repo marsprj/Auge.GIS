@@ -70,6 +70,24 @@ namespace auge
 
 	void GMultiLineStringWKB::Centroid(double &x, double &y)
 	{
-
+		x=0.0f,y=0.0f;
+		int point_total = 0;
+		Point* pt = NULL;
+		int numLineStrings = m_pWKBMultiLineString->numLineStrings;
+		WKBLineString* pWKBLineString = &(m_pWKBMultiLineString->lineStrings[0]);
+		for(int i=0; i<numLineStrings; i++)
+		{	
+			int numPoints = pWKBLineString->numPoints;
+			point_total += numPoints;
+			pt = &(pWKBLineString->points[0]);
+			for(int j=0; j<numPoints; j++, pt++)
+			{
+				x += pt->x;
+				y += pt->y;
+			}
+			pWKBLineString = (WKBLineString*)pt;
+		}
+		x /= point_total;
+		y /= point_total;
 	}
 }

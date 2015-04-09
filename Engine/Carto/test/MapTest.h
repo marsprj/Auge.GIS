@@ -9,7 +9,7 @@
 class MapTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(MapTest);
-	CPPUNIT_TEST(DrawMap);
+	//CPPUNIT_TEST(DrawMap);
 	//CPPUNIT_TEST(Create_Map_Point_Label);
 	//CPPUNIT_TEST(Draw_Map_Point_Label);
 	//CPPUNIT_TEST(Draw_Map_Point_Label_Anchor);
@@ -17,6 +17,11 @@ class MapTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(CreateMap);
 	//CPPUNIT_TEST(CreateLayer);
 	//CPPUNIT_TEST(DrawMapSLD);
+
+	CPPUNIT_TEST(Draw_Map_Polygon_Label);
+	
+	//CPPUNIT_TEST(DrawCities);
+	//CPPUNIT_TEST(DrawCountry);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -30,7 +35,13 @@ private:
 
 	void		Draw_Map_Point_Label();
 	void		Draw_Map_Point_Label_Anchor();
+
+	void		Draw_Map_Polygon_Label();
+
 	void		Create_Map_Point_Label();
+
+	void		DrawCities();
+	void		DrawCountry();
 
 	void		CreateLayer();
 
