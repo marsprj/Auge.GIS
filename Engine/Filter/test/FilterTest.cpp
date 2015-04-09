@@ -279,3 +279,25 @@ void FilterTest::ReadSpatialAttribute()
 	AUGE_SAFE_RELEASE(pxDoc);
 }
 
+void FilterTest::ReadFilterText()
+{
+	const char* text = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><ogc:Filter xmlns=\"http://www.opengis.net/sld\" xmlns:sld=\"http://www.opengis.net/sld\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\" version=\"1.0.0\"><ogc:PropertyIsEqualTo><ogc:PropertyName>continent</ogc:PropertyName><ogc:Literal>Antarctica</ogc:Literal></ogc:PropertyIsEqualTo></ogc:Filter>";
+	auge::FilterFactory* pFactory = auge::augeGetFilterFactoryInstance();
+	auge::FilterReader* pFilterReader = pFactory->CreateFilerReader(NULL);
+	auge::GFilter* pFilter = NULL;
+
+	auge::XParser parser;
+	auge::XDocument	*pxDoc = NULL;
+	auge::XElement	*pxFilter = NULL;
+
+	pxDoc = parser.ParseMemory(text);
+	pxFilter = pxDoc->GetRootNode();
+
+	pFilter = pFilterReader->Read(pxFilter);
+	CPPUNIT_ASSERT(pFilter!=NULL);
+
+	AUGE_SAFE_RELEASE(pFilter);
+	pxDoc->Close();
+	AUGE_SAFE_RELEASE(pxDoc);
+
+}

@@ -110,6 +110,8 @@ namespace auge
 		}
 
 		GLogger *pLogger = augeGetLoggerInstance();
+		pLogger->Debug(buffer, __FILE__, __LINE__);
+
 		XParser parser;
 		m_pxDoc = parser.ParseMemory(buffer);
 		if(m_pxDoc==NULL)

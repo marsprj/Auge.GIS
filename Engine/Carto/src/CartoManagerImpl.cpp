@@ -766,7 +766,7 @@ namespace auge
 
 		Style* pStyle = NULL;
 		StyleReaderImpl reader;
-		pStyle = reader.Read(text, strlen(text), NULL);
+		pStyle = reader.Read(text, strlen(text), pFeatureClass);
 		pResult->Release();
 
 		if(pStyle!=NULL)

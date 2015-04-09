@@ -265,7 +265,8 @@ namespace auge
 					if(m_pFeatureClass!=NULL)
 					{
 						FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
-						FilterReader* reader = pFilterFactory->CreateFilerReader(m_pFeatureClass->GetFields());
+						GFields* pFields = m_pFeatureClass->GetFields();
+						FilterReader* reader = pFilterFactory->CreateFilerReader(pFields);
 						pFilter = reader->Read((XElement*)pxNode);
 						AUGE_SAFE_RELEASE(reader);
 						pRule->SetFilter(pFilter);
