@@ -456,7 +456,7 @@ namespace auge
 		{
 			return false;
 		}
-		coordinate = pxNode->GetContent();
+		coordinate = pxNode->GetContent(); 
 		sscanf(coordinate, "%lf %lf", &extent.m_xmax, &extent.m_ymax);
 		pxNodeSet->Release();
 		
@@ -478,7 +478,6 @@ namespace auge
 		}
 		coordinate = pxNode->GetContent();
 		sscanf(coordinate, "%lf,%lf %lf,%lf", &extent.m_xmin, &extent.m_ymin, &extent.m_xmax, &extent.m_ymax);
-		pxNode->Release();
 
 		return true;
 	}
