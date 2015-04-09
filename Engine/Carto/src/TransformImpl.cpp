@@ -51,6 +51,15 @@ namespace auge
 
 		m_viewer_cx = (viewer.m_xmin + viewer.m_xmax) / 2.0f;
 		m_viewer_cy = (viewer.m_ymin + viewer.m_ymax) / 2.0f;
+
+		double view_width_2 = m_canvas_width / m_scale / 2.0f;
+		double view_height_2= m_canvas_height / m_scale /2.0f;
+
+		m_viewer.m_xmin = m_viewer_cx - view_width_2;
+		m_viewer.m_xmax = m_viewer_cx + view_width_2;
+		m_viewer.m_ymin = m_viewer_cy - view_height_2;
+		m_viewer.m_ymax = m_viewer_cy + view_height_2;
+
 	}
 
 	GEnvelope& TransformationImpl::GetViewer()

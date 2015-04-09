@@ -31,8 +31,8 @@ namespace auge
 
 	void CanvasImpl::SetViewer(GEnvelope& viewer)
 	{
-		m_viewer = viewer;
 		m_transform.SetViewer(viewer);
+		m_viewer = m_transform.m_viewer;
 	}
 
 	void CanvasImpl::Draw(Map* pMap)
