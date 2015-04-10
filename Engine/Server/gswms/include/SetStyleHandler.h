@@ -1,5 +1,5 @@
-#ifndef __AUGE_IMS_LAYER_SETSTYLE_HANDLER_H__
-#define __AUGE_IMS_LAYER_SETSTYLE_HANDLER_H__
+#ifndef __AUGE_WMS_LAYER_SETSTYLE_HANDLER_H__
+#define __AUGE_WMS_LAYER_SETSTYLE_HANDLER_H__
 
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
@@ -25,4 +25,6 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_IMS_LAYER_SETSTYLE_HANDLER_H__
+
+
+#endif //__AUGE_WMS_LAYER_SETSTYLE_HANDLER_H__

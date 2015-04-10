@@ -45,7 +45,7 @@ namespace auge
 		virtual g_int			GetStyleID(const char* name);
 
 		virtual RESULTCODE		SetStyle(g_uint layerID, g_uint styleID);
-			
+					
 	public:
 		virtual	RESULTCODE		Initialize(GConnection* pConnection);
 		virtual void			Cleanup();

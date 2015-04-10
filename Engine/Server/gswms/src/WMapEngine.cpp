@@ -6,6 +6,7 @@
 #include "CapabilitiesHandler.h"
 #include "GetMapHandler.h"
 #include "GetFeatureInfoHandler.h"
+#include "SetStyleHandler.h"
 
 namespace auge
 {
@@ -21,6 +22,7 @@ namespace auge
 		m_handlers.push_back(new CapabilitiesHandler());
 		m_handlers.push_back(new GetMapHandler());
 		m_handlers.push_back(new GetFeatureInfoHandler());
+		m_handlers.push_back(new SetStyleHandler());
 	}
 
 	WMapEngine::~WMapEngine()

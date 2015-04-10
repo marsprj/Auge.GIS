@@ -244,7 +244,7 @@ namespace auge
 
 		//ÐÞ¸Ä
 		virtual RESULTCODE		SetStyle(g_uint layerID, g_uint styleID) = 0;
-
+		
 	public:
 		virtual	RESULTCODE		Initialize(GConnection* pConnection) = 0;
 		virtual void			Cleanup() = 0;

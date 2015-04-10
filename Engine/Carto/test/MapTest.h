@@ -14,8 +14,8 @@ class MapTest : public CppUnit::TestFixture
 
 	//CPPUNIT_TEST(Draw_Map_Point_Label);
 	//CPPUNIT_TEST(Draw_Map_Point_Label_Anchor);
-	CPPUNIT_TEST(Draw_Map_Point_Graphic);
-
+	//CPPUNIT_TEST(Draw_Map_Point_Graphic);
+	CPPUNIT_TEST(Draw_Line);
 
 	//CPPUNIT_TEST(DrawMapObj);	
 	//CPPUNIT_TEST(CreateMap);
@@ -41,6 +41,8 @@ private:
 	void		Draw_Map_Point_Label_Anchor();
 
 	void		Draw_Map_Point_Graphic();
+
+	void		Draw_Line();
 
 	void		Draw_Map_Polygon_Label();
 

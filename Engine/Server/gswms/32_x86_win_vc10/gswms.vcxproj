@@ -92,6 +92,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetMapHandler.cpp" />
     <ClCompile Include="..\src\GetMapRequest.cpp" />
     <ClCompile Include="..\src\GetMapResponse.cpp" />
+    <ClCompile Include="..\src\SetStyleHandler.cpp" />
+    <ClCompile Include="..\src\SetStyleRequest.cpp" />
     <ClCompile Include="..\src\WMapEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +106,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetMapHandler.h" />
     <ClInclude Include="..\include\GetMapRequest.h" />
     <ClInclude Include="..\include\GetMapResponse.h" />
+    <ClInclude Include="..\include\SetStyleHandler.h" />
+    <ClInclude Include="..\include\SetStyleRequest.h" />
     <ClInclude Include="..\include\WMapEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
