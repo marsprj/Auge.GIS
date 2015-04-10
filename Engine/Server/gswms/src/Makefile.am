@@ -22,5 +22,7 @@ libgswms_la_SOURCES=\
 		GetMapHandler.cpp \
 		GetMapRequest.cpp \
 		GetMapResponse.cpp \
-		WMapEngine.cpp
+		WMapEngine.cpp \
+		SetStyleHandler.cpp \
+		SetStyleRequest.cpp
 

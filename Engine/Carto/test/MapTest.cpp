@@ -316,14 +316,18 @@ void MapTest::Draw_Map_Point_Graphic()
 	pMap = pCartoFactory->CreateMap();
 	pMap->AddLayer(pLayer);
 
+#ifdef WIN32
 	DWORD ts = GetTickCount();
+#endif
 
 	pCanvas->Draw(pMap);
 	pCanvas->Save("g:\\temp\\map\\point_graphic.png");
 	//pCanvas->Save("/home/renyc/map/map.png");
 
+#ifdef WIN32
 	DWORD te = GetTickCount();
 	printf("[Time]:%fºÁÃë\n", (te-ts)/1000.0f);
+#endif
 
 	//m_pConnection->Close();
 	//AUGE_SAFE_RELEASE(m_pConnection);

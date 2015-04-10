@@ -49,4 +49,6 @@ libgcarto_la_SOURCES=\
 		Label.cpp \
 		LabelSet.cpp \
 		Maplex.cpp \
-		EnumMapImpl.cpp
+		EnumMapImpl.cpp \
+		ExternalGraphicImpl.cpp \
+		GraphicImpl.cpp

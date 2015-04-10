@@ -272,5 +272,8 @@
     <ClCompile Include="..\src\ExternalGraphicImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Server\gswms\src\SetStyleHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

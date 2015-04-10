@@ -130,6 +130,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\TransformImpl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Server\gswms\src\SetStyleHandler.cpp" />
     <ClCompile Include="..\src\CanvasImpl.cpp" />
     <ClCompile Include="..\src\CartoFactoryImpl.cpp" />
     <ClCompile Include="..\src\CartoManagerImpl.cpp" />
