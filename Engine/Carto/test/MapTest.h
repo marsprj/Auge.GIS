@@ -26,6 +26,7 @@ class MapTest : public CppUnit::TestFixture
 	
 	//CPPUNIT_TEST(DrawCities);
 	//CPPUNIT_TEST(DrawCountry);
+	
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -50,6 +51,8 @@ private:
 
 	void		DrawCities();
 	void		DrawCountry();
+
+	void		GetNullValue();
 
 	void		CreateLayer();
 

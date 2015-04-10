@@ -382,7 +382,8 @@ namespace auge
 					break;
 				case augeFieldTypeString:
 					{
-						pValue = new GValue(content);
+						pValue = new GValue(content==NULL?"":content);
+						//pValue = new GValue(content);
 					}
 					break;
 				case augeFieldTypeTime:	

@@ -94,6 +94,15 @@ namespace auge
 
 	GValue*	FeaturePgs::GetValue(g_uint i) const
 	{
+		if(PQgetisnull(m_pgResult, m_index, i))
+		{
+			const char* value = PQgetvalue(m_pgResult, m_index, i);
+		}
+		else
+		{
+			const char* value = PQgetvalue(m_pgResult, m_index, i);
+		}
+		
 		return NULL;
 	}
 

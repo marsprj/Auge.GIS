@@ -417,6 +417,8 @@ void MapTest::Draw_Map_Point_Label_Anchor()
 
 void MapTest::Draw_Line()
 {
+	const char* className = "rivers";
+
 	auge::DataEngine	*pEngine = NULL;
 	auge::DataEngineManager* pEngineManager = NULL;
 	pEngineManager = auge::augeGetDataEngineManagerInstance();
@@ -436,12 +438,13 @@ void MapTest::Draw_Line()
 
 	auge::FeatureWorksapce* pWorkspace = NULL;
 	pWorkspace = (auge::FeatureWorksapce*)pConnManager->GetWorkspace("db1");
-	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass("cities");
+	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_label_top_left.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_label_top_left.xml");
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point.xml");
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_2.xml");
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line_null_value_small.xml");
 
 	auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
 	pLayer->SetName("cities");
@@ -453,7 +456,7 @@ void MapTest::Draw_Line()
 	pMap->AddLayer(pLayer);
 
 	pCanvas->Draw(pMap);
-	pCanvas->Save("g:\\temp\\map\\map.png");
+	pCanvas->Save("g:\\temp\\map\\line_null_value.png");
 	//pCanvas->Save("/home/renyc/map/map.png");
 
 	//m_pConnection->Close();
@@ -733,4 +736,3 @@ void MapTest::DrawCities()
 	AUGE_SAFE_RELEASE(pMap);
 	AUGE_SAFE_RELEASE(pCanvas);
 }
-

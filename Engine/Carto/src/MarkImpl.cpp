@@ -2,7 +2,7 @@
 #include "MarkImpl.h"
 
 namespace auge
-{
+{ 
 
 	MarkImpl::MarkImpl():
 m_type(augeSquare),

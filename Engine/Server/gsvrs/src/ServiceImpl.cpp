@@ -75,7 +75,7 @@ namespace auge
 			const char* msg = pError->GetLastError();
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
-			return pExpResponse;
+			return pExpResponse; 
 		}
 		
 		WebContext* pWebContext = augeGetWebContextInstance();

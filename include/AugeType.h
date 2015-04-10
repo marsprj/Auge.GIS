@@ -162,7 +162,8 @@ typedef enum augeValueType_e
 	augeValueTypeString			= 9,
 	augeValueTypeTime			= 10,
 	augeValueTypeBLOB			= 11,
-	augeValueTypeGeometry		= 12
+	augeValueTypeGeometry		= 12,
+	augeValueTypeNull			= 13,
 } augeValueType;
 
 typedef struct  tagTIME_STRU

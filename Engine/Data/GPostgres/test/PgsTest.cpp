@@ -7,7 +7,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
 void PgsTest::setUp() 
 {
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=GISDB;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
 	pLogger->Initialize();
@@ -217,5 +218,27 @@ void PgsTest::GetUniqueValue()
 	}
 
 	pEnumValues->Release();
+	pFeatureClass->Release();
+}
+
+void PgsTest::GetNullValue()
+{
+	auge::FeatureClass* pFeatureClass = m_pWorkspace->OpenFeatureClass("rivers");
+
+	auge::GValue* pValue = NULL;
+	auge::Feature* pFeature = NULL;
+	auge::FeatureCursor* pCursor = pFeatureClass->Query();
+	while((pFeature=pCursor->NextFeature())!=NULL)
+	{
+		if(pFeature->GetFID()==3)
+		{
+			pValue = pFeature->GetValue("system");
+			pValue->Release();
+		}
+
+		pFeature->Release();
+	}
+
+	pCursor->Release();
 	pFeatureClass->Release();
 }

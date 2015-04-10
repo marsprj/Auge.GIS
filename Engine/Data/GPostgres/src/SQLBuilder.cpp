@@ -903,7 +903,7 @@ namespace auge
 		case augeValueTypeString:
 			{
 				sql.append("'");
-				sql.append(pValue->GetString());
+				sql.append(pValue->GetString()==NULL?"":pValue->GetString());
 				sql.append("'");
 			}
 			break;
