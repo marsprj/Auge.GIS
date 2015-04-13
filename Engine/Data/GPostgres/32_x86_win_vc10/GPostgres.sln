@@ -20,6 +20,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDEngine", "..\..\GDEngine\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GShape", "..\..\GShape\32_x86_win_vc10\GShape.vcxproj", "{C17AA319-6571-48F3-BFD6-111B3B0445C5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shp2pgs", "..\..\..\..\Tool\shp2pgs\shp2pgs.vcxproj", "{E9D4A751-8336-41A5-877F-16AA0523B087}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -50,6 +52,10 @@ Global
 		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Debug|Win32.Build.0 = Debug|Win32
 		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Release|Win32.ActiveCfg = Release|Win32
 		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Release|Win32.Build.0 = Release|Win32
+		{E9D4A751-8336-41A5-877F-16AA0523B087}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E9D4A751-8336-41A5-877F-16AA0523B087}.Debug|Win32.Build.0 = Debug|Win32
+		{E9D4A751-8336-41A5-877F-16AA0523B087}.Release|Win32.ActiveCfg = Release|Win32
+		{E9D4A751-8336-41A5-877F-16AA0523B087}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

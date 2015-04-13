@@ -113,7 +113,96 @@ namespace auge
 	
 	GValue*	FeatureShp::GetValue(g_uint i) const
 	{
-		return NULL;
+		GValue* pValue = NULL;
+		SHPHandle pSHPHandle = m_pFeatureClass->m_pSHPHandle;
+		DBFHandle pDBFHandle = m_pFeatureClass->m_pDBFHandle;
+		//if(index == m_lFIDIndex)
+		//{
+		//	pValue = new GValue(m_fid);
+		//}		
+		//else
+		{
+			if(pDBFHandle==NULL)
+				return NULL;
+			//int innerIndex = GetFieldInnerIndex(index);		
+			GField* pField = (GField*)m_pFeatureClass->GetFields()->GetField(i);
+			if(pField==NULL)
+				return NULL;
+
+			const char* szFieldName = pField->GetName();
+			int innerIndex = ::DBFGetFieldIndex(pDBFHandle, szFieldName);
+
+			switch(pField->GetType())
+			{
+			case augeFieldTypeString:
+				{				
+					const char* szTemp = DBFReadStringAttribute (pDBFHandle,  m_fid, innerIndex);
+					if(NULL == szTemp)
+					{
+						return NULL;
+					}
+					pValue = new GValue(szTemp);
+				}			
+				break;
+			case augeFieldTypeInt:
+				{
+					int val;
+					val = ::DBFReadIntegerAttribute(pDBFHandle, m_fid, innerIndex);
+					pValue = new GValue(val);
+				}
+				break;
+			case augeFieldTypeDouble:
+				{
+					double val;
+					val = ::DBFReadDoubleAttribute(pDBFHandle, m_fid, innerIndex);
+					pValue = new GValue(val);
+				}
+				break;
+			case augeFieldTypeBool:
+				{
+					const char* val;
+					val = ::DBFReadLogicalAttribute(pDBFHandle, m_fid, innerIndex);
+					if(g_stricmp(val, "N")==0)
+						pValue = new GValue(false);
+					else
+						pValue = new GValue(true);
+
+				}
+				break;
+			case augeFieldTypeTime:
+				{
+					//const char* val;
+					//val = ::DBFReadDateAttribute(pDBFHandle, m_fid, innerIndex);
+					//TIME_STRU timStru;
+					//Parse(timStru, val);
+					//pValue = new GValue(&timStru, true);
+				}
+				break;
+
+			case augeFieldTypeNone:
+				{
+
+				}
+				break;
+			case augeFieldTypeGeometry:
+				{
+					if(m_pGeometry==NULL)
+					{
+						FeatureShp* pThis = (FeatureShp*)this;
+						pThis->m_pGeometry = pThis->CreateGeometry(m_fid, m_pFeatureClass->m_pSHPHandle);
+					}
+					if(m_pGeometry!=NULL)
+					{
+						pValue = new GValue(m_pGeometry);
+						m_pGeometry->AddRef();
+					}
+					
+				}
+				break;
+			}
+		}
+
+		return pValue;
 	}
 
 	bool FeatureShp::GetBool(g_uint i) const

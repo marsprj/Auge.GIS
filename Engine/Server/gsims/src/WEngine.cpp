@@ -22,6 +22,8 @@
 
 #include "RegisterMapHandler.h"
 
+#include "GetFontHandler.h"
+
 #include "AugeCore.h"
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
@@ -60,6 +62,8 @@ namespace auge
 		m_handlers.push_back(new RemoveStyleHandler());
 
 		m_handlers.push_back(new RegisterMapHandler());
+
+		m_handlers.push_back(new GetFontHandler());
 		
 	}
 

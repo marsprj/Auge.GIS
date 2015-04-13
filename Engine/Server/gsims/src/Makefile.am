@@ -55,5 +55,8 @@ libgsims_la_SOURCES=\
 		    UnRegisterDataSourceRequest.cpp \
 		    RegisterMapHandler.cpp \
 		    RegisterMapRequest.cpp \
+		    GetFontHandler.cpp \
+		    GetFontRequest.cpp \
+		    GetFontResponse.cpp
 		    WEngine.cpp
 

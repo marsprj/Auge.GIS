@@ -57,6 +57,11 @@ namespace auge
 		return m_extent;
 	}
 
+	g_int FeatureClassPgs::GetCount()
+	{
+		return 0;
+	}
+
 	GFields* FeatureClassPgs::GetFields()
 	{
 		return m_pFields;

@@ -23,6 +23,7 @@ namespace auge
 		virtual const char*			GetName();
 		virtual g_uint				GetSRID();
 		virtual GEnvelope&			GetExtent();
+		virtual g_int				GetCount();
 
 		virtual GFields*			GetFields();
 		virtual GField*				GetField(const char* name);

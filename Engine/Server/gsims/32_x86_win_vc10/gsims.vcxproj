@@ -96,6 +96,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetDataSourceHandler.cpp" />
     <ClCompile Include="..\src\GetDataSourceRequest.cpp" />
     <ClCompile Include="..\src\GetDataSourceResponse.cpp" />
+    <ClCompile Include="..\src\GetFontHandler.cpp" />
+    <ClCompile Include="..\src\GetFontRequest.cpp" />
+    <ClCompile Include="..\src\GetFontResponse.cpp" />
     <ClCompile Include="..\src\GetMapHandler.cpp" />
     <ClCompile Include="..\src\GetMapRequest.cpp" />
     <ClCompile Include="..\src\GetMapResponse.cpp" />
@@ -140,6 +143,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetDataSourceHandler.h" />
     <ClInclude Include="..\include\GetDataSourceRequest.h" />
     <ClInclude Include="..\include\GetDataSourceResponse.h" />
+    <ClInclude Include="..\include\GetFontHandler.h" />
+    <ClInclude Include="..\include\GetFontRequest.h" />
+    <ClInclude Include="..\include\GetFontResponse.h" />
     <ClInclude Include="..\include\GetMapHandler.h" />
     <ClInclude Include="..\include\GetMapRequest.h" />
     <ClInclude Include="..\include\GetMapResponse.h" />

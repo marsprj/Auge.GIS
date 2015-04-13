@@ -38,6 +38,11 @@ namespace auge
 		return m_extent;
 	}
 
+	g_int FeatureClassShp::GetCount()
+	{
+		return m_pSHPHandle->nRecords;
+	}
+
 	GFields* FeatureClassShp::GetFields()
 	{
 		return m_pFields;

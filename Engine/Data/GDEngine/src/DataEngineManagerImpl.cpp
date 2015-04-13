@@ -188,6 +188,9 @@ namespace auge
 		auge_get_cwd(cdir, AUGE_PATH_MAX);
 
 #ifdef WIN32
+		//char pdir[AUGE_PATH_MAX] = {0};
+		//auge_get_parent_dir(cdir, pdir, AUGE_PATH_MAX);
+		//auge_make_path(path, NULL, pdir, "conf\\DataEngine", "xml");
 		auge_make_path(path, NULL, cdir, "conf\\DataEngine", "xml");
 #else
 		char pdir[AUGE_PATH_MAX] = {0};
@@ -222,6 +225,8 @@ namespace auge
 
 		char libpath[AUGE_PATH_MAX] = {0};
 		MakeLibraryPath(libpath, path, id);
+		GLogger* pLogger = augeGetLoggerInstance();
+		pLogger->Debug(libpath, __FILE__, __LINE__);
 
 		DataEngine* pEngine = NULL;
 		pEngine = LoadEngine(libpath);
