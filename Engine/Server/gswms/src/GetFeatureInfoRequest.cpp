@@ -161,7 +161,7 @@ namespace auge
 			}
 			else
 			{
-				*pe = NULL;
+				*pe = '\0';
 				m_styles[i++] = ps;
 			}			
 			ps = pe+1;

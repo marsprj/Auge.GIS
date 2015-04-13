@@ -6,7 +6,7 @@
 #include "AugeGeometry.h"
 #include <string>
 #include <vector>
-#include <rude/cgi.h>s
+#include <rude/cgi.h>
 
 namespace auge
 {
