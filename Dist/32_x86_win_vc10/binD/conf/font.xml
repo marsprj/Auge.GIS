@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fonts>
-<font face="System" family="System"></font>
-<font face="@System" family="@System"></font>
-<font face="Terminal" family="Terminal"></font>
-<font face="@Terminal" family="@Terminal"></font>
-<font face="Fixedsys" family="Fixedsys"></font>
-<font face="@Fixedsys" family="@Fixedsys"></font>
+	<!--Correct-->
+	<font face="宋体" family="SimSun"></font>
+	<font face="新宋体" family="NSimSun"></font>
+	<font face="黑体" family="SimHei"></font>
+	<font face="微软雅黑" family="Microsoft YaHei"></font>
+	<font face="细明体" family="MingLiU"></font>
+	<font face="新细明体" family="PMingLiU"></font>
+	<font face="标楷体" family="DFKai-SB"></font>
+	<font face="楷体" family="KaiTi"></font>
+	<font face="仿宋" family="FangSong"></font>
+	<font face="Microsoft JhengHei" family="Microsoft JhengHei"></font>
+	<font face="System" family="System"></font>
+	<font face="Terminal" family="Terminal"></font>
+	<font face="Fixedsys" family="Fixedsys"></font>
+	<font face="Arial" family="Arial"></font>
+	<font face="Times New Roman" family="Times New Roman"></font>
+	<font face="Courier New" family="Courier New"></font>
+
+
+	<!--Correct-->
+<!--
+
 <font face="Modern" family="Modern"></font>
 <font face="Roman" family="Roman"></font>
 <font face="Script" family="Script"></font>
@@ -18,7 +34,6 @@
 <font face="vt100dt" family="vt100dt"></font>
 <font face="vt100db" family="vt100db"></font>
 <font face="Marlett" family="Marlett"></font>
-<font face="Arial" family="Arial"></font>
 <font face="Arabic Transparent" family="Arabic Transparent"></font>
 <font face="Arial Baltic" family="Arial Baltic"></font>
 <font face="Arial CE" family="Arial CE"></font>
@@ -26,14 +41,10 @@
 <font face="Arial Greek" family="Arial Greek"></font>
 <font face="Arial TUR" family="Arial TUR"></font>
 <font face="Batang" family="Batang"></font>
-<font face="@Batang" family="@Batang"></font>
 <font face="BatangChe" family="BatangChe"></font>
-<font face="@BatangChe" family="@BatangChe"></font>
 <font face="Gungsuh" family="Gungsuh"></font>
-<font face="@Gungsuh" family="@Gungsuh"></font>
 <font face="GungsuhChe" family="GungsuhChe"></font>
-<font face="@GungsuhChe" family="@GungsuhChe"></font>
-<font face="Courier New" family="Courier New"></font>
+
 <font face="Courier New Baltic" family="Courier New Baltic"></font>
 <font face="Courier New CE" family="Courier New CE"></font>
 <font face="Courier New CYR" family="Courier New CYR"></font>
@@ -46,13 +57,9 @@
 <font face="Gautami" family="Gautami"></font>
 <font face="Vani" family="Vani"></font>
 <font face="Gulim" family="Gulim"></font>
-<font face="@Gulim" family="@Gulim"></font>
 <font face="GulimChe" family="GulimChe"></font>
-<font face="@GulimChe" family="@GulimChe"></font>
 <font face="Dotum" family="Dotum"></font>
-<font face="@Dotum" family="@Dotum"></font>
 <font face="DotumChe" family="DotumChe"></font>
-<font face="@DotumChe" family="@DotumChe"></font>
 <font face="Impact" family="Impact"></font>
 <font face="Iskoola Pota" family="Iskoola Pota"></font>
 <font face="Kalinga" family="Kalinga"></font>
@@ -62,34 +69,20 @@
 <font face="Latha" family="Latha"></font>
 <font face="Lucida Console" family="Lucida Console"></font>
 <font face="Malgun Gothic" family="Malgun Gothic"></font>
-<font face="@Malgun Gothic" family="@Malgun Gothic"></font>
 <font face="Mangal" family="Mangal"></font>
 <font face="Microsoft Himalaya" family="Microsoft Himalaya"></font>
-<font face="Microsoft JhengHei" family="Microsoft JhengHei"></font>
-<font face="@Microsoft JhengHei" family="@Microsoft JhengHei"></font>
-<font face="MingLiU" family="MingLiU"></font>
-<font face="@MingLiU" family="@MingLiU"></font>
-<font face="PMingLiU" family="PMingLiU"></font>
-<font face="@PMingLiU" family="@PMingLiU"></font>
+
+
 <font face="MingLiU_HKSCS" family="MingLiU_HKSCS"></font>
-<font face="@MingLiU_HKSCS" family="@MingLiU_HKSCS"></font>
 <font face="MingLiU-ExtB" family="MingLiU-ExtB"></font>
-<font face="@MingLiU-ExtB" family="@MingLiU-ExtB"></font>
 <font face="PMingLiU-ExtB" family="PMingLiU-ExtB"></font>
-<font face="@PMingLiU-ExtB" family="@PMingLiU-ExtB"></font>
 <font face="MingLiU_HKSCS-ExtB" family="MingLiU_HKSCS-ExtB"></font>
-<font face="@MingLiU_HKSCS-ExtB" family="@MingLiU_HKSCS-ExtB"></font>
 <font face="Mongolian Baiti" family="Mongolian Baiti"></font>
 <font face="MS Gothic" family="MS Gothic"></font>
-<font face="@MS Gothic" family="@MS Gothic"></font>
 <font face="MS PGothic" family="MS PGothic"></font>
-<font face="@MS PGothic" family="@MS PGothic"></font>
 <font face="MS UI Gothic" family="MS UI Gothic"></font>
-<font face="@MS UI Gothic" family="@MS UI Gothic"></font>
 <font face="MS Mincho" family="MS Mincho"></font>
-<font face="@MS Mincho" family="@MS Mincho"></font>
 <font face="MS PMincho" family="MS PMincho"></font>
-<font face="@MS PMincho" family="@MS PMincho"></font>
 <font face="MV Boli" family="MV Boli"></font>
 <font face="Microsoft New Tai Lue" family="Microsoft New Tai Lue"></font>
 <font face="Nyala" family="Nyala"></font>
@@ -102,15 +95,10 @@
 <font face="Segoe UI Light" family="Segoe UI Light"></font>
 <font face="Segoe UI Symbol" family="Segoe UI Symbol"></font>
 <font face="Shruti" family="Shruti"></font>
-<font face="宋体" family="宋体"></font>
-<font face="@宋体" family="@宋体"></font>
-<font face="新宋体" family="新宋体"></font>
-<font face="@新宋体" family="@新宋体"></font>
 <font face="SimSun-ExtB" family="SimSun-ExtB"></font>
-<font face="@SimSun-ExtB" family="@SimSun-ExtB"></font>
 <font face="Sylfaen" family="Sylfaen"></font>
 <font face="Microsoft Tai Le" family="Microsoft Tai Le"></font>
-<font face="Times New Roman" family="Times New Roman"></font>
+
 <font face="Times New Roman Baltic" family="Times New Roman Baltic"></font>
 <font face="Times New Roman CE" family="Times New Roman CE"></font>
 <font face="Times New Roman CYR" family="Times New Roman CYR"></font>
@@ -149,12 +137,9 @@
 <font face="Miriam Fixed" family="Miriam Fixed"></font>
 <font face="Narkisim" family="Narkisim"></font>
 <font face="Rod" family="Rod"></font>
-<font face="仿宋" family="仿宋"></font>
-<font face="@仿宋" family="@仿宋"></font>
-<font face="黑体" family="黑体"></font>
-<font face="@黑体" family="@黑体"></font>
-<font face="楷体" family="楷体"></font>
-<font face="@楷体" family="@楷体"></font>
+
+
+
 <font face="AngsanaUPC" family="AngsanaUPC"></font>
 <font face="Browallia New" family="Browallia New"></font>
 <font face="BrowalliaUPC" family="BrowalliaUPC"></font>
@@ -166,8 +151,7 @@
 <font face="JasmineUPC" family="JasmineUPC"></font>
 <font face="KodchiangUPC" family="KodchiangUPC"></font>
 <font face="LilyUPC" family="LilyUPC"></font>
-<font face="DFKai-SB" family="DFKai-SB"></font>
-<font face="@DFKai-SB" family="@DFKai-SB"></font>
+
 <font face="Lucida Sans Unicode" family="Lucida Sans Unicode"></font>
 <font face="Arial Black" family="Arial Black"></font>
 <font face="Comic Sans MS" family="Comic Sans MS"></font>
@@ -180,47 +164,30 @@
 <font face="Verdana" family="Verdana"></font>
 <font face="Webdings" family="Webdings"></font>
 <font face="Arial Unicode MS" family="Arial Unicode MS"></font>
-<font face="@Arial Unicode MS" family="@Arial Unicode MS"></font>
 <font face="Calibri" family="Calibri"></font>
 <font face="Cambria" family="Cambria"></font>
 <font face="Cambria Math" family="Cambria Math"></font>
 <font face="方正舒体" family="方正舒体"></font>
-<font face="@方正舒体" family="@方正舒体"></font>
 <font face="方正姚体" family="方正姚体"></font>
-<font face="@方正姚体" family="@方正姚体"></font>
 <font face="隶书" family="隶书"></font>
-<font face="@隶书" family="@隶书"></font>
 <font face="华文彩云" family="华文彩云"></font>
-<font face="@华文彩云" family="@华文彩云"></font>
 <font face="华文仿宋" family="华文仿宋"></font>
-<font face="@华文仿宋" family="@华文仿宋"></font>
 <font face="华文琥珀" family="华文琥珀"></font>
-<font face="@华文琥珀" family="@华文琥珀"></font>
 <font face="华文楷体" family="华文楷体"></font>
-<font face="@华文楷体" family="@华文楷体"></font>
 <font face="华文隶书" family="华文隶书"></font>
-<font face="@华文隶书" family="@华文隶书"></font>
 <font face="华文宋体" family="华文宋体"></font>
-<font face="@华文宋体" family="@华文宋体"></font>
 <font face="华文细黑" family="华文细黑"></font>
-<font face="@华文细黑" family="@华文细黑"></font>
 <font face="华文行楷" family="华文行楷"></font>
-<font face="@华文行楷" family="@华文行楷"></font>
 <font face="华文新魏" family="华文新魏"></font>
-<font face="@华文新魏" family="@华文新魏"></font>
 <font face="华文中宋" family="华文中宋"></font>
-<font face="@华文中宋" family="@华文中宋"></font>
 <font face="幼圆" family="幼圆"></font>
-<font face="@幼圆" family="@幼圆"></font>
 <font face="Century" family="Century"></font>
 <font face="Candara" family="Candara"></font>
 <font face="Consolas" family="Consolas"></font>
 <font face="Constantia" family="Constantia"></font>
 <font face="Corbel" family="Corbel"></font>
 <font face="Meiryo" family="Meiryo"></font>
-<font face="@Meiryo" family="@Meiryo"></font>
 <font face="Meiryo UI" family="Meiryo UI"></font>
-<font face="@Meiryo UI" family="@Meiryo UI"></font>
 <font face="Wingdings 2" family="Wingdings 2"></font>
 <font face="Wingdings 3" family="Wingdings 3"></font>
 <font face="Book Antiqua" family="Book Antiqua"></font>
@@ -290,7 +257,6 @@
 <font face="MS Reference Sans Serif" family="MS Reference Sans Serif"></font>
 <font face="MS Reference Specialty" family="MS Reference Specialty"></font>
 <font face="Fixedsys Excelsior 3.01" family="Fixedsys Excelsior 3.01"></font>
-<font face="@Fixedsys Excelsior 3.01" family="@Fixedsys Excelsior 3.01"></font>
 <font face="Bitstream Vera Sans Mono" family="Bitstream Vera Sans Mono"></font>
 <font face="04b_21" family="04b_21"></font>
 <font face="DejaVu Sans" family="DejaVu Sans"></font>
@@ -305,8 +271,7 @@
 <font face="Buxton Sketch" family="Buxton Sketch"></font>
 <font face="Segoe Marker" family="Segoe Marker"></font>
 <font face="SketchFlow Print" family="SketchFlow Print"></font>
-<font face="1:1万符号" family="1:1万符号"></font>
-<font face="微软雅黑" family="微软雅黑"></font>
-<font face="@微软雅黑" family="@微软雅黑"></font>
+
 <font face="DejaVu Sans Mono" family="DejaVu Sans Mono"></font>
+-->
 </fonts>
