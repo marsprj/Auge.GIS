@@ -9,6 +9,7 @@
 #include "UnRegisterDataSourceHandler.h"
 #include "GetDataSourceHandler.h"
 #include "GetDataSetHandler.h"
+#include "GetPreviewHandler.h"
 
 #include "RegisterLayerHandler.h"
 
@@ -52,6 +53,7 @@ namespace auge
 		m_handlers.push_back(new UnRegisterDataSourceHandler());
 		m_handlers.push_back(new GetDataSourceHandler());
 		m_handlers.push_back(new GetDataSetHandler());
+		m_handlers.push_back(new GetPreviewHandler());
 
 		m_handlers.push_back(new RegisterLayerHandler());
 

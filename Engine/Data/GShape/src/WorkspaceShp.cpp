@@ -89,6 +89,11 @@ namespace auge
 		return true;
 	}
 
+	DataSet* WorkspaceShp::OpenDataSet(const char* name)
+	{
+		return OpenFeatureClass(name);
+	}
+
 	FeatureClass* WorkspaceShp::OpenFeatureClass(const char* name)
 	{
 		if(name==NULL)

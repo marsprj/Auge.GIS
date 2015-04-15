@@ -61,5 +61,8 @@ libgsims_la_SOURCES=\
 		    GetDataSetHandler.cpp \
 		    GetDataSetRequest.cpp \
 		    GetDataSetResponse.cpp \
+		    GetPreviewRequest.cpp \
+		    GetPreviewResponse.cpp \
+		    GetPreviewHandler.cpp \
 		    WEngine.cpp
 

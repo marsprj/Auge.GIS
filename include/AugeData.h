@@ -19,6 +19,7 @@ namespace auge
 {
 	class DataEngine;
 	class Workspace;
+	class DataSet;
 	class EnumDataSet;
 	class GConnection;
 	class GResultSet;
@@ -77,6 +78,7 @@ namespace auge
 		virtual bool			IsOpen() = 0;
 
 		virtual EnumDataSet*	GetDataSets() = 0;
+		virtual DataSet*		OpenDataSet(const char* name) = 0;
 
 		virtual	DataEngine*		GetEngine() = 0;
 	};

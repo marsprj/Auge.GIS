@@ -32,6 +32,7 @@ namespace auge
 		virtual bool			IsOpen();
 
 		virtual EnumDataSet*	GetDataSets();
+		virtual DataSet*		OpenDataSet(const char* name);
 
 		// FeatureClass
 		virtual	FeatureClass*	OpenFeatureClass(const char* name);
