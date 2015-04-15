@@ -78,6 +78,8 @@ namespace auge
 
 		g_snprintf(str, AUGE_MSG_MAX, "%f,%f", pWKBPoint->point.x, pWKBPoint->point.y);
 		XElement* pxCoordinates = pxPoint->AddChild("coordinates", AUGE_GML_SPACENAME);
+		pxCoordinates->SetAttribute("ts", " ", NULL);
+		pxCoordinates->SetAttribute("cs", ",", NULL);
 		pxCoordinates->AddChildText(str);
 
 		return AG_SUCCESS;
@@ -113,6 +115,8 @@ namespace auge
 		std::string coordinates = ss.str();
 
 		XElement* pxCoordinates = pxLineString->AddChild("coordinates", AUGE_GML_SPACENAME);
+		pxCoordinates->SetAttribute("ts", " ", NULL);
+		pxCoordinates->SetAttribute("cs", ",", NULL);
 		pxLineString->AddChildText(ss.str().c_str());
 
 		return AG_SUCCESS;
@@ -221,6 +225,8 @@ namespace auge
 			pxMember = pxMultiPoint->AddChild("pointMember", AUGE_GML_SPACENAME);
 			pxPoint  = pxMember->AddChild("Point", AUGE_GML_SPACENAME);
 			pxCoordinates = pxPoint->AddChild("coordinates", AUGE_GML_SPACENAME);
+			pxCoordinates->SetAttribute("ts", " ", NULL);
+			pxCoordinates->SetAttribute("cs", ",", NULL);
 			pxCoordinates->AddChildText(str);
 		}
 

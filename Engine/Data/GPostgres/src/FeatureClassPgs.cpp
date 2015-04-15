@@ -285,7 +285,6 @@ namespace auge
 		return true;
 	}
 
-
 	GField*	FeatureClassPgs::CreateField(int col, PGresult* pgResult)
 	{
 		Oid pgType		= PQftype(pgResult, col);

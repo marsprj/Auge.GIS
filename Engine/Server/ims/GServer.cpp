@@ -157,11 +157,11 @@ namespace auge
 		//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\"	xmlns:world=\"http://www.radi.ac.cn/world\"	xmlns:wfs=\"http://www.opengis.net/wfs\"	xmlns:ogc=\"http://www.opengis.net/ogc\"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"	xsi:schemaLocation=\"http://www.opengis.net/wfs	http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\">	<wfs:Query typeName=\"world:cities\">		<wfs:PropertyName>world:gid</wfs:PropertyName>		<wfs:PropertyName>world:name</wfs:PropertyName>		<wfs:PropertyName>world:the_geom</wfs:PropertyName>	</wfs:Query></wfs:GetFeature>";
 		//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.0.0\"  xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\"  xmlns:world=\"undefined\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd\"><wfs:Query typeName=\"cities\"><ogc:Filter><ogc:BBOX><gml:Box><gml:coordinates>-180,-146.0625 180,146.0625</gml:coordinates></gml:Box></ogc:BBOX></ogc:Filter></wfs:Query></wfs:GetFeature>";
 		//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.0.0\"  xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\"  xmlns:world=\"undefined\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd\"><wfs:Query typeName=\"cities\"><ogc:Filter><ogc:BBOX><gml:Box><gml:coordinates>-195.75,-141.9375 164.25,150.1875</gml:coordinates></gml:Box></ogc:BBOX></ogc:Filter></wfs:Query></wfs:GetFeature>";
-		m_pLogger->Debug("[Request]",__FILE__, __LINE__);
+		m_pLogger->Trace("[Request]",__FILE__, __LINE__);
 		const char* ctype = getenv("CONTENT_TYPE");
 		if(ctype!=NULL)
-			m_pLogger->Debug(ctype,__FILE__, __LINE__);
-		m_pLogger->Debug(xml_string,__FILE__, __LINE__);
+			m_pLogger->Trace(ctype,__FILE__, __LINE__);
+		m_pLogger->Trace(xml_string,__FILE__, __LINE__);
 
 		XParser parser;
 		XDocument* pxDoc = parser.ParseMemory(xml_string);

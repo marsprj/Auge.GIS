@@ -48,7 +48,7 @@ namespace auge
 
 	};
 
-	class FeatureClass : public GObject
+	class FeatureClass : public DataSet
 	{
 	protected:
 		FeatureClass(){}

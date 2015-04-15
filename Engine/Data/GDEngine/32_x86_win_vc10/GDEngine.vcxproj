@@ -92,10 +92,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\..\..\..\include\AugeCore.h" />
     <ClInclude Include="..\..\..\..\include\AugeData.h" />
     <ClInclude Include="..\..\..\..\include\AugeFeature.h" />
+    <ClInclude Include="..\..\GPostgres\include\EnumDataSetImpl.h" />
     <ClInclude Include="..\include\ConnectionManagerImpl.h" />
     <ClInclude Include="..\include\DataEngineManagerImpl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\GPostgres\src\EnumDataSetImpl.cpp" />
     <ClCompile Include="..\src\ConnectionManagerImpl.cpp" />
     <ClCompile Include="..\src\DataEngineManagerImpl.cpp" />
   </ItemGroup>

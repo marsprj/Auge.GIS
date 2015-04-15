@@ -93,6 +93,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\CreateServiceHandler.cpp" />
     <ClCompile Include="..\src\CreateServiceRequest.cpp" />
     <ClCompile Include="..\src\CreateServiceResponse.cpp" />
+    <ClCompile Include="..\src\GetDataSetHandler.cpp" />
+    <ClCompile Include="..\src\GetDataSetRequest.cpp" />
+    <ClCompile Include="..\src\GetDataSetResponse.cpp" />
     <ClCompile Include="..\src\GetDataSourceHandler.cpp" />
     <ClCompile Include="..\src\GetDataSourceRequest.cpp" />
     <ClCompile Include="..\src\GetDataSourceResponse.cpp" />
@@ -140,6 +143,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\CreateServiceHandler.h" />
     <ClInclude Include="..\include\CreateServiceRequest.h" />
     <ClInclude Include="..\include\CreateServiceResponse.h" />
+    <ClInclude Include="..\include\GetDataSetHandler.h" />
+    <ClInclude Include="..\include\GetDataSetRequest.h" />
+    <ClInclude Include="..\include\GetDataSetResponse.h" />
     <ClInclude Include="..\include\GetDataSourceHandler.h" />
     <ClInclude Include="..\include\GetDataSourceRequest.h" />
     <ClInclude Include="..\include\GetDataSourceResponse.h" />

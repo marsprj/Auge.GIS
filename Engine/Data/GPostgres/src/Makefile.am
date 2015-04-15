@@ -23,4 +23,5 @@ libGPostgres_la_SOURCES=\
 		FeatureObj.cpp \
 		ResultSetPgs.cpp \
 		SQLBuilder.cpp \
-		WorkspacePgs.cpp
+		WorkspacePgs.cpp \
+		EnumDataSetImpl.cpp

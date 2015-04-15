@@ -19,6 +19,7 @@ namespace auge
 {
 	class DataEngine;
 	class Workspace;
+	class EnumDataSet;
 	class GConnection;
 	class GResultSet;
 	class ConnectionManager;
@@ -69,7 +70,30 @@ namespace auge
 		virtual void			Close() = 0;
 		virtual bool			IsOpen() = 0;
 
+		virtual EnumDataSet*	GetDataSets() = 0;
+
 		virtual	DataEngine*		GetEngine() = 0;
+	};
+
+	class DataSet : public GObject
+	{
+	protected:
+		DataSet(){}
+		virtual ~DataSet(){}
+	public:
+		virtual const char*		GetName() = 0;
+	};
+
+	class EnumDataSet : public GObject
+	{
+	protected:
+		EnumDataSet(){}
+		virtual ~EnumDataSet(){}
+	public:
+		virtual void			Reset() = 0;
+		virtual DataSet*		Next() = 0;
+		virtual bool			Add(DataSet* pDataSet) = 0;
+		virtual void			Release() = 0;
 	};
 
 	class DataEngine
@@ -108,7 +132,6 @@ namespace auge
 
 		virtual RESULTCODE			Initialize(GConnection* pConnection) = 0;
 		virtual void				Unload() = 0;
-		
 	};
 	
 	class DataEngineManager

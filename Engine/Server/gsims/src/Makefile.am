@@ -58,5 +58,8 @@ libgsims_la_SOURCES=\
 		    GetFontHandler.cpp \
 		    GetFontRequest.cpp \
 		    GetFontResponse.cpp \
+		    GetDataSetHandler.cpp \
+		    GetDataSetRequest.cpp \
+		    GetDataSetResponse.cpp \
 		    WEngine.cpp
 

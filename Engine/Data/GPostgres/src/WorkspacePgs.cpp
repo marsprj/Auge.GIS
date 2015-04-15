@@ -2,6 +2,7 @@
 #include "FeatureClassPgs.h"
 #include "DataEngineImpl.h"
 #include "SQLBuilder.h"
+#include "EnumDataSetImpl.h"
 
 namespace auge
 {	
@@ -124,6 +125,40 @@ namespace auge
 
 		return UnRegiseterGeometryColumn(name);
 	}
+
+	EnumDataSet* WorkspacePgs::GetDataSets()
+	{
+		char* sql = "select f_table_name from geometry_columns";
+
+		PGresult* pgResult = m_pgConnection.PgExecute(sql);
+		if(pgResult==NULL)
+		{
+			return false;
+		}
+
+		const char* className = NULL;
+		FeatureClass* pFeatureClass = NULL;	
+		EnumDataSetImpl *pEnum = new EnumDataSetImpl();
+
+		int nTuples = PQntuples(pgResult);
+		for(int i=0;i<nTuples; i++)
+		{
+			className = PQgetvalue(pgResult, i, 0);
+			pFeatureClass = OpenFeatureClass(className);
+			if(pFeatureClass!=NULL)
+			{
+				pEnum->Add(pFeatureClass);
+			}
+		}
+
+		PQclear(pgResult);
+
+		return pEnum;
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	// 
+	//////////////////////////////////////////////////////////////////////////
 
 	RESULTCODE WorkspacePgs::CreateTable(const char* name, GFields* pFields)
 	{
