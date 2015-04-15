@@ -28,6 +28,11 @@ namespace auge
 		AUGE_SAFE_RELEASE(m_pFields);
 	}
 
+	augeDataSetType FeatureClassPgs::GetType()
+	{
+		return augeDataSetFeature;
+	}
+
 	const char*	FeatureClassPgs::GetName()
 	{
 		return m_name.c_str();

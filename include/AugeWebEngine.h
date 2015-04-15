@@ -33,6 +33,7 @@ namespace auge
 		virtual const char*		GetEngine() = 0;
 		virtual const char*		GetVersion() = 0;
 		virtual const char*		GetRequest() = 0;
+		/*virtual const char*		GetEncoding() = 0;*/
 		/*virtual const char*		GetService() = 0;*/
 	};
 

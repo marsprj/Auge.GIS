@@ -1,6 +1,8 @@
 #include "GetDataSetHandler.h"
 #include "GetDataSetRequest.h"
 #include "GetDataSetResponse.h"
+#include "AugeService.h"
+#include "AugeData.h"
 
 
 namespace auge
@@ -70,8 +72,8 @@ namespace auge
 		}
 
 		EnumDataSet* pDataSets = pWorkspace->GetDataSets();
-		GetDataSetResponse* pResponse = new GetDataSetResponse();
-		pResponse->SetDataSets();
+		GetDataSetResponse* pResponse = new GetDataSetResponse(pRequest);
+		pResponse->SetDataSets(pDataSets);
 
 		return pResponse;
 	}

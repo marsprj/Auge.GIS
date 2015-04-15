@@ -19,6 +19,7 @@ namespace auge
 		FeatureClassShp();
 		virtual ~FeatureClassShp();
 	public:
+		virtual augeDataSetType		GetType();
 		virtual const char*			GetName();
 		virtual g_uint				GetSRID();
 		virtual GEnvelope&			GetExtent();

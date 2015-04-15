@@ -4,9 +4,11 @@
 #include "RemoveServiceHandler.h"
 #include "GetServiceHandler.h"
 //#include "RegisterHandlerHandler.h"
+
 #include "RegisterDataSourceHandler.h"
 #include "UnRegisterDataSourceHandler.h"
 #include "GetDataSourceHandler.h"
+#include "GetDataSetHandler.h"
 
 #include "RegisterLayerHandler.h"
 
@@ -45,9 +47,11 @@ namespace auge
 		m_handlers.push_back(new CreateServiceHandler());
 		m_handlers.push_back(new RemoveServiceHandler());
 		m_handlers.push_back(new GetServiceHandler());
+
 		m_handlers.push_back(new RegisterDataSourceHandler());
 		m_handlers.push_back(new UnRegisterDataSourceHandler());
 		m_handlers.push_back(new GetDataSourceHandler());
+		m_handlers.push_back(new GetDataSetHandler());
 
 		m_handlers.push_back(new RegisterLayerHandler());
 

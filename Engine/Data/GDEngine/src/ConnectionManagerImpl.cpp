@@ -8,6 +8,17 @@ namespace auge
 		return &g_connMgr;
 	}
 
+	const char*	augeGetDataSetType(augeDataSetType type)
+	{
+		switch(type)
+		{
+		case augeDataSetFeature:
+			return "Feature";
+		case augeDataSetRaster:
+			return "Raster";
+		}
+	}
+
 	ConnectionManagerImpl::ConnectionManagerImpl():
 	m_pConnection(NULL)
 	{

@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
+		m_encoding = "GBK";
 	}
 
 	GetDataSetRequest::~GetDataSetRequest()
@@ -100,6 +101,11 @@ namespace auge
 			return NULL;
 		}
 		return m_dataset_name.c_str();
+	}
+
+	const char* GetDataSetRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 }

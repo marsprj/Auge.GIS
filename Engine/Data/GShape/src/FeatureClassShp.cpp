@@ -22,6 +22,11 @@ namespace auge
 		AUGE_SAFE_RELEASE(m_pFields);
 		CloseSHPFile();
 	}
+
+	augeDataSetType FeatureClassShp::GetType()
+	{
+		return augeDataSetFeature;
+	}
 	
 	const char*	FeatureClassShp::GetName()
 	{

@@ -24,6 +24,12 @@ namespace auge
 	class GResultSet;
 	class ConnectionManager;
 
+	typedef enum
+	{
+		augeDataSetFeature,
+		augeDataSetRaster
+	}augeDataSetType;
+
 	class GConnection : public GObject
 	{
 	protected:
@@ -82,6 +88,7 @@ namespace auge
 		virtual ~DataSet(){}
 	public:
 		virtual const char*		GetName() = 0;
+		virtual augeDataSetType	GetType() = 0;
 	};
 
 	class EnumDataSet : public GObject
@@ -155,7 +162,8 @@ namespace auge
 	{
 		AUGE_DATA_ENGINE_API	DataEngineManager*	augeGetDataEngineManagerInstance();
 		AUGE_DATA_ENGINE_API	ConnectionManager*	augeGetConnectionManagerInstance();
-		AUGE_DATA_ENGINE_API	DataEngine*			augeGetDataEngineInstance(); 
+		AUGE_DATA_ENGINE_API	DataEngine*			augeGetDataEngineInstance();
+		AUGE_DATA_ENGINE_API	const char*			augeGetDataSetType(augeDataSetType type);
 	}
 }
 
