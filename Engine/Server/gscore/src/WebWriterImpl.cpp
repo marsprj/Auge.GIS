@@ -53,7 +53,7 @@ namespace auge
 
 		if(gzip)
 		{
-			printf("Content-Encoding:gzip \r\n");
+			//printf("Content-Encoding:gzip \r\n");
 		}
 
 		printf("\r\n");
