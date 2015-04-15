@@ -7,12 +7,17 @@ namespace auge
 {
 	GetDataSetResponse::GetDataSetResponse(GetDataSetRequest* pRequest)
 	{
+		m_pDataSets = NULL;
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
 	}
 
 	GetDataSetResponse::~GetDataSetResponse()
 	{
+		if(m_pDataSets!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pDataSets);
+		}
 	}
 
 	RESULTCODE GetDataSetResponse::Write(WebWriter* pWriter)
@@ -48,15 +53,12 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void GetDataSetResponse::SetPath(const char* path)
+	void GetDataSetResponse::SetDataSets(EnumDataSet* pDataSets)
 	{
-		if(path==NULL)
+		if(m_pDataSets!=NULL)
 		{
-			m_path.clear();
+			AUGE_SAFE_RELEASE(m_pDataSets);
 		}
-		else
-		{
-			m_path = path;
-		}
+		m_pDataSets = pDataSets;
 	}
 }

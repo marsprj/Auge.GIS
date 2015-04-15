@@ -10,6 +10,7 @@ namespace auge
 	class Service;
 	class Workspace;
 	class GetDataSetRequest;
+	class EnumDataSet;
 
 	class GetDataSetResponse : public WebResponse
 	{
@@ -19,10 +20,10 @@ namespace auge
 	public:
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 	public:
-		void	SetPath(const char* path);
+		void	SetDataSets(EnumDataSet* pDataSets);
 
 	private:
-		std::string m_path;
+		EnumDataSet* m_pDataSets;
 		GetDataSetRequest *m_pRequest;	
 	};
 }

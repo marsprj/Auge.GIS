@@ -41,23 +41,37 @@ namespace auge
 
 	WebResponse* GetDataSetHandler::Execute(WebRequest* pWebRequest)
 	{
-		char path[AUGE_PATH_MAX] = {0};
-		char cdir[AUGE_PATH_MAX] = {0};
-		auge_get_cwd(cdir, AUGE_PATH_MAX);
+		GetDataSetRequest* pRequest = static_cast<GetDataSetRequest*>(pWebRequest);
 
-#ifdef WIN32
-		//char pdir[AUGE_PATH_MAX] = {0};
-		//auge_get_parent_dir(cdir, pdir, AUGE_PATH_MAX);
-		//auge_make_path(path, NULL, pdir, "conf\\DataEngine", "xml");
-		auge_make_path(path, NULL, cdir, "conf\\font", "xml");
-#else
-		char pdir[AUGE_PATH_MAX] = {0};
-		auge_get_parent_dir(cdir, pdir, AUGE_PATH_MAX);
-		auge_make_path(path, NULL, pdir, "conf/font", "xml");
-#endif
+		const char* sourceName = pRequest->GetSourceName();
+		const char* dataSetName= pRequest->GetDataSetName();
 
-		GetDataSetResponse* pResponse = new GetDataSetResponse(static_cast<GetDataSetRequest*>(pWebRequest));
-		pResponse->SetPath(path);
+		if(sourceName==NULL)
+		{
+			const char* msg = "Parameter [sourceName] is NULL";
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		Workspace* pWorkspace = NULL;
+		ConnectionManager* pConnectionManager = augeGetConnectionManagerInstance();
+		pWorkspace = pConnectionManager->GetWorkspace(sourceName);
+		if( pWorkspace==NULL )
+		{
+			const char* msg = "Parameter [sourceName] is NULL";
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage("Parameter [sourceName] is NULL");
+			return pExpResponse;
+		}
+
+		EnumDataSet* pDataSets = pWorkspace->GetDataSets();
+		GetDataSetResponse* pResponse = new GetDataSetResponse();
+		pResponse->SetDataSets();
 
 		return pResponse;
 	}
