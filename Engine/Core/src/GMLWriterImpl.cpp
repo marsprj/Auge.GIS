@@ -77,10 +77,12 @@ namespace auge
 		pxPoint->SetAttribute("srsName", str, NULL);
 
 		g_snprintf(str, AUGE_MSG_MAX, "%f,%f", pWKBPoint->point.x, pWKBPoint->point.y);
-		XElement* pxCoordinates = pxPoint->AddChild("coordinates", AUGE_GML_SPACENAME);
-		pxCoordinates->SetAttribute("ts", " ", NULL);
-		pxCoordinates->SetAttribute("cs", ",", NULL);
-		pxCoordinates->AddChildText(str);
+		AsCoordinates(pxPoint, str);
+		//XElement* pxCoordinates = pxPoint->AddChild("coordinates", AUGE_GML_SPACENAME);
+		//pxCoordinates->SetAttribute("ts", " ", NULL);
+		//pxCoordinates->SetAttribute("cs", ",", NULL);
+		//pxCoordinates->SetAttribute("decimal", ".", NULL);
+		//pxCoordinates->AddChildText(str);
 
 		return AG_SUCCESS;
 	}
@@ -111,13 +113,13 @@ namespace auge
 			}
 			ss<<pt->x<<","<<pt->y;
 		}
-
-		std::string coordinates = ss.str();
-
-		XElement* pxCoordinates = pxLineString->AddChild("coordinates", AUGE_GML_SPACENAME);
-		pxCoordinates->SetAttribute("ts", " ", NULL);
-		pxCoordinates->SetAttribute("cs", ",", NULL);
-		pxLineString->AddChildText(ss.str().c_str());
+		
+		AsCoordinates(pxLineString, ss.str().c_str());
+		//XElement* pxCoordinates = pxLineString->AddChild("coordinates", AUGE_GML_SPACENAME);
+		//pxCoordinates->SetAttribute("ts", " ", NULL);
+		//pxCoordinates->SetAttribute("cs", ",", NULL);
+		//pxCoordinates->SetAttribute("decimal", ".", NULL);
+		//pxLineString->AddChildText(ss.str().c_str());
 
 		return AG_SUCCESS;
 	}
@@ -224,10 +226,12 @@ namespace auge
 			g_snprintf(str, AUGE_MSG_MAX, "%f,%f",pWKBPoint->point.x,pWKBPoint->point.y);
 			pxMember = pxMultiPoint->AddChild("pointMember", AUGE_GML_SPACENAME);
 			pxPoint  = pxMember->AddChild("Point", AUGE_GML_SPACENAME);
-			pxCoordinates = pxPoint->AddChild("coordinates", AUGE_GML_SPACENAME);
-			pxCoordinates->SetAttribute("ts", " ", NULL);
-			pxCoordinates->SetAttribute("cs", ",", NULL);
-			pxCoordinates->AddChildText(str);
+			AsCoordinates(pxPoint, str);
+			//pxCoordinates = pxPoint->AddChild("coordinates", AUGE_GML_SPACENAME);
+			//pxCoordinates->SetAttribute("ts", " ", NULL);
+			//pxCoordinates->SetAttribute("cs", ",", NULL);
+			//pxCoordinates->SetAttribute("decimal", ".", NULL);
+			//pxCoordinates->AddChildText(str);
 		}
 
 		return AG_SUCCESS;
@@ -350,8 +354,18 @@ namespace auge
 		}
 
 		XElement* pxLinearRing = pxParent->AddChild("LinearRing",AUGE_GML_SPACENAME);
-		pxLinearRing->AddChildText(os.str().c_str());
+		AsCoordinates(pxLinearRing, os.str().c_str());
 
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE GMLWriterImpl::AsCoordinates(XElement* pxParent,const char* coordinates)
+	{
+		XElement* pxCoordinates = pxParent->AddChild("coordinates",AUGE_GML_SPACENAME);
+		pxCoordinates->AddChildText(coordinates);
+		pxCoordinates->SetAttribute("ts", " ", NULL);
+		pxCoordinates->SetAttribute("cs", ",", NULL);
+		pxCoordinates->SetAttribute("decimal", ".", NULL);
 		return AG_SUCCESS;
 	}
 
@@ -368,7 +382,8 @@ namespace auge
 		}
 
 		XElement* pxLineString = pxParent->AddChild("LineString",AUGE_GML_SPACENAME);
-		pxLineString->AddChildText(os.str().c_str());
+		//pxLineString->AddChildText(os.str().c_str());
+		AsCoordinates(pxLineString, os.str().c_str());
 
 		return AG_SUCCESS;
 	}

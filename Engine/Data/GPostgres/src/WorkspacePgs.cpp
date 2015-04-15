@@ -128,12 +128,12 @@ namespace auge
 
 	EnumDataSet* WorkspacePgs::GetDataSets()
 	{
-		char* sql = "select f_table_name from geometry_columns";
+		const char* sql = "select f_table_name from geometry_columns";
 
 		PGresult* pgResult = m_pgConnection.PgExecute(sql);
 		if(pgResult==NULL)
 		{
-			return false;
+			return NULL;
 		}
 
 		const char* className = NULL;

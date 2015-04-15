@@ -30,18 +30,12 @@
     <ClInclude Include="..\include\ConnectionManagerImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\GPostgres\include\EnumDataSetImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DataEngineManagerImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ConnectionManagerImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\GPostgres\src\EnumDataSetImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

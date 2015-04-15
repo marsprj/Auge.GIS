@@ -26,6 +26,7 @@ namespace auge
 		RESULTCODE AsGML(XElement* pxParent,LinearRing* pLinearRing);
 		RESULTCODE AsGML(XElement* pxParent,WKBLineString* pLineString);
 		RESULTCODE AsGML(XElement* pxParent,WKBPolygon* pWKBPolygon);
+		RESULTCODE AsCoordinates(XElement* pxParent,const char* coordinates);
 
 	private:
 		int		FindOutBoundIndex(WKBPolygon* pWKBPolygon);
