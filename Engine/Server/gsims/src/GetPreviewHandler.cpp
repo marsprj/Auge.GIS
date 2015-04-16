@@ -122,7 +122,7 @@ namespace auge
 
 		pFeatureLayer = pCartoFactory->CreateFeatureLayer();
 		pFeatureLayer->SetFeatureClass(pFeatureClass);
-		pFeatureClass->AddRef();
+		//pFeatureClass->AddRef();
 
 		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
 		augeGeometryType type = pField->GetGeometryDef()->GeometryType();
@@ -133,7 +133,15 @@ namespace auge
 		pCanvas->DrawBackground(bgColor);
 
 		GEnvelope extent = pRequest->GetExtent();
-		pCanvas->SetViewer(extent.IsValid() ? extent : pFeatureClass->GetExtent());
+		if(extent.IsValid())
+		{
+			pCanvas->SetViewer(extent);
+		}
+		else
+		{
+			pCanvas->SetViewer(pFeatureClass->GetExtent());
+		}
+		//pCanvas->SetViewer(extent.IsValid() ? extent : pFeatureClass->GetExtent());
 		
 		pCanvas->DrawLayer(pFeatureLayer, pStyle);
 
