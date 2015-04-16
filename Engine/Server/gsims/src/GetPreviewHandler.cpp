@@ -145,8 +145,9 @@ namespace auge
 		char img_path[AUGE_PATH_MAX] = {0};
 		auge_get_image_suffix(pRequest->GetMimeType(), img_sfix, AUGE_EXT_MAX);
 		auge_generate_uuid(img_name, AUGE_NAME_MAX);
-		const char* cache_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\cache\\map";//pWebContext->GetCacheMapPath();
-		auge_make_path(img_path, NULL, cache_path, img_name, img_sfix);
+		WebContext* pWebContext = augeGetWebContextInstance();
+		//const char* cache_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\cache\\map";//pWebContext->GetCacheMapPath();
+		auge_make_path(img_path, NULL, pWebContext->GetCacheMapPath(), img_name, img_sfix);
 		pCanvas->Save(img_path);
 		pCanvas->Release();
 		GetPreviewResponse* pMapResponse = new GetPreviewResponse(pRequest);
