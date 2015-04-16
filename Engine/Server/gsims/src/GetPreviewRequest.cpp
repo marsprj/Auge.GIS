@@ -128,7 +128,7 @@ namespace auge
 
 	void GetPreviewRequest::SetExtent(const char* extent)
 	{
-		if(extent!=NULL)
+		if((extent!=NULL)&&(extent[0]!='\0'))
 		{
 			double xmin, ymin, xmax, ymax;
 			sscanf(extent, "%lf,%lf,%lf,%lf,",&xmin, &ymin, &xmax, &ymax);
