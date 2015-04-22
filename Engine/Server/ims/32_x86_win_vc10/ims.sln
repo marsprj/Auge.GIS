@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mgr", "..\..\mgr\32_x86_win
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsvrs", "..\..\gsvrs\32_x86_win_vc10\gsvrs.vcxproj", "{D8C7BCA3-AADF-430D-BD10-6F771418F31B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uploader", "..\..\uploader\32_x86_win_vc10\uploader.vcxproj", "{E9DED101-D400-4337-B692-DC51D48527B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -95,6 +97,10 @@ Global
 		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Debug|Win32.Build.0 = Debug|Win32
 		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Release|Win32.ActiveCfg = Release|Win32
 		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Release|Win32.Build.0 = Release|Win32
+		{E9DED101-D400-4337-B692-DC51D48527B1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E9DED101-D400-4337-B692-DC51D48527B1}.Debug|Win32.Build.0 = Debug|Win32
+		{E9DED101-D400-4337-B692-DC51D48527B1}.Release|Win32.ActiveCfg = Release|Win32
+		{E9DED101-D400-4337-B692-DC51D48527B1}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

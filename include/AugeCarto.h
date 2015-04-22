@@ -148,6 +148,9 @@ namespace auge
 
 		virtual void		Label(const char* text, WKBPoint *pWKBPoint, TextSymbolizer* pSymbolizer, Transformation* pTransformation) = 0;
 
+		virtual void		Save() = 0;
+		virtual void		Resotre() = 0;
+
 	public:
 		virtual void		FillRectangle(g_uint width, g_uint height, GColor& color) = 0;
 		virtual	void		DrawRectangle(g_uint width, g_uint height, GColor& color, double border) = 0;

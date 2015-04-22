@@ -31,6 +31,9 @@ namespace auge
 
 		virtual void		Label(const char* text, WKBPoint *pWKBPoint, TextSymbolizer* pSymbolizer, Transformation* pTransformation);
 
+		virtual void		Save();
+		virtual void		Resotre();
+
 	public:
 		virtual void		FillRectangle(g_uint width, g_uint height, GColor& color);
 		virtual	void		DrawRectangle(g_uint width, g_uint height, GColor& color, double border);

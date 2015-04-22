@@ -20,6 +20,7 @@ namespace auge
 		virtual const char*		GetCachePath();
 		virtual const char*		GetCacheMapPath();
 		virtual const char*		GetCacheProtocolPath();
+		virtual const char*		GetUploadPath();
 
 		virtual GConnection*	GetConnection();
 
@@ -50,6 +51,7 @@ namespace auge
 		std::string m_cache_path;
 		std::string m_cache_map_path;
 		std::string m_cache_protocol_path;
+		std::string m_upload_path;
 
 		std::string m_data_engine;
 		std::string m_data_uri;

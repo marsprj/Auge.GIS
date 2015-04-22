@@ -35,6 +35,16 @@ namespace auge
 		delete this;
 	}
 
+	void RendererCairo::Save()
+	{
+		cairo_save(m_cairo);
+	}
+
+	void RendererCairo::Resotre()
+	{
+		cairo_restore(m_cairo);
+	}
+
 	void RendererCairo::DrawRectangle(g_uint width, g_uint height, GColor& color, double border)
 	{
 		DrawRectangle(0,0,width, height,color, border);
@@ -370,8 +380,8 @@ namespace auge
 		g_char* utext = (g_char*)text;
 		Font* pFont = pSymbolizer->GetFont();
 		//cairo_select_font_face(m_cairo, "Sazanami Gothic", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-		cairo_select_font_face(m_cairo, "Microsoft Yahei", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-		//cairo_select_font_face(m_cairo, pFont->GetFamily(), (cairo_font_slant_t)(pFont->GetStyle()), (cairo_font_weight_t)(pFont->GetWeight()));
+		//cairo_select_font_face(m_cairo, "Microsoft Yahei", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+		cairo_select_font_face(m_cairo, pFont->GetFamily(), (cairo_font_slant_t)(pFont->GetStyle()), (cairo_font_weight_t)(pFont->GetWeight()));
 		//cairo_set_font_size(m_cairo, 30.0);
 		cairo_set_font_size(m_cairo, pFont->GetSize());
 

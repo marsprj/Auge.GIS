@@ -35,7 +35,8 @@ namespace auge
 		else
 		{
 			m_text = text;
-			m_wtext = (wchar_t*)auge_encoding_convert("GBK","UTF-8",text, strlen(text));
+			const char* wtext = auge_encoding_convert("GBK","UTF-8",text, strlen(text));
+			m_wtext = (wchar_t*)wtext;
 		}
 	}
 

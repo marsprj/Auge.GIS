@@ -479,4 +479,14 @@ namespace auge
 #endif
 	}
 
+	bool auge_unzip(const char* zip_path, const char* dest_path)
+	{
+		return true;
+	}
+
+	bool auge_zip(const char* src_path, const char* zip_path)
+	{
+		return true;
+	}
+
 }

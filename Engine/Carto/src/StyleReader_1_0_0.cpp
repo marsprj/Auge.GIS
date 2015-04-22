@@ -643,10 +643,69 @@ namespace auge
 
 	bool StyleReader_1_0_0::ReadPlacement(TextSymbolizer* pSymbolizer, XNode* pxPlacementNode)
 	{
-		XNode* pxPointPlacement = pxPlacementNode->GetFirstChild("PointPlacement");
-		if(pxPointPlacement==NULL)
+		XNode* pxLabelPlacement = pxPlacementNode->GetFirstChild("PointPlacement");
+		if(pxLabelPlacement==NULL)
 		{
 			return false;
+		}
+
+		XNode* pxNode = NULL;
+		XNodeSet* pxNodeSet = pxLabelPlacement->GetChildren();
+		if(pxNodeSet!=NULL)
+		{
+			pxNodeSet->Reset();
+			while((pxNode=pxNodeSet->Next())!=NULL)
+			{
+				const char* nodeName = pxNode->GetName();
+				if(g_stricmp(nodeName, "AnchorPoint")==0)
+				{
+					double x=0.0f,y=0.0f;
+					XNode* pxNodeAnchor = pxNode->GetFirstChild("AnchorPointX");
+					if(pxNodeAnchor!=NULL)
+					{
+						const char* ax = pxNodeAnchor->GetContent();
+						if(ax!=NULL)
+						{
+							x = atof(ax);
+						}
+					}				
+					pxNodeAnchor = pxNode->GetFirstChild("AnchorPointY");
+					if(pxNodeAnchor!=NULL)
+					{
+						const char* ay = pxNodeAnchor->GetContent();
+						if(ay!=NULL)
+						{
+							y = atof(ay);
+						}
+					}
+					pSymbolizer->SetAnchor(x, y);
+				}
+				else if(g_stricmp(nodeName, "Displacement")==0)
+				{
+					double x=0.0f,y=0.0f;
+					XNode* pxDisplacement = pxNode->GetFirstChild("DisplacementX");
+					if(pxDisplacement!=NULL)
+					{
+						const char* ax = pxDisplacement->GetContent();
+						if(ax!=NULL)
+						{
+							x = atof(ax);
+						}
+					}				
+					pxDisplacement = pxNode->GetFirstChild("DisplacementY");
+					if(pxDisplacement!=NULL)
+					{
+						const char* ay = pxDisplacement->GetContent();
+						if(ay!=NULL)
+						{
+							y = atof(ay);
+						}
+					}			
+					pSymbolizer->SetDisplacement(x, y);
+				}
+			}
+
+			pxNodeSet->Release();
 		}
 
 		//XNode* pxPOffset = pxLinePlacement->GetFirstChild("PerpendicularOffset");

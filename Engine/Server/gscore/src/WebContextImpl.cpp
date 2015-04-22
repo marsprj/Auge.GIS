@@ -173,6 +173,11 @@ namespace auge
 		return m_cache_protocol_path.c_str();
 	}
 
+	const char* WebContextImpl::GetUploadPath()
+	{
+		return m_upload_path.c_str();
+	}
+
 	GConnection* WebContextImpl::GetConnection()
 	{
 		GError	*pError  = augeGetErrorInstance();
@@ -288,5 +293,13 @@ namespace auge
 			auge_mkdir(cache_map);
 		}
 		m_cache_map_path = cache_map;
+
+		char upload_path[AUGE_PATH_MAX];
+		auge_make_path(upload_path, NULL, cdir, "upload", NULL);
+		if(g_access(upload_path, 4))
+		{
+			auge_mkdir(upload_path); 
+		}
+		m_upload_path = upload_path;		
 	}
 }

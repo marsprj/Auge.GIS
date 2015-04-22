@@ -321,13 +321,20 @@ namespace auge
 
 		GFilter* pViewFilter = CreateViewFilter(pFilter, pFeatureClass);
 		
-		pCursor = pFeatureClass->Query(pViewFilter);
-
 		const char* label_text = NULL;
 		g_uchar* wkb = NULL;
 		auge::Geometry	*pGeometry = NULL;
 		auge::Feature	*pFeature = NULL;
 		auge::GLabel	*pLabel = NULL;
+
+		Font* pFont = pSymbolizer->GetFont();
+		m_pRenderer->Save();
+		m_pRenderer->SetFont(pFont->GetFamily(),
+							pFont->GetSize(),
+							pFont->GetStyle(),
+							pFont->GetWeight());
+
+		pCursor = pFeatureClass->Query(pViewFilter);
 		while((pFeature=pCursor->NextFeature())!=NULL)
 		{
 			pGeometry = pFeature->GetGeometry();
@@ -372,6 +379,7 @@ namespace auge
 			pFeature->Release();
 		}
 		pCursor->Release();
+		m_pRenderer->Resotre();
 		if(pViewFilter!=NULL)
 		{
 			AUGE_SAFE_RELEASE(pViewFilter);

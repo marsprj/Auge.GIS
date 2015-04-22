@@ -39,7 +39,7 @@
                         <sld:LabelPlacement>
                             <sld:PointPlacement>
                                 <sld:AnchorPoint>
-                                    <sld:AnchorPointX>0.0</sld:AnchorPointX>
+                                    <sld:AnchorPointX>1.0</sld:AnchorPointX>
                                     <sld:AnchorPointY>0.0</sld:AnchorPointY>
                                 </sld:AnchorPoint>
                                 <sld:Displacement>

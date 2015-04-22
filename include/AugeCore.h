@@ -351,6 +351,9 @@ namespace auge
 		AUGE_API void		auge_free_library(void* handler);
 		AUGE_API void*		auge_get_function_pointer(void* handler, const char* fname);
 
+		AUGE_API bool		auge_unzip(const char* zip_path, const char* dest_path);
+		AUGE_API bool		auge_zip(const char* src_path, const char* zip_path);
+
 		AUGE_API g_ulong	auge_get_time();
 
 		AUGE_API const char*	auge_encoding_convert(const char* from, const char* to, const char* instr, size_t instrlen);
