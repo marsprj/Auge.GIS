@@ -20,15 +20,15 @@ namespace auge
 		}
 	}
 
-	const char*	TransactionRequest::GetEngine()
-	{
-		return "wfs";
-	}
+	//const char*	TransactionRequest::GetEngine()
+	//{
+	//	return "wfs";
+	//}
 
-	const char*	TransactionRequest::GetVersion()
-	{
-		return m_version.c_str();
-	}
+	//const char*	TransactionRequest::GetVersion()
+	//{
+	//	return m_version.c_str();
+	//}
 
 	const char* TransactionRequest::GetTypeName()
 	{
@@ -40,14 +40,14 @@ namespace auge
 		return "Transaction";
 	}
 
-	void TransactionRequest::SetVersion(const char* value)
-	{
-		if(value==NULL)
-		{
-			return;
-		}
-		m_version = value;
-	}
+	//void TransactionRequest::SetVersion(const char* value)
+	//{
+	//	if(value==NULL)
+	//	{
+	//		return;
+	//	}
+	//	m_version = value;
+	//}
 
 	void TransactionRequest::SetTypeName(const char* value)
 	{
@@ -60,10 +60,10 @@ namespace auge
 		m_type_name = sep==NULL ? value : sep+1;
 	}
 
-	const char*	TransactionRequest::GetMimeType()
-	{
-		return m_mime_type.c_str();
-	}
+	//const char*	TransactionRequest::GetMimeType()
+	//{
+	//	return m_mime_type.c_str();
+	//}
 
 	XDocument* TransactionRequest::GetXmlDoc()
 	{
@@ -86,6 +86,12 @@ namespace auge
 		if(pxAttr!=NULL)
 		{
 			SetVersion(pxAttr->GetValue());
+		}
+
+		pxAttr = pxRoot->GetAttribute("mapName");
+		if(pxAttr!=NULL)
+		{
+			SetMapName(pxAttr->GetValue());
 		}
 
 		return true;

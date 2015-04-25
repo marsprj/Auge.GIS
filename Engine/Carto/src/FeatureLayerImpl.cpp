@@ -79,6 +79,10 @@ namespace auge
 	
 	GEnvelope& FeatureLayerImpl::GetExtent()
 	{
+		if(m_pFeatureClass!=NULL)
+		{
+			m_extent = m_pFeatureClass->GetExtent();
+		}
 		return m_extent;
 	}
 

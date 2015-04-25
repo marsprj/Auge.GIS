@@ -7,7 +7,7 @@ namespace auge
 		m_version = "1.3.0";
 		m_width = 800;
 		m_height = 600;
-		m_bgColor.Set(255,255,255,0);
+		m_bgColor.Set(255,255,255,0); 
 		m_transparent = true;
 		m_mime_type = "image/png";
 	}
@@ -17,15 +17,15 @@ namespace auge
 
 	}
 
-	const char*	GetMapRequest::GetEngine()
-	{
-		return "wms";
-	}
+	//const char*	GetMapRequest::GetEngine()
+	//{
+	//	return "wms";
+	//}
 
-	const char*	GetMapRequest::GetVersion()
-	{
-		return m_version.c_str();
-	}
+	//const char*	GetMapRequest::GetVersion() 
+	//{
+	//	return m_version.c_str();
+	//}
 
 	const char*	GetMapRequest::GetRequest()
 	{
@@ -88,6 +88,7 @@ namespace auge
 	bool GetMapRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
+		SetMapName(cgi["mapName"]);
 		SetLayers(cgi["layers"]);
 		SetStyles(cgi["styles"]);
 		SetBBox(cgi["bbox"]);

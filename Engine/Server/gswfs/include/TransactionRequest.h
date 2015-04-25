@@ -7,32 +7,33 @@
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
+#include "WFeatureRequest.h"
 
 namespace auge
 {
 	class XDocument;
 
-	class TransactionRequest : public WebRequest
+	class TransactionRequest : public WFeatureRequest
 	{
 	public:
 		TransactionRequest();
 		virtual ~TransactionRequest();
 
 	public:
-		virtual const char*		GetEngine();
-		virtual const char*		GetVersion();
+		//virtual const char*		GetEngine();
+		//virtual const char*		GetVersion();
 		virtual const char*		GetTypeName();
 		virtual const char*		GetRequest();
-		virtual const char*		GetMimeType();
+		//virtual const char*		GetMimeType();
 
 	public:
-		void		SetVersion(const char* value);
+		//void		SetVersion(const char* value);
 		void		SetTypeName(const char* typeName);
 		bool		Create(XDocument* pxDoc);
 		XDocument*	GetXmlDoc();
 
 	private: 
-		std::string m_version;
+		//std::string m_version;
 		std::string m_type_name;
 		std::string m_full_name;
 		std::string m_mime_type;

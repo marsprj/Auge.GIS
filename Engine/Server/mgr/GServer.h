@@ -56,7 +56,7 @@ namespace auge
 	private:
 		WebResponse*	DoGet(rude::CGI& cgi);
 		WebResponse*	DoPost(rude::CGI& cgi);
-		WebResponse*	Execute(WebRequest* pWebRequest);
+		//WebResponse*	Execute(WebRequest* pWebRequest);
 
 		augeHttpMethodType	GetMethod();
 

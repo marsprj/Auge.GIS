@@ -44,6 +44,9 @@ namespace auge
 		virtual const char*		GetName() = 0;
 		virtual RESULTCODE		SetName(const char* szName) = 0;
 
+		virtual const char*		GetURI() = 0;
+		virtual RESULTCODE		SetURI(const char* uri) = 0;
+
 		virtual GEnvelope&		GetExtent() = 0;
 		virtual void			SetExtent(double xmin, double ymin, double xmax, double ymax) = 0;
 		virtual g_int			GetSRID() = 0;
@@ -54,9 +57,6 @@ namespace auge
 		virtual Layer*			GetLayer(const char* szName) = 0;
 
 		virtual RESULTCODE		AddLayer(Layer* pLayer) = 0;
-
-
-		
 	};
 
 	class Layer : public GObject

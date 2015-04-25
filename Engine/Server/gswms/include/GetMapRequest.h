@@ -7,18 +7,19 @@
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
+#include "WMapRequest.h"
 
 namespace auge
 {
-	class GetMapRequest : public WebRequest
+	class GetMapRequest : public WMapRequest
 	{
 	public:
 		GetMapRequest();
 		virtual ~GetMapRequest();
 
 	public:
-		virtual const char*		GetEngine();
-		virtual const char*		GetVersion();
+		//virtual const char*		GetEngine();
+		//virtual const char*		GetVersion();
 		virtual const char*		GetRequest();
 
 	public:
@@ -67,6 +68,9 @@ namespace auge
 -------------------------------------------------------------------------
 servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=point,line,polygon&bbox=-180,-90,180,90&width=800&height=600&transparent=true
 user=user1&servicename=world&service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=point,line,polygon&bbox=-180,-90,180,90&width=800&height=600&transparent=true
+
+service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=point,line,polygon&bbox=-180,-90,180,90&width=800&height=600&transparent=true&mapName=world
+http://127.0.0.1:8088/ows/user1/mgr?service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=point,line,polygon&bbox=-180,-90,180,90&width=800&height=600&transparent=true&mapName=world
 
 http://127.0.0.1:8088/ows/user1/world/ims?service=wms&version=1.3.0&request=GetMap&layers=cities,rivers,country&styles=point,line,polygon&bbox=-180,-90,180,90&width=800&height=600&transparent=true
 http://192.168.111.160:8088//ows/user1/world/ims?service=wms&version=1.3.0&request=GetMap&layers=cities&bbox=-180,-90,180,90&width=800&height=600&transparent=true

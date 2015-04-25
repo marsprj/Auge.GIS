@@ -40,7 +40,8 @@ namespace auge
 	WebRequest*	GetFeatureHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
 	{
 		GetFeatureRequest* pRequest = new GetFeatureRequest();
-		if(!pRequest->Create(pxDoc, pMap))
+		//if(!pRequest->Create(pxDoc, pMap))
+		if(!pRequest->Create(pxDoc))
 		{
 			GLogger* pLogger = augeGetLoggerInstance();
 			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
@@ -78,8 +79,10 @@ namespace auge
 		pLayer = pMap->GetLayer(typeName);
 		if(pLayer==NULL)
 		{
+			const char* ns = pWebContext->GetService() ? pWebContext->GetService() : pMap->GetName();
+
 			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "Service %s has not FeatureType %s,",pRequest->GetServiceName(), typeName);
+			g_sprintf(msg, "Service %s has not FeatureType %s,",ns, typeName);
 			pLogger->Error(msg, __FILE__, __LINE__);
 
 			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
@@ -113,7 +116,7 @@ namespace auge
 		}
 
 		FeatureCursor *pCursor = NULL; 
-		GQuery* pQuery = pRequest->GetQuery(); 
+		GQuery* pQuery = pRequest->GetQuery(pFeatureClass); 
 		if(pQuery!=NULL)
 		{ 
 			pCursor = pFeatureClass->Query(pQuery);

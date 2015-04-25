@@ -102,6 +102,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\TransactionRequest.cpp" />
     <ClCompile Include="..\src\TransactionResponse.cpp" />
     <ClCompile Include="..\src\WFeatureEngine.cpp" />
+    <ClCompile Include="..\src\WFeatureRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\CapabilitiesHandler.h" />
@@ -123,6 +124,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\TransactionRequest.h" />
     <ClInclude Include="..\include\TransactionResponse.h" />
     <ClInclude Include="..\include\WFeatureEngine.h" />
+    <ClInclude Include="..\include\WFeatureRequest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

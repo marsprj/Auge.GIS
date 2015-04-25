@@ -16,6 +16,8 @@ namespace auge
 
 		//m_pFilter = NULL;
 		m_pQuery = NULL;
+
+		m_pxDoc = NULL;
 	}
 
 	GetFeatureRequest::~GetFeatureRequest()
@@ -24,15 +26,15 @@ namespace auge
 		AUGE_SAFE_RELEASE(m_pQuery);
 	}
 
-	const char*	GetFeatureRequest::GetEngine()
-	{
-		return "wfs";
-	}
+	//const char*	GetFeatureRequest::GetEngine()
+	//{
+	//	return "wfs";
+	//}
 
-	const char*	GetFeatureRequest::GetVersion()
-	{
-		return m_version.c_str();
-	}
+	//const char*	GetFeatureRequest::GetVersion()
+	//{
+	//	return m_version.c_str();
+	//}
 
 	const char* GetFeatureRequest::GetTypeName()
 	{
@@ -44,14 +46,14 @@ namespace auge
 		return "GetFeature";
 	}
 
-	void GetFeatureRequest::SetVersion(const char* value)
-	{
-		if(value==NULL)
-		{
-			return;
-		}
-		m_version = value;
-	}
+	//void GetFeatureRequest::SetVersion(const char* value)
+	//{
+	//	if(value==NULL)
+	//	{
+	//		return;
+	//	}
+	//	m_version = value;
+	//}
 
 	void GetFeatureRequest::SetTypeName(const char* value)
 	{
@@ -64,10 +66,10 @@ namespace auge
 		m_type_name = sep==NULL ? value : sep+1;
 	}
 
-	const char*	GetFeatureRequest::GetMimeType()
-	{
-		return m_mime_type.c_str();
-	}
+	//const char*	GetFeatureRequest::GetMimeType()
+	//{
+	//	return m_mime_type.c_str();
+	//}
 
 	const char*	GetFeatureRequest::GetOutputFormat()
 	{
@@ -151,9 +153,62 @@ namespace auge
 		}
 	}
 
-	GQuery* GetFeatureRequest::GetQuery()
+	GQuery* GetFeatureRequest::GetQuery(FeatureClass* pFeatureClass)
 	{
+		if(m_pQuery==NULL)
+		{
+			m_pQuery = ParseQuery(pFeatureClass);
+		}
 		return m_pQuery;
+	}
+
+	GQuery* GetFeatureRequest::ParseQuery(FeatureClass* pFeatureClass)
+	{
+		if(m_pxDoc==NULL)
+		{
+			return NULL;
+		}
+
+		XElement* pxRoot = m_pxDoc->GetRootNode();
+		XElement* pxQuery = (XElement*)pxRoot->GetFirstChild("Query");
+		if(pxQuery==NULL)
+		{
+			return NULL;
+		}
+
+		FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
+		GQuery* pQuery = pFilterFactory->CreateQuery();
+		if(pQuery==NULL)
+		{
+			return NULL;
+		}
+
+		XElement* pxFilter = (XElement*)pxQuery->GetFirstChild("Filter");
+		if(pxFilter!=NULL)
+		{
+			GFilter* pFilter = NULL;
+			FilterReader* reader = pFilterFactory->CreateFilerReader(pFeatureClass->GetFields());
+			pFilter = reader->Read(pxFilter);
+			pQuery->SetFilter(pFilter);
+
+		}
+
+		//PropertyName
+		char field_name[AUGE_NAME_MAX];
+		const char* property_name;
+		XNode* pxNode = NULL;
+		XNodeSet* pxNodeSet = pxQuery->GetChildren("PropertyName");
+		pxNodeSet->Reset();
+		while((pxNode=pxNodeSet->Next())!=NULL)
+		{
+			property_name = pxNode->GetContent();
+			ParseFieldName(property_name, field_name, AUGE_NAME_MAX);
+			pQuery->AddSubField(field_name);
+
+		}
+		pxNodeSet->Release();
+
+		return pQuery;
 	}
 
 	void GetFeatureRequest::SetQuery(const char* filter, const char* fields, const char* typeName, Map* pMap)
@@ -226,6 +281,7 @@ namespace auge
 	bool GetFeatureRequest::Create(rude::CGI& cgi, Map* pMap)
 	{
 		SetVersion(cgi["version"]);
+		SetMapName(cgi["mapName"]);
 		SetTypeName(cgi["typeName"]);
 		SetOutputFormat(cgi["outputFormat"]);
 		SetMaxFeatures(cgi["maxFeatures"]);
@@ -238,17 +294,25 @@ namespace auge
 		
 		return true;
 	}
-	
-	bool GetFeatureRequest::Create(XDocument* pxDoc,Map* pMap)
+
+	bool GetFeatureRequest::Create(XDocument* pxDoc)
 	{
 		XElement	*pxRoot = NULL;
 		XAttribute	*pxAttr = NULL;
+
+		m_pxDoc = pxDoc;
 
 		pxRoot = pxDoc->GetRootNode();
 		pxAttr = pxRoot->GetAttribute("version");
 		if(pxAttr!=NULL)
 		{
 			SetVersion(pxAttr->GetValue());
+		}
+
+		pxAttr = pxRoot->GetAttribute("mapName");
+		if(pxAttr!=NULL)
+		{
+			SetMapName(pxAttr->GetValue());
 		}
 
 		pxAttr = pxRoot->GetAttribute("outputFormat");
@@ -266,14 +330,9 @@ namespace auge
 		XElement* pxQuery = (XElement*)pxRoot->GetFirstChild("Query");
 		if(pxQuery==NULL)
 		{
-			return false;
+			return NULL;
 		}
 
-		if(m_pQuery!=NULL)
-		{
-			AUGE_SAFE_RELEASE(m_pQuery);
-		}
-		
 		pxAttr = pxQuery->GetAttribute("typeName");
 		if(pxAttr==NULL)
 		{
@@ -284,56 +343,158 @@ namespace auge
 		{
 			return false;
 		}
-		
-		Layer* pLayer = NULL;
-		pLayer = pMap->GetLayer(m_type_name.c_str());
-		if(pLayer==NULL)
-		{
-			return false;
-		}
-		if(pLayer->GetType()!=augeLayerFeature)
-		{
-			return false;
-		}
-		FeatureLayer* pFLayer = NULL;
-		FeatureClass* pFeatureClass = NULL;
-		pFLayer = static_cast<FeatureLayer*>(pLayer);
-		pFeatureClass = pFLayer->GetFeatureClass();
-		if(pFeatureClass==NULL)
-		{
-			return false;
-		}
 
-		FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
-		m_pQuery = pFilterFactory->CreateQuery();
+		//Layer* pLayer = NULL;
+		//pLayer = pMap->GetLayer(m_type_name.c_str());
+		//if(pLayer==NULL)
+		//{
+		//	return false;
+		//}
+		//if(pLayer->GetType()!=augeLayerFeature)
+		//{
+		//	return false;
+		//}
+		//FeatureLayer* pFLayer = NULL;
+		//FeatureClass* pFeatureClass = NULL;
+		//pFLayer = static_cast<FeatureLayer*>(pLayer);
+		//pFeatureClass = pFLayer->GetFeatureClass();
+		//if(pFeatureClass==NULL)
+		//{
+		//	return false;
+		//}
 
-		XElement* pxFilter = (XElement*)pxQuery->GetFirstChild("Filter");
-		if(pxFilter!=NULL)
-		{
-			GFilter* pFilter = NULL;
-			FilterReader* reader = pFilterFactory->CreateFilerReader(pFeatureClass->GetFields());
-			pFilter = reader->Read(pxFilter);
-			m_pQuery->SetFilter(pFilter);
-			
-		}
+		//FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
+		//m_pQuery = pFilterFactory->CreateQuery();
 
-		//PropertyName
-		char field_name[AUGE_NAME_MAX];
-		const char* property_name;
-		XNode* pxNode = NULL;
-		XNodeSet* pxNodeSet = pxQuery->GetChildren("PropertyName");
-		pxNodeSet->Reset();
-		while((pxNode=pxNodeSet->Next())!=NULL)
-		{
-			property_name = pxNode->GetContent();
-			ParseFieldName(property_name, field_name, AUGE_NAME_MAX);
-			m_pQuery->AddSubField(field_name);
-			
-		}
-		pxNodeSet->Release();
+		//XElement* pxFilter = (XElement*)pxQuery->GetFirstChild("Filter");
+		//if(pxFilter!=NULL)
+		//{
+		//	GFilter* pFilter = NULL;
+		//	FilterReader* reader = pFilterFactory->CreateFilerReader(pFeatureClass->GetFields());
+		//	pFilter = reader->Read(pxFilter);
+		//	m_pQuery->SetFilter(pFilter);
+
+		//}
+
+		////PropertyName
+		//char field_name[AUGE_NAME_MAX];
+		//const char* property_name;
+		//XNode* pxNode = NULL;
+		//XNodeSet* pxNodeSet = pxQuery->GetChildren("PropertyName");
+		//pxNodeSet->Reset();
+		//while((pxNode=pxNodeSet->Next())!=NULL)
+		//{
+		//	property_name = pxNode->GetContent();
+		//	ParseFieldName(property_name, field_name, AUGE_NAME_MAX);
+		//	m_pQuery->AddSubField(field_name);
+
+		//}
+		//pxNodeSet->Release();
 
 		return true;
 	}
+	
+	//bool GetFeatureRequest::Create(XDocument* pxDoc,Map* pMap)
+	//{
+	//	XElement	*pxRoot = NULL;
+	//	XAttribute	*pxAttr = NULL;
+
+	//	pxRoot = pxDoc->GetRootNode();
+	//	pxAttr = pxRoot->GetAttribute("version");
+	//	if(pxAttr!=NULL)
+	//	{
+	//		SetVersion(pxAttr->GetValue());
+	//	}
+
+	//	pxAttr = pxRoot->GetAttribute("mapName");
+	//	if(pxAttr!=NULL)
+	//	{
+	//		SetMapName(pxAttr->GetValue());
+	//	}
+
+	//	pxAttr = pxRoot->GetAttribute("outputFormat");
+	//	if(pxAttr!=NULL)
+	//	{
+	//		SetOutputFormat(pxAttr->GetValue());
+	//	}
+
+	//	pxAttr = pxRoot->GetAttribute("offset");
+	//	if(pxAttr!=NULL)
+	//	{
+	//		SetOffset(pxAttr->GetValue());
+	//	}
+
+	//	XElement* pxQuery = (XElement*)pxRoot->GetFirstChild("Query");
+	//	if(pxQuery==NULL)
+	//	{
+	//		return false;
+	//	}
+
+	//	if(m_pQuery!=NULL)
+	//	{
+	//		AUGE_SAFE_RELEASE(m_pQuery);
+	//	}
+	//	
+	//	pxAttr = pxQuery->GetAttribute("typeName");
+	//	if(pxAttr==NULL)
+	//	{
+	//		return false;
+	//	}
+	//	SetTypeName(pxAttr->GetValue());
+	//	if(m_type_name.empty())
+	//	{
+	//		return false;
+	//	}
+	//	
+	//	Layer* pLayer = NULL;
+	//	pLayer = pMap->GetLayer(m_type_name.c_str());
+	//	if(pLayer==NULL)
+	//	{
+	//		return false;
+	//	}
+	//	if(pLayer->GetType()!=augeLayerFeature)
+	//	{
+	//		return false;
+	//	}
+	//	FeatureLayer* pFLayer = NULL;
+	//	FeatureClass* pFeatureClass = NULL;
+	//	pFLayer = static_cast<FeatureLayer*>(pLayer);
+	//	pFeatureClass = pFLayer->GetFeatureClass();
+	//	if(pFeatureClass==NULL)
+	//	{
+	//		return false;
+	//	}
+
+	//	FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
+	//	m_pQuery = pFilterFactory->CreateQuery();
+
+	//	XElement* pxFilter = (XElement*)pxQuery->GetFirstChild("Filter");
+	//	if(pxFilter!=NULL)
+	//	{
+	//		GFilter* pFilter = NULL;
+	//		FilterReader* reader = pFilterFactory->CreateFilerReader(pFeatureClass->GetFields());
+	//		pFilter = reader->Read(pxFilter);
+	//		m_pQuery->SetFilter(pFilter);
+	//		
+	//	}
+
+	//	//PropertyName
+	//	char field_name[AUGE_NAME_MAX];
+	//	const char* property_name;
+	//	XNode* pxNode = NULL;
+	//	XNodeSet* pxNodeSet = pxQuery->GetChildren("PropertyName");
+	//	pxNodeSet->Reset();
+	//	while((pxNode=pxNodeSet->Next())!=NULL)
+	//	{
+	//		property_name = pxNode->GetContent();
+	//		ParseFieldName(property_name, field_name, AUGE_NAME_MAX);
+	//		m_pQuery->AddSubField(field_name);
+	//		
+	//	}
+	//	pxNodeSet->Release();
+
+	//	return true;
+	//}
 
 	// world:name --> name
 	void GetFeatureRequest::ParseFieldName(const char* property_name, char* field_name, size_t size)
@@ -349,38 +510,38 @@ namespace auge
 		}
 	}
 
-	const char*	GetFeatureRequest::GetServiceName()
-	{
-		return m_service_name.c_str();
-	}
+	//const char*	GetFeatureRequest::GetServiceName()
+	//{
+	//	return m_service_name.c_str();
+	//}
 
-	const char* GetFeatureRequest::GetServiceURI()
-	{
-		return m_service_uri.c_str();
-	}
+	//const char* GetFeatureRequest::GetServiceURI()
+	//{
+	//	return m_service_uri.c_str();
+	//}
 
-	void GetFeatureRequest::SetServiceName(const char* name)
-	{
-		if(name==NULL)
-		{
-			m_service_name.clear();
-		}
-		else
-		{
-			m_service_name = name;
-		}
-	}
-	void GetFeatureRequest::SetServiceURI(const char* uri)
-	{
-		if(uri==NULL)
-		{
-			m_service_uri.clear();
-		}
-		else
-		{
-			m_service_uri = uri;
-		}
-	}
+	//void GetFeatureRequest::SetServiceName(const char* name)
+	//{
+	//	if(name==NULL)
+	//	{
+	//		m_service_name.clear();
+	//	}
+	//	else
+	//	{
+	//		m_service_name = name;
+	//	}
+	//}
+	//void GetFeatureRequest::SetServiceURI(const char* uri)
+	//{
+	//	if(uri==NULL)
+	//	{
+	//		m_service_uri.clear();
+	//	}
+	//	else
+	//	{
+	//		m_service_uri = uri;
+	//	}
+	//}
 
 	void GetFeatureRequest::Info()
 	{

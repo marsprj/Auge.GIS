@@ -95,6 +95,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\SetStyleHandler.cpp" />
     <ClCompile Include="..\src\SetStyleRequest.cpp" />
     <ClCompile Include="..\src\WMapEngine.cpp" />
+    <ClCompile Include="..\src\WMapRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\CapabilitiesHandler.h" />
@@ -109,6 +110,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\SetStyleHandler.h" />
     <ClInclude Include="..\include\SetStyleRequest.h" />
     <ClInclude Include="..\include\WMapEngine.h" />
+    <ClInclude Include="..\include\WMapRequest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

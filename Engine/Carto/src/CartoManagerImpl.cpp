@@ -91,7 +91,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select m_name,version,minx,miny,maxx,maxy,srid from g_map where gid=%d", mid);
+		g_snprintf(sql, AUGE_SQL_MAX, "select m_name,m_uri, version,minx,miny,maxx,maxy,srid from g_map where gid=%d", mid);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -106,16 +106,18 @@ namespace auge
 		}
 
 		const char* name = pResult->GetString(0,0);
-		g_int version = pResult->GetInt(0,1);
-		double xmin = pResult->GetDouble(0,2);
-		double ymin = pResult->GetDouble(0,3);
-		double xmax = pResult->GetDouble(0,4);
-		double ymax = pResult->GetDouble(0,5);
-		g_int  srid = pResult->GetInt(0,6);
+		const char* uri = pResult->GetString(0,1);
+		g_int version = pResult->GetInt(0,2);
+		double xmin = pResult->GetDouble(0,3);
+		double ymin = pResult->GetDouble(0,4);
+		double xmax = pResult->GetDouble(0,5);
+		double ymax = pResult->GetDouble(0,6);
+		g_int  srid = pResult->GetInt(0,7);
 
 		Map* pMap = new MapImpl();
 		pMap->SetID(mid);
 		pMap->SetName(name);
+		pMap->SetURI(uri);
 		pMap->SetVersion(version);
 		pMap->SetExtent(xmin, ymin,xmax,ymax);
 		pMap->SetSRID(srid);
@@ -133,7 +135,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,version,minx,miny,maxx,maxy,srid from g_map where m_name='%s'", name);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,m_uri, version,minx,miny,maxx,maxy,srid from g_map where m_name='%s'", name);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -148,16 +150,18 @@ namespace auge
 		}
 	
 		g_int mid = pResult->GetInt(0,0);
-		g_int version = pResult->GetInt(0,1);
-		double xmin = pResult->GetDouble(0,2);
-		double ymin = pResult->GetDouble(0,3);
-		double xmax = pResult->GetDouble(0,4);
-		double ymax = pResult->GetDouble(0,5);
-		g_int  srid = pResult->GetInt(0,6);
+		const char* uri = pResult->GetString(0,1);
+		g_int version = pResult->GetInt(0,2);
+		double xmin = pResult->GetDouble(0,3);
+		double ymin = pResult->GetDouble(0,4);
+		double xmax = pResult->GetDouble(0,5);
+		double ymax = pResult->GetDouble(0,6);
+		g_int  srid = pResult->GetInt(0,7);
 
 		Map* pMap = new MapImpl();
 		pMap->SetID(mid);
 		pMap->SetName(name);
+		pMap->SetURI(uri);
 		pMap->SetVersion(version);
 		pMap->SetExtent(xmin, ymin,xmax,ymax);
 		pMap->SetSRID(srid);
@@ -174,7 +178,7 @@ namespace auge
 			return NULL;
 		}
 
-		const char* sql = "select gid, m_name,version,minx,miny,maxx,maxy,srid from g_map";
+		const char* sql = "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid from g_map";
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -189,15 +193,17 @@ namespace auge
 		{
 			int mid = pResult->GetInt(i,0);
 			const char* name = pResult->GetString(i,1);
-			g_int version = pResult->GetInt(i,2);
-			double xmin = pResult->GetDouble(i,3);
-			double ymin = pResult->GetDouble(i,4);
-			double xmax = pResult->GetDouble(i,5);
-			double ymax = pResult->GetDouble(i,6);
-			g_int  srid = pResult->GetInt(i,7);
+			const char* uri = pResult->GetString(i,2);
+			g_int version = pResult->GetInt(i,3);
+			double xmin = pResult->GetDouble(i,4);
+			double ymin = pResult->GetDouble(i,5);
+			double xmax = pResult->GetDouble(i,6);
+			double ymax = pResult->GetDouble(i,7);
+			g_int  srid = pResult->GetInt(i,8);
 
 			Map* pMap = new MapImpl();
 			pMap->SetID(mid);
+			pMap->SetURI(uri);
 			pMap->SetName(name);
 			pMap->SetVersion(version);
 			pMap->SetExtent(xmin, ymin,xmax,ymax);

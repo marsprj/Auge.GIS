@@ -10,6 +10,7 @@
 #include "GetGmlObjectHandler.h"
 #include "TransactionHandler.h"
 #include "GetValueHandler.h"
+#include "WFeatureRequest.h"
 
 namespace auge
 {
@@ -203,6 +204,30 @@ namespace auge
 
 	WebResponse* WFeatureEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
 	{
+		const char* request = pWebRequest->GetRequest();
+		WebHandler* handler = GetHandler(request);
+		if(handler == NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Request %s is not supported", request);
+		}
+
+		if(pMap==NULL)
+		{
+			WFeatureRequest* pWFeatureRequest = static_cast<WFeatureRequest*>(pWebRequest);
+			const char* mapName = pWFeatureRequest->GetMapName();
+			if(mapName!=NULL)
+			{
+				CartoManager* pCartoManager = augeGetCartoManagerInstance();
+				pMap = pCartoManager->LoadMap(mapName);
+				pWebContext->SetURI(pMap->GetURI());
+			}
+		}
+		else
+		{
+			pMap->AddRef();
+		}
+
 		if(pMap==NULL)
 		{
 			GLogger* pLogger = augeGetLoggerInstance();
@@ -214,16 +239,10 @@ namespace auge
 			pExpResopnse->SetMessage(msg);
 			return pExpResopnse;
 		}
+		
+		WebResponse* pWebResponse = handler->Execute(pWebRequest, pWebContext, pMap);
+		pMap->Release();
 
-		WebResponse	*pWebResponse = NULL;
-
-		const char* request = pWebRequest->GetRequest();
-		WebHandler* handler = GetHandler(request);
-		if(handler == NULL)
-		{
-			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "Request %s is not supported", request);
-		}
-		return handler->Execute(pWebRequest, pWebContext, pMap);
+		return pWebResponse;
 	}
 }

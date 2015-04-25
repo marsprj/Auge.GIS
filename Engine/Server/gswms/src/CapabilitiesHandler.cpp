@@ -113,7 +113,7 @@ namespace auge
 		g_sprintf(wms_xlink, "http://%s/%s/%s/%s/ims?service=wms",	pRequest->GetHost(),
 																	AUGE_VIRTUAL_NAME,
 																	pRequest->GetUser(),
-																	pRequest->GetServiceName()); 
+																	pWebContext->GetService()); 
 
 		char str[AUGE_MSG_MAX];
 		char capa_path[AUGE_PATH_MAX];
@@ -330,12 +330,13 @@ namespace auge
 	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_3_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap)
 	{
 		const char* cache_path = pWebContext->GetCacheProtocolPath(); 
+		const char* ns = pWebContext->GetService() ? pWebContext->GetService() : pMap->GetName();
 
 		char wms_xlink[AUGE_MSG_MAX];
 		g_sprintf(wms_xlink, "http://%s/%s/%s/%s/ims?service=wms",	pRequest->GetHost(),
 			AUGE_VIRTUAL_NAME,
 			pRequest->GetUser(),
-			pRequest->GetServiceName()); 
+			ns); 
 
 		char str[AUGE_MSG_MAX];
 		char capa_path[AUGE_PATH_MAX];

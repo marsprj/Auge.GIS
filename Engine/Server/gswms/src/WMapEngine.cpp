@@ -3,6 +3,7 @@
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
 
+#include "WMapRequest.h"
 #include "CapabilitiesHandler.h"
 #include "GetMapHandler.h"
 #include "GetFeatureInfoHandler.h"
@@ -184,6 +185,31 @@ namespace auge
 
 	WebResponse* WMapEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
 	{
+		WebResponse	*pWebResponse = NULL;
+		WMapRequest *pWMapRequest = static_cast<WMapRequest*>(pWebRequest);
+
+		const char* request = pWMapRequest->GetRequest();
+		WebHandler* handler = GetHandler(request);
+		if(handler == NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Request %s is not supported", request);
+		}
+
+		if(pMap==NULL)
+		{
+			const char* mapName = pWMapRequest->GetMapName();
+			if(mapName!=NULL)
+			{
+				CartoManager* pCartoManager = augeGetCartoManagerInstance();
+				pMap = pCartoManager->LoadMap(mapName);
+			}
+		}
+		else
+		{
+			pMap->AddRef();
+		}
+
 		if(pMap==NULL)
 		{
 			GLogger* pLogger = augeGetLoggerInstance();
@@ -195,17 +221,11 @@ namespace auge
 			pExpResopnse->SetMessage(msg);
 			return pExpResopnse;
 		}
+		
+		pWebResponse = handler->Execute(pWebRequest, pWebContext, pMap);
+		pMap->Release();
 
-		WebResponse	*pWebResponse = NULL;
-
-		const char* request = pWebRequest->GetRequest();
-		WebHandler* handler = GetHandler(request);
-		if(handler == NULL)
-		{
-			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "Request %s is not supported", request);
-		}
-		return handler->Execute(pWebRequest, pWebContext, pMap);
+		return pWebResponse;
 	}
 	
 	//WebResponse* WebMapEngine::GetCapabilities(GetCapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap)

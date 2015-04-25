@@ -28,6 +28,24 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	const char*	MapImpl::GetURI()
+	{
+		return m_uri.c_str();
+	}
+
+	RESULTCODE MapImpl::SetURI(const char* uri)
+	{
+		if(uri==NULL)
+		{
+			m_uri.clear();
+		}
+		else
+		{
+			m_uri = uri;
+		}
+		return AG_SUCCESS;
+	}
+
 	g_uint MapImpl::GetLayerCount()
 	{
 		return m_layers.size();

@@ -9,19 +9,19 @@ namespace auge
 	}
 
 	DescribeFeatureTypeRequest::~DescribeFeatureTypeRequest()
-	{
+	{ 
 
 	}
 
-	const char*	DescribeFeatureTypeRequest::GetEngine()
-	{
-		return "wfs";
-	}
+	//const char*	DescribeFeatureTypeRequest::GetEngine()
+	//{
+	//	return "wfs";
+	//}
 
-	const char*	DescribeFeatureTypeRequest::GetVersion()
-	{
-		return m_version.c_str();
-	}
+	//const char*	DescribeFeatureTypeRequest::GetVersion()
+	//{
+	//	return m_version.c_str();
+	//}
 
 	const char* DescribeFeatureTypeRequest::GetTypeName()
 	{
@@ -33,14 +33,14 @@ namespace auge
 		return "DescribeFeatureType";
 	}
 
-	void DescribeFeatureTypeRequest::SetVersion(const char* value)
-	{
-		if(value==NULL)
-		{
-			return;
-		}
-		m_version = value;
-	}
+	//void DescribeFeatureTypeRequest::SetVersion(const char* value)
+	//{
+	//	if(value==NULL)
+	//	{
+	//		return;
+	//	}
+	//	m_version = value;
+	//}
 
 	void DescribeFeatureTypeRequest::SetTypeName(const char* value)
 	{
@@ -53,14 +53,15 @@ namespace auge
 		m_type_name = sep==NULL ? value : sep+1;
 	}
 
-	const char*	DescribeFeatureTypeRequest::GetMimeType()
-	{
-		return m_mime_type.c_str();
-	}
+	//const char*	DescribeFeatureTypeRequest::GetMimeType()
+	//{
+	//	return m_mime_type.c_str();
+	//}
 
 	bool DescribeFeatureTypeRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
+		SetMapName(cgi["mapName"]);
 		SetTypeName(cgi["typeName"]);
 		return true;
 	}

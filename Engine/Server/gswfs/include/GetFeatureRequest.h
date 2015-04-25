@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
+#include "WFeatureRequest.h"
 
 namespace auge
 {
@@ -16,35 +17,36 @@ namespace auge
 	class Map;
 	class GFilter;
 	class GQuery;
+	class FeatureClass;
 	class XDocument;
 
-	class GetFeatureRequest : public WebRequest
+	class GetFeatureRequest : public WFeatureRequest
 	{
 	public:
 		GetFeatureRequest();
 		virtual ~GetFeatureRequest();
 
 	public:
-		virtual const char*		GetEngine();
-		virtual const char*		GetVersion();
+		//virtual const char*		GetEngine();
+		//virtual const char*		GetVersion();
 		virtual const char*		GetTypeName();
 		virtual const char*		GetRequest();
-		virtual const char*		GetMimeType();
+		//virtual const char*		GetMimeType();
 		
 	public:
 
-		const char*	GetServiceName();
+		//const char*	GetServiceName();
 		const char* GetServiceURI();
 
 		const char*	GetOutputFormat();
 		g_int		GetMaxFeatures();
 		g_int		GetOffset();
 		GEnvelope&	GetBBox();
-		GQuery*		GetQuery();
+		GQuery*		GetQuery(FeatureClass* pFeatureClass);
 
-		void		SetVersion(const char* value);
-		void		SetServiceName(const char* name);
-		void		SetServiceURI(const char* uri);
+		//void		SetVersion(const char* value);
+		//void		SetServiceName(const char* name);
+		//void		SetServiceURI(const char* uri);
 		void		SetTypeName(const char* typeName);
 		void		SetOutputFormat(const char* format);
 		void		SetMaxFeatures(const char* maxFeatures);
@@ -53,7 +55,7 @@ namespace auge
 		void		SetQuery(const char* filter, const char* fields, const char* typeName, Map* pMap);
 
 		bool		Create(rude::CGI& cgi, Map* pMap);
-		bool		Create(XDocument* pxDoc, Map* pMap);
+		bool		Create(XDocument* pxDoc);
 
 	public:
 		void		Info();
@@ -61,11 +63,12 @@ namespace auge
 	private:
 		void		ParseFieldName(const char* property_name, char* field_name, size_t size);
 		void		SetFields(GQuery* pQuery, const char* fields);
+		GQuery*		ParseQuery(FeatureClass* pFeatureClass);
 
 	private: 
-		std::string m_version;
-		std::string m_service_name;
-		std::string m_service_uri;
+		//std::string m_version;
+		//std::string m_service_name;
+		//std::string m_service_uri;
 		std::string m_type_name;
 		std::string m_full_name;
 		std::string m_mime_type;
@@ -77,6 +80,8 @@ namespace auge
 
 		//GFilter		*m_pFilter;
 		GQuery		*m_pQuery;
+
+		XDocument	*m_pxDoc;
 	};
 }
 
@@ -86,6 +91,9 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
+user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&mapName=world
+http://127.0.0.1:8088/ows/user1/mgr?user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&mapName=world
+
 service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&filter=<ogc:Filter xmlns:wfs="http://www.opengis.net/wfs" xmlns:ogc="http://www.opengis.net/ogc"><ogc:FeatureId fid="world.3"/></ogc:Filter>
@@ -99,6 +107,7 @@ user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeNa
 [ HTTP Post 1.0.0]
 <wfs:GetFeature service="WFS" version="1.0.0"
 	outputFormat="GML2"
+	mapName="world"
 	xmlns:topp="http://www.openplans.org/topp"
 	xmlns:wfs="http://www.opengis.net/wfs"
 	xmlns:ogc="http://www.opengis.net/ogc"
@@ -114,6 +123,7 @@ user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeNa
 
 [ HTTP Post 1.1.0]
 <wfs:GetFeature service="WFS" version="1.1.0"
+	mapName="world"
 	xmlns:world="http://www.radi.ac.cn/world"
 	xmlns:wfs="http://www.opengis.net/wfs"
 	xmlns:ogc="http://www.opengis.net/ogc"
