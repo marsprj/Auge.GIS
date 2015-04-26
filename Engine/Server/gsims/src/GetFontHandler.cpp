@@ -20,7 +20,7 @@ namespace auge
 		return "GetFont";
 	}
 
-	WebRequest*	GetFontHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	GetFontHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetFontRequest* pRequest = new GetFontRequest();
 
@@ -34,7 +34,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetFontHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest* GetFontHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	GetFontHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		return NULL;
 	}
@@ -62,8 +67,8 @@ namespace auge
 		return pResponse;
 	}
 
-	WebResponse* GetFontHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* GetFontHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return NULL;
+		return Execute(pWebRequest);
 	}
 }

@@ -166,7 +166,7 @@ namespace auge
 		return pWebRequest;
 	}
 
-	WebRequest*	WEngine::ParseRequest(rude::CGI& cgi, WebContext* pWebContext, Map* pMap)
+	WebRequest*	WEngine::ParseRequest(rude::CGI& cgi)
 	{
 		const char* request = cgi["request"];
 		if(request==NULL)
@@ -181,6 +181,11 @@ namespace auge
 			return NULL;
 		}
 		return handler->ParseRequest(cgi);
+	}
+
+	WebRequest*	WEngine::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
 	}
 
 	/*WebRequest*	WEngine::ParseRequest(rude::CGI& cgi)
@@ -266,7 +271,7 @@ namespace auge
 		return pWebRequest;
 	}*/
 
-	WebRequest*	WEngine::ParseRequest(XDocument* pxDoc, WebContext* pWebContext, Map* pMap)
+	WebRequest*	WEngine::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		GError* pError = augeGetErrorInstance();
 		pError->SetError("WMS do not support xml request");
@@ -333,9 +338,9 @@ namespace auge
 		return pWebResponse;
 	}*/
 
-	WebResponse* WEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* WEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return NULL;
+		return Execute(pWebRequest);
 	}
 
 	//WebResponse* WEngine::GetCapabilities(CapabilitiesRequest* pRequest)

@@ -22,7 +22,7 @@ namespace auge
 		return "GetDataSet";
 	}
 
-	WebRequest*	GetDataSetHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	GetDataSetHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetDataSetRequest* pRequest = new GetDataSetRequest();
 
@@ -36,7 +36,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetDataSetHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	GetDataSetHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	GetDataSetHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		return NULL;
 	}
@@ -78,8 +83,8 @@ namespace auge
 		return pResponse;
 	}
 
-	WebResponse* GetDataSetHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* GetDataSetHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return NULL;
+		return Execute(pWebRequest);
 	}
 }

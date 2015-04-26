@@ -20,7 +20,7 @@ namespace auge
 		return "CreateService";
 	}
 
-	WebRequest*	CreateServiceHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	CreateServiceHandler::ParseRequest(rude::CGI& cgi)
 	{
 		CreateServiceRequest* pRequest = new CreateServiceRequest();
 
@@ -34,7 +34,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	CreateServiceHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	CreateServiceHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	CreateServiceHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		return NULL;
 	}
@@ -72,8 +77,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* CreateServiceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* CreateServiceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return NULL;
+		return Execute(pWebRequest);
 	}
 }

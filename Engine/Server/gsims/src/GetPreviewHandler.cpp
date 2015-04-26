@@ -26,7 +26,7 @@ namespace auge
 		return "GetPreview";
 	}
 
-	WebRequest*	GetPreviewHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	GetPreviewHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetPreviewRequest* pRequest = new GetPreviewRequest();
 
@@ -40,7 +40,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetPreviewHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	GetPreviewHandler::ParseRequest(rude::CGI& cgi,const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	GetPreviewHandler::ParseRequest(XDocument* pxDoc,const char* mapName)
 	{
 		return NULL;
 	}
@@ -101,9 +106,9 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* GetPreviewHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* GetPreviewHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return NULL;
+		return Execute(pWebRequest);
 	}
 
 	WebResponse* GetPreviewHandler::DrawFeature(FeatureClass* pFeatureClass, GetPreviewRequest* pRequest)

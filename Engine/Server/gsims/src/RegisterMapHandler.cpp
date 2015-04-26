@@ -21,10 +21,10 @@ namespace auge
 		return "RegisterMap";
 	}
 
-	WebRequest*	RegisterMapHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	RegisterMapHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RegisterMapRequest* pRequest = new RegisterMapRequest();
-
+		
 		if(!pRequest->Create(cgi))
 		{
 			GLogger* pLogger = augeGetLoggerInstance();
@@ -35,7 +35,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	RegisterMapHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest* RegisterMapHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	RegisterMapHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		return NULL;
 	}
@@ -112,8 +117,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* RegisterMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* RegisterMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return NULL;
+		return Execute(pWebRequest);
 	}
 }

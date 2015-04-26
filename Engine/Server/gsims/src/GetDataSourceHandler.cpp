@@ -20,7 +20,7 @@ namespace auge
 		return "GetDataSource";
 	}
 
-	WebRequest*	GetDataSourceHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	GetDataSourceHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetDataSourceRequest* pRequest = new GetDataSourceRequest();
 
@@ -34,7 +34,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetDataSourceHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	GetDataSourceHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	GetDataSourceHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		return NULL;
 	}
@@ -44,8 +49,8 @@ namespace auge
 		return new GetDataSourceResponse(static_cast<GetDataSourceRequest*>(pWebRequest));
 	}
 
-	WebResponse* GetDataSourceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* GetDataSourceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return NULL;
+		return Execute(pWebRequest);
 	}
 }

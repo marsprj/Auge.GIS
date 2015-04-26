@@ -20,7 +20,7 @@ namespace auge
 		return "RemoveMap";
 	}
 
-	WebRequest*	RemoveMapHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	RemoveMapHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RemoveMapRequest* pRequest = new RemoveMapRequest();
 
@@ -34,7 +34,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	RemoveMapHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest* RemoveMapHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	RemoveMapHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		return NULL;
 	}
@@ -69,8 +74,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* RemoveMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* RemoveMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return NULL;
+		return Execute(pWebRequest);
 	}
 }

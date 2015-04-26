@@ -20,7 +20,7 @@ namespace auge
 		return "UnRegisterDataSource";
 	}
 
-	WebRequest*	UnRegisterDataSourceHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	UnRegisterDataSourceHandler::ParseRequest(rude::CGI& cgi)
 	{
 		UnRegisterDataSourceRequest* pRequest = new UnRegisterDataSourceRequest();
 
@@ -34,7 +34,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	UnRegisterDataSourceHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	UnRegisterDataSourceHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	UnRegisterDataSourceHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		return NULL;
 	}
@@ -68,8 +73,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* UnRegisterDataSourceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* UnRegisterDataSourceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return NULL;
+		return Execute(pWebRequest);
 	}
 }

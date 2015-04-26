@@ -20,7 +20,7 @@ namespace auge
 		return "GetMap";
 	}
 
-	WebRequest*	GetMapHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	GetMapHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetMapRequest* pRequest = new GetMapRequest();
 
@@ -34,7 +34,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetMapHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest* GetMapHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	GetMapHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		return NULL;
 	}
@@ -44,8 +49,8 @@ namespace auge
 		return new GetMapResponse(static_cast<GetMapRequest*>(pWebRequest));
 	}
 
-	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return NULL;
+		return new GetMapResponse(static_cast<GetMapRequest*>(pWebRequest));
 	}
 }

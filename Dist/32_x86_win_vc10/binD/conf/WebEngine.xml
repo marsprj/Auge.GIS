@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <Engines>
+	<Engine description="Auge Web Service Manager" path="" id="gsims"/>
 	<Engine description="Web Map Sevice" path="" id="gswms"/>
 	<Engine description="Web Feature Sevice" path="" id="gswfs"/>
 </Engines>

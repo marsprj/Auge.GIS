@@ -21,7 +21,7 @@ namespace auge
 		return "RemoveStyle";
 	}
 
-	WebRequest*	RemoveStyleHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	RemoveStyleHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RemoveStyleRequest* pRequest = new RemoveStyleRequest();
 
@@ -35,7 +35,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	RemoveStyleHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest* RemoveStyleHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	RemoveStyleHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		return NULL;
 	}
@@ -66,8 +71,8 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* RemoveStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* RemoveStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return NULL;
+		return Execute(pWebRequest);
 	}
 }

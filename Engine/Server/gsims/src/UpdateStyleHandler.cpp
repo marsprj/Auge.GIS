@@ -21,7 +21,7 @@ namespace auge
 		return "UpdateStyle";
 	}
 
-	WebRequest*	UpdateStyleHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	UpdateStyleHandler::ParseRequest(rude::CGI& cgi)
 	{
 		UpdateStyleRequest* pRequest = new UpdateStyleRequest();
 
@@ -35,7 +35,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	UpdateStyleHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest* UpdateStyleHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	UpdateStyleHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		return NULL;
 	}
@@ -68,8 +73,8 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* UpdateStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* UpdateStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return NULL;
+		return Execute(pWebRequest);
 	}
 }
