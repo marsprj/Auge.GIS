@@ -24,22 +24,18 @@ namespace auge
 	{
 		return "Transaction";
 	}
-	
-	WebRequest*	TransactionHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+
+	WebRequest*	TransactionHandler::ParseRequest(rude::CGI& cgi)
 	{
 		return NULL;
-		//TransactionRequest* pRequest = new TransactionRequest();
-		//if(!pRequest->Create(cgi))
-		//{
-		//	GLogger* pLogger = augeGetLoggerInstance();
-		//	pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
-		//	pRequest->Release();
-		//	pRequest = NULL;
-		//}
-		//return pRequest;
+	}
+	
+	WebRequest*	TransactionHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return NULL;
 	}
 
-	WebRequest*	TransactionHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	TransactionHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		TransactionRequest* pRequest = new TransactionRequest();
 		if(!pRequest->Create(pxDoc))
@@ -47,36 +43,60 @@ namespace auge
 			GLogger* pLogger = augeGetLoggerInstance();
 			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
 			pRequest->Release();
-			pRequest = NULL;
+			return NULL;
 		}
+		pRequest->SetMapName(mapName);
 		return pRequest;
 	}
+
+	//WebRequest*	TransactionHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	//{
+	//	TransactionRequest* pRequest = new TransactionRequest();
+	//	if(!pRequest->Create(pxDoc))
+	//	{
+	//		GLogger* pLogger = augeGetLoggerInstance();
+	//		pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+	//		pRequest->Release();
+	//		pRequest = NULL;
+	//	}
+	//	return pRequest;
+	//}
 
 	WebResponse* TransactionHandler::Execute(WebRequest* pWebRequest)
 	{
 		return NULL;
 	}
 
-	WebResponse* TransactionHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* TransactionHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
 		GLogger *pLogger = augeGetLoggerInstance();
 
-		//if(pMap==NULL)
-		//{
-		//	char msg[AUGE_MSG_MAX];
-		//	g_sprintf(msg, "Service is empty");
-		//	pLogger->Error(msg, __FILE__, __LINE__);
-
-		//	WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
-		//	pExpResopnse->SetMessage(msg);
-		//	return pExpResopnse;
-		//}
-
 		TransactionRequest* pRequest = static_cast<TransactionRequest*>(pWebRequest);
+
+		const char* mapName = pRequest->GetMapName();
+		if(mapName==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "No Map is attached");
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		Map *pMap = pCartoManager->LoadMap(mapName);
+		if(pMap==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "Cannot load map [%s]", mapName);
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
 
 		const char* typeName = NULL;
 		Layer* pLayer = NULL;
-		
+
 
 		XDocument* pxDoc = NULL;
 		pxDoc = pRequest->GetXmlDoc();
@@ -100,13 +120,67 @@ namespace auge
 		pxNodeSet = pxRoot->GetChildren("Delete");
 		g_uint num_delete = Delete(pxNodeSet, pWebContext, pMap);
 		pxNodeSet->Release();
-		
+
 		TransactionResponse *pResponse = new TransactionResponse(pRequest);	
 		pResponse->SetInsertCount(num_insert);
 		pResponse->SetUpdateCount(num_update);
 		pResponse->SetDeleteCount(num_delete);
+
+		pMap->Release();
+
 		return pResponse;
 	}
+
+	//WebResponse* TransactionHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	//{
+	//	GLogger *pLogger = augeGetLoggerInstance();
+
+	//	//if(pMap==NULL)
+	//	//{
+	//	//	char msg[AUGE_MSG_MAX];
+	//	//	g_sprintf(msg, "Service is empty");
+	//	//	pLogger->Error(msg, __FILE__, __LINE__);
+
+	//	//	WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+	//	//	pExpResopnse->SetMessage(msg);
+	//	//	return pExpResopnse;
+	//	//}
+
+	//	TransactionRequest* pRequest = static_cast<TransactionRequest*>(pWebRequest);
+
+	//	const char* typeName = NULL;
+	//	Layer* pLayer = NULL;
+	//	
+
+	//	XDocument* pxDoc = NULL;
+	//	pxDoc = pRequest->GetXmlDoc();
+	//	if(pxDoc==NULL)
+	//	{
+	//		WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+	//		pExpResponse->SetMessage("transaction xml parse error");
+	//		return pExpResponse;
+	//	}
+
+	//	XNodeSet	*pxNodeSet = NULL;
+	//	XElement	*pxRoot = pxDoc->GetRootNode();
+	//	pxNodeSet = pxRoot->GetChildren("Insert");
+	//	g_uint num_insert = Insert(pxNodeSet, pWebContext, pMap);
+	//	pxNodeSet->Release();
+
+	//	pxNodeSet = pxRoot->GetChildren("Update");
+	//	g_uint num_update = Update(pxNodeSet, pWebContext, pMap);
+	//	pxNodeSet->Release();
+
+	//	pxNodeSet = pxRoot->GetChildren("Delete");
+	//	g_uint num_delete = Delete(pxNodeSet, pWebContext, pMap);
+	//	pxNodeSet->Release();
+	//	
+	//	TransactionResponse *pResponse = new TransactionResponse(pRequest);	
+	//	pResponse->SetInsertCount(num_insert);
+	//	pResponse->SetUpdateCount(num_update);
+	//	pResponse->SetDeleteCount(num_delete);
+	//	return pResponse;
+	//}
 
 	g_uint TransactionHandler::Insert(XNodeSet* pxNodeSet, WebContext* pWebContext, Map* pMap)
 	{

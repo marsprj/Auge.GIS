@@ -18,37 +18,38 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetLayerName(cgi["layer"]);
 		SetStyleName(cgi["style"]);
+		SetMapName(cgi["mapName"]);
 		 return true;
 	}
 
-	const char*	SetStyleRequest::GetEngine()
-	{
-		return "wms";
-	}
+	//const char*	SetStyleRequest::GetEngine()
+	//{
+	//	return "wms";
+	//}
 
-	const char*	SetStyleRequest::GetVersion()
-	{
-		return m_version.c_str();
-	}
+	//const char*	SetStyleRequest::GetVersion()
+	//{
+	//	return m_version.c_str();
+	//}
 
 	const char*	SetStyleRequest::GetRequest()
 	{
 		return "SetStyle";
 	}
 
-	void SetStyleRequest::SetVersion(const char* value)
-	{
-		if(value==NULL)
-		{
-			return;
-		}
-		m_version = value;
-	}
+	//void SetStyleRequest::SetVersion(const char* value)
+	//{
+	//	if(value==NULL)
+	//	{
+	//		return;
+	//	}
+	//	m_version = value;
+	//}
 
-	const char*	SetStyleRequest::GetMimeType()
-	{
-		return m_mime_type.c_str();
-	}
+	//const char*	SetStyleRequest::GetMimeType()
+	//{
+	//	return m_mime_type.c_str();
+	//}
 
 	void SetStyleRequest::SetLayerName(const char* layerName)
 	{

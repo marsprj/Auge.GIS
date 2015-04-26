@@ -25,7 +25,7 @@ namespace auge
 		return "DescribeFeatureType";
 	}
 
-	WebRequest*	DescribeFeatureTypeHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	DescribeFeatureTypeHandler::ParseRequest(rude::CGI& cgi)
 	{
 		DescribeFeatureTypeRequest* pRequest = new DescribeFeatureTypeRequest();
 		if(!pRequest->Create(cgi))
@@ -33,12 +33,39 @@ namespace auge
 			GLogger* pLogger = augeGetLoggerInstance();
 			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
 			pRequest->Release();
-			pRequest = NULL;
+			return NULL;
 		}
 		return pRequest;
 	}
 
-	WebRequest*	DescribeFeatureTypeHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	DescribeFeatureTypeHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		DescribeFeatureTypeRequest* pRequest = new DescribeFeatureTypeRequest();
+		if(!pRequest->Create(cgi))
+		{
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			pRequest->Release();
+			return NULL;
+		}
+		pRequest->SetMapName(mapName);
+		return pRequest;
+	}
+
+	//WebRequest*	DescribeFeatureTypeHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	//{
+	//	DescribeFeatureTypeRequest* pRequest = new DescribeFeatureTypeRequest();
+	//	if(!pRequest->Create(cgi))
+	//	{
+	//		GLogger* pLogger = augeGetLoggerInstance();
+	//		pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+	//		pRequest->Release();
+	//		pRequest = NULL;
+	//	}
+	//	return pRequest;
+	//}
+
+	WebRequest*	DescribeFeatureTypeHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		DescribeFeatureTypeRequest* pRequest = new DescribeFeatureTypeRequest();
 		//if(!pRequest->Create(cgi))
@@ -77,7 +104,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* DescribeFeatureTypeHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* DescribeFeatureTypeHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
 		DescribeFeatureTypeRequest* pRequest = static_cast<DescribeFeatureTypeRequest*>(pWebRequest);
 
@@ -85,6 +112,27 @@ namespace auge
 		Layer* pLayer = NULL;
 		GLogger *pLogger = augeGetLoggerInstance();
 		typeName = pRequest->GetTypeName();
+
+		const char* mapName = pRequest->GetMapName();
+		if(mapName==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "No Map is attached");
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		Map *pMap = pCartoManager->LoadMap(mapName);
+		if(pMap==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "Cannot load map [%s]", mapName);
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
 
 		//if(pMap==NULL)
 		//{
@@ -145,11 +193,87 @@ namespace auge
 			WriteDescribeFeatureType(pRequest->GetVersion(), pWebContext, typeName, pFeatureClass);
 		}
 
+		pMap->Release();
+
 		DescribeFeatureTypeResponse* pResponse = new DescribeFeatureTypeResponse(pRequest);		
 		pResponse->SetPath(cache_file);
-		
+
 		return pResponse;
 	}
+
+	//WebResponse* DescribeFeatureTypeHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	//{
+	//	DescribeFeatureTypeRequest* pRequest = static_cast<DescribeFeatureTypeRequest*>(pWebRequest);
+
+	//	const char* typeName = NULL;
+	//	Layer* pLayer = NULL;
+	//	GLogger *pLogger = augeGetLoggerInstance();
+	//	typeName = pRequest->GetTypeName();
+
+	//	//if(pMap==NULL)
+	//	//{
+	//	//	char msg[AUGE_MSG_MAX];
+	//	//	g_sprintf(msg, "FeatureType [%s] doesn't exist.",typeName);
+	//	//	pLogger->Error(msg, __FILE__, __LINE__);
+
+	//	//	WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+	//	//	pExpResopnse->SetMessage(msg);
+	//	//	return pExpResopnse;
+	//	//}
+
+	//	pLayer = pMap->GetLayer(typeName);
+	//	if(pLayer==NULL)
+	//	{
+	//		char msg[AUGE_MSG_MAX];
+	//		g_sprintf(msg, "Service %s has not FeatureType %s,",pWebContext->GetService(), typeName);
+	//		pLogger->Error(msg, __FILE__, __LINE__);
+
+	//		WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+	//		pExpResopnse->SetMessage(msg);
+	//		return pExpResopnse;
+	//	}
+
+	//	if(pLayer->GetType()!=augeLayerFeature)
+	//	{
+	//		char msg[AUGE_MSG_MAX];
+	//		g_sprintf(msg, "%s is not a Feature Layer",typeName);
+	//		pLogger->Error(msg, __FILE__, __LINE__);
+
+	//		WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+	//		pExpResopnse->SetMessage(msg);
+	//		return pExpResopnse;
+	//	}
+
+	//	FeatureClass* pFeatureClass = NULL;
+	//	FeatureLayer* pFLayer = static_cast<FeatureLayer*>(pLayer);
+	//	pFeatureClass = pFLayer->GetFeatureClass();
+	//	if(pFeatureClass==NULL)
+	//	{
+	//		char msg[AUGE_MSG_MAX];
+	//		g_sprintf(msg, "Cannot Get FeatureType %s",typeName);
+	//		pLogger->Error(msg, __FILE__, __LINE__);
+
+	//		WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+	//		pExpResopnse->SetMessage(msg);
+	//		return pExpResopnse;
+	//	}
+
+	//	char cache_name[AUGE_NAME_MAX];
+	//	char cache_file[AUGE_PATH_MAX];
+	//	const char* cache_path = pWebContext->GetCacheProtocolPath();
+	//	g_snprintf(cache_name, AUGE_NAME_MAX,"%s_wfs_%s_describe_feauretype_1_1_0", pWebContext->GetService(), typeName);
+	//	auge_make_path(cache_file, NULL, cache_path, cache_name,"xml");
+
+	//	//if(access(capa_path,4))
+	//	{
+	//		WriteDescribeFeatureType(pRequest->GetVersion(), pWebContext, typeName, pFeatureClass);
+	//	}
+
+	//	DescribeFeatureTypeResponse* pResponse = new DescribeFeatureTypeResponse(pRequest);		
+	//	pResponse->SetPath(cache_file);
+	//	
+	//	return pResponse;
+	//}
 	
 	bool DescribeFeatureTypeHandler::WriteDescribeFeatureType(const char* version,WebContext* pWebContext, const char* typeName, FeatureClass* pFeatureClass)
 	{

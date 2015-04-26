@@ -1098,6 +1098,7 @@ namespace auge
 		const char* sql =   "CREATE TABLE g_map(" \
 							"  gid serial NOT NULL," \
 							"  m_name character varying(32) NOT NULL," \
+							"  m_uri  character varying(128) NOT NULL," \
 							"  srid integer DEFAULT 4326," \
 							"  version integer DEFAULT 1," \
 							"  minx double precision DEFAULT -180," \

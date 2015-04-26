@@ -20,6 +20,7 @@ namespace auge
 
 		virtual Map*			GetMap();
 		virtual void			SetMap(Map* pMap);
+		virtual const char*		GetMapName();
 		virtual WebContext*		GetWebContext();
 
 		virtual	RESULTCODE		Start();

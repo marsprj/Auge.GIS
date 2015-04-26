@@ -81,7 +81,8 @@ namespace auge
 		WebContext* pWebContext = augeGetWebContextInstance();
 		pWebContext->SetService(GetName());
 		pWebContext->SetURI(GetURI());
-		return pWebEngine->Execute(pRequest, pWebContext, GetMap());
+		//return pWebEngine->Execute(pRequest, pWebContext, GetMap());
+		return pWebEngine->Execute(pRequest, pWebContext);
 	}
 
 	void ServiceImpl::Release()
@@ -109,7 +110,7 @@ namespace auge
 		{
 			m_name.clear();
 		}
-		m_name = name;
+		m_map_name = name;
 		if(m_pMap!=NULL)
 		{
 			if(strcmp(m_name.c_str(),m_pMap->GetName()))
@@ -132,6 +133,11 @@ namespace auge
 	Map* ServiceImpl::GetMap()
 	{
 		return m_pMap;
+	}
+
+	const char*	ServiceImpl::GetMapName()
+	{
+		return m_map_name.c_str();
 	}
 
 	RESULTCODE ServiceImpl::Start()

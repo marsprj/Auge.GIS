@@ -135,7 +135,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebRequest* WMapEngine::ParseRequest(rude::CGI& cgi, WebContext* pWebContext, Map* pMap)
+	WebRequest* WMapEngine::ParseRequest(rude::CGI& cgi)
 	{
 		const char* request = cgi["request"];
 		if(request==NULL)
@@ -162,7 +162,18 @@ namespace auge
 		return handler->ParseRequest(cgi);
 	}
 
-	WebRequest*	WMapEngine::ParseRequest(XDocument* pxDoc, WebContext* pWebContext, Map* pMap)
+	WebRequest* WMapEngine::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		WebRequest* pWebRequest = ParseRequest(cgi);
+		if(pWebRequest!=NULL)
+		{
+			WMapRequest* pWRequest = static_cast<WMapRequest*>(pWebRequest);
+			pWRequest->SetMapName(mapName);
+		}
+		return pWebRequest;
+	}
+
+	WebRequest*	WMapEngine::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		GError* pError = augeGetErrorInstance();
 		pError->SetError("WMS do not support xml request");
@@ -179,54 +190,77 @@ namespace auge
 		{
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Request %s is not supported", request);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+			pExpResopnse->SetMessage(msg);
+			return pExpResopnse;
+
 		}
 		return handler->Execute(pWebRequest);
 	}
 
-	WebResponse* WMapEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* WMapEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		WebResponse	*pWebResponse = NULL;
-		WMapRequest *pWMapRequest = static_cast<WMapRequest*>(pWebRequest);
-
-		const char* request = pWMapRequest->GetRequest();
+		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
 		if(handler == NULL)
 		{
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Request %s is not supported", request);
-		}
-
-		if(pMap==NULL)
-		{
-			const char* mapName = pWMapRequest->GetMapName();
-			if(mapName!=NULL)
-			{
-				CartoManager* pCartoManager = augeGetCartoManagerInstance();
-				pMap = pCartoManager->LoadMap(mapName);
-			}
-		}
-		else
-		{
-			pMap->AddRef();
-		}
-
-		if(pMap==NULL)
-		{
 			GLogger* pLogger = augeGetLoggerInstance();
-			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "Empty Service");
 			pLogger->Error(msg, __FILE__, __LINE__);
-
 			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
 			pExpResopnse->SetMessage(msg);
 			return pExpResopnse;
 		}
-		
-		pWebResponse = handler->Execute(pWebRequest, pWebContext, pMap);
-		pMap->Release();
-
-		return pWebResponse;
+		return handler->Execute(pWebRequest, pWebContext);
 	}
+
+	//WebResponse* WMapEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	//{
+	//	WebResponse	*pWebResponse = NULL;
+	//	WMapRequest *pWMapRequest = static_cast<WMapRequest*>(pWebRequest);
+
+	//	const char* request = pWMapRequest->GetRequest();
+	//	WebHandler* handler = GetHandler(request);
+	//	if(handler == NULL)
+	//	{
+	//		char msg[AUGE_MSG_MAX];
+	//		g_sprintf(msg, "Request %s is not supported", request);
+	//	}
+
+	//	if(pMap==NULL)
+	//	{
+	//		const char* mapName = pWMapRequest->GetMapName();
+	//		if(mapName!=NULL)
+	//		{
+	//			CartoManager* pCartoManager = augeGetCartoManagerInstance();
+	//			pMap = pCartoManager->LoadMap(mapName);
+	//		}
+	//	}
+	//	else
+	//	{
+	//		pMap->AddRef();
+	//	}
+
+	//	if(pMap==NULL)
+	//	{
+	//		GLogger* pLogger = augeGetLoggerInstance();
+	//		char msg[AUGE_MSG_MAX];
+	//		g_sprintf(msg, "Empty Service");
+	//		pLogger->Error(msg, __FILE__, __LINE__);
+
+	//		WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+	//		pExpResopnse->SetMessage(msg);
+	//		return pExpResopnse;
+	//	}
+	//	
+	//	pWebResponse = handler->Execute(pWebRequest, pWebContext, pMap);
+	//	pMap->Release();
+
+	//	return pWebResponse;
+	//}
 	
 	//WebResponse* WebMapEngine::GetCapabilities(GetCapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap)
 	//{

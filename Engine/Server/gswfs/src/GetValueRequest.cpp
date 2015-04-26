@@ -89,6 +89,7 @@ namespace auge
 		SetTypeName(cgi["typeName"]);
 		SetField(cgi["field"]);
 		SetOrder(cgi["order"]);
+		SetMapName(cgi["mapName"]);
 		return true;
 	}
 

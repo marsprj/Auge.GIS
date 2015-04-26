@@ -21,12 +21,14 @@ namespace auge
 		//virtual const char*		GetEngine();
 		//virtual const char*		GetVersion();
 		virtual const char*		GetTypeName();
+		virtual const char*		GetSourceName();
 		virtual const char*		GetRequest();
 		//virtual const char*		GetMimeType();
 
 	public:
 		//void		SetVersion(const char* value);
 		void		SetTypeName(const char* typeName);
+		void		SetSourceName(const char* sourceName);
 		bool		Create(rude::CGI& cgi);
 
 	private:
@@ -34,6 +36,7 @@ namespace auge
 		std::string m_type_name;
 		std::string m_full_name;
 		std::string m_mime_type;
+		std::string m_source_name;
 	};
 }
 

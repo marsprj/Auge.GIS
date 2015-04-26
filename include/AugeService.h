@@ -35,10 +35,11 @@ namespace auge
 	public:
 		virtual const char*		GetName() = 0;
 		virtual const char*		GetURI() = 0;
-		virtual WebResponse*		Execute(WebRequest* pRequest) = 0;
+		virtual WebResponse*	Execute(WebRequest* pRequest) = 0;
 
 		virtual void			SetMap(Map* pMap) = 0;
 		virtual Map*			GetMap() = 0;
+		virtual const char*		GetMapName() = 0;
 
 		virtual WebContext*		GetWebContext() = 0;
 

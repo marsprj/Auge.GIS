@@ -7,10 +7,11 @@
 #include "AugeFilter.h"
 #include <string>
 #include <vector>
+#include "WFeatureRequest.h"
 
 namespace auge
 {
-	class GetValueRequest : public WebRequest
+	class GetValueRequest : public WFeatureRequest
 	{
 	public:
 		GetValueRequest();

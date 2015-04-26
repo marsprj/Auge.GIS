@@ -23,7 +23,7 @@ namespace auge
 		return "GetCapabilities";
 	}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi)
 	{
 		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
 		if(!pRequest->Create(cgi))
@@ -39,7 +39,40 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
+		if(!pRequest->Create(cgi))
+		{
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			pRequest->Release();
+			pRequest = NULL;
+			return NULL;
+		}
+		pRequest->SetMapName(mapName);
+		pRequest->SetHost(getenv("HTTP_HOST"));
+		pRequest->SetRequestMethod(getenv("REQUEST_METHOD"));
+		return pRequest;
+	}
+
+	//WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	//{
+	//	CapabilitiesRequest* pRequest = new CapabilitiesRequest();
+	//	if(!pRequest->Create(cgi))
+	//	{
+	//		GLogger* pLogger = augeGetLoggerInstance();
+	//		pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+	//		pRequest->Release();
+	//		pRequest = NULL;
+	//		return NULL;
+	//	}
+	//	pRequest->SetHost(getenv("HTTP_HOST"));
+	//	pRequest->SetRequestMethod(getenv("REQUEST_METHOD"));
+	//	return pRequest;
+	//}
+
+	WebRequest*	CapabilitiesHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
 		//if(!pRequest->Create(cgi))
@@ -78,10 +111,31 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
 		WebResponse* pWebResponse = NULL;
 		CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
+
+		const char* mapName = pRequest->GetMapName();
+		if(mapName==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "No Map is attached");
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		Map *pMap = pCartoManager->LoadMap(mapName);
+		if(pMap==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "Cannot load map [%s]", mapName);
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
 
 		const char* version = pRequest->GetVersion();
 		if(strcmp(version,"1.0.0")==0)
@@ -101,8 +155,36 @@ namespace auge
 			pWebResponse = pExpResponse;
 		}
 
+		pMap->Release();
+
 		return pWebResponse;
 	}
+
+	//WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	//{
+	//	WebResponse* pWebResponse = NULL;
+	//	CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
+
+	//	const char* version = pRequest->GetVersion();
+	//	if(strcmp(version,"1.0.0")==0)
+	//	{
+	//		pWebResponse = WriteCapabilities_1_0_0(pRequest, pWebContext, pMap);
+	//	}
+	//	else if(strcmp(version,"1.1.0")==0)
+	//	{
+	//		pWebResponse = WriteCapabilities_1_1_0(pRequest, pWebContext, pMap);
+	//	}
+	//	else
+	//	{
+	//		char msg[AUGE_MSG_MAX];
+	//		WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+	//		g_sprintf(msg, "WMS does not support %s",version);
+	//		pExpResponse->SetMessage(msg);
+	//		pWebResponse = pExpResponse;
+	//	}
+
+	//	return pWebResponse;
+	//}
 	
 	// 1.1.0 in fact
 	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap) 

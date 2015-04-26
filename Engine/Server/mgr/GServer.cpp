@@ -58,25 +58,24 @@ namespace auge
 //				"%d",m_counter++);
 
 			pLogger->Info("--------------------------------------------------------");
-
-			//DebugCGI(cgi);
+			
 
 			WebResponse* pWebResponse = NULL;
 
 			g_ulong ts = auge_get_time();
-			
-			//switch(GetMethod())
-			//{
-			//case augeHttpGet:
-			//	pWebResponse = DoGet(cgi);
-			//	break;
-			//case augeHttpPost:
+
+			switch(GetMethod())
+			{
+			case augeHttpGet:
+				pWebResponse = DoGet(cgi);
+				break;
+			case augeHttpPost:
 				pWebResponse = DoPost(cgi);
-			//}
+			}
 
 			pWebResponse->Write(pWebWriter);
 			AUGE_SAFE_RELEASE(pWebResponse);
-			
+
 			g_ulong te = auge_get_time();
 			WriteTime(ts, te);
 			
@@ -124,7 +123,7 @@ namespace auge
 		}
 
 		auge::WebContext* pWebContext = auge::augeGetWebContextInstance();
-		pWebResponse = pWebEngine->Execute(pWebRequest,pWebContext, NULL);
+		pWebResponse = pWebEngine->Execute(pWebRequest,pWebContext);
 		pWebRequest->Release();
 		
 		return pWebResponse;
@@ -137,6 +136,7 @@ namespace auge
 		WebResponse	*pWebResponse = NULL;
 		WebEngine	*pWebEngine = NULL;
 
+		const char* mapName = cgi["mapName"];
 		const char* xml_string = cgi["xml"];
 		//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\"  mapName=\"world\" xmlns:topp=\"http://www.openplans.org/topp\"	xmlns:wfs=\"http://www.opengis.net/wfs\"	xmlns:ogc=\"http://www.opengis.net/ogc\"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"	xsi:schemaLocation=\"http://www.opengis.net/wfs	http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\">	<wfs:Query typeName=\"world:cities\">		<ogc:Filter>			<ogc:FeatureId fid=\"world.3\"/>		</ogc:Filter>	</wfs:Query></wfs:GetFeature>";
 		//const char* xml_string = "<wfs:Transaction service=\"WFS\" version=\"1.0.0\"  mapName=\"world\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:world=\"http://www.openplans.org/world\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-transaction.xsd http://www.openplans.org/cities  http://localhost:8080/geoserver/wfs/DescribeFeaturename?namename=world:cities\"><wfs:Insert><world:cities><world:the_geom><gml:Point srsName=\"http://www.opengis.net/gml/srs/epsg.xml#4326\"><gml:coordinates>33.086040496826172,68.963546752929687</gml:coordinates></gml:Point></world:the_geom><world:name>alley</world:name></world:cities></wfs:Insert><wfs:Update name=\"cities\"><wfs:Property><wfs:Name>name</wfs:Name><wfs:Value>xxxx</wfs:Value></wfs:Property><ogc:Filter><ogc:FeatureId fid=\"cities.1\"/></ogc:Filter></wfs:Update><wfs:Delete name=\"cities\"><ogc:Filter><ogc:PropertyIsEqualTo><ogc:PropertyName>gid</ogc:PropertyName><ogc:Literal>610</ogc:Literal></ogc:PropertyIsEqualTo></ogc:Filter></wfs:Delete></wfs:Transaction>";
@@ -195,7 +195,7 @@ namespace auge
 		}
 
 		auge::WebContext* pWebContext = auge::augeGetWebContextInstance();
-		pWebRequest = pWebEngine->ParseRequest(pxDoc, pWebContext, NULL);
+		pWebRequest = pWebEngine->ParseRequest(pxDoc,mapName);
 		if(pWebRequest==NULL)
 		{
 			pxDoc->Close();
@@ -209,7 +209,7 @@ namespace auge
 			return pWebResponse;
 		}
 
-		pWebResponse = pWebEngine->Execute(pWebRequest,pWebContext,NULL);
+		pWebResponse = pWebEngine->Execute(pWebRequest,pWebContext);
 		pWebRequest->Release();
 
 		//pxDoc->Close();

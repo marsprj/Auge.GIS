@@ -23,7 +23,7 @@ namespace auge
 		return "GetFeatureInfo";
 	}
 
-	WebRequest*	GetFeatureInfoHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	GetFeatureInfoHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetFeatureInfoRequest* pRequest = new GetFeatureInfoRequest();
 		if(!pRequest->Create(cgi))
@@ -36,7 +36,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetFeatureInfoHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	GetFeatureInfoHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	GetFeatureInfoHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		GetFeatureInfoRequest* pRequest = new GetFeatureInfoRequest();
 		//if(!pRequest->Create(cgi))
@@ -75,90 +80,92 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* GetFeatureInfoHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* GetFeatureInfoHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		GetFeatureInfoRequest* pRequest = static_cast<GetFeatureInfoRequest*>(pWebRequest);
+		//GetFeatureInfoRequest* pRequest = static_cast<GetFeatureInfoRequest*>(pWebRequest);
 
-		g_uint width  = pRequest->GetWidth();
-		g_uint height = pRequest->GetHeight();
+		//g_uint width  = pRequest->GetWidth();
+		//g_uint height = pRequest->GetHeight();
 
-		Canvas* pCanvas = NULL;
-		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
+		//Canvas* pCanvas = NULL;
+		//CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
 
-		pCanvas = pCartoFactory->CreateCanvas2D(width, height);
+		//pCanvas = pCartoFactory->CreateCanvas2D(width, height);
 
-		GColor& bgColor = pRequest->GetBgColor(); 
-		//GColor bgColor(255,0,0,255);
-		char temp[AUGE_NAME_MAX];
-		g_sprintf(temp, "[Alpha]:%d", bgColor.GetAlpha());
-		GLogger* pLogger = augeGetLoggerInstance();
-		pLogger->Info(temp, __FILE__, __LINE__);
-		pCanvas->DrawBackground(bgColor);
+		//GColor& bgColor = pRequest->GetBgColor(); 
+		////GColor bgColor(255,0,0,255);
+		//char temp[AUGE_NAME_MAX];
+		//g_sprintf(temp, "[Alpha]:%d", bgColor.GetAlpha());
+		//GLogger* pLogger = augeGetLoggerInstance();
+		//pLogger->Info(temp, __FILE__, __LINE__);
+		//pCanvas->DrawBackground(bgColor);
 
-		GEnvelope& extent = pRequest->GetExtent();
-		pCanvas->SetViewer(extent);
+		//GEnvelope& extent = pRequest->GetExtent();
+		//pCanvas->SetViewer(extent);
 
-		const char* lname = NULL;
-		const char* sname = NULL;
+		//const char* lname = NULL;
+		//const char* sname = NULL;
 
-		Layer* pLayer = NULL;
-		Style* pStyle = NULL;
-		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		//Layer* pLayer = NULL;
+		//Style* pStyle = NULL;
+		//CartoManager* pCartoManager = augeGetCartoManagerInstance();
 
-		g_uint lc = pRequest->GetLayerCount();
-		for(g_int i=lc-1; i>=0; i--)
-		{
-			lname = pRequest->GetLayer(i);
-			sname = pRequest->GetStyle(i);
+		//g_uint lc = pRequest->GetLayerCount();
+		//for(g_int i=lc-1; i>=0; i--)
+		//{
+		//	lname = pRequest->GetLayer(i);
+		//	sname = pRequest->GetStyle(i);
 
-			pLayer = pMap->GetLayer(lname);
-			if(pLayer!=NULL)
-			{
-				if(!strlen(sname))
-				{	// Default Style
-					pCanvas->DrawLayer(pLayer);
-				}
-				else
-				{	
-					switch(pLayer->GetType())
-					{
-					case augeLayerFeature:
-						{
-							FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-							FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-							pStyle = pCartoManager->GetStyle(sname,pFeatureClass);
-						}
-						break;
-					case augeLayerRaster:
-						break;;
-					}
-					if(pStyle!=NULL)
-					{
-						pCanvas->DrawLayer(pLayer, pStyle);
-					}
-					else
-					{
-						char msg[AUGE_MSG_MAX];
-						g_sprintf(msg, "Style [%s] Not Defined", sname);
-						GLogger* pLogger = augeGetLoggerInstance();
-						pLogger->Info(msg, __FILE__, __LINE__);
-					}
-				}
-			}
-		}
+		//	pLayer = pMap->GetLayer(lname);
+		//	if(pLayer!=NULL)
+		//	{
+		//		if(!strlen(sname))
+		//		{	// Default Style
+		//			pCanvas->DrawLayer(pLayer);
+		//		}
+		//		else
+		//		{	
+		//			switch(pLayer->GetType())
+		//			{
+		//			case augeLayerFeature:
+		//				{
+		//					FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+		//					FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+		//					pStyle = pCartoManager->GetStyle(sname,pFeatureClass);
+		//				}
+		//				break;
+		//			case augeLayerRaster:
+		//				break;;
+		//			}
+		//			if(pStyle!=NULL)
+		//			{
+		//				pCanvas->DrawLayer(pLayer, pStyle);
+		//			}
+		//			else
+		//			{
+		//				char msg[AUGE_MSG_MAX];
+		//				g_sprintf(msg, "Style [%s] Not Defined", sname);
+		//				GLogger* pLogger = augeGetLoggerInstance();
+		//				pLogger->Info(msg, __FILE__, __LINE__);
+		//			}
+		//		}
+		//	}
+		//}
 
-		char img_sfix[AUGE_EXT_MAX] = {0};
-		char img_name[AUGE_NAME_MAX] = {0};
-		char img_path[AUGE_PATH_MAX] = {0};
-		auge_get_image_suffix(pRequest->GetMimeType(), img_sfix, AUGE_EXT_MAX);
-		auge_generate_uuid(img_name, AUGE_NAME_MAX);
-		const char* cache_path = pWebContext->GetCacheMapPath();
-		auge_make_path(img_path, NULL, cache_path, img_name, img_sfix);
-		pCanvas->Save(img_path);
-		pCanvas->Release();
-		GetFeatureInfoResponse* pMapResponse = new GetFeatureInfoResponse(pRequest);
-		pMapResponse->SetPath(img_path);
-		return pMapResponse;
+		//char img_sfix[AUGE_EXT_MAX] = {0};
+		//char img_name[AUGE_NAME_MAX] = {0};
+		//char img_path[AUGE_PATH_MAX] = {0};
+		//auge_get_image_suffix(pRequest->GetMimeType(), img_sfix, AUGE_EXT_MAX);
+		//auge_generate_uuid(img_name, AUGE_NAME_MAX);
+		//const char* cache_path = pWebContext->GetCacheMapPath();
+		//auge_make_path(img_path, NULL, cache_path, img_name, img_sfix);
+		//pCanvas->Save(img_path);
+		//pCanvas->Release();
+		//GetFeatureInfoResponse* pMapResponse = new GetFeatureInfoResponse(pRequest);
+		//pMapResponse->SetPath(img_path);
+		//return pMapResponse;
+
+		return NULL;
 	}
 
 }

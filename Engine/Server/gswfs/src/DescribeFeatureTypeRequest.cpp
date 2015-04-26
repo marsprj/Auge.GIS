@@ -53,6 +53,23 @@ namespace auge
 		m_type_name = sep==NULL ? value : sep+1;
 	}
 
+	const char*	DescribeFeatureTypeRequest::GetSourceName()
+	{
+		return m_source_name.c_str();
+	}
+
+	void DescribeFeatureTypeRequest::SetSourceName(const char* sourceName)
+	{
+		if(sourceName==NULL)
+		{
+			m_source_name.clear();
+		}
+		else
+		{
+			m_source_name  = sourceName;
+		}
+	}
+
 	//const char*	DescribeFeatureTypeRequest::GetMimeType()
 	//{
 	//	return m_mime_type.c_str();
@@ -63,6 +80,7 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetMapName(cgi["mapName"]);
 		SetTypeName(cgi["typeName"]);
+		SetSourceName(cgi["sourceName"]);
 		return true;
 	}
 

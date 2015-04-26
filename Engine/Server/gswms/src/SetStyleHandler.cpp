@@ -20,8 +20,8 @@ namespace auge
 	{
 		return "SetStyle";
 	}
-
-	WebRequest*	SetStyleHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	 
+	WebRequest*	SetStyleHandler::ParseRequest(rude::CGI& cgi)
 	{
 		SetStyleRequest* pRequest = new SetStyleRequest();
 
@@ -35,7 +35,18 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	SetStyleHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	SetStyleHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		WebRequest* pWebRequest = ParseRequest(cgi);
+		if(pWebRequest!=NULL)
+		{
+			SetStyleRequest* pWRequest = static_cast<SetStyleRequest*>(pWebRequest);
+			pWRequest->SetMapName(mapName);
+		}
+		return pWebRequest;
+	}
+
+	WebRequest*	SetStyleHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		return NULL;
 	}
@@ -43,6 +54,37 @@ namespace auge
 	WebResponse* SetStyleHandler::Execute(WebRequest* pWebRequest)
 	{
 		return NULL;
+	}
+
+	WebResponse* SetStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	{
+		SetStyleRequest* pRequest = static_cast<SetStyleRequest*>(pWebRequest);
+
+		const char* mapName = pRequest->GetMapName();
+		if(mapName==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "No Map is attached");
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		Map *pMap = pCartoManager->LoadMap(mapName);
+		if(pMap==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "Cannot load map [%s]", mapName);
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		WebResponse* pWebResponse = Execute(pWebRequest, pWebContext, pMap);
+		pMap->Release();
+
+		return pWebResponse;
 	}
 
 	WebResponse* SetStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)

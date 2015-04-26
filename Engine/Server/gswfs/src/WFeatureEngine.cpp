@@ -141,7 +141,12 @@ namespace auge
 		return NULL;
 	}
 
-	WebRequest* WFeatureEngine::ParseRequest(rude::CGI& cgi, WebContext* pWebContext, Map* pMap)
+	WebRequest*	WFeatureEngine::ParseRequest(rude::CGI& cgi)
+	{
+		return ParseRequest(cgi, cgi["mapName"]);
+	}
+
+	WebRequest* WFeatureEngine::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
 		const char* request = cgi["request"];
 		if(request==NULL)
@@ -165,10 +170,37 @@ namespace auge
 
 			return NULL;
 		}
-		return handler->ParseRequest(cgi, pWebContext, pMap);
+		return handler->ParseRequest(cgi, mapName);
 	}
 
-	WebRequest*	WFeatureEngine::ParseRequest(XDocument* pxDoc,WebContext* pWebContext, Map* pMap)
+	//WebRequest* WFeatureEngine::ParseRequest(rude::CGI& cgi, WebContext* pWebContext, Map* pMap)
+	//{
+	//	const char* request = cgi["request"];
+	//	if(request==NULL)
+	//	{
+	//		const char* msg = "[Request] is NULL";
+	//		GLogger* pLogger = augeGetLoggerInstance();
+	//		pLogger->Error(msg, __FILE__, __LINE__);
+	//		GError* pError = augeGetErrorInstance();
+	//		pError->SetError(msg);
+	//		return NULL;
+	//	}
+	//	WebHandler* handler = GetHandler(request);
+	//	if(handler == NULL)
+	//	{
+	//		char msg[AUGE_MSG_MAX];
+	//		g_sprintf(msg, "%s doesn't support request [%s]", GetType(), request);
+	//		GLogger* pLogger = augeGetLoggerInstance();
+	//		pLogger->Error(msg, __FILE__, __LINE__);
+	//		GError* pError = augeGetErrorInstance();
+	//		pError->SetError(msg);
+
+	//		return NULL;
+	//	}
+	//	return handler->ParseRequest(cgi, pWebContext, pMap);
+	//}
+
+	WebRequest*	WFeatureEngine::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		XElement	*pxRoot = pxDoc->GetRootNode();
 		const char* request = pxRoot->GetName();
@@ -185,8 +217,28 @@ namespace auge
 
 			return NULL;
 		}
-		return handler->ParseRequest(pxDoc, pWebContext, pMap);
+		return handler->ParseRequest(pxDoc, mapName);
 	}
+
+	//WebRequest*	WFeatureEngine::ParseRequest(XDocument* pxDoc,WebContext* pWebContext, Map* pMap)
+	//{
+	//	XElement	*pxRoot = pxDoc->GetRootNode();
+	//	const char* request = pxRoot->GetName();
+
+	//	WebHandler* handler = GetHandler(request);
+	//	if(handler == NULL)
+	//	{
+	//		char msg[AUGE_MSG_MAX];
+	//		g_sprintf(msg, "%s doesn't support request [%s]", GetType(), request);
+	//		GLogger* pLogger = augeGetLoggerInstance();
+	//		pLogger->Error(msg, __FILE__, __LINE__);
+	//		GError* pError = augeGetErrorInstance();
+	//		pError->SetError(msg);
+
+	//		return NULL;
+	//	}
+	//	return handler->ParseRequest(pxDoc, pWebContext, pMap);
+	//}
 
 	WebResponse* WFeatureEngine::Execute(WebRequest* pWebRequest)
 	{
@@ -198,11 +250,16 @@ namespace auge
 		{
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Request %s is not supported", request);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+			pExpResopnse->SetMessage(msg);
+			return pExpResopnse;
 		}
 		return handler->Execute(pWebRequest);
 	}
 
-	WebResponse* WFeatureEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	WebResponse* WFeatureEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
 		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
@@ -210,39 +267,13 @@ namespace auge
 		{
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Request %s is not supported", request);
-		}
-
-		if(pMap==NULL)
-		{
-			WFeatureRequest* pWFeatureRequest = static_cast<WFeatureRequest*>(pWebRequest);
-			const char* mapName = pWFeatureRequest->GetMapName();
-			if(mapName!=NULL)
-			{
-				CartoManager* pCartoManager = augeGetCartoManagerInstance();
-				pMap = pCartoManager->LoadMap(mapName);
-				pWebContext->SetURI(pMap->GetURI());
-			}
-		}
-		else
-		{
-			pMap->AddRef();
-		}
-
-		if(pMap==NULL)
-		{
 			GLogger* pLogger = augeGetLoggerInstance();
-			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "Empty Service");
 			pLogger->Error(msg, __FILE__, __LINE__);
-
 			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
 			pExpResopnse->SetMessage(msg);
 			return pExpResopnse;
 		}
 		
-		WebResponse* pWebResponse = handler->Execute(pWebRequest, pWebContext, pMap);
-		pMap->Release();
-
-		return pWebResponse;
+		return handler->Execute(pWebRequest, pWebContext);
 	}
 }

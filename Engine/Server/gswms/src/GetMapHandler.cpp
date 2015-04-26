@@ -23,7 +23,7 @@ namespace auge
 		return "GetMap";
 	}
 
-	WebRequest*	GetMapHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	GetMapHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetMapRequest* pRequest = new GetMapRequest();
 		if(!pRequest->Create(cgi))
@@ -36,7 +36,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetMapHandler::ParseRequest(XDocument* pxDoc, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
+	WebRequest*	GetMapHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	{
+		return ParseRequest(cgi);
+	}
+
+	WebRequest*	GetMapHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		GetMapRequest* pRequest = new GetMapRequest();
 		//if(!pRequest->Create(cgi))
@@ -71,6 +76,37 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			pWebResponse = pExpResponse;
 		}
+
+		return pWebResponse;
+	}
+
+	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	{
+		GetMapRequest* pRequest = static_cast<GetMapRequest*>(pWebRequest);
+
+		const char* mapName = pRequest->GetMapName();
+		if(mapName==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "No Map is attached");
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		Map *pMap = pCartoManager->LoadMap(mapName);
+		if(pMap==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "Cannot load map [%s]", mapName);
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		WebResponse* pWebResponse = Execute(pWebRequest, pWebContext, pMap);
+		pMap->Release();
 
 		return pWebResponse;
 	}
@@ -125,33 +161,6 @@ namespace auge
 				}
 
 				DrawNamedLayer(pCanvas, pLayer, sname);
-				//switch(pLayer->GetType())
-				//{
-				//case augeLayerFeature:
-				//	{
-				//		FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-				//		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-				//		pStyle = pCartoManager->GetStyle(sname, pFeatureClass);
-				//	}
-				//	break;
-				//case augeLayerRaster:
-				//	{
-
-				//	}
-				//	break;
-				//}
-				//if(pStyle!=NULL)
-				//{
-				//	pCanvas->DrawLayer(pLayer, pStyle);
-				//}
-				//else
-				//{
-				//	char msg[AUGE_MSG_MAX];
-				//	g_sprintf(msg, "Style [%s] Not Defined", sname);
-				//	GLogger* pLogger = augeGetLoggerInstance();
-				//	pLogger->Info(msg, __FILE__, __LINE__);
-				//}
-				//}				
 			}
 		}
 		pCanvas->Label();

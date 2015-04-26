@@ -7,20 +7,21 @@
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
+#include "WMapRequest.h"
 
 namespace auge
 {
-	class SetStyleRequest : public WebRequest
+	class SetStyleRequest : public WMapRequest
 	{
 	public:
 		SetStyleRequest();
 		virtual ~SetStyleRequest();
 
 	public:
-		virtual const char*		GetEngine();
-		virtual const char*		GetVersion();
+		//virtual const char*		GetEngine();
+		//virtual const char*		GetVersion();
 		virtual const char*		GetRequest();
-		virtual const char*		GetMimeType();
+		//virtual const char*		GetMimeType();
 
 	public:
 		bool		Create(rude::CGI& cgi);
@@ -29,7 +30,7 @@ namespace auge
 		const char* GetLayerName();
 		const char* GetStyleName();
 
-		void		SetVersion(const char* value);
+		//void		SetVersion(const char* value);
 		void		SetLayerName(const char* layerName);
 		void		SetStyleName(const char* styleName);
 
