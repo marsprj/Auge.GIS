@@ -27,7 +27,7 @@ namespace auge
 
 	const char*	GetPreviewRequest::GetEngine()
 	{
-		return "ims";
+		return "dbs";
 	}
 
 	const char*	GetPreviewRequest::GetVersion()

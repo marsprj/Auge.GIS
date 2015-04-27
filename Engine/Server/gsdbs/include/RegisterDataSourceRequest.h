@@ -49,9 +49,9 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-service=ims&version=1.0.0&request=RegisterDataSource&name=db221&engine=Postgres&uri=server=127.0.0.1;instance=5432;database=gisdb;user=postgres;password=qwer1234;encoding=GBK
-http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterDataSource&name=db221&engine=Postgres&uri=server=127.0.0.1;instance=5432;database=gisdb;user=postgres;password=qwer1234;encoding=GBK
-http://192.168.111.160:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterDataSource&name=db221&engine=Postgres&uri=server=127.0.0.1;instance=5432;database=gisdb;user=postgres;password=qwer1234;encoding=GBK
+service=dbs&version=1.0.0&request=RegisterDataSource&name=db221&engine=Postgres&uri=server=127.0.0.1;instance=5432;database=gisdb;user=postgres;password=qwer1234;encoding=GBK
+http://127.0.0.1:8088/ows/user1/mgr?service=dbs&version=1.0.0&request=RegisterDataSource&name=db221&engine=Postgres&uri=server=127.0.0.1;instance=5432;database=gisdb;user=postgres;password=qwer1234;encoding=GBK
+http://192.168.111.160:8088/ows/user1/mgr?service=dbs&version=1.0.0&request=RegisterDataSource&name=db221&engine=Postgres&uri=server=127.0.0.1;instance=5432;database=gisdb;user=postgres;password=qwer1234;encoding=GBK
 
 [ HTTP Post ]
 -------------------------------------------------------------------------

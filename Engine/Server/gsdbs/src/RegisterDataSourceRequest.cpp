@@ -24,7 +24,7 @@ namespace auge
 
 	const char*	RegisterDataSourceRequest::GetEngine()
 	{
-		return "ims";
+		return "dbs";
 	}
 
 	const char*	RegisterDataSourceRequest::GetVersion()

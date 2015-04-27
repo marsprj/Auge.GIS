@@ -1,31 +1,10 @@
-#include "WEngine.h"
-#include "CapabilitiesHandler.h"
-#include "CreateServiceHandler.h"
-#include "RemoveServiceHandler.h"
-#include "GetServiceHandler.h"
-//#include "RegisterHandlerHandler.h"
+#include "WDataEngine.h"
 
-//#include "RegisterDataSourceHandler.h"
-//#include "UnRegisterDataSourceHandler.h"
-//#include "GetDataSourceHandler.h"
-//#include "GetDataSetHandler.h"
-//#include "GetPreviewHandler.h"
-
-#include "RegisterLayerHandler.h"
-
-#include "CreateMapHandler.h"
-#include "GetMapHandler.h"
-#include "RemoveMapHandler.h"
-#include "SetStyleHandler.h"
-
-#include "GetStyleHandler.h"
-#include "AddStyleHandler.h"
-#include "UpdateStyleHandler.h"
-#include "RemoveStyleHandler.h"
-
-#include "RegisterMapHandler.h"
-
-#include "GetFontHandler.h"
+#include "RegisterDataSourceHandler.h"
+#include "UnRegisterDataSourceHandler.h"
+#include "GetDataSourceHandler.h"
+#include "GetDataSetHandler.h"
+#include "GetPreviewHandler.h"
 
 #include "AugeCore.h"
 #include "AugeCarto.h"
@@ -44,33 +23,11 @@ namespace auge
 	{
 		m_handler = NULL;
 
-		m_handlers.push_back(new CapabilitiesHandler());
-		m_handlers.push_back(new CreateServiceHandler());
-		m_handlers.push_back(new RemoveServiceHandler());
-		m_handlers.push_back(new GetServiceHandler());
-
-		//m_handlers.push_back(new RegisterDataSourceHandler());
-		//m_handlers.push_back(new UnRegisterDataSourceHandler());
-		//m_handlers.push_back(new GetDataSourceHandler());
-		//m_handlers.push_back(new GetDataSetHandler());
-		//m_handlers.push_back(new GetPreviewHandler());
-
-		m_handlers.push_back(new RegisterLayerHandler());
-
-		m_handlers.push_back(new CreateMapHandler());
-		m_handlers.push_back(new GetMapHandler());
-		m_handlers.push_back(new RemoveMapHandler());
-		m_handlers.push_back(new SetStyleHandler());
-
-		m_handlers.push_back(new GetStyleHandler());
-		m_handlers.push_back(new AddStyleHandler());
-		m_handlers.push_back(new UpdateStyleHandler());
-		m_handlers.push_back(new RemoveStyleHandler());
-
-		m_handlers.push_back(new RegisterMapHandler());
-
-		m_handlers.push_back(new GetFontHandler());
-		
+		m_handlers.push_back(new RegisterDataSourceHandler());
+		m_handlers.push_back(new UnRegisterDataSourceHandler());
+		m_handlers.push_back(new GetDataSourceHandler());
+		m_handlers.push_back(new GetDataSetHandler());
+		m_handlers.push_back(new GetPreviewHandler());
 	}
 
 	WEngine::~WEngine()
@@ -116,12 +73,12 @@ namespace auge
 
 	const char*	WEngine::GetID()
 	{
-		return "WEngine";
+		return "WDataEngine";
 	}
 
 	const char*	WEngine::GetType()
 	{
-		return "ims";
+		return "dbs";
 	}
 
 	const char*	WEngine::GetDescription()
@@ -178,12 +135,6 @@ namespace auge
 		WebHandler* handler = GetHandler(request);
 		if(handler == NULL)
 		{
-			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "%s doesn't support request [%s]", GetType(), request);
-			GLogger* pLogger = augeGetLoggerInstance();
-			pLogger->Error(msg, __FILE__, __LINE__);
-			GError* pError = augeGetErrorInstance();
-			pError->SetError(msg);
 			return NULL;
 		}
 		return handler->ParseRequest(cgi);

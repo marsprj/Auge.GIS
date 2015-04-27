@@ -1,2 +1,2 @@
 AUTOMAKE_OPTION=foreign
-SUBDIRS=gscore gsvrs gswfs gswms gsims ims mgr
+SUBDIRS=gscore gsvrs gswfs gswms gsims gsdbs ims mgr

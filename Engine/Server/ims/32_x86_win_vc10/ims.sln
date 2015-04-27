@@ -38,6 +38,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswfs", "..\..\gswfs\32_x86
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsims", "..\..\gsims\32_x86_win_vc10\gsims.vcxproj", "{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsdbs", "..\..\gsdbs\32_x86_win_vc10\gsdbs.vcxproj", "{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -100,6 +102,10 @@ Global
 		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Debug|Win32.Build.0 = Debug|Win32
 		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Release|Win32.ActiveCfg = Release|Win32
 		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Release|Win32.Build.0 = Release|Win32
+		{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}.Debug|Win32.Build.0 = Debug|Win32
+		{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}.Release|Win32.ActiveCfg = Release|Win32
+		{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

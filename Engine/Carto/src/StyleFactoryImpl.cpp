@@ -250,66 +250,48 @@ namespace auge
 
 	FeatureStyle* CreateLineStyle()
 	{
-		//// Point Symbol 
-		//Fill *pFill = NULL;
-		//pFill = new FillImpl();
+		// Polygon Symbol 
+		Fill *pFill = new FillImpl();
 
-		//Stroke *pStroke = NULL;
-		//pStroke = new StrokeImpl();;
+		Stroke *pStroke = new StrokeImpl();
 
-		//LineSymbolizer *pLineSymbolizer = NULL;
-		//pLineSymbolizer = CreateLineSymbolizer();
+		LineSymbolizer *pSymbolizer = NULL;
+		pSymbolizer = CreateLineSymbolizer();
 
-		//Rule *pRule = NULL;
-		//pRule = Rule::Create();
-		//pRule->SetSymbolizer(pLineSymbolizer);
+		Rule *pRule = new RuleImpl();
+		pRule->SetSymbolizer(pSymbolizer);
 
-		//Filter *pFilter = NULL;
-		//pRule->SetFilter(pFilter);
+		GFilter *pFilter = NULL;
+		pRule->SetFilter(pFilter);
 
-		//FeatureTypeStyle *pFeatureTypeStyle = NULL;
-		//pFeatureTypeStyle = new FeatureTypeStyleImpl();
-		//pFeatureTypeStyle->AddRule(pRule);
+		FeatureStyle *pFeatureStyle = NULL;
+		pFeatureStyle = new FeatureStyleImpl();
+		pFeatureStyle->AddRule(pRule);
 
-		//FeatureStyle	*pFeatureStyle = NULL;
-		//pFeatureStyle = new FeatureStyleImpl();
-		//pFeatureStyle->AddFeaturetypeStyle(pFeatureTypeStyle);
-
-		//return pFeatureStyle;
-
-		return NULL;
+		return pFeatureStyle;
 	}
 
 	FeatureStyle* CreatePolygonStyle()
 	{
-		//// Point Symbol 
-		//Fill *pFill = NULL;
-		//pFill = new FillImpl();
+		// Polygon Symbol 
+		Fill *pFill = new FillImpl();
 
-		//Stroke *pStroke = NULL;
-		//pStroke = new StrokeImpl();;
+		Stroke *pStroke = new StrokeImpl();
 
-		//PolygonSymbolizer *pPolygonSymbolizer = NULL;
-		//pPolygonSymbolizer = CreatePolygonSymbolizer();
+		PolygonSymbolizer *pSymbolizer = NULL;
+		pSymbolizer = CreatePolygonSymbolizer();
 
-		//Rule *pRule = NULL;
-		//pRule = Rule::Create();
-		//pRule->SetSymbolizer(pPolygonSymbolizer);
+		Rule *pRule = new RuleImpl();
+		pRule->SetSymbolizer(pSymbolizer);
 
-		//Filter *pFilter = NULL;
-		//pRule->SetFilter(pFilter);
+		GFilter *pFilter = NULL;
+		pRule->SetFilter(pFilter);
 
-		//FeatureTypeStyle *pFeatureTypeStyle = NULL;
-		//pFeatureTypeStyle = new FeatureTypeStyleImpl();
-		//pFeatureTypeStyle->AddRule(pRule);
+		FeatureStyle *pFeatureStyle = NULL;
+		pFeatureStyle = new FeatureStyleImpl();
+		pFeatureStyle->AddRule(pRule);
 
-		//FeatureStyle	*pFeatureStyle = NULL;
-		//pFeatureStyle = new FeatureStyleImpl();
-		//pFeatureStyle->AddFeaturetypeStyle(pFeatureTypeStyle);
-
-		//return pFeatureStyle;
-
-		return NULL;
+		return pFeatureStyle;
 	}
 
 	FeatureStyle* CreateTextStyle()

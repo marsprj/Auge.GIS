@@ -22,7 +22,7 @@ namespace auge
 
 	const char*	GetDataSourceRequest::GetEngine()
 	{
-		return "ims";
+		return "dbs";
 	}
 
 	const char*	GetDataSourceRequest::GetVersion()

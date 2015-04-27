@@ -3,4 +3,5 @@
 	<Engine description="Auge Web Service Manager" path="" id="gsims"/>
 	<Engine description="Web Map Sevice" path="" id="gswms"/>
 	<Engine description="Web Feature Sevice" path="" id="gswfs"/>
+	<Engine description="Web Database Sevice" path="" id="gsdbs"/>
 </Engines>

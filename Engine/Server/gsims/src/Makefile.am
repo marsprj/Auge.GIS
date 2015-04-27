@@ -22,9 +22,6 @@ libgsims_la_SOURCES=\
 		    CreateServiceHandler.cpp \
 		    CreateServiceRequest.cpp \
 		    CreateServiceResponse.cpp \
-		    GetDataSourceHandler.cpp \
-		    GetDataSourceRequest.cpp \
-		    GetDataSourceResponse.cpp \
 		    GetMapHandler.cpp \
 		    GetMapRequest.cpp \
 		    GetMapResponse.cpp \
@@ -34,8 +31,6 @@ libgsims_la_SOURCES=\
 		    GetStyleHandler.cpp \
 		    GetStyleRequest.cpp \
 		    GetStyleResponse.cpp \
-		    RegisterDataSourceHandler.cpp \
-		    RegisterDataSourceRequest.cpp \
 		    RegisterLayerHandler.cpp \
 		    RegisterLayerRequest.cpp \
 		    RemoveMapHandler.cpp \
@@ -51,18 +46,10 @@ libgsims_la_SOURCES=\
 		    RemoveStyleRequest.cpp \
 		    UpdateStyleHandler.cpp \
 		    UpdateStyleRequest.cpp \
-		    UnRegisterDataSourceHandler.cpp \
-		    UnRegisterDataSourceRequest.cpp \
 		    RegisterMapHandler.cpp \
 		    RegisterMapRequest.cpp \
 		    GetFontHandler.cpp \
 		    GetFontRequest.cpp \
 		    GetFontResponse.cpp \
-		    GetDataSetHandler.cpp \
-		    GetDataSetRequest.cpp \
-		    GetDataSetResponse.cpp \
-		    GetPreviewRequest.cpp \
-		    GetPreviewResponse.cpp \
-		    GetPreviewHandler.cpp \
 		    WEngine.cpp
 
