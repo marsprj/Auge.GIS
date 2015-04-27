@@ -9,6 +9,7 @@ namespace auge
 {
 	class Service;
 	class Workspace;
+	class DataSet;
 	class GetDataSetRequest;
 	class EnumDataSet;
 
@@ -20,9 +21,14 @@ namespace auge
 	public:
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 	public:
-		void	SetDataSets(EnumDataSet* pDataSets);
+		void		SetDataSets(EnumDataSet* pDataSets);
+		void		SetDataSet(DataSet* pDataSet);
+
+		RESULTCODE	Write(WebWriter* pWriter, DataSet* pDataSet);
+		RESULTCODE	Write(WebWriter* pWriter, EnumDataSet* pDataSets);
 
 	private:
+		DataSet* m_pDataSet;
 		EnumDataSet* m_pDataSets;
 		GetDataSetRequest *m_pRequest;	
 	};

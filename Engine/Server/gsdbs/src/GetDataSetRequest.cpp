@@ -79,7 +79,7 @@ namespace auge
 
 	void GetDataSetRequest::SetDataSetName(const char* name)
 	{
-		if(name==NULL)
+		if(name==NULL||(strlen(name)==0))
 		{
 			m_dataset_name.clear();
 		}

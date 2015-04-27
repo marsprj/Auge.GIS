@@ -21,6 +21,7 @@ namespace auge
 
 	private:
 		void	AddMapNode(XElement* pxRoot, Map* pMap);
+		void	AddMapNode(XDocument* pxDoc, Map* pMap);
 		void	AddLayerNode(XElement* pxLayers, Layer* pLayer);
 		void	AddBoundingBoxNode(XElement* pxRoot, GEnvelope& extent);
 		

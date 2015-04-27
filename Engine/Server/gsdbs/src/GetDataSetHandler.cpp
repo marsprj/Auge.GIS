@@ -76,11 +76,36 @@ namespace auge
 			return pExpResponse;
 		}
 
-		EnumDataSet* pDataSets = pWorkspace->GetDataSets();
-		GetDataSetResponse* pResponse = new GetDataSetResponse(pRequest);
-		pResponse->SetDataSets(pDataSets);
+		WebResponse* pWebResponse = NULL;
+		if(dataSetName!=NULL)
+		{	
+			DataSet* pDataSet = pWorkspace->OpenDataSet(dataSetName);
+			if(pDataSet==NULL)
+			{
+				char msg[AUGE_MSG_MAX];
+				g_sprintf(msg, "Cannot Find DataSet [%s]", dataSetName);
+				GLogger* pLogger = augeGetLoggerInstance();
+				pLogger->Error(msg, __FILE__, __LINE__);
+				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+				pExpResponse->SetMessage("Parameter [sourceName] is NULL");
+				return pExpResponse;
+			}
+			else
+			{
+				GetDataSetResponse* pResponse = new GetDataSetResponse(pRequest);
+				pResponse->SetDataSet(pDataSet);
+				pWebResponse = pResponse;
+			}
+		}
+		else
+		{
+			EnumDataSet* pDataSets = pWorkspace->GetDataSets();
+			GetDataSetResponse* pResponse = new GetDataSetResponse(pRequest);
+			pResponse->SetDataSets(pDataSets);
+			pWebResponse = pResponse;
+		}
 
-		return pResponse;
+		return pWebResponse;
 	}
 
 	WebResponse* GetDataSetHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)

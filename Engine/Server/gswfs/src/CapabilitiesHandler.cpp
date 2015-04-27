@@ -41,19 +41,13 @@ namespace auge
 
 	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
-		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
-		if(!pRequest->Create(cgi))
+		WebRequest* pWebRequest = ParseRequest(cgi);
+		if(pWebRequest!=NULL)
 		{
-			GLogger* pLogger = augeGetLoggerInstance();
-			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
-			pRequest->Release();
-			pRequest = NULL;
-			return NULL;
+			CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
+			pRequest->SetMapName(mapName);
 		}
-		pRequest->SetMapName(mapName);
-		pRequest->SetHost(getenv("HTTP_HOST"));
-		pRequest->SetRequestMethod(getenv("REQUEST_METHOD"));
-		return pRequest;
+		return pWebRequest;
 	}
 
 	//WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)
@@ -116,46 +110,52 @@ namespace auge
 		WebResponse* pWebResponse = NULL;
 		CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
 
-		const char* mapName = pRequest->GetMapName();
-		if(mapName==NULL)
+		if(pRequest->IsValidSource())
 		{
-			char msg[AUGE_MSG_MAX];
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			g_sprintf(msg, "No Map is attached");
-			pExpResponse->SetMessage(msg);
-			return pExpResponse;
-		}
-
-		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		Map *pMap = pCartoManager->LoadMap(mapName);
-		if(pMap==NULL)
-		{
-			char msg[AUGE_MSG_MAX];
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			g_sprintf(msg, "Cannot load map [%s]", mapName);
-			pExpResponse->SetMessage(msg);
-			return pExpResponse;
-		}
-
-		const char* version = pRequest->GetVersion();
-		if(strcmp(version,"1.0.0")==0)
-		{
-			pWebResponse = WriteCapabilities_1_0_0(pRequest, pWebContext, pMap);
-		}
-		else if(strcmp(version,"1.1.0")==0)
-		{
-			pWebResponse = WriteCapabilities_1_1_0(pRequest, pWebContext, pMap);
+			//ExecuteBySource(pRequest, pWebContext)
 		}
 		else
 		{
-			char msg[AUGE_MSG_MAX];
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			g_sprintf(msg, "WMS does not support %s",version);
-			pExpResponse->SetMessage(msg);
-			pWebResponse = pExpResponse;
-		}
+			const char* mapName = pRequest->GetMapName();
+			if(mapName==NULL)
+			{
+				char msg[AUGE_MSG_MAX];
+				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+				g_sprintf(msg, "No Map is attached");
+				pExpResponse->SetMessage(msg);
+				return pExpResponse;
+			}
 
-		pMap->Release();
+			CartoManager* pCartoManager = augeGetCartoManagerInstance();
+			Map *pMap = pCartoManager->LoadMap(mapName);
+			if(pMap==NULL)
+			{
+				char msg[AUGE_MSG_MAX];
+				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+				g_sprintf(msg, "Cannot load map [%s]", mapName);
+				pExpResponse->SetMessage(msg);
+				return pExpResponse;
+			}
+
+			const char* version = pRequest->GetVersion();
+			if(strcmp(version,"1.0.0")==0)
+			{
+				pWebResponse = WriteCapabilities_1_0_0(pRequest, pWebContext, pMap);
+			}
+			else if(strcmp(version,"1.1.0")==0)
+			{
+				pWebResponse = WriteCapabilities_1_1_0(pRequest, pWebContext, pMap);
+			}
+			else
+			{
+				char msg[AUGE_MSG_MAX];
+				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+				g_sprintf(msg, "WMS does not support %s",version);
+				pExpResponse->SetMessage(msg);
+				pWebResponse = pExpResponse;
+			}
+			pMap->Release();
+		}
 
 		return pWebResponse;
 	}

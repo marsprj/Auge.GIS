@@ -283,6 +283,7 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetMapName(cgi["mapName"]);
 		SetTypeName(cgi["typeName"]);
+		
 		SetOutputFormat(cgi["outputFormat"]);
 		SetMaxFeatures(cgi["maxFeatures"]);
 		SetOffset(cgi["offset"]);
@@ -292,6 +293,9 @@ namespace auge
 			SetQuery(cgi["filter"],cgi["fields"], GetTypeName(), pMap);
 		}
 		
+		//
+		SetSourceName(cgi["sourceName"]);
+
 		return true;
 	}
 
