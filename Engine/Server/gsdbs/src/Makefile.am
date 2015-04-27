@@ -19,8 +19,6 @@ libgsdbs_la_SOURCES=\
 		    GetDataSourceResponse.cpp \
 		    RegisterDataSourceHandler.cpp \
 		    RegisterDataSourceRequest.cpp \
-		    RegisterLayerHandler.cpp \
-		    RegisterLayerRequest.cpp \
 		    UnRegisterDataSourceHandler.cpp \
 		    UnRegisterDataSourceRequest.cpp \
 		    GetDataSetHandler.cpp \
