@@ -59,5 +59,6 @@ namespace auge
 -------------------------------------------------------------------------
 service=dbs&version=1.0.0&request=GetPreview&sourceName=db1&dataSetName=cities&width=800&height=600
 http://127.0.0.1:8088/ows/user1/mgr?service=dbs&version=1.0.0&request=GetPreview&sourceName=db1&dataSetName=cities&width=800&height=600
+http://127.0.0.1:8088/ows/user1/cities/mgr?service=dbs&version=1.0.0&request=GetPreview&sourceName=db1&width=800&height=600
 
 ************************************************************************/

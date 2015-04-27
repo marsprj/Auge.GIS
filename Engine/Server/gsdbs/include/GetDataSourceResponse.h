@@ -20,6 +20,7 @@ namespace auge
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 	private:
 		void	AddDataSourceNode(XElement* pxRoot, Workspace* pWorkspace);
+		void	AddDataSourceNode(XDocument* pxDoc, Workspace* pWorkspace);
 
 	private:
 		GetDataSourceRequest *m_pRequest;	

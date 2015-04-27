@@ -68,6 +68,28 @@ namespace auge
 		}
 	}
 
+	const char* WFeatureRequest::GetSourceName()
+	{
+		return m_source_name.c_str();
+	}
+
+	void WFeatureRequest::SetSourceName(const char* sourcName)
+	{
+		if(sourcName==NULL)
+		{
+			m_source_name.clear();
+		}
+		else
+		{
+			m_source_name = sourcName;
+		}
+	}
+
+	bool WFeatureRequest::IsValidSource()
+	{
+		return !m_source_name.empty();
+	}
+
 	void WFeatureRequest::SetVersion(const char* value)
 	{
 		if(value==NULL)

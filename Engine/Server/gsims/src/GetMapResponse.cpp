@@ -29,11 +29,11 @@ namespace auge
 
 		XElement	*pxNode = NULL;
 		XDocument	*pxDoc = new XDocument();
-		XElement	*pxRoot = pxDoc->CreateRootNode("Maps", NULL, NULL);
 		
 		const char* name = m_pRequest->GetName();
 		if(name==NULL)
 		{
+			XElement	*pxRoot = pxDoc->CreateRootNode("Maps", NULL, NULL);
 			EnumMap* pEnumMap = pCartoManager->GetMaps();
 			pEnumMap->Reset();
 			while((pMap=pEnumMap->Next())!=NULL)
@@ -47,7 +47,7 @@ namespace auge
 			pMap = pCartoManager->LoadMap(name);
 			if(pMap!=NULL)
 			{
-				AddMapNode(pxRoot, pMap);
+				AddMapNode(pxDoc, pMap);
 				pMap->Release();
 			}
 		}
@@ -74,6 +74,39 @@ namespace auge
 		XElement *pxNode = NULL;
 		XElement *pxExtent = NULL;
 		XElement *pxMap  = pxRoot->AddChild("Map", NULL);
+		pxNode = pxMap->AddChild("Name");
+		pxNode->AddChildText(pMap->GetName());
+
+		// SRID
+		g_sprintf(str, "%d", pMap->GetSRID());
+		pxNode = pxMap->AddChild("Srid");
+		pxNode->AddChildText(str);
+
+		// Extent
+		AddBoundingBoxNode(pxMap, pMap->GetExtent());		
+
+		// Layers
+		XElement* pxLayers = pxMap->AddChild("Layers");
+
+		Layer* pLayer = NULL;
+		g_int count = pMap->GetLayerCount();
+		for(g_int i=0; i<count; i++)
+		{
+			pLayer = pMap->GetLayer(i);
+			if(pLayer!=NULL)
+			{
+				AddLayerNode(pxLayers, pLayer);
+			}
+		}
+	}
+
+	void GetMapResponse::AddMapNode(XDocument* pxDoc, Map* pMap)
+	{
+		char str[AUGE_MSG_MAX];
+
+		XElement *pxNode = NULL;
+		XElement *pxExtent = NULL;
+		XElement *pxMap  = pxDoc->CreateRootNode("Map", NULL, NULL);
 		pxNode = pxMap->AddChild("Name");
 		pxNode->AddChildText(pMap->GetName());
 

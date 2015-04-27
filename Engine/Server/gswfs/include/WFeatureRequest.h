@@ -10,7 +10,7 @@
 
 namespace auge
 {
-	class WFeatureRequest : public WebRequest
+	class WFeatureRequest : public WebRequest 
 	{
 	public:
 		WFeatureRequest();
@@ -31,9 +31,12 @@ namespace auge
 		void		SetVersion(const char* value);
 		void		SetUser(const char* user);
 		void		SetMapName(const char* mapName);
+		void		SetSourceName(const char* sourcName);
 
 		void		SetHost(const char* host);
 		void		SetRequestMethod(const char* method);
+		const char*	GetSourceName();
+		bool		IsValidSource();
 
 	protected:
 		std::string m_user;
@@ -42,6 +45,7 @@ namespace auge
 		std::string m_host;
 		std::string m_request_method;
 		std::string m_map_name;
+		std::string m_source_name;
 
 	private:
 		static std::string	DEFAULT_HOST;

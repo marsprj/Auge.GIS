@@ -28,11 +28,11 @@ namespace auge
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
 		XDocument	*pxDoc = new XDocument();
-		XElement	*pxRoot = pxDoc->CreateRootNode("IMS_DataSources", NULL, NULL);
-
+		
 		const char* name = m_pRequest->GetName();
 		if(name==NULL)
 		{
+			XElement *pxRoot = pxDoc->CreateRootNode("IMS_DataSources", NULL, NULL);
 			g_uint count = pConnManager->GetCount();
 			for(g_uint i=0; i<count; i++)
 			{
@@ -45,7 +45,7 @@ namespace auge
 			pWorkspace = pConnManager->GetWorkspace(name);
 			if(pWorkspace!=NULL)
 			{
-				AddDataSourceNode(pxRoot, pWorkspace);
+				AddDataSourceNode(pxDoc, pWorkspace);
 			}
 		}
 
@@ -71,6 +71,19 @@ namespace auge
 
 		pxDataSource = pxRoot->AddChild("DataSource", NULL);
 
+		pxNode = pxDataSource->AddChild("Name");
+		pxNode->AddChildText(pWorkspace->GetName());
+		pxNode = pxDataSource->AddChild("Engine");
+		pxNode->AddChildText(pWorkspace->GetEngine()->GetID());
+		pxNode = pxDataSource->AddChild("ConnectionString");
+		pxNode->AddChildText(pWorkspace->GetConnectionString());
+	}
+
+	void GetDataSourceResponse::AddDataSourceNode(XDocument* pxDoc, Workspace* pWorkspace)
+	{
+		XElement	*pxNode = NULL;
+		XElement	*pxDataSource  = NULL;
+		pxDataSource = pxDoc->CreateRootNode("DataSource", NULL, NULL);
 		pxNode = pxDataSource->AddChild("Name");
 		pxNode->AddChildText(pWorkspace->GetName());
 		pxNode = pxDataSource->AddChild("Engine");

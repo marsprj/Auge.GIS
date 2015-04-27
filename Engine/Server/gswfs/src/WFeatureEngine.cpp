@@ -143,7 +143,29 @@ namespace auge
 
 	WebRequest*	WFeatureEngine::ParseRequest(rude::CGI& cgi)
 	{
-		return ParseRequest(cgi, cgi["mapName"]);
+		const char* request = cgi["request"];
+		if(request==NULL)
+		{
+			const char* msg = "[Request] is NULL";
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return NULL;
+		}
+		WebHandler* handler = GetHandler(request);
+		if(handler == NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "%s doesn't support request [%s]", GetType(), request);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
+			return NULL;
+		}
+		return handler->ParseRequest(cgi);
 	}
 
 	WebRequest* WFeatureEngine::ParseRequest(rude::CGI& cgi, const char* mapName)
@@ -170,7 +192,7 @@ namespace auge
 
 			return NULL;
 		}
-		return handler->ParseRequest(cgi, mapName);
+		return handler->ParseRequest(cgi,mapName);
 	}
 
 	//WebRequest* WFeatureEngine::ParseRequest(rude::CGI& cgi, WebContext* pWebContext, Map* pMap)
