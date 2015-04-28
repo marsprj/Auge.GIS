@@ -32,6 +32,7 @@ namespace auge
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 	private:
+		WebResponse*			ExecuteByMap(CapabilitiesRequest* pWebRequest, WebContext* pWebContext);
 		CapabilitiesResponse*	WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
 		CapabilitiesResponse*	WriteCapabilities_1_1_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
 	};

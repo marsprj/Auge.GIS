@@ -112,53 +112,56 @@ namespace auge
 
 		if(pRequest->IsValidSource())
 		{
-			//ExecuteBySource(pRequest, pWebContext)
+			ExecuteBySource(pRequest, pWebContext)
 		}
 		else
 		{
-			const char* mapName = pRequest->GetMapName();
-			if(mapName==NULL)
-			{
-				char msg[AUGE_MSG_MAX];
-				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-				g_sprintf(msg, "No Map is attached");
-				pExpResponse->SetMessage(msg);
-				return pExpResponse;
-			}
+			pWebResponse = ExecuteByMap(pRequest, pWebContext);
+			//const char* mapName = pRequest->GetMapName();
+			//if(mapName==NULL)
+			//{
+			//	char msg[AUGE_MSG_MAX];
+			//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			//	g_sprintf(msg, "No Map is attached");
+			//	pExpResponse->SetMessage(msg);
+			//	return pExpResponse;
+			//}
 
-			CartoManager* pCartoManager = augeGetCartoManagerInstance();
-			Map *pMap = pCartoManager->LoadMap(mapName);
-			if(pMap==NULL)
-			{
-				char msg[AUGE_MSG_MAX];
-				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-				g_sprintf(msg, "Cannot load map [%s]", mapName);
-				pExpResponse->SetMessage(msg);
-				return pExpResponse;
-			}
+			//CartoManager* pCartoManager = augeGetCartoManagerInstance();
+			//Map *pMap = pCartoManager->LoadMap(mapName);
+			//if(pMap==NULL)
+			//{
+			//	char msg[AUGE_MSG_MAX];
+			//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			//	g_sprintf(msg, "Cannot load map [%s]", mapName);
+			//	pExpResponse->SetMessage(msg);
+			//	return pExpResponse;
+			//}
 
-			const char* version = pRequest->GetVersion();
-			if(strcmp(version,"1.0.0")==0)
-			{
-				pWebResponse = WriteCapabilities_1_0_0(pRequest, pWebContext, pMap);
-			}
-			else if(strcmp(version,"1.1.0")==0)
-			{
-				pWebResponse = WriteCapabilities_1_1_0(pRequest, pWebContext, pMap);
-			}
-			else
-			{
-				char msg[AUGE_MSG_MAX];
-				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-				g_sprintf(msg, "WMS does not support %s",version);
-				pExpResponse->SetMessage(msg);
-				pWebResponse = pExpResponse;
-			}
-			pMap->Release();
+			//const char* version = pRequest->GetVersion();
+			//if(strcmp(version,"1.0.0")==0)
+			//{
+			//	pWebResponse = WriteCapabilities_1_0_0(pRequest, pWebContext, pMap);
+			//}
+			//else if(strcmp(version,"1.1.0")==0)
+			//{
+			//	pWebResponse = WriteCapabilities_1_1_0(pRequest, pWebContext, pMap);
+			//}
+			//else
+			//{
+			//	char msg[AUGE_MSG_MAX];
+			//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			//	g_sprintf(msg, "WMS does not support %s",version);
+			//	pExpResponse->SetMessage(msg);
+			//	pWebResponse = pExpResponse;
+			//}
+			//pMap->Release();
 		}
 
 		return pWebResponse;
 	}
+
+
 
 	//WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
 	//{
@@ -186,6 +189,54 @@ namespace auge
 	//	return pWebResponse;
 	//}
 	
+	//////////////////////////////////////////////////////////////////////////
+	// ExecuteByMap
+	//////////////////////////////////////////////////////////////////////////
+	WebResponse* CapabilitiesHandler::ExecuteByMap(CapabilitiesRequest* pWebRequest, WebContext* pWebContext)
+	{
+		WebResponse* pWebResponse = NULL;
+		const char* mapName = pWebRequest->GetMapName();
+		if(mapName==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "No Map is attached");
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		Map *pMap = pCartoManager->LoadMap(mapName);
+		if(pMap==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "Cannot load map [%s]", mapName);
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		const char* version = pWebRequest->GetVersion();
+		if(strcmp(version,"1.0.0")==0)
+		{
+			pWebResponse = WriteCapabilities_1_0_0(pWebRequest, pWebContext, pMap);
+		}
+		else if(strcmp(version,"1.1.0")==0)
+		{
+			pWebResponse = WriteCapabilities_1_1_0(pWebRequest, pWebContext, pMap);
+		}
+		else
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "WMS does not support %s",version);
+			pExpResponse->SetMessage(msg);
+			pWebResponse = pExpResponse;
+		}
+		pMap->Release();
+		return pWebResponse;
+	}
+
 	// 1.1.0 in fact
 	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap) 
 	{

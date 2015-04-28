@@ -15,6 +15,7 @@ namespace auge
 	class CapabilitiesRequest;
 	class CapabilitiesResponse;
 	class FeatureLayer;
+	class Style;
 
 	class CapabilitiesHandler : public WebHandler
 	{
@@ -42,6 +43,9 @@ namespace auge
 		CapabilitiesResponse*	WriteCapabilities_1_3_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
 
 		void					AddLayerGeomTypeNode(XElement* pxLayer, FeatureLayer* pFeatureLayer);
+		void					AddLayerGeographicBoundingNode(XElement* pxLayer, GEnvelope& extent);
+		void					AddLayerBoundingNode(XElement* pxParent, GEnvelope& extent, int srid);
+		void					AddStyleNode(XElement* pxParent, Style* pStyle);
 	};
 }
 

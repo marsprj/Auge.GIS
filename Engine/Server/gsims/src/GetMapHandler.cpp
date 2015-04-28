@@ -1,7 +1,7 @@
 #include "GetMapHandler.h"
 #include "GetMapRequest.h"
 #include "GetMapResponse.h"
-
+#include "AugeCarto.h"
 
 namespace auge
 {
@@ -46,11 +46,45 @@ namespace auge
 
 	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest)
 	{
-		return new GetMapResponse(static_cast<GetMapRequest*>(pWebRequest));
+		return NULL;
+
+		//GetMapRequest* pRequest = static_cast<GetMapRequest*>(pWebRequest);
+		//GetMapResponse* pWebResponse = new GetMapResponse(pRequest);
+		//CartoManager* pCartoManager = augeGetCartoManagerInstance();
+
+		//const char* name = pRequest->GetName();
+		//if(name==NULL)
+		//{
+		//	EnumMap* pMaps = pCartoManager->GetMaps();
+		//	pWebResponse->SetMaps(pMaps);
+		//}
+		//else
+		//{
+		//	Map* pMap = pCartoManager->LoadMap(name);
+		//	pWebResponse->SetMap(pMap);
+		//}
+		//return pWebResponse;
 	}
 
 	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return new GetMapResponse(static_cast<GetMapRequest*>(pWebRequest));
+		GetMapRequest* pRequest = static_cast<GetMapRequest*>(pWebRequest);
+		GetMapResponse* pWebResponse = new GetMapResponse(pRequest);
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+
+		const char* name = pRequest->GetName();
+		if(name==NULL)
+		{
+			EnumMap* pMaps = pCartoManager->GetMaps();
+			pWebResponse->SetMaps(pMaps);
+		}
+		else
+		{
+			Map* pMap = pCartoManager->LoadMap(name);
+			pWebResponse->SetMap(pMap);
+		}
+
+		pWebResponse->SetWebContext(pWebContext);
+		return pWebResponse;
 	}
 }
