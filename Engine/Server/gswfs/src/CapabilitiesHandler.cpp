@@ -395,7 +395,6 @@ namespace auge
 			pRequest->GetUser(),
 			ns); 
 
-		char str[AUGE_MSG_MAX];
 		char capa_path[AUGE_PATH_MAX];
 		auge_make_path(capa_path, NULL, cache_path, "wfs_capabilities_1_1_0","xml");
 
@@ -406,96 +405,17 @@ namespace auge
 		SetRooteNode_1_1_0(pxRoot, "1.1.0");
 
 		// WFS_Capabilities-->ServiceIdentification
-		AddServiceIdentificationNode_1_0_0(pxRoot);
-		//XElement *pxService = pxRoot->AddChild("ServiceIdentification", "ows");
-		//pxNode = pxNode = pxService->AddChild("Name", "ows");
-		//pxNode->SetChildText("WFS");
-		//pxNode = pxNode = pxService->AddChild("Title", "ows");
-		//pxNode->SetChildText("Auge Web Map Service");
-		//pxNode = pxNode = pxService->AddChild("Abstract", "ows");
-		//// WFS_Capabilities-->ServiceIdentification-->KeywordList
-		//XElement *pxKeywords = pxService->AddChild("KeywordList", "ows");
-		//pxNode = pxNode = pxKeywords->AddChild("Keyword", "ows");
-		//pxNode->SetChildText("WFS");
-		//pxNode = pxNode = pxKeywords->AddChild("Keyword", "ows");
-		//pxNode->SetChildText("AugeGIS");
-		//// WFS_Capabilities-->ServiceIdentification-->ServiceType
-		//pxNode = pxService->AddChild("ServiceType", "ows");
-		//pxNode->SetChildText("WFS");
-		//pxNode = pxService->AddChild("ServiceVersion", "ows");
-		//pxNode->SetChildText("1.1.0");
-		//// WFS_Capabilities-->ServiceIdentification-->Fees
-		//XElement *pxFees = pxService->AddChild("Fees", "ows");
-		//pxFees->SetChildText("NONE");
-		//// WFS_Capabilities-->ServiceIdentification-->AccessConstraints
-		//XElement *pxConstraints = pxService->AddChild("AccessConstraints", "ows");
-		//pxConstraints->SetChildText("NONE");
+		AddServiceIdentificationNode_1_1_0(pxRoot);
 
 		// WFS_Capabilities-->ServiceProvider
-		AddServiceProviderNode_1_0_0(pxRoot);
-		//XElement* pxProvider = pxRoot->AddChild("ServiceProvider", "ows");
-		//XElement* pxProviderName = pxProvider->AddChild("ProviderName","ows");
-		////pxConstraints->SetChildText("Auge GIS");
-		//XElement* pxServiceContact = pxProvider->AddChild("ServiceContact","ows");
-		//pxNode = pxServiceContact->AddChild("IndividualName","ows");
-		//pxNode = pxServiceContact->AddChild("PositionName","ows");
-		//XElement* pxContactInfo = pxServiceContact->AddChild("PositionName","ows");
-		//XElement* pxPhone = pxContactInfo->AddChild("Phone","ows");
-		//pxNode = pxPhone->AddChild("Voice","ows");
-		//pxNode = pxPhone->AddChild("Facsimile","ows");
-		//XElement* pxAddress = pxContactInfo->AddChild("Address","ows");
-		//pxNode = pxAddress->AddChild("City","ows");
-		//pxNode = pxAddress->AddChild("AdministrativeArea","ows");
-		//pxNode = pxAddress->AddChild("Country","ows");
+		AddServiceProviderNode_1_1_0(pxRoot);
 
 		// WFS_Capabilities-->OperationsMetadata
-		
-		XElement* pxOperationsMetadata = pxRoot->AddChild("OperationsMetadata", "ows");
-
-		// Service Handlers
-		WFeatureEngine* pFeatureEngine = (WFeatureEngine*)augeGetWebEngineInstance();
-		std::vector<WebHandler*>& handlers = pFeatureEngine->m_handlers;
-		std::vector<WebHandler*>::iterator iter;
-		for(iter=handlers.begin(); iter!=handlers.end(); iter++)
-		{
-			WebHandler* handler = *iter;
-
-			// WFS_Capabilities-->OperationsMetadata-->Operation (GetCapabilities)
-			XElement* pxOperation = pxOperationsMetadata->AddChild("Operation", "ows");
-			pxOperation->SetAttribute("name", handler->GetName(),NULL);
-			// WFS_Capabilities-->OperationsMetadata-->Operation-->DCP
-			XElement* pxDCP = pxOperation->AddChild("DCP", "ows");
-			// WFS_Capabilities-->OperationsMetadata-->Operation-->DCP-->HTTP
-			XElement* pxHTTP = pxDCP->AddChild("HTTP", "ows");
-			// WFS_Capabilities-->OperationsMetadata-->Operation-->DCP-->Get/Post
-			pxNode = pxHTTP->AddChild("Get", "ows");
-			pxNode->SetAttribute("href",wfs_xlink,"xlink");
-			pxNode = pxHTTP->AddChild("Post", "ows");
-			pxNode->SetAttribute("href",wfs_xlink,"xlink");
-			// WFS_Capabilities-->OperationsMetadata-->Operation-->Parameter(AcceptVersion)
-			XElement* pxParameter = pxOperation->AddChild("Parameter", "ows");
-			pxNode = pxParameter->AddChild("Value", "ows");
-			pxNode->AddChildText("1.0.0");
-			pxNode = pxParameter->AddChild("Value", "ows");
-			pxNode->AddChildText("1.1.0");
-			pxParameter = pxOperation->AddChild("AcceptFormats", "ows");
-			pxNode = pxParameter->AddChild("Value", "ows");
-			pxNode->AddChildText("text/xml");
-		}
+		AddOperationsMetadataNode_1_1_0(pxRoot, wfs_xlink);
 
 		// WFS_Capabilities-->FeatureTypeList 
-		XElement* pxTypeList = pxRoot->AddChild("FeatureTypeList", "ows");
-		XElement* pxOperations = pxTypeList->AddChild("Operations", "ows");
-		XElement* pxOperation = pxOperations->AddChild("Operation", "ows");
-		pxOperation->AddChildText("Query");
-		pxOperation = pxOperations->AddChild("Operation", "ows");
-		pxOperation->AddChildText("Insert");
-		pxOperation = pxOperations->AddChild("Operation", "ows");
-		pxOperation->AddChildText("Update");
-		pxOperation = pxOperations->AddChild("Operation", "ows");
-		pxOperation->AddChildText("Delete");
-		pxOperation = pxOperations->AddChild("Operation", "ows");
-		pxOperation->AddChildText("Lock");
+		XElement* pxTypeList = AddFeatureTypeListNode_1_1_0(pxRoot); 
+		
 
 		// WFS_Capabilities-->FeatureTypeList->FeatureType
 		Layer* pLayer = NULL;
@@ -506,43 +426,12 @@ namespace auge
 			if(pLayer!=NULL)
 			{
 				if(pLayer->GetType()==augeLayerFeature)
-				{
-					FeatureLayer* pFLayer = static_cast<FeatureLayer*>(pLayer);
+				{ 
+					FeatureLayer* pFLayer = static_cast<FeatureLayer*>(pLayer);					
 					FeatureClass* pFeatureClass = pFLayer->GetFeatureClass();
 					if(pFeatureClass!=NULL)
 					{
-						XElement* pxType = pxTypeList->AddChild("FeatureType", NULL);
-						pxNode = pxType->AddChild("Name",NULL);
-						pxNode->SetChildText(pFLayer->GetName());
-						pxNode = pxType->AddChild("Tile",NULL);
-						pxNode->SetChildText(pFeatureClass->GetName());
-						pxNode = pxType->AddChild("Abstract",NULL);
-
-						//Keywords
-						XElement* pxKeywords = pxType->AddChild("KeywordList", "ows");
-						pxNode = pxKeywords->AddChild("Keyword", "ows");
-						pxNode->SetChildText(pFeatureClass->GetName());
-
-						//DefaultSRS
-						g_snprintf(str, AUGE_MSG_MAX, "EPSG:%d", pFeatureClass->GetSRID());
-						pxNode = pxType->AddChild("DefaultSRS", "ows");
-						pxNode->SetChildText(str);
-
-						//WGS84BoundingBox
-						GEnvelope& extent = pFeatureClass->GetExtent();
-						XElement* px84Bounding = pxType->AddChild("WGS84BoundingBox", "ows");
-						pxNode = px84Bounding->AddChild("LowerCorner","ows");
-						if(extent.IsValid())
-						{
-							g_snprintf(str, AUGE_MSG_MAX, "%.7f %.7f", extent.m_xmin, extent.m_ymin);
-							pxNode->AddChildText(str);
-						}
-						pxNode = px84Bounding->AddChild("LowerCorner","ows");
-						if(extent.IsValid())
-						{
-							g_snprintf(str, AUGE_MSG_MAX, "%.7f %.7f", extent.m_xmax, extent.m_ymax);
-							pxNode->AddChildText(str);
-						}
+						AddFeatureTypeNode_1_1_0(pxTypeList, pFLayer->GetName(), pFeatureClass);
 					}
 				}
 			} 
@@ -571,7 +460,7 @@ namespace auge
 		pxRoot->SetAttribute("version", version, NULL);
 	}
 
-	void CapabilitiesHandler::AddServiceIdentificationNode_1_0_0(XElement* pxParent)
+	void CapabilitiesHandler::AddServiceIdentificationNode_1_1_0(XElement* pxParent)
 	{	
 		XElement *pxService = pxParent->AddChild("ServiceIdentification", "ows");
 		XElement *pxNode = pxNode = pxService->AddChild("Name", "ows");
@@ -598,7 +487,7 @@ namespace auge
 		pxConstraints->SetChildText("NONE");
 	}
 
-	void CapabilitiesHandler::AddServiceProviderNode_1_0_0(XElement* pxParent)
+	void CapabilitiesHandler::AddServiceProviderNode_1_1_0(XElement* pxParent)
 	{
 		XElement* pxProvider = pxParent->AddChild("ServiceProvider", "ows");
 		XElement* pxProviderName = pxProvider->AddChild("ProviderName","ows");
@@ -616,6 +505,96 @@ namespace auge
 		pxNode = pxAddress->AddChild("Country","ows");
 	}
 
+	void CapabilitiesHandler::AddOperationsMetadataNode_1_1_0(XElement* pxParent, const char* wfs_xlink)
+	{
+		XElement* pxOperationsMetadata = pxParent->AddChild("OperationsMetadata", "ows");
+
+		// Service Handlers
+		WFeatureEngine* pFeatureEngine = (WFeatureEngine*)augeGetWebEngineInstance();
+		std::vector<WebHandler*>& handlers = pFeatureEngine->m_handlers;
+		std::vector<WebHandler*>::iterator iter;
+		for(iter=handlers.begin(); iter!=handlers.end(); iter++)
+		{
+			WebHandler* handler = *iter;
+
+			// WFS_Capabilities-->OperationsMetadata-->Operation (GetCapabilities)
+			XElement* pxOperation = pxOperationsMetadata->AddChild("Operation", "ows");
+			pxOperation->SetAttribute("name", handler->GetName(),NULL);
+			// WFS_Capabilities-->OperationsMetadata-->Operation-->DCP
+			XElement* pxDCP = pxOperation->AddChild("DCP", "ows");
+			// WFS_Capabilities-->OperationsMetadata-->Operation-->DCP-->HTTP
+			XElement* pxHTTP = pxDCP->AddChild("HTTP", "ows");
+			// WFS_Capabilities-->OperationsMetadata-->Operation-->DCP-->Get/Post
+			XElement* pxNode = pxHTTP->AddChild("Get", "ows");
+			pxNode->SetAttribute("href",wfs_xlink,"xlink");
+			pxNode = pxHTTP->AddChild("Post", "ows");
+			pxNode->SetAttribute("href",wfs_xlink,"xlink");
+			// WFS_Capabilities-->OperationsMetadata-->Operation-->Parameter(AcceptVersion)
+			XElement* pxParameter = pxOperation->AddChild("Parameter", "ows");
+			pxNode = pxParameter->AddChild("Value", "ows");
+			pxNode->AddChildText("1.0.0");
+			pxNode = pxParameter->AddChild("Value", "ows");
+			pxNode->AddChildText("1.1.0");
+			pxParameter = pxOperation->AddChild("AcceptFormats", "ows");
+			pxNode = pxParameter->AddChild("Value", "ows");
+			pxNode->AddChildText("text/xml");
+		}
+	}
+
+	XElement* CapabilitiesHandler::AddFeatureTypeListNode_1_1_0(XElement* pxParent)
+	{
+		XElement* pxTypeList = pxParent->AddChild("FeatureTypeList", "ows");
+		XElement* pxOperations = pxTypeList->AddChild("Operations", "ows");
+		XElement* pxOperation = pxOperations->AddChild("Operation", "ows");
+		pxOperation->AddChildText("Query");
+		pxOperation = pxOperations->AddChild("Operation", "ows");
+		pxOperation->AddChildText("Insert");
+		pxOperation = pxOperations->AddChild("Operation", "ows");
+		pxOperation->AddChildText("Update");
+		pxOperation = pxOperations->AddChild("Operation", "ows");
+		pxOperation->AddChildText("Delete");
+		pxOperation = pxOperations->AddChild("Operation", "ows");
+		pxOperation->AddChildText("Lock");
+		return pxTypeList;
+	}
+
+	void CapabilitiesHandler::AddFeatureTypeNode_1_1_0(XElement* pxParent, const char* typeName, FeatureClass* pFeatureClass)
+	{
+		char str[AUGE_NAME_MAX] = {0};
+		XElement* pxType = pxParent->AddChild("FeatureType", NULL);
+		XElement* pxNode = pxType->AddChild("Name",NULL);
+		pxNode->SetChildText(typeName);
+		pxNode = pxType->AddChild("Tile",NULL);
+		pxNode->SetChildText(pFeatureClass->GetName());
+		pxNode = pxType->AddChild("Abstract",NULL);
+
+		//Keywords
+		XElement* pxKeywords = pxType->AddChild("KeywordList", "ows");
+		pxNode = pxKeywords->AddChild("Keyword", "ows");
+		pxNode->SetChildText(pFeatureClass->GetName());
+
+		//DefaultSRS
+		g_snprintf(str, AUGE_MSG_MAX, "EPSG:%d", pFeatureClass->GetSRID());
+		pxNode = pxType->AddChild("DefaultSRS", "ows");
+		pxNode->SetChildText(str);
+
+		//WGS84BoundingBox			
+		GEnvelope& extent = pFeatureClass->GetExtent();
+		XElement* px84Bounding = pxType->AddChild("WGS84BoundingBox", "ows");
+		pxNode = px84Bounding->AddChild("LowerCorner","ows");
+		if(extent.IsValid())
+		{
+			g_snprintf(str, AUGE_MSG_MAX, "%.7f %.7f", extent.m_xmin, extent.m_ymin);
+			pxNode->AddChildText(str);
+		}
+		pxNode = px84Bounding->AddChild("LowerCorner","ows");
+		if(extent.IsValid())
+		{
+			g_snprintf(str, AUGE_MSG_MAX, "%.7f %.7f", extent.m_xmax, extent.m_ymax);
+			pxNode->AddChildText(str);
+		}
+	}
+	
 	WebResponse* CapabilitiesHandler::ExecuteBySource(CapabilitiesRequest* pWebRequest, WebContext* pWebContext)
 	{
 		WebResponse* pWebResponse = NULL;
@@ -643,11 +622,11 @@ namespace auge
 		const char* version = pWebRequest->GetVersion();
 		if(strcmp(version,"1.0.0")==0)
 		{
-			//pWebResponse = WriteCapabilities_1_0_0(pWebRequest, pWebContext, pWorkspace);
+			pWebResponse = WriteCapabilities_1_0_0(pWebRequest, pWebContext, pWorkspace);
 		}
 		else if(strcmp(version,"1.1.0")==0)
 		{
-			//pWebResponse = WriteCapabilities_1_1_0(pWebRequest, pWebContext, pWorkspace);
+			pWebResponse = WriteCapabilities_1_1_0(pWebRequest, pWebContext, pWorkspace);
 		}
 		else
 		{
@@ -658,5 +637,80 @@ namespace auge
 			pWebResponse = pExpResponse;
 		}
 		return pWebResponse;
+	}
+
+	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Workspace* pWorkspace)
+	{
+		return WriteCapabilities_1_1_0(pRequest, pWebContext, pWorkspace);
+	}
+
+	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_1_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Workspace* pWorkspace)
+	{
+		const char* cache_path = pWebContext->GetCacheProtocolPath();
+		const char* ns = pWorkspace->GetName();
+
+		char wfs_xlink[AUGE_MSG_MAX];
+		g_sprintf(wfs_xlink, "http://%s/%s/%s/%s/ims?service=wfs",	pRequest->GetHost(),
+			AUGE_VIRTUAL_NAME,
+			pRequest->GetUser(),
+			ns); 
+
+		char capa_name[AUGE_PATH_MAX];
+		char capa_path[AUGE_PATH_MAX];
+		g_sprintf(capa_name, "dbs_%s_capabilities_1_1_0", pWorkspace->GetName());
+		auge_make_path(capa_path, NULL, cache_path, capa_name,"xml");
+
+		XElement  *pxNode = NULL; 
+		XElement  *pxRoot = NULL;
+		XDocument *pxDoc = new XDocument();
+		pxRoot = pxDoc->CreateRootNode("WFS_Capabilities", NULL, NULL);
+		SetRooteNode_1_1_0(pxRoot, "1.1.0");
+
+		// WFS_Capabilities-->ServiceIdentification
+		AddServiceIdentificationNode_1_1_0(pxRoot);
+
+		// WFS_Capabilities-->ServiceProvider
+		AddServiceProviderNode_1_1_0(pxRoot);
+
+		// WFS_Capabilities-->OperationsMetadata
+		AddOperationsMetadataNode_1_1_0(pxRoot, wfs_xlink);
+
+		// WFS_Capabilities-->FeatureTypeList 
+		XElement* pxTypeList = AddFeatureTypeListNode_1_1_0(pxRoot); 
+
+		// WFS_Capabilities-->FeatureTypeList->FeatureType
+		DataSet* pDataSet = NULL;
+		EnumDataSet* pDataSets = pWorkspace->GetDataSets();
+		if(pDataSets!=NULL)
+		{
+			pDataSets->Reset();
+			while((pDataSet=pDataSets->Next())!=NULL)
+			{
+				switch(pDataSet->GetType())
+				{
+				case augeDataSetFeature:
+					{
+						FeatureClass* pFeatureClass = static_cast<FeatureClass*>(pDataSet);
+						AddFeatureTypeNode_1_1_0(pxTypeList, pFeatureClass->GetName(), pFeatureClass);
+					}
+					break;
+				case augeDataSetRaster:
+					break;
+				}
+			}
+
+			pDataSets->Release();
+		}
+
+		// WFS_Capabilities-->OGC_FilterCapabilities
+		XElement* pxFilter = pxRoot->AddChild("OGC_FilterCapabilities","ogc");
+
+		pxDoc->Save(capa_path, pWebContext->GetResponseEncoding(), 1);
+		pxDoc->Release();
+
+		CapabilitiesResponse* pResponse = new CapabilitiesResponse(pRequest);
+		pResponse->SetPath(capa_path);
+
+		return pResponse;
 	}
 }
