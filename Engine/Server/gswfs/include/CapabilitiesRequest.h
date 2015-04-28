@@ -57,7 +57,8 @@ service=wfs&version=1.0.0&request=GetCapabilities
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetCapabilities
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetCapabilities&sourceName=world
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetCapabilities&mapName=world
-http://127.0.0.1:8088/ows/user1/mgr?user=user1&servicename=world&service=wfs&version=1.0.0&request=GetCapabilities&mapName=world
+http://127.0.0.1:8088/ows/user1/mgr?service=wfs&version=1.0.0&request=GetCapabilities&mapName=world
+http://127.0.0.1:8088/ows/user1/mgr?service=wfs&version=1.0.0&request=GetCapabilities&sourceName=db1
 
 http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetCapabilities
 

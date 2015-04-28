@@ -9,9 +9,11 @@
 #include <rude/cgi.h>
 
 namespace auge
-{
+{ 
 	class Map;
 	class WebContext;
+	class FeatureClass;
+	class Workspace;
 	class CapabilitiesRequest;
 	class CapabilitiesResponse;
 
@@ -36,9 +38,16 @@ namespace auge
 		CapabilitiesResponse*	WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
 		CapabilitiesResponse*	WriteCapabilities_1_1_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
 
+		CapabilitiesResponse*	WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Workspace* pWorkspace);
+		CapabilitiesResponse*	WriteCapabilities_1_1_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Workspace* pWorkspace);
+
+
 		void					SetRooteNode_1_1_0(XElement* pxRoot, const char* version);
-		void					AddServiceIdentificationNode_1_0_0(XElement* pxParent);
-		void					AddServiceProviderNode_1_0_0(XElement* pxParent);
+		void					AddServiceIdentificationNode_1_1_0(XElement* pxParent);
+		void					AddServiceProviderNode_1_1_0(XElement* pxParent);
+		void					AddOperationsMetadataNode_1_1_0(XElement* pxParent, const char* wfs_xlink);
+		XElement*				AddFeatureTypeListNode_1_1_0(XElement* pxParent);
+		void					AddFeatureTypeNode_1_1_0(XElement* pxParent, const char* typeName, FeatureClass* pFeatureClass);
 
 		WebResponse*			ExecuteBySource(CapabilitiesRequest* pWebRequest, WebContext* pWebContext);
 	};

@@ -37,6 +37,14 @@ namespace auge
 		bool					WriteDescribeFeatureType_1_0_0(WebContext* pWebContext, const char* typeName, FeatureClass* pFeatureClass);
 		bool					WriteDescribeFeatureType_1_1_0(WebContext* pWebContext, const char* typeName, FeatureClass* pFeatureClass);
 
+		FeatureClass*			GetFeatureClass(WebRequest* pWebRequest, WebContext* pWebContext);
+		FeatureClass*			GetFeatureClassByMap(WebRequest* pWebRequest, WebContext* pWebContext);
+		FeatureClass*			GetFeatureClassBySource(WebRequest* pWebRequest, WebContext* pWebContext);
+
+
+		WebResponse*			ExecuteByMap(WebRequest* pWebRequest, WebContext* pWebContext);
+		WebResponse*			ExecuteBySource(WebRequest* pWebRequest, WebContext* pWebContext);
+
 		const char*				GetOgcFieldType(augeFieldType type);
 		const char*				GetOgcGeometryType(augeGeometryType type);
 	};
