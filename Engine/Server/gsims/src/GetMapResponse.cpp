@@ -100,7 +100,7 @@ namespace auge
 		XElement* pxCapability = pxRoot->AddChild("Capability", NULL);
 		// WMS_Capabilities-->Capability-->Layer
 		XElement* pxLayer = pxCapability->AddChild("Layer", NULL);
-		pxNode = pxLayer->AddChild("Title", NULL);
+		pxNode = pxLayer->AddChild("Name", NULL);
 		pxNode->AddChildText("Group");
 		pxNode = pxLayer->AddChild("Abstract", NULL);
 		pxNode->AddChildText("Group");
