@@ -97,7 +97,7 @@ namespace auge
 			char msg[AUGE_MSG_MAX];
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			g_sprintf(msg, "WMS does not support %s",version);
-			pExpResponse->SetMessage(msg);
+			pExpResponse->SetMessage(msg); 
 			pWebResponse = pExpResponse;
 		}
 
@@ -106,11 +106,173 @@ namespace auge
 
 	WebResponse* DescribeFeatureTypeHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
+		WebResponse* pWebResponse = NULL;
 		DescribeFeatureTypeRequest* pRequest = static_cast<DescribeFeatureTypeRequest*>(pWebRequest);
+		
+		//if(pRequest->IsValidSource())
+		//{
+		//	pWebResponse = ExecuteBySource(pWebRequest, pWebContext);
+		//}
+		//else
+		//{
+		//	pWebResponse = ExecuteByMap(pWebRequest, pWebContext);
+		//}
 
+		FeatureClass* pFeatureClass = GetFeatureClass(pWebRequest, pWebContext);
+		if(pFeatureClass==NULL)
+		{
+			GError* pError = augeGetErrorInstance();
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			return pExpResponse;
+		}
+
+		char cache_name[AUGE_NAME_MAX];
+		char cache_file[AUGE_PATH_MAX];
+		const char* typeName = pRequest->GetTypeName();
+		const char* cache_path = pWebContext->GetCacheProtocolPath();
+		g_snprintf(cache_name, AUGE_NAME_MAX,"%s_wfs_%s_describe_feauretype_1_1_0", pWebContext->GetService(), typeName);
+		auge_make_path(cache_file, NULL, cache_path, cache_name,"xml");
+
+		//if(access(capa_path,4))
+		{
+			WriteDescribeFeatureType(pRequest->GetVersion(), pWebContext, typeName, pFeatureClass);
+		}
+
+		pFeatureClass->Release();
+
+		DescribeFeatureTypeResponse* pResponse = new DescribeFeatureTypeResponse(pRequest);		
+		pResponse->SetPath(cache_file);
+
+		return pResponse;
+	}
+
+	FeatureClass* DescribeFeatureTypeHandler::GetFeatureClass(WebRequest* pWebRequest, WebContext* pWebContext)
+	{
+		FeatureClass* pFeatureClass = NULL;
+		WFeatureRequest* pRequest = static_cast<WFeatureRequest*>(pWebRequest);
+		if(pRequest->IsValidSource())
+		{
+			pFeatureClass = GetFeatureClassBySource(pWebRequest, pWebContext);
+		}
+		else
+		{
+			pFeatureClass = GetFeatureClassByMap(pWebRequest, pWebContext);
+		}
+		return pFeatureClass;
+	}
+
+	FeatureClass* DescribeFeatureTypeHandler::GetFeatureClassByMap(WebRequest* pWebRequest, WebContext* pWebContext)
+	{
 		const char* typeName = NULL;
 		Layer* pLayer = NULL;
 		GLogger *pLogger = augeGetLoggerInstance();
+		DescribeFeatureTypeRequest* pRequest = static_cast<DescribeFeatureTypeRequest*>(pWebRequest);
+		typeName = pRequest->GetTypeName();
+
+		const char* mapName = pRequest->GetMapName();
+		if(mapName==NULL)
+		{
+			GError* pError = augeGetErrorInstance();
+			pError->SetError("No Map is attached");
+			return NULL;
+		}
+
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		Map *pMap = pCartoManager->LoadMap(mapName);
+		if(pMap==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Cannot load map [%s]", mapName);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return NULL;
+		}
+
+		pLayer = pMap->GetLayer(typeName);
+		if(pLayer==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Service %s has not FeatureType %s,",pWebContext->GetService(), typeName);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return NULL;
+		}
+
+		if(pLayer->GetType()!=augeLayerFeature)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "%s is not a Feature Layer",typeName);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return NULL;
+		}
+
+		FeatureClass* pFeatureClass = NULL;
+		FeatureLayer* pFLayer = static_cast<FeatureLayer*>(pLayer);
+		pFeatureClass = pFLayer->GetFeatureClass();
+		if(pFeatureClass==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Cannot Get FeatureType %s",typeName);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return NULL;
+		}
+		pFeatureClass->AddRef();
+		return pFeatureClass;
+	}
+
+	FeatureClass* DescribeFeatureTypeHandler::GetFeatureClassBySource(WebRequest* pWebRequest, WebContext* pWebContext)
+	{
+		const char* typeName = NULL;
+		Layer* pLayer = NULL;
+		GLogger *pLogger = augeGetLoggerInstance();
+		DescribeFeatureTypeRequest* pRequest = static_cast<DescribeFeatureTypeRequest*>(pWebRequest);
+		typeName = pRequest->GetTypeName();
+
+		const char* sourceName = pRequest->GetSourceName();
+		if(sourceName==NULL)
+		{
+			GError* pError = augeGetErrorInstance();
+			pError->SetError("No Source is attached");
+			return NULL;
+		}
+
+		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+		Workspace* pWorkspace = pConnManager->GetWorkspace(sourceName);
+		if(pWorkspace==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "No DataSource Named [%s]", sourceName);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return NULL;
+		}
+
+		FeatureWorksapce* pFeatureWorkspace = static_cast<FeatureWorksapce*>(pWorkspace);
+		FeatureClass* pFeatureClass = pFeatureWorkspace->OpenFeatureClass(typeName);
+		if(pFeatureClass==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Cannot Get FeatureType %s",typeName);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return NULL;
+		}
+		return pFeatureClass;
+	}
+
+	WebResponse* DescribeFeatureTypeHandler::ExecuteByMap(WebRequest* pWebRequest, WebContext* pWebContext)
+	{
+		const char* typeName = NULL;
+		Layer* pLayer = NULL;
+		GLogger *pLogger = augeGetLoggerInstance();
+		DescribeFeatureTypeRequest* pRequest = static_cast<DescribeFeatureTypeRequest*>(pWebRequest);
 		typeName = pRequest->GetTypeName();
 
 		const char* mapName = pRequest->GetMapName();
@@ -133,17 +295,6 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
-
-		//if(pMap==NULL)
-		//{
-		//	char msg[AUGE_MSG_MAX];
-		//	g_sprintf(msg, "FeatureType [%s] doesn't exist.",typeName);
-		//	pLogger->Error(msg, __FILE__, __LINE__);
-
-		//	WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
-		//	pExpResopnse->SetMessage(msg);
-		//	return pExpResopnse;
-		//}
 
 		pLayer = pMap->GetLayer(typeName);
 		if(pLayer==NULL)
@@ -194,6 +345,67 @@ namespace auge
 		}
 
 		pMap->Release();
+
+		DescribeFeatureTypeResponse* pResponse = new DescribeFeatureTypeResponse(pRequest);		
+		pResponse->SetPath(cache_file);
+
+		return pResponse;
+	}
+
+	WebResponse* DescribeFeatureTypeHandler::ExecuteBySource(WebRequest* pWebRequest, WebContext* pWebContext)
+	{
+		const char* typeName = NULL;
+		Layer* pLayer = NULL;
+		GLogger *pLogger = augeGetLoggerInstance();
+		DescribeFeatureTypeRequest* pRequest = static_cast<DescribeFeatureTypeRequest*>(pWebRequest);
+		typeName = pRequest->GetTypeName();
+
+		const char* sourceName = pRequest->GetSourceName();
+		if(sourceName==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "No Source is attached");
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+		Workspace* pWorkspace = pConnManager->GetWorkspace(sourceName);
+		if(pWorkspace==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "No DataSource Named [%s]", sourceName);
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		FeatureWorksapce* pFeatureWorkspace = static_cast<FeatureWorksapce*>(pWorkspace);
+		FeatureClass* pFeatureClass = pFeatureWorkspace->OpenFeatureClass(typeName);
+		if(pFeatureClass==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Cannot Get FeatureType %s",typeName);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
+			pExpResopnse->SetMessage(msg);
+			return pExpResopnse;
+		}
+
+		char cache_name[AUGE_NAME_MAX];
+		char cache_file[AUGE_PATH_MAX];
+		const char* cache_path = pWebContext->GetCacheProtocolPath();
+		g_snprintf(cache_name, AUGE_NAME_MAX,"%s_wfs_%s_describe_feauretype_1_1_0", pWebContext->GetService(), typeName);
+		auge_make_path(cache_file, NULL, cache_path, cache_name,"xml");
+
+		//if(access(capa_path,4))
+		{
+			WriteDescribeFeatureType(pRequest->GetVersion(), pWebContext, typeName, pFeatureClass);
+		}
+
+		pFeatureClass->Release();
 
 		DescribeFeatureTypeResponse* pResponse = new DescribeFeatureTypeResponse(pRequest);		
 		pResponse->SetPath(cache_file);
@@ -290,82 +502,83 @@ namespace auge
 
 	bool DescribeFeatureTypeHandler::WriteDescribeFeatureType_1_0_0(WebContext* pWebContext, const char* typeName, FeatureClass* pFeatureClass)
 	{
-		char str[AUGE_NAME_MAX];
-		char cache_name[AUGE_NAME_MAX];
-		char cache_file[AUGE_PATH_MAX];
-		const char* cache_path = pWebContext->GetCacheProtocolPath();
-		g_snprintf(cache_name, AUGE_NAME_MAX,"%s_wfs_%s_describe_feauretype_1_1_0", pWebContext->GetService(), typeName);
-		auge_make_path(cache_file, NULL, cache_path, cache_name,"xml");
+		return WriteDescribeFeatureType_1_1_0(pWebContext, typeName, pFeatureClass);
+		//char str[AUGE_NAME_MAX];
+		//char cache_name[AUGE_NAME_MAX];
+		//char cache_file[AUGE_PATH_MAX];
+		//const char* cache_path = pWebContext->GetCacheProtocolPath();
+		//g_snprintf(cache_name, AUGE_NAME_MAX,"%s_wfs_%s_describe_feauretype_1_1_0", pWebContext->GetService(), typeName);
+		//auge_make_path(cache_file, NULL, cache_path, cache_name,"xml");
 
-		XElement  *pxNode = NULL;
-		XElement  *pxRoot = NULL;
-		XDocument *pxDoc = new XDocument();
-		pxRoot = pxDoc->CreateRootNode("schema", NULL, NULL);
-		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/wfs",NULL);
-		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/wfs","wfs");
-		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/ows","ows");
-		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/gml","gml");
-		pxRoot->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
-		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
-		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema","xsd");		
-		pxRoot->SetAttribute("version", "1.1.0", NULL);
+		//XElement  *pxNode = NULL;
+		//XElement  *pxRoot = NULL;
+		//XDocument *pxDoc = new XDocument();
+		//pxRoot = pxDoc->CreateRootNode("schema", NULL, NULL);
+		//pxRoot->SetNamespaceDeclaration("http://www.opengis.net/wfs",NULL);
+		//pxRoot->SetNamespaceDeclaration("http://www.opengis.net/wfs","wfs");
+		//pxRoot->SetNamespaceDeclaration("http://www.opengis.net/ows","ows");
+		//pxRoot->SetNamespaceDeclaration("http://www.opengis.net/gml","gml");
+		//pxRoot->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
+		//pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
+		//pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema","xsd");		
+		//pxRoot->SetAttribute("version", "1.1.0", NULL);
 
-		// schema-->import
-		XElement* pxImport = pxRoot->AddChild("import", "xsd");
-		pxImport->SetAttribute("namespace","http://www.opengis.net/gml", NULL);
-		// schema-->complexType
-		g_sprintf(str,"%sType", typeName);
-		XElement* pxComplexType = pxRoot->AddChild("complexType", "xsd");
-		pxComplexType->SetAttribute("name", str, NULL);
-		// schema-->complexType-->complexContent
-		XElement* pxComplexContent = pxComplexType->AddChild("complexContent","xsd");
-		// schema-->complexType-->complexContent-->extentsion
-		XElement* pxExtentsion = pxComplexContent->AddChild("extentsion", "xsd");
-		pxExtentsion->SetAttribute("base","gml:AbstractFeatureType", NULL);
-		// schema-->complexType-->complexContent-->extentsion-->sequence
-		XElement* pxSequence = pxExtentsion->AddChild("sequence", "xsd");
+		//// schema-->import
+		//XElement* pxImport = pxRoot->AddChild("import", "xsd");
+		//pxImport->SetAttribute("namespace","http://www.opengis.net/gml", NULL);
+		//// schema-->complexType
+		//g_sprintf(str,"%sType", typeName);
+		//XElement* pxComplexType = pxRoot->AddChild("complexType", "xsd");
+		//pxComplexType->SetAttribute("name", str, NULL);
+		//// schema-->complexType-->complexContent
+		//XElement* pxComplexContent = pxComplexType->AddChild("complexContent","xsd");
+		//// schema-->complexType-->complexContent-->extentsion
+		//XElement* pxExtentsion = pxComplexContent->AddChild("extentsion", "xsd");
+		//pxExtentsion->SetAttribute("base","gml:AbstractFeatureType", NULL);
+		//// schema-->complexType-->complexContent-->extentsion-->sequence
+		//XElement* pxSequence = pxExtentsion->AddChild("sequence", "xsd");
 
-		GField	*pField  = NULL;
-		GFields	*pFields = pFeatureClass->GetFields();
-		g_uint count = pFields->Count();
+		//GField	*pField  = NULL;
+		//GFields	*pFields = pFeatureClass->GetFields();
+		//g_uint count = pFields->Count();
 
-		// schema-->complexType-->complexContent-->extentsion-->sequence-->element
-		XElement* pxElement = NULL;
-		for(g_uint i=0; i<count; i++)
-		{
-			pField = pFields->GetField(i);
-			pxElement = pxSequence->AddChild("element", "xsd");		
-			pxElement->SetAttribute("name",pField->GetName(), NULL);
-			pxElement->SetAttribute("nillable",pField->IsNullable()?"true":"false", NULL);
-			pxElement->SetAttribute("minOccurs","0", NULL);
-			pxElement->SetAttribute("maxOccurs","1", NULL);
+		//// schema-->complexType-->complexContent-->extentsion-->sequence-->element
+		//XElement* pxElement = NULL;
+		//for(g_uint i=0; i<count; i++)
+		//{
+		//	pField = pFields->GetField(i);
+		//	pxElement = pxSequence->AddChild("element", "xsd");		
+		//	pxElement->SetAttribute("name",pField->GetName(), NULL);
+		//	pxElement->SetAttribute("nillable",pField->IsNullable()?"true":"false", NULL);
+		//	pxElement->SetAttribute("minOccurs","0", NULL);
+		//	pxElement->SetAttribute("maxOccurs","1", NULL);
 
-			if(pField->GetType()==augeFieldTypeGeometry)
-			{
-				augeGeometryType gtype = pField->GetGeometryDef()->GeometryType();
-				const char* sss = GetOgcGeometryType(gtype);
-				g_sprintf(str,"gml:%sPropertyType",sss);
-				pxElement->SetAttribute("type",str, NULL);
-			}
-			else
-			{
-				g_sprintf(str, "xsd:%s", GetOgcFieldType(pField->GetType()));
-				pxElement->SetAttribute("type",str, NULL);
-			}
+		//	if(pField->GetType()==augeFieldTypeGeometry)
+		//	{
+		//		augeGeometryType gtype = pField->GetGeometryDef()->GeometryType();
+		//		const char* sss = GetOgcGeometryType(gtype);
+		//		g_sprintf(str,"gml:%sPropertyType",sss);
+		//		pxElement->SetAttribute("type",str, NULL);
+		//	}
+		//	else
+		//	{
+		//		g_sprintf(str, "xsd:%s", GetOgcFieldType(pField->GetType()));
+		//		pxElement->SetAttribute("type",str, NULL);
+		//	}
 
-		}
+		//}
 
-		// schema-->element
-		pxElement = pxRoot->AddChild("element", "xsd");
-		g_sprintf(str, "%sType", typeName);
-		pxElement->SetAttribute("type",str, NULL);
-		pxElement->SetAttribute("name",typeName, NULL);
-		pxElement->SetAttribute("substitutionGroup","gml:_Feature", NULL);
+		//// schema-->element
+		//pxElement = pxRoot->AddChild("element", "xsd");
+		//g_sprintf(str, "%sType", typeName);
+		//pxElement->SetAttribute("type",str, NULL);
+		//pxElement->SetAttribute("name",typeName, NULL);
+		//pxElement->SetAttribute("substitutionGroup","gml:_Feature", NULL);
 
-		pxDoc->Save(cache_file, pWebContext->GetResponseEncoding(), 1);
-		pxDoc->Release();
+		//pxDoc->Save(cache_file, pWebContext->GetResponseEncoding(), 1);
+		//pxDoc->Release();
 
-		return true;
+		//return true;
 	}
 
 	bool DescribeFeatureTypeHandler::WriteDescribeFeatureType_1_1_0(WebContext* pWebContext, const char* typeName, FeatureClass* pFeatureClass)
