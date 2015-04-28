@@ -24,7 +24,6 @@ namespace auge
 	WebRequest*	AddStyleHandler::ParseRequest(rude::CGI& cgi)
 	{
 		AddStyleRequest* pRequest = new AddStyleRequest();
-
 		if(!pRequest->Create(cgi))
 		{
 			GLogger* pLogger = augeGetLoggerInstance();

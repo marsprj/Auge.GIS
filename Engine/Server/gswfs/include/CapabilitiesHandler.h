@@ -35,6 +35,12 @@ namespace auge
 		WebResponse*			ExecuteByMap(CapabilitiesRequest* pWebRequest, WebContext* pWebContext);
 		CapabilitiesResponse*	WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
 		CapabilitiesResponse*	WriteCapabilities_1_1_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
+
+		void					SetRooteNode_1_1_0(XElement* pxRoot, const char* version);
+		void					AddServiceIdentificationNode_1_0_0(XElement* pxParent);
+		void					AddServiceProviderNode_1_0_0(XElement* pxParent);
+
+		WebResponse*			ExecuteBySource(CapabilitiesRequest* pWebRequest, WebContext* pWebContext);
 	};
 }
 
