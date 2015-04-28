@@ -112,7 +112,7 @@ namespace auge
 
 		if(pRequest->IsValidSource())
 		{
-			ExecuteBySource(pRequest, pWebContext)
+			//ExecuteBySource(pRequest, pWebContext)
 		}
 		else
 		{
