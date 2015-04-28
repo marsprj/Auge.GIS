@@ -94,6 +94,8 @@ namespace auge
 		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
 		pxRoot->SetAttribute("version", "1.0.0", NULL);
 
+		XElement* pxName = pxRoot->AddChild("Name", NULL);
+		pxName->SetChildText(pMap->GetName());
 		// WMS_Capabilities-->Capability
 		XElement* pxCapability = pxRoot->AddChild("Capability", NULL);
 		// WMS_Capabilities-->Capability-->Layer
@@ -272,7 +274,8 @@ namespace auge
 		pxNode->AddChildText(str);
 
 		// Extent
-		AddBoundingBoxNode(pxMap, pMap->GetExtent());		
+		//AddBoundingBoxNode(pxMap, pMap->GetExtent());		
+		AddLayerBoundingNode(pxRoot, pMap->GetExtent(), pMap->GetSRID());
 
 		// Layers
 		XElement* pxLayers = pxMap->AddChild("Layers");
@@ -350,6 +353,7 @@ namespace auge
 			pxCorner->AddChildText("0 0");
 		}		
 	}
+
 
 	void GetMapResponse::AddLayerNode(XElement* pxLayers, Layer* pLayer)
 	{
