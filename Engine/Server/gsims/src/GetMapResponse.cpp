@@ -275,7 +275,7 @@ namespace auge
 
 		// Extent
 		//AddBoundingBoxNode(pxMap, pMap->GetExtent());		
-		AddLayerBoundingNode(pxRoot, pMap->GetExtent(), pMap->GetSRID());
+		AddLayerBoundingNode(pxMap, pMap->GetExtent(), pMap->GetSRID());
 
 		// Layers
 		XElement* pxLayers = pxMap->AddChild("Layers");
