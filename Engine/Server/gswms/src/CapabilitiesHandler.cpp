@@ -123,7 +123,7 @@ namespace auge
 		}
 		else if(strcmp(version,"1.3.0")==0)
 		{
-			pWebResponse = WriteCapabilities_1_3_0(pRequest, pWebContext, pMap);
+			pWebResponse = WriteCapabilities_1_3_0(pRequest, pWebContext, pMap); 
 		}
 		else
 		{
@@ -141,12 +141,12 @@ namespace auge
 	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap) 
 	{
 		const char* cache_path = pWebContext->GetCacheProtocolPath(); 
-		
+
 		char wms_xlink[AUGE_MSG_MAX];
 		g_sprintf(wms_xlink, "http://%s/%s/%s/%s/ims?service=wms",	pRequest->GetHost(),
-																	AUGE_VIRTUAL_NAME,
-																	pRequest->GetUser(),
-																	pWebContext->GetService()); 
+			AUGE_VIRTUAL_NAME,
+			pRequest->GetUser(),
+			pWebContext->GetService()); 
 
 		char str[AUGE_MSG_MAX];
 		char capa_path[AUGE_PATH_MAX];
@@ -185,7 +185,7 @@ namespace auge
 
 		// WMS_Capabilities-->Capability
 		XElement* pxCapability = pxRoot->AddChild("Capability", NULL);
-		
+
 		// Service Handlers
 		WMapEngine* pMapEngine = (WMapEngine*)augeGetWebEngineInstance();
 		std::vector<WebHandler*>& handlers = pMapEngine->m_handlers;
@@ -237,31 +237,8 @@ namespace auge
 		{
 			extent.Set(-180.f,-90.0f,180.0f,90.0f);
 		}
-		XElement* pxGeoBounding = pxLayer->AddChild("EX_GeographicBoundingBox", NULL);
-		g_sprintf(str, "%.6f", extent.m_xmin);
-		pxNode = pxGeoBounding->AddChild("westBoundLongitude");
-		pxNode->SetChildText(str);
-		g_sprintf(str, "%.6f", extent.m_xmax);
-		pxNode = pxGeoBounding->AddChild("eastBoundLongitude");
-		pxNode->SetChildText(str);
-		g_sprintf(str, "%.6f", extent.m_ymin);
-		pxNode = pxGeoBounding->AddChild("southBoundLatitude");
-		pxNode->SetChildText(str);
-		g_sprintf(str, "%.6f", extent.m_ymax);
-		pxNode = pxGeoBounding->AddChild("northBoundLatitude");
-		pxNode->SetChildText(str);
-		// WMS_Capabilities-->Capability-->Layer-->BoundingBox
-		XElement* pxBounding = pxLayer->AddChild("BoundingBox", NULL);
-		g_sprintf(str, "CRS:%d", pMap->GetSRID());
-		pxBounding->SetAttribute("CRS", str,NULL);
-		g_sprintf(str, "%.6f", extent.m_xmin);
-		pxBounding->SetAttribute("minx", str,NULL);
-		g_sprintf(str, "%.6f", extent.m_xmax);
-		pxBounding->SetAttribute("maxx", str,NULL);
-		g_sprintf(str, "%.6f", extent.m_ymin);
-		pxBounding->SetAttribute("miny", str,NULL);		
-		g_sprintf(str, "%.6f", extent.m_ymax);
-		pxBounding->SetAttribute("maxy", str,NULL);
+		AddLayerGeographicBoundingNode(pxLayer, extent);
+		AddLayerBoundingNode(pxLayer, extent, pMap->GetSRID());
 
 		// WMS_Capabilities-->Capability-->Layer-->Layer
 		Layer* pLayer = NULL;
@@ -293,46 +270,13 @@ namespace auge
 				{
 					extent.Set(-180.f,-90.0f,180.0f,90.0f);
 				}
-				pxGeoBounding = pxLayer_2->AddChild("EX_GeographicBoundingBox", NULL);
-				g_sprintf(str, "%.6f", extent.m_xmin);
-				pxNode = pxGeoBounding->AddChild("westBoundLongitude");
-				pxNode->SetChildText(str);
-				g_sprintf(str, "%.6f", extent.m_xmax);
-				pxNode = pxGeoBounding->AddChild("eastBoundLongitude");
-				pxNode->SetChildText(str);
-				g_sprintf(str, "%.6f", extent.m_ymin);
-				pxNode = pxGeoBounding->AddChild("southBoundLatitude");
-				pxNode->SetChildText(str);
-				g_sprintf(str, "%.6f", extent.m_ymax);
-				pxNode = pxGeoBounding->AddChild("northBoundLatitude");
-				pxNode->SetChildText(str);
-				// WMS_Capabilities-->Capability-->Layer-->Layer
-				pxBounding = pxLayer->AddChild("BoundingBox", NULL);
-				g_sprintf(str, "CRS:%d", pMap->GetSRID());
-				pxBounding->SetAttribute("CRS", str,NULL);
-				g_sprintf(str, "%.6f", extent.m_xmin);
-				pxBounding->SetAttribute("minx", str,NULL);
-				g_sprintf(str, "%.6f", extent.m_xmax);
-				pxBounding->SetAttribute("maxx", str,NULL);
-				g_sprintf(str, "%.6f", extent.m_ymin);
-				pxBounding->SetAttribute("miny", str,NULL);		
-				g_sprintf(str, "%.6f", extent.m_ymax);
-				pxBounding->SetAttribute("maxy", str,NULL);
+				AddLayerGeographicBoundingNode(pxLayer_2, extent);
+				AddLayerBoundingNode(pxLayer_2, extent, pMap->GetSRID());
 				// WMS_Capabilities-->Capability-->Layer-->Layer-->Style
 				Style* pStyle = pLayer->GetStyle();
-				XElement* pxStyle = pxLayer_2->AddChild("Style", NULL);
 				if(pStyle!=NULL)
 				{
-					pxNode = pxStyle->AddChild("Name",NULL);
-					pxNode->AddChildText(pStyle->GetName());
-					pxNode = pxStyle->AddChild("Title",NULL);
-					pxNode = pxStyle->AddChild("Abstract",NULL);
-					XElement* pxLegendURL = pxStyle->AddChild("LegendURL",NULL);
-					pxLegendURL->SetAttribute("width","20", NULL);
-					pxLegendURL->SetAttribute("height","20", NULL);
-					pxNode = pxLegendURL->AddChild("Format",NULL);
-					pxNode->SetChildText("image/png");
-					pxNode = pxLegendURL->AddChild("OnlineResource",NULL);
+					AddStyleNode(pxLayer_2, pStyle);
 				}
 				//else
 				//{
@@ -598,4 +542,60 @@ namespace auge
 			}
 		}
 	}
+
+	void CapabilitiesHandler::AddStyleNode(XElement* pxParent, Style* pStyle)
+	{
+		XElement* pxStyle = pxParent->AddChild("Style", NULL);
+		XElement* pxNode = pxStyle->AddChild("Name",NULL);
+		pxNode->AddChildText(pStyle->GetName());
+		pxNode = pxStyle->AddChild("Title",NULL);
+		pxNode = pxStyle->AddChild("Abstract",NULL);
+		XElement* pxLegendURL = pxStyle->AddChild("LegendURL",NULL);
+		pxLegendURL->SetAttribute("width","20", NULL);
+		pxLegendURL->SetAttribute("height","20", NULL);
+		pxNode = pxLegendURL->AddChild("Format",NULL);
+		pxNode->SetChildText("image/png");
+		pxNode = pxLegendURL->AddChild("OnlineResource",NULL);
+	}
+
+	void CapabilitiesHandler::AddLayerBoundingNode(XElement* pxParent, GEnvelope& extent, int srid)
+	{
+		XElement* pxNode = NULL;
+		XElement* pxBounding = NULL;
+		char str[AUGE_NAME_MAX];
+
+		pxBounding = pxParent->AddChild("BoundingBox", NULL);
+		g_sprintf(str, "CRS:%d", srid);
+		pxBounding->SetAttribute("CRS", str,NULL);
+		g_sprintf(str, "%.6f", extent.m_xmin);
+		pxBounding->SetAttribute("minx", str,NULL);
+		g_sprintf(str, "%.6f", extent.m_xmax);
+		pxBounding->SetAttribute("maxx", str,NULL);
+		g_sprintf(str, "%.6f", extent.m_ymin);
+		pxBounding->SetAttribute("miny", str,NULL);		
+		g_sprintf(str, "%.6f", extent.m_ymax);
+		pxBounding->SetAttribute("maxy", str,NULL);
+	}
+
+	void CapabilitiesHandler::AddLayerGeographicBoundingNode(XElement* pxParent, GEnvelope& extent)
+	{
+		XElement* pxNode = NULL;
+		XElement* pxGeoBounding = NULL;
+		char str[AUGE_NAME_MAX];
+
+		pxGeoBounding = pxParent->AddChild("EX_GeographicBoundingBox", NULL);
+		g_sprintf(str, "%.6f", extent.m_xmin);
+		pxNode = pxGeoBounding->AddChild("westBoundLongitude");
+		pxNode->SetChildText(str);
+		g_sprintf(str, "%.6f", extent.m_xmax);
+		pxNode = pxGeoBounding->AddChild("eastBoundLongitude");
+		pxNode->SetChildText(str);
+		g_sprintf(str, "%.6f", extent.m_ymin);
+		pxNode = pxGeoBounding->AddChild("southBoundLatitude");
+		pxNode->SetChildText(str);
+		g_sprintf(str, "%.6f", extent.m_ymax);
+		pxNode = pxGeoBounding->AddChild("northBoundLatitude");
+		pxNode->SetChildText(str);
+	}
+
 }

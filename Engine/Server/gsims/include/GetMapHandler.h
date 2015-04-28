@@ -23,6 +23,7 @@ namespace auge
 
 		virtual WebResponse*	Execute(WebRequest* pWebRequest);
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
+
 	};
 }
 

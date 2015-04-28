@@ -70,7 +70,7 @@ namespace auge
 				{
 					FeatureClass* pFeatureClass = static_cast<FeatureClass*>(pDataSet);
 					GField* pField = pFeatureClass->GetFields()->GetGeometryField();
-					XElement* pxGeometry = pxDataSet->AddChild("Gometry");
+					XElement* pxGeometry = pxDataSet->AddChild("Geometry");
 					if(pField!=NULL)
 					{
 						GeometryDef* pGeometryDef = pField->GetGeometryDef();
@@ -87,7 +87,6 @@ namespace auge
 							g_sprintf(str, "%d", pGeometryDef->GetSRID());
 							pxElem = pxGeometry->AddChild("SRID");
 							pxElem->AddChildText(str);
-
 						}
 					}
 				}
@@ -134,7 +133,7 @@ namespace auge
 			{
 				FeatureClass* pFeatureClass = static_cast<FeatureClass*>(pDataSet);
 				GField* pField = pFeatureClass->GetFields()->GetGeometryField();
-				XElement* pxGeometry = pxDataSet->AddChild("Gometry");
+				XElement* pxGeometry = pxDataSet->AddChild("Geometry");
 				if(pField!=NULL)
 				{
 					GeometryDef* pGeometryDef = pField->GetGeometryDef();
@@ -151,7 +150,6 @@ namespace auge
 						g_sprintf(str, "%d", pGeometryDef->GetSRID());
 						pxElem = pxGeometry->AddChild("SRID");
 						pxElem->AddChildText(str);
-
 					}
 				}
 			}

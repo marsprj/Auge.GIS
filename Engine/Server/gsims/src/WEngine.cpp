@@ -346,7 +346,15 @@ namespace auge
 
 	WebResponse* WEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return Execute(pWebRequest);
+		const char* request = pWebRequest->GetRequest();
+		WebHandler* handler = GetHandler(request);
+		if(handler == NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Request %s is not supported", request);
+		}
+
+		return handler->Execute(pWebRequest, pWebContext);
 	}
 
 	//WebResponse* WEngine::GetCapabilities(CapabilitiesRequest* pRequest)
