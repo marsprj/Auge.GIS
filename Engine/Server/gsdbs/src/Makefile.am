@@ -29,5 +29,7 @@ libgsdbs_la_SOURCES=\
 		    GetPreviewRequest.cpp \
 		    GetPreviewResponse.cpp \
 		    GetPreviewHandler.cpp \
+		    CreateDataSetRequest.cpp \
+		    CreateDataSetHandler.cpp \
 		    WDataEngine.cpp
 

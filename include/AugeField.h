@@ -266,8 +266,10 @@ namespace auge
 		FieldFactory(){}
 		virtual ~FieldFactory(){}
 	public:
-		virtual GField*		CreateField() = 0;
-		virtual GFields*	CreateFields() = 0;
+		virtual GField*			CreateField() = 0;
+		virtual GFields*		CreateFields() = 0;
+		virtual const char*		Encode(augeFieldType type) = 0;
+		virtual augeFieldType	Decode(const char* type) = 0;
 	};
 
 	extern "C"

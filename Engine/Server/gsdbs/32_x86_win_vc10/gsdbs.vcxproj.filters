@@ -63,9 +63,6 @@
     <ClCompile Include="..\src\CreateDataSetRequest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\CreateDataSetResponse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\GetDataSetHandler.h">
@@ -108,6 +105,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\WDataEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CreateDataSetHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CreateDataSetRequest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
