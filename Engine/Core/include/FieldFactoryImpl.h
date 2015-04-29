@@ -11,8 +11,10 @@ namespace auge
 		FieldFactoryImpl();
 		virtual ~FieldFactoryImpl();
 	public:
-		virtual GField*		CreateField();
-		virtual GFields*	CreateFields();
+		virtual GField*			CreateField();
+		virtual GFields*		CreateFields();
+		virtual const char*		Encode(augeFieldType type);
+		virtual augeFieldType	Decode(const char* type);
 	};
 }
 

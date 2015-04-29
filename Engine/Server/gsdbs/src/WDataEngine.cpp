@@ -6,6 +6,8 @@
 #include "GetDataSetHandler.h"
 #include "GetPreviewHandler.h"
 
+#include "CreateDataSetHandler.h"
+
 #include "AugeCore.h"
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
@@ -28,6 +30,7 @@ namespace auge
 		m_handlers.push_back(new GetDataSourceHandler());
 		m_handlers.push_back(new GetDataSetHandler());
 		m_handlers.push_back(new GetPreviewHandler());
+		m_handlers.push_back(new CreateDataSetHandler());
 	}
 
 	WEngine::~WEngine()
@@ -230,9 +233,22 @@ namespace auge
 
 	WebRequest*	WEngine::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
-		GError* pError = augeGetErrorInstance();
-		pError->SetError("WMS do not support xml request");
-		return NULL;
+		XElement	*pxRoot = pxDoc->GetRootNode();
+		const char* request = pxRoot->GetName();
+
+		WebHandler* handler = GetHandler(request);
+		if(handler == NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "%s doesn't support request [%s]", GetType(), request);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
+			return NULL;
+		}
+		return handler->ParseRequest(pxDoc, mapName);
 	}
 
 	WebResponse* WEngine::Execute(WebRequest* pWebRequest)
