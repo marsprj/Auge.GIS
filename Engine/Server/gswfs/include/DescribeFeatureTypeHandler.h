@@ -41,10 +41,6 @@ namespace auge
 		FeatureClass*			GetFeatureClassByMap(WebRequest* pWebRequest, WebContext* pWebContext);
 		FeatureClass*			GetFeatureClassBySource(WebRequest* pWebRequest, WebContext* pWebContext);
 
-
-		WebResponse*			ExecuteByMap(WebRequest* pWebRequest, WebContext* pWebContext);
-		WebResponse*			ExecuteBySource(WebRequest* pWebRequest, WebContext* pWebContext);
-
 		const char*				GetOgcFieldType(augeFieldType type);
 		const char*				GetOgcGeometryType(augeGeometryType type);
 	};

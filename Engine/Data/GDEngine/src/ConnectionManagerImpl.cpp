@@ -174,7 +174,7 @@ namespace auge
 		}
 		else
 		{
-			const char* sql = "select gid,name,engine,uri,state from g_data_source";
+			const char* sql = "select gid,name,engine,uri,state,d_uri from g_data_source";
 			GResultSet* pResultSet = NULL;
 			pResultSet = m_pConnection->ExecuteQuery(sql);
 			if(pResultSet!=NULL)
@@ -185,6 +185,7 @@ namespace auge
 				const char* engn=NULL;
 				const char* uri = NULL;
 				const char* stat= NULL;
+				const char* d_uri = NULL;
 				g_uint count = pResultSet->GetCount();
 				for(g_uint i=0; i<count; i++)
 				{
@@ -193,6 +194,7 @@ namespace auge
 					engn= pResultSet->GetString(i,2);
 					uri = pResultSet->GetString(i,3);
 					stat= pResultSet->GetString(i,4);
+					d_uri = pResultSet->GetString(i,5);
 
 					pWorkspace = CreateWorkspace(name, engn, uri);
 					if(pWorkspace!=NULL)
@@ -221,7 +223,7 @@ namespace auge
 
 	bool ConnectionManagerImpl::CreateDataSourceTable()
 	{
-		const char* sql = "CREATE TABLE g_data_source(gid serial NOT NULL,name character varying(32) NOT NULL, engine character varying(16) NOT NULL, uri character varying(256) NOT NULL, state character varying(8),CONSTRAINT g_data_source_pkey PRIMARY KEY (gid),CONSTRAINT g_data_source_name_key UNIQUE (name))";
+		const char* sql = "CREATE TABLE g_data_source(gid serial NOT NULL,name character varying(32) NOT NULL, d_uri character varying(128) NOT NULL, engine character varying(16) NOT NULL, uri character varying(256) NOT NULL, state character varying(8),CONSTRAINT g_data_source_pkey PRIMARY KEY (gid),CONSTRAINT g_data_source_name_key UNIQUE (name))";
 		if(m_pConnection->ExecuteSQL(sql)!=AG_SUCCESS)
 		{
 			return false;
@@ -245,7 +247,7 @@ namespace auge
 
 		pWorkspace = pEngine->CreateWorkspace();
 		pWorkspace->SetConnectionString(uri);
-		pWorkspace->SetName(name);
+		pWorkspace->SetName(name); 
 		
 
 		return pWorkspace;

@@ -281,7 +281,6 @@ namespace auge
 	bool GetFeatureRequest::Create(rude::CGI& cgi, Map* pMap)
 	{
 		SetVersion(cgi["version"]);
-		SetMapName(cgi["mapName"]);
 		SetTypeName(cgi["typeName"]);
 		
 		SetOutputFormat(cgi["outputFormat"]);
@@ -295,6 +294,7 @@ namespace auge
 		
 		//
 		SetSourceName(cgi["sourceName"]);
+		SetMapName(cgi["mapName"]);
 
 		return true;
 	}
@@ -317,6 +317,12 @@ namespace auge
 		if(pxAttr!=NULL)
 		{
 			SetMapName(pxAttr->GetValue());
+		}
+
+		pxAttr = pxRoot->GetAttribute("sourceName");
+		if(pxAttr!=NULL)
+		{
+			SetSourceName(pxAttr->GetValue());
 		}
 
 		pxAttr = pxRoot->GetAttribute("outputFormat");

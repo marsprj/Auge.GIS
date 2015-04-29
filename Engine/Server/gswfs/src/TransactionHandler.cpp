@@ -69,6 +69,21 @@ namespace auge
 
 	WebResponse* TransactionHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
+		WebResponse *pWebResponse = NULL;
+		WFeatureRequest* pRequest = static_cast<WFeatureRequest*>(pWebRequest);
+		if(pRequest->IsValidSource())
+		{
+			pWebResponse = ExecuteBySource(pWebRequest, pWebContext);
+		}
+		else
+		{
+			pWebResponse = ExecuteByMap(pWebRequest, pWebContext);
+		}
+		return pWebResponse;
+	}
+
+	WebResponse* TransactionHandler::ExecuteByMap(WebRequest* pWebRequest, WebContext* pWebContext)
+	{
 		GLogger *pLogger = augeGetLoggerInstance();
 
 		TransactionRequest* pRequest = static_cast<TransactionRequest*>(pWebRequest);
@@ -96,7 +111,6 @@ namespace auge
 
 		const char* typeName = NULL;
 		Layer* pLayer = NULL;
-
 
 		XDocument* pxDoc = NULL;
 		pxDoc = pRequest->GetXmlDoc();
@@ -127,6 +141,68 @@ namespace auge
 		pResponse->SetDeleteCount(num_delete);
 
 		pMap->Release();
+
+		return pResponse;
+	}
+
+	WebResponse* TransactionHandler::ExecuteBySource(WebRequest* pWebRequest, WebContext* pWebContext)
+	{
+		GLogger *pLogger = augeGetLoggerInstance();
+
+		TransactionRequest* pRequest = static_cast<TransactionRequest*>(pWebRequest);
+
+		const char* sourceName = pRequest->GetSourceName();
+		if(sourceName==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			g_sprintf(msg, "No DataSource is Defined");
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+		FeatureWorksapce* pWorkspace = (FeatureWorksapce*)pConnManager->GetWorkspace(sourceName);
+		if(pWorkspace==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "No DataSource Named [%s]", sourceName);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		const char* typeName = NULL;
+		Layer* pLayer = NULL;
+
+		XDocument* pxDoc = NULL;
+		pxDoc = pRequest->GetXmlDoc();
+		if(pxDoc==NULL)
+		{
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage("transaction xml parse error");
+			return pExpResponse;
+		}
+
+		XNodeSet	*pxNodeSet = NULL;
+		XElement	*pxRoot = pxDoc->GetRootNode();
+		pxNodeSet = pxRoot->GetChildren("Insert");
+		g_uint num_insert = Insert(pxNodeSet, pWebContext, pWorkspace);
+		pxNodeSet->Release();
+
+		pxNodeSet = pxRoot->GetChildren("Update");
+		g_uint num_update = Update(pxNodeSet, pWebContext, pWorkspace);
+		pxNodeSet->Release();
+
+		pxNodeSet = pxRoot->GetChildren("Delete");
+		g_uint num_delete = Delete(pxNodeSet, pWebContext, pWorkspace);
+		pxNodeSet->Release();
+
+		TransactionResponse *pResponse = new TransactionResponse(pRequest);	
+		pResponse->SetInsertCount(num_insert);
+		pResponse->SetUpdateCount(num_update);
+		pResponse->SetDeleteCount(num_delete);
 
 		return pResponse;
 	}
@@ -435,5 +511,141 @@ namespace auge
 		}
 
 		return count;
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	// Exectue By DataSource
+	//////////////////////////////////////////////////////////////////////////
+	g_uint TransactionHandler::Insert(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorksapce* pWorkspace)
+	{
+		g_uint count = 0;
+		XNode *pxNode = NULL;
+		pxNodeSet->Reset();
+		while((pxNode=pxNodeSet->Next()))
+		{
+			if(Insert(pxNode, pWebContext, pWorkspace))
+			{
+				count++;
+			}
+		}
+		return count;
+	}
+
+	g_uint TransactionHandler::Update(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorksapce* pWorkspace)
+	{
+		g_uint count = 0;
+		XNode *pxNode = NULL;
+		pxNodeSet->Reset();
+		while((pxNode=pxNodeSet->Next()))
+		{
+			//if(Insert(pxNode, pWebContext, pMap))
+			//{
+			//	count++;
+			//}
+		}
+		return count;
+	}
+
+	g_uint TransactionHandler::Delete(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorksapce* pWorkspace)
+	{
+		g_uint count = 0;
+		XNode *pxNode = NULL;
+		pxNodeSet->Reset();
+		while((pxNode=pxNodeSet->Next()))
+		{
+			count += Delete(pxNode, pWebContext, pWorkspace);
+		}
+		return count;
+	}
+
+	g_int TransactionHandler::Delete(XNode* pxDelete, WebContext* pWebContext, FeatureWorksapce* pWorkspace)
+	{
+		int count = 0;
+
+		XAttribute* pxAttr = ((XElement*)pxDelete)->GetAttribute("name");
+		if(pxAttr==NULL)
+		{
+			return 0;
+		}
+		const char* name = pxAttr->GetValue();
+		FeatureClass* pFeatureClass = NULL;
+		pFeatureClass = pWorkspace->OpenFeatureClass(name);
+		if(pFeatureClass==NULL)
+		{
+			return 0;
+		}
+
+		GFilter* pFilter = NULL;
+		XNode* pxFilter = pxDelete->GetFirstChild("Filter");
+		if(pxFilter!=NULL)
+		{
+			FilterFactory *factory = augeGetFilterFactoryInstance();
+			FilterReader  *reader  = factory->CreateFilerReader(pFeatureClass->GetFields());
+			pFilter = reader->Read((XElement*)pxFilter);
+		}
+
+		count = pFeatureClass->RemoveFeature(pFilter);
+		if(pFilter!=NULL)
+		{
+			pFilter->Release();
+			pFilter = NULL;
+		}
+		pFeatureClass->Release();
+
+		return count;
+	}
+
+	bool TransactionHandler::Insert(XNode* pxInsert, WebContext* pWebContext, FeatureWorksapce* pWorkspace)
+	{	
+		XNode* pxType = pxInsert->GetFirstChild();
+		if(pxType==NULL)
+		{
+			return false;
+		}
+		const char* name = pxType->GetName();
+		FeatureClass* pFeatureClass = NULL;
+		pFeatureClass = pWorkspace->OpenFeatureClass(name);
+		if(pFeatureClass==NULL)
+		{
+			return false;
+		}
+
+		Feature* pFeature = pFeatureClass->NewFeature();
+		if(pFeature==NULL)
+		{
+			return false;
+		}
+
+		GField	*pField  = NULL;
+		GFields	*pFields = pFeatureClass->GetFields();
+		const char* fname = NULL;
+
+		GValue* pValue = NULL;
+		XNode* pxNode = NULL;
+		XNodeSet* pxNodeSet = pxType->GetChildren();
+		pxNodeSet->Reset();
+		while((pxNode=pxNodeSet->Next())!=NULL)
+		{
+			fname = pxNode->GetName();
+			pField = pFields->GetField(fname);
+			if(pField!=NULL)
+			{
+				pValue = CreateValue(pxNode, pField);
+				if(pValue!=NULL)
+				{
+					pFeature->SetValue(fname, pValue);
+				}
+			}
+		}
+		pxNodeSet->Release();
+
+		FeatureInsertCommand* cmd = pFeatureClass->CreateInsertCommand();
+		RESULTCODE rc = cmd->Insert(pFeature);
+
+		AUGE_SAFE_RELEASE(pFeature);
+		AUGE_SAFE_RELEASE(cmd);
+		AUGE_SAFE_RELEASE(pFeatureClass);
+
+		return !rc;
 	}
 }

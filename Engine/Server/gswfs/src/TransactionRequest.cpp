@@ -94,6 +94,12 @@ namespace auge
 			SetMapName(pxAttr->GetValue());
 		}
 
+		pxAttr = pxRoot->GetAttribute("sourceName");
+		if(pxAttr!=NULL)
+		{
+			SetSourceName(pxAttr->GetValue());
+		}
+
 		return true;
 	}
 

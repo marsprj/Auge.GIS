@@ -58,7 +58,7 @@ namespace auge
 
 	void WFeatureRequest::SetMapName(const char* mapName)
 	{
-		if(mapName==NULL)
+		if((mapName==NULL)||(strlen(mapName)==0))
 		{
 			m_map_name.clear();
 		}
@@ -75,7 +75,7 @@ namespace auge
 
 	void WFeatureRequest::SetSourceName(const char* sourcName)
 	{
-		if(sourcName==NULL)
+		if((sourcName==NULL)||(strlen(sourcName)==0))
 		{
 			m_source_name.clear();
 		}
