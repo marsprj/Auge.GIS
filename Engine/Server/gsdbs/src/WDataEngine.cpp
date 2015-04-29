@@ -7,6 +7,7 @@
 #include "GetPreviewHandler.h"
 
 #include "CreateDataSetHandler.h"
+#include "RemoveDataSetHandler.h"
 
 #include "AugeCore.h"
 #include "AugeCarto.h"
@@ -26,11 +27,12 @@ namespace auge
 		m_handler = NULL;
 
 		m_handlers.push_back(new RegisterDataSourceHandler());
-		m_handlers.push_back(new UnRegisterDataSourceHandler());
+		m_handlers.push_back(new UnRegisterDataSourceHandler()); 
 		m_handlers.push_back(new GetDataSourceHandler());
 		m_handlers.push_back(new GetDataSetHandler());
 		m_handlers.push_back(new GetPreviewHandler());
 		m_handlers.push_back(new CreateDataSetHandler());
+		m_handlers.push_back(new RemoveDataSetHandler());
 	}
 
 	WEngine::~WEngine()
@@ -108,7 +110,6 @@ namespace auge
 			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
 			return NULL;
 		}
-
 
 		if(g_stricmp(request, "GetCapabilities")==0)
 		{
