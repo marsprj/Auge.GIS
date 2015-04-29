@@ -17,6 +17,7 @@ namespace auge
 		m_cache_path = "G:\\temp\\map\\";
 		m_pConnection = NULL;
 		m_response_encoding = "GBK";
+		m_uri = "http://www.radi.ac.cn";
 	}
 
 	WebContextImpl::~WebContextImpl()
@@ -197,7 +198,6 @@ namespace auge
 			{
 				m_pConnection = pEngine->CreateConnection();
 			}
-
 		}
 		if(m_pConnection==NULL)
 		{

@@ -17,6 +17,7 @@ namespace auge
 	class XNodeSet;
 	class XNode;
 	class GField;
+	class FeatureWorksapce;
 
 	class TransactionHandler : public WebHandler
 	{
@@ -35,14 +36,25 @@ namespace auge
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 
 	private:
-		g_uint	Insert(XNodeSet* pxNodeSet, WebContext* pWebContext, Map* pMap);
-		g_uint	Update(XNodeSet* pxNodeSet, WebContext* pWebContext, Map* pMap);
-		g_uint	Delete(XNodeSet* pxNodeSet, WebContext* pWebContext, Map* pMap);
+		g_uint			Insert(XNodeSet* pxNodeSet, WebContext* pWebContext, Map* pMap);
+		g_uint			Update(XNodeSet* pxNodeSet, WebContext* pWebContext, Map* pMap);
+		g_uint			Delete(XNodeSet* pxNodeSet, WebContext* pWebContext, Map* pMap);
 
-		bool	Insert(XNode* pxInsert, WebContext* pWebContext, Map* pMap);
-		g_int	Delete(XNode* pxDelete, WebContext* pWebContext, Map* pMap);
+		bool			Insert(XNode* pxInsert, WebContext* pWebContext, Map* pMap);
+		g_int			Delete(XNode* pxDelete, WebContext* pWebContext, Map* pMap);
 
-		GValue*	CreateValue(XNode* pxNode, GField* pField);
+
+		g_uint			Insert(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorksapce* pWorkspace);
+		g_uint			Update(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorksapce* pWorkspace);
+		g_uint			Delete(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorksapce* pWorkspace);
+		bool			Insert(XNode* pxInsert, WebContext* pWebContext, FeatureWorksapce* pWorkspace);
+		g_int			Delete(XNode* pxDelete, WebContext* pWebContext, FeatureWorksapce* pWorkspace);
+
+		GValue*			CreateValue(XNode* pxNode, GField* pField);
+
+	private:
+		WebResponse*	ExecuteByMap(WebRequest* pWebRequest, WebContext* pWebContext);
+		WebResponse*	ExecuteBySource(WebRequest* pWebRequest, WebContext* pWebContext);
 	};
 }
 

@@ -31,6 +31,11 @@ namespace auge
 		virtual WebResponse*	Execute(WebRequest* pWebRequest);
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
+
+	protected:
+		FeatureClass*			GetFeatureClass(WebRequest* pWebRequest, WebContext* pWebContext);
+		FeatureClass*			GetFeatureClassByMap(WebRequest* pWebRequest, WebContext* pWebContext);
+		FeatureClass*			GetFeatureClassBySource(WebRequest* pWebRequest, WebContext* pWebContext);
 	};
 }
 

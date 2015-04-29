@@ -97,13 +97,20 @@ http://127.0.0.1:8088/ows/user1/mgr?user=user1&servicename=world&service=wfs&ver
 service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&filter=<ogc:Filter xmlns:wfs="http://www.opengis.net/wfs" xmlns:ogc="http://www.opengis.net/ogc"><ogc:FeatureId fid="world.3"/></ogc:Filter>
+
 http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities
+
+service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&sourceName=db1
+http://127.0.0.1:8088/ows/user1/mgr?service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&sourceName=db1
+
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&bbox=0,0,10,10
 http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&bbox=0,0,10,10
 
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&fields=gid,name,geom&orderby=
 
-
+//////////////////////////////////////////////////////////////////////////
+// Standard WFS Request
+//////////////////////////////////////////////////////////////////////////
 [ HTTP Post 1.0.0]
 <wfs:GetFeature service="WFS" version="1.0.0"
 	outputFormat="GML2"
@@ -124,6 +131,47 @@ user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeNa
 [ HTTP Post 1.1.0]
 <wfs:GetFeature service="WFS" version="1.1.0"
 	mapName="world"
+	xmlns:world="http://www.radi.ac.cn/world"
+	xmlns:wfs="http://www.opengis.net/wfs"
+	xmlns:ogc="http://www.opengis.net/ogc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.opengis.net/wfs
+	http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">
+	<wfs:Query typeName="world:cities">
+		<wfs:PropertyName>world:gid</wfs:PropertyName>
+		<wfs:PropertyName>world:name</wfs:PropertyName>
+		<wfs:PropertyName>world:geom</wfs:PropertyName>
+		<!--
+		<ogc:Filter>
+			<ogc:FeatureId fid="world.3"/>
+		</ogc:Filter>
+		-->
+	</wfs:Query>
+</wfs:GetFeature>
+
+//////////////////////////////////////////////////////////////////////////
+// Extended WFS Request
+//////////////////////////////////////////////////////////////////////////
+[ HTTP Post 1.0.0]
+<wfs:GetFeature service="WFS" version="1.0.0"
+	outputFormat="GML2"
+	sourceName="world"
+	xmlns:topp="http://www.openplans.org/topp"
+	xmlns:wfs="http://www.opengis.net/wfs"
+	xmlns:ogc="http://www.opengis.net/ogc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.opengis.net/wfs
+	http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd">
+	<wfs:Query typeName="topp:states">
+		<ogc:Filter>
+			<ogc:FeatureId fid="states.3"/>
+		</ogc:Filter>
+	</wfs:Query>
+</wfs:GetFeature>
+
+[ HTTP Post 1.1.0]
+<wfs:GetFeature service="WFS" version="1.1.0"
+	sourceName="world"
 	xmlns:world="http://www.radi.ac.cn/world"
 	xmlns:wfs="http://www.opengis.net/wfs"
 	xmlns:ogc="http://www.opengis.net/ogc"

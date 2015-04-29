@@ -14,7 +14,7 @@
 
 #ifdef WIN32
 #	define	AUGE_RUDE_CGI	rude::CGI cgi(&environ)
-#else
+#else 
 #	define	AUGE_RUDE_CGI	rude::CGI cgi
 #endif
 

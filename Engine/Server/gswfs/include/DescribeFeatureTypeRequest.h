@@ -49,6 +49,6 @@ service=wfs&version=1.0.0&request=DescribeFeatureType&typeName=world:cities&sour
 user=user1&servicename=world&service=wfs&version=1.1.0&request=DescribeFeatureType&typeName=cities
 http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=DescribeFeatureType&typeName=cities
 
-http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=DescribeFeatureType&typeName=cities
+http://127.0.0.1:8088/ows/user1/mgr?service=wfs&version=1.0.0&request=DescribeFeatureType&typeName=cities&sourceName=db1
 
 ************************************************************************/

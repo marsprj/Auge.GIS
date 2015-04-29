@@ -85,11 +85,12 @@ namespace auge
 		const char* val = NULL;
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
-		SetServiceName(cgi["servicename"]);
+		//SetServiceName(cgi["servicename"]);
 		SetTypeName(cgi["typeName"]);
 		SetField(cgi["field"]);
 		SetOrder(cgi["order"]);
 		SetMapName(cgi["mapName"]);
+		SetSourceName(cgi["sourceName"]);
 		return true;
 	}
 
