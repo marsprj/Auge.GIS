@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
 
 auge::Map*	CreateMapObj();
 auge::Map*	CreateMapObj_SLD();
@@ -735,4 +735,12 @@ void MapTest::DrawCities()
 	//AUGE_SAFE_RELEASE(m_pConnection);
 	AUGE_SAFE_RELEASE(pMap);
 	AUGE_SAFE_RELEASE(pCanvas);
+}
+
+
+void MapTest::LoadColorMap()
+{
+	auge::CartoManager* pCartoManager = auge::augeGetCartoManagerInstance();
+	auge::EnumColorMap* pColorMaps =  pCartoManager->GetColorMaps();
+	pColorMaps->Release();
 }

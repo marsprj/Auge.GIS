@@ -14,6 +14,7 @@ namespace auge
 		virtual Map*			CreateMap();
 		virtual FeatureLayer*	CreateFeatureLayer();
 		virtual Canvas*			CreateCanvas2D(g_uint width, g_uint height);
+		virtual Renderer*		CreateRenderer2D(g_uint width, g_uint height);
 	};
 }
 

@@ -146,6 +146,8 @@ namespace auge
 		virtual void		DrawText(const	  char* text, int x, int y, TextSymbolizer* pSymbolizer) = 0;
 		virtual void		DrawText(const g_uchar* text, int x, int y, TextSymbolizer* pSymbolizer) = 0;
 
+		virtual bool		DrawColorMap(ColorMap* pColorMap) = 0;
+
 		virtual void		Label(const char* text, WKBPoint *pWKBPoint, TextSymbolizer* pSymbolizer, Transformation* pTransformation) = 0;
 
 		virtual void		Save() = 0;
@@ -247,6 +249,8 @@ namespace auge
 
 		//ÐÞ¸Ä
 		virtual RESULTCODE		SetStyle(g_uint layerID, g_uint styleID) = 0;
+
+		virtual	EnumColorMap*	GetColorMaps() = 0;
 		
 	public:
 		virtual	RESULTCODE		Initialize(GConnection* pConnection) = 0;
@@ -262,6 +266,7 @@ namespace auge
 		virtual Map*			CreateMap() = 0;
 		virtual FeatureLayer*	CreateFeatureLayer() = 0;
 		virtual Canvas*			CreateCanvas2D(g_uint width, g_uint height) = 0;
+		virtual Renderer*		CreateRenderer2D(g_uint width, g_uint height) = 0;
 	};
 
 

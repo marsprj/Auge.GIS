@@ -6,13 +6,15 @@
 class CanvasTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(CanvasTest);
-	CPPUNIT_TEST(BackgroundTest);
-	CPPUNIT_TEST(DrawPoint);
-	CPPUNIT_TEST(DrawLine);
-	CPPUNIT_TEST(DrawPolygon);
+	//CPPUNIT_TEST(BackgroundTest);
+	//CPPUNIT_TEST(DrawPoint);
+	//CPPUNIT_TEST(DrawLine);
+	//CPPUNIT_TEST(DrawPolygon);
 	//CPPUNIT_TEST(DrawShpPoint);
 	//CPPUNIT_TEST(DrawShpLine);
-	CPPUNIT_TEST(DrawShpPolygon);
+	//CPPUNIT_TEST(DrawShpPolygon);
+	//CPPUNIT_TEST(DrawColorMap);
+	//CPPUNIT_TEST(ReadColor);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -28,6 +30,9 @@ private:
 	//void DrawShpLine();
 	void DrawShpPolygon();
 
+	void DrawColorMap();
+	void ReadColor();
+	
 };
 
 #endif //__AUGE_CANVAS_TEST__H__

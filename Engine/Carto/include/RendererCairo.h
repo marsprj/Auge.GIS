@@ -31,6 +31,8 @@ namespace auge
 
 		virtual void		Label(const char* text, WKBPoint *pWKBPoint, TextSymbolizer* pSymbolizer, Transformation* pTransformation);
 
+		virtual bool		DrawColorMap(ColorMap* pColorMap);
+
 		virtual void		Save();
 		virtual void		Resotre();
 
@@ -62,6 +64,8 @@ namespace auge
 		cairo_surface_t	*m_cairo_surface;
 		cairo_t			*m_cairo;
 		bool			m_image_render;
+		g_uint			m_width;
+		g_uint			m_height;
 	};
 }
 

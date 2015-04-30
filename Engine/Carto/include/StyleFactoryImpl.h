@@ -26,7 +26,7 @@ namespace auge
 		virtual Fill*				CreateFill();
 		virtual Mark*				CreateMark();
 		virtual Font*				CreateFont();
-		virtual ColorMap*			CreateColorMap(g_uint count);
+		virtual ColorMap*			CreateColorMap(g_uint count, GColor& start, GColor& end);
 
 		virtual StyleReader*		CreateStyleReader();
 		virtual StyleWriter*		CreateStyleWriter();

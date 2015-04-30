@@ -3,6 +3,7 @@
 #include "FeatureLayerImpl.h"
 
 #include "CanvasImpl.h"
+#include "RendererCairo.h"
 
 namespace auge
 {
@@ -35,5 +36,10 @@ namespace auge
 	Canvas*	CartoFactoryImpl::CreateCanvas2D(g_uint width, g_uint height)
 	{
 		return (new CanvasImpl(width,height));
+	}
+
+	Renderer* CartoFactoryImpl::CreateRenderer2D(g_uint width, g_uint height)
+	{
+		return (new RendererCairo(width, height));
 	}
 }

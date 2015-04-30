@@ -354,6 +354,9 @@ namespace auge
 		AUGE_API bool		auge_unzip(const char* zip_path, const char* dest_path);
 		AUGE_API bool		auge_zip(const char* src_path, const char* zip_path);
 
+		AUGE_API void		auge_rgb_2_hsv(g_byte r, g_byte g, g_byte b, float& h, float& s, float& v);
+		AUGE_API void		auge_hsv_2_rgb(float h, float s, float v, g_byte& r, g_byte& g, g_byte& b);
+
 		AUGE_API g_ulong	auge_get_time();
 
 		AUGE_API const char*	auge_encoding_convert(const char* from, const char* to, const char* instr, size_t instrlen);

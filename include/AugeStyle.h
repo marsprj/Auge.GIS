@@ -91,6 +91,7 @@ namespace auge
 		augeStyleRaster		= 1
 	}augeStyleType;
 
+	class GColor;
 	class Rule;
 	class Graphic;
 	class Symbolizer;
@@ -740,8 +741,24 @@ namespace auge
 		ColorMap(){}
 		virtual ~ColorMap(){}
 	public:
-		virtual	g_uint			Count() = 0;
+		virtual	g_uint			GetCount() = 0;
+		virtual bool			SetCount(g_uint count) = 0;
 		virtual	GColor*			GetColor(g_uint i) = 0;
+		virtual GColor&			GetStartColor() = 0;
+		virtual GColor&			GetEndColor() = 0;
+		virtual const char*		GetImagePath() = 0;
+		virtual const char*		GetAbsoluteImagePath() = 0;
+		virtual void			Release() = 0;
+	};
+
+	class EnumColorMap : public GObject
+	{
+	protected:
+		EnumColorMap(){}
+		virtual ~EnumColorMap(){}
+	public:
+		virtual	void			Reset() = 0;
+		virtual ColorMap*		Next() = 0;
 		virtual void			Release() = 0;
 	};
 
@@ -785,7 +802,7 @@ namespace auge
 		virtual Fill*				CreateFill() = 0;
 		virtual Mark*				CreateMark() = 0;
 		virtual Font*				CreateFont() = 0;
-		virtual ColorMap*			CreateColorMap(g_uint count) = 0;
+		virtual ColorMap*			CreateColorMap(g_uint count, GColor& start, GColor& end) = 0;
 
 		virtual StyleReader*		CreateStyleReader() = 0;
 		virtual StyleWriter*		CreateStyleWriter() = 0;
