@@ -5,6 +5,7 @@
 #include "AugeData.h"
 #include "AugeService.h"
 #include "AugeWebCore.h"
+#include "AugeUser.h"
 
 #ifdef WIN32
 #	define	AUGE_FCGI_ACCEPT	FCGI_Accept_t(&environ)
@@ -29,6 +30,7 @@ namespace auge
 	m_pConnManager(NULL),
 	m_pCartoManager(NULL),
 	m_pServiceManager(NULL),
+	m_pUserManager(NULL),
 	m_pError(augeGetErrorInstance())
 	{
 
@@ -58,7 +60,6 @@ namespace auge
 //				"%d",m_counter++);
 
 			pLogger->Info("--------------------------------------------------------");
-			
 
 			WebResponse* pWebResponse = NULL;
 
@@ -332,6 +333,8 @@ namespace auge
 		OpenServerBase();		
 		LoadServerConfig();
 
+		LoadUserManager();
+
 		LoadConnectionPool();
 		LoadCartoPool();
 		LoadServicePool();
@@ -451,6 +454,13 @@ namespace auge
 			m_pLogger->Error(m_pError->GetLastError(), __FILE__, __LINE__);
 		}
 		return rc;
+	}
+
+	RESULTCODE GServer::LoadUserManager()
+	{
+		m_pUserManager = augeGetUserManagerInstance();
+		m_pUserManager->Initialize(m_pConnection);
+		return AG_SUCCESS;
 	}
 
 	//========================================================================

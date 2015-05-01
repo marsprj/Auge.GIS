@@ -2,6 +2,7 @@
 #define __AUGE_ENUM_USER_IMPL_H__
 
 #include "AugeUser.h"
+#include <vector>
 
 namespace auge
 {
@@ -14,6 +15,13 @@ namespace auge
 		virtual	void			Reset();
 		virtual User*			Next();
 		virtual void			Release();
+	public:
+		void	Add(User* pUser);
+		void	Cleanup();
+
+	private:
+		std::vector<User*>	m_Users;
+		std::vector<User*>::iterator m_iter;
 	};
 }
 

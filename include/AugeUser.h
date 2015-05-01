@@ -15,6 +15,8 @@
 
 namespace auge
 {
+	class GConnection;
+
 	typedef enum
 	{
 		augeRoleAdmin	= 0,
@@ -90,6 +92,8 @@ namespace auge
 		UserManager(){}
 		virtual ~UserManager(){}
 	public:
+		virtual RESULTCODE		Initialize(GConnection* pConnection) = 0;
+
 		virtual User*			CreateUser(const char* name, const char* alias, const char* password, const char* email, const char* role) = 0;
 		virtual RESULTCODE		RemoveUser(const char* name) = 0;
 		virtual User*			GetUser(const char* name) = 0;

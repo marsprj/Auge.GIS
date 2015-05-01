@@ -11,6 +11,8 @@ namespace auge
 		UserManagerImpl();
 		virtual ~UserManagerImpl();
 	public:
+		virtual RESULTCODE		Initialize(GConnection* pConnection);
+
 		virtual User*			CreateUser(const char* name, const char* alias, const char* password, const char* email, const char* role);
 		virtual RESULTCODE		RemoveUser(const char* name);
 		virtual User*			GetUser(const char* name);
@@ -18,6 +20,15 @@ namespace auge
 
 		virtual Role*			GetRole(const char* name);
 		virtual EnumRole*		GetRoles();
+
+	public:
+		RESULTCODE CreateRoleTable();
+		RESULTCODE InitRoleTable();
+		RESULTCODE CreateUserTable();
+		RESULTCODE InitUserTable();
+
+	private:
+		GConnection*	m_pConnection;
 	};
 }
 
