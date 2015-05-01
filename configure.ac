@@ -81,6 +81,8 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Data/GShape/test/Makefile
                  Engine/Data/Makefile
                  Engine/Filter/Makefile
+                 Engine/User/src/Makefile
+		 Engine/User/Makefile
                  Engine/Filter/src/Makefile
                  Engine/Makefile
                  Engine/Server/Makefile
