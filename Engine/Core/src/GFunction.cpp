@@ -495,8 +495,8 @@ namespace auge
 		int min_v, max_v;
 		float delta;
 
-		min_v = min( r, min(g, b) );
-		max_v = max( r, max(g, b) );
+		min_v = g_max( r, g_max(g, b) );
+		max_v = g_max( r, g_max(g, b) );
 		v = (float)max_v; // v
 		delta = (float)(max_v - min_v);
 
