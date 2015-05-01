@@ -17,6 +17,7 @@ namespace auge
 	class ConnectionManager;
 	class CartoManager;
 	class ServiceManager;
+	class UserManager;
 	class WebRequest;
 	class WebResponse;
 
@@ -46,6 +47,8 @@ namespace auge
 		RESULTCODE	LoadDataEngine();
 		RESULTCODE	LoadServiceEngine();
 
+		RESULTCODE	LoadUserManager();
+
 		RESULTCODE	LoadServerConfig();
 		RESULTCODE	OpenServerBase();
 		
@@ -74,6 +77,8 @@ namespace auge
 		ConnectionManager	*m_pConnManager;
 		CartoManager		*m_pCartoManager;
 		ServiceManager		*m_pServiceManager;
+
+		UserManager			*m_pUserManager;
 
 		int					m_counter;
 	};
