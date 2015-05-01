@@ -93,6 +93,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\CreateServiceHandler.cpp" />
     <ClCompile Include="..\src\CreateServiceRequest.cpp" />
     <ClCompile Include="..\src\CreateServiceResponse.cpp" />
+    <ClCompile Include="..\src\GetColorMapHandler.cpp" />
+    <ClCompile Include="..\src\GetColorMapRequest.cpp" />
+    <ClCompile Include="..\src\GetColorMapResponse.cpp" />
     <ClCompile Include="..\src\GetFontHandler.cpp" />
     <ClCompile Include="..\src\GetFontRequest.cpp" />
     <ClCompile Include="..\src\GetFontResponse.cpp" />
@@ -133,6 +136,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\CreateServiceHandler.h" />
     <ClInclude Include="..\include\CreateServiceRequest.h" />
     <ClInclude Include="..\include\CreateServiceResponse.h" />
+    <ClInclude Include="..\include\GetColorMapHandler.h" />
+    <ClInclude Include="..\include\GetColorMapRequest.h" />
+    <ClInclude Include="..\include\GetColorMapResponse.h" />
     <ClInclude Include="..\include\GetFontHandler.h" />
     <ClInclude Include="..\include\GetFontRequest.h" />
     <ClInclude Include="..\include\GetFontResponse.h" />

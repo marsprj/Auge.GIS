@@ -7,6 +7,8 @@
 #include "StyleWriterImpl.h"
 #include "EnumStyleImpl.h"
 #include "EnumMapImpl.h"
+#include "EnumColorMapImpl.h"
+#include "ColorMapImpl.h"
 
 namespace auge
 {
@@ -61,6 +63,19 @@ namespace auge
 				return AG_FAILURE;
 			}
 		}
+
+		if(!m_pConnection->HasTable("g_color_map"))
+		{
+			if(!CreateColorMapTable())
+			{
+				return AG_FAILURE;
+			}
+			else
+			{
+				InitColorMap();
+			}
+		}
+
 		return AG_SUCCESS;
 	}
 
@@ -1075,8 +1090,6 @@ namespace auge
 			return false;
 		}
 
-
-
 		return false;
 	}
 
@@ -1090,6 +1103,62 @@ namespace auge
 		}
 		pxDoc->Release();
 		return true;
+	}
+
+	EnumColorMap* CartoManagerImpl::GetColorMaps()
+	{
+		EnumColorMapImpl* pMaps = new EnumColorMapImpl();
+		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
+		Renderer* pRenderer = pCartoFactory->CreateRenderer2D(200,20);
+
+		const char* sql = "select gid, s_color, e_color from g_color_map";
+		GResultSet* pResultSet = m_pConnection->ExecuteQuery(sql);
+		if(pResultSet!=NULL)
+		{
+			int r,g,b,a;
+			GColor s_color,e_color;
+
+			char i_name[AUGE_NAME_MAX];
+			char i_path[AUGE_PATH_MAX];
+			char c_dir[AUGE_PATH_MAX];
+			char m_dir[AUGE_PATH_MAX];
+			auge_get_cwd(c_dir, AUGE_PATH_MAX);
+#ifdef WIN32
+			auge_make_path(m_dir, NULL, c_dir, "colormap", NULL);
+#else
+			char p_dir[AUGE_PATH_MAX];
+			auge_get_parent_dir(c_dir, p_dir, AUGE_PATH_MAX);
+			auge_make_path(m_dir, NULL, p_dir, "colormap", NULL);
+#endif
+			auge_mkdir(m_dir);
+			
+			int count = pResultSet->GetCount();
+			for(int i=0; i<count; i++)
+			{
+				int gid = pResultSet->GetInt(i,0);
+				const char* s_c = pResultSet->GetString(i,1);
+				const char* e_c = pResultSet->GetString(i,2);				
+				sscanf(s_c, "#%2x%2x%2x%2x",&r,&g,&b,&a);
+				s_color.Set(r,g,b,a);
+				sscanf(e_c, "#%2x%2x%2x%2x",&r,&g,&b,&a);
+				e_color.Set(r,g,b,a);
+				ColorMapImpl* pColorMap = new ColorMapImpl();
+				pColorMap->Create(gid, s_color, e_color);
+				pMaps->Add(pColorMap);
+
+				sprintf(i_name, "colomap/%d.png", gid);
+				auge_make_path(i_path, NULL, c_dir, i_name, NULL);				
+				pColorMap->SetImagePath(i_name);
+				pColorMap->SetAbsoluteImagePath(i_path);
+			
+				pRenderer->DrawColorMap(pColorMap);
+				pRenderer->SaveAsImage(i_path);
+			}
+
+			pResultSet->Release();
+		}
+		pRenderer->Release();
+		return pMaps;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -1163,6 +1232,34 @@ namespace auge
 		RESULTCODE rc = AG_SUCCESS;
 		rc = m_pConnection->ExecuteSQL(sql);
 		return (rc == AG_SUCCESS);
+	}
+
+	RESULTCODE CartoManagerImpl::CreateColorMapTable()
+	{
+		const char* sql =   
+			"CREATE TABLE g_color_map" \
+			"(" \
+			"	gid serial NOT NULL," \
+			"	s_color character varying(16)," \
+			"	e_color character varying(16)," \
+			"	CONSTRAINT g_color_map_pkey PRIMARY KEY (gid)" \
+			")";
+		RESULTCODE rc = m_pConnection->ExecuteSQL(sql);
+		return (rc==AG_SUCCESS);
+	}
+
+	RESULTCODE CartoManagerImpl::InitColorMap()
+	{
+		const char* color_map[] = {"#FF0000FF", "#00FF00FF"};
+		size_t count = sizeof(color_map) / sizeof(const char*) / 2;
+		const char* format = "insert into g_color_map(s_color, e_color) values('%s','%s')";
+		char sql[AUGE_SQL_MAX];
+		for(int i=0; i<count; i+=2)
+		{
+			g_snprintf(sql, AUGE_SQL_MAX, format, color_map[i],color_map[i+1]);
+			m_pConnection->ExecuteSQL(sql);
+		}
+		return AG_SUCCESS;
 	}
 
 	//CREATE TABLE g_layer(gid serial NOT NULL,type integer NOT NULL,version integer,l_name character varying(32) NOT NULL,f_name character varying(32) NOT NULL,s_id integer NOT NULL,m_id integer,CONSTRAINT g_layer_m_id_fkey FOREIGN KEY (m_id)REFERENCES g_map (gid) MATCH SIMPLEON UPDATE NO ACTION ON DELETE NO ACTION,CONSTRAINT g_layer_s_id_fkey FOREIGN KEY (s_id)REFERENCES g_data_source (gid) MATCH SIMPLEON UPDATE NO ACTION ON DELETE NO ACTION,CONSTRAINT g_layer_l_name_key UNIQUE (l_name))

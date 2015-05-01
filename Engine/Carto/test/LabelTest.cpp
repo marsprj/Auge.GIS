@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(LabelTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(LabelTest);
 
 auge::Map*	CreateMapObj();
 auge::Map*	CreateMapObj_SLD();

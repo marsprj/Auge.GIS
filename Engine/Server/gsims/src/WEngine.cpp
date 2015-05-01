@@ -26,6 +26,7 @@
 #include "RegisterMapHandler.h"
 
 #include "GetFontHandler.h"
+#include "GetColorMapHandler.h"
 
 #include "AugeCore.h"
 #include "AugeCarto.h"
@@ -70,6 +71,7 @@ namespace auge
 		m_handlers.push_back(new RegisterMapHandler());
 
 		m_handlers.push_back(new GetFontHandler());
+		m_handlers.push_back(new GetColorMapHandler());
 		
 	}
 

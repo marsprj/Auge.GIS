@@ -96,6 +96,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetPreviewResponse.cpp" />
     <ClCompile Include="..\src\RegisterDataSourceHandler.cpp" />
     <ClCompile Include="..\src\RegisterDataSourceRequest.cpp" />
+    <ClCompile Include="..\src\RemoveDataSetHandler.cpp" />
+    <ClCompile Include="..\src\RemoveDataSetRequest.cpp" />
     <ClCompile Include="..\src\UnRegisterDataSourceHandler.cpp" />
     <ClCompile Include="..\src\UnRegisterDataSourceRequest.cpp" />
     <ClCompile Include="..\src\WDataEngine.cpp" />
@@ -114,6 +116,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetPreviewResponse.h" />
     <ClInclude Include="..\include\RegisterDataSourceHandler.h" />
     <ClInclude Include="..\include\RegisterDataSourceRequest.h" />
+    <ClInclude Include="..\include\RemoveDataSetHandler.h" />
+    <ClInclude Include="..\include\RemoveDataSetRequest.h" />
     <ClInclude Include="..\include\UnRegisterDataSourceHandler.h" />
     <ClInclude Include="..\include\UnRegisterDataSourceRequest.h" />
     <ClInclude Include="..\include\WDataEngine.h" />

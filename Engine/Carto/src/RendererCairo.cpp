@@ -13,6 +13,8 @@ namespace auge
 		m_cairo_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 		m_cairo = cairo_create(m_cairo_surface);
 		m_image_render = false;
+		m_width = width;
+		m_height = height;
 	}
 
 	RendererCairo::~RendererCairo()
@@ -63,8 +65,12 @@ namespace auge
 	void RendererCairo::FillRectangle(g_uint x, g_uint y, g_uint width, g_uint height, GColor& color)
 	{
 		float r = color.GetRedF();
-		cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
-		cairo_rectangle(m_cairo, 0, 0, width, height);
+		float g = color.GetGreenF();
+		float b = color.GetBlueF();
+		float a = color.GetAlphaF();
+		//cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
+		cairo_set_source_rgba(m_cairo, r, g, b, 1.0f);
+		cairo_rectangle(m_cairo, x, y, width, height);
 		cairo_fill(m_cairo);
 	}
 
@@ -420,6 +426,58 @@ namespace auge
 		extent.Set(0, 0, caro_extents.width, caro_extents.height);
 		return true;
 	}
+
+	bool RendererCairo::DrawColorMap(ColorMap* pColorMap)
+	{
+		if(pColorMap==NULL)
+		{
+			return false;
+		}
+
+		GColor& start = pColorMap->GetStartColor();
+		GColor& end = pColorMap->GetEndColor();
+
+		g_byte r=0, g=0, b=0;
+		float h=0.0f, s=0.0f, v=0.0f;
+		float h_s=0.0f, s_s=0.0f, v_s=0.0f;
+		float h_e=0.0f, s_e=0.0f, v_e=0.0f;
+
+		auge_rgb_2_hsv(start.GetRed(), start.GetGreen(), start.GetBlue(), h_s, s_s, v_s);
+		auge_rgb_2_hsv(end.GetRed(), end.GetGreen(), end.GetBlue(), h_e, s_e, v_e);
+
+		float h_span = (h_e - h_s) / (m_width-1);
+		float s_span = (s_e - s_s) / (m_width-1);
+		float v_span = (v_e - v_s) / (m_width-1);
+
+		for(int i=0; i<m_width-1; i++)
+		{
+			auge_hsv_2_rgb(h_s+h_span*i, s_s+s_span*i, v_s+v_span*i, r, g, b);
+			GColor color(r,g,b,255);
+			FillRectangle(i, 0, 1, m_height, color);
+		}
+
+		return true;
+	}
+
+	//bool RendererCairo::DrawColorMap(ColorMap* pColorMap)
+	//{
+	//	if(pColorMap==NULL)
+	//	{
+	//		return false;
+	//	}
+
+	//	int count = pColorMap->GetCount();
+	//	if(count==0)
+	//	{
+	//		return false;
+	//	}
+	//	float span = (float)(m_width) / (float)(count);
+	//	for(int i=0; i<count; i++)
+	//	{
+	//		GColor* color = pColorMap->GetColor(i);
+	//		FillRectangle(span*i, 0, span, m_height, *color);
+	//	}
+	//}
 }
 
 namespace auge

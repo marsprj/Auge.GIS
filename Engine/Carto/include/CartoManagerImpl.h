@@ -45,6 +45,8 @@ namespace auge
 		virtual g_int			GetStyleID(const char* name);
 
 		virtual RESULTCODE		SetStyle(g_uint layerID, g_uint styleID);
+
+		virtual	EnumColorMap*	GetColorMaps();
 					
 	public:
 		virtual	RESULTCODE		Initialize(GConnection* pConnection);
@@ -61,6 +63,8 @@ namespace auge
 		RESULTCODE				CreateMapTable();
 		RESULTCODE				CreateLayerTable();
 		RESULTCODE				CreateStyleTable();
+		RESULTCODE				CreateColorMapTable();
+		RESULTCODE				InitColorMap();
 
 	private:
 		GConnection	*m_pConnection;

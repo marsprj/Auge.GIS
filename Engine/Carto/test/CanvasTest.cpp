@@ -409,3 +409,42 @@ void CanvasTest::DrawShpPolygon()
 
 	pEngineManager->Unload();
 }
+
+void CanvasTest::DrawColorMap()
+{
+	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
+	auge::Renderer* pRenderer = pCartoFactory->CreateRenderer2D(100, 20);
+
+	auge::StyleFactory* pStyleFactory = auge::augeGetStyleFactoryInstance();
+	auge::GColor start(255,0,0,100);
+	auge::GColor end(0,255,0,100);
+	auge::ColorMap* pColorMap = pStyleFactory->CreateColorMap(10,start,end);
+
+	//pColorMap->Release();
+
+	pRenderer->DrawColorMap(pColorMap);
+	pColorMap->Release();
+
+	pRenderer->SaveAsImage("g:\\temp\\colormap.png");
+	pRenderer->Release();
+}
+
+void CanvasTest::ReadColor()
+{
+	const char* str = "#FF0000FF";
+	auge::GColor color;
+
+	g_ulong val = atoi(str+1);
+	color.Set(val);
+
+	int r,g,b,a;
+	sscanf(str,"#%2x%2x%2x%2x", &r,&g,&b,&a);
+
+	color.Set(r,g,b,a);
+
+	//g_byte r = color.GetRed();
+	//g_byte g = color.GetGreen();
+	//g_byte b = color.GetBlue();
+	//g_byte a = color.GetAlpha();
+
+}

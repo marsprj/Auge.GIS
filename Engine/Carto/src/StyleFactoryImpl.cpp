@@ -203,14 +203,15 @@ namespace auge
 		return (new RuleImpl());
 	}
 
-	ColorMap* StyleFactoryImpl::CreateColorMap(g_uint count)
+	ColorMap* StyleFactoryImpl::CreateColorMap(g_uint count, GColor& start, GColor& end)
 	{
 		if(count==0)
 		{
 			return NULL;
 		}
 		ColorMapImpl* pColorMap = new ColorMapImpl();
-		pColorMap->Create(count);
+		pColorMap->Create(-1, start,end);
+		pColorMap->SetCount(count);
 		return pColorMap;
 	}
 
