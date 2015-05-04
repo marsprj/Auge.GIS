@@ -60,16 +60,16 @@ int main(int argc, char* argv[])
 		AUGE_RUDE_CGI;
 
 		printf("ContentType: text/html \r\n" "\r\n");
-		//printf("%d \r\n", count++);  
+		////printf("%d \r\n", count++);  
 
-		int count = cgi.numValues();
-		printf("[count]:%d<br>", count);
-		for(int i=0; i<count; i++) 
-		{
-			printf_variable(cgi.fieldnameAt(i), cgi[cgi.fieldnameAt(i)]);
-			
-		}
-		printf("=====================================================<br>", count);
+		//int count = cgi.numValues();
+		//printf("[count]:%d<br>", count);
+		//for(int i=0; i<count; i++) 
+		//{
+		//	printf_variable(cgi.fieldnameAt(i), cgi[cgi.fieldnameAt(i)]);
+		//	
+		//}
+		//printf("=====================================================<br>", count);
 
 		count = sizeof(keys) / sizeof(char*);
 		for(int i=0; i<count; i++)
