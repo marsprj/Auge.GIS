@@ -18,6 +18,36 @@
 void printf_variable(const char* key, const char* value);
 void printf_cgi_variable(const char* key, const char* value);
 
+const char* keys[] = {"AUTH_TYPE",
+	"GATEWAY_INTERFACE",
+	"PATH_INFO",
+	"PATH_TRANSLATED",
+	"QUERY_STRING",
+	"REMOTE_ADDR",
+	"REMOTE_HOST",
+	"REMOTE_IDENT",
+	"REMOTE_PORT",
+	"REMOTE_USER",
+	"REQUEST_URI",
+	"REQUEST_METHOD",
+	"SCRIPT_NAME",
+	"SCRIPT_FILENAME",
+	"SERVER_ADMIN",
+	"SERVER_NAME",
+	"SERVER_PORT",
+	"SERVER_PROTOCOL",
+	"SERVER_SIGNATURE",
+	"SERVER_SOFTWARE",
+	"HTTP_ACCEPT",
+	"HTTP_ACCEPT_ENCODING",
+	"HTTP_ACCEPT_LANGUAGE",
+	"HTTP_COOKIE",
+	"HTTP_FORWARDED",
+	"HTTP_HOST",
+	"HTTP_PRAGMA",
+	"HTTP_REFERER",
+	"HTTP_USER_AGENT"};
+
 int main(int argc, char* argv[]) 
 {
 	int count = 0;
@@ -40,10 +70,13 @@ int main(int argc, char* argv[])
 			
 		}
 		printf("=====================================================<br>", count);
-		const char* key = "HTTP_COOKIE";
-		printf_cgi_variable(key, getenv(key));
-		key = "REQUEST_METHOD";
-		printf_cgi_variable(key, getenv(key));
+
+		count = sizeof(keys) / sizeof(char*);
+		for(int i=0; i<count; i++)
+		{
+			const char* key = keys[i];
+			printf_cgi_variable(key, getenv(key));
+		}
 
 		printf("\n\n");
 		cgi.finish(); 
