@@ -1,4 +1,4 @@
-#include "WUserEngine.h"
+#include "WAuthEngine.h"
 #include "AugeCore.h"
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
@@ -12,11 +12,11 @@ namespace auge
 {
 	WebEngine* augeGetWebEngineInstance()
 	{
-		static WUserEngine g_webMapEngine;
+		static WAuthEngine g_webMapEngine;
 		return &g_webMapEngine;
 	}
 
-	WUserEngine::WUserEngine()
+	WAuthEngine::WAuthEngine()
 	{
 		m_handler = NULL;
 		m_handlers.push_back(new CreateUserHandler());
@@ -25,12 +25,12 @@ namespace auge
 		m_handlers.push_back(new GetRoleHandler());
 	}
 
-	WUserEngine::~WUserEngine()
+	WAuthEngine::~WAuthEngine()
 	{
 		CleanupHandlers(); 
 	}
 
-	void WUserEngine::CleanupHandlers()
+	void WAuthEngine::CleanupHandlers()
 	{
 		WebHandler* pHandler = NULL;
 		std::vector<WebHandler*>::iterator iter;
@@ -42,7 +42,7 @@ namespace auge
 		m_handlers.clear();
 	}
 
-	WebHandler*	WUserEngine::GetHandler(const char* name)
+	WebHandler*	WAuthEngine::GetHandler(const char* name)
 	{
 		std::vector<WebHandler*>::iterator iter;
 		for(iter=m_handlers.begin(); iter!=m_handlers.end(); iter++)
@@ -55,37 +55,37 @@ namespace auge
 		return NULL;
 	}
 
-	const char*	WUserEngine::GetID()
+	const char*	WAuthEngine::GetID()
 	{
-		return "WUserEngine";
+		return "WAuthEngine";
 	}
 
-	const char*	WUserEngine::GetType()
+	const char*	WAuthEngine::GetType()
 	{
-		return "wus";
+		return "was";
 	}
 
-	const char*	WUserEngine::GetDescription()
+	const char*	WAuthEngine::GetDescription()
 	{
-		return "WUS";
+		return "WAS";
 	}
 
-	void* WUserEngine::GetHandler()
+	void* WAuthEngine::GetHandler()
 	{
 		return m_handler;
 		}
 
-	void WUserEngine::SetHandler(void* handler)
+	void WAuthEngine::SetHandler(void* handler)
 	{
 		m_handler = handler;
 	}
 
-	const char*	WUserEngine::GetLibraryPath()
+	const char*	WAuthEngine::GetLibraryPath()
 	{
 		return NULL;
 	}
 
-	WebRequest*	WUserEngine::ParseRequest(const char* url)
+	WebRequest*	WAuthEngine::ParseRequest(const char* url)
 	{
 		//GPropertySet props;
 		//props.Parse(url,"&");
@@ -134,7 +134,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebRequest* WUserEngine::ParseRequest(rude::CGI& cgi)
+	WebRequest* WAuthEngine::ParseRequest(rude::CGI& cgi)
 	{
 		const char* request = cgi["request"];
 		if(request==NULL)
@@ -161,7 +161,7 @@ namespace auge
 		return handler->ParseRequest(cgi);
 	}
 
-	WebRequest* WUserEngine::ParseRequest(rude::CGI& cgi, const char* mapName)
+	WebRequest* WAuthEngine::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
 		//WebRequest* pWebRequest = ParseRequest(cgi);
 		//if(pWebRequest!=NULL)
@@ -173,14 +173,14 @@ namespace auge
 		return NULL;
 	}
 
-	WebRequest*	WUserEngine::ParseRequest(XDocument* pxDoc, const char* mapName)
+	WebRequest*	WAuthEngine::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		GError* pError = augeGetErrorInstance();
 		pError->SetError("WMS do not support xml request");
 		return NULL;
 	}
 
-	WebResponse* WUserEngine::Execute(WebRequest* pWebRequest)
+	WebResponse* WAuthEngine::Execute(WebRequest* pWebRequest)
 	{
 		WebResponse	*pWebResponse = NULL;
 
@@ -200,7 +200,7 @@ namespace auge
 		return handler->Execute(pWebRequest);
 	}
 
-	WebResponse* WUserEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WAuthEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
 		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
@@ -217,7 +217,7 @@ namespace auge
 		return handler->Execute(pWebRequest, pWebContext);
 	}
 
-	//WebResponse* WUserEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	//WebResponse* WAuthEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
 	//{
 	//	WebResponse	*pWebResponse = NULL;
 	//	WMapRequest *pWMapRequest = static_cast<WMapRequest*>(pWebRequest);
