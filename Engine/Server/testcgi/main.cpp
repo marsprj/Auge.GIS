@@ -3,17 +3,17 @@
 #include <rude/cgi.h>
 #include <stdlib.h>
 
-#ifdef WIN32
-#	define	AUGE_FCGI_ACCEPT	FCGI_Accept_t(&environ)
-#else
-#	define	AUGE_FCGI_ACCEPT	FCGI_Accept()
-#endif
-
-#ifdef WIN32
-#	define	AUGE_RUDE_CGI	rude::CGI cgi(&environ)
-#else 
-#	define	AUGE_RUDE_CGI	rude::CGI cgi
-#endif
+//#ifdef WIN32
+//#	define	AUGE_FCGI_ACCEPT	FCGI_Accept_t(&environ)
+//#else
+//#	define	AUGE_FCGI_ACCEPT	FCGI_Accept()
+//#endif
+//
+//#ifdef WIN32
+//#	define	AUGE_RUDE_CGI	rude::CGI cgi(&environ)
+//#else 
+//#	define	AUGE_RUDE_CGI	rude::CGI cgi
+//#endif
 
 void printf_variable(const char* key, const char* value);
 void printf_cgi_variable(const char* key, const char* value);
@@ -51,13 +51,13 @@ const char* keys[] = {"AUTH_TYPE",
 int main(int argc, char* argv[]) 
 {
 	int count = 0;
-	//while(FCGI_Accept() >= 0) 
+	while(FCGI_Accept() >= 0) 
 	//while(FCGI_Accept_t(&environ) >= 0) 
-	while(AUGE_FCGI_ACCEPT>=0)
+	//while(AUGE_FCGI_ACCEPT>=0)
 	{ 
 		//rude::CGI cgi; 
 		//rude::CGI cgi(&environ);
-		AUGE_RUDE_CGI;
+		//AUGE_RUDE_CGI;
 
 		printf("ContentType: text/html \r\n" "\r\n");
 		////printf("%d \r\n", count++);  
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
 		}
 
 		printf("\n\n");
-		cgi.finish(); 
+		//cgi.finish(); 
 	} 
 	return 0;
 }
