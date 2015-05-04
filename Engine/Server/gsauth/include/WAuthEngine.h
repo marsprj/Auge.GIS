@@ -7,13 +7,13 @@
 
 namespace auge
 {
-	class WUserEngine : public WebEngine
+	class WAuthEngine : public WebEngine
 	{
 		friend class CapabilitiesHandler;
 
 	public:
-		WUserEngine();
-		virtual ~WUserEngine();
+		WAuthEngine();
+		virtual ~WAuthEngine();
 
 	public:
 		virtual WebResponse*	Execute(WebRequest* pWebRequest);
