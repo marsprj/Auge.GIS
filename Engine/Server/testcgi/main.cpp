@@ -1,6 +1,7 @@
 #include <fcgi_stdio.h>
 #include <fcgi_config.h>
 #include <rude/cgi.h>
+#include <stdlib.h>
 
 #ifdef WIN32
 #	define	AUGE_FCGI_ACCEPT	FCGI_Accept_t(&environ)
