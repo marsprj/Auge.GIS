@@ -1,15 +1,15 @@
 AUTOMAKE_OPTION=foreign
-lib_LTLIBRARIES=libguser.la
+lib_LTLIBRARIES=libgauth.la
 AM_CXXFLAGS=-D_LINUX
 
 AM_CPPFLAGS=-I../include \
 		-I$(top_srcdir)/include
 
-libguser_la_LDFLAGS=-L$(top_srcdir)/Engine/Core/src
+libgauth_la_LDFLAGS=-L$(top_srcdir)/Engine/Core/src
 
-libguser_la_LIBADD=-lgcore
+libgauth_la_LIBADD=-lgcore
 
-libguser_la_SOURCES=\
+libgauth_la_SOURCES=\
 		RoleImpl.cpp \
 		UserImpl.cpp \
 		EnumRoleImpl.cpp \

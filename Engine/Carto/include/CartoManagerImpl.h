@@ -5,12 +5,17 @@
 
 namespace auge
 {
+	class GResultSet;
+
 	class CartoManagerImpl : public CartoManager
 	{
 	public:
 		CartoManagerImpl();
 		virtual ~CartoManagerImpl();
 	public:
+		//------------------------------------------------------------------------
+		// Map Methods
+		//------------------------------------------------------------------------
 		virtual g_uint			GetCount();
 		virtual	Map*			GetMap(g_uint mid);
 		virtual	Map*			GetMap(const char* name);
@@ -23,7 +28,22 @@ namespace auge
 		virtual RESULTCODE		RemoveMap(const char* name);
 		virtual g_int			GetMapID(const char* name);
 
+		//------------------------------------------------------------------------
+		// Map User Methods
+		//------------------------------------------------------------------------
+		virtual g_uint			GetCount(g_uint user);
+		virtual	Map*			GetMap(g_uint user, const char* mapName);
+		virtual EnumMap*		GetMaps(g_uint user);
+		virtual Map*			LoadMap(g_uint user, const char* mapName);
+
+		virtual Map*			CreateMap(g_uint user, const char* name);
+		virtual Map*			CreateMap(g_uint user, const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax);
+		virtual RESULTCODE		RemoveMap(g_uint user, const char* name);
+		virtual g_int			GetMapID(g_uint user, const char* name);
+		
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_id, g_uint style_id);
+		virtual RESULTCODE		RemoveLayers(const char* mapName);
+		virtual RESULTCODE		RemoveLayers(g_uint map_id);
 		virtual g_int			GetLayerID(const char* layerName, const char* mapName);
 
 		virtual bool			HasStyle(g_uint id);
@@ -58,6 +78,7 @@ namespace auge
 		bool					HasLayer(const char* layerName, int mapID);
 
 		bool					IsValiad(const char* text);
+		Map*					CreateMap(GResultSet* pResult, int row);
 
 	private:
 		RESULTCODE				CreateMapTable();

@@ -60,7 +60,9 @@ namespace auge
 			return pExpResponse;
 		}
 
-		RESULTCODE rc = pCartoManager->RemoveMap(name);
+		RESULTCODE rc = pCartoManager->RemoveLayers(name);
+
+		rc = pCartoManager->RemoveMap(name);
 		if(rc!=AG_SUCCESS)
 		{
 			GError* pError = augeGetErrorInstance();

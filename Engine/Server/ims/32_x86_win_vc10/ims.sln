@@ -20,7 +20,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gscore", "..\..\gscore\32_x
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mgr", "..\..\mgr\32_x86_win_vc10\mgr.vcxproj", "{C315E5BD-713B-4812-9B05-8A0F6475DAB0}"
 	ProjectSection(ProjectDependencies) = postProject
-		{E361D34C-1E89-48C1-AC90-D60721C7D06A} = {E361D34C-1E89-48C1-AC90-D60721C7D06A}
+		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A} = {A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsvrs", "..\..\gsvrs\32_x86_win_vc10\gsvrs.vcxproj", "{D8C7BCA3-AADF-430D-BD10-6F771418F31B}"
@@ -28,9 +28,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uploader", "..\..\uploader\32_x86_win_vc10\uploader.vcxproj", "{E9DED101-D400-4337-B692-DC51D48527B1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ims", "ims.vcxproj", "{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E361D34C-1E89-48C1-AC90-D60721C7D06A} = {E361D34C-1E89-48C1-AC90-D60721C7D06A}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswms", "..\..\gswms\32_x86_win_vc10\gswms.vcxproj", "{C6045F1B-77E7-4716-84F1-E8E0B8A70290}"
 EndProject
@@ -42,10 +39,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsdbs", "..\..\gsdbs\32_x86
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUser", "..\..\..\User\32_x86_win_vc10\GUser.vcxproj", "{B38DA2F1-03B5-482B-B0F1-59C57403B03F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsusr", "..\..\gsusr\32_x86_win_vc10\gsusr.vcxproj", "{E361D34C-1E89-48C1-AC90-D60721C7D06A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B38DA2F1-03B5-482B-B0F1-59C57403B03F} = {B38DA2F1-03B5-482B-B0F1-59C57403B03F}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GAuth", "..\..\..\Auth\32_x86_win_vc10\GAuth.vcxproj", "{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,10 +111,10 @@ Global
 		{B38DA2F1-03B5-482B-B0F1-59C57403B03F}.Debug|Win32.Build.0 = Debug|Win32
 		{B38DA2F1-03B5-482B-B0F1-59C57403B03F}.Release|Win32.ActiveCfg = Release|Win32
 		{B38DA2F1-03B5-482B-B0F1-59C57403B03F}.Release|Win32.Build.0 = Release|Win32
-		{E361D34C-1E89-48C1-AC90-D60721C7D06A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E361D34C-1E89-48C1-AC90-D60721C7D06A}.Debug|Win32.Build.0 = Debug|Win32
-		{E361D34C-1E89-48C1-AC90-D60721C7D06A}.Release|Win32.ActiveCfg = Release|Win32
-		{E361D34C-1E89-48C1-AC90-D60721C7D06A}.Release|Win32.Build.0 = Release|Win32
+		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Debug|Win32.Build.0 = Debug|Win32
+		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Release|Win32.ActiveCfg = Release|Win32
+		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
