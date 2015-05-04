@@ -102,10 +102,7 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Server/gsauth/src/Makefile
                  Engine/Server/ims/Makefile
                  Engine/Server/mgr/Makefile
-                 Engine/Service/Makefile
-                 Engine/Service/ims/Makefile
-                 Engine/Service/mgr/Makefile
-                 Engine/Service/testcgi/Makefile
+                 Engine/Server/testcgi/Makefile
                  Makefile
                  include/Makefile])
 AC_OUTPUT

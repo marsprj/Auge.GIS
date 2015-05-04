@@ -41,6 +41,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUser", "..\..\..\User\32_x
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GAuth", "..\..\..\Auth\32_x86_win_vc10\GAuth.vcxproj", "{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsauth", "..\..\gsauth\32_x86_win_vc10\gsauth.vcxproj", "{E361D34C-1E89-48C1-AC90-D60721C7D06A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -115,6 +117,10 @@ Global
 		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Debug|Win32.Build.0 = Debug|Win32
 		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Release|Win32.ActiveCfg = Release|Win32
 		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Release|Win32.Build.0 = Release|Win32
+		{E361D34C-1E89-48C1-AC90-D60721C7D06A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E361D34C-1E89-48C1-AC90-D60721C7D06A}.Debug|Win32.Build.0 = Debug|Win32
+		{E361D34C-1E89-48C1-AC90-D60721C7D06A}.Release|Win32.ActiveCfg = Release|Win32
+		{E361D34C-1E89-48C1-AC90-D60721C7D06A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

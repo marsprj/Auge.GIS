@@ -4,5 +4,5 @@
 	<Engine description="Web Map Sevice" path="" id="gswms"/>
 	<Engine description="Web Feature Sevice" path="" id="gswfs"/>
 	<Engine description="Web Database Sevice" path="" id="gsdbs"/>
-	<Engine description="Web User Sevice" path="" id="gsusr"/>
+	<Engine description="Web User Sevice" path="" id="gsauth"/>
 </Engines>
