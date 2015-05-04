@@ -447,7 +447,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "delete from g_map where m_name='%s'", name);
+		g_snprintf(sql, AUGE_SQL_MAX, "delete from g_map where m_name='%s' ", name);
 		RESULTCODE rc = m_pConnection->ExecuteSQL(sql);
 		if(rc==AG_SUCCESS)
 		{
@@ -898,6 +898,28 @@ namespace auge
 		pFLayer->SetFeatureClass(pFeatureClass);
 		
 		return pFLayer;
+	}
+
+	RESULTCODE CartoManagerImpl::RemoveLayers(const char* mapName)
+	{
+		if(mapName==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		g_int mapID = GetMapID(mapName);
+		if(mapID<0)
+		{
+			return AG_FAILURE;
+		}
+		return RemoveLayers(mapID);
+	}
+
+	RESULTCODE CartoManagerImpl::RemoveLayers(g_uint map_id)
+	{
+		char sql[AUGE_SQL_MAX] = {0};
+		g_snprintf(sql, AUGE_SQL_MAX,"delete from g_layer where m_id=%d", map_id);
+		return m_pConnection->ExecuteSQL(sql);
 	}
 
 	bool CartoManagerImpl::HasStyle(g_uint id)

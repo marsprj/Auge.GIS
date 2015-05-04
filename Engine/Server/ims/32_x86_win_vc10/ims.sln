@@ -20,7 +20,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gscore", "..\..\gscore\32_x
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mgr", "..\..\mgr\32_x86_win_vc10\mgr.vcxproj", "{C315E5BD-713B-4812-9B05-8A0F6475DAB0}"
 	ProjectSection(ProjectDependencies) = postProject
-		{E361D34C-1E89-48C1-AC90-D60721C7D06A} = {E361D34C-1E89-48C1-AC90-D60721C7D06A}
+		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A} = {A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsvrs", "..\..\gsvrs\32_x86_win_vc10\gsvrs.vcxproj", "{D8C7BCA3-AADF-430D-BD10-6F771418F31B}"
