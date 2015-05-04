@@ -52,5 +52,4 @@ libgcarto_la_SOURCES=\
 		EnumMapImpl.cpp \
 		ExternalGraphicImpl.cpp \
 		EnumColorMapImpl.cpp \
-		ColorMapImpl.cpp \
 		GraphicImpl.cpp
