@@ -323,7 +323,7 @@ namespace auge
 
 	bool ServiceManagerImpl::CreateServiceTable()
 	{
-		const char* sql = "CREATE TABLE g_service(gid serial NOT NULL,s_name character varying(32) NOT NULL,s_uri character varying(128) NOT NULL,m_id integer DEFAULT -1,version integer DEFAULT 1,state integer NOT NULL DEFAULT 0,CONSTRAINT g_service_pkey PRIMARY KEY (gid ),CONSTRAINT g_service_s_name_key UNIQUE (s_name ))";
+		const char* sql = "CREATE TABLE g_service(gid serial NOT NULL,user_id integer NOT NULL DEFAULT 1,s_name character varying(32) NOT NULL,s_uri character varying(128) NOT NULL,m_id integer DEFAULT -1,version integer DEFAULT 1,state integer NOT NULL DEFAULT 0,CONSTRAINT g_service_pkey PRIMARY KEY (gid ),CONSTRAINT g_service_s_name_key UNIQUE (s_name),CONSTRAINT g_service_user_fkey FOREIGN KEY (user_id) REFERENCES g_user (gid) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION)";
 		return (m_pConnection->ExecuteSQL(sql)==AG_SUCCESS);
 	}
 

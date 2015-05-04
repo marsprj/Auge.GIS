@@ -213,6 +213,9 @@ namespace auge
 		CartoManager(){}
 		virtual ~CartoManager(){}
 	public:
+		//------------------------------------------------------------------------
+		// Map Methods
+		//------------------------------------------------------------------------
 		virtual g_uint			GetCount() = 0;
 		virtual	Map*			GetMap(g_uint mid) = 0;
 		virtual	Map*			GetMap(const char* name) = 0;
@@ -224,6 +227,18 @@ namespace auge
 		virtual Map*			CreateMap(const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax) = 0;
 		virtual RESULTCODE		RemoveMap(const char* name) = 0;
 		virtual g_int			GetMapID(const char* name) = 0;
+
+		//------------------------------------------------------------------------
+		// Map User Methods
+		//------------------------------------------------------------------------
+		virtual g_uint			GetCount(g_uint user) = 0;
+		virtual	Map*			GetMap(g_uint user, const char* mapName) = 0;
+		virtual EnumMap*		GetMaps(g_uint user) = 0;
+		virtual Map*			LoadMap(g_uint user, const char* mapName) = 0;
+		virtual Map*			CreateMap(g_uint user, const char* name) = 0;
+		virtual Map*			CreateMap(g_uint user, const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax) = 0;
+		virtual RESULTCODE		RemoveMap(g_uint user, const char* name) = 0;
+		virtual g_int			GetMapID(g_uint user, const char* name) = 0;
 
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_i, g_uint style_id) = 0;
 		virtual g_int			GetLayerID(const char* layerName, const char* mapName) = 0;
