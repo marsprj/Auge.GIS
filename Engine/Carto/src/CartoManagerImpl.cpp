@@ -922,6 +922,28 @@ namespace auge
 		return m_pConnection->ExecuteSQL(sql);
 	}
 
+	RESULTCODE CartoManagerImpl::RemoveLayer(const char* mapName, const char* layerName)
+	{
+		if(mapName==NULL||layerName==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		g_int mapID = GetMapID(mapName);
+		if(mapID<0)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Cannot find map [%s].", mapName);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+		}
+
+		char sql[AUGE_SQL_MAX];
+		g_sprintf(sql, "delete from g_layer where m_id=%d and l_name='%s'", mapID, layerName);
+
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
 	bool CartoManagerImpl::HasStyle(g_uint id)
 	{
 		char sql[AUGE_SQL_MAX] = {0};

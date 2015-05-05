@@ -12,6 +12,7 @@
 //#include "GetPreviewHandler.h"
 
 #include "RegisterLayerHandler.h"
+#include "UnRegisterLayerHandler.h"
 
 #include "CreateMapHandler.h"
 #include "GetMapHandler.h"
@@ -57,6 +58,7 @@ namespace auge
 		//m_handlers.push_back(new GetPreviewHandler());
 
 		m_handlers.push_back(new RegisterLayerHandler());
+		m_handlers.push_back(new UnRegisterLayerHandler());
 
 		m_handlers.push_back(new CreateMapHandler());
 		m_handlers.push_back(new GetMapHandler());
