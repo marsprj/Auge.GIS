@@ -1,4 +1,4 @@
-#include "RemoveUserRequest.h"f
+#include "RemoveUserRequest.h"
 #include "AugeXML.h"
 #include "AugeField.h"
 
