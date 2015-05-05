@@ -13,5 +13,15 @@ libgsauth_la_LDFLAGS=\
 libgsauth_la_LIBADD=-lgcore -lgcarto -lgscore
 
 libgsauth_la_SOURCES=\
-		WAuthEngine.cpp
+		CreateUserHandler.cpp \
+		CreateUserRequest.cpp \
+		GetRoleHandler.cpp \
+		GetRoleRequest.cpp \
+		GetRoleResponse.cpp \
+		GetUserHandler.cpp \
+		GetUserRequest.cpp \
+		GetUserResponse.cpp \
+		RemoveUserHandler.cpp \
+		RemoveUserRequest.cpp \
+		WAuthEngine.cpp 
 
