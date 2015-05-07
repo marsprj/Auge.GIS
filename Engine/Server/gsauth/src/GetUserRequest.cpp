@@ -1,4 +1,4 @@
-#include "GetUserRequest.h"f
+#include "GetUserRequest.h"
 #include "AugeXML.h"
 #include "AugeField.h"
 

@@ -131,13 +131,13 @@ namespace auge
 						break;
 					case augeFieldTypeLong:
 						{
-							g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetLong(i));
+							g_snprintf(str, AUGE_BUFFER_MAX,"%ld",pFeature->GetLong(i));
 							pxValue->AddChildText(str);
 						}
 						break;
 					case augeFieldTypeInt64:
 						{
-							g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetInt64(i));
+							g_snprintf(str, AUGE_BUFFER_MAX,"%ld",pFeature->GetInt64(i));
 							pxValue->AddChildText(str);
 						}
 						break;

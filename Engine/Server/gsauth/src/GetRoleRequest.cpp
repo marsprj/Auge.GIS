@@ -1,4 +1,4 @@
-#include "GetRoleRequest.h"f
+#include "GetRoleRequest.h"
 #include "AugeXML.h"
 #include "AugeField.h"
 
