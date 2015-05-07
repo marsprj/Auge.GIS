@@ -114,7 +114,13 @@ namespace auge
 
 	RESULTCODE ConnectionManagerImpl::Unregister(const char* name)
 	{
-		return AG_SUCCESS;
+		if(name==NULL)
+		{
+			return AG_FAILURE;
+		}
+		char sql[AUGE_NAME_MAX];
+		g_snprintf(sql, AUGE_NAME_MAX, "delete from g_data_source where name='%s'", name);
+		return m_pConnection->ExecuteSQL(sql);
 	}
 
 	bool ConnectionManagerImpl::Has(const char* name)
