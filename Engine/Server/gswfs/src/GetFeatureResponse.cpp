@@ -137,7 +137,7 @@ namespace auge
 						break;
 					case augeFieldTypeInt64:
 						{
-							g_snprintf(str, AUGE_BUFFER_MAX,"%ld",pFeature->GetInt64(i));
+							g_snprintf(str, AUGE_BUFFER_MAX,"%lld",pFeature->GetInt64(i));
 							pxValue->AddChildText(str);
 						}
 						break;
@@ -149,7 +149,7 @@ namespace auge
 						break;
 					case augeFieldTypeDouble:
 						{
-							g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetDouble(i));
+							g_snprintf(str, AUGE_BUFFER_MAX,"%f",pFeature->GetDouble(i));
 							pxValue->AddChildText(str);
 						}
 						break;
