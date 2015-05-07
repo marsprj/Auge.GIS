@@ -2,4 +2,5 @@
 <Engines>
 	<Engine description="PostgreSQL Data Engine" path="" id="Postgres"/>
 	<Engine description="Shape file Data Engine" path="" id="Shape"/>
+	<Engine description="Raster Data Engine" path="" id="Raster"/>
 </Engines>

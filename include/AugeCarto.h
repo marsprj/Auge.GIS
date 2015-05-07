@@ -34,6 +34,7 @@ namespace auge
 	class Renderer;
 	class Transformation;
 	class Canvas;
+	class Raster;
 
 	class Map : public GObject
 	{
@@ -102,6 +103,8 @@ namespace auge
 
 	public:
 		virtual augeLayerType	GetType() = 0;
+		virtual RESULTCODE		SetRaster(Raster* pRaster) = 0;
+		virtual Raster*			GetRaster() = 0;
 
 	};
 

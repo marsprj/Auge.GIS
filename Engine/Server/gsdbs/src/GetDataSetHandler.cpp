@@ -68,11 +68,23 @@ namespace auge
 		pWorkspace = pConnectionManager->GetWorkspace(sourceName);
 		if( pWorkspace==NULL )
 		{
-			const char* msg = "Parameter [sourceName] is NULL";
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Cannot Get DataSource [%s]", sourceName);
 			GLogger* pLogger = augeGetLoggerInstance();
 			pLogger->Error(msg, __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage("Parameter [sourceName] is NULL");
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+		
+		if(!pWorkspace->IsOpen())
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "[%s] Cannot connect to data source", sourceName);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
 
@@ -87,7 +99,7 @@ namespace auge
 				GLogger* pLogger = augeGetLoggerInstance();
 				pLogger->Error(msg, __FILE__, __LINE__);
 				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-				pExpResponse->SetMessage("Parameter [sourceName] is NULL");
+				pExpResponse->SetMessage(msg);
 				return pExpResponse;
 			}
 			else

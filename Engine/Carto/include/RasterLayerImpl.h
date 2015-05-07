@@ -28,6 +28,9 @@ namespace auge
 		virtual RESULTCODE		SetStyle(Style* pStyle);
 		virtual Style*			GetStyle();
 
+		virtual RESULTCODE		SetRaster(Raster* pRaster);
+		virtual Raster*			GetRaster();
+
 		virtual void			Release();
 
 	private:
@@ -36,6 +39,8 @@ namespace auge
 		g_int		m_srid;
 		bool		m_visiable;
 		Style*		m_pStyle;
+
+		Raster*		m_pRaster;
 	};
 }
 

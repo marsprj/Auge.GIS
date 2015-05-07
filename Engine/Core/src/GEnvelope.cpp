@@ -22,10 +22,10 @@ m_xmin(xmin),
 
 void GEnvelope::Set(double xmin, double ymin, double xmax, double ymax)
 {
-	m_xmin = xmin;
-	m_xmax = xmax;
-	m_ymin = ymin;
-	m_ymax = ymax;
+	m_xmin = xmin < xmax ? xmin : xmax;
+	m_xmax = xmin > xmax ? xmin : xmax;
+	m_ymin = ymin < ymax ? ymin : ymax;
+	m_ymax = ymin > ymax ? ymin : ymax;
 }
 
 void GEnvelope::Union(GEnvelope& o)

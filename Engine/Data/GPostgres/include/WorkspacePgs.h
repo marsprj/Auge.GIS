@@ -1,5 +1,5 @@
-#ifndef __AUGE_WORKSPACE_SHP_H__
-#define __AUGE_WORKSPACE_SHP_H__
+#ifndef __AUGE_WORKSPACE_PGS_H__
+#define __AUGE_WORKSPACE_PGS_H__
 
 #include "AugeFeature.h"
 #include <string>
@@ -57,4 +57,4 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_WORKSPACE_SHP_H__
+#endif //__AUGE_WORKSPACE_PGS_H__

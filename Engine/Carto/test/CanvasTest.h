@@ -15,6 +15,8 @@ class CanvasTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(DrawShpPolygon);
 	//CPPUNIT_TEST(DrawColorMap);
 	//CPPUNIT_TEST(ReadColor);
+
+	CPPUNIT_TEST(DrawRasterLayer);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -32,6 +34,8 @@ private:
 
 	void DrawColorMap();
 	void ReadColor();
+
+	void DrawRasterLayer();
 	
 };
 
