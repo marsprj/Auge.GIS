@@ -1,16 +1,21 @@
 #include "RasterLayerImpl.h"
+#include "AugeRaster.h"
 
 namespace auge
 {
 	RasterLayerImpl::RasterLayerImpl():
-	m_srid(4326)
+	m_srid(4326),
+	m_pRaster(NULL)
 	{
 		
 	}
 
 	RasterLayerImpl::~RasterLayerImpl()
 	{
-
+		if(m_pRaster!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pRaster);
+		}
 	}
 
 	augeLayerType RasterLayerImpl::GetType()
@@ -76,5 +81,20 @@ namespace auge
 	Style* RasterLayerImpl::GetStyle()
 	{
 		return NULL;
+	}
+
+	RESULTCODE RasterLayerImpl::SetRaster(Raster* pRaster)
+	{
+		if(m_pRaster)
+		{
+			AUGE_SAFE_RELEASE(m_pRaster);
+		}
+		m_pRaster = pRaster;
+		return AG_SUCCESS;
+	}
+
+	Raster* RasterLayerImpl::GetRaster()
+	{
+		return m_pRaster;
 	}
 }

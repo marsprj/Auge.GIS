@@ -42,7 +42,7 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-service=ims&version=1.0.0&request=UnRegisterDataSource&name=world
+service=dbs&version=1.0.0&request=UnRegisterDataSource&name=world
 
 [ HTTP Post ]
 -------------------------------------------------------------------------

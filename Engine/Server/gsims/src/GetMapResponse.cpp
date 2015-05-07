@@ -96,6 +96,15 @@ namespace auge
 
 		XElement* pxName = pxRoot->AddChild("Name", NULL);
 		pxName->SetChildText(pMap->GetName());
+		// SRID
+		g_sprintf(str, "%d", pMap->GetSRID());
+		pxNode = pxRoot->AddChild("Srid");
+		pxNode->AddChildText(str);
+
+		// Extent
+		//AddBoundingBoxNode(pxMap, pMap->GetExtent());		
+		AddLayerBoundingNode(pxRoot, pMap->GetExtent(), pMap->GetSRID());
+
 		// WMS_Capabilities-->Capability
 		XElement* pxCapability = pxRoot->AddChild("Capability", NULL);
 		// WMS_Capabilities-->Capability-->Layer

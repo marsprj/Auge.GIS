@@ -9,6 +9,8 @@
 #include "CreateDataSetHandler.h"
 #include "RemoveDataSetHandler.h"
 
+#include "TestConnectionHandler.h"
+
 #include "AugeCore.h"
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
@@ -18,11 +20,11 @@ namespace auge
 {
 	WebEngine* augeGetWebEngineInstance()
 	{
-		static WEngine g_webMapEngine;
+		static WDataEngine g_webMapEngine;
 		return &g_webMapEngine;
-	}
+	} 
 
-	WEngine::WEngine()
+	WDataEngine::WDataEngine()
 	{
 		m_handler = NULL;
 
@@ -33,25 +35,26 @@ namespace auge
 		m_handlers.push_back(new GetPreviewHandler());
 		m_handlers.push_back(new CreateDataSetHandler());
 		m_handlers.push_back(new RemoveDataSetHandler());
+		m_handlers.push_back(new TryConnectionHandler());
 	}
 
-	WEngine::~WEngine()
+	WDataEngine::~WDataEngine()
 	{
 		m_handler = NULL;
 		CleanupHandlers();
 	}
 
-	void* WEngine::GetHandler()
+	void* WDataEngine::GetHandler()
 	{
 		return m_handler;
 	}
 
-	void WEngine::SetHandler(void* handler)
+	void WDataEngine::SetHandler(void* handler)
 	{
 		m_handler = handler;
 	}
 
-	void WEngine::CleanupHandlers()
+	void WDataEngine::CleanupHandlers()
 	{
 		WebHandler* pHandler = NULL;
 		std::vector<WebHandler*>::iterator iter;
@@ -63,7 +66,7 @@ namespace auge
 		m_handlers.clear();
 	}
 
-	WebHandler*	WEngine::GetHandler(const char* name)
+	WebHandler*	WDataEngine::GetHandler(const char* name)
 	{
 		std::vector<WebHandler*>::iterator iter;
 		for(iter=m_handlers.begin(); iter!=m_handlers.end(); iter++)
@@ -76,27 +79,27 @@ namespace auge
 		return NULL;
 	}
 
-	const char*	WEngine::GetID()
+	const char*	WDataEngine::GetID()
 	{
 		return "WDataEngine";
 	}
 
-	const char*	WEngine::GetType()
+	const char*	WDataEngine::GetType()
 	{
 		return "dbs";
 	}
 
-	const char*	WEngine::GetDescription()
+	const char*	WDataEngine::GetDescription()
 	{
 		return "Auge Web Service Manager";
 	}
 
-	const char*	WEngine::GetLibraryPath()
+	const char*	WDataEngine::GetLibraryPath()
 	{
 		return NULL;
 	}
 
-	WebRequest*	WEngine::ParseRequest(const char* url)
+	WebRequest*	WDataEngine::ParseRequest(const char* url)
 	{
 		GPropertySet props;
 		props.Parse(url,"&");
@@ -127,11 +130,11 @@ namespace auge
 		return pWebRequest;
 	}
 
-	WebRequest*	WEngine::ParseRequest(rude::CGI& cgi)
+	WebRequest*	WDataEngine::ParseRequest(rude::CGI& cgi)
 	{
 		const char* request = cgi["request"];
 		if(request==NULL)
-		{
+		{ 
 			GLogger* pLogger = augeGetLoggerInstance();
 			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
 			return NULL;
@@ -139,17 +142,23 @@ namespace auge
 		WebHandler* handler = GetHandler(request);
 		if(handler == NULL)
 		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "%s doesn't support request [%s]", GetType(), request);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
 			return NULL;
 		}
 		return handler->ParseRequest(cgi);
 	}
 
-	WebRequest*	WEngine::ParseRequest(rude::CGI& cgi, const char* mapName)
+	WebRequest*	WDataEngine::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
 		return ParseRequest(cgi);
 	}
 
-	/*WebRequest*	WEngine::ParseRequest(rude::CGI& cgi)
+	/*WebRequest*	WDataEngine::ParseRequest(rude::CGI& cgi)
 	{
 		WebRequest* pWebRequest = NULL;
 
@@ -232,7 +241,7 @@ namespace auge
 		return pWebRequest;
 	}*/
 
-	WebRequest*	WEngine::ParseRequest(XDocument* pxDoc, const char* mapName)
+	WebRequest*	WDataEngine::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		XElement	*pxRoot = pxDoc->GetRootNode();
 		const char* request = pxRoot->GetName();
@@ -252,7 +261,7 @@ namespace auge
 		return handler->ParseRequest(pxDoc, mapName);
 	}
 
-	WebResponse* WEngine::Execute(WebRequest* pWebRequest)
+	WebResponse* WDataEngine::Execute(WebRequest* pWebRequest)
 	{
 		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
@@ -265,7 +274,7 @@ namespace auge
 		return handler->Execute(pWebRequest);
 	}
 
-	/*WebResponse* WEngine::Execute(WebRequest* pWebRequest)
+	/*WebResponse* WDataEngine::Execute(WebRequest* pWebRequest)
 	{
 		WebResponse		*pWebResponse = NULL;
 
@@ -312,17 +321,17 @@ namespace auge
 		return pWebResponse;
 	}*/
 
-	WebResponse* WEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WDataEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
 		return Execute(pWebRequest);
 	}
 
-	//WebResponse* WEngine::GetCapabilities(CapabilitiesRequest* pRequest)
+	//WebResponse* WDataEngine::GetCapabilities(CapabilitiesRequest* pRequest)
 	//{	
 	//	return new CapabilitiesResponse(pRequest);
 	//}
 
-	//WebResponse* WEngine::CreateService(CreateServiceRequest* pRequest)
+	//WebResponse* WDataEngine::CreateService(CreateServiceRequest* pRequest)
 	//{
 	//	const char* name = NULL;
 	//	ServiceManager* pServiceManager = NULL;
@@ -354,7 +363,7 @@ namespace auge
 	//	return pSusResponse;
 	//}
 
-	//WebResponse* WEngine::RemoveService(RemoveServiceRequest* pRequest)
+	//WebResponse* WDataEngine::RemoveService(RemoveServiceRequest* pRequest)
 	//{
 	//	const char* name = NULL;
 	//	ServiceManager* pServiceManager = NULL;
@@ -386,12 +395,12 @@ namespace auge
 	//	return pSusResponse;
 	//}
 
-	//WebResponse* WEngine::GetService(GetServiceRequest* pRequest)
+	//WebResponse* WDataEngine::GetService(GetServiceRequest* pRequest)
 	//{
 	//	return new GetServiceResponse(pRequest);
 	//}
 
-	//WebResponse* WEngine::RegisterHandler(RegisterHandlerRequest* pRequest)
+	//WebResponse* WDataEngine::RegisterHandler(RegisterHandlerRequest* pRequest)
 	//{
 	//	const char* service_name = NULL;
 	//	const char* handler = NULL;
@@ -416,7 +425,7 @@ namespace auge
 	//	return pResponse;
 	//}
 	//
-	//WebResponse* WEngine::RegisterDataSource(RegisterDataSourceRequest* pRequest)
+	//WebResponse* WDataEngine::RegisterDataSource(RegisterDataSourceRequest* pRequest)
 	//{
 	//	const char* name = NULL;
 	//	const char* engine = NULL;

@@ -83,6 +83,17 @@ namespace auge
 		virtual	DataEngine*		GetEngine() = 0;
 	};
 
+	class EnumWorkspace
+	{
+	protected:
+		EnumWorkspace(){}
+		virtual ~EnumWorkspace(){}
+	public:
+		virtual void			Reset() = 0;
+		virtual	Workspace*		Next() = 0;
+		virtual void			Release() = 0;
+	};
+
 	class DataSet : public GObject
 	{
 	protected:
@@ -133,6 +144,7 @@ namespace auge
 		virtual Workspace*			GetWorkspace(g_uint i) = 0;
 		virtual Workspace*			GetWorkspace(const char* name) = 0;
 		virtual Workspace*			GetWorkspaceById(g_uint id) = 0;
+		virtual EnumWorkspace*		GetWorkspaces() = 0;
 		virtual RESULTCODE			Register(const char* name, const char* engine, const char* constr) = 0;
 		virtual RESULTCODE			Unregister(const char* name) = 0;
 

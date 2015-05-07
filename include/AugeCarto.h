@@ -34,6 +34,7 @@ namespace auge
 	class Renderer;
 	class Transformation;
 	class Canvas;
+	class Raster;
 
 	class Map : public GObject
 	{
@@ -102,6 +103,8 @@ namespace auge
 
 	public:
 		virtual augeLayerType	GetType() = 0;
+		virtual RESULTCODE		SetRaster(Raster* pRaster) = 0;
+		virtual Raster*			GetRaster() = 0;
 
 	};
 
@@ -243,6 +246,7 @@ namespace auge
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_i, g_uint style_id) = 0;
 		virtual RESULTCODE		RemoveLayers(const char* mapName) = 0;
 		virtual RESULTCODE		RemoveLayers(g_uint map_id) = 0;
+		virtual RESULTCODE		RemoveLayer(const char* mapName, const char* layerName) = 0;
 		virtual g_int			GetLayerID(const char* layerName, const char* mapName) = 0;
 
 		virtual g_uint			GetStyleCount() = 0;

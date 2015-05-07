@@ -33,12 +33,19 @@ namespace auge
 		if(name==NULL)
 		{
 			XElement *pxRoot = pxDoc->CreateRootNode("IMS_DataSources", NULL, NULL);
-			g_uint count = pConnManager->GetCount();
-			for(g_uint i=0; i<count; i++)
+			EnumWorkspace* pEnum = pConnManager->GetWorkspaces();
+			pEnum->Reset();
+			while((pWorkspace=pEnum->Next()))
 			{
-				pWorkspace = pConnManager->GetWorkspace(i);
 				AddDataSourceNode(pxRoot, pWorkspace);
 			}
+			pEnum->Release();
+			//g_uint count = pConnManager->GetCount();
+			//for(g_uint i=0; i<count; i++)
+			//{
+			//	pWorkspace = pConnManager->GetWorkspace(i);
+			//	AddDataSourceNode(pxRoot, pWorkspace);
+			//}
 		}
 		else
 		{

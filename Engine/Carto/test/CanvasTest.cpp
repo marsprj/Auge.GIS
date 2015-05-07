@@ -448,3 +448,8 @@ void CanvasTest::ReadColor()
 	//g_byte a = color.GetAlpha();
 
 }
+
+void DrawRasterLayer()
+{
+
+}
