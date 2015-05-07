@@ -9,7 +9,7 @@ libgraster_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
 		-L$(top_srcdir)/Engine/Filter/src
 
-libgraster_la_LIBADD=-lgcore
+libgraster_la_LIBADD=-lgcore -lgdal
 
 libgraster_la_SOURCES=\
 		RasterImpl.cpp \
