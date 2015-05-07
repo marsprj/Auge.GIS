@@ -12,5 +12,7 @@ libgraster_la_LDFLAGS=\
 libgraster_la_LIBADD=-lgcore
 
 libgraster_la_SOURCES=\
-		DataEngineImpl.cpp \
-		WorkspaceRaster.cpp
+		RasterImpl.cpp \
+		RasterBandImpl.cpp \
+		WorkspaceRaster.cpp \
+		DataEngineImpl.cpp
