@@ -488,7 +488,7 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	g_uint CartoManagerImpl::GetCount(g_uint user)
 	{
-		if(user==NULL)
+		if(user<=0)
 		{
 			return 0;
 		}
@@ -637,7 +637,7 @@ namespace auge
 			return NULL;
 		}
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_map (m_name, user_id) values('%s',user_id) returning gid", name, user);
+		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_map (m_name, user_id) values('%s',%d) returning gid", name, user);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
