@@ -11,4 +11,5 @@ libgdengine_la_LIBADD=-lgcore
 
 libgdengine_la_SOURCES=\
 		ConnectionManagerImpl.cpp \
-		DataEngineManagerImpl.cpp
+		DataEngineManagerImpl.cpp \
+		EnumWorkspaceImpl.cpp

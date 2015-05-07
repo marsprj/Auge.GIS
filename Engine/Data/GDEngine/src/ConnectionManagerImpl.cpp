@@ -1,4 +1,5 @@
 #include "ConnectionManagerImpl.h"
+#include "EnumWorkspaceImpl.h"
 
 namespace auge
 {
@@ -85,6 +86,46 @@ namespace auge
 			}
 		}
 		return NULL;
+	}
+
+	EnumWorkspace* ConnectionManagerImpl::GetWorkspaces()
+	{
+		EnumWorkspaceImpl* pWorkspaces = new EnumWorkspaceImpl();
+		if(m_pConnection==NULL)
+		{
+			return pWorkspaces;
+		}
+
+		const char* sql = "select gid,name,engine,uri,state,d_uri from g_data_source";
+		GResultSet* pResultSet = NULL;
+		pResultSet = m_pConnection->ExecuteQuery(sql);
+		if(pResultSet!=NULL)
+		{
+			Workspace* pWorkspace = NULL;
+			int gid = -1;
+			const char* name= NULL;
+			const char* engn=NULL;
+			const char* uri = NULL;
+			const char* stat= NULL;
+			const char* d_uri = NULL;
+			g_uint count = pResultSet->GetCount();
+			for(g_uint i=0; i<count; i++)
+			{
+				gid = pResultSet->GetInt(i,0);
+				name= pResultSet->GetString(i,1);
+				engn= pResultSet->GetString(i,2);
+				uri = pResultSet->GetString(i,3);
+				stat= pResultSet->GetString(i,4);
+				d_uri = pResultSet->GetString(i,5);
+
+				pWorkspace = CreateWorkspace(name, engn, uri);
+				if(pWorkspace!=NULL)
+				{
+					pWorkspaces->Add(pWorkspace);
+				}
+			}
+		}
+		return pWorkspaces;
 	}
 
 	RESULTCODE ConnectionManagerImpl::Register(const char* name, const char* engine, const char* constr)
@@ -254,7 +295,6 @@ namespace auge
 		pWorkspace = pEngine->CreateWorkspace();
 		pWorkspace->SetConnectionString(uri);
 		pWorkspace->SetName(name); 
-		
 
 		return pWorkspace;
 	}

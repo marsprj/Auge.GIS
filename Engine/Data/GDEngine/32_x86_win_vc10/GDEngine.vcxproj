@@ -94,10 +94,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\..\..\..\include\AugeFeature.h" />
     <ClInclude Include="..\include\ConnectionManagerImpl.h" />
     <ClInclude Include="..\include\DataEngineManagerImpl.h" />
+    <ClInclude Include="..\include\EnumWorkspaceImpl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ConnectionManagerImpl.cpp" />
     <ClCompile Include="..\src\DataEngineManagerImpl.cpp" />
+    <ClCompile Include="..\src\EnumWorkspaceImpl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
