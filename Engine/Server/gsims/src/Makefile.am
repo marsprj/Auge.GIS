@@ -22,9 +22,9 @@ libgsims_la_SOURCES=\
 		    CreateServiceHandler.cpp \
 		    CreateServiceRequest.cpp \
 		    CreateServiceResponse.cpp \
-		    GetMapHandler.cpp \
-		    GetMapRequest.cpp \
-		    GetMapResponse.cpp \
+		    DescribeMapHandler.cpp \
+		    DescribeMapRequest.cpp \
+		    DescribeMapResponse.cpp \
 		    GetServiceHandler.cpp \
 		    GetServiceRequest.cpp \
 		    GetServiceResponse.cpp \

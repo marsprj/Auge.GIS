@@ -1,5 +1,5 @@
-#ifndef __AUGE_IMS_GET_MAP_REQUEST_H__
-#define __AUGE_IMS_GET_MAP_REQUEST_H__
+#ifndef __AUGE_IMS_DESCRIBE_MAP_REQUEST_H__
+#define __AUGE_IMS_DESCRIBE_MAP_REQUEST_H__
 
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
@@ -10,11 +10,11 @@
 
 namespace auge
 {
-	class GetMapRequest : public WebRequest
+	class DescribeMapRequest : public WebRequest
 	{
 	public:
-		GetMapRequest();
-		virtual ~GetMapRequest();
+		DescribeMapRequest();
+		virtual ~DescribeMapRequest();
 
 	public:
 		virtual const char*		GetEngine();
@@ -36,13 +36,13 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_IMS_GET_MAP_REQUEST_H__
+#endif //__AUGE_IMS_DESCRIBE_MAP_REQUEST_H__
 
 /************************************************************************
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-service=ims&version=1.0.0&request=GetMap&name=world
-http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=GetMap&name=world
+service=ims&version=1.0.0&request=DescribeMap&name=world
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=DescribeMap&name=world
 
 ************************************************************************/
