@@ -2,6 +2,7 @@
 #include "DescribeMapRequest.h"
 #include "DescribeMapResponse.h"
 #include "AugeCarto.h"
+#include "AugeService.h"
 
 namespace auge
 {
@@ -68,23 +69,38 @@ namespace auge
 
 	WebResponse* DescribeMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		DescribeMapRequest* pRequest = static_cast<DescribeMapRequest*>(pWebRequest);
-		DescribeMapResponse* pWebResponse = new DescribeMapResponse(pRequest);
+		WebResponse* pWebResponse = NULL;
+		DescribeMapRequest* pRequest = static_cast<DescribeMapRequest*>(pWebRequest);		
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
 
 		const char* name = pRequest->GetName();
 		if(name==NULL)
 		{
 			EnumMap* pMaps = pCartoManager->GetMaps();
-			pWebResponse->SetMaps(pMaps);
+			DescribeMapResponse* pResponse = new DescribeMapResponse(pRequest);
+			pResponse->SetMaps(pMaps);
+			pResponse->SetWebContext(pWebContext);
+			pWebResponse = pResponse;
 		}
 		else
 		{
 			Map* pMap = pCartoManager->LoadMap(name);
-			pWebResponse->SetMap(pMap);
+			if(pMap==NULL)
+			{
+				GError* pError = augeGetErrorInstance();
+				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+				pExpResponse->SetMessage(pError->GetLastError());
+				pWebResponse = pExpResponse;
+			}
+			else
+			{
+				DescribeMapResponse* pResponse = new DescribeMapResponse(pRequest);
+				pResponse->SetMap(pMap);
+				pResponse->SetWebContext(pWebContext);
+				pWebResponse = pResponse;;
+			}
 		}
-
-		pWebResponse->SetWebContext(pWebContext);
+		
 		return pWebResponse;
 	}
 }
