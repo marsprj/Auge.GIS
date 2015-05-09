@@ -148,10 +148,11 @@ namespace auge
 
 		virtual void		DrawText(const	  char* text, int x, int y, TextSymbolizer* pSymbolizer) = 0;
 		virtual void		DrawText(const g_uchar* text, int x, int y, TextSymbolizer* pSymbolizer) = 0;
+		virtual void		Label(const char* text, WKBPoint *pWKBPoint, TextSymbolizer* pSymbolizer, Transformation* pTransformation) = 0;
 
 		virtual bool		DrawColorMap(ColorMap* pColorMap) = 0;
 
-		virtual void		Label(const char* text, WKBPoint *pWKBPoint, TextSymbolizer* pSymbolizer, Transformation* pTransformation) = 0;
+		virtual bool		DrawRaster(Raster* pRaster, Transformation* pTransformation) = 0;
 
 		virtual void		Save() = 0;
 		virtual void		Resotre() = 0;
@@ -286,6 +287,7 @@ namespace auge
 	public:
 		virtual Map*			CreateMap() = 0;
 		virtual FeatureLayer*	CreateFeatureLayer() = 0;
+		virtual RasterLayer*	CreateRasterLayer() = 0;
 		virtual Canvas*			CreateCanvas2D(g_uint width, g_uint height) = 0;
 		virtual Renderer*		CreateRenderer2D(g_uint width, g_uint height) = 0;
 	};

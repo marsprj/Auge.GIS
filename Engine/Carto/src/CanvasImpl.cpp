@@ -85,7 +85,8 @@ namespace auge
 
 	void CanvasImpl::DrawLayer(RasterLayer* pLayer)
 	{
-
+		Raster* pRaster = pLayer->GetRaster();
+		m_pRenderer->DrawRaster(pRaster, &m_transform);
 	}
 
 	void CanvasImpl::DrawLayer(Layer* pLayer, Style* pStyle)

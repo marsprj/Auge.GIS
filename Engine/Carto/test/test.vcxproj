@@ -85,6 +85,7 @@
     <ClCompile Include="LabelTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapTest.cpp" />
+    <ClCompile Include="RasterTest.cpp" />
     <ClCompile Include="StyleTest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +93,7 @@
     <ClInclude Include="CanvasTest.h" />
     <ClInclude Include="LabelTest.h" />
     <ClInclude Include="MapTest.h" />
+    <ClInclude Include="RasterTest.h" />
     <ClInclude Include="StyleTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

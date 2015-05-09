@@ -1,7 +1,10 @@
 #include "RendererCairo.h"
+#include "AugeRaster.h"
 
 namespace auge
 {
+	const g_uint g_cairo_bands = 4;
+	
 	void	build_path(cairo_t* cairo, WKBLineString		*pWKBLineString,		Transformation* pTransformation);
 	void	build_path(cairo_t* cairo, WKBMultiLineString	*pWKBMultiLineString,	Transformation* pTransformation);
 	void	build_path(cairo_t* cairo, WKBPolygon			*pWKBPolygon,			Transformation* pTransformation);
@@ -69,7 +72,8 @@ namespace auge
 		float b = color.GetBlueF();
 		float a = color.GetAlphaF();
 		//cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
-		cairo_set_source_rgba(m_cairo, r, g, b, 1.0f);
+		//cairo_set_source_rgba(m_cairo, r, g, b, 1.0f);
+		cairo_set_source_rgba(m_cairo, r, g, b, a);
 		cairo_rectangle(m_cairo, x, y, width, height);
 		cairo_fill(m_cairo);
 	}
@@ -625,4 +629,203 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	// Build Path End
 	//////////////////////////////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////////////////////////////
+	// DrawRaster Begin
+	//////////////////////////////////////////////////////////////////////////
+	bool RendererCairo::DrawRaster(Raster* pRaster, Transformation* pTransformation)
+	{
+		GEnvelope& raster_extent = pRaster->GetExtent();
+		GEnvelope& viewer_extent = pTransformation->GetViewer();
+
+		if(!raster_extent.Intersects(viewer_extent))
+		{
+			return false;
+		}
+
+		GEnvelope visible_extent = raster_extent.Intersect(viewer_extent);
+		if(!visible_extent.IsValid())
+		{
+			return false;
+		}
+
+		g_uint r_xmin=0, r_ymin=0, r_xmax=0, r_ymax=0;
+		pRaster->GetRasterPosition(visible_extent.m_xmin, visible_extent.m_ymax, r_xmin, r_ymin);
+		pRaster->GetRasterPosition(visible_extent.m_xmax, visible_extent.m_ymin, r_xmax, r_ymax);
+
+		g_uint r_w = r_xmax - r_xmin;
+		g_uint r_h= r_ymax - r_ymin;
+
+		g_uint r_stride = r_w * g_cairo_bands;
+		g_uint r_data_size = r_stride * r_h;
+		unsigned char* r_data = (unsigned char*)calloc(r_data_size, sizeof(unsigned char));
+
+		ReadRasterSubArea(pRaster, r_data, r_xmin, r_ymin, r_w, r_h);
+
+		cairo_surface_t *raster_surface = NULL;	
+		raster_surface = cairo_image_surface_create_for_data(r_data,
+									CAIRO_FORMAT_ARGB32,//(cairo_format_t)pRaster->GetPixelType(),
+									r_w,
+									r_h,
+									r_stride);
+
+		int s_x0=0, s_y0=0;
+		int s_x1=0, s_y1=0;
+		GEnvelope& extent = pRaster->GetExtent();
+		pTransformation->ToScreenPoint(visible_extent.m_xmin, visible_extent.m_ymin, s_x0, s_y0);
+		pTransformation->ToScreenPoint(visible_extent.m_xmax, visible_extent.m_ymax, s_x1, s_y1);
+		int s_w = abs(s_x1 - s_x0);
+		int s_h = abs(s_y1 - s_y0);
+		int o_x = g_min(s_x0, s_x1);
+		int o_y = g_min(s_y0, s_y1);
+		double cairo_scale_x = (double)s_w/(double)r_w;
+		double cairo_scale_y = (double)s_h/(double)r_h;
+		//double cairo_scale_x = 1.0f;
+		//double cairo_scale_y = 1.0f;
+		
+		cairo_save(m_cairo);
+		cairo_translate(m_cairo, o_x, o_y);
+		cairo_scale  (m_cairo, cairo_scale_x, cairo_scale_y);
+		cairo_set_source_surface(m_cairo, raster_surface, 0,0);
+
+		cairo_paint(m_cairo);
+		cairo_surface_flush(m_cairo_surface);
+		cairo_surface_destroy(raster_surface);
+		cairo_restore(m_cairo);
+
+		return true;
+	}
+
+	//bool RendererCairo::DrawRaster(Raster* pRaster, Transformation* pTransformation)
+	//{
+	//	const char* path = pRaster->GetPath();
+	//	cairo_surface_t *image = cairo_image_surface_create_from_png(path);
+	//	if(image!=NULL)
+	//	{
+	//		int s_x0=0, s_y0=0;
+	//		int s_x1=0, s_y1=0;
+	//		GEnvelope& extent = pRaster->GetExtent();
+	//		pTransformation->ToScreenPoint(extent.m_xmin, extent.m_ymin, s_x0, s_y0);
+	//		pTransformation->ToScreenPoint(extent.m_xmax, extent.m_ymax, s_x1, s_y1);
+	//		int s_w = abs(s_x1 - s_x0);
+	//		int s_h = abs(s_y1 - s_y0);
+	//		int o_x = g_min(s_x0, s_x1);
+	//		int o_y = g_min(s_y0, s_y1);
+
+	//		int i_w = cairo_image_surface_get_width(image);
+	//		int i_h = cairo_image_surface_get_height(image);
+
+	//		cairo_save(m_cairo);
+	//		cairo_translate(m_cairo, o_x, o_y);
+	//		cairo_scale  (m_cairo, (double)s_w/(double)i_w, (double)s_h/(double)i_h);
+	//		cairo_set_source_surface(m_cairo, image, 0,0);
+
+	//		cairo_paint(m_cairo);
+	//		cairo_surface_flush(m_cairo_surface);
+	//		cairo_surface_destroy(image);
+	//		cairo_restore(m_cairo);
+	//	}
+
+	//	return true;
+	//}
+
+	bool RendererCairo::ReadRasterSubArea(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height)
+	{
+		bool ret = false;
+		g_uint nBands = pRaster->GetBandCount();
+
+		switch(nBands)
+		{
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			ret = ReadRasterSubAreaBand_3(pRaster, pdata, x, y, width, height);
+			break;
+		case 4:
+			ret = ReadRasterSubAreaBand_4(pRaster, pdata, x, y, width, height);
+			break;
+		}
+
+		return ret;
+	}
+
+	bool RendererCairo::ReadRasterSubAreaBand_3(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height)
+	{
+		g_uint stride = m_width * g_cairo_bands * sizeof(char);
+
+		auge::RasterBand* pBand = NULL;
+		// red
+		pBand = pRaster->GetBand(0);
+		unsigned char* pb = (unsigned char*)pBand->GetData(x, y);
+		CopyMatrix(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
+		// green
+		pBand = pRaster->GetBand(1);
+		pb = (unsigned char*)pBand->GetData(x, y);
+		CopyMatrix(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+1, width, height, g_cairo_bands);
+		// blue
+		pBand = pRaster->GetBand(2);
+		pb = (unsigned char*)pBand->GetData(x, y);
+		CopyMatrix(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
+		// alpha
+		SetMatrix(pdata+3, width, height, g_cairo_bands, 255);
+
+		return true;
+	}
+
+	bool RendererCairo::ReadRasterSubAreaBand_4(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height)
+	{
+		g_uint stride = m_width * g_cairo_bands * sizeof(char);
+
+		auge::RasterBand* pBand = NULL;
+		// red
+		pBand = pRaster->GetBand(0);
+		unsigned char* pb = (unsigned char*)pBand->GetData(x, y);
+		CopyMatrix(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
+		// green
+		pBand = pRaster->GetBand(1);
+		pb = (unsigned char*)pBand->GetData(x, y);
+		CopyMatrix(pb,pRaster->GetWidth(), pRaster->GetHeight(),  pdata+1, width, height, g_cairo_bands);
+		// blue
+		pBand = pRaster->GetBand(2);
+		pb = (unsigned char*)pBand->GetData(x, y);
+		CopyMatrix(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
+		// alpha
+		pBand = pRaster->GetBand(3);
+		pb = (unsigned char*)pBand->GetData(x, y);
+		CopyMatrix(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+3, width, height, g_cairo_bands);
+		// alpha
+		//SetMatrix(pdata+3, width, height, g_cairo_bands, 255);
+
+		return true;
+	}
+
+	void RendererCairo::CopyMatrix(unsigned char* src, int src_width, int src_height, unsigned char* obj, int obj_width, int obj_height, int obj_step)
+	{
+		unsigned char* sp = src;
+		unsigned char* op = obj;
+		int i,j;
+		for(i=0; i<obj_height; i++)
+		{
+			unsigned char* ptr = sp;
+			for(j=0; j<obj_width; j++,op+=obj_step)
+			{
+				*op = *(ptr++);
+			}
+			sp += src_width;
+		}
+	}
+
+	void RendererCairo::SetMatrix(unsigned char* obj, int width, int height, int stride, unsigned char value)
+	{
+		unsigned char* op = obj;
+		for(int i=0; i<height; i++)
+		{
+			for(int j=0; j<width; j++,op+=stride)
+			{
+				*op = value;
+			}
+		}
+	}
 }

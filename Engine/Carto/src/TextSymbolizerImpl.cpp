@@ -4,7 +4,7 @@
 #include "string.h"
 
 
-namespace auge
+namespace auge 
 {
 	TextSymbolizerImpl::TextSymbolizerImpl():
 	m_pFont(new FontImpl),

@@ -4,6 +4,7 @@
 #include "AugeCarto.h"
 #include <string>
 #include <map>
+#include <vector>
 
 namespace auge
 {
@@ -40,7 +41,8 @@ namespace auge
 		std::string m_uri;
 		GEnvelope	m_exent;
 		g_int		m_srid;
-		std::map<std::string, Layer*> m_layers;
+		//std::map<std::string, Layer*> m_layers;
+		std::vector<Layer*> m_layers;
 		
 	};
 }

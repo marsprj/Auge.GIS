@@ -13,6 +13,7 @@ namespace auge
 	public:
 		virtual Map*			CreateMap();
 		virtual FeatureLayer*	CreateFeatureLayer();
+		virtual RasterLayer*	CreateRasterLayer();
 		virtual Canvas*			CreateCanvas2D(g_uint width, g_uint height);
 		virtual Renderer*		CreateRenderer2D(g_uint width, g_uint height);
 	};

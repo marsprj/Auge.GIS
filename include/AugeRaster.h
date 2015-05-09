@@ -50,8 +50,15 @@ namespace auge
 		virtual g_uint			GetWidth() = 0;
 		virtual g_uint			GetHeight() = 0;
 		virtual g_uint			GetBandCount() = 0;
-		virtual augePixelType	GetPixelType() = 0;
+		virtual RasterBand*		GetBand(g_uint i) = 0;
 		virtual GEnvelope&		GetExtent() = 0;
+
+		virtual augePixelType	GetPixelType() = 0;
+		virtual g_uint			GetPixelSize() = 0;
+
+		virtual bool			GetMapPosition(g_uint rx, g_uint ry, double& mx, double& my) = 0;
+		virtual bool			GetRasterPosition(double mx, double my, g_uint& rx, g_uint& ry) = 0;
+
 		virtual const char*		GetPath() = 0;
 	};
 
@@ -63,7 +70,16 @@ namespace auge
 	public:
 		virtual g_uint			GetWidth() = 0;
 		virtual g_uint			GetHeight() = 0;
+		virtual GEnvelope&		GetExtent() = 0;
+
 		virtual augePixelType	GetPixelType() = 0;
+		virtual g_uint			GetPixelSize() = 0;
+
+		virtual g_uint			GetDataSize() = 0;
+		virtual void*			GetData() = 0;
+
+		virtual void*			GetData(int x, int y) = 0;
+		virtual void*			GetData(double x, double y) = 0;
 	};
 }
 

@@ -204,19 +204,20 @@ namespace auge
 		virtual ~GEnvelope();
 
 	public:
-		void	Set(double xmin, double ymin, double xmax, double ymax);
+		void		Set(double xmin, double ymin, double xmax, double ymax);
 
-		void	Union(GEnvelope& o);
-		void	Offset(double x, double y);
-		void	MoveTo(double x, double y);
-		bool	Contain(double x, double y);
-		bool	Intersects(GEnvelope& other);
-		void	Inflate(int o);
+		void		Union(GEnvelope& o);
+		void		Offset(double x, double y);
+		void		MoveTo(double x, double y);
+		bool		Contain(double x, double y);
+		bool		Intersects(GEnvelope& other);
+		void		Inflate(int o);
+		GEnvelope	Intersect(GEnvelope& other);
 
-		double	GetWidth();
-		double	GetHeight();
+		double		GetWidth();
+		double		GetHeight();
 
-		bool	IsValid();
+		bool		IsValid();
 	public:
 		double	m_xmin, m_ymin,m_xmax, m_ymax;
 	};
