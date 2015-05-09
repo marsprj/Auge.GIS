@@ -15,14 +15,14 @@
 #include "UnRegisterLayerHandler.h"
 
 #include "CreateMapHandler.h"
-#include "GetMapHandler.h"
+#include "DescribeMapHandler.h"
 #include "RemoveMapHandler.h"
 #include "SetStyleHandler.h"
 
 #include "GetStyleHandler.h"
 #include "AddStyleHandler.h"
 #include "UpdateStyleHandler.h"
-#include "RemoveStyleHandler.h"
+#include "RemoveStyleHandler.h" 
 
 #include "RegisterMapHandler.h"
 
@@ -38,8 +38,8 @@ namespace auge
 {
 	WebEngine* augeGetWebEngineInstance()
 	{
-		static WEngine g_webMapEngine;
-		return &g_webMapEngine;
+		static WEngine g_webEngine;
+		return &g_webEngine;
 	}
 
 	WEngine::WEngine()
@@ -61,7 +61,7 @@ namespace auge
 		m_handlers.push_back(new UnRegisterLayerHandler());
 
 		m_handlers.push_back(new CreateMapHandler());
-		m_handlers.push_back(new GetMapHandler());
+		m_handlers.push_back(new DescribeMapHandler());
 		m_handlers.push_back(new RemoveMapHandler());
 		m_handlers.push_back(new SetStyleHandler());
 

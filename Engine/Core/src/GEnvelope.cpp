@@ -76,8 +76,8 @@ double GEnvelope::GetHeight()
 
 bool GEnvelope::Contain(double x, double y)
 {
-	bool b1 = (x>m_xmin) && (x<m_xmax);  
-	bool b2 = (y>m_ymin) && (y<m_ymax);  
+	bool b1 = (x>=m_xmin) && (x<=m_xmax);  
+	bool b2 = (y>=m_ymin) && (y<=m_ymax);  
 
 	return b1 && b2;
 }
@@ -91,6 +91,18 @@ bool GEnvelope::Intersects(GEnvelope& other)
 	double ymax = m_ymax < other.m_ymax ? m_ymax : other.m_ymax;
 
 	return (xmin<xmax)&&(ymin<ymax);  
+}
+
+GEnvelope GEnvelope::Intersect(GEnvelope& other)
+{
+	GEnvelope common;
+	common.m_xmin = m_xmin > other.m_xmin ? m_xmin : other.m_xmin;
+	common.m_xmax = m_xmax < other.m_xmax ? m_xmax : other.m_xmax;
+
+	common.m_ymin = m_ymin > other.m_ymin ? m_ymin : other.m_ymin;
+	common.m_ymax = m_ymax < other.m_ymax ? m_ymax : other.m_ymax;
+
+	return common;
 }
 
 void GEnvelope::Inflate(int o)

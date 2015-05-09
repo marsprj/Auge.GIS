@@ -1,5 +1,5 @@
-#include "GetMapRequest.h"
-#include "GetMapResponse.h"
+#include "DescribeMapRequest.h"
+#include "DescribeMapResponse.h"
 #include "AugeService.h"
 #include "AugeCarto.h"
 #include "AugeFeature.h"
@@ -7,7 +7,7 @@
 
 namespace auge
 { 
-	GetMapResponse::GetMapResponse(GetMapRequest* pRequest)
+	DescribeMapResponse::DescribeMapResponse(DescribeMapRequest* pRequest)
 	{
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
@@ -15,12 +15,12 @@ namespace auge
 		m_pMaps = NULL;
 	}
 
-	GetMapResponse::~GetMapResponse()
+	DescribeMapResponse::~DescribeMapResponse()
 	{
 		Cleanup();
 	}
 
-	void GetMapResponse::Cleanup()
+	void DescribeMapResponse::Cleanup()
 	{
 		if(m_pMaps!=NULL)
 		{
@@ -32,24 +32,24 @@ namespace auge
 		}
 	}
 
-	void GetMapResponse::SetMap(Map* pMap)
+	void DescribeMapResponse::SetMap(Map* pMap)
 	{
 		Cleanup();
 		m_pMap = pMap;
 	}
 
-	void GetMapResponse::SetMaps(EnumMap* pMaps)
+	void DescribeMapResponse::SetMaps(EnumMap* pMaps)
 	{
 		Cleanup();
 		m_pMaps = pMaps;
 	}
 
-	void GetMapResponse::SetWebContext(WebContext* pWebContext)
+	void DescribeMapResponse::SetWebContext(WebContext* pWebContext)
 	{
 		m_pWebContext = pWebContext;
 	}
 
-	RESULTCODE GetMapResponse::Write(WebWriter* pWriter)
+	RESULTCODE DescribeMapResponse::Write(WebWriter* pWriter)
 	{
 		if(pWriter==NULL)
 		{
@@ -81,7 +81,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void GetMapResponse::WriteMap(XDocument* pxDoc)
+	void DescribeMapResponse::WriteMap(XDocument* pxDoc)
 	{
 		Map* pMap = m_pMap;
 		XElement  *pxNode = NULL;
@@ -171,12 +171,12 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	// Add Map
 	//////////////////////////////////////////////////////////////////////////
-	//void GetMapResponse::SetLayerNode(XElement* pxLayer, const char* name, const char* title, const char* abstract, g_int srid, bool queryable)
+	//void DescribeMapResponse::SetLayerNode(XElement* pxLayer, const char* name, const char* title, const char* abstract, g_int srid, bool queryable)
 	//{
 	//	return NULL;
 	//}
 
-	void GetMapResponse::AddStyleNode(XElement* pxParent, Style* pStyle)
+	void DescribeMapResponse::AddStyleNode(XElement* pxParent, Style* pStyle)
 	{
 		XElement* pxStyle = pxParent->AddChild("Style", NULL);
 		XElement* pxNode = pxStyle->AddChild("Name",NULL);
@@ -191,7 +191,7 @@ namespace auge
 		pxNode = pxLegendURL->AddChild("OnlineResource",NULL);
 	}
 
-	void GetMapResponse::AddLayerBoundingNode(XElement* pxParent, GEnvelope& extent, int srid)
+	void DescribeMapResponse::AddLayerBoundingNode(XElement* pxParent, GEnvelope& extent, int srid)
 	{
 		XElement* pxNode = NULL;
 		XElement* pxBounding = NULL;
@@ -210,7 +210,7 @@ namespace auge
 		pxBounding->SetAttribute("maxy", str,NULL);
 	}
 
-	void GetMapResponse::AddLayerGeographicBoundingNode(XElement* pxParent, GEnvelope& extent)
+	void DescribeMapResponse::AddLayerGeographicBoundingNode(XElement* pxParent, GEnvelope& extent)
 	{
 		XElement* pxNode = NULL;
 		XElement* pxGeoBounding = NULL;
@@ -231,7 +231,7 @@ namespace auge
 		pxNode->SetChildText(str);
 	}
 
-	void GetMapResponse::AddLayerGeomTypeNode(XElement* pxLayer, FeatureLayer* pFeatureLayer)
+	void DescribeMapResponse::AddLayerGeomTypeNode(XElement* pxLayer, FeatureLayer* pFeatureLayer)
 	{
 		XElement* pxGeomType = pxLayer->AddChild("GeometryType", NULL);
 		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
@@ -250,7 +250,7 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	// Add Maps
 	//////////////////////////////////////////////////////////////////////////
-	void GetMapResponse::WriteMaps(XDocument* pxDoc)
+	void DescribeMapResponse::WriteMaps(XDocument* pxDoc)
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 
@@ -267,7 +267,7 @@ namespace auge
 		}
 	}
 
-	void GetMapResponse::AddMapNode(XElement* pxRoot, Map* pMap)
+	void DescribeMapResponse::AddMapNode(XElement* pxRoot, Map* pMap)
 	{
 		char str[AUGE_MSG_MAX];
 
@@ -301,7 +301,7 @@ namespace auge
 		}
 	}
 
-	void GetMapResponse::AddMapNode(XDocument* pxDoc, Map* pMap)
+	void DescribeMapResponse::AddMapNode(XDocument* pxDoc, Map* pMap)
 	{
 		char str[AUGE_MSG_MAX];
 
@@ -334,7 +334,7 @@ namespace auge
 		}
 	}
 
-	void GetMapResponse::AddBoundingBoxNode(XElement* pxRoot, GEnvelope& extent)
+	void DescribeMapResponse::AddBoundingBoxNode(XElement* pxRoot, GEnvelope& extent)
 	{
 		XElement* pxNode = NULL;
 		XElement* pxCorner = NULL;
@@ -364,7 +364,7 @@ namespace auge
 	}
 
 
-	void GetMapResponse::AddLayerNode(XElement* pxLayers, Layer* pLayer)
+	void DescribeMapResponse::AddLayerNode(XElement* pxLayers, Layer* pLayer)
 	{
 		XElement *pxNode = NULL;
 		XElement *pxLayer = NULL;

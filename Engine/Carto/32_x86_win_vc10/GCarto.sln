@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCarto", "GCarto.vcxproj", "{1BA6BCF9-52DA-46D1-A096-DA9A72C8C4B6}"
 	ProjectSection(ProjectDependencies) = postProject
-		{175ED294-86C6-45A1-9E7A-770AE765EB23} = {175ED294-86C6-45A1-9E7A-770AE765EB23}
+		{B082D314-56E0-4F40-8862-23C00E77EB24} = {B082D314-56E0-4F40-8862-23C00E77EB24}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCore", "..\..\Core\32_x86_win_vc10\GCore.vcxproj", "{175ED294-86C6-45A1-9E7A-770AE765EB23}"

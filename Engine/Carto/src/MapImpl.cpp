@@ -57,10 +57,7 @@ namespace auge
 		{
 			return NULL;
 		}
-		std::map<std::string, Layer*>::iterator iter;
-		iter = m_layers.begin();
-		for(g_uint n=0; n<i; n++, iter++);
-		return iter->second;
+		return m_layers[i];
 	}
 
 	Layer* MapImpl::GetLayer(const char* szName)
@@ -69,8 +66,17 @@ namespace auge
 		{
 			return NULL;
 		}
-		std::string strName = szName;
-		return m_layers[strName];
+		//std::string strName = szName;
+		//return m_layers[strName];
+		std::vector<Layer*>::iterator iter;
+		for(iter = m_layers.begin(); iter!=m_layers.end(); iter++)
+		{
+			if(!strcmp(szName, (*iter)->GetName()))
+			{
+				return *iter;
+			}
+		}
+		return NULL;
 	}
 
 	RESULTCODE MapImpl::AddLayer(Layer* pLayer)
@@ -93,18 +99,31 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		std::string strName = name;
-		m_layers[strName] = pLayer;
+		//std::string strName = name;
+		//m_layers[strName] = pLayer;
+		m_layers.push_back(pLayer);
 		return AG_SUCCESS;
 	}
 
 	void MapImpl::Cleanup()
 	{
+		//Layer* pLayer = NULL;
+		//std::map<std::string, Layer*>::iterator iter;
+		//for(iter=m_layers.begin(); iter!=m_layers.end(); iter++)
+		//{
+		//	pLayer = iter->second;
+		//	if(pLayer!=NULL)
+		//	{
+		//		pLayer->Release();
+		//	}
+		//}
+		//m_layers.clear();
+
 		Layer* pLayer = NULL;
-		std::map<std::string, Layer*>::iterator iter;
+		std::vector<Layer*>::iterator iter;
 		for(iter=m_layers.begin(); iter!=m_layers.end(); iter++)
 		{
-			pLayer = iter->second;
+			pLayer = *iter;
 			if(pLayer!=NULL)
 			{
 				pLayer->Release();
@@ -115,6 +134,27 @@ namespace auge
 
 	GEnvelope& MapImpl::GetExtent()
 	{
+		if(!m_layers.size())
+		{
+			return m_exent;
+		}
+		
+		//std::map<std::string, Layer*>::iterator iter = m_layers.begin();
+		//m_exent = iter->second->GetExtent();
+		//for(iter++;iter!=m_layers.end(); iter++)
+		//{
+		//	Layer* pLayer = iter->second;
+		//	GEnvelope& extent = pLayer->GetExtent();
+		//	m_exent.Union(extent);
+		//}
+		std::vector<Layer*>::iterator iter = m_layers.begin();
+		m_exent = (*iter)->GetExtent();
+		for(iter++;iter!=m_layers.end(); iter++)
+		{
+			Layer* pLayer = *iter;
+			GEnvelope& extent = pLayer->GetExtent();
+			m_exent.Union(extent);
+		}
 		return m_exent;
 	}
 

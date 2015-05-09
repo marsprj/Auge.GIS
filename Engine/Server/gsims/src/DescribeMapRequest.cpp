@@ -1,41 +1,41 @@
-#include "GetMapRequest.h"
+#include "DescribeMapRequest.h"
 
 namespace auge
 {
-	GetMapRequest::GetMapRequest()
+	DescribeMapRequest::DescribeMapRequest()
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
 	}
 
-	GetMapRequest::~GetMapRequest()
+	DescribeMapRequest::~DescribeMapRequest()
 	{
 
 	}
 
-	bool GetMapRequest::Create(rude::CGI& cgi)
+	bool DescribeMapRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
 		SetName(cgi["name"]);
 		return true;
 	}
 
-	const char*	GetMapRequest::GetEngine()
+	const char*	DescribeMapRequest::GetEngine()
 	{
 		return "ims";
 	}
 
-	const char*	GetMapRequest::GetVersion()
+	const char*	DescribeMapRequest::GetVersion()
 	{
 		return m_version.c_str();
 	}
 
-	const char*	GetMapRequest::GetRequest()
+	const char*	DescribeMapRequest::GetRequest()
 	{
-		return "GetMap";
+		return "DescribeMap";
 	}
 
-	void GetMapRequest::SetVersion(const char* value)
+	void DescribeMapRequest::SetVersion(const char* value)
 	{
 		if(value==NULL)
 		{
@@ -44,12 +44,12 @@ namespace auge
 		m_version = value;
 	}
 
-	const char*	GetMapRequest::GetMimeType()
+	const char*	DescribeMapRequest::GetMimeType()
 	{
 		return m_mime_type.c_str();
 	}
 
-	//bool GetMapRequest::Create(GPropertySet& props)
+	//bool DescribeMapRequest::Create(GPropertySet& props)
 	//{
 	//	const char* val = NULL;
 	//	val = props.GetValue("version");
@@ -57,7 +57,7 @@ namespace auge
 	//	return true;
 	//}
 
-	void GetMapRequest::SetName(const char* name)
+	void DescribeMapRequest::SetName(const char* name)
 	{
 		if(name==NULL)
 		{
@@ -74,7 +74,7 @@ namespace auge
 		
 	}
 
-	const char*	GetMapRequest::GetName()
+	const char*	DescribeMapRequest::GetName()
 	{
 		if(m_name.empty())
 		{

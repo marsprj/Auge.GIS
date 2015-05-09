@@ -1,6 +1,7 @@
 #include "CartoFactoryImpl.h"
 #include "MapImpl.h"
 #include "FeatureLayerImpl.h"
+#include "RasterLayerImpl.h"
 
 #include "CanvasImpl.h"
 #include "RendererCairo.h"
@@ -31,6 +32,11 @@ namespace auge
 	FeatureLayer* CartoFactoryImpl::CreateFeatureLayer()
 	{
 		return (new FeatureLayerImpl());
+	}
+
+	RasterLayer* CartoFactoryImpl::CreateRasterLayer()
+	{
+		return (new RasterLayerImpl());
 	}
 
 	Canvas*	CartoFactoryImpl::CreateCanvas2D(g_uint width, g_uint height)

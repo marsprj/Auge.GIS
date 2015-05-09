@@ -28,10 +28,11 @@ namespace auge
 
 		virtual void		DrawText(const	  char* text, int x, int y, TextSymbolizer* pSymbolizer);
 		virtual void		DrawText(const g_uchar* text, int x, int y, TextSymbolizer* pSymbolizer);
-
 		virtual void		Label(const char* text, WKBPoint *pWKBPoint, TextSymbolizer* pSymbolizer, Transformation* pTransformation);
 
 		virtual bool		DrawColorMap(ColorMap* pColorMap);
+
+		virtual bool		DrawRaster(Raster* pRaster, Transformation* pTransformation);
 
 		virtual void		Save();
 		virtual void		Resotre();
@@ -59,6 +60,13 @@ namespace auge
 
 		void	DrawGeometryPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation);
 		void	DrawGraphicPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation);
+
+		bool	ReadRasterSubArea(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height);
+		bool	ReadRasterSubAreaBand_3(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height);
+		bool	ReadRasterSubAreaBand_4(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height);
+
+		void	CopyMatrix(unsigned char* src, int src_width, int src_height, unsigned char* obj, int obj_width, int obj_height, int obj_step);
+		void	SetMatrix(unsigned char* obj, int width, int height, int stride, unsigned char value);
 
 	private:
 		cairo_surface_t	*m_cairo_surface;

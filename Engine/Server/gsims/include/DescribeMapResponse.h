@@ -1,5 +1,5 @@
-#ifndef __AUGE_IMS_GET_MAP_RESPONSE_H__
-#define __AUGE_IMS_GET_MAP_RESPONSE_H__
+#ifndef __AUGE_IMS_DESCRIBE_MAP_RESPONSE_H__
+#define __AUGE_IMS_DESCRIBE_MAP_RESPONSE_H__
 
 #include "AugeWebEngine.h"
 #include "AugeXML.h"
@@ -11,14 +11,14 @@ namespace auge
 	class Layer;
 	class EnumMap;
 	class FeatureLayer;
-	class GetMapRequest;
+	class DescribeMapRequest;
 	class Style;
 
-	class GetMapResponse : public WebResponse
+	class DescribeMapResponse : public WebResponse
 	{
 	public:
-		GetMapResponse(GetMapRequest* pRequest);
-		virtual ~GetMapResponse();
+		DescribeMapResponse(DescribeMapRequest* pRequest);
+		virtual ~DescribeMapResponse();
 	public:
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 		
@@ -44,7 +44,7 @@ namespace auge
 		void	Cleanup();
 		
 	private:
-		GetMapRequest	*m_pRequest;
+		DescribeMapRequest	*m_pRequest;
 		WebContext	*m_pWebContext;
 		EnumMap		*m_pMaps;
 		Map			*m_pMap;

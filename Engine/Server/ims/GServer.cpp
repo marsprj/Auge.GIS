@@ -56,8 +56,8 @@ namespace auge
 			Service* pService = NULL;
 			WebResponse* pWebResponse = NULL;
 
-			//const char* szServiceName = cgi["servicename"];
-			const char* szServiceName = "world";
+			const char* szServiceName = cgi["servicename"];
+			//const char* szServiceName = "world";
 			if(szServiceName==NULL)
 			{
 				m_pLogger->Error("Request Parameter ServiceName is NULL", __FILE__, __LINE__);

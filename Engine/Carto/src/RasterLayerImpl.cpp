@@ -33,19 +33,27 @@ namespace auge
 
 	const char* RasterLayerImpl::GetName()
 	{
-		return NULL;
+		return m_name.c_str();
 	}
 
 	void RasterLayerImpl::SetName(const char* szName)
 	{
-		if(szName!=NULL)
+		if(szName)
 		{
 			m_name = szName;
+		}
+		else
+		{
+			m_name.clear();
 		}
 	}
 
 	GEnvelope& RasterLayerImpl::GetExtent()
 	{
+		if(m_pRaster)
+		{
+			m_extent = m_pRaster->GetExtent();
+		}
 		return m_extent;
 	}
 

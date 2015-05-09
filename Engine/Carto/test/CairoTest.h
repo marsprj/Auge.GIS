@@ -13,7 +13,10 @@ class CairoTest : public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(CairoTest);
 	//CPPUNIT_TEST(DrawPNG);
-	CPPUNIT_TEST(TranslateImage);
+	//CPPUNIT_TEST(ReadPNG);
+	//CPPUNIT_TEST(TranslateImage);
+	//CPPUNIT_TEST(DrawData_ARGB32);
+	CPPUNIT_TEST(DrawData_RGB24);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -21,7 +24,12 @@ public:
 
 private:
 	void DrawPNG();
+	void ReadPNG();
 	void TranslateImage();
+
+	void DrawData_ARGB32();
+	void DrawData_RGB24();
+
 
 private:
 	cairo_surface_t	*m_cairo_surface;
