@@ -1,7 +1,7 @@
 #ifndef __AUGE_WORKSPACE_SHP_H__
 #define __AUGE_WORKSPACE_SHP_H__
 
-#include "AugeRaster.h"
+#include "AugeData.h"
 #include <string>
 #include <map>
 

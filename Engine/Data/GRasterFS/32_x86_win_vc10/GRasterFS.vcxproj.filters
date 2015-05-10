@@ -15,24 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\RasterBandImpl.cpp">
+    <ClCompile Include="..\src\DataEngineImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\RasterImpl.cpp">
+    <ClCompile Include="..\src\RasterDatasetImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\RasterIOImpl.cpp">
+    <ClCompile Include="..\src\WorkspaceRaster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\include\AugeRaster.h">
+    <ClInclude Include="..\include\DataEngineImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\RasterIOImpl.h">
+    <ClInclude Include="..\include\RasterDatasetImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\RasterImpl.h">
+    <ClInclude Include="..\include\WorkspaceRaster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
