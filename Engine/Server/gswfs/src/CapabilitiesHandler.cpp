@@ -680,7 +680,7 @@ namespace auge
 
 		// WFS_Capabilities-->FeatureTypeList->FeatureType
 		DataSet* pDataSet = NULL;
-		EnumDataSet* pDataSets = pWorkspace->GetDataSets();
+		EnumDataSet* pDataSets = pWorkspace->GetFeatureClasses();
 		if(pDataSets!=NULL)
 		{
 			pDataSets->Reset();
