@@ -3,6 +3,7 @@
 #include "GetDataSetResponse.h"
 #include "AugeService.h"
 #include "AugeData.h"
+#include "AugeFeature.h"
 
 
 namespace auge
@@ -111,7 +112,8 @@ namespace auge
 		}
 		else
 		{
-			EnumDataSet* pDataSets = pWorkspace->GetDataSets();
+			FeatureWorksapce* pFeatureWorkspace = dynamic_cast<FeatureWorksapce*>(pWorkspace);
+			EnumDataSet* pDataSets = pFeatureWorkspace->GetFeatureClasses();
 			GetDataSetResponse* pResponse = new GetDataSetResponse(pRequest);
 			pResponse->SetDataSets(pDataSets);
 			pWebResponse = pResponse;

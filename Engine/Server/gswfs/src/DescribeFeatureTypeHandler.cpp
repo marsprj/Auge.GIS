@@ -253,7 +253,7 @@ namespace auge
 			return NULL;
 		}
 
-		FeatureWorksapce* pFeatureWorkspace = static_cast<FeatureWorksapce*>(pWorkspace);
+		FeatureWorksapce* pFeatureWorkspace = dynamic_cast<FeatureWorksapce*>(pWorkspace);
 		FeatureClass* pFeatureClass = pFeatureWorkspace->OpenFeatureClass(typeName);
 		if(pFeatureClass==NULL)
 		{

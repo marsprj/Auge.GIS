@@ -98,7 +98,7 @@ namespace auge
 		}
 		pDataSet->Release();
 
-		FeatureWorksapce* pFeatureWorkspace = static_cast<FeatureWorksapce*>(pWorkspace);
+		FeatureWorksapce* pFeatureWorkspace = dynamic_cast<FeatureWorksapce*>(pWorkspace);
 		RESULTCODE rc = pFeatureWorkspace->RemoveFeatureClass(dataSetName);
 		if(rc!=AG_SUCCESS)
 		{

@@ -680,7 +680,8 @@ namespace auge
 
 		// WFS_Capabilities-->FeatureTypeList->FeatureType
 		DataSet* pDataSet = NULL;
-		EnumDataSet* pDataSets = pWorkspace->GetFeatureClasses();
+		FeatureWorksapce* pFeatureWorkspace = dynamic_cast<FeatureWorksapce*>(pWorkspace);
+		EnumDataSet* pDataSets = pFeatureWorkspace->GetFeatureClasses();
 		if(pDataSets!=NULL)
 		{
 			pDataSets->Reset();
