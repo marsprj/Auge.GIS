@@ -19,12 +19,12 @@ public:
 	void tearDown();
 
 private:
-	//void ReadTest();
-	//void CairoReadTest();
-	//void GetDataSet();
+	void ReadTest();
+	void CairoReadTest();
+	void GetDataSet();
 
-	//void DrawRaster();
-	//void DrawRaster_jpg();
+	void DrawRaster();
+	void DrawRaster_jpg();
 
 	void Read_png();
 

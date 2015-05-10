@@ -19,12 +19,16 @@ namespace auge
 		virtual ~RasterImpl();
 	public:
 		virtual const char*		GetName();
+		virtual const char*		GetAlias();
 		virtual augeDataSetType	GetType();
+		virtual const char*		GetFormat();
 
 		virtual g_uint			GetWidth();
 		virtual g_uint			GetHeight();
 		virtual g_uint			GetBandCount();
 		virtual RasterBand*		GetBand(g_uint i);
+
+		virtual g_int			GetSRID();
 
 		virtual augePixelType	GetPixelType();
 		virtual g_uint			GetPixelSize();
@@ -36,7 +40,8 @@ namespace auge
 		virtual const char*		GetPath();
 
 	public:
-		void	Create(const char* name, GDALDataset* poDataset, WorkspaceRaster* pWorkspace, const char* path);
+		bool	Create(const char* name, const char* path);
+		//void	Create(const char* name, GDALDataset* poDataset, WorkspaceRaster* pWorkspace, const char* path);
 		g_uint	GetPixelSize(GDALDataType type);
 
 	private:
@@ -44,12 +49,15 @@ namespace auge
 
 	private:
 		std::string  m_name;
+		std::string	 m_alias;
 		std::string  m_path;
+		std::string  m_format;
 
 		GDALDataset* m_poDataset;
 		GEnvelope	 m_extent;
-		WorkspaceRaster* m_pWorkspace;
+		//WorkspaceRaster* m_pWorkspace;
 
+		g_int		 m_srid;
 		g_uint		 m_pixel_size;
 		double		 m_geo_transform[6];
 

@@ -2,6 +2,7 @@
 #define __AUGE_DATA_H__
 
 #include "AugeData.h"
+#include "AugeRaster.h"
 
 #ifdef WIN32
 #	ifdef AUGE_DATA_ENGINE_EXPORTS
@@ -17,6 +18,7 @@
 
 namespace auge
 {
+	class Raster;
 	class DataEngine;
 	class Workspace;
 	class DataSet;
@@ -110,10 +112,10 @@ namespace auge
 		EnumDataSet(){}
 		virtual ~EnumDataSet(){}
 	public:
-		virtual void			Reset() = 0;
-		virtual DataSet*		Next() = 0;
-		virtual bool			Add(DataSet* pDataSet) = 0;
-		virtual void			Release() = 0;
+		virtual void				Reset() = 0;
+		virtual DataSet*			Next() = 0;
+		virtual bool				Add(DataSet* pDataSet) = 0;
+		virtual void				Release() = 0;
 	};
 
 	class DataEngine
@@ -170,6 +172,28 @@ namespace auge
 
 		virtual	RESULTCODE			Load(const char* config_path=NULL) = 0;
 		virtual void				Unload() = 0;
+	};
+
+	class RasterDataset : public DataSet
+	{
+	public:
+		RasterDataset(){}
+		virtual ~RasterDataset(){}
+	public:
+		virtual Raster*			GetRaster() = 0;
+	};
+
+	class RasterWorkspace : public Workspace
+	{
+	protected:
+		RasterWorkspace(){}
+		virtual ~RasterWorkspace(){}
+	public:
+		virtual void			SetConnection(GConnection* pConnection) = 0; 
+		virtual	Raster*			OpenRaster(const char* name) = 0;
+
+		virtual RESULTCODE		AddRaster(Raster* pRaster) = 0;
+		virtual RESULTCODE		RemoveRaster(g_uint id) = 0;
 	};
 
 	extern "C"

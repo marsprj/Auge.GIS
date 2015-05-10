@@ -5,8 +5,9 @@ namespace auge
 {
 	RasterImpl::RasterImpl()
 	{
+		m_srid = 4326;
 		m_poDataset = NULL;
-		m_pWorkspace = NULL;
+		//m_pWorkspace = NULL;
 		memset(m_geo_transform, 0, sizeof(double)*6);
 	}
 
@@ -24,9 +25,19 @@ namespace auge
 		return m_name.c_str();
 	}
 
+	const char*	RasterImpl::GetAlias()
+	{
+		return m_alias.c_str();
+	}
+
 	augeDataSetType RasterImpl::GetType()
 	{
 		return augeDataSetRaster;
+	}
+
+	const char* RasterImpl::GetFormat()
+	{
+		return m_format.c_str();
 	}
 
 	g_uint RasterImpl::GetWidth()
@@ -37,6 +48,11 @@ namespace auge
 	g_uint RasterImpl::GetHeight()
 	{
 		return m_poDataset->GetRasterYSize();
+	}
+
+	g_int RasterImpl::GetSRID()
+	{
+		return m_srid;
 	}
 
 	g_uint RasterImpl::GetBandCount()
@@ -128,23 +144,39 @@ namespace auge
 		return true;
 	}
 
-	void RasterImpl::Create(const char* name, GDALDataset* poDataset, WorkspaceRaster* pWorkspace, const char* path)
+	bool RasterImpl::Create(const char* name, const char* path)
 	{
 		m_name = name;
+		m_alias= name;
 		m_path = path;
-		m_poDataset = poDataset;
-		m_pWorkspace = pWorkspace;
 
-		m_poDataset->GetGeoTransform(m_geo_transform);
+		GDALDataset* poDataset = (GDALDataset*)GDALOpen(path, GA_ReadOnly);	
+		if(poDataset==NULL)
+		{
+			return false;
+		}
 
+		// raster format 
+		char ext[AUGE_EXT_MAX] = {0};
+		auge_split_path(path, NULL, NULL, NULL, ext);
+		m_format = ext+1;
+
+		// extent
+		poDataset->GetGeoTransform(m_geo_transform);
 		double x0 = m_geo_transform[0];
 		double y0 = m_geo_transform[3];
-		double x1 = x0 + m_geo_transform[1] * m_poDataset->GetRasterXSize();
-		double y1 = y0 + m_geo_transform[5] * m_poDataset->GetRasterYSize();
+		double x1 = x0 + m_geo_transform[1] * poDataset->GetRasterXSize();
+		double y1 = y0 + m_geo_transform[5] * poDataset->GetRasterYSize();
 		m_extent.Set(x0,y0,x1,y1);
 
+		// pixel size
 		m_pixel_size = GetPixelSize((GDALDataType)GetPixelType());
 
+		// spatial reference
+		const char* proj = poDataset->GetProjectionRef();
+		const char* gproj= poDataset->GetGCPProjection();
+
+		// set bands
 		int bands = poDataset->GetRasterCount();
 		Cleanup();
 		m_bands.resize(bands);
@@ -152,7 +184,35 @@ namespace auge
 		{
 			m_bands[i] = NULL;
 		}
+		m_poDataset = poDataset;
+		return true;
 	}
+
+	//void RasterImpl::Create(const char* name, GDALDataset* poDataset, WorkspaceRaster* pWorkspace, const char* path)
+	//{
+	//	m_name = name;
+	//	m_path = path;
+	//	m_poDataset = poDataset;
+	//	m_pWorkspace = pWorkspace;
+
+	//	m_poDataset->GetGeoTransform(m_geo_transform);
+
+	//	double x0 = m_geo_transform[0];
+	//	double y0 = m_geo_transform[3];
+	//	double x1 = x0 + m_geo_transform[1] * m_poDataset->GetRasterXSize();
+	//	double y1 = y0 + m_geo_transform[5] * m_poDataset->GetRasterYSize();
+	//	m_extent.Set(x0,y0,x1,y1);
+
+	//	m_pixel_size = GetPixelSize((GDALDataType)GetPixelType());
+
+	//	int bands = poDataset->GetRasterCount();
+	//	Cleanup();
+	//	m_bands.resize(bands);
+	//	for(int i=0; i<bands; i++)
+	//	{
+	//		m_bands[i] = NULL;
+	//	}
+	//}
 
 	const char*	RasterImpl::GetPath()
 	{

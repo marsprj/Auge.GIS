@@ -41,7 +41,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\log4cplus-1.1.2\include;E:\DevEnv\GnuWin32\include;$(IncludePath)</IncludePath>
     <TargetName>$(ProjectName)D</TargetName>
-    <LibraryPath>E:\DevEnv\log4cplus-1.1.2\lib;E:\DevEnv\GnuWin32\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>E:\DevEnv\log4cplus-1.1.2\lib;E:\DevEnv\GnuWin32\lib;E:\DevEnv\gdal-1.11.1\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

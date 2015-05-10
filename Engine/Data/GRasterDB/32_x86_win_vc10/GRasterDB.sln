@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GRasterDB", "GRasterDB.vcxproj", "{F48BFECB-342B-47B0-A85C-250FA6FF74C9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "..\test\test.vcxproj", "{634F6CF5-056B-4A46-9E52-335F7C33E9AF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F48BFECB-342B-47B0-A85C-250FA6FF74C9} = {F48BFECB-342B-47B0-A85C-250FA6FF74C9}
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698} = {5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GPostgres", "..\..\GPostgres\32_x86_win_vc10\GPostgres.vcxproj", "{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDEngine", "..\..\GDEngine\32_x86_win_vc10\GDEngine.vcxproj", "{07AF14F1-448D-4018-80BF-0298C9A7D022}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GRaster", "..\..\GRaster\32_x86_win_vc10\GRaster.vcxproj", "{B082D314-56E0-4F40-8862-23C00E77EB24}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GRasterFS", "..\..\GRasterFS\32_x86_win_vc10\GRasterFS.vcxproj", "{44D099DD-1C8A-4CE2-8B0B-63C4589CB511}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F48BFECB-342B-47B0-A85C-250FA6FF74C9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F48BFECB-342B-47B0-A85C-250FA6FF74C9}.Debug|Win32.Build.0 = Debug|Win32
+		{F48BFECB-342B-47B0-A85C-250FA6FF74C9}.Release|Win32.ActiveCfg = Release|Win32
+		{F48BFECB-342B-47B0-A85C-250FA6FF74C9}.Release|Win32.Build.0 = Release|Win32
+		{634F6CF5-056B-4A46-9E52-335F7C33E9AF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{634F6CF5-056B-4A46-9E52-335F7C33E9AF}.Debug|Win32.Build.0 = Debug|Win32
+		{634F6CF5-056B-4A46-9E52-335F7C33E9AF}.Release|Win32.ActiveCfg = Release|Win32
+		{634F6CF5-056B-4A46-9E52-335F7C33E9AF}.Release|Win32.Build.0 = Release|Win32
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Debug|Win32.Build.0 = Debug|Win32
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Release|Win32.ActiveCfg = Release|Win32
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Release|Win32.Build.0 = Release|Win32
+		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Debug|Win32.ActiveCfg = Debug|Win32
+		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Debug|Win32.Build.0 = Debug|Win32
+		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Release|Win32.ActiveCfg = Release|Win32
+		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Release|Win32.Build.0 = Release|Win32
+		{B082D314-56E0-4F40-8862-23C00E77EB24}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B082D314-56E0-4F40-8862-23C00E77EB24}.Debug|Win32.Build.0 = Debug|Win32
+		{B082D314-56E0-4F40-8862-23C00E77EB24}.Release|Win32.ActiveCfg = Release|Win32
+		{B082D314-56E0-4F40-8862-23C00E77EB24}.Release|Win32.Build.0 = Release|Win32
+		{44D099DD-1C8A-4CE2-8B0B-63C4589CB511}.Debug|Win32.ActiveCfg = Debug|Win32
+		{44D099DD-1C8A-4CE2-8B0B-63C4589CB511}.Debug|Win32.Build.0 = Debug|Win32
+		{44D099DD-1C8A-4CE2-8B0B-63C4589CB511}.Release|Win32.ActiveCfg = Release|Win32
+		{44D099DD-1C8A-4CE2-8B0B-63C4589CB511}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
