@@ -97,17 +97,12 @@ namespace auge
 
 	DataSet* WorkspaceRaster::OpenDataSet(const char* name)
 	{
-		char raster_path[AUGE_NAME_MAX] = {0};
+		return OpenRasterDataset(name);
+	}
 
-		Raster* pRaster = OpenRaster(name);
-		if(pRaster==NULL)
-		{
-			return NULL;
-		}
-
-		RasterDatasetImpl* pRasterDataset = new RasterDatasetImpl();
-		pRasterDataset->Create(pRaster);
-		return pRasterDataset;
+	RESULTCODE WorkspaceRaster::RemoveDataSet(const char* name)
+	{
+		return AG_SUCCESS;
 	}
 
 	DataEngine*	WorkspaceRaster::GetEngine()
@@ -123,46 +118,45 @@ namespace auge
 		}
 	}
 
-	Raster*	WorkspaceRaster::OpenRaster(const char* name)
+	EnumDataSet* WorkspaceRaster::GetRasterDatasets()
 	{
 		return NULL;
-		//if(name==NULL)
-		//{
-		//	return NULL;
-		//}
-
-		//g_char raster_path[AUGE_PATH_MAX];
-		//memset(raster_path,0,AUGE_PATH_MAX);
-		//auge_make_path(raster_path, NULL, m_path.c_str(), name, NULL);
-
-		//GDALDataset* poDataset = (GDALDataset*)GDALOpen(raster_path, GA_ReadOnly);		
-		//if(poDataset==NULL)
-		//{
-		//	const char* msg = CPLGetLastErrorMsg();
-		//	GError* pError = augeGetErrorInstance();
-		//	pError->SetError(msg);
-		//	return NULL;
-		//}
-		//
-		//RasterImpl* pRaster = new RasterImpl();
-		//pRaster->Create(name, poDataset, this,raster_path);
-
-		//return pRaster;
 	}
-
-	void WorkspaceRaster::SetConnection(GConnection* pConnection)
+	
+	RasterDataset* WorkspaceRaster::OpenRasterDataset(const char* name)
 	{
+		char raster_path[AUGE_NAME_MAX] = {0};
 
+		Raster* pRaster = OpenRaster(name);
+		if(pRaster==NULL)
+		{
+			return NULL;
+		}
+
+		RasterDatasetImpl* pRasterDataset = new RasterDatasetImpl();
+		pRasterDataset->Create(pRaster);
+		return pRasterDataset;
 	}
 
 	RESULTCODE WorkspaceRaster::AddRaster(Raster* pRaster)
 	{
-		return NULL;
-	}
-
-	RESULTCODE WorkspaceRaster::RemoveRaster(g_uint id)
-	{
 		return AG_SUCCESS;
 	}
+
+	Raster*	WorkspaceRaster::OpenRaster(const char* name)
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+
+		g_char raster_path[AUGE_PATH_MAX];
+		memset(raster_path,0,AUGE_PATH_MAX);
+		auge_make_path(raster_path, NULL, m_path.c_str(), name, NULL);
+
+		RasterIO* pRasterIO = augeGetRasterIOInstance();
+		return pRasterIO->Read(raster_path);
+	}
+
 
 }

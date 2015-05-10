@@ -94,6 +94,11 @@ namespace auge
 		return OpenFeatureClass(name);
 	}
 
+	RESULTCODE WorkspaceShp::RemoveDataSet(const char* name)
+	{
+		return RemoveFeatureClass(name);
+	}
+
 	FeatureClass* WorkspaceShp::OpenFeatureClass(const char* name)
 	{
 		if(name==NULL)
@@ -121,7 +126,12 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	EnumDataSet* WorkspaceShp::GetDataSets()
+	//EnumDataSet* WorkspaceShp::GetDataSets()
+	//{
+	//	return NULL;
+	//}
+
+	EnumDataSet* WorkspaceShp::GetFeatureClasses()
 	{
 		return NULL;
 	}

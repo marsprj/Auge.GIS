@@ -6,7 +6,7 @@
 namespace auge
 {
 	class Raster;
-	class WorkspaceRasterDB;
+	class WorkspacePgs;
 
 	class RasterDatasetImpl : public RasterDataset
 	{
@@ -28,7 +28,7 @@ namespace auge
 		virtual Raster*			GetRaster();
 
 	public:
-		void	Create( WorkspaceRasterDB* pWorkspace,
+		void	Create( WorkspacePgs* pWorkspace,
 						g_uint gid,
 						const char* name,
 						const char* alias,
@@ -58,7 +58,7 @@ namespace auge
 		std::string	m_uuid;
 		GEnvelope	m_extent;
 
-		WorkspaceRasterDB* m_pWoskspace;
+		WorkspacePgs* m_pWoskspace;
 	};
 }
 

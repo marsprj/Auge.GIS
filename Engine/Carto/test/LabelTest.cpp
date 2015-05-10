@@ -78,7 +78,7 @@ void LabelTest::DrawMap()
 	pCanvas->DrawBackground(bgColor);
 
 	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = (auge::FeatureWorksapce*)pConnManager->GetWorkspace("db1");
+	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass("cities");
 
 	const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_label.xml";

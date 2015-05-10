@@ -6,6 +6,8 @@
 
 namespace auge
 {
+	class RasterDataset;
+
 	class RasterLayerImpl : public RasterLayer
 	{
 	public:
@@ -31,6 +33,9 @@ namespace auge
 		virtual RESULTCODE		SetRaster(Raster* pRaster);
 		virtual Raster*			GetRaster();
 
+		virtual RESULTCODE		SetRasterDataset(RasterDataset* pRasterDataset);
+		virtual RasterDataset*	GetRasterDataset();
+
 		virtual void			Release();
 
 	private:
@@ -41,6 +46,7 @@ namespace auge
 		Style*		m_pStyle;
 
 		Raster*		m_pRaster;
+		RasterDataset* m_pRasterDataset;
 	};
 }
 

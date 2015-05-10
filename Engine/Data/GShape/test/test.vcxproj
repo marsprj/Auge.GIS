@@ -39,7 +39,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\DevEnv\cppunit-1.13.2\include;%AUGE_GIS_HOME%/include;$(IncludePath)</IncludePath>
+    <IncludePath>E:\DevEnv\cppunit-1.13.2\include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;$(IncludePath)</IncludePath>
     <LibraryPath>E:\DevEnv\cppunit-1.13.2\lib;%AUGE_GIS_HOME%/Dist\32_x86_win_vc10\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -52,6 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

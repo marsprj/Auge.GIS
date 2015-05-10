@@ -16,6 +16,8 @@ namespace auge
 		// Base Methods
 		virtual const char*		GetName();
 		virtual void			SetName(const char* name);
+		virtual	DataEngine*		GetEngine();
+		virtual void			Release();
 
 		virtual	RESULTCODE		SetConnectionString(const char* conn_string);
 		virtual const char*		GetConnectionString();
@@ -27,10 +29,8 @@ namespace auge
 
 		virtual EnumDataSet*	GetDataSets();
 		virtual DataSet*		OpenDataSet(const char* name);
-
-		virtual	DataEngine*		GetEngine();
-
-		virtual void			Release();
+		virtual RESULTCODE		RemoveDataSet(const char* name);
+		virtual RasterDataset*	OpenRasterDataset(const char* name);
 
 		// Raster Methods
 		virtual	Raster*			OpenRaster(const char* name);

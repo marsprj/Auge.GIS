@@ -5,6 +5,7 @@ namespace auge
 {
 	RasterLayerImpl::RasterLayerImpl():
 	m_srid(4326),
+	m_pRasterDataset(NULL),
 	m_pRaster(NULL)
 	{
 		
@@ -15,6 +16,10 @@ namespace auge
 		if(m_pRaster!=NULL)
 		{
 			AUGE_SAFE_RELEASE(m_pRaster);
+		}
+		if(m_pRasterDataset!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pRasterDataset);
 		}
 	}
 
@@ -104,5 +109,20 @@ namespace auge
 	Raster* RasterLayerImpl::GetRaster()
 	{
 		return m_pRaster;
+	}
+
+	RESULTCODE RasterLayerImpl::SetRasterDataset(RasterDataset* pRasterDataset)
+	{
+		if(m_pRasterDataset!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pRasterDataset);
+		}
+		m_pRasterDataset = pRasterDataset;
+		return AG_SUCCESS;
+	}
+
+	RasterDataset* RasterLayerImpl::GetRasterDataset()
+	{
+		return m_pRasterDataset;
 	}
 }

@@ -24,7 +24,7 @@ namespace auge
 
 	const char*	DataEngineRasterFS::GetID()
 	{
-		return "Raster";
+		return "rasterfs";
 	}
 
 	const char*	DataEngineRasterFS::GetDescription()

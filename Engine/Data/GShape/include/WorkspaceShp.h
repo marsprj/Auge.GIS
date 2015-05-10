@@ -27,9 +27,11 @@ namespace auge
 		virtual void			Close();
 		virtual bool			IsOpen();
 
-		virtual EnumDataSet*	GetDataSets();
+		//virtual EnumDataSet*	GetDataSets();
 		virtual DataSet*		OpenDataSet(const char* name);
+		virtual RESULTCODE		RemoveDataSet(const char* name);
 
+		virtual EnumDataSet*	GetFeatureClasses();
 		virtual	FeatureClass*	OpenFeatureClass(const char* name);
 		virtual RESULTCODE		CreateFeatureClass(const char* name, GFields* pFields);
 		virtual RESULTCODE		RemoveFeatureClass(const char* name);

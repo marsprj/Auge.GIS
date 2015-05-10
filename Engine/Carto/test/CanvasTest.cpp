@@ -355,7 +355,7 @@ void CanvasTest::DrawShpPolygon()
 	//pEngine = auge::augeGetDataEngineInstance();
 
 	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = static_cast<auge::FeatureWorksapce*>(pEngine->CreateWorkspace());
+	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pEngine->CreateWorkspace());
 	pWorkspace->SetConnectionString(path);
 
 	rc = pWorkspace->Open();

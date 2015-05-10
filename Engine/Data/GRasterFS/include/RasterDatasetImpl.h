@@ -14,7 +14,16 @@ namespace auge
 		virtual ~RasterDatasetImpl();
 	public:
 		virtual const char*		GetName();
+		virtual const char*		GetAlias();
 		virtual augeDataSetType	GetType();
+		virtual g_uint			GetWidth();
+		virtual g_uint			GetHeight();
+		virtual g_uint			GetBandCount();
+		virtual GEnvelope&		GetExtent();
+		virtual g_int			GetSRID();
+		virtual const char*		GetFormat();
+		virtual const char*		GetPath();
+
 		virtual Raster*			GetRaster();
 
 	public:

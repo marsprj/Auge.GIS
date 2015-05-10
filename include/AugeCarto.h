@@ -103,8 +103,10 @@ namespace auge
 
 	public:
 		virtual augeLayerType	GetType() = 0;
-		virtual RESULTCODE		SetRaster(Raster* pRaster) = 0;
-		virtual Raster*			GetRaster() = 0;
+		//virtual RESULTCODE		SetRaster(Raster* pRaster) = 0;
+		//virtual Raster*			GetRaster() = 0;
+		virtual RESULTCODE		SetRasterDataset(RasterDataset* pRasterDataset) = 0;
+		virtual RasterDataset*	GetRasterDataset() = 0;
 
 	};
 

@@ -52,7 +52,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GRASTERDB_EXPORTS;AUGE_RASTER_EXPORTS;AUGE_DATA_ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GRASTERDB_EXPORTS;AUGE_DATA_ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -83,13 +83,16 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\AugeData.h" />
     <ClInclude Include="..\..\..\..\include\AugeRaster.h" />
     <ClInclude Include="..\include\DataEngineImpl.h" />
+    <ClInclude Include="..\include\EnumDataSetImpl.h" />
     <ClInclude Include="..\include\RasterDatasetImpl.h" />
     <ClInclude Include="..\include\WorkspaceRaster.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DataEngineImpl.cpp" />
+    <ClCompile Include="..\src\EnumDataSetImpl.cpp" />
     <ClCompile Include="..\src\RasterDatasetImpl.cpp" />
     <ClCompile Include="..\src\WorkspaceRaster.cpp" />
   </ItemGroup>

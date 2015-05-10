@@ -849,7 +849,7 @@ namespace auge
 		FeatureWorksapce* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = static_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
+		pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
 		if(pWorkspace==NULL)
 		{
 			return NULL;
@@ -873,7 +873,7 @@ namespace auge
 		FeatureWorksapce* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = static_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
+		pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
 		if(pWorkspace==NULL)
 		{
 			return NULL;

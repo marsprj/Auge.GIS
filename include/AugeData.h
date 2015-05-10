@@ -3,6 +3,7 @@
 
 #include "AugeData.h"
 #include "AugeRaster.h"
+#include "AugeGeometry.h"
 
 #ifdef WIN32
 #	ifdef AUGE_DATA_ENGINE_EXPORTS
@@ -79,8 +80,9 @@ namespace auge
 		virtual void			Close() = 0;
 		virtual bool			IsOpen() = 0;
 
-		virtual EnumDataSet*	GetDataSets() = 0;
+		//virtual EnumDataSet*	GetDataSets() = 0;
 		virtual DataSet*		OpenDataSet(const char* name) = 0;
+		virtual RESULTCODE		RemoveDataSet(const char* name) = 0;
 
 		virtual	DataEngine*		GetEngine() = 0;
 	};
@@ -180,20 +182,34 @@ namespace auge
 		RasterDataset(){}
 		virtual ~RasterDataset(){}
 	public:
+		virtual const char*		GetName() = 0;
+		virtual const char*		GetAlias() = 0;
+		virtual g_uint			GetWidth() = 0;
+		virtual g_uint			GetHeight() = 0;
+		virtual g_uint			GetBandCount() = 0;
+		virtual GEnvelope&		GetExtent() = 0;
+		virtual g_int			GetSRID() = 0;
+		virtual const char*		GetFormat() = 0;
+		virtual const char*		GetPath() = 0;
+
 		virtual Raster*			GetRaster() = 0;
 	};
 
-	class RasterWorkspace : public Workspace
+	class RasterWorkspace : virtual public Workspace
 	{
 	protected:
 		RasterWorkspace(){}
 		virtual ~RasterWorkspace(){}
 	public:
-		virtual void			SetConnection(GConnection* pConnection) = 0; 
-		virtual	Raster*			OpenRaster(const char* name) = 0;
+		//virtual void			SetConnection(GConnection* pConnection) = 0;
 
+		virtual EnumDataSet*	GetRasterDatasets() = 0;
+		virtual RasterDataset*	OpenRasterDataset(const char* name) = 0;
+		//virtual RESULTCODE		RemoverRasterDataset(const char* name) = 0;
+
+		//virtual	Raster*			OpenRaster(const char* name) = 0;
 		virtual RESULTCODE		AddRaster(Raster* pRaster) = 0;
-		virtual RESULTCODE		RemoveRaster(g_uint id) = 0;
+		//virtual RESULTCODE		RemoveRaster(g_uint id) = 0;
 	};
 
 	extern "C"

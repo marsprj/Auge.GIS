@@ -7,17 +7,21 @@
 class RsTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(RsTest);
-	//CPPUNIT_TEST(GetDataSet);
-	CPPUNIT_TEST(AddRasterTest);
+	//CPPUNIT_TEST(OpenRaster);
+	//CPPUNIT_TEST(OpenRasterDataset);
+	//CPPUNIT_TEST(AddRasterTest);
+	CPPUNIT_TEST(GetDatasets);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
 	void tearDown();
 
 private:
-	void GetDataSet();
+	void OpenRaster();
+	void OpenRasterDataset();
 
 	void AddRasterTest();
+	void GetDatasets();
 
 private:
 	auge::RasterWorkspace	*m_pWorkspace;

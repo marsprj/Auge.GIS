@@ -1,4 +1,5 @@
 #include "RasterDatasetImpl.h"
+#include "WorkspacePgs.h"
 #include "AugeRaster.h"
 
 namespace auge
@@ -85,7 +86,7 @@ namespace auge
 	//	m_pRaster = pRaster;
 	//}
 
-	void RasterDatasetImpl::Create(WorkspaceRasterDB* pWorkspace,g_uint gid,const char* name,const char* alias,const char* format,const char* path,g_uint nband,g_int srid,g_uint width,g_uint height,double xmin,double ymin,double xmax,double ymax,const char* uuid)
+	void RasterDatasetImpl::Create(WorkspacePgs* pWorkspace,g_uint gid,const char* name,const char* alias,const char* format,const char* path,g_uint nband,g_int srid,g_uint width,g_uint height,double xmin,double ymin,double xmax,double ymax,const char* uuid)
 	{
 		m_id = gid;
 		m_nband = nband;

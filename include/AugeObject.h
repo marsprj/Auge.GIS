@@ -59,7 +59,7 @@ namespace auge
 			m_version = version;
 		}
 
-	private:
+	protected:
 		int  m_id;
 		int	 m_ref;
 		int	 m_version;

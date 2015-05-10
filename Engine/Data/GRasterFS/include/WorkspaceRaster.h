@@ -1,5 +1,5 @@
-#ifndef __AUGE_WORKSPACE_SHP_H__
-#define __AUGE_WORKSPACE_SHP_H__
+#ifndef __AUGE_RASTER_WORKSPACE__FS_H__
+#define __AUGE_RASTER_WORKSPACE__FS_H__
 
 #include "AugeData.h"
 #include <string>
@@ -19,7 +19,6 @@ namespace auge
 
 		virtual	RESULTCODE		SetConnectionString(const char* conn_string);
 		virtual const char*		GetConnectionString();
-		virtual void			SetConnection(GConnection* pConnection); 
 
 		virtual RESULTCODE		Open();
 		virtual void			Close();
@@ -27,15 +26,18 @@ namespace auge
 
 		virtual EnumDataSet*	GetDataSets();
 		virtual DataSet*		OpenDataSet(const char* name);
+		virtual RESULTCODE		RemoveDataSet(const char* name);
 
 		virtual	DataEngine*		GetEngine();
 
 		virtual void			Release();
 
 		// Raster Methods
-		virtual	Raster*			OpenRaster(const char* name);
+		virtual EnumDataSet*	GetRasterDatasets();
+		virtual RasterDataset*	OpenRasterDataset(const char* name);
+
 		virtual RESULTCODE		AddRaster(Raster* pRaster);
-		virtual RESULTCODE		RemoveRaster(g_uint id);
+		virtual	Raster*			OpenRaster(const char* name);
 	private:
 		std::string	m_connection_string;
 		std::string	m_name;
@@ -43,4 +45,4 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_WORKSPACE_SHP_H__
+#endif //__AUGE_RASTER_WORKSPACE__FS_H__

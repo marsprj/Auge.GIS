@@ -15,12 +15,12 @@ void TransferTest::setUp()
 	pEngineManager = auge::augeGetDataEngineManagerInstance();
 	pEngineManager->Load();
 	pEngine = pEngineManager->GetEngine("Postgres");
-	m_pwsPGS = (auge::FeatureWorksapce*)pEngine->CreateWorkspace();
+	m_pwsPGS = dynamic_cast<auge::FeatureWorksapce*>(pEngine->CreateWorkspace());
 	m_pwsPGS->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pwsPGS->Open();
 
 	pEngine = pEngineManager->GetEngine("Shape");
-	m_pwsSHP = (auge::FeatureWorksapce*)pEngine->CreateWorkspace();
+	m_pwsSHP = dynamic_cast<auge::FeatureWorksapce*>(pEngine->CreateWorkspace());
 	//m_pwsSHP->SetConnectionString("DATABASE=D:\\GeoBeans\\data\\world");
 	m_pwsSHP->SetConnectionString("DATABASE=/home/auge/world");
 	m_pwsSHP->Open();
