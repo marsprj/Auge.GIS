@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
 
 auge::Map*	CreateMapObj();
 auge::Map*	CreateMapObj_SLD();
@@ -743,4 +743,55 @@ void MapTest::LoadColorMap()
 	auge::CartoManager* pCartoManager = auge::augeGetCartoManagerInstance();
 	auge::EnumColorMap* pColorMaps =  pCartoManager->GetColorMaps();
 	pColorMaps->Release();
+}
+
+void MapTest::DrawRasterMap()
+{
+	auge::ConnectionManager* pConnManager = NULL;
+	pConnManager = auge::augeGetConnectionManagerInstance();
+
+	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
+
+	auge::Style* pStyle = NULL;
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_5.xml");
+
+	const char* className = "country";
+	auge::FeatureClass* pFeatureClass = NULL;
+	auge::FeatureWorksapce* pFeatureWorkspace = NULL;
+	pFeatureWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	pFeatureClass = pFeatureWorkspace->OpenFeatureClass("country");
+	auge::FeatureLayer* pFeatureLayer = NULL;
+	pFeatureLayer = pCartoFactory->CreateFeatureLayer();
+	pFeatureLayer->SetName(className);
+	pFeatureLayer->SetFeatureClass(pFeatureClass);
+	pFeatureLayer->SetStyle(pStyle);
+	
+	const char* rsName = "16km.png";
+	auge::RasterDataset* pRasterDataset = NULL;
+	auge::RasterWorkspace* pRasterWorkspace = NULL;
+	pRasterWorkspace = dynamic_cast<auge::RasterWorkspace*>(pConnManager->GetWorkspace("db2"));
+	pRasterDataset = pRasterWorkspace->OpenRasterDataset(rsName);
+	auge::RasterLayer* pRasterLayer = NULL;
+	pRasterLayer = pCartoFactory->CreateRasterLayer();
+	pRasterLayer->SetName(rsName);
+	pRasterLayer->SetRasterDataset(pRasterDataset);
+
+	auge::Map* pMap = pCartoFactory->CreateMap();
+	pMap->SetName("world");
+	pMap->AddLayer(pFeatureLayer);
+	pMap->AddLayer(pRasterLayer);
+
+	auge::GColor bgColor(255,0,0,0);
+	//auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
+	auge::GEnvelope viewer(-10.0f,-10.f,30.f,20.f);
+	auge::Canvas* pCanvas = pCartoFactory->CreateCanvas2D(800,600);
+	pCanvas->SetViewer(viewer);
+	pCanvas->DrawBackground(bgColor);
+
+	pCanvas->Draw(pMap);
+
+	pCanvas->Save("g:\\temp\\map\\map.png");
+
+	pCanvas->Release();
+	pMap->Release();
 }

@@ -27,7 +27,8 @@ class MapTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(DrawCities);
 	//CPPUNIT_TEST(DrawCountry);
 
-	CPPUNIT_TEST(LoadColorMap);
+	//CPPUNIT_TEST(LoadColorMap);
+	CPPUNIT_TEST(DrawRasterMap);
 	
 	CPPUNIT_TEST_SUITE_END();
 public:
@@ -42,23 +43,20 @@ private:
 
 	void		Draw_Map_Point_Label();
 	void		Draw_Map_Point_Label_Anchor();
-
 	void		Draw_Map_Point_Graphic();
 
 	void		Draw_Line();
-
 	void		Draw_Map_Polygon_Label();
-
 	void		Create_Map_Point_Label();
 
 	void		DrawCities();
 	void		DrawCountry();
 
 	void		GetNullValue();
-
 	void		CreateLayer();
-
 	void		LoadColorMap();
+
+	void		DrawRasterMap();
 
 private:
 	auge::Style* LoadSLD(const char* path);
