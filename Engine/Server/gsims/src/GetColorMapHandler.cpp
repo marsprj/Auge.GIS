@@ -2,6 +2,7 @@
 #include "GetColorMapRequest.h"
 #include "GetColorMapResponse.h"
 #include "AugeCarto.h"
+#include "AugeService.h"
 
 namespace auge
 {
@@ -54,11 +55,37 @@ namespace auge
 
 	WebResponse* GetColorMapHandler::Execute(WebRequest* pWebRequest)
 	{
+		WebResponse* pWebResponse = NULL;
+		GetColorMapRequest* pRequest = static_cast<GetColorMapRequest*>(pWebRequest);
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		EnumColorMap* pColorMaps = pCartoManager->GetColorMaps();
-		GetColorMapResponse* pResponse =  new GetColorMapResponse(static_cast<GetColorMapRequest*>(pWebRequest));
-		pResponse->SetColorMaps(pColorMaps);
-		return pResponse;
+		
+		g_int id = pRequest->GetID();
+		if(id<=0)
+		{
+			GetColorMapResponse* pResponse =  new GetColorMapResponse(static_cast<GetColorMapRequest*>(pWebRequest));
+			EnumColorMap* pColorMaps = pCartoManager->GetColorMaps();
+			pResponse->SetColorMaps(pColorMaps);
+			pWebResponse = pResponse;
+		}
+		else
+		{
+			ColorMap* pColorMap = pCartoManager->GetColorMap(id);
+			if(pColorMap)
+			{
+				GetColorMapResponse* pResponse =  new GetColorMapResponse(static_cast<GetColorMapRequest*>(pWebRequest));
+				pResponse->SetColorMap(pColorMap);
+				pWebResponse = pResponse;
+			}
+			else
+			{
+				const char* msg = "Cannot Load ColorMap";
+				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+				pExpResponse->SetMessage(msg);
+				pWebResponse = pExpResponse;
+			}
+		}
+		
+		return pWebResponse;
 	}
 
 	WebResponse* GetColorMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)

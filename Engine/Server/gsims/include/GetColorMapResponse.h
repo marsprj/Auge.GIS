@@ -6,6 +6,7 @@
 
 namespace auge
 {
+	class ColorMap;
 	class EnumColorMap;
 	class GetColorMapRequest;
 
@@ -19,10 +20,16 @@ namespace auge
 
 	public:
 		void	SetColorMaps(EnumColorMap* pColorMaps);
+		void	SetColorMap(ColorMap* pColorMap);
+
+	private:
+		RESULTCODE	WriteColorMaps(WebWriter* pWriter);
+		RESULTCODE	WriteColorMap(WebWriter* pWriter);
 
 	private:
 		GetColorMapRequest	*m_pRequest;
 		EnumColorMap		*m_pColorMaps;
+		ColorMap			*m_pColorMap;
 	};
 }
 

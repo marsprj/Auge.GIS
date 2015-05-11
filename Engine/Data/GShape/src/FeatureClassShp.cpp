@@ -1,6 +1,7 @@
 #include "WorkspaceShp.h"
 #include "FeatureCursorShp.h"
 #include "FeatureClassShp.h"
+#include "FeatureInsertCommandShp.h"
 
 #include <AugeCore.h>
 
@@ -8,8 +9,8 @@ namespace auge
 {
 	FeatureClassShp::FeatureClassShp():
 	m_pWorkspace(NULL),
-	m_pSHPHandle(NULL),
-	m_pDBFHandle(NULL),
+	m_pshpHandle(NULL),
+	m_pdbfHandle(NULL),
 	m_srid(4326),
 	m_feature_count(0)
 	{
@@ -45,7 +46,7 @@ namespace auge
 
 	g_int FeatureClassShp::GetCount()
 	{
-		return m_pSHPHandle->nRecords;
+		return m_pshpHandle->nRecords;
 	}
 
 	GFields* FeatureClassShp::GetFields()
@@ -97,18 +98,18 @@ namespace auge
 #endif
 
 		CloseSHPFile();
-		m_pSHPHandle = ::SHPOpen(shp_path, "rb");
-		if(m_pSHPHandle==NULL)
+		m_pshpHandle = ::SHPOpen(shp_path, "rb");
+		if(m_pshpHandle==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Cannot Open SHP file [%s].", shp_path);
 			pError->SetError(msg);
 			return false;
 		}
-		m_pDBFHandle = ::DBFOpen(dbf_path, "rb");
-		if(m_pSHPHandle==NULL)
+		m_pdbfHandle = ::DBFOpen(dbf_path, "rb");
+		if(m_pshpHandle==NULL)
 		{
-			::SHPClose(m_pSHPHandle);
+			::SHPClose(m_pshpHandle);
 
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Cannot Open DBF file [%s].", dbf_path);
@@ -122,23 +123,23 @@ namespace auge
 
 	void FeatureClassShp::CloseSHPFile()
 	{
-		if(m_pSHPHandle!=NULL)
+		if(m_pshpHandle!=NULL)
 		{
-			::SHPClose(m_pSHPHandle);
-			m_pSHPHandle = NULL;
+			::SHPClose(m_pshpHandle);
+			m_pshpHandle = NULL;
 		}
-		if(m_pDBFHandle!=NULL)
+		if(m_pdbfHandle!=NULL)
 		{
-			::DBFClose(m_pDBFHandle);
-			m_pDBFHandle = NULL;
+			::DBFClose(m_pdbfHandle);
+			m_pdbfHandle = NULL;
 		}
 	}
 
 	bool FeatureClassShp::GetMetaData()
 	{
-		m_geom_type = GetGeometryType(m_pSHPHandle->nShapeType);
-		m_extent.Set(m_pSHPHandle->adBoundsMin[0], m_pSHPHandle->adBoundsMin[1], m_pSHPHandle->adBoundsMax[0], m_pSHPHandle->adBoundsMax[1]);
-		m_feature_count = m_pSHPHandle->nRecords;
+		m_geom_type = GetGeometryType(m_pshpHandle->nShapeType);
+		m_extent.Set(m_pshpHandle->adBoundsMin[0], m_pshpHandle->adBoundsMin[1], m_pshpHandle->adBoundsMax[0], m_pshpHandle->adBoundsMax[1]);
+		m_feature_count = m_pshpHandle->nRecords;
 		return true;
 	}
 
@@ -156,10 +157,10 @@ namespace auge
 		char name[AUGE_NAME_MAX] = {0};
 		int width=0,decimal=0;
 
-		int nfields = m_pDBFHandle->nFields;
+		int nfields = m_pdbfHandle->nFields;
 		for(int i=0; i<nfields; i++)
 		{
-			dbfType = ::DBFGetFieldInfo(m_pDBFHandle, i, name, &width, &decimal);
+			dbfType = ::DBFGetFieldInfo(m_pdbfHandle, i, name, &width, &decimal);
 			ftype = GetFieldType(dbfType);
 
 			pField = pFactory->CreateField();
@@ -203,7 +204,7 @@ namespace auge
 		FeatureCursorShp* pCursor = NULL;
 
 		pCursor = new FeatureCursorShp();
-		if(!pCursor->Create(this, m_pSHPHandle, m_pDBFHandle))
+		if(!pCursor->Create(this, m_pshpHandle, m_pdbfHandle))
 		{
 			pCursor->Release();
 			pCursor = NULL;
@@ -269,7 +270,7 @@ namespace auge
 
 	FeatureInsertCommand* FeatureClassShp::CreateInsertCommand()
 	{
-		return NULL;
+		return (new FeatureInsertCommandShp(this));
 	}
 
 	RESULTCODE FeatureClassShp::RemoveFeature(GFilter* pFilter)

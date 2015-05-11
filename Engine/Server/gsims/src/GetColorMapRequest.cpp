@@ -3,11 +3,13 @@
 namespace auge
 {
 	std::string GetColorMapRequest::DEFAULT_HOST   = "127.0.0.1";
-	std::string GetColorMapRequest::DEFAULT_METHOD = "wms";
+	std::string GetColorMapRequest::DEFAULT_METHOD = "wms"; 
 
 	GetColorMapRequest::GetColorMapRequest():
 	m_version("1.0.0"),
 		m_mime_type("text/xml"),
+		m_count(2),
+		m_id(-1),
 		m_host(DEFAULT_HOST),
 		m_request_method(DEFAULT_METHOD)
 	{
@@ -53,6 +55,8 @@ namespace auge
 		const char* val = NULL;
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
+		SetID(cgi["id"]);
+		SetCount(cgi["count"]);
 		return true;
 	}
 
@@ -103,6 +107,54 @@ namespace auge
 		{
 			m_host = host;
 		}
+	}
+
+	void GetColorMapRequest::SetID(const char* id)
+	{
+		if(id==NULL)
+		{
+			m_id = -1;
+		}
+		else
+		{
+			if(isdigit(id[0]))
+			{
+				m_id = atoi(id);
+			}
+			else
+			{
+				m_id = -1;
+			}			
+		}
+	}
+
+	void GetColorMapRequest::SetCount(const char* count)
+	{
+		if(count==NULL)
+		{
+			m_count = 2;
+		}
+		else
+		{
+			if(isdigit(count[0]))
+			{
+				m_count = atoi(count);
+			}
+			else
+			{
+				m_count = 2;
+			}
+		}
+	}
+
+	g_int GetColorMapRequest::GetID()
+	{
+		return m_id;
+	}
+
+	g_uint GetColorMapRequest::GetCount()
+	{
+		return m_count;
 	}
 
 	const char* GetColorMapRequest::GetRequestMethod()

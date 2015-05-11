@@ -1259,13 +1259,21 @@ SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
 /* -------------------------------------------------------------------- */
 /*      Write out record.                                               */
 /* -------------------------------------------------------------------- */
-    if( fseek( psSHP->fpSHP, nRecordOffset, 0 ) != 0
-        || fwrite( pabyRec, nRecordSize, 1, psSHP->fpSHP ) < 1 )
-    {
-        printf( "Error in fseek() or fwrite().\n" );
-        free( pabyRec );
-        return -1;
-    }
+	int ret_s = fseek( psSHP->fpSHP, nRecordOffset, 0 );
+	int ret_w = fwrite( pabyRec, nRecordSize, 1, psSHP->fpSHP );
+	if( ret_s != 0 || ret_s < 1 )
+	{
+		printf( "Error in fseek() or fwrite().\n" );
+		free( pabyRec );
+		return -1;
+	}
+    //if( fseek( psSHP->fpSHP, nRecordOffset, 0 ) != 0
+    //    || fwrite( pabyRec, nRecordSize, 1, psSHP->fpSHP ) < 1 )
+    //{
+    //    printf( "Error in fseek() or fwrite().\n" );
+    //    free( pabyRec );
+    //    return -1;
+    //}
 
     free( pabyRec );
 

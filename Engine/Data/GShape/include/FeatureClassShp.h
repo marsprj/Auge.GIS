@@ -14,6 +14,7 @@ namespace auge
 	class FeatureClassShp : public FeatureClass
 	{
 		friend class FeatureShp;
+		friend class FeatureInsertCommandShp;
 
 	public:
 		FeatureClassShp();
@@ -60,8 +61,8 @@ namespace auge
 	private:
 		std::string			m_name;
 		WorkspaceShp*		m_pWorkspace;
-		SHPHandle			m_pSHPHandle;
-		DBFHandle			m_pDBFHandle;
+		SHPHandle			m_pshpHandle;
+		DBFHandle			m_pdbfHandle;
 		augeGeometryType	m_geom_type;
 		GFields*			m_pFields;
 		GEnvelope			m_extent;

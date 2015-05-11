@@ -14,6 +14,7 @@ namespace auge
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
 		m_pColorMaps = NULL;
+		m_pColorMap = NULL;
 	}
 
 	GetColorMapResponse::~GetColorMapResponse()
@@ -22,6 +23,11 @@ namespace auge
 		{
 			m_pColorMaps->Release();
 			m_pColorMaps = NULL;
+		}
+		if(m_pColorMap!=NULL)
+		{
+			m_pColorMap->Release();
+			m_pColorMap = NULL;
 		}
 	}
 
@@ -32,6 +38,83 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		RESULTCODE rc = AG_FAILURE;
+		if(m_pColorMap)
+		{
+			rc = WriteColorMap(pWriter);
+		}
+		else
+		{
+			rc = WriteColorMaps(pWriter);
+		}
+
+		//XDocument	*pxDoc = new XDocument();
+		//XElement	*pxRoot = pxDoc->CreateRootNode("ColorMaps", NULL, NULL);
+		//pxRoot->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
+
+		//if(m_pColorMaps!=NULL)
+		//{
+		//	char str[AUGE_NAME_MAX]; 
+		//	ColorMap* pColorMap = NULL; 
+		//	m_pColorMaps->Reset();
+		//	while((pColorMap=m_pColorMaps->Next())!=NULL)
+		//	{
+		//		sprintf(str,"%d",pColorMap->GetID());
+		//		XElement* pxColorMap = pxRoot->AddChild("ColorMap",NULL);				
+		//		pxColorMap->SetAttribute("id",str,NULL);
+
+		//		XElement* pxColorWrapper = pxColorMap->AddChild("Color");
+		//		XElement* pxColor = pxColorWrapper->AddChild("Start");
+		//		GColor color = pColorMap->GetStartColor(); 
+		//		const char* format = "#%02x%02x%02x%02x";
+		//		g_sprintf(str,format, color.GetRed(),color.GetGreen(),color.GetBlue(),color.GetAlpha());
+		//		pxColor->AddChildText(str);
+
+		//		color = pColorMap->GetEndColor();
+		//		g_sprintf(str,format, color.GetRed(),color.GetGreen(),color.GetBlue(),color.GetAlpha());
+		//		pxColor = pxColorWrapper->AddChild("End");
+		//		pxColor->AddChildText(str);
+		//		
+		//		XElement *pxOnlineResource = pxColorMap->AddChild("OnlineResource", NULL);
+		//		pxOnlineResource->SetAttribute("xlink:href",pColorMap->GetImagePath(), NULL);
+		//	}
+		//}
+
+		//int len = 0;
+		//g_uchar* buffer = NULL;
+		//GLogger* pLogger = augeGetLoggerInstance();
+
+		//pxDoc->WriteToString(&buffer, len, "GBK",0);
+
+		//pWriter->WriteHead(m_pRequest->GetMimeType(),false);
+		//pWriter->Write(buffer, len);
+		//pWriter->WriteTail();
+
+		return rc;
+	}
+
+	void GetColorMapResponse::SetColorMaps(EnumColorMap* pColorMaps)
+	{		
+		if(m_pColorMap!=NULL)
+		{
+			m_pColorMap->Release();
+			m_pColorMap = NULL;
+		}
+		m_pColorMaps = pColorMaps;
+	}
+
+	void GetColorMapResponse::SetColorMap(ColorMap* pColorMap)
+	{
+		if(m_pColorMaps!=NULL)
+		{
+			m_pColorMaps->Release();
+			m_pColorMaps = NULL;
+		}
+		m_pColorMap = pColorMap;
+	}
+
+	RESULTCODE GetColorMapResponse::WriteColorMaps(WebWriter* pWriter)
+	{
 		XDocument	*pxDoc = new XDocument();
 		XElement	*pxRoot = pxDoc->CreateRootNode("ColorMaps", NULL, NULL);
 		pxRoot->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
@@ -58,7 +141,7 @@ namespace auge
 				g_sprintf(str,format, color.GetRed(),color.GetGreen(),color.GetBlue(),color.GetAlpha());
 				pxColor = pxColorWrapper->AddChild("End");
 				pxColor->AddChildText(str);
-				
+
 				XElement *pxOnlineResource = pxColorMap->AddChild("OnlineResource", NULL);
 				pxOnlineResource->SetAttribute("xlink:href",pColorMap->GetImagePath(), NULL);
 			}
@@ -77,9 +160,39 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void GetColorMapResponse::SetColorMaps(EnumColorMap* pColorMaps)
+	RESULTCODE GetColorMapResponse::WriteColorMap(WebWriter* pWriter)
 	{
-		m_pColorMaps = pColorMaps;
-	}
+		g_uint count = m_pRequest->GetCount();
+		m_pColorMap->SetCount(count);
 
+		char str[AUGE_NAME_MAX];
+
+		XDocument	*pxDoc = new XDocument();
+		XElement	*pxRoot = pxDoc->CreateRootNode("ColorMap", NULL, NULL);
+		pxRoot->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
+
+		sprintf(str,"%d", count);
+		pxRoot->SetAttribute("count",str, NULL);
+		
+		for(g_uint i=0; i<count; i++)
+		{
+			GColor* c = m_pColorMap->GetColor(i);
+			sprintf(str, "#%02x%02x%02x%02x",c->GetRed(),c->GetGreen(),c->GetBlue(), c->GetAlpha());
+
+			XElement* pxNode = pxRoot->AddChild("Color");
+			pxNode->AddChildText(str);
+		}
+
+		int len = 0;
+		g_uchar* buffer = NULL;
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		pxDoc->WriteToString(&buffer, len, "GBK",0);
+
+		pWriter->WriteHead(m_pRequest->GetMimeType(),false);
+		pWriter->Write(buffer, len);
+		pWriter->WriteTail();
+
+		return AG_SUCCESS;
+	}
 }

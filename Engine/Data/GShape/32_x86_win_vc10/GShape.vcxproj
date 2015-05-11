@@ -95,6 +95,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\DataEngineImpl.h" />
     <ClInclude Include="..\include\FeatureClassShp.h" />
     <ClInclude Include="..\include\FeatureCursorShp.h" />
+    <ClInclude Include="..\include\FeatureInsertCommandShp.h" />
     <ClInclude Include="..\include\FeatureShp.h" />
     <ClInclude Include="..\include\shapefil.h" />
     <ClInclude Include="..\include\ShpUtil.h" />
@@ -105,6 +106,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\dbfopen.cpp" />
     <ClCompile Include="..\src\FeatureClassShp.cpp" />
     <ClCompile Include="..\src\FeatureCursorShp.cpp" />
+    <ClCompile Include="..\src\FeatureInsertCommandShp.cpp" />
     <ClCompile Include="..\src\FeatureShp.cpp" />
     <ClCompile Include="..\src\shpopen.cpp" />
     <ClCompile Include="..\src\ShpUtil.cpp" />

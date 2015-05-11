@@ -23,6 +23,9 @@ namespace auge
 		virtual const char*		GetRequest();
 		virtual const char*		GetMimeType();
 
+		virtual g_uint			GetCount();
+		virtual g_int			GetID();
+
 		virtual const char*		GetHost();
 		virtual const char*		GetRequestMethod();
 
@@ -30,6 +33,8 @@ namespace auge
 		bool		Create(rude::CGI& cgi);
 		void		SetUser(const char* user);
 		void		SetVersion(const char* value);
+		void		SetID(const char* id);
+		void		SetCount(const char* count);
 
 		void		SetHost(const char* host);
 		void		SetRequestMethod(const char* method);
@@ -42,6 +47,8 @@ namespace auge
 		std::string m_mime_type;
 		std::string m_host;
 		std::string m_request_method;
+		g_int m_id;
+		g_uint m_count;
 
 		std::string m_name;
 

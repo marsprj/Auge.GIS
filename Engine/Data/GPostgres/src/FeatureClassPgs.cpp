@@ -292,11 +292,11 @@ namespace auge
 
 	GField*	FeatureClassPgs::CreateField(int col, PGresult* pgResult)
 	{
-		Oid pgType		= PQftype(pgResult, col);
-		const char* name= PQfname(pgResult, col);
+		Oid pgType		 = PQftype(pgResult, col);
+		const char* fname= PQfname(pgResult, col);
 		
 		augeFieldType type = augeFieldTypeNone;
-		if(!g_stricmp(name,m_geom_filed_name.c_str()))
+		if(!g_stricmp(fname,m_geom_filed_name.c_str()))
 		{
 			type = augeFieldTypeGeometry;
 		}
@@ -316,10 +316,18 @@ namespace auge
 		pField = pFactory->CreateField();
 		pField_2 = pField->Field_2();
 
-		pField_2->SetName(name);
-		pField_2->SetAlias(name);
+		pField_2->SetName(fname);
+		pField_2->SetAlias(fname);
 		pField_2->SetType(type);
-		pField_2->SetLength(PQfsize(pgResult, col));
+
+
+		g_int fsize = 0;
+		if(pField->GetType()==augeFieldTypeString)
+			fsize = PQfmod(pgResult, col) -4;
+		else
+			fsize = PQfsize(pgResult, col);
+
+		pField_2->SetLength(fsize);
 
 		if(type==augeFieldTypeGeometry)
 		{

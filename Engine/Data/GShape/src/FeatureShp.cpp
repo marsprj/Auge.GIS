@@ -34,7 +34,7 @@ namespace auge
 	{
 		if(m_pGeometry==NULL)
 		{
-			m_pGeometry = CreateGeometry(m_fid, m_pFeatureClass->m_pSHPHandle);
+			m_pGeometry = CreateGeometry(m_fid, m_pFeatureClass->m_pshpHandle);
 		}
 		return m_pGeometry;
 	}
@@ -53,8 +53,8 @@ namespace auge
 		m_pFeatureClass = pFeatureClassShp;
 		m_pFeatureClass->AddRef();
 		m_pFields = m_pFeatureClass->GetFields();
-		m_pSHPHandle = m_pFeatureClass->m_pSHPHandle;
-		m_pDBFHandle = m_pFeatureClass->m_pDBFHandle;
+		m_pSHPHandle = m_pFeatureClass->m_pshpHandle;
+		m_pDBFHandle = m_pFeatureClass->m_pdbfHandle;
 
 		return true;
 	}
@@ -114,8 +114,8 @@ namespace auge
 	GValue*	FeatureShp::GetValue(g_uint i) const
 	{
 		GValue* pValue = NULL;
-		SHPHandle pSHPHandle = m_pFeatureClass->m_pSHPHandle;
-		DBFHandle pDBFHandle = m_pFeatureClass->m_pDBFHandle;
+		SHPHandle pSHPHandle = m_pFeatureClass->m_pshpHandle;
+		DBFHandle pDBFHandle = m_pFeatureClass->m_pdbfHandle;
 		//if(index == m_lFIDIndex)
 		//{
 		//	pValue = new GValue(m_fid);
@@ -189,7 +189,7 @@ namespace auge
 					if(m_pGeometry==NULL)
 					{
 						FeatureShp* pThis = (FeatureShp*)this;
-						pThis->m_pGeometry = pThis->CreateGeometry(m_fid, m_pFeatureClass->m_pSHPHandle);
+						pThis->m_pGeometry = pThis->CreateGeometry(m_fid, m_pFeatureClass->m_pshpHandle);
 					}
 					if(m_pGeometry!=NULL)
 					{

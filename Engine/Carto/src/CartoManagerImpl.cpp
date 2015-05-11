@@ -1481,6 +1481,68 @@ namespace auge
 		return pMaps;
 	}
 
+	ColorMap* CartoManagerImpl::GetColorMap(g_int id)
+	{
+		char sql[AUGE_SQL_MAX];
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid, s_color, e_color from g_color_map where gid=%d",id);
+		GResultSet* pResultSet = m_pConnection->ExecuteQuery(sql);
+		if(pResultSet==NULL)
+		{
+			return NULL;
+		}
+
+		int count = pResultSet->GetCount();
+		if(count==0)
+		{
+			pResultSet->Release();
+			return NULL;
+		}
+
+		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
+		Renderer* pRenderer = pCartoFactory->CreateRenderer2D(200,20);
+
+		int r,g,b,a;
+		GColor s_color,e_color;
+
+		char i_name[AUGE_NAME_MAX];
+		char i_path[AUGE_PATH_MAX];
+		char c_dir[AUGE_PATH_MAX];
+		char m_dir[AUGE_PATH_MAX];
+		auge_get_cwd(c_dir, AUGE_PATH_MAX);
+#ifdef WIN32
+		auge_make_path(m_dir, NULL, c_dir, "colormap", NULL);
+#else
+		char p_dir[AUGE_PATH_MAX];
+		auge_get_parent_dir(c_dir, p_dir, AUGE_PATH_MAX);
+		auge_make_path(m_dir, NULL, p_dir, "colormap", NULL);
+#endif
+		auge_mkdir(m_dir);
+
+		int i=0;		
+		int gid = pResultSet->GetInt(i,0);
+		const char* s_c = pResultSet->GetString(i,1);
+		const char* e_c = pResultSet->GetString(i,2);				
+		sscanf(s_c, "#%2x%2x%2x%2x",&r,&g,&b,&a);
+		s_color.Set(r,g,b,a);
+		sscanf(e_c, "#%2x%2x%2x%2x",&r,&g,&b,&a);
+		e_color.Set(r,g,b,a);
+		ColorMapImpl* pColorMap = new ColorMapImpl();
+		pColorMap->Create(gid, s_color, e_color);
+
+		sprintf(i_name, "colomap/%d.png", gid);
+		auge_make_path(i_path, NULL, c_dir, i_name, NULL);				
+		pColorMap->SetImagePath(i_name);
+		pColorMap->SetAbsoluteImagePath(i_path);
+
+		pRenderer->DrawColorMap(pColorMap);
+		pRenderer->SaveAsImage(i_path);
+
+		pResultSet->Release();
+		pRenderer->Release();
+
+		return pColorMap;
+	}
+
 	//////////////////////////////////////////////////////////////////////////
 	RESULTCODE CartoManagerImpl::CreateMapTable()
 	{
