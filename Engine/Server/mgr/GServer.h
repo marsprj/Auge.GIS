@@ -78,7 +78,7 @@ namespace auge
 		CartoManager		*m_pCartoManager;
 		ServiceManager		*m_pServiceManager;
 
-		UserManager			*m_pUserManager;
+		//UserManager			*m_pUserManager;
 
 		int					m_counter;
 	};
