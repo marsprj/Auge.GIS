@@ -6,6 +6,7 @@ AM_CPPFLAGS=-I$(top_srcdir)/include
 
 
 mgr_cgi_LDFLAGS= \
+		-L$(top_srcdir)/Engine/Auth/src \
 		-L$(top_srcdir)/Engine/Core/src \
 		-L$(top_srcdir)/Engine/Data/GDEngine/src \
 		-L$(top_srcdir)/Engine/Carto/src \
@@ -15,6 +16,7 @@ mgr_cgi_LDFLAGS= \
 
 	
 mgr_cgi_LDADD=	-lgcore \
+		-lgauth \
       		-lgdengine \
   		-lgcarto \
 		-lgscore \
