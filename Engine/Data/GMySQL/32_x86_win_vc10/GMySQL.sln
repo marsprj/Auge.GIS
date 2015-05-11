@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GMySQL", "GMySQL.vcxproj", "{9B374F64-FD6D-49D5-952A-2E0BA5D74F68}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "..\test\test.vcxproj", "{634F6CF5-056B-4A46-9E52-335F7C33E9AF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9B374F64-FD6D-49D5-952A-2E0BA5D74F68} = {9B374F64-FD6D-49D5-952A-2E0BA5D74F68}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B374F64-FD6D-49D5-952A-2E0BA5D74F68}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9B374F64-FD6D-49D5-952A-2E0BA5D74F68}.Debug|Win32.Build.0 = Debug|Win32
+		{9B374F64-FD6D-49D5-952A-2E0BA5D74F68}.Release|Win32.ActiveCfg = Release|Win32
+		{9B374F64-FD6D-49D5-952A-2E0BA5D74F68}.Release|Win32.Build.0 = Release|Win32
+		{634F6CF5-056B-4A46-9E52-335F7C33E9AF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{634F6CF5-056B-4A46-9E52-335F7C33E9AF}.Debug|Win32.Build.0 = Debug|Win32
+		{634F6CF5-056B-4A46-9E52-335F7C33E9AF}.Release|Win32.ActiveCfg = Release|Win32
+		{634F6CF5-056B-4A46-9E52-335F7C33E9AF}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
