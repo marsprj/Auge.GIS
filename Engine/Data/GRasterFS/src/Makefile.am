@@ -9,7 +9,7 @@ libgrasterfs_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
 		-L$(top_srcdir)/Engine/Data/GRaster/src
 
-libgrasterfs_la_LIBADD=-lgcore -lgdal -lgraster
+libgrasterfs_la_LIBADD=-lgcore -lgraster
 
 libgrasterfs_la_SOURCES=\
 		RasterDatasetImpl.cpp \

@@ -30,7 +30,7 @@ namespace auge
 	m_pConnManager(NULL),
 	m_pCartoManager(NULL),
 	m_pServiceManager(NULL),
-	/*m_pUserManager(NULL),*/
+	m_pUserManager(NULL),
 	m_pError(augeGetErrorInstance())
 	{
 
@@ -458,8 +458,8 @@ namespace auge
 
 	RESULTCODE GServer::LoadUserManager()
 	{
-		//m_pUserManager = augeGetUserManagerInstance();
-		//m_pUserManager->Initialize(m_pConnection);
+		m_pUserManager = augeGetUserManagerInstance();
+		m_pUserManager->Initialize(m_pConnection);
 		return AG_SUCCESS;
 	}
 
