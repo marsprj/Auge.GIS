@@ -116,15 +116,15 @@ namespace auge
 			return pExpResponse;
 		}
 
-		RESULTCODE rc = pWorkspace->CreateFeatureClass(dataSetName, pFields);
-		if(rc!=AG_SUCCESS)
+		FeatureClass* pNewClass = pWorkspace->CreateFeatureClass(dataSetName, pFields);
+		if(pNewClass==NULL)
 		{
 			GError* pError = augeGetErrorInstance();
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(pError->GetLastError());
 			return pExpResponse;
 		}
-
+		pNewClass->Release();
 		WebSuccessResponse* pSussResponse = augeCreateWebSuccessResponse();
 		pSussResponse->SetRequest(pRequest->GetRequest());
 		return pSussResponse;
