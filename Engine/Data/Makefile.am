@@ -1,2 +1,2 @@
 AUTOMAKE_OPTION=foreign
-SUBDIRS=GDEngine GPostgres GShape GRaster GRasterFS
+SUBDIRS=GRaster GDEngine GPostgres GShape GRasterFS
