@@ -16,6 +16,7 @@ namespace auge
 	public:
 		virtual	RESULTCODE	Prepare(FeatureClass* pFeatureClass);
 		virtual RESULTCODE	Insert(Feature* pFeature);
+		virtual RESULTCODE	Commit();
 	private:
 		FeatureClassPgs	*m_pFeatureClass;
 		ConnectionPgs	*m_pgConnection;

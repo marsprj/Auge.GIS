@@ -93,36 +93,36 @@ namespace auge
 		return pFeatureClass;
 	}
 
-	RESULTCODE WorkspacePgs::CreateFeatureClass(const char* name, GFields* pFields)
+	FeatureClass* WorkspacePgs::CreateFeatureClass(const char* name, GFields* pFields)
 	{
 		if(name==NULL||pFields==NULL)
 		{
-			return AG_FAILURE;
+			return NULL;
 		}
 		if(pFields->Count()==0)
 		{
-			return AG_FAILURE;
+			return NULL;
 		}
 		GField* pField = pFields->GetGeometryField();
 		if(pField==NULL)
 		{
-			return AG_FAILURE;
+			return NULL;
 		}
 
 		RESULTCODE rc = AG_FAILURE;
 		rc = CreateTable(name, pFields);
 		if(rc!=AG_SUCCESS)
 		{
-			return rc;
+			return NULL;
 		}
 		rc = AddGeometryColumn(name, pField);
 		if(rc!=AG_SUCCESS)
 		{
 			RemoveTable(name);
-			return rc;
+			return NULL;
 		}
 
-		return AG_SUCCESS;
+		return OpenFeatureClass(name);
 	}
 
 	RESULTCODE WorkspacePgs::RemoveFeatureClass(const char* name)

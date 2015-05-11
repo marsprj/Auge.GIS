@@ -39,7 +39,7 @@ namespace auge
 		// FeatureClass
 		virtual EnumDataSet*	GetFeatureClasses();
 		virtual	FeatureClass*	OpenFeatureClass(const char* name);
-		virtual RESULTCODE		CreateFeatureClass(const char* name, GFields* pFields);
+		virtual FeatureClass*	CreateFeatureClass(const char* name, GFields* pFields);
 		virtual RESULTCODE		RemoveFeatureClass(const char* name);
 
 		// Raster

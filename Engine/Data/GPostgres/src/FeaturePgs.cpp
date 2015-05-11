@@ -247,7 +247,94 @@ namespace auge
 		{
 			return NULL;
 		}
-		return GetValue(PQfnumber(m_pgResult, name));
+
+		GField* pField = m_pFields->GetField(name);
+		if(pField==NULL)
+		{
+			return NULL;
+		}
+
+		GValue* pValue = NULL;
+		int findex = PQfnumber(m_pgResult, name);
+		const char* value = PQgetvalue(m_pgResult, m_index, findex);
+		switch(pField->GetType())
+		{
+		case augeFieldTypeShort:
+			{
+				pValue = new GValue((short)atoi(value));
+			}
+			break;
+		case augeFieldTypeInt:
+			{
+				pValue = new GValue((int)atoi(value));
+			}
+			break;
+		case augeFieldTypeLong:
+			{
+				pValue = new GValue((long)atoi(value));
+			}
+			break;
+		case augeFieldTypeInt64:
+			{
+				pValue = new GValue((g_long)atoi(value));
+			}
+			break;
+		case augeFieldTypeFloat:
+			{
+				pValue = new GValue((float)atof(value));
+			}
+			break;
+		case augeFieldTypeDouble:
+			{
+				pValue = new GValue((double)atof(value));
+			}
+			break;
+		case augeFieldTypeChar:			 
+			{
+				pValue = new GValue(value[0]);
+			}
+			break;
+		case augeFieldTypeString:
+			{
+				pValue = new GValue(value);
+			}
+			break;
+		case augeFieldTypeTime:	
+			{
+
+			}
+			break;
+		case augeFieldTypeBool:			 
+			{
+
+			}
+			break;
+		case augeFieldTypeBLOB:			 
+			{
+
+			}
+			break;
+		case augeFieldTypeGeometry:
+			{
+				size_t numBytes = 0;
+				GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+				g_uchar* pWKB = PQunescapeBytea((const g_uchar*)value, &numBytes);
+				if(pWKB!=NULL)
+				{
+					//g_uchar* wkb = (g_uchar*)auge_malloc(sizeof(g_uchar), numBytes);
+					//memcpy(wkb, pWKB, numBytes);
+					Geometry* pGeometry = pGeometryFactory->CreateGeometryFromWKB((g_uchar*)pWKB, false);
+					if(pGeometry!=NULL)
+					{
+						pValue = new GValue(pGeometry);
+					}
+					PQfreemem(pWKB);
+				}
+			}
+			break;
+		}//switch
+
+		return pValue;
 	}
 
 	bool FeaturePgs::GetBool(const char* name) const

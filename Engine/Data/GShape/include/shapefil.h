@@ -190,7 +190,7 @@ extern "C" {
 /************************************************************************/
 typedef	struct
 {
-    FILE    *fpSHP;
+    FILE        *fpSHP;
     FILE	*fpSHX;
 
 	unsigned char byteOrder;

@@ -21,6 +21,13 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	RESULTCODE FeatureInsertCommandShp::Commit()
+	{
+		::SHPFlush(m_pFeatureClass->m_pshpHandle);
+		::DBFFlush(m_pFeatureClass->m_pdbfHandle);
+		return AG_SUCCESS;
+	}
+
 	RESULTCODE FeatureInsertCommandShp::Insert(Feature* pFeature)
 	{
 		if(pFeature==NULL)
@@ -28,8 +35,11 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		Geometry* pGeometry = NULL;
-		pGeometry = pFeature->GetGeometry();
+		Geometry* pGeometry = pFeature->GetGeometry();
+		if(pGeometry==NULL)
+		{
+			return AG_FAILURE;
+		}
 		SHPObject* pshpObject = NULL;
 		pshpObject  = CreateSHPObjectFromWKB(pGeometry->AsBinary(), 1);
 		if(pshpObject==NULL)
@@ -71,7 +81,8 @@ namespace auge
 			}
 
 			f_index = pFields->FindField(fname);
-			dbf_index = GetFieldInnerIndex(f_index, i_index, g_index);
+			dbf_index = f_index;
+			//dbf_index = GetFieldInnerIndex(f_index, i_index, g_index);
 			if(dbf_index<0)
 			{
 				continue;
@@ -159,21 +170,12 @@ namespace auge
 			return NULL;
 		}
 
-		SHPObject *pshpObject = NULL;
-
-		//int * panPartStart = NULL;
-		//int * panPartType  = NULL;
-		//int nVertices = 0;
-		double padfX = 0;
-		double padfY = 0;
+		double padfX = pPoint->point.x;
+		double padfY = pPoint->point.y;
 		double padfZ = 0;
 		double padfM = 0;
 
-		padfX = pPoint->point.x;
-		padfY = pPoint->point.y;
-		padfZ = 0;
-		padfM = 0;
-
+		SHPObject *pshpObject = NULL;
 		pshpObject = ::SHPCreateObject(SHPT_POINT,
 									 -1,
 									 1,

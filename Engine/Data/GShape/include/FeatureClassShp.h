@@ -46,6 +46,7 @@ namespace auge
 
 	public:
 		bool	Create(const char* name, WorkspaceShp* pWorkspace);
+		bool	Create(const char* name, WorkspaceShp* pWorkspace, SHPHandle pshpHandle, DBFHandle pdfHandle);
 
 	private:
 		bool	OpenSHPFile(const char* name, WorkspaceShp* pWorkspace);

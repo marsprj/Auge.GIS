@@ -116,17 +116,17 @@ namespace auge
 		return pFeatureClass;
 	}
 
-	RESULTCODE WorkspaceShp::CreateFeatureClass(const char* name, GFields* pFields)
+	FeatureClass* WorkspaceShp::CreateFeatureClass(const char* name, GFields* pFields)
 	{
 		if(name==NULL||pFields==NULL)
 		{
-			return AG_FAILURE;
+			return NULL;
 		}
 
 		GField* pField = pFields->GetGeometryField();
 		if(pField==NULL)
 		{
-			return AG_FAILURE;
+			return NULL;
 		}
 
 		char shp_path[AUGE_PATH_MAX];
@@ -138,18 +138,18 @@ namespace auge
 		DBFHandle pdbfHandle = NULL;
 
 		GeometryDef* pGeometryDef = pField->GetGeometryDef();
-		g_uint shp_type = pGeometryDef->GeometryType();
+		g_uint shp_type = GetShpType(pGeometryDef->GeometryType());
 		
 		pshpHandle = ::SHPCreate(shp_path, shp_type);
 		if(pshpHandle==NULL)
 		{
-			return AG_FAILURE;
+			return NULL;
 		}
 		pdbfHandle = ::DBFCreate(dbf_path);
 		if(pdbfHandle==NULL)
 		{
 			::SHPClose(pshpHandle);
-			return AG_FAILURE;
+			return NULL;
 		}
 
 		int ret = 0;
@@ -177,12 +177,12 @@ namespace auge
 			else
 				ret = ::DBFAddField(pdbfHandle, pField->GetName(), dbf_type, pField->GetLength(), 0);
 		}
-		DBFFlush(pdbfHandle);
+		::DBFFlush(pdbfHandle);
 
-		::SHPClose(pshpHandle);
-		::DBFClose(pdbfHandle);
+		FeatureClassShp* pFeatureClass = new FeatureClassShp();
+		pFeatureClass->Create(name, this, pshpHandle, pdbfHandle);
 
-		return AG_SUCCESS;
+		return pFeatureClass;
 	}
 
 	RESULTCODE WorkspaceShp::RemoveFeatureClass(const char* name)

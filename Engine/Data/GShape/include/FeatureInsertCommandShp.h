@@ -18,6 +18,7 @@ namespace auge
 	public:
 		virtual	RESULTCODE	Prepare(FeatureClass* pFeatureClass);
 		virtual RESULTCODE	Insert(Feature* pFeature);
+		virtual RESULTCODE	Commit();
 
 	private:
 		SHPObject* CreateSHPObjectFromWKB(const g_uchar* pWKB, const int iWKBLen);

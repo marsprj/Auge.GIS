@@ -32,4 +32,9 @@ namespace auge
 		SQLBuilder::BuildInsertFeature(sql, m_pFeatureClass->GetName(), pFeature, m_pFeatureClass->GetSRID());
 		return m_pgConnection->ExecuteSQL(sql.c_str());
 	}
+
+	RESULTCODE FeatureInsertCommandPgs::Commit()
+	{
+		return AG_SUCCESS;
+	}
 }

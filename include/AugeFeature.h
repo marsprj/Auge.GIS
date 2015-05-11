@@ -44,7 +44,7 @@ namespace auge
 	public:
 		virtual EnumDataSet*	GetFeatureClasses() = 0;
 		virtual	FeatureClass*	OpenFeatureClass(const char* name) = 0;
-		virtual RESULTCODE		CreateFeatureClass(const char* name, GFields* pFields) = 0;
+		virtual FeatureClass*	CreateFeatureClass(const char* name, GFields* pFields) = 0;
 		virtual RESULTCODE		RemoveFeatureClass(const char* name) = 0;
 
 	};
@@ -139,6 +139,7 @@ namespace auge
 	public:
 		virtual	RESULTCODE	Prepare(FeatureClass* pFeatureClass) = 0;
 		virtual RESULTCODE	Insert(Feature* pFeature) = 0;
+		virtual RESULTCODE	Commit() = 0;
 	};
 }
 

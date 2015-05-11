@@ -82,6 +82,26 @@ namespace auge
 		return true;
 	}
 
+	bool FeatureClassShp::Create(const char* name, WorkspaceShp* pWorkspace, SHPHandle pshpHandle, DBFHandle pdfHandle)
+	{
+		m_name = name;
+		m_pWorkspace = pWorkspace;
+		m_pshpHandle = pshpHandle;
+		m_pdbfHandle = pdfHandle;
+
+		if(!GetMetaData())
+		{
+			return false;
+		}
+
+		if(!CreateFields())
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	bool FeatureClassShp::OpenSHPFile(const char* name, WorkspaceShp* pWorkspace)
 	{
 		GError* pError = augeGetErrorInstance();
