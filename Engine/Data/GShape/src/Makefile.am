@@ -20,4 +20,5 @@ libGShape_la_SOURCES=\
 		FeatureObj.cpp \
 		shpopen.cpp \
 		ShpUtil.cpp \
+		FeatureInsertCommandShp.cpp \
 		WorkspaceShp.cpp
