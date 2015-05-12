@@ -128,13 +128,15 @@ namespace auge
 			{
 				sprintf(str,"%d",pColorMap->GetID());
 				XElement* pxColorMap = pxRoot->AddChild("ColorMap",NULL);				
-				pxColorMap->SetAttribute("id",str,NULL);
+				pxColorMap->SetAttribute("id",str,NULL); 
 
 				XElement* pxColorWrapper = pxColorMap->AddChild("Color");
 				XElement* pxColor = pxColorWrapper->AddChild("Start");
 				GColor color = pColorMap->GetStartColor(); 
-				const char* format = "#%02x%02x%02x%02x";
-				g_sprintf(str,format, color.GetRed(),color.GetGreen(),color.GetBlue(),color.GetAlpha());
+				//const char* format = "#%02x%02x%02x%02x";
+				//g_sprintf(str,format, color.GetRed(),color.GetGreen(),color.GetBlue(),color.GetAlpha());
+				const char* format = "#%02x%02x%02x%";
+				g_sprintf(str,format, color.GetRed(),color.GetGreen(),color.GetBlue());
 				pxColor->AddChildText(str);
 
 				color = pColorMap->GetEndColor();
@@ -177,7 +179,8 @@ namespace auge
 		for(g_uint i=0; i<count; i++)
 		{
 			GColor* c = m_pColorMap->GetColor(i);
-			sprintf(str, "#%02x%02x%02x%02x",c->GetRed(),c->GetGreen(),c->GetBlue(), c->GetAlpha());
+			//sprintf(str, "#%02x%02x%02x%02x",c->GetRed(),c->GetGreen(),c->GetBlue(), c->GetAlpha());
+			sprintf(str, "#%02x%02x%02x",c->GetRed(),c->GetGreen(),c->GetBlue());
 
 			XElement* pxNode = pxRoot->AddChild("Color");
 			pxNode->AddChildText(str);

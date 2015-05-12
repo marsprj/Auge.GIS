@@ -85,6 +85,4 @@ service=ims&version=1.0.0&request=AddStyle&name=polygon1&type=polygon&style=
     </sld:UserLayer>
 </sld:StyledLayerDescriptor>
 
-
-
 ************************************************************************/
