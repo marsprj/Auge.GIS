@@ -1007,7 +1007,7 @@ namespace auge
 			if(pStyle==NULL)
 			{
 				GLogger* pLogger = augeGetLoggerInstance();
-				pLogger->Error("Bad Style XML Document");
+				pLogger->Error("Bad Style XML Document", __FILE__,__LINE__);
 				pLogger->Debug(text);
 				continue;
 			}
@@ -1529,8 +1529,8 @@ namespace auge
 		ColorMapImpl* pColorMap = new ColorMapImpl();
 		pColorMap->Create(gid, s_color, e_color);
 
-		sprintf(i_name, "colomap/%d.png", gid);
-		auge_make_path(i_path, NULL, c_dir, i_name, NULL);				
+		sprintf(i_name, "colormap/%d.png", gid);
+		auge_make_path(i_path, NULL, m_dir, i_name, NULL);				
 		pColorMap->SetImagePath(i_name);
 		pColorMap->SetAbsoluteImagePath(i_path);
 
