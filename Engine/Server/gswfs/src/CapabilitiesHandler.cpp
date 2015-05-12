@@ -653,7 +653,7 @@ namespace auge
 		g_sprintf(wfs_xlink, "http://%s/%s/%s/%s/ims?service=wfs",	pRequest->GetHost(),
 			AUGE_VIRTUAL_NAME,
 			pRequest->GetUser(),
-			ns); 
+			NULL); 
 
 		char capa_name[AUGE_PATH_MAX];
 		char capa_path[AUGE_PATH_MAX];

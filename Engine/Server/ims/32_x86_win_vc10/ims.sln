@@ -20,7 +20,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gscore", "..\..\gscore\32_x
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mgr", "..\..\mgr\32_x86_win_vc10\mgr.vcxproj", "{C315E5BD-713B-4812-9B05-8A0F6475DAB0}"
 	ProjectSection(ProjectDependencies) = postProject
-		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A} = {A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}
+		{1ADED051-D30B-4034-BCA9-908F3F93BC6A} = {1ADED051-D30B-4034-BCA9-908F3F93BC6A}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsvrs", "..\..\gsvrs\32_x86_win_vc10\gsvrs.vcxproj", "{D8C7BCA3-AADF-430D-BD10-6F771418F31B}"
@@ -44,6 +44,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsauth", "..\..\gsauth\32_x86_win_vc10\gsauth.vcxproj", "{E361D34C-1E89-48C1-AC90-D60721C7D06A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GRaster", "..\..\..\Data\GRaster\32_x86_win_vc10\GRaster.vcxproj", "{B082D314-56E0-4F40-8862-23C00E77EB24}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswps", "..\..\gswps\32_x86_win_vc10\gswps.vcxproj", "{1ADED051-D30B-4034-BCA9-908F3F93BC6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,6 +129,10 @@ Global
 		{B082D314-56E0-4F40-8862-23C00E77EB24}.Debug|Win32.Build.0 = Debug|Win32
 		{B082D314-56E0-4F40-8862-23C00E77EB24}.Release|Win32.ActiveCfg = Release|Win32
 		{B082D314-56E0-4F40-8862-23C00E77EB24}.Release|Win32.Build.0 = Release|Win32
+		{1ADED051-D30B-4034-BCA9-908F3F93BC6A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1ADED051-D30B-4034-BCA9-908F3F93BC6A}.Debug|Win32.Build.0 = Debug|Win32
+		{1ADED051-D30B-4034-BCA9-908F3F93BC6A}.Release|Win32.ActiveCfg = Release|Win32
+		{1ADED051-D30B-4034-BCA9-908F3F93BC6A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

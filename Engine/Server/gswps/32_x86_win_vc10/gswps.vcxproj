@@ -86,12 +86,18 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\CapabilitiesHandler.cpp" />
     <ClCompile Include="..\src\CapabilitiesRequest.cpp" />
     <ClCompile Include="..\src\CapabilitiesResponse.cpp" />
+    <ClCompile Include="..\src\DescribeProcessHandler.cpp" />
+    <ClCompile Include="..\src\DescribeProcessRequest.cpp" />
+    <ClCompile Include="..\src\DescribeProcessResponse.cpp" />
     <ClCompile Include="..\src\WProcessEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\CapabilitiesHandler.h" />
     <ClInclude Include="..\include\CapabilitiesRequest.h" />
     <ClInclude Include="..\include\CapabilitiesResponse.h" />
+    <ClInclude Include="..\include\DescribeProcessHandler.h" />
+    <ClInclude Include="..\include\DescribeProcessRequest.h" />
+    <ClInclude Include="..\include\DescribeProcessResponse.h" />
     <ClInclude Include="..\include\WProcessEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

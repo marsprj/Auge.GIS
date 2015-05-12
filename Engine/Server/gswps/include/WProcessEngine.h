@@ -14,13 +14,13 @@ namespace auge
 	//class RegisterHandlerRequest;
 	//class RegisterDataSourceRequest;
 
-	class WDataEngine : public WebEngine
+	class WProcessEngine : public WebEngine
 	{
-		friend class CapabilitiesResponse;
+		friend class CapabilitiesHandler;
 
 	public:
-		WDataEngine();
-		virtual ~WDataEngine();
+		WProcessEngine();
+		virtual ~WProcessEngine();
 
 	public:
 		virtual WebResponse*	Execute(WebRequest* pWebRequest);

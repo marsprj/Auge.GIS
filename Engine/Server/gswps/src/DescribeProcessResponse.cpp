@@ -1,5 +1,5 @@
-#include "CapabilitiesResponse.h"
-#include "CapabilitiesRequest.h"
+#include "DescribeProcessResponse.h"
+#include "DescribeProcessRequest.h"
 #include "AugeWebCore.h"
 #include "AugeService.h"
 #include "AugeCore.h"
@@ -8,18 +8,18 @@
 
 namespace auge
 {
-	CapabilitiesResponse::CapabilitiesResponse(CapabilitiesRequest* pRequest)
+	DescribeProcessResponse::DescribeProcessResponse(DescribeProcessRequest* pRequest)
 	{
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
 	}
 
-	CapabilitiesResponse::~CapabilitiesResponse()
+	DescribeProcessResponse::~DescribeProcessResponse()
 	{
 
 	}
 
-	RESULTCODE CapabilitiesResponse::Write(WebWriter* pWriter)
+	RESULTCODE DescribeProcessResponse::Write(WebWriter* pWriter)
 	{
 		if(pWriter==NULL)
 		{
@@ -52,7 +52,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void CapabilitiesResponse::SetPath(const char* path)
+	void DescribeProcessResponse::SetPath(const char* path)
 	{
 		m_path = path;
 	}

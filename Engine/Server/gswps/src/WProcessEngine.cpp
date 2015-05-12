@@ -1,49 +1,45 @@
-#include "WProcessEngine.h"
-
 #include "AugeCore.h"
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
 #include "AugeService.h"
 
+#include "WProcessEngine.h"
+#include "CapabilitiesHandler.h"
+#include "DescribeProcessHandler.h"
+
 namespace auge
 {
 	WebEngine* augeGetWebEngineInstance()
 	{
-		static WDataEngine g_webMapEngine;
+		static WProcessEngine g_webMapEngine;
 		return &g_webMapEngine;
 	} 
 
-	WDataEngine::WDataEngine()
+	WProcessEngine::WProcessEngine()
 	{
 		m_handler = NULL;
 
-		//m_handlers.push_back(new RegisterDataSourceHandler());
-		//m_handlers.push_back(new UnRegisterDataSourceHandler()); 
-		//m_handlers.push_back(new GetDataSourceHandler());
-		//m_handlers.push_back(new GetDataSetHandler());
-		//m_handlers.push_back(new GetPreviewHandler());
-		//m_handlers.push_back(new CreateDataSetHandler());
-		//m_handlers.push_back(new RemoveDataSetHandler());
-		//m_handlers.push_back(new TryConnectionHandler());
+		m_handlers.push_back(new CapabilitiesHandler());
+		m_handlers.push_back(new DescribeProcessHandler());
 	}
 
-	WDataEngine::~WDataEngine()
+	WProcessEngine::~WProcessEngine()
 	{
 		m_handler = NULL;
 		CleanupHandlers();
 	}
 
-	void* WDataEngine::GetHandler()
+	void* WProcessEngine::GetHandler()
 	{
 		return m_handler;
 	}
 
-	void WDataEngine::SetHandler(void* handler)
+	void WProcessEngine::SetHandler(void* handler)
 	{
 		m_handler = handler;
 	}
 
-	void WDataEngine::CleanupHandlers()
+	void WProcessEngine::CleanupHandlers()
 	{
 		WebHandler* pHandler = NULL;
 		std::vector<WebHandler*>::iterator iter;
@@ -55,40 +51,40 @@ namespace auge
 		m_handlers.clear();
 	}
 
-	WebHandler*	WDataEngine::GetHandler(const char* name)
+	WebHandler*	WProcessEngine::GetHandler(const char* name)
 	{
 		std::vector<WebHandler*>::iterator iter;
 		for(iter=m_handlers.begin(); iter!=m_handlers.end(); iter++)
 		{
 			if(g_stricmp((*iter)->GetName(), name)==0)
 			{
-				return *iter;
+				return *iter; 
 			}
 		}
 		return NULL;
 	}
 
-	const char*	WDataEngine::GetID()
+	const char*	WProcessEngine::GetID()
 	{
-		return "WDataEngine";
+		return "WProcessEngine";
 	}
 
-	const char*	WDataEngine::GetType()
+	const char*	WProcessEngine::GetType()
 	{
-		return "dbs";
+		return "wps";
 	}
 
-	const char*	WDataEngine::GetDescription()
+	const char*	WProcessEngine::GetDescription()
 	{
-		return "Auge Web Service Manager";
+		return "Web Processing Service";
 	}
 
-	const char*	WDataEngine::GetLibraryPath()
+	const char*	WProcessEngine::GetLibraryPath()
 	{
 		return NULL;
 	}
 
-	WebRequest*	WDataEngine::ParseRequest(const char* url)
+	WebRequest*	WProcessEngine::ParseRequest(const char* url)
 	{
 		GPropertySet props;
 		props.Parse(url,"&");
@@ -119,7 +115,7 @@ namespace auge
 		return pWebRequest;
 	}
 
-	WebRequest*	WDataEngine::ParseRequest(rude::CGI& cgi)
+	WebRequest*	WProcessEngine::ParseRequest(rude::CGI& cgi)
 	{
 		const char* request = cgi["request"];
 		if(request==NULL)
@@ -142,12 +138,12 @@ namespace auge
 		return handler->ParseRequest(cgi);
 	}
 
-	WebRequest*	WDataEngine::ParseRequest(rude::CGI& cgi, const char* mapName)
+	WebRequest*	WProcessEngine::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
 		return ParseRequest(cgi);
 	}
 
-	/*WebRequest*	WDataEngine::ParseRequest(rude::CGI& cgi)
+	/*WebRequest*	WProcessEngine::ParseRequest(rude::CGI& cgi)
 	{
 		WebRequest* pWebRequest = NULL;
 
@@ -230,7 +226,7 @@ namespace auge
 		return pWebRequest;
 	}*/
 
-	WebRequest*	WDataEngine::ParseRequest(XDocument* pxDoc, const char* mapName)
+	WebRequest*	WProcessEngine::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
 		XElement	*pxRoot = pxDoc->GetRootNode();
 		const char* request = pxRoot->GetName();
@@ -250,7 +246,7 @@ namespace auge
 		return handler->ParseRequest(pxDoc, mapName);
 	}
 
-	WebResponse* WDataEngine::Execute(WebRequest* pWebRequest)
+	WebResponse* WProcessEngine::Execute(WebRequest* pWebRequest)
 	{
 		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
@@ -263,7 +259,7 @@ namespace auge
 		return handler->Execute(pWebRequest);
 	}
 
-	/*WebResponse* WDataEngine::Execute(WebRequest* pWebRequest)
+	/*WebResponse* WProcessEngine::Execute(WebRequest* pWebRequest)
 	{
 		WebResponse		*pWebResponse = NULL;
 
@@ -310,17 +306,25 @@ namespace auge
 		return pWebResponse;
 	}*/
 
-	WebResponse* WDataEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WProcessEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return Execute(pWebRequest);
+		const char* request = pWebRequest->GetRequest();
+		WebHandler* handler = GetHandler(request);
+		if(handler == NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Request %s is not supported", request);
+		}
+
+		return handler->Execute(pWebRequest,pWebContext);
 	}
 
-	//WebResponse* WDataEngine::GetCapabilities(CapabilitiesRequest* pRequest)
+	//WebResponse* WProcessEngine::GetCapabilities(CapabilitiesRequest* pRequest)
 	//{	
 	//	return new CapabilitiesResponse(pRequest);
 	//}
 
-	//WebResponse* WDataEngine::CreateService(CreateServiceRequest* pRequest)
+	//WebResponse* WProcessEngine::CreateService(CreateServiceRequest* pRequest)
 	//{
 	//	const char* name = NULL;
 	//	ServiceManager* pServiceManager = NULL;
@@ -352,7 +356,7 @@ namespace auge
 	//	return pSusResponse;
 	//}
 
-	//WebResponse* WDataEngine::RemoveService(RemoveServiceRequest* pRequest)
+	//WebResponse* WProcessEngine::RemoveService(RemoveServiceRequest* pRequest)
 	//{
 	//	const char* name = NULL;
 	//	ServiceManager* pServiceManager = NULL;
@@ -384,12 +388,12 @@ namespace auge
 	//	return pSusResponse;
 	//}
 
-	//WebResponse* WDataEngine::GetService(GetServiceRequest* pRequest)
+	//WebResponse* WProcessEngine::GetService(GetServiceRequest* pRequest)
 	//{
 	//	return new GetServiceResponse(pRequest);
 	//}
 
-	//WebResponse* WDataEngine::RegisterHandler(RegisterHandlerRequest* pRequest)
+	//WebResponse* WProcessEngine::RegisterHandler(RegisterHandlerRequest* pRequest)
 	//{
 	//	const char* service_name = NULL;
 	//	const char* handler = NULL;
@@ -414,7 +418,7 @@ namespace auge
 	//	return pResponse;
 	//}
 	//
-	//WebResponse* WDataEngine::RegisterDataSource(RegisterDataSourceRequest* pRequest)
+	//WebResponse* WProcessEngine::RegisterDataSource(RegisterDataSourceRequest* pRequest)
 	//{
 	//	const char* name = NULL;
 	//	const char* engine = NULL;

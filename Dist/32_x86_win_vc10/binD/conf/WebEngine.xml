@@ -5,4 +5,5 @@
 	<Engine description="Web Feature Sevice" path="" id="gswfs"/>
 	<Engine description="Web Database Sevice" path="" id="gsdbs"/>
 	<Engine description="Web User Sevice" path="" id="gsauth"/>
+	<Engine description="Web Processing Sevice" path="" id="gswps"/>
 </Engines>

@@ -244,12 +244,20 @@ namespace auge
 					pExpResponse = auge::augeCreateWebExceptionResponse();
 					pExpResponse->SetMessage(m_pError->GetLastError());
 					pWebResponse = pExpResponse;
-					return pWebResponse;
+					return pWebResponse; 
 				}
 			}
-			else
+			else 
 			{
 				szService = cgi["service"];
+				if(service==NULL)
+				{
+					pLogger->Error("service is null",__FILE__,__LINE__);
+				}
+				else
+				{
+					pLogger->Error(service,__FILE__,__LINE__);
+				}
 				pWebEngine = m_pWebEngineManager->GetEngine(szService);
 				if(pWebEngine==NULL)
 				{
@@ -272,10 +280,6 @@ namespace auge
 				}
 			}
 		}
-
-
-
-		
 
 		pWebResponse = pWebEngine->Execute(pWebRequest,pWebContext);
 		pWebRequest->Release();
