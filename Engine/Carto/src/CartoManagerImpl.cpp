@@ -1466,7 +1466,8 @@ namespace auge
 				pColorMap->Create(gid, s_color, e_color);
 				pMaps->Add(pColorMap);
 
-				sprintf(i_name, "colormap/%d.png", gid);
+				//sprintf(i_name, "colormap/%d.png", gid);
+				sprintf(i_name, "%d.png", gid);
 				auge_make_path(i_path, NULL, m_dir, i_name, NULL);				
 				pColorMap->SetImagePath(i_name);
 				pColorMap->SetAbsoluteImagePath(i_path);
