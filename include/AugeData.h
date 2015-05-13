@@ -31,7 +31,8 @@ namespace auge
 	typedef enum
 	{
 		augeDataSetFeature,
-		augeDataSetRaster
+		augeDataSetRaster,
+		augeDataSetTile
 	}augeDataSetType;
 
 	class GConnection : public GObject

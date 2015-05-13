@@ -9,6 +9,7 @@ namespace auge
 {
 	GetFeatureResponse::GetFeatureResponse(GetFeatureRequest* pRequest)
 	{
+		m_pCursor = NULL;
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
 		m_encoding = "GBK";
