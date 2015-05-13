@@ -90,6 +90,38 @@ namespace auge
 
 	WebResponse* GetColorMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
-		return Execute(pWebRequest);
+		WebResponse* pWebResponse = NULL;
+		GetColorMapRequest* pRequest = static_cast<GetColorMapRequest*>(pWebRequest);
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+
+		g_int id = pRequest->GetID();
+		if(id<=0)
+		{
+			GetColorMapResponse* pResponse =  new GetColorMapResponse(static_cast<GetColorMapRequest*>(pWebRequest));
+			EnumColorMap* pColorMaps = pCartoManager->GetColorMaps();
+			pResponse->SetColorMaps(pColorMaps);
+			pResponse->SetWebContext(pWebContext);
+			pWebResponse = pResponse;
+		}
+		else
+		{
+			ColorMap* pColorMap = pCartoManager->GetColorMap(id);
+			if(pColorMap)
+			{
+				GetColorMapResponse* pResponse =  new GetColorMapResponse(static_cast<GetColorMapRequest*>(pWebRequest));
+				pResponse->SetColorMap(pColorMap);
+				pResponse->SetWebContext(pWebContext);
+				pWebResponse = pResponse;
+			}
+			else
+			{
+				const char* msg = "Cannot Load ColorMap";
+				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+				pExpResponse->SetMessage(msg);
+				pWebResponse = pExpResponse;
+			}
+		}
+
+		return pWebResponse;
 	}
 }

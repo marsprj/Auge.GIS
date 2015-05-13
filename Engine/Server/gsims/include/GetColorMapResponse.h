@@ -9,6 +9,7 @@ namespace auge
 	class ColorMap;
 	class EnumColorMap;
 	class GetColorMapRequest;
+	class WebContext;
 
 	class GetColorMapResponse : public WebResponse
 	{
@@ -21,6 +22,7 @@ namespace auge
 	public:
 		void	SetColorMaps(EnumColorMap* pColorMaps);
 		void	SetColorMap(ColorMap* pColorMap);
+		void	SetWebContext(WebContext* pWebContext);
 
 	private:
 		RESULTCODE	WriteColorMaps(WebWriter* pWriter);
@@ -30,6 +32,7 @@ namespace auge
 		GetColorMapRequest	*m_pRequest;
 		EnumColorMap		*m_pColorMaps;
 		ColorMap			*m_pColorMap;
+		WebContext			*m_pWebContext;
 	};
 }
 

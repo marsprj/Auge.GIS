@@ -15,6 +15,7 @@ namespace auge
 		m_pRequest->AddRef();
 		m_pColorMaps = NULL;
 		m_pColorMap = NULL;
+		m_pWebContext = NULL;
 	}
 
 	GetColorMapResponse::~GetColorMapResponse()
@@ -144,8 +145,10 @@ namespace auge
 				pxColor = pxColorWrapper->AddChild("End");
 				pxColor->AddChildText(str);
 
+				g_sprintf(str,"http://%s:%s/colormap/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), pColorMap->GetImagePath());
 				XElement *pxOnlineResource = pxColorMap->AddChild("OnlineResource", NULL);
-				pxOnlineResource->SetAttribute("xlink:href",pColorMap->GetImagePath(), NULL);
+				//pxOnlineResource->SetAttribute("xlink:href",pColorMap->GetImagePath(), NULL);
+				pxOnlineResource->SetAttribute("xlink:href",str, NULL);
 			}
 		}
 
@@ -197,5 +200,10 @@ namespace auge
 		pWriter->WriteTail();
 
 		return AG_SUCCESS;
+	}
+
+	void GetColorMapResponse::SetWebContext(WebContext* pWebContext)
+	{
+		m_pWebContext = pWebContext;
 	}
 }
