@@ -1,3 +1,4 @@
+#include "WorkspaceTFS.h"
 #include "PGISTileStore.h"
 #include <math.h>
 
@@ -9,8 +10,10 @@ namespace auge
 		m_start_level = 1;
 		m_end_level = 18;
 		m_tile_format = "png";
-		m_full_extent.Set(-180.0f,-90.0f,180.0f,90.0f);
-		m_extent = m_full_extent;
+		m_full_extent.Set(-256.0f,-256.0f,256.0f,256.0f);
+		m_extent.Set(-180.0f,-90.0f,180.0f,90.0f);
+
+		m_pWorkspace = NULL;
 	}
 
 	PGISTileStore::~PGISTileStore()
@@ -30,7 +33,8 @@ namespace auge
 
 	void PGISTileStore::GetTopLeftCorner(double &x, double &y)
 	{
-
+		x = -256;
+		y = -256;
 	}
 
 	g_uint PGISTileStore::GetRows(g_uint level)
@@ -95,36 +99,92 @@ namespace auge
 
 	RESULTCODE PGISTileStore::GetExtent(GEnvelope& extent, g_uint level, g_uint row, g_uint col)
 	{
-		double resolution = m_full_extent.GetHeight() / pow(2.0f,(float)(level-1));
+		double resolution = m_full_extent.GetHeight() / pow(2.0f,(float)(level));
 		double xmin = m_full_extent.m_xmin + resolution * col;
 		double ymax = m_full_extent.m_ymax - resolution * row;
 		double xmax = xmin + resolution;
 		double ymin = ymax - resolution;
 		extent.Set(xmin,ymin,xmax,ymax);
+
+		if(!m_extent.Intersects(extent))
+		{
+			return AG_FAILURE;
+		}
 		return AG_SUCCESS;
 	}
 
 	RESULTCODE PGISTileStore::GetTilePath(char* key, size_t size, g_uint level, g_uint row, g_uint col)
 	{	
-		g_snprintf(key, size, "%s/%d/%d_%d.%s",m_path.c_str(), level, row, col,m_tile_format.c_str());
+		char l_tile[AUGE_NAME_MAX] = {0};
+		char r_tile[AUGE_NAME_MAX] = {0};
+		char c_tile[AUGE_NAME_MAX] = {0};
+		g_sprintf(l_tile,"L%02d", level);
+		g_sprintf(r_tile,"R%08x", row);
+		g_sprintf(c_tile,"C%08x", col);
+
+		char l_path[AUGE_PATH_MAX] = {0};
+		auge_make_path(l_path, NULL, m_layers_path.c_str(), l_tile, NULL);
+
+		char r_path[AUGE_PATH_MAX] = {0};
+		auge_make_path(r_path, NULL, l_path, r_tile, NULL);
+		auge_mkdir(r_path);
+
+		//char t_path[AUGE_PATH_MAX] = {0};
+		auge_make_path(key, NULL, r_path, c_tile, m_tile_format.c_str());
+
+		//g_snprintf(key, size, "%s/%d/%d_%d.%s",m_path.c_str(), level, row, col,m_tile_format.c_str());
 		return AG_SUCCESS;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
 	RESULTCODE	PGISTileStore::CreateLevels(g_uint start, g_uint end)
 	{
-		char level[AUGE_NAME_MAX];
+		char layers_path[AUGE_PATH_MAX] = {0};
+		auge_make_path(layers_path, NULL, m_path.c_str(), "Layers", NULL);
+		auge_mkdir(layers_path);
+
+		char _alllayers_path[AUGE_PATH_MAX] = {0};
+		auge_make_path(_alllayers_path, NULL, layers_path, "_alllayers", NULL);
+		auge_mkdir(_alllayers_path);
+		m_layers_path = _alllayers_path;
+
+		char l_name[AUGE_NAME_MAX];
 		char l_path[AUGE_PATH_MAX] = {0};
 		for(g_uint i=start; i<=end; i++)
 		{
-			g_sprintf(level, "%d", i);
-			auge_make_path(l_path,NULL, m_path.c_str(), level, NULL);
+			g_sprintf(l_name, "L%02d", i);
+			auge_make_path(l_path,NULL, _alllayers_path, l_name, NULL);
 
 			if(g_access(l_path, 4))
 			{
 				auge_mkdir(l_path);
 			}
 		}
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE PGISTileStore::Create(TileWorkspaceFS* pWorkspace)
+	{
+		m_pWorkspace = pWorkspace;
+		m_path = pWorkspace->GetPath();
+
+		CreateLevels(m_start_level, m_end_level);
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE PGISTileStore::Create(TileWorkspaceFS* pWorkspace, const char* name, g_uint start_level, g_uint end_level, GEnvelope& extent)
+	{
+		m_pWorkspace = pWorkspace;
+		m_path = pWorkspace->GetPath();
+		m_start_level = start_level;
+		m_end_level = end_level;
+		m_extent = extent;
+
+		SetName(name);
+
+		CreateLevels(m_start_level, m_end_level);
 
 		return AG_SUCCESS;
 	}

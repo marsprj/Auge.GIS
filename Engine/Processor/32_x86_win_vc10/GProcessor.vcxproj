@@ -82,12 +82,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\GoogleCRS84QuadTileStoreGeneratorImpl.cpp" />
+    <ClCompile Include="..\src\FileSytemTileStoreGeneratorImpl.cpp" />
     <ClCompile Include="..\src\ProcessorFactoryImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\AugeProcessor.h" />
-    <ClInclude Include="..\include\GoogleCRS84QuadTileStoreGeneratorImpl.h" />
+    <ClInclude Include="..\include\FileSytemTileStoreGeneratorImpl.h" />
     <ClInclude Include="..\include\ProcessorFactoryImpl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

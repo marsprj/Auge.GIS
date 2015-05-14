@@ -1,3 +1,4 @@
+#include "WorkspaceTFS.h"
 #include "GoogleCRS84QuadTileStore.h"
 #include <math.h>
 
@@ -11,6 +12,7 @@ namespace auge
 		m_tile_format = "png";
 		m_full_extent.Set(-180.0f,-90.0f,180.0f,90.0f);
 		m_extent = m_full_extent;
+		m_pWorkspace = NULL;
 	}
 
 	GoogleCRS84QuadTileStore::~GoogleCRS84QuadTileStore()
@@ -30,7 +32,8 @@ namespace auge
 
 	void GoogleCRS84QuadTileStore::GetTopLeftCorner(double &x, double &y)
 	{
-
+		x = -180;
+		y = -90;
 	}
 
 	g_uint GoogleCRS84QuadTileStore::GetRows(g_uint level)
@@ -125,6 +128,31 @@ namespace auge
 				auge_mkdir(l_path);
 			}
 		}
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE GoogleCRS84QuadTileStore::Create(TileWorkspaceFS* pWorkspace)
+	{
+		m_pWorkspace = pWorkspace;
+		m_path = pWorkspace->GetPath();
+
+		CreateLevels(m_start_level, m_end_level);
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE GoogleCRS84QuadTileStore::Create(TileWorkspaceFS* pWorkspace, const char* name, g_uint start_level, g_uint end_level, GEnvelope& extent)
+	{
+		m_pWorkspace = pWorkspace;
+		m_path = pWorkspace->GetPath();
+		m_start_level = start_level;
+		m_end_level = end_level;
+		m_extent = extent;
+
+		SetName(name);
+
+		CreateLevels(m_start_level, m_end_level);
 
 		return AG_SUCCESS;
 	}

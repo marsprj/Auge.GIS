@@ -1,5 +1,5 @@
 #include "ProcessorFactoryImpl.h"
-#include "GoogleCRS84QuadTileStoreGeneratorImpl.h"
+#include "FileSytemTileStoreGeneratorImpl.h"
 
 namespace auge
 {
@@ -21,6 +21,6 @@ namespace auge
 
 	TileStoreGenerator* GProcessorFactoryImpl::CreateTileStoreGenerator()
 	{
-		return (new GoogleCRS84QuadTileStoreGeneratorImpl());
+		return (new FileSystemileStoreGeneratorImpl());
 	}
 }

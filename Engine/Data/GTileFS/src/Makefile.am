@@ -12,6 +12,6 @@ libGTileFS_la_LIBADD=-lgcore
 
 libGTileFS_la_SOURCES=\
 		PGISTileStore.cpp \
-		GoogleCRS84QuadTileStore \
+		GoogleCRS84QuadTileStore.cpp \
 		WorkspaceTFS.cpp \
 		DataEngineImpl.cpp

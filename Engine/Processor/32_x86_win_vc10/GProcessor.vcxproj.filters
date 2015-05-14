@@ -18,7 +18,7 @@
     <ClCompile Include="..\src\ProcessorFactoryImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GoogleCRS84QuadTileStoreGeneratorImpl.cpp">
+    <ClCompile Include="..\src\FileSytemTileStoreGeneratorImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClInclude Include="..\..\..\include\AugeProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\GoogleCRS84QuadTileStoreGeneratorImpl.h">
+    <ClInclude Include="..\include\FileSytemTileStoreGeneratorImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

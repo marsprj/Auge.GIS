@@ -18,7 +18,7 @@ namespace auge
 {
 	class Map;
 	class GEnvelope;
-	class TileWorkspace;
+	class TileStore;
 
 	class GProcessor : public GObject
 	{
@@ -36,7 +36,7 @@ namespace auge
 		virtual ~TileStoreGenerator(){}
 	public:
 		virtual	void	SetMap(Map* pMap) = 0;
-		virtual void	SetTileWorkspace(TileWorkspace* pWorkspace) = 0;
+		virtual void	SetTileStore(TileStore* pTileStore) = 0;
 		virtual void	SetStartLevel(g_uint l) = 0;
 		virtual void	SetEndLevel(g_uint l) = 0;
 		virtual void	SetViewer(GEnvelope& viewer) = 0;

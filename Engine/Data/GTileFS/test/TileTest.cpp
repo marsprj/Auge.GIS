@@ -1,6 +1,6 @@
 #include "TileTest.h"
 #include "AugeCore.h"
-#include "AugeData.h"
+#include "AugeTile.h"
 #include "AugeCarto.h"
 #include <iostream>
 
@@ -77,7 +77,9 @@ void TileTest::WriteTest()
 	
 	char t_path[AUGE_PATH_MAX] = {0};
 	//strcpy(t_path, "G:\\temp\\map\\map.png");
-	auge::GEnvelope viewer = m_pWorkspace->GetExtent();
+
+	auge::TileStore* pTileStore = m_pWorkspace->GetTileStore(NULL);
+	auge::GEnvelope viewer = pTileStore->GetExtent();
 	//pCanvas->SetViewer(viewer);
 	//pCanvas->Draw(pMap);
 
@@ -88,8 +90,8 @@ void TileTest::WriteTest()
 	g_uint levels = 8;
 	for(g_uint l=1; l<levels; l++)
 	{
-		g_uint rows = m_pWorkspace->GetRows(l);
-		g_uint cols = m_pWorkspace->GetCols(l);
+		g_uint rows = pTileStore->GetRows(l);	
+		g_uint cols = pTileStore->GetCols(l);
 
 		for(g_uint r=0; r<rows; r++)
 		{
@@ -97,8 +99,8 @@ void TileTest::WriteTest()
 			{
 				printf("\r[%d]:%d-%d-%d",counter++,l,r,c);
 				
-				m_pWorkspace->GetExtent(viewer, l, r,c);
-				m_pWorkspace->GetTilePath(t_path, AUGE_PATH_MAX, l, r, c);
+				pTileStore->GetExtent(viewer, l, r,c);
+				pTileStore->GetTilePath(t_path, AUGE_PATH_MAX, l, r, c);
 
 				pCanvas = pCartoFactory->CreateCanvas2D(256,256);
 				pCanvas->SetViewer(viewer);

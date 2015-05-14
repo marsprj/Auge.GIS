@@ -7,6 +7,8 @@
 
 namespace auge
 {
+	class TileWorkspaceFS;
+
 	class GoogleCRS84QuadTileStore : public TileStore
 	{
 	public:
@@ -32,6 +34,10 @@ namespace auge
 		virtual RESULTCODE		GetExtent(GEnvelope& extent, g_uint level, g_uint row, g_uint col) ;
 		virtual RESULTCODE		GetTilePath(char* key, size_t size, g_uint level, g_uint row, g_uint col) ;
 
+	public:
+		RESULTCODE		Create(TileWorkspaceFS* pWorkspace);
+		RESULTCODE		Create(TileWorkspaceFS* pWorkspace, const char* name, g_uint start_level, g_uint end_level, GEnvelope& extent);
+
 	private:
 		RESULTCODE		CreateLevels(g_uint start, g_uint end);
 
@@ -47,6 +53,8 @@ namespace auge
 
 		g_uint			m_start_level;
 		g_uint			m_end_level;
+
+		TileWorkspaceFS* m_pWorkspace;
 	};
 }
 

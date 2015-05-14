@@ -7,6 +7,8 @@
 
 namespace auge
 {
+	class TileWorkspaceFS;
+
 	class PGISTileStore : public TileStore
 	{
 	public:
@@ -32,21 +34,29 @@ namespace auge
 		virtual RESULTCODE		GetExtent(GEnvelope& extent, g_uint level, g_uint row, g_uint col) ;
 		virtual RESULTCODE		GetTilePath(char* key, size_t size, g_uint level, g_uint row, g_uint col) ;
 
+	public:
+		RESULTCODE		Create(TileWorkspaceFS* pWorkspace);
+		RESULTCODE		Create(TileWorkspaceFS* pWorkspace, const char* name, g_uint start_level, g_uint end_level, GEnvelope& extent);
+
 	private:
 		RESULTCODE		CreateLevels(g_uint start, g_uint end);
 
 	private:
 		std::string		m_name;
 		std::string		m_path;
+		std::string		m_layers_path;
 		std::string		m_connstring;
 		std::string		m_tile_format;
 		augeTileType	m_tile_type;
 
 		GEnvelope		m_extent;
 		GEnvelope		m_full_extent;
+		//GEnvelope		m_geo_extent;
 
 		g_uint			m_start_level;
 		g_uint			m_end_level;
+
+		TileWorkspaceFS* m_pWorkspace;
 	};
 }
 

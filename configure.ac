@@ -83,7 +83,10 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Data/GRaster/src/Makefile
 		 Engine/Data/GRasterFS/Makefile
                  Engine/Data/GRasterFS/src/Makefile
+                 Engine/Data/GTileFS/Makefile
+                 Engine/Data/GTileFS/src/Makefile
                  Engine/Data/Makefile
+                 Engine/Processor/src/Makefile
                  Engine/Filter/Makefile
                  Engine/Auth/src/Makefile
 		 Engine/Auth/Makefile

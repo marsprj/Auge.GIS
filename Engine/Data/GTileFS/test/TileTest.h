@@ -2,7 +2,7 @@
 #define __AUGE_TILE_TEST__H__
 
 #include "cppunit/extensions/HelperMacros.h" 
-#include "AugeData.h"
+#include "AugeTile.h"
 
 class TileTest : public CppUnit::TestFixture 
 {

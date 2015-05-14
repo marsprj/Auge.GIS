@@ -7,22 +7,22 @@
 
 namespace auge
 {
-	class GoogleCRS84QuadTileStoreGeneratorImpl : public TileStoreGenerator
+	class FileSystemileStoreGeneratorImpl : public TileStoreGenerator
 	{
 	public:
-		GoogleCRS84QuadTileStoreGeneratorImpl();
-		virtual ~GoogleCRS84QuadTileStoreGeneratorImpl();
+		FileSystemileStoreGeneratorImpl();
+		virtual ~FileSystemileStoreGeneratorImpl();
 	public:
 		virtual	void		SetMap(Map* pMap);
-		virtual void		SetTileWorkspace(TileWorkspace* pWorkspace);
+		virtual void		SetTileStore(TileStore* pTileStore);
 		virtual void		SetStartLevel(g_uint l);
 		virtual void		SetEndLevel(g_uint l);
 		virtual void		SetViewer(GEnvelope& viewer);
 		virtual RESULTCODE	Execute();
 
 	private:
-		Map				*m_pMap;
-		TileWorkspace	*m_pWorkspace;
+		Map*			m_pMap;
+		TileStore*		m_pTileStore;
 		GEnvelope		m_viewer;
 		g_uint			m_start_level;
 		g_uint			m_end_level;
