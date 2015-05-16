@@ -35,10 +35,6 @@ namespace auge
 		FeatureClass*			GetFeatureClassByMap(CentroidRequest* pWebRequest, WebContext* pWebContext);
 		FeatureClass*			GetFeatureClassBySource(CentroidRequest* pWebRequest, WebContext* pWebContext);
 		
-
-	protected:
-		void*	m_handler;
-		std::vector<WebHandler*>	m_handlers;
 	};
 }
 

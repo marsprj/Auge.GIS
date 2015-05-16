@@ -170,15 +170,15 @@ namespace auge
 		return AG_SUCCESS;
 	}
 	
-	TileStore* TileWorkspaceFS::GetTileStore(const char* name)
+	TileStore* TileWorkspaceFS::OpenTileStore(const char* name)
 	{
 		if(m_pTileStore==NULL)
 		{
-			//GoogleCRS84QuadTileStore *pTileStore = new GoogleCRS84QuadTileStore();
-			//pTileStore->Create(this);
-
-			PGISTileStore* pTileStore = new PGISTileStore();
+			GoogleCRS84QuadTileStore *pTileStore = new GoogleCRS84QuadTileStore();
 			pTileStore->Create(this);
+
+			//PGISTileStore* pTileStore = new PGISTileStore();
+			//pTileStore->Create(this);
 
 			m_pTileStore = pTileStore;
 		}

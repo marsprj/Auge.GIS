@@ -6,6 +6,9 @@
 #include "GProcessEngine.h"
 #include "CapabilitiesHandler.h"
 #include "CentroidHandler.h"
+#include "TileUpdateHandler.h"
+
+#include "BuildPyramidHandler.h"
 
 namespace auge
 {
@@ -21,6 +24,10 @@ namespace auge
 
 		m_handlers.push_back(new CapabilitiesHandler());
 		m_handlers.push_back(new CentroidHandler());
+
+		m_handlers.push_back(new UpdateTileHandler());
+
+		m_handlers.push_back(new BuildPyramidHandler());
 	}
 
 	GeoProcessingEngine::~GeoProcessingEngine()

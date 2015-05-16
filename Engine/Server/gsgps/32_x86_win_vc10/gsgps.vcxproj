@@ -83,6 +83,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\BuildPyramidHandler.cpp" />
+    <ClCompile Include="..\src\BuildPyramidRequest.cpp" />
     <ClCompile Include="..\src\CapabilitiesHandler.cpp" />
     <ClCompile Include="..\src\CapabilitiesRequest.cpp" />
     <ClCompile Include="..\src\CapabilitiesResponse.cpp" />
@@ -90,9 +92,14 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\CentroidRequest.cpp" />
     <ClCompile Include="..\src\CentroidResponse.cpp" />
     <ClCompile Include="..\src\GProcessEngine.cpp" />
+    <ClCompile Include="..\src\ThreadManager.cpp" />
     <ClCompile Include="..\src\threadpool.c" />
+    <ClCompile Include="..\src\TileUpdateHandler.cpp" />
+    <ClCompile Include="..\src\TileUpdateRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\BuildPyramidHandler.h" />
+    <ClInclude Include="..\include\BuildPyramidRequest.h" />
     <ClInclude Include="..\include\CapabilitiesHandler.h" />
     <ClInclude Include="..\include\CapabilitiesRequest.h" />
     <ClInclude Include="..\include\CapabilitiesResponse.h" />
@@ -101,7 +108,10 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\CentroidResponse.h" />
     <ClInclude Include="..\include\GProcessEngine.h" />
     <ClInclude Include="..\include\spthread.h" />
+    <ClInclude Include="..\include\ThreadManager.h" />
     <ClInclude Include="..\include\threadpool.h" />
+    <ClInclude Include="..\include\TileUpdateHandler.h" />
+    <ClInclude Include="..\include\TileUpdateRequest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

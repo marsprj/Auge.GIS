@@ -46,6 +46,23 @@ namespace auge
 
 	RESULTCODE FileSystemileStoreGeneratorImpl::Execute()
 	{
+		if(m_pMap==NULL)
+		{
+			return AG_FAILURE;
+		}
+		if(m_start_level<=0||m_end_level<=0)
+		{
+			return AG_FAILURE;
+		}
+		if(m_start_level>m_end_level)
+		{
+			return AG_FAILURE;
+		}
+		if(m_pTileStore==NULL)
+		{
+			return AG_FAILURE;
+		}
+
 		g_uint counter = 0;
 		char t_path[AUGE_PATH_MAX] = {0};
 		Canvas* pCanvas = NULL;

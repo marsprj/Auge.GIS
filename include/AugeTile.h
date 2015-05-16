@@ -51,7 +51,7 @@ namespace auge
 		TileWorkspace(){}
 		virtual ~TileWorkspace(){}
 	public:
-		virtual TileStore*		GetTileStore(const char* name) = 0;
+		virtual TileStore*		OpenTileStore(const char* name) = 0;
 		virtual RESULTCODE		CreateTileStore(const char* name, augeTileType type) = 0;
 		virtual RESULTCODE		CreateTileStore(const char* name, augeTileType type, g_uint start_level, g_uint end_level, GEnvelope& extent) = 0;
 		virtual RESULTCODE		RemoveTileStore() = 0;
