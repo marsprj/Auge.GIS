@@ -13,5 +13,5 @@ libgtilemgo_la_LIBADD=-lgcore
 libgtilemgo_la_SOURCES=\
 		PGISTileStore.cpp \
 		GoogleCRS84QuadTileStore.cpp \
-		WorkspaceTileMongo.cpp \
+		TileWorkspaceMongo.cpp \
 		DataEngineTileMongo.cpp
