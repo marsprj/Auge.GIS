@@ -106,7 +106,7 @@ namespace auge
 
 	bool TileWorkspaceMongo::IsOpen()
 	{
-		return true;
+		return m_mongo;
 	}
 
 	DataSet* TileWorkspaceMongo::OpenDataSet(const char* name)
@@ -160,14 +160,21 @@ namespace auge
 			return NULL;
 		}
 
-		mongoc_collection_t *mgo_collection = mongoc_client_get_collection(m_mongo, m_database.c_str(), name);
-		if(mgo_collection==NULL)
+		//mongoc_collection_t *mgo_collection = mongoc_client_get_collection(m_mongo, m_database.c_str(), name);
+		//if(mgo_collection==NULL)
+		//{
+		//	return NULL;
+		//}
+
+		bson_error_t error;
+		mongoc_gridfs_t* mgo_gridfs = mongoc_client_get_gridfs(m_mongo, m_database.c_str(), name,&error);
+		if(mgo_gridfs==NULL)
 		{
 			return NULL;
 		}
 
 		GoogleCRS84QuadTileStore *pTileStore = new GoogleCRS84QuadTileStore();
-		pTileStore->Create(this, mgo_collection);
+		pTileStore->Create(this, mgo_gridfs);
 		return pTileStore;
 	}
 	

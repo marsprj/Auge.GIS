@@ -7,7 +7,8 @@
 class TileTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(TileTest);
-	CPPUNIT_TEST(WriteTest);
+	//CPPUNIT_TEST(WriteTest);
+	CPPUNIT_TEST(GetTile);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -16,6 +17,7 @@ public:
 private:
 
 	void	WriteTest();
+	void	GetTile();
 
 private:
 	auge::TileWorkspace* m_pWorkspace;

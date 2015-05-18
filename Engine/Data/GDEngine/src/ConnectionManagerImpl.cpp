@@ -67,7 +67,7 @@ namespace auge
 		}
 		return NULL;
 	}
-
+	
 	Workspace* ConnectionManagerImpl::GetWorkspaceById(g_uint id)
 	{
 		Workspace* pWorkspace = NULL;
@@ -304,5 +304,10 @@ namespace auge
 		char sql[AUGE_NAME_MAX];
 		g_snprintf(sql, AUGE_NAME_MAX, "insert into g_data_source (name, engine, uri) values('%s','%s','%s')", name, engine, uri);
 		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	Workspace* ConnectionManagerImpl::NewWorkspace(const char* name)
+	{
+		return NULL;
 	}
 }

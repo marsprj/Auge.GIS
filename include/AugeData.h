@@ -150,6 +150,9 @@ namespace auge
 		virtual Workspace*			GetWorkspace(const char* name) = 0;
 		virtual Workspace*			GetWorkspaceById(g_uint id) = 0;
 		virtual EnumWorkspace*		GetWorkspaces() = 0;
+
+		virtual Workspace*			NewWorkspace(const char* name) = 0;
+
 		virtual RESULTCODE			Register(const char* name, const char* engine, const char* constr) = 0;
 		virtual RESULTCODE			Unregister(const char* name) = 0;
 

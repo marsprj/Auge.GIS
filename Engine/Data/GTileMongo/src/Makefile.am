@@ -14,6 +14,7 @@ libgtilemgo_la_LDFLAGS=\
 libgtilemgo_la_LIBADD=-lgcore -lmongoc-1.0 -lbson-1.0
 
 libgtilemgo_la_SOURCES=\
+		TileImpl.cpp \
 		PGISTileStore.cpp \
 		GoogleCRS84QuadTileStore.cpp \
 		TileWorkspaceMongo.cpp \

@@ -38,11 +38,12 @@ namespace auge
 		virtual RESULTCODE		GetTilePath(char* key, size_t size, g_uint level, g_uint row, g_uint col) ;
 
 	public:
-		RESULTCODE		Create(TileWorkspaceMongo* pWorkspace, mongoc_collection_t *mgo_collection);
+		RESULTCODE		Create(TileWorkspaceMongo* pWorkspace, mongoc_gridfs_t *mgo_gridfs);
 		RESULTCODE		Create(TileWorkspaceMongo* pWorkspace, const char* name, g_uint start_level, g_uint end_level, GEnvelope& extent);
 
 	private:
 		RESULTCODE		CreateLevels(g_uint start, g_uint end);
+		void			MakeKey(char* key, size_t size, g_uint level, g_uint row, g_uint col);
 
 	private:
 		std::string		m_name;
@@ -56,8 +57,9 @@ namespace auge
 		g_uint			m_start_level;
 		g_uint			m_end_level;
 
-		TileWorkspaceMongo*  m_pWorkspace;
-		mongoc_collection_t* m_collection;
+		TileWorkspaceMongo* m_pWorkspace;
+		//mongoc_collection_t* m_collection;
+		mongoc_gridfs_t*	m_gridfs;
 	};
 }
 

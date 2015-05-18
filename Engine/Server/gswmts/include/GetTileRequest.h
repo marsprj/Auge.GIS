@@ -62,6 +62,8 @@ service=wmts&request=GetTile&version=1.0.0&layer=tfs&style=Default&format=image/
 
 service=wmts&request=GetTile&version=1.0.0&layer=world&style=Default&format=image/png&tilematrixset=pgis_tile_store&tilematrix=1&tilerow=0&tilecol=1
 http://127.0.0.1:8088/ows/user1/world/mgr?service=wmts&request=GetTile&version=1.0.0&layer=tfs&style=Default&format=image/png&tilematrixset=store1&tilematrix=1&tilerow=0&tilecol=1
+http://127.0.0.1:8088/ows/user1/world/mgr?service=wmts&request=GetTile&version=1.0.0&layer=tmgo&style=Default&format=image/png&tilematrixset=store1&tilematrix=1&tilerow=0&tilecol=1
+
 http://127.0.0.1:8088/ows/user1/mgr?service=wmts&request=GetTile&version=1.0.0&layer=tfs&style=Default&format=image/png&tilematrixset=store1&tilematrix=1&tilerow=0&tilecol=1
 
 ************************************************************************/

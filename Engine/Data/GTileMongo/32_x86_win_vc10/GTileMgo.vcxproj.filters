@@ -27,6 +27,9 @@
     <ClCompile Include="..\src\TileWorkspaceMongo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\TileImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\DataEngineTileMongo.h">
@@ -39,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\TileWorkspaceMongo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TileImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
