@@ -2,6 +2,7 @@
 #define __AUGE_WFS_GET_FEATURE_REQUEST_H__
 
 #include "AugeCore.h"
+#include "AugeWebCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
 #include <string>
@@ -52,18 +53,20 @@ namespace auge
 		void		SetMaxFeatures(const char* maxFeatures);
 		void		SetOffset(const char* offset);
 		void		SetBBox(const char* bbox);
-		void		SetQuery(const char* filter, const char* fields, const char* typeName, Map* pMap);
+		//void		SetQuery(const char* filter, const char* fields, const char* typeName, Map* pMap);
 
 		bool		Create(rude::CGI& cgi, Map* pMap);
 		bool		Create(XDocument* pxDoc);
 
 	public:
 		void		Info();
+		augeHttpMethodType GetMethod();
 
 	private:
 		void		ParseFieldName(const char* property_name, char* field_name, size_t size);
 		void		SetFields(GQuery* pQuery, const char* fields);
-		GQuery*		ParseQuery(FeatureClass* pFeatureClass);
+		GQuery*		ParseXmlQuery(FeatureClass* pFeatureClass);
+		GQuery*		ParseKvpQuery(FeatureClass* pFeatureClass);
 
 	private: 
 		//std::string m_version;
@@ -77,6 +80,8 @@ namespace auge
 		g_int		m_max_features;
 		g_int		m_offset;
 		GEnvelope	m_extent;
+		const char*	m_filter;
+		const char* m_fields;
 
 		//GFilter		*m_pFilter;
 		GQuery		*m_pQuery;

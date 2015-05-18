@@ -111,12 +111,12 @@ namespace auge
 			return pExpResponse;
 		}
 
-		char cache_name[AUGE_NAME_MAX];
-		char cache_file[AUGE_PATH_MAX];
+		//char cache_name[AUGE_NAME_MAX];
+		//char cache_file[AUGE_PATH_MAX];
 		const char* typeName = pRequest->GetTypeName();
-		const char* cache_path = pWebContext->GetCacheProtocolPath();
-		g_snprintf(cache_name, AUGE_NAME_MAX,"%s_wfs_%s_describe_feauretype_1_1_0", pWebContext->GetService(), typeName);
-		auge_make_path(cache_file, NULL, cache_path, cache_name,"xml");
+		//const char* cache_path = pWebContext->GetCacheProtocolPath();
+		//g_snprintf(cache_name, AUGE_NAME_MAX,"%s_wfs_%s_describe_feauretype_1_1_0", pWebContext->GetService(), typeName);
+		//auge_make_path(cache_file, NULL, cache_path, cache_name,"xml");
 
 		//if(access(capa_path,4))
 		FeatureCursor *pCursor = NULL; 

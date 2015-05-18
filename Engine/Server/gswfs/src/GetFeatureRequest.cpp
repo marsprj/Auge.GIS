@@ -3,6 +3,7 @@
 #include "AugeCarto.h"
 #include "AugeXML.h"
 #include "AugeFilter.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {	
@@ -13,6 +14,9 @@ namespace auge
 		m_output_format = AUGE_WFS_OUTPUT_FORMAT_GML2;
 		m_max_features = 10;
 		m_offset = 0;
+
+		m_fields = NULL;
+		m_filter = NULL;
 
 		//m_pFilter = NULL;
 		m_pQuery = NULL;
@@ -157,12 +161,21 @@ namespace auge
 	{
 		if(m_pQuery==NULL)
 		{
-			m_pQuery = ParseQuery(pFeatureClass);
+			switch(GetMethod())
+			{
+			case augeHttpGet:
+				m_pQuery = ParseKvpQuery(pFeatureClass);
+				break;
+			case augeHttpPost:
+				m_pQuery = ParseXmlQuery(pFeatureClass);
+				break;
+			}
+			
 		}
 		return m_pQuery;
 	}
 
-	GQuery* GetFeatureRequest::ParseQuery(FeatureClass* pFeatureClass)
+	GQuery* GetFeatureRequest::ParseXmlQuery(FeatureClass* pFeatureClass)
 	{
 		if(m_pxDoc==NULL)
 		{
@@ -206,40 +219,54 @@ namespace auge
 			pQuery->AddSubField(field_name);
 
 		}
+
+		if(m_max_features>0)
+		{
+			pQuery->SetMaxFeatures(m_max_features);
+		}
+		if(m_offset>0)
+		{
+			pQuery->SetOffset(m_offset);
+		}
+		
 		pxNodeSet->Release();
 
 		return pQuery;
 	}
 
-	void GetFeatureRequest::SetQuery(const char* filter, const char* fields, const char* typeName, Map* pMap)
+	GQuery* GetFeatureRequest::ParseKvpQuery(FeatureClass* pFeatureClass)//;const char* filter, const char* fields, const char* typeName, Map* pMap)
 	{
 		XParser parser;
 		XDocument* pxDoc = NULL;
-		if(typeName==NULL||pMap==NULL)
-		{
-			return;
-		}
+		//if(typeName==NULL||pMap==NULL)
+		//{
+		//	return;
+		//}
 
-		GQuery	*pQuery = NULL;
 		GFilter	*pFilter = NULL;
 		FilterReader* reader = NULL;
 		FilterFactory *factory = augeGetFilterFactoryInstance();
-
-		Layer* pLayer = pMap->GetLayer(typeName);
-		if(pLayer==NULL)
+		GQuery* pQuery = factory->CreateQuery();
+		if(pQuery==NULL)
 		{
-			return;
+			return NULL;
 		}
 
-		FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-		if(pFeatureClass==NULL)
-		{
-			return;
-		}
+		//Layer* pLayer = pMap->GetLayer(typeName);
+		//if(pLayer==NULL)
+		//{
+		//	return;
+		//}
+
+		//FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+		//FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+		//if(pFeatureClass==NULL) 
+		//{
+		//	return;
+		//}
 
 		pQuery = factory->CreateQuery();
-		pxDoc = parser.ParseMemory(filter);
+		pxDoc = parser.ParseMemory(m_filter);
 		if(pxDoc!=NULL)
 		{
 			reader = factory->CreateFilerReader(pFeatureClass->GetFields());
@@ -248,13 +275,12 @@ namespace auge
 			pxDoc->Release();
 		}
 
-		SetFields(pQuery, fields);
+		pQuery->SetMaxFeatures(m_max_features);
+		pQuery->SetOffset(m_offset);
 
-		if(m_pQuery!=NULL)
-		{
-			AUGE_SAFE_RELEASE(m_pQuery);
-		}
-		m_pQuery = pQuery;
+		SetFields(pQuery, m_fields);
+
+		return pQuery;
 	}
 
 	void GetFeatureRequest::SetFields(GQuery* pQuery, const char* fields)
@@ -283,18 +309,20 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetTypeName(cgi["typeName"]);
 		
+		SetSourceName(cgi["sourceName"]);
+		SetMapName(cgi["mapName"]);
+
 		SetOutputFormat(cgi["outputFormat"]);
 		SetMaxFeatures(cgi["maxFeatures"]);
 		SetOffset(cgi["offset"]);
 		SetBBox(cgi["bbox"]);
-		if(!m_extent.IsValid())
-		{
-			SetQuery(cgi["filter"],cgi["fields"], GetTypeName(), pMap);
-		}
-		
-		//
-		SetSourceName(cgi["sourceName"]);
-		SetMapName(cgi["mapName"]);
+
+		m_filter = cgi["filter"];
+		m_fields = cgi["fields"];
+		//if(!m_extent.IsValid())
+		//{
+		//	SetQuery(cgi["filter"],cgi["fields"], GetTypeName(), pMap);
+		//}
 
 		return true;
 	}
@@ -586,6 +614,25 @@ namespace auge
 
 		g_sprintf(str,"\t%s:%d", "Offset", GetOffset());
 		pLogger->Debug(str);
+	}
+
+	augeHttpMethodType GetFeatureRequest::GetMethod()
+	{
+		const char* method = getenv("REQUEST_METHOD");
+		if(method == NULL)
+		{
+			return augeHttpGet;
+		}
+
+		if(strcmp(method, "GET")==0)
+		{
+			return augeHttpGet;
+		}
+		else if(strcmp(method, "POST")==0)
+		{
+			return augeHttpPost;
+		}
+		return augeHttpGet;
 	}
 
 }
