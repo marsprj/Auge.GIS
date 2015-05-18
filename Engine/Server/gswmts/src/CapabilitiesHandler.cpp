@@ -12,7 +12,7 @@ namespace auge
 {
 	CapabilitiesHandler::CapabilitiesHandler()
 	{
-
+		m_pRequest = NULL;
 	}
 
 	CapabilitiesHandler::~CapabilitiesHandler()
@@ -94,12 +94,13 @@ namespace auge
 	{
 		WebResponse* pWebResponse = NULL;
 		CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
+		m_pRequest = pRequest;
 
 		const char* sourceName = pRequest->GetMapName();
 		if(sourceName==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse(); 
 			g_sprintf(msg, "No DataSource is attached");
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
@@ -117,22 +118,22 @@ namespace auge
 		//}
 
 		const char* version = pRequest->GetVersion();
-		if(strcmp(version,"1.0.0")==0)
+		//if(strcmp(version,"1.0.0")==0)
 		{
 			pWebResponse = WriteCapabilities_1_0_0(pRequest, pWebContext, sourceName);
 		}
-		else if(strcmp(version,"1.3.0")==0)
-		{
-			pWebResponse = WriteCapabilities_1_3_0(pRequest, pWebContext, sourceName); 
-		}
-		else
-		{
-			char msg[AUGE_MSG_MAX];
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			g_sprintf(msg, "WMS does not support %s",version);
-			pExpResponse->SetMessage(msg);
-			pWebResponse = pExpResponse;
-		}
+		//else if(strcmp(version,"1.3.0")==0)
+		//{
+		//	pWebResponse = WriteCapabilities_1_3_0(pRequest, pWebContext, sourceName); 
+		//}
+		//else
+		//{
+		//	char msg[AUGE_MSG_MAX];
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	g_sprintf(msg, "WMS does not support %s",version);
+		//	pExpResponse->SetMessage(msg);
+		//	pWebResponse = pExpResponse;
+		//}
 		//pMap->Release();
 
 		return pWebResponse;
@@ -182,7 +183,7 @@ namespace auge
 
 		CapabilitiesResponse* pResponse = new CapabilitiesResponse(pRequest);
 		pResponse->SetPath(capa_path);
-
+		 
 		return pResponse;
 	}
 
@@ -199,7 +200,7 @@ namespace auge
 		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/gml","gml");
 		pxRoot->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
 		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
-		//pxRoot->SetNamespaceDeclaration("http://www.opengis.net/wmts/1.0 http://schemas.opengis.net/wmts/1.0/wmtsGetCapabilities_response.xsd","xsi:schemaLocation");
+		pxRoot->SetAttribute("schemaLocation","http://www.opengis.net/wmts/1.0 http://schemas.opengis.net/wmts/1.0/wmtsGetCapabilities_response.xsd","xsi");
 		pxRoot->SetAttribute("version", version, NULL);
 	}
 
@@ -220,7 +221,7 @@ namespace auge
 		// WMTS_Capabilities-->ServiceIdentification-->ServiceType
 		pxNode = pxService->AddChild("ServiceType", "ows");
 		pxNode->SetChildText("WMTS");
-		pxNode = pxService->AddChild("ServiceVersion", "ows");
+		pxNode = pxService->AddChild("ServiceTypeVersion", "ows");
 		pxNode->SetChildText("1.0.0");
 		//// WMTS_Capabilities-->ServiceIdentification-->Fees
 		//XElement *pxFees = pxService->AddChild("Fees", "ows");
@@ -303,7 +304,7 @@ namespace auge
 		{
 			pTileStore = pTileWorkspace->OpenTileStore("store1");
 
-			XElement* pxLayer = pxParent->AddChild("Layer", NULL);
+			XElement* pxLayer = pxParent->AddChild("Layer", NULL); 
 			XElement* pxTitle = pxLayer->AddChild("Title","ows");
 			pxTitle->AddChildText(name);
 			XElement* pxIdentifier = pxLayer->AddChild("Identifier","ows");
@@ -313,6 +314,7 @@ namespace auge
 
 			GEnvelope& extent = pTileStore->GetExtent();
 			XElement* pxWGS84BoundingBox = pxLayer->AddChild("WGS84BoundingBox", "ows");
+			pxWGS84BoundingBox->SetAttribute("crs","urn:ogc:def:crs:OGC:2:84",NULL);
 			g_snprintf(str, AUGE_PATH_MAX, "%f %f", extent.m_xmin, extent.m_ymin);
 			XElement* pxLowerCorner = pxWGS84BoundingBox->AddChild("LowerCorner", "ows");
 			pxLowerCorner->AddChildText(str);
@@ -330,14 +332,22 @@ namespace auge
 			XElement* pxFormat = pxLayer->AddChild("Format",NULL);
 			pxFormat->AddChildText("image/png");
 
-			XElement* pxTileMatrixSetLink = pxLayer->AddChild("TileMatrixSetLink",NULL);
+			XElement* pxTileMatrixSetLink = pxLayer->AddChild("TileMatrixSetLink",NULL); 
 			XElement* pxTileMatrixSet = pxTileMatrixSetLink->AddChild("TileMatrixSet",NULL);
 			pxTileMatrixSet->AddChildText("GoogleCRS84Quad");
 
 			XElement* pxResourceURL = pxLayer->AddChild("ResourceURL", NULL);
 			pxResourceURL->SetAttribute("format", "image/png", NULL);
 			pxResourceURL->SetAttribute("resourceType", "tile", NULL);
+
+			char strs[AUGE_PATH_MAX];
+			//g_snprintf(strs,AUGE_PATH_MAX,"http://localhost:8080/QuadServer/services/maps/wmts100/google/default/GOOGLE_TILE_STORE/{TileMatrix}/{TileRow}/{TileCol}.png");
 			//g_snprintf(str, AUGE_PATH_MAX, )
+			g_snprintf(strs,AUGE_PATH_MAX, "http://%s/%s/%s/%s/mgr/default/GOOGLE_TILE_STORE/{TileMatrix}/{TileRow}/{TileCol}.png",m_pRequest->GetHost(),
+									AUGE_VIRTUAL_NAME,
+									m_pRequest->GetUser(),
+									sourceName); 
+			pxResourceURL->SetAttribute("template", strs, NULL);
 
 		}
 	}
@@ -388,32 +398,33 @@ namespace auge
 		*/
 		XElement* pxTileMatrixSet = pxParent->AddChild("TileMatrixSet", NULL);
 
-		XElement* pxTitle = pxTileMatrixSet->AddChild("Title", "ows");
-		pxTitle->AddChildText(identifier);
+		//XElement* pxTitle = pxTileMatrixSet->AddChild("Title", "ows");
+		//pxTitle->AddChildText(identifier); 
 
-		XElement* pxAbstract = pxTileMatrixSet->AddChild("Abstract", "ows");
-		pxAbstract->AddChildText(identifier);
+		//XElement* pxAbstract = pxTileMatrixSet->AddChild("Abstract", "ows");
+		//pxAbstract->AddChildText(identifier);
 
 		XElement* pxIdentifier = pxTileMatrixSet->AddChild("Identifier", "ows");
 		pxIdentifier->AddChildText(identifier);
 
-		XElement* pxBoundingBox = pxTileMatrixSet->AddChild("BoundingBox", "ows");
-		pxBoundingBox->SetAttribute("crs","urn:ogc:def:crs:EPSG:6.18:3:3857", NULL);
-		XElement* pxLowerCorner = pxBoundingBox->AddChild("LowerCorner", "ows");
-		pxLowerCorner->AddChildText("-20037508 -20037508");
-		XElement* pxUpperCorner = pxBoundingBox->AddChild("UpperCorner", "ows");
-		pxUpperCorner->AddChildText("20037508 20037508");
+		//XElement* pxBoundingBox = pxTileMatrixSet->AddChild("BoundingBox", "ows");
+		////pxBoundingBox->SetAttribute("crs","urn:ogc:def:crs:EPSG:6.18:3:3857", NULL);
+		//XElement* pxLowerCorner = pxBoundingBox->AddChild("LowerCorner", "ows");
+		//pxLowerCorner->AddChildText("-20037508 -20037508");
+		//XElement* pxUpperCorner = pxBoundingBox->AddChild("UpperCorner", "ows");
+		//pxUpperCorner->AddChildText("20037508 20037508");
 
-		XElement* pxSupportedCRS = pxTileMatrixSet->AddChild("SupportedCRS");
-		pxSupportedCRS->AddChildText("urn:ogc:def:crs:EPSG:6.18:3:3857");
+		XElement* pxSupportedCRS = pxTileMatrixSet->AddChild("SupportedCRS","ows");
+		//pxSupportedCRS->AddChildText("urn:ogc:def:crs:EPSG:6.18:3:3857");
+		pxSupportedCRS->AddChildText("urn:ogc:def:crs:EPSG::4326");
 
-		XElement* pxWellKnownScaleSet = pxTileMatrixSet->AddChild("WellKnownScaleSet", NULL);
-		pxWellKnownScaleSet->AddChildText("urn:ogc:def:wkss:OGC:1.0:GoogleMapsCompatible");
+		//XElement* pxWellKnownScaleSet = pxTileMatrixSet->AddChild("WellKnownScaleSet", NULL);
+		//pxWellKnownScaleSet->AddChildText("urn:ogc:def:wkss:OGC:1.0:GoogleMapsCompatible");
 
 		size_t count = sizeof(denomiators) / sizeof(char*);
 		for(size_t i=0; i<count; i++)
 		{
-			XElement* pxTileMatrix = pxTileMatrixSet->AddChild("TileMatirx", NULL);
+			XElement* pxTileMatrix = pxTileMatrixSet->AddChild("TileMatrix", NULL);
 			g_sprintf(str, "GoogleCRS84Quad:%d",i);
 			XElement* pxIdentifier = pxTileMatrix->AddChild("Identifier", "ows");
 			pxIdentifier->AddChildText(str);

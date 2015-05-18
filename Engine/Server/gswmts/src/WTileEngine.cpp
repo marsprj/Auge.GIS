@@ -135,16 +135,15 @@ namespace auge
 	WebRequest* WTileEngine::ParseRequest(rude::CGI& cgi)
 	{
 		const char* request = cgi["request"];
-		if(request==NULL)
+		WebHandler* handler = NULL;
+		if((request==NULL)||(strlen(request)==0))
 		{
-			const char* msg = "[Request] is NULL";
-			GLogger* pLogger = augeGetLoggerInstance();
-			pLogger->Error(msg, __FILE__, __LINE__);
-			GError* pError = augeGetErrorInstance();
-			pError->SetError(msg);
-			return NULL;
+			handler = GetHandler("GetCapabilities");
 		}
-		WebHandler* handler = GetHandler(request);
+		else
+		{
+			handler = GetHandler(request);			
+		}
 		if(handler == NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -156,6 +155,7 @@ namespace auge
 
 			return NULL;
 		}
+		
 		return handler->ParseRequest(cgi);
 	}
 

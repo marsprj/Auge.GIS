@@ -54,6 +54,7 @@ namespace auge
 		while(AUGE_FCGI_ACCEPT>=0)
 		{
 			AUGE_RUDE_CGI;
+			cgi.setCaseSensitive(false);
 
 //			printf("Content-type: text/html\r\n"
 //				"\r\n" 

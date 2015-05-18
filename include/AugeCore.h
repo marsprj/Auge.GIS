@@ -102,7 +102,7 @@ namespace auge
 		GPropertySet();
 		GPropertySet(const GPropertySet& other);
 		virtual ~GPropertySet();
-
+		 
 	public:
 		bool			Parse(const char* connection_string, const char *delimit=";");
 		void			Clear();

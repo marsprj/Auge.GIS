@@ -18,7 +18,7 @@ namespace auge
 
 	const char*	GetTileRequest::GetRequest()
 	{
-		return "GetTile";
+		return "GetTile"; 
 	}
 
 	//service=wmts&request=GetTile&version=1.0.0&layer=tfs&style=Default&format=image/jpeg&tilematrixset=pgis_tile_store&tilematrix=1&tilerow=0&tilecol=1
@@ -27,7 +27,9 @@ namespace auge
 		const char* val = NULL;
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
-		SetMapName(cgi["layer"]);
+		SetMapName(cgi["mapName"]);
+		SetStoreName(cgi["layer"]);
+		//SetMapName(cgi["layer"]);
 		
 		SetStyle(cgi["style"]);
 		SetFormat(cgi["format"]);
@@ -38,6 +40,23 @@ namespace auge
 
 		//SetServiceName(cgi["servicename"]);
 		return true;
+	}
+
+	const char* GetTileRequest::GetStoreName()
+	{
+		return m_store_name.empty() ? NULL : m_store_name.c_str();
+	}
+
+	void GetTileRequest::SetStoreName(const char* name)
+	{
+		if(name)
+		{
+			m_store_name = name;
+		}
+		else
+		{
+			m_store_name.clear();
+		}
 	}
 
 	void GetTileRequest::SetStyle(const char* style)
@@ -95,9 +114,11 @@ namespace auge
 	{
 		if(level)
 		{
-			if(isdigit(level[0]))
+			const char* ptr = strstr(level,":");
+			const char* plevel = ptr ? ptr+1 : level;
+			if(isdigit(plevel[0]))
 			{
-				m_level = atoi(level);
+				m_level = atoi(plevel);
 			}
 			else
 			{

@@ -44,6 +44,9 @@ namespace auge
 
 		void	AddTileMatrixSetNode_1_0_0(XElement* pxParent);
 		void	AddTileMatrixSet_GoogleCRS84Quad_1_0_0(XElement* pxParent);
+
+	private:
+		CapabilitiesRequest*	m_pRequest;
 	};
 }
 

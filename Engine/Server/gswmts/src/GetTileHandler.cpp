@@ -73,8 +73,8 @@ namespace auge
 		WebResponse* pWebResponse = NULL;
 		GetTileRequest* pRequest = static_cast<GetTileRequest*>(pWebRequest);
 
-		const char* mapName = pRequest->GetMapName();
-		if(mapName==NULL)
+		const char* sourceName = pRequest->GetMapName();
+		if(sourceName==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
@@ -82,12 +82,12 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
-		const char* matrixset = pRequest->GetMatrixSet();
-		if(matrixset==NULL)
+		const char* storeName = pRequest->GetStoreName();
+		if(storeName==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			g_sprintf(msg, "No Matrixset is attached");
+			g_sprintf(msg, "No Layer is defined");
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
@@ -96,9 +96,9 @@ namespace auge
 		TileStore* pTileStore = NULL;
 		TileWorkspace* pTileWorkspace = NULL;
 		ConnectionManager *pConnManager = augeGetConnectionManagerInstance();
-		pTileWorkspace = dynamic_cast<TileWorkspace*>(pConnManager->GetWorkspace(mapName));
+		pTileWorkspace = dynamic_cast<TileWorkspace*>(pConnManager->GetWorkspace(sourceName));
 
-		pTileStore = pTileWorkspace->OpenTileStore(matrixset);
+		pTileStore = pTileWorkspace->OpenTileStore(storeName);
 
 		g_int level = pRequest->GetLevel();
 		g_int row = pRequest->GetRow();
