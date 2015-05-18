@@ -22,7 +22,7 @@ namespace auge
 
 	const char*	DataEngineTFS::GetID()
 	{
-		return "TileFS";
+		return "tilefs";
 	}
 
 	const char*	DataEngineTFS::GetDescription()
