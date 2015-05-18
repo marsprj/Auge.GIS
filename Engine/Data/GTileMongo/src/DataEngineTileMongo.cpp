@@ -22,7 +22,7 @@ namespace auge
 
 	const char*	DataEngineTileMongo::GetID()
 	{
-		return "tilemgo";
+		return "TileMgo";
 	}
 
 	const char*	DataEngineTileMongo::GetDescription()
