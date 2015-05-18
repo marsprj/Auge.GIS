@@ -5,7 +5,8 @@
 #include <fcgi_config.h>
 #include <rude/cgi.h>
 
-#include <AugeCore.h>
+#include "AugeCore.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -21,11 +22,11 @@ namespace auge
 	class WebRequest;
 	class WebResponse;
 
-	typedef enum
-	{
-		augeHttpGet	= 0,
-		augeHttpPost
-	}augeHttpMethodType;
+	//typedef enum
+	//{
+	//	augeHttpGet	= 0,
+	//	augeHttpPost
+	//}augeHttpMethodType;
 
 	class GServer
 	{

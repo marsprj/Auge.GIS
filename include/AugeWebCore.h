@@ -16,6 +16,12 @@
 
 namespace auge
 {
+	typedef enum
+	{
+		augeHttpGet	= 0,
+		augeHttpPost
+	}augeHttpMethodType;
+
 	class GConnection;
 
 	class WebSuccessResponse : public WebResponse

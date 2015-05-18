@@ -229,6 +229,20 @@ namespace auge
 				sql.append(pOrderBy->IsAsc() ? " asc" : " desc");
 			}
 		}
+
+		if(pQuery->GetMaxFeatures()>0)
+		{
+			char str[AUGE_NAME_MAX];
+			g_sprintf(str, " limit %d", pQuery->GetMaxFeatures());
+			sql.append(str);
+		}
+
+		if(pQuery->GetOffset()>0)
+		{
+			char str[AUGE_NAME_MAX];
+			g_sprintf(str, " offset %d", pQuery->GetOffset());
+			sql.append(str);
+		}
 	}
 
 	void SQLBuilder::BuildFields(std::string& fields, FeatureClassPgs* pFeatureClass)

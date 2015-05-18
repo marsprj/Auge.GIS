@@ -85,6 +85,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\DataEngineImpl.cpp" />
     <ClCompile Include="..\src\GoogleCRS84QuadTileStore.cpp" />
     <ClCompile Include="..\src\PGISTileStore.cpp" />
+    <ClCompile Include="..\src\TileImpl.cpp" />
     <ClCompile Include="..\src\WorkspaceTFS.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +94,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\DataEngineImpl.h" />
     <ClInclude Include="..\include\GoogleCRS84QuadTileStore.h" />
     <ClInclude Include="..\include\PGISTileStore.h" />
+    <ClInclude Include="..\include\TileImpl.h" />
     <ClInclude Include="..\include\WorkspaceTFS.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

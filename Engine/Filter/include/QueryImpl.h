@@ -30,6 +30,12 @@ namespace auge
 		virtual		  RESULTCODE  SetOrderBy(OrderBy* pOrderBy);
 		virtual		  OrderBy*    GetOrderBy();
 
+		virtual		  void			SetMaxFeatures(g_int maxFeatures);
+		virtual		  g_int			GetMaxFeatures();
+
+		virtual		  void			SetOffset(g_int offset);
+		virtual		  g_int			GetOffset();
+
 		virtual bool			  SetSQL(const char* szsql);
 		virtual const char*       GetSQL() const;
 
@@ -45,6 +51,9 @@ namespace auge
 		SUBFIELD_VECTOR m_subfields;
 		OrderBy		*m_pOrderBy;
 		GFilter		*m_pFilter;
+
+		g_int		m_maxFeatures;
+		g_int		m_offset;
 	};
 }
 

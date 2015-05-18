@@ -163,4 +163,24 @@ namespace auge
 		return true;
 	}
 
+	void GQueryImpl::SetMaxFeatures(g_int maxFeatures)
+	{
+		m_maxFeatures = maxFeatures;
+	}
+
+	g_int GQueryImpl::GetMaxFeatures()
+	{
+		return m_maxFeatures;
+	}
+
+	void GQueryImpl::SetOffset(g_int offset)
+	{
+		m_offset = offset;
+	}
+
+	g_int GQueryImpl::GetOffset()
+	{
+		return m_offset;
+	}
+
 }

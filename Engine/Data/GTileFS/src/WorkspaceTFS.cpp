@@ -182,6 +182,10 @@ namespace auge
 
 			m_pTileStore = pTileStore;
 		}
+		if(m_pTileStore!=NULL)
+		{
+			m_pTileStore->AddRef();
+		}
 		return m_pTileStore;
 	}
 	

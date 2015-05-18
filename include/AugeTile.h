@@ -20,6 +20,10 @@ namespace auge
 	protected:
 		Tile(){}
 		virtual ~Tile(){}
+	public:
+		virtual const char*		GetKey()  = 0;
+		virtual	g_uchar*		GetData() = 0;
+		virtual g_uint			GetSize() = 0;
 	};
 
 	class TileStore : public GObject

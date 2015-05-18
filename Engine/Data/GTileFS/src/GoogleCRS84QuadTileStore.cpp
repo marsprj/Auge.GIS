@@ -1,5 +1,6 @@
 #include "WorkspaceTFS.h"
 #include "GoogleCRS84QuadTileStore.h"
+#include "TileImpl.h"
 #include <math.h>
 
 namespace auge
@@ -72,7 +73,17 @@ namespace auge
 
 	Tile* GoogleCRS84QuadTileStore::GetTile(g_uint level, g_uint row, g_uint col)
 	{
-		return NULL;
+		char t_path[AUGE_PATH_MAX] = {0};
+		RESULTCODE rc = GetTilePath(t_path, AUGE_PATH_MAX, level, row, col);
+		if(rc!=AG_SUCCESS)
+		{
+			return NULL;
+		}
+
+		TileImpl* pTile = new TileImpl();
+		pTile->Create(t_path);
+	
+		return pTile;
 	}
 
 	RESULTCODE GoogleCRS84QuadTileStore::PutTile(g_uint level, g_uint row, g_uint col, const char* path)

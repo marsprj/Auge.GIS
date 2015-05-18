@@ -462,6 +462,12 @@ namespace auge
 		virtual		  RESULTCODE	SetOrderBy(OrderBy* pOrderBy) = 0;
 		virtual		  OrderBy*		GetOrderBy() = 0;
 
+		virtual		  void			SetMaxFeatures(g_int maxFeatures) = 0;
+		virtual		  g_int			GetMaxFeatures() = 0;
+
+		virtual		  void			SetOffset(g_int offset) = 0;
+		virtual		  g_int			GetOffset() = 0;
+
 		// SetSQL
 		virtual bool				SetSQL(const char* szsql) = 0;
 		virtual const char*			GetSQL() const = 0;
