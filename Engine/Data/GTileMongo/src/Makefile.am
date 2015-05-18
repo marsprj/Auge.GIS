@@ -8,12 +8,13 @@ AM_CPPFLAGS=-I../include \
 		-I$(MONGO_C_HOME)/include/libmongoc-1.0
 
 libgtilemgo_la_LDFLAGS=\
-		-L$(top_srcdir)/Engine/Core/src
+		-L$(top_srcdir)/Engine/Core/src \
+		-L$(MONGO_C_HOME)/lib
 
 libgtilemgo_la_LIBADD=-lgcore -lmongoc-1.0 -lbson-1.0
 
 libgtilemgo_la_SOURCES=\
 		PGISTileStore.cpp \
 		GoogleCRS84QuadTileStore.cpp \
-		WorkspaceTileMongo.cpp \
+		TileWorkspaceMongo.cpp \
 		DataEngineTileMongo.cpp
