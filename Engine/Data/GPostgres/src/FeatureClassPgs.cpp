@@ -62,9 +62,38 @@ namespace auge
 		return m_extent;
 	}
 
-	g_int FeatureClassPgs::GetCount()
+	g_uint FeatureClassPgs::GetCount()
 	{
-		return 0;
+		std::string sql;
+		SQLBuilder::BuildCount(sql, this);
+
+		PGresult* pgResult =  m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		g_uint count = atoi(PQgetvalue(pgResult,0,0));
+		PQclear(pgResult);
+
+		return count;
+	}
+
+	g_uint FeatureClassPgs::GetCount(GEnvelope& extent)
+	{
+		std::string sql;
+		SQLBuilder::BuildCount(sql, extent, this);
+		PGresult* pgResult =  m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		g_uint count = atoi(PQgetvalue(pgResult,0,0));
+		PQclear(pgResult);
+
+		return count;
+	}
+
+	g_uint FeatureClassPgs::GetCount(GFilter* pFilter)
+	{
+		std::string sql;
+		SQLBuilder::BuildCount(sql, pFilter, this);
+		PGresult* pgResult =  m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		g_uint count = atoi(PQgetvalue(pgResult,0,0));
+		PQclear(pgResult);
+
+		return count;
 	}
 
 	GFields* FeatureClassPgs::GetFields()

@@ -10,6 +10,7 @@
 #include "GetGmlObjectHandler.h"
 #include "TransactionHandler.h"
 #include "GetValueHandler.h"
+#include "GetCountHandler.h"
 #include "WFeatureRequest.h"
 
 namespace auge
@@ -30,6 +31,7 @@ namespace auge
 		m_handlers.push_back(new GetGmlObjectHandler());
 		m_handlers.push_back(new TransactionHandler());
 		m_handlers.push_back(new GetValueHandler());
+		m_handlers.push_back(new GetCountHandler());
 	}
 
 	WFeatureEngine::~WFeatureEngine()

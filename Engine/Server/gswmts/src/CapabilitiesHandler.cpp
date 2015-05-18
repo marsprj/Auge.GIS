@@ -156,13 +156,13 @@ namespace auge
 		XElement  *pxRoot = NULL;
 		XDocument *pxDoc = new XDocument();
 		pxRoot = pxDoc->CreateRootNode("Capabilities", NULL, NULL); 
-		SetRooteNode_1_0_0(pxRoot, "1.0.0");
+		SetRooteNode_1_0_0(pxRoot, "1.0.0"); 
 
 		// Capabilities-->ServiceIdentification
 		AddServiceIdentificationNode_1_0_0(pxRoot);
 
 		// Capabilities-->ServiceProviderNode
-		AddServiceProviderNode_1_0_0(pxRoot);
+		//AddServiceProviderNode_1_0_0(pxRoot);
 
 		// Capabilities-->OperationsMetadataNode
 		AddOperationsMetadataNode_1_0_0(pxRoot,wmts_xlink);
@@ -271,7 +271,7 @@ namespace auge
 			XElement* pxNode = pxHTTP->AddChild("Get", "ows");
 			pxNode->SetAttribute("href",wmts_xlink,"xlink");
 
-			XElement* pxConstraint = pxHTTP->AddChild("Constraint","ows");
+			XElement* pxConstraint = pxNode->AddChild("Constraint","ows");
 			pxConstraint->SetAttribute("name", "GetEncoding", NULL);
 			XElement* pxAllowedValues = pxConstraint->AddChild("AllowedValues","ows");
 			XElement* pxValue = pxAllowedValues->AddChild("Value","ows");
@@ -392,7 +392,7 @@ namespace auge
 		pxTitle->AddChildText(identifier);
 
 		XElement* pxAbstract = pxTileMatrixSet->AddChild("Abstract", "ows");
-		pxTitle->AddChildText(identifier);
+		pxAbstract->AddChildText(identifier);
 
 		XElement* pxIdentifier = pxTileMatrixSet->AddChild("Identifier", "ows");
 		pxIdentifier->AddChildText(identifier);

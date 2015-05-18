@@ -62,7 +62,9 @@ namespace auge
 		virtual GFields*			GetFields() = 0;
 		virtual GField*				GetField(const char* name) = 0;
 
-		virtual g_int				GetCount() = 0;
+		virtual g_uint				GetCount() = 0;
+		virtual g_uint				GetCount(GEnvelope& extent) = 0;
+		virtual g_uint				GetCount(GFilter* pFilter) = 0;
 		
 		virtual FeatureCursor*		Query(augeCursorType type=augeStaticCursor) = 0;
 		virtual FeatureCursor*		Query(GEnvelope& extent, augeCursorType type=augeStaticCursor) = 0;

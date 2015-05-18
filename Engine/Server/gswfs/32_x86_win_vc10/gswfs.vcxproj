@@ -89,6 +89,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\DescribeFeatureTypeHandler.cpp" />
     <ClCompile Include="..\src\DescribeFeatureTypeRequest.cpp" />
     <ClCompile Include="..\src\DescribeFeatureTypeResponse.cpp" />
+    <ClCompile Include="..\src\GetCountHandler.cpp" />
+    <ClCompile Include="..\src\GetCountRequest.cpp" />
+    <ClCompile Include="..\src\GetCountResponse.cpp" />
     <ClCompile Include="..\src\GetFeatureHandler.cpp" />
     <ClCompile Include="..\src\GetFeatureRequest.cpp" />
     <ClCompile Include="..\src\GetFeatureResponse.cpp" />
@@ -111,6 +114,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\DescribeFeatureTypeHandler.h" />
     <ClInclude Include="..\include\DescribeFeatureTypeRequest.h" />
     <ClInclude Include="..\include\DescribeFeatureTypeResponse.h" />
+    <ClInclude Include="..\include\GetCountHandler.h" />
+    <ClInclude Include="..\include\GetCountRequest.h" />
+    <ClInclude Include="..\include\GetCountResponse.h" />
     <ClInclude Include="..\include\GetFeatureHandler.h" />
     <ClInclude Include="..\include\GetFeatureRequest.h" />
     <ClInclude Include="..\include\GetFeatureResponse.h" />

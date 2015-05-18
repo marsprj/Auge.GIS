@@ -25,6 +25,10 @@ namespace auge
 		static void BuildFields(std::string& fields, FeatureClassPgs* pFeatureClass);
 		static void BuildFields(std::string& fields, GQuery* pQuery, FeatureClassPgs* pFeatureClass);
 
+		static void	BuildCount(std::string& sql, FeatureClassPgs* pFeatureClass);
+		static void	BuildCount(std::string& sql, GEnvelope& extent, FeatureClassPgs* pFeatureClass);
+		static void	BuildCount(std::string& sql, GFilter* pFilter, FeatureClassPgs* pFeatureClass);
+		
 		static RESULTCODE BuildFilter(std::string& sql, FeatureClassPgs* pFeatureClass, GFilter* pFilter);
 		static RESULTCODE BuildIDFilter(std::string& sql,FeatureClassPgs* pFeatureClass, IDFilter* pFilter);
 		static RESULTCODE BuildComparisioFilter(std::string& sql,FeatureClassPgs* pFeatureClass, ComparisionFilter* pFilter);

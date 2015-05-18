@@ -31,5 +31,8 @@ libgswfs_la_SOURCES=\
 		GetValueHandler.cpp \
 		GetValueRequest.cpp \
 		GetValueResponse.cpp \
+		GetCountHandler.cpp \
+		GetCountRequest.cpp \
+		GetCountResponse.cpp \
 		WFeatureRequest.cpp \
 		WFeatureEngine.cpp

@@ -24,7 +24,10 @@ namespace auge
 		virtual const char*			GetName();
 		virtual g_uint				GetSRID();
 		virtual GEnvelope&			GetExtent();
-		virtual g_int				GetCount();
+
+		virtual g_uint				GetCount();
+		virtual g_uint				GetCount(GEnvelope& extent);
+		virtual g_uint				GetCount(GFilter* pFilter);
 
 		virtual GFields*			GetFields();
 		virtual GField*				GetField(const char* name);

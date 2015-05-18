@@ -44,7 +44,17 @@ namespace auge
 		return m_extent;
 	}
 
-	g_int FeatureClassShp::GetCount()
+	g_uint FeatureClassShp::GetCount()
+	{
+		return m_pshpHandle->nRecords;
+	}
+
+	g_uint FeatureClassShp::GetCount(GEnvelope& extent)
+	{
+		return m_pshpHandle->nRecords;
+	}
+
+	g_uint FeatureClassShp::GetCount(GFilter* pFilter)
 	{
 		return m_pshpHandle->nRecords;
 	}

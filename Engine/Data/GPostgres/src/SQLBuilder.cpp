@@ -245,6 +245,48 @@ namespace auge
 		}
 	}
 
+	//////////////////////////////////////////////////////////////////////////
+	void SQLBuilder::BuildCount(std::string& sql, FeatureClassPgs* pFeatureClass)
+	{
+		sql = "select count(*)";
+		sql.append(" from ");
+		sql.append(pFeatureClass->GetName());
+	}
+
+	void SQLBuilder::BuildCount(std::string& sql, GEnvelope& extent, FeatureClassPgs* pFeatureClass)
+	{
+		sql = "select count(*)";
+		sql.append(" from ");
+		sql.append(pFeatureClass->GetName());
+
+		char where[AUGE_BUFFER_MAX];
+		g_snprintf(where,AUGE_BUFFER_MAX," where (%s && 'BOX3D(%.7f %.7f,%.7f %.7f)'::box3d)", pFeatureClass->m_geom_filed_name.c_str(),
+			extent.m_xmin,
+			extent.m_ymin,
+			extent.m_xmax,
+			extent.m_ymax);
+
+		sql.append(where);
+	}
+
+	void SQLBuilder::BuildCount(std::string& sql, GFilter* pFilter, FeatureClassPgs* pFeatureClass)
+	{
+		sql = "select count(*)";
+		sql.append(" from ");
+
+		sql.append(" from ");
+		sql.append(pFeatureClass->GetName());
+
+		if(pFilter!=NULL)
+		{
+			sql.append(" where ");
+			std::string where = "";
+			BuildFilter(where, pFeatureClass, pFilter);
+			sql.append(where);
+		}
+	}
+	//////////////////////////////////////////////////////////////////////////
+
 	void SQLBuilder::BuildFields(std::string& fields, FeatureClassPgs* pFeatureClass)
 	{
 		GField 	*pField = NULL;
