@@ -22,6 +22,7 @@ libgswfs_la_SOURCES=\
 		GetFeatureHandler.cpp \
 		GetFeatureRequest.cpp \
 		GetFeatureResponse.cpp \
+		GetFeatureResponseShapezip.cpp \
 		GetGmlObjectHandler.cpp \
 		GetGmlObjectRequest.cpp \
 		GetGmlObjectResponse.cpp \

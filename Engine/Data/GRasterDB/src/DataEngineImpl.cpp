@@ -24,7 +24,7 @@ namespace auge
 
 	const char*	DataEngineRasterDB::GetID()
 	{
-		return "rasterdb";
+		return "RasterDB";
 	}
 
 	const char*	DataEngineRasterDB::GetDescription()

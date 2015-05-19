@@ -1,6 +1,7 @@
 #include "GetFeatureHandler.h"
 #include "GetFeatureRequest.h"
 #include "GetFeatureResponse.h"
+#include "GetFeatureResponseShapezip.h"
 #include "WFeatureEngine.h"
 #include "AugeService.h"
 #include "AugeXML.h"
@@ -139,20 +140,35 @@ namespace auge
 		}
 
 		WebResponse* pWebResponse = NULL; 
-		if(pCursor!=NULL) 
-		{ 
-			GetFeatureResponse *pResponse = new GetFeatureResponse(pRequest);
+		if(pCursor==NULL) 
+		{
+			pFeatureClass->Release();
+
+			GError* pError = augeGetErrorInstance();
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			pWebResponse = pExpResponse;
+		}
+
+		const char* output_format = pRequest->GetOutputFormat();
+		
+		if(g_stricmp(output_format,"shape-zip")==0)
+		{
+			GetFeatureShapeZipResponse* pResponse = NULL;
+			pResponse = new GetFeatureShapeZipResponse(pRequest);
 			pResponse->SetWebContenxt(pWebContext);
 			pResponse->SetFeatureCursor(pCursor);
 			pWebResponse = pResponse;
 		}
 		else
 		{
-			GError* pError = augeGetErrorInstance();
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(pError->GetLastError());
-			pWebResponse = pExpResponse;
+			GetFeatureResponse *pResponse = NULL;
+			pResponse = new GetFeatureResponse(pRequest);
+			pResponse->SetWebContenxt(pWebContext);
+			pResponse->SetFeatureCursor(pCursor);
+			pWebResponse = pResponse;
 		}
+		
 		
 		pFeatureClass->Release();
 		

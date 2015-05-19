@@ -46,6 +46,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GTileFS", "..\..\..\Data\GT
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GTileMgo", "..\..\..\Data\GTileMongo\32_x86_win_vc10\GTileMgo.vcxproj", "{483450F0-61B4-49A8-BF5C-0358B6C38E25}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GRasterFS", "..\..\..\Data\GRasterFS\32_x86_win_vc10\GRasterFS.vcxproj", "{44D099DD-1C8A-4CE2-8B0B-63C4589CB511}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -136,6 +138,10 @@ Global
 		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Debug|Win32.Build.0 = Debug|Win32
 		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Release|Win32.ActiveCfg = Release|Win32
 		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Release|Win32.Build.0 = Release|Win32
+		{44D099DD-1C8A-4CE2-8B0B-63C4589CB511}.Debug|Win32.ActiveCfg = Debug|Win32
+		{44D099DD-1C8A-4CE2-8B0B-63C4589CB511}.Debug|Win32.Build.0 = Debug|Win32
+		{44D099DD-1C8A-4CE2-8B0B-63C4589CB511}.Release|Win32.ActiveCfg = Release|Win32
+		{44D099DD-1C8A-4CE2-8B0B-63C4589CB511}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

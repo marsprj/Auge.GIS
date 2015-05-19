@@ -113,6 +113,12 @@ http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetF
 
 user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&fields=gid,name,geom&orderby=
 
+// output shapefile
+user=user1&servicename=world&service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&outputformat=shape-zip
+user=user1&sourcename=db1&service=wfs&version=1.0.0&request=GetFeature&typeName=cities&outputformat=shape-zip
+http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetFeature&typeName=world:cities&outputformat=shape-zip
+
+
 //////////////////////////////////////////////////////////////////////////
 // Standard WFS Request
 //////////////////////////////////////////////////////////////////////////

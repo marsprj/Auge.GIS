@@ -84,6 +84,9 @@
     <ClCompile Include="..\src\GetCountResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\GetFeatureResponseShapezip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\WFeatureEngine.h">
@@ -153,6 +156,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\GetCountResponse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\GetFeatureResponseShapezip.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -95,6 +95,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetFeatureHandler.cpp" />
     <ClCompile Include="..\src\GetFeatureRequest.cpp" />
     <ClCompile Include="..\src\GetFeatureResponse.cpp" />
+    <ClCompile Include="..\src\GetFeatureResponseShapezip.cpp" />
     <ClCompile Include="..\src\GetGmlObjectHandler.cpp" />
     <ClCompile Include="..\src\GetGmlObjectRequest.cpp" />
     <ClCompile Include="..\src\GetGmlObjectResponse.cpp" />
@@ -120,6 +121,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetFeatureHandler.h" />
     <ClInclude Include="..\include\GetFeatureRequest.h" />
     <ClInclude Include="..\include\GetFeatureResponse.h" />
+    <ClInclude Include="..\include\GetFeatureResponseShapezip.h" />
     <ClInclude Include="..\include\GetGmlObjectHandler.h" />
     <ClInclude Include="..\include\GetGmlObjectRequest.h" />
     <ClInclude Include="..\include\GetGmlObjectResponse.h" />

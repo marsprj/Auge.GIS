@@ -2,7 +2,7 @@
 <Engines>
 	<Engine description="PostgreSQL Data Engine" path="" id="Postgres"/>
 	<Engine description="Shape file Data Engine" path="" id="Shape"/>
-	<Engine description="Raster Data Engine" path="" id="Raster"/>
+	<Engine description="Raster FileSystem Engine" path="" id="RasterFS"/>
 	<Engine description="Raster Database Engine" path="" id="RasterDB"/>
 	<Engine description="Tile Storage Engine" path="" id="TileFS"/>
 	<Engine description="Mongo Tile Storage Engine" path="" id="TileMgo"/>
