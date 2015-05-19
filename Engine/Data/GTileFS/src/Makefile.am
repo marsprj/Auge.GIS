@@ -11,6 +11,7 @@ libGTileFS_la_LDFLAGS=\
 libGTileFS_la_LIBADD=-lgcore
 
 libGTileFS_la_SOURCES=\
+		TileImpl.cpp \
 		PGISTileStore.cpp \
 		GoogleCRS84QuadTileStore.cpp \
 		WorkspaceTFS.cpp \
