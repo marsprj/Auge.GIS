@@ -95,6 +95,21 @@ namespace auge
 
 	EnumDataSet* WorkspaceRasterDB::GetDataSets()
 	{
+		return GetRasterDatasets();
+	}
+
+	DataSet* WorkspaceRasterDB::OpenDataSet(const char* name)
+	{
+		return OpenRasterDataset(name);
+	}
+
+	RESULTCODE WorkspaceRasterDB::RemoveDataSet(const char* name)
+	{
+		return AG_SUCCESS;
+	}
+
+	EnumDataSet* WorkspaceRasterDB::GetRasterDatasets()
+	{
 		char sql[AUGE_SQL_MAX] = {0};
 		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid from %s";
 		g_snprintf(sql, AUGE_SQL_MAX, format,	g_catalog_table.c_str());
@@ -133,16 +148,6 @@ namespace auge
 		pResult->Release();
 
 		return pEnumDataset;
-	}
-
-	DataSet* WorkspaceRasterDB::OpenDataSet(const char* name)
-	{
-		return OpenRasterDataset(name);
-	}
-
-	RESULTCODE WorkspaceRasterDB::RemoveDataSet(const char* name)
-	{
-		return AG_SUCCESS;
 	}
 
 	RasterDataset* WorkspaceRasterDB::OpenRasterDataset(const char* name)

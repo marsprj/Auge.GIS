@@ -33,6 +33,7 @@ namespace auge
 		virtual RasterDataset*	OpenRasterDataset(const char* name);
 
 		// Raster Methods
+		virtual EnumDataSet*	GetRasterDatasets();
 		virtual	Raster*			OpenRaster(const char* name);
 		virtual RESULTCODE		AddRaster(Raster* pRaster);
 		virtual RESULTCODE		RemoveRaster(g_uint id);

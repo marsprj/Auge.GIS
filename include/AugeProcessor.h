@@ -42,6 +42,22 @@ namespace auge
 		virtual void	SetViewer(GEnvelope& viewer) = 0;
 	};
 
+	class ArchiveProcessor : public GProcessor
+	{
+	protected:
+		ArchiveProcessor(){}
+		virtual ~ArchiveProcessor(){}
+	public:
+
+		virtual RESULTCODE	Compress(const char* tpath) = 0;
+		virtual RESULTCODE	Decompress(const char* tpath) = 0;
+
+		virtual void		AddFile(const char* fpath) = 0;
+		virtual void		Clear() = 0;
+
+		virtual void		Release() = 0;
+	};
+
 	class GProcessorFactory
 	{
 	protected:
@@ -49,6 +65,7 @@ namespace auge
 		virtual ~GProcessorFactory(){}
 	public:
 		virtual TileStoreGenerator*	CreateTileStoreGenerator() = 0;
+		virtual ArchiveProcessor*	CreateArchiveProcessor() = 0;
 	};
 
 	extern "C"

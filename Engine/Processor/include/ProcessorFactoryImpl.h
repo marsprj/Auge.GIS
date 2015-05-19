@@ -12,6 +12,7 @@ namespace auge
 		virtual ~GProcessorFactoryImpl();
 	public:
 		virtual TileStoreGenerator*	CreateTileStoreGenerator();
+		virtual ArchiveProcessor*	CreateArchiveProcessor();
 	};
 }
 

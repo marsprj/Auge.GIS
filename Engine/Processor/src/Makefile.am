@@ -12,4 +12,5 @@ libgprocessor_la_LIBADD=-lgcore
 
 libgprocessor_la_SOURCES=\
 		FileSytemTileStoreGeneratorImpl.cpp \
+		ArchiveProcessorImpl.cpp \
 		ProcessorFactoryImpl.cpp
