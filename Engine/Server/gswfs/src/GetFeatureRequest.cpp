@@ -238,10 +238,6 @@ namespace auge
 	{
 		XParser parser;
 		XDocument* pxDoc = NULL;
-		//if(typeName==NULL||pMap==NULL)
-		//{
-		//	return;
-		//}
 
 		GFilter	*pFilter = NULL;
 		FilterReader* reader = NULL;
@@ -252,18 +248,7 @@ namespace auge
 			return NULL;
 		}
 
-		//Layer* pLayer = pMap->GetLayer(typeName);
-		//if(pLayer==NULL)
-		//{
-		//	return;
-		//}
 
-		//FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-		//FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-		//if(pFeatureClass==NULL) 
-		//{
-		//	return;
-		//}
 
 		pQuery = factory->CreateQuery();
 		pxDoc = parser.ParseMemory(m_filter);

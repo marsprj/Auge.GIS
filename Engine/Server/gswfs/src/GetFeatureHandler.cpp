@@ -121,17 +121,17 @@ namespace auge
 
 		//if(access(capa_path,4))
 		FeatureCursor *pCursor = NULL; 
-		GQuery* pQuery = pRequest->GetQuery(pFeatureClass); 
-		if(pQuery!=NULL)
-		{ 
-			pCursor = pFeatureClass->Query(pQuery);
+		GEnvelope& bbox = pRequest->GetBBox(); 
+		if(bbox.IsValid()) 
+		{
+			pCursor = pFeatureClass->Query(bbox);
 		}
 		else
 		{
-			GEnvelope& bbox = pRequest->GetBBox(); 
-			if(bbox.IsValid()) 
-			{
-				pCursor = pFeatureClass->Query(bbox);
+			GQuery* pQuery = pRequest->GetQuery(pFeatureClass); 
+			if(pQuery!=NULL)
+			{ 
+				pCursor = pFeatureClass->Query(pQuery);
 			}
 			else
 			{
