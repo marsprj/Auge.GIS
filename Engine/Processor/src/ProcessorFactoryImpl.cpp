@@ -1,5 +1,6 @@
 #include "ProcessorFactoryImpl.h"
 #include "FileSytemTileStoreGeneratorImpl.h"
+#include "FeatureImportProcessorImpl.h"
 
 #ifndef WIN32
 #include "ArchiveProcessorImpl.h"
@@ -35,5 +36,10 @@ namespace auge
 #else
 		return (new ArchiveProcessorImpl());
 #endif
+	}
+
+	FeatureImportProcessor* GProcessorFactoryImpl::CreateFeatureImportProcessor()
+	{
+		return (new FeatureImportProcessorImpl());
 	}
 }

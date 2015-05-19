@@ -58,14 +58,26 @@ namespace auge
 		virtual void		Release() = 0;
 	};
 
+	class FeatureImportProcessor : public GProcessor
+	{
+	protected:
+		FeatureImportProcessor(){}
+		virtual ~FeatureImportProcessor(){}
+	public:
+		virtual void		SetShapePath(const char* path) = 0;
+		virtual void		SetShapeName(const char* className) = 0;
+		virtual void		SetDataSourceName(const char* sourceName) = 0;
+	};
+
 	class GProcessorFactory
 	{
 	protected:
 		GProcessorFactory(){}
 		virtual ~GProcessorFactory(){}
 	public:
-		virtual TileStoreGenerator*	CreateTileStoreGenerator() = 0;
-		virtual ArchiveProcessor*	CreateArchiveProcessor() = 0;
+		virtual TileStoreGenerator*		CreateTileStoreGenerator() = 0;
+		virtual ArchiveProcessor*		CreateArchiveProcessor() = 0;
+		virtual FeatureImportProcessor*	CreateFeatureImportProcessor() = 0;
 	};
 
 	extern "C"
