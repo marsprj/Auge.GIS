@@ -86,7 +86,7 @@ namespace auge
 		if(rc!=AG_SUCCESS)
 		{
 			pshpWorkspace->Release();
-			return NULL;
+			return AG_FAILURE;
 		}
 
 		FeatureClass* pshpFeatureClass = NULL;
@@ -94,7 +94,7 @@ namespace auge
 		if(pshpFeatureClass==NULL)
 		{
 			pshpWorkspace->Release();
-			return NULL;
+			return AG_FAILURE;
 		}
 		
 		FeatureInsertCommand* cmd = pshpFeatureClass->CreateInsertCommand();
