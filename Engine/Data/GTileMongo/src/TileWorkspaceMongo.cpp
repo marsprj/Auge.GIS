@@ -54,7 +54,7 @@ namespace auge
 
 	const char*	TileWorkspaceMongo::GetConnectionString()
 	{
-		return NULL;
+		return m_connstring.c_str();
 	}
 
 	RESULTCODE TileWorkspaceMongo::Open()
@@ -121,7 +121,7 @@ namespace auge
 
 	DataEngine*	TileWorkspaceMongo::GetEngine()
 	{
-		return NULL;
+		return augeGetDataEngineInstance();
 	}
 
 	//////////////////////////////////////////////////////////////////////////

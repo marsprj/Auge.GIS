@@ -61,7 +61,7 @@ namespace auge
 
 	const char*	TileWorkspaceFS::GetConnectionString()
 	{
-		return NULL;
+		return m_connstring.c_str();
 	}
 
 	RESULTCODE TileWorkspaceFS::Open()
@@ -112,7 +112,7 @@ namespace auge
 
 	DataEngine*	TileWorkspaceFS::GetEngine()
 	{
-		return NULL;
+		return augeGetDataEngineInstance();
 	}
 
 	//////////////////////////////////////////////////////////////////////////
