@@ -40,13 +40,17 @@ namespace auge
 		virtual g_uint			GetCols(g_uint level) = 0;
 
 		virtual augeTileType	GetTileType() = 0;
-		virtual	Tile*			GetTile(g_uint level, g_uint row, g_uint col) = 0;
-		virtual RESULTCODE		PutTile(g_uint level, g_uint row, g_uint col, const char* path) = 0;
-		virtual RESULTCODE		PutTile(g_uint level, g_uint row, g_uint col, unsigned char* data, size_t size) = 0;
+		virtual	Tile*			GetTile(g_uint level, g_uint64 row, g_uint64 col) = 0;
+		virtual RESULTCODE		PutTile(g_uint level, g_uint64 row, g_uint64 col, const char* path) = 0;
+		virtual RESULTCODE		PutTile(g_uint level, g_uint64 row, g_uint64 col, g_uchar* data, size_t size) = 0;
 
-		virtual RESULTCODE		GetKey(char* key, size_t size, g_uint level, g_uint row, g_uint col) = 0;
-		virtual RESULTCODE		GetExtent(GEnvelope& extent, g_uint level, g_uint row, g_uint col) = 0;
-		virtual RESULTCODE		GetTilePath(char* key, size_t size, g_uint level, g_uint row, g_uint col) = 0;
+		virtual RESULTCODE		GetKey(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col) = 0;
+		virtual RESULTCODE		GetTileExtent(GEnvelope& extent, g_uint level, g_uint64 row, g_uint64 col) = 0;
+		virtual RESULTCODE		GetTilePath(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col) = 0;
+
+		virtual RESULTCODE		GetBoundingBox(GEnvelope& viewer, g_uint level, g_uint& r_min, g_uint& r_max, g_uint& c_min, g_uint& c_max) = 0;
+		virtual g_uint			GetOriginalLevel(GEnvelope& viewer, g_uint viewer_w, g_uint viewer_h) = 0;
+
 	};
 
 	class TileWorkspace : virtual public Workspace

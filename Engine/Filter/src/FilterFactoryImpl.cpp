@@ -64,6 +64,23 @@ namespace auge
 		return (new BBoxFilterImpl());
 	}
 
+	BBoxFilter*	FilterFactoryImpl::CreateBBoxFilter(const char* geomfield, GEnvelope& bbox)
+	{
+		if(geomfield==NULL)
+		{
+			return NULL;
+		}
+		PropertyNameImpl* pPropName = new PropertyNameImpl();
+		pPropName->SetName(geomfield);
+
+		BBoxFilterImpl* pBBoxFilter = NULL;
+		pBBoxFilter = new BBoxFilterImpl();
+		pBBoxFilter->SetPropertyName(pPropName);
+		pBBoxFilter->SetExtent(bbox);
+
+		return pBBoxFilter;
+	}
+
 	BBoxFilter* FilterFactoryImpl::CreateBBoxFilter(Expression* pPropertyName, GEnvelope& bbox)
 	{
 		BBoxFilterImpl* pBBoxFilter = NULL;

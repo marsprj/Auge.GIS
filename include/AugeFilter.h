@@ -526,6 +526,7 @@ namespace auge
 		//---------------------------------------------------------------
 		// Filter
 		virtual	BBoxFilter*				CreateBBoxFilter() = 0;
+		virtual	BBoxFilter*				CreateBBoxFilter(const char* geomfield, GEnvelope& bbox) = 0;
 		virtual	BBoxFilter*				CreateBBoxFilter(Expression* pPropertyName, GEnvelope& bbox) = 0;
 
 		virtual IDFilter*				CreateIDFilter() = 0;

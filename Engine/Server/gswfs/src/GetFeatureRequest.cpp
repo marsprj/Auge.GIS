@@ -1,4 +1,5 @@
 #include "GetFeatureRequest.h"
+#include "AugeField.h"
 #include "AugeData.h"
 #include "AugeCarto.h"
 #include "AugeXML.h"
@@ -248,16 +249,26 @@ namespace auge
 			return NULL;
 		}
 
-
-
 		pQuery = factory->CreateQuery();
-		pxDoc = parser.ParseMemory(m_filter);
-		if(pxDoc!=NULL)
+		if(m_extent.IsValid())
 		{
-			reader = factory->CreateFilerReader(pFeatureClass->GetFields());
-			pFilter = reader->Read(pxDoc->GetRootNode());
-			pQuery->SetFilter(pFilter);
-			pxDoc->Release();
+			GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+			if(pField)
+			{
+				pFilter = factory->CreateBBoxFilter(pField->GetName(), m_extent);
+				pQuery->SetFilter(pFilter);
+			}
+		}
+		else
+		{
+			pxDoc = parser.ParseMemory(m_filter);
+			if(pxDoc!=NULL)
+			{
+				reader = factory->CreateFilerReader(pFeatureClass->GetFields());
+				pFilter = reader->Read(pxDoc->GetRootNode());
+				pQuery->SetFilter(pFilter);
+				pxDoc->Release();
+			}
 		}
 
 		pQuery->SetMaxFeatures(m_max_features);

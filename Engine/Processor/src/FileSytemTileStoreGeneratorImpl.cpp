@@ -80,7 +80,7 @@ namespace auge
 			{
 				for(g_uint c=0; c<cols; c++)
 				{
-					rc = m_pTileStore->GetExtent(viewer, l, r,c);
+					rc = m_pTileStore->GetTileExtent(viewer, l, r,c);
 					if(rc==AG_SUCCESS)
 					{
 						printf("\r[%d]:%d-%d-%d",counter++,l,r,c);

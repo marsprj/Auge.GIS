@@ -71,17 +71,17 @@ namespace auge
 		return m_tile_type;
 	}
 
-	Tile* PGISTileStore::GetTile(g_uint level, g_uint row, g_uint col)
+	Tile* PGISTileStore::GetTile(g_uint level, g_uint64 row, g_uint64 col)
 	{
 		return NULL;
 	}
 
-	RESULTCODE PGISTileStore::PutTile(g_uint level, g_uint row, g_uint col, const char* path)
+	RESULTCODE PGISTileStore::PutTile(g_uint level, g_uint64 row, g_uint64 col, const char* path)
 	{
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE PGISTileStore::PutTile(g_uint level, g_uint row, g_uint col, unsigned char* data, size_t size)
+	RESULTCODE PGISTileStore::PutTile(g_uint level, g_uint64 row, g_uint64 col, unsigned char* data, size_t size)
 	{
 		return AG_SUCCESS;
 	}
@@ -92,12 +92,12 @@ namespace auge
 	 *	[Col]: 0 ~ 2^l
 	 * ------------------------------------------------------------
 	 */
-	RESULTCODE PGISTileStore::GetKey(char* key, size_t size, g_uint level, g_uint row, g_uint col)
+	RESULTCODE PGISTileStore::GetKey(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col)
 	{
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE PGISTileStore::GetExtent(GEnvelope& extent, g_uint level, g_uint row, g_uint col)
+	RESULTCODE PGISTileStore::GetTileExtent(GEnvelope& extent, g_uint level, g_uint64 row, g_uint64 col)
 	{
 		double resolution = m_full_extent.GetHeight() / pow(2.0f,(float)(level));
 		double xmin = m_full_extent.m_xmin + resolution * col;
@@ -113,7 +113,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE PGISTileStore::GetTilePath(char* key, size_t size, g_uint level, g_uint row, g_uint col)
+	RESULTCODE PGISTileStore::GetTilePath(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col)
 	{	
 		char l_tile[AUGE_NAME_MAX] = {0};
 		char r_tile[AUGE_NAME_MAX] = {0};
@@ -187,5 +187,15 @@ namespace auge
 		CreateLevels(m_start_level, m_end_level);
 
 		return AG_SUCCESS;
+	}
+
+	RESULTCODE PGISTileStore::GetBoundingBox(GEnvelope& viewer, g_uint level, g_uint& r_min, g_uint& r_max, g_uint& c_min, g_uint& c_max)
+	{
+		return AG_SUCCESS;
+	}
+
+	g_uint PGISTileStore::GetOriginalLevel(GEnvelope& viewer, g_uint viewer_w, g_uint viewer_h)
+	{
+		return 0;
 	}
 }

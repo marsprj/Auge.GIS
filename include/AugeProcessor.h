@@ -19,6 +19,7 @@ namespace auge
 	class Map;
 	class GEnvelope;
 	class TileStore;
+	class Raster;
 
 	class GProcessor : public GObject
 	{
@@ -36,6 +37,20 @@ namespace auge
 		virtual ~TileStoreGenerator(){}
 	public:
 		virtual	void	SetMap(Map* pMap) = 0;
+		virtual void	SetTileStore(TileStore* pTileStore) = 0;
+		virtual void	SetStartLevel(g_uint l) = 0;
+		virtual void	SetEndLevel(g_uint l) = 0;
+		virtual void	SetViewer(GEnvelope& viewer) = 0;
+	};
+
+	class RasterTileStoreGenerator : public GProcessor
+	{
+	protected:
+		RasterTileStoreGenerator(){}
+		virtual ~RasterTileStoreGenerator(){}
+	public:
+		virtual	void	SetRaster(Raster* pRaster) = 0;
+		virtual void	SetFormat(const char* format) = 0;
 		virtual void	SetTileStore(TileStore* pTileStore) = 0;
 		virtual void	SetStartLevel(g_uint l) = 0;
 		virtual void	SetEndLevel(g_uint l) = 0;

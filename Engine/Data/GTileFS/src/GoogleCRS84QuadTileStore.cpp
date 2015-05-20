@@ -5,6 +5,27 @@
 
 namespace auge
 {
+	double scale_denomiators[]={
+				5.590822640287178E8,
+				2.795411320143589E8,
+				1.397705660071794E8,
+				6.988528300358972E7,
+				3.494264150179486E7,
+				1.747132075089743E7,
+				8735660.375448715,
+				4367830.187724357,
+				2183915.093862179,
+				1091957.546931089,
+				545978.7734655447,
+				272989.3867327723,
+				136494.6933663862,
+				68247.34668319309,
+				34123.67334159654,
+				17061.83667079827,
+				8530.918335399136,
+				4265.459167699568, 
+				2132.729583849784};
+
 	GoogleCRS84QuadTileStore::GoogleCRS84QuadTileStore()
 	{
 		m_tile_type = augeTileGoogleCRS84Quad;
@@ -71,7 +92,7 @@ namespace auge
 		return m_tile_type;
 	}
 
-	Tile* GoogleCRS84QuadTileStore::GetTile(g_uint level, g_uint row, g_uint col)
+	Tile* GoogleCRS84QuadTileStore::GetTile(g_uint level, g_uint64 row, g_uint64 col)
 	{
 		char t_path[AUGE_PATH_MAX] = {0};
 		RESULTCODE rc = GetTilePath(t_path, AUGE_PATH_MAX, level, row, col);
@@ -86,12 +107,12 @@ namespace auge
 		return pTile;
 	}
 
-	RESULTCODE GoogleCRS84QuadTileStore::PutTile(g_uint level, g_uint row, g_uint col, const char* path)
+	RESULTCODE GoogleCRS84QuadTileStore::PutTile(g_uint level, g_uint64 row, g_uint64 col, const char* path)
 	{
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE GoogleCRS84QuadTileStore::PutTile(g_uint level, g_uint row, g_uint col, unsigned char* data, size_t size)
+	RESULTCODE GoogleCRS84QuadTileStore::PutTile(g_uint level, g_uint64 row, g_uint64 col, unsigned char* data, size_t size)
 	{
 		return AG_SUCCESS;
 	}
@@ -102,12 +123,12 @@ namespace auge
 	 *	[Col]: 0 ~ 2^l
 	 * ------------------------------------------------------------
 	 */
-	RESULTCODE GoogleCRS84QuadTileStore::GetKey(char* key, size_t size, g_uint level, g_uint row, g_uint col)
+	RESULTCODE GoogleCRS84QuadTileStore::GetKey(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col)
 	{
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE GoogleCRS84QuadTileStore::GetExtent(GEnvelope& extent, g_uint level, g_uint row, g_uint col)
+	RESULTCODE GoogleCRS84QuadTileStore::GetTileExtent(GEnvelope& extent, g_uint level, g_uint64 row, g_uint64 col)
 	{
 		double resolution = m_full_extent.GetHeight() / pow(2.0f,(float)(level-1));
 		double xmin = m_full_extent.m_xmin + resolution * col;
@@ -118,7 +139,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE GoogleCRS84QuadTileStore::GetTilePath(char* key, size_t size, g_uint level, g_uint row, g_uint col)
+	RESULTCODE GoogleCRS84QuadTileStore::GetTilePath(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col)
 	{	
 		g_snprintf(key, size, "%s/%d/%d_%d.%s",m_path.c_str(), level, row, col,m_tile_format.c_str());
 		return AG_SUCCESS;
@@ -166,5 +187,39 @@ namespace auge
 		CreateLevels(m_start_level, m_end_level);
 
 		return AG_SUCCESS;
+	}
+
+	RESULTCODE GoogleCRS84QuadTileStore::GetBoundingBox(GEnvelope& viewer, g_uint level, g_uint& r_min, g_uint& r_max, g_uint& c_min, g_uint& c_max)
+	{
+		if(!m_full_extent.Intersects(viewer))
+		{
+			return AG_FAILURE;
+		}
+
+		GEnvelope common = m_full_extent.Intersect(viewer);
+	
+		double resolution = m_full_extent.GetHeight() / pow(2.0f,(float)(level-1));
+
+		c_min = floor((common.m_xmin - m_full_extent.m_xmin) / resolution);
+		c_max = ceil ((common.m_xmax - m_full_extent.m_xmin) / resolution);
+
+		r_min = floor((m_full_extent.m_ymax - common.m_ymax) / resolution);
+		r_max = ceil ((m_full_extent.m_ymax - common.m_ymin) / resolution);
+		
+		return AG_SUCCESS;
+	}
+
+	g_uint GoogleCRS84QuadTileStore::GetOriginalLevel(GEnvelope& viewer, g_uint viewer_w, g_uint viewer_h)
+	{
+		g_uint64 p_w = viewer_h * viewer.GetHeight() / 180.f;
+		for(g_uint i=0; i<20; i++)
+		{
+			g_uint v = 1 << i;
+			if( v > p_w )
+			{
+				return i+1;
+			}
+		}
+		return 0;
 	}
 }

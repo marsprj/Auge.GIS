@@ -13,6 +13,17 @@ typedef int					g_int32;
 typedef unsigned int		g_uint;
 typedef long				g_long;
 typedef unsigned long		g_ulong;
+#if defined(_MSC_VER) || defined(__BORLANDC__)
+typedef signed __int64      g_int64;
+#else
+typedef signed long long    g_int64;
+#endif
+
+#if defined(_MSC_VER) || defined(__BORLANDC__)
+typedef unsigned __int64    g_uint64;
+#else
+typedef unsigned long long  g_uint64;
+#endif
 
 #ifndef PI
 #define PI					3.14159265358979323846

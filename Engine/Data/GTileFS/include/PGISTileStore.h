@@ -22,17 +22,20 @@ namespace auge
 		virtual GEnvelope&		GetFullExtent();
 		virtual void			GetTopLeftCorner(double &x, double &y);
 
-		virtual g_uint			GetRows(g_uint level) ;
-		virtual g_uint			GetCols(g_uint level) ;
+		virtual g_uint			GetRows(g_uint level);
+		virtual g_uint			GetCols(g_uint level);
 
-		virtual augeTileType	GetTileType() ;
-		virtual	Tile*			GetTile(g_uint level, g_uint row, g_uint col) ;
-		virtual RESULTCODE		PutTile(g_uint level, g_uint row, g_uint col, const char* path) ;
-		virtual RESULTCODE		PutTile(g_uint level, g_uint row, g_uint col, unsigned char* data, size_t size) ;
+		virtual augeTileType	GetTileType();
+		virtual	Tile*			GetTile(g_uint level, g_uint64 row, g_uint64 col);
+		virtual RESULTCODE		PutTile(g_uint level, g_uint64 row, g_uint64 col, const char* path);
+		virtual RESULTCODE		PutTile(g_uint level, g_uint64 row, g_uint64 col, unsigned char* data, size_t size);
 
-		virtual RESULTCODE		GetKey(char* key, size_t size, g_uint level, g_uint row, g_uint col) ;
-		virtual RESULTCODE		GetExtent(GEnvelope& extent, g_uint level, g_uint row, g_uint col) ;
-		virtual RESULTCODE		GetTilePath(char* key, size_t size, g_uint level, g_uint row, g_uint col) ;
+		virtual RESULTCODE		GetKey(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col);
+		virtual RESULTCODE		GetTileExtent(GEnvelope& extent, g_uint level, g_uint64 row, g_uint64 col);
+		virtual RESULTCODE		GetTilePath(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col);
+
+		virtual RESULTCODE		GetBoundingBox(GEnvelope& viewer, g_uint level, g_uint& r_min, g_uint& r_max, g_uint& c_min, g_uint& c_max);
+		virtual g_uint			GetOriginalLevel(GEnvelope& viewer, g_uint viewer_w, g_uint viewer_h);
 
 	public:
 		RESULTCODE		Create(TileWorkspaceFS* pWorkspace);

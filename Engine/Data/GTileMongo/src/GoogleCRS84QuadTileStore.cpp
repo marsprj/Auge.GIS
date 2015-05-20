@@ -77,7 +77,7 @@ namespace auge
 		return m_tile_type;
 	}
 
-	Tile* GoogleCRS84QuadTileStore::GetTile(g_uint level, g_uint row, g_uint col)
+	Tile* GoogleCRS84QuadTileStore::GetTile(g_uint level, g_uint64 row, g_uint64 col)
 	{
 		char key[AUGE_NAME_MAX] = {0};
 		MakeKey(key, AUGE_NAME_MAX, level, row, col);
@@ -128,7 +128,7 @@ namespace auge
 		return pTile;
 	}
 
-	//Tile* GoogleCRS84QuadTileStore::GetTile(g_uint level, g_uint row, g_uint col)
+	//Tile* GoogleCRS84QuadTileStore::GetTile(g_uint level, g_uint64 row, g_uint64 col)
 	//{
 	//	char key[AUGE_NAME_MAX] = {0};
 	//	MakeKey(key, AUGE_NAME_MAX, level, row, col);
@@ -164,7 +164,7 @@ namespace auge
 	//	return NULL;
 	//}
 
-	RESULTCODE GoogleCRS84QuadTileStore::PutTile(g_uint level, g_uint row, g_uint col, const char* path)
+	RESULTCODE GoogleCRS84QuadTileStore::PutTile(g_uint level, g_uint64 row, g_uint64 col, const char* path)
 	{
 		if(path==NULL)
 		{
@@ -202,7 +202,7 @@ namespace auge
 		return ret ? AG_SUCCESS : AG_FAILURE;
 	}
 
-	RESULTCODE GoogleCRS84QuadTileStore::PutTile(g_uint level, g_uint row, g_uint col, unsigned char* data, size_t size)
+	RESULTCODE GoogleCRS84QuadTileStore::PutTile(g_uint level, g_uint64 row, g_uint64 col, unsigned char* data, size_t size)
 	{
 		if(data==NULL)
 		{
@@ -216,7 +216,7 @@ namespace auge
 		return AG_FAILURE;
 	}
 
-	//RESULTCODE GoogleCRS84QuadTileStore::PutTile(g_uint level, g_uint row, g_uint col, unsigned char* data, size_t size)
+	//RESULTCODE GoogleCRS84QuadTileStore::PutTile(g_uint level, g_uint64 row, g_uint64 col, unsigned char* data, size_t size)
 	//{
 	//	if(data==NULL)
 	//	{
@@ -259,7 +259,7 @@ namespace auge
 	 *	[Col]: 0 ~ 2^l
 	 * ------------------------------------------------------------
 	 */
-	RESULTCODE GoogleCRS84QuadTileStore::GetKey(char* key, size_t size, g_uint level, g_uint row, g_uint col)
+	RESULTCODE GoogleCRS84QuadTileStore::GetKey(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col)
 	{
 		if(key==NULL)
 		{
@@ -269,7 +269,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE GoogleCRS84QuadTileStore::GetExtent(GEnvelope& extent, g_uint level, g_uint row, g_uint col)
+	RESULTCODE GoogleCRS84QuadTileStore::GetTileExtent(GEnvelope& extent, g_uint level, g_uint64 row, g_uint64 col)
 	{
 		double resolution = m_full_extent.GetHeight() / pow(2.0f,(float)(level-1));
 		double xmin = m_full_extent.m_xmin + resolution * col;
@@ -280,7 +280,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE GoogleCRS84QuadTileStore::GetTilePath(char* key, size_t size, g_uint level, g_uint row, g_uint col)
+	RESULTCODE GoogleCRS84QuadTileStore::GetTilePath(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col)
 	{
 		return AG_SUCCESS;
 	}
@@ -305,8 +305,18 @@ namespace auge
 	}
 
 	inline
-	void GoogleCRS84QuadTileStore::MakeKey(char* key, size_t size, g_uint level, g_uint row, g_uint col)
+	void GoogleCRS84QuadTileStore::MakeKey(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col)
 	{
 		g_snprintf(key, size,  "%dx%dx%d",level,row,col);
+	}
+
+	RESULTCODE GoogleCRS84QuadTileStore::GetBoundingBox(GEnvelope& viewer, g_uint level, g_uint& r_min, g_uint& r_max, g_uint& c_min, g_uint& c_max)
+	{
+		return AG_SUCCESS;
+	}
+
+	g_uint GoogleCRS84QuadTileStore::GetOriginalLevel(GEnvelope& viewer, g_uint viewer_w, g_uint viewer_h)
+	{
+		return 0;
 	}
 }

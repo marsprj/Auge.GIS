@@ -20,6 +20,7 @@ namespace auge
 		//---------------------------------------------------------------
 		// Filter
 		virtual	BBoxFilter*				CreateBBoxFilter();
+		virtual	BBoxFilter*				CreateBBoxFilter(const char* geomfield, GEnvelope& bbox);
 		virtual	BBoxFilter*				CreateBBoxFilter(Expression* pPropertyName, GEnvelope& bbox);
 
 		virtual IDFilter*				CreateIDFilter();
