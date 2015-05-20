@@ -156,7 +156,7 @@ namespace auge
 		pTileStore->GetTilePath(t_path, AUGE_PATH_MAX, level, row, col);
 
 		GEnvelope viewer;
-		pTileStore->GetExtent(viewer, level, row,col);
+		pTileStore->GetTileExtent(viewer, level, row,col);
 		pCanvas->SetViewer(viewer);
 		pCanvas->Draw(pMap);
 		pCanvas->Save(t_path);
