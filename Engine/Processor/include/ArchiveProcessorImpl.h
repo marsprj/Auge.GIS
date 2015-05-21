@@ -15,12 +15,20 @@ namespace auge
 		virtual ~ArchiveProcessorImpl();
 	public:
 		virtual void		AddFile(const char* fpath);
+		virtual void		SetArchivePath(const char* apath);
 		virtual void		Clear();
-		virtual RESULTCODE	Compress(const char* tpath);
-		virtual RESULTCODE	Decompress(const char* tpath);
+
+		virtual RESULTCODE	Compress();
+		virtual RESULTCODE	Decompress();
+
 		virtual void		Release();
+
+	public:
+		const char*			GetArchivePath();
+
 	private:
 		std::vector<std::string>	m_paths;
+		std::string m_archive_path;
 	};
 }
 

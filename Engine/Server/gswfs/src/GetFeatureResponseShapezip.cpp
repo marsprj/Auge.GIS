@@ -4,9 +4,12 @@
 #include "AugeFeature.h"
 #include "AugeField.h"
 #include "AugeXML.h"
+#include "AugeProcessor.h"
 
 namespace auge
 {
+	const char* shp_ext[] = {"shp","shx","dbf"};
+
 	GetFeatureShapeZipResponse::GetFeatureShapeZipResponse(GetFeatureRequest* pRequest)
 	{
 		m_pCursor = NULL;
@@ -48,7 +51,28 @@ namespace auge
 
 		char zipfile[AUGE_PATH_MAX];
 		memset(zipfile, 0, AUGE_PATH_MAX);
-		auge_make_path(zipfile, NULL, cach_path, uuid, "shp");
+
+#ifdef WIN32
+		auge_make_path(zipfile, NULL, cach_path, uuid, "gz");
+#else
+		ArchiveProcessor* processor = NULL;
+		GProcessorFactory* factory = augeGetGeoProcessorFactoryInstance();
+		processor = factory->CreateArchiveProcessor();
+
+		char shp_path[AUGE_PATH_MAX];
+		size_t count = sizeof(shp_ext) / sizeof(char*);
+		for(size_t i=0; i<count; i++)
+		{
+			memset(shp_path, NULL, cach_path, uuid,shp_ext[i]);
+			if(!g_access(shp_path,4))
+			{
+				processor->AddFile(shp_path);
+			}
+		}
+		processor->SetArchivePath(zipfile);
+		processor->Compress();
+		processor->Release();
+#endif
 
 		return WriteFile(pWriter, zipfile);
 	}
@@ -120,7 +144,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		pWriter->WriteHead("application/zip");
+		pWriter->WriteHead("application/gzip");
 
 		g_uint nBytes = 0;
 		g_uchar buffer[AUGE_BUFFER_MAX];		

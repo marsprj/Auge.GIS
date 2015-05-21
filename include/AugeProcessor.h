@@ -64,10 +64,11 @@ namespace auge
 		virtual ~ArchiveProcessor(){}
 	public:
 
-		virtual RESULTCODE	Compress(const char* tpath) = 0;
-		virtual RESULTCODE	Decompress(const char* tpath) = 0;
+		virtual RESULTCODE	Compress() = 0;
+		virtual RESULTCODE	Decompress() = 0;
 
 		virtual void		AddFile(const char* fpath) = 0;
+		virtual void		SetArchivePath(const char* apath) = 0;
 		virtual void		Clear() = 0;
 
 		virtual void		Release() = 0;

@@ -30,6 +30,11 @@ namespace auge
 		}
 	}
 
+	const char*	ArchiveProcessorImpl::GetArchivePath()
+	{
+		return m_archive_path.empty() ? NULL : m_archive_path.c_str();
+	}
+
 	void ArchiveProcessorImpl::Clear()
 	{
 		m_paths.clear();
