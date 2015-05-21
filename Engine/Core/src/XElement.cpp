@@ -124,7 +124,12 @@ namespace auge
 	{
 		if(m_pxNode->type == XML_ELEMENT_NODE)
 		{
-			char* content_utf8 = (char*)content;
+			//char* content_utf8 = (char*)content;
+			//size_t size_utf8 = 0;
+			//char content_utf8[AUGE_PATH_MAX];
+			//memset(content_utf8, 0, AUGE_PATH_MAX);
+			//auge_encoding_convert_2("GBK", "UTF-8",content, strlen(content), (char*)content_utf8, &size_utf8);
+			const char* content_utf8 = auge_encoding_convert("GBK", "UTF-8",content, strlen(content));
 			xmlNode* node = xmlNewText((const xmlChar*)content_utf8);
 
 			// Use the result, because node can be freed when merging text nodes:

@@ -60,7 +60,7 @@ namespace auge
 
 		if(!m_pgConnection.HasTable(g_catalog_table.c_str()))
 		{
-			rc = CreateCatalogTable();
+			CreateCatalogTable();
 		}
 	
 		return rc;

@@ -39,11 +39,13 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		GLogger* pLogger = augeGetLoggerInstance();
 		XDocument* pxDoc = WriteDocument(); 
 		
 		int len = 0; 
 		g_uchar* buffer = NULL; 
 		pxDoc->WriteToString(&buffer, len,m_encoding.c_str(),1);
+		pLogger->Info((char*)buffer, __FILE__, __LINE__);
 
 		pWriter->WriteHead(m_pRequest->GetMimeType(),false);
 		pWriter->Write(buffer, len);
@@ -100,6 +102,7 @@ namespace auge
 			GFields		*pFields = pFeatureClass->GetFields();
 			GField		*pField  = NULL;
 			g_uint		fcount = pFields->Count();
+			const char	*fname = NULL;	
 
 			while((pFeature=m_pCursor->NextFeature())!=NULL)
 			{
@@ -113,6 +116,7 @@ namespace auge
 				for(g_uint i=0; i<fcount; i++)
 				{
 					pField = pFields->GetField(i);
+					fname = pField->GetName();
 					// FeatureCollection-->feature->value
 					pxValue = pxFeature->AddChild(pField->GetName(),service_name);
 
@@ -162,7 +166,8 @@ namespace auge
 						break;
 					case augeFieldTypeString:
 						{
-							pxValue->AddChildText(pFeature->GetString(i));
+							const char* val = pFeature->GetString(i);
+							pxValue->AddChildText(val);
 						}
 						break;
 					case augeFieldTypeTime:	
