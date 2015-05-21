@@ -53,8 +53,10 @@ namespace auge
 		memset(zipfile, 0, AUGE_PATH_MAX);
 
 #ifdef WIN32
-		auge_make_path(zipfile, NULL, cach_path, uuid, "gz");
+		auge_make_path(zipfile, NULL, cach_path, uuid, "shp");
 #else
+
+		auge_make_path(zipfile, NULL, cach_path, uuid, "gz");
 		ArchiveProcessor* processor = NULL;
 		GProcessorFactory* factory = augeGetGeoProcessorFactoryInstance();
 		processor = factory->CreateArchiveProcessor();
@@ -63,7 +65,8 @@ namespace auge
 		size_t count = sizeof(shp_ext) / sizeof(char*);
 		for(size_t i=0; i<count; i++)
 		{
-			memset(shp_path, NULL, cach_path, uuid,shp_ext[i]);
+			memset(shp_path,0,AUGE_PATH_MAX);
+			auge_make_path(shp_path, NULL, cach_path, uuid,shp_ext[i]);
 			if(!g_access(shp_path,4))
 			{
 				processor->AddFile(shp_path);
@@ -144,7 +147,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		pWriter->WriteHead("application/gzip");
+		pWriter->WriteHead("application/zip");
 
 		g_uint nBytes = 0;
 		g_uchar buffer[AUGE_BUFFER_MAX];		

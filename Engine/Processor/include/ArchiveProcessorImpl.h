@@ -3,6 +3,7 @@
 
 #include "AugeType.h"
 #include "AugeCore.h"
+#include "AugeProcessor.h"
 #include <vector>
 #include <string>
 
@@ -20,6 +21,8 @@ namespace auge
 
 		virtual RESULTCODE	Compress();
 		virtual RESULTCODE	Decompress();
+
+		virtual RESULTCODE	Execute();
 
 		virtual void		Release();
 

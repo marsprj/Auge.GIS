@@ -31,11 +31,12 @@ namespace auge
 
 	ArchiveProcessor* GProcessorFactoryImpl::CreateArchiveProcessor()
 	{
-#ifdef WIN32
-		return NULL;
-#else
-		return (new ArchiveProcessorImpl());
-#endif
+		ArchiveProcessor* procesor = NULL;
+//#ifdef WIN32
+//#else
+		procesor = new ArchiveProcessorImpl();
+//#endif
+		return procesor;
 	}
 
 	FeatureImportProcessor* GProcessorFactoryImpl::CreateFeatureImportProcessor()

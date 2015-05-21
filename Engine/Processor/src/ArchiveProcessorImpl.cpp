@@ -30,7 +30,19 @@ namespace auge
 		}
 	}
 
-	const char*	ArchiveProcessorImpl::GetArchivePath()
+	void ArchiveProcessorImpl::SetArchivePath(const char* apath)
+	{
+		if(apath==NULL)
+		{
+			m_archive_path.clear();
+		}
+		else
+		{
+			m_archive_path = apath;
+		}
+	}
+
+	const char* ArchiveProcessorImpl::GetArchivePath()
 	{
 		return m_archive_path.empty() ? NULL : m_archive_path.c_str();
 	}
@@ -40,8 +52,9 @@ namespace auge
 		m_paths.clear();
 	}
 
-	RESULTCODE ArchiveProcessorImpl::Compress(const char* tpath)
+	RESULTCODE ArchiveProcessorImpl::Compress()
 	{
+		const char* tpath = GetArchivePath();
 		if(tpath==NULL)
 		{
 			return AG_FAILURE;
@@ -50,7 +63,6 @@ namespace auge
 		struct archive *a;
 		struct archive_entry *entry;
 		struct stat st;
-		char fname[AUGE_NAME_MAX];
 		char buff[AUGE_BUFFER_MAX];
 		int len;
 		int fd;
@@ -65,18 +77,25 @@ namespace auge
 		archive_write_set_format_pax_restricted(a);
 		archive_write_open_filename(a,tpath);
 
+		const char* fpath = NULL;
+		char name[AUGE_NAME_MAX];
+		char ext[AUGE_EXT_MAX];
+		char fname[AUGE_NAME_MAX];
 		std::vector<std::string>::iterator iter;
 		for(iter=m_paths.begin(); iter!=m_paths.end();iter++)
 		{
-			const char* fpath = iter->c_str();
+			fpath = (*iter).c_str();
 			memset(fname,0,AUGE_NAME_MAX);
-			auge_split_path(fpath, NULL, NULL, fname, NULL);
+			memset(name,0,AUGE_NAME_MAX);
+			memset(name,0,AUGE_EXT_MAX);
+			auge_split_path(fpath, NULL, NULL, name, ext);
+			auge_make_path(fname, NULL, NULL, name, ext);
 			if(strlen(fname)==0)
 			{
 				continue;
 			}
 
-			stat(fname,&st);
+			stat(fpath,&st);
 
 			entry = archive_entry_new();
 			archive_entry_set_pathname(entry,fname);
@@ -102,8 +121,9 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE ArchiveProcessorImpl::Decompress(const char* tpath)
+	RESULTCODE ArchiveProcessorImpl::Decompress()
 	{
+		const char* tpath = GetArchivePath();
 		if(tpath==NULL)
 		{
 			return AG_FAILURE;
@@ -216,5 +236,10 @@ namespace auge
 				return (r);
 			}
 		}
+	}
+
+	RESULTCODE ArchiveProcessorImpl::Execute()
+	{
+		return AG_SUCCESS;
 	}
 }

@@ -13,6 +13,7 @@ libgsgps_la_LDFLAGS=\
 libgsgps_la_LIBADD=-lgcore -lgscore -lgprocessor
 
 libgsgps_la_SOURCES=\
+		threadpool.c \
 		BuildPyramidHandler.cpp \
 		BuildPyramidRequest.cpp \
 		CapabilitiesHandler.cpp \
