@@ -120,7 +120,7 @@ namespace auge
 		return static_cast<XCommentNode*>(node->_private);
 	}
 
-	XTextNode* XElement::AddChildText(const char* content)
+	XTextNode* XElement::AddChildText(const char* content, bool encoding/*=false*/)
 	{
 		if(m_pxNode->type == XML_ELEMENT_NODE)
 		{
@@ -129,8 +129,16 @@ namespace auge
 			//char content_utf8[AUGE_PATH_MAX];
 			//memset(content_utf8, 0, AUGE_PATH_MAX);
 			//auge_encoding_convert_2("GBK", "UTF-8",content, strlen(content), (char*)content_utf8, &size_utf8);
-			const char* content_utf8 = auge_encoding_convert("GBK", "UTF-8",content, strlen(content));
-			xmlNode* node = xmlNewText((const xmlChar*)content_utf8);
+			xmlNode* node = NULL;
+			if(encoding)
+			{
+				const char* content_utf8 = auge_encoding_convert("GBK", "UTF-8",content, strlen(content));
+				node = xmlNewText((const xmlChar*)content_utf8);
+			}
+			else
+			{
+				node = xmlNewText((const xmlChar*)content);
+			}
 
 			// Use the result, because node can be freed when merging text nodes:
 			node = xmlAddChild(m_pxNode, node); 

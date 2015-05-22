@@ -167,7 +167,7 @@ namespace auge
 					case augeFieldTypeString:
 						{
 							const char* val = pFeature->GetString(i);
-							pxValue->AddChildText(val);
+							pxValue->AddChildText(val,true);
 						}
 						break;
 					case augeFieldTypeTime:	

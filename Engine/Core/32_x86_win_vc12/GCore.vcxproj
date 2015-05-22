@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{CB5F0506-1054-442B-BE8C-95441DC449CA}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>GCore</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(Configuration)</IntDir>
+    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\log4cplus-1.1.2\include;E:\DevEnv\GnuWin32\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>E:\DevEnv\log4cplus-1.1.2\lib;E:\DevEnv\GnuWin32\lib;E:\DevEnv\gdal-1.11.1\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+    <TargetName>$(ProjectName)D</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GCORE_EXPORTS;_CRT_SECURE_NO_WARNINGS;AUGE_EXPORTS;AUGE_GEOMETRY_EXPORTS;AUGE_FIELD_EXPORTS;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>log4cplusD.lib;libxml2.lib;libiconv.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)\$(TargetName).dll %AUGE_GIS_HOME%\Dist\32_x86_win_vc12\binD
+copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc12\lib
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GCORE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\EnumValueImpl.cpp" />
+    <ClCompile Include="..\src\FieldFactoryImpl.cpp" />
+    <ClCompile Include="..\src\GColor.cpp" />
+    <ClCompile Include="..\src\GEnvelope.cpp" />
+    <ClCompile Include="..\src\GeometryDefImpl.cpp" />
+    <ClCompile Include="..\src\GeometryFactoryImpl.cpp" />
+    <ClCompile Include="..\src\GeometryUtilImpl.cpp" />
+    <ClCompile Include="..\src\GErrorImpl.cpp" />
+    <ClCompile Include="..\src\GFieldImpl.cpp" />
+    <ClCompile Include="..\src\GFieldsImpl.cpp" />
+    <ClCompile Include="..\src\GFunction.cpp" />
+    <ClCompile Include="..\src\GLineStringWKB.cpp" />
+    <ClCompile Include="..\src\GLoggerImpl.cpp" />
+    <ClCompile Include="..\src\GMLWriterImpl.cpp" />
+    <ClCompile Include="..\src\GMultiLineStringWKB.cpp" />
+    <ClCompile Include="..\src\GMultiPointWKB.cpp" />
+    <ClCompile Include="..\src\GMultiPolygonWKB.cpp" />
+    <ClCompile Include="..\src\GPointWKB.cpp" />
+    <ClCompile Include="..\src\GPolygonWKB.cpp" />
+    <ClCompile Include="..\src\GPropertySet.cpp" />
+    <ClCompile Include="..\src\GValue.cpp" />
+    <ClCompile Include="..\src\StringTokenizer.cpp" />
+    <ClCompile Include="..\src\WKTReader.cpp" />
+    <ClCompile Include="..\src\WKTWriter.cpp" />
+    <ClCompile Include="..\src\XAttribute.cpp" />
+    <ClCompile Include="..\src\XCdataNode.cpp" />
+    <ClCompile Include="..\src\XCommentNode.cpp" />
+    <ClCompile Include="..\src\XContentNode.cpp" />
+    <ClCompile Include="..\src\XDocument.cpp" />
+    <ClCompile Include="..\src\XDtd.cpp" />
+    <ClCompile Include="..\src\XElement.cpp" />
+    <ClCompile Include="..\src\XEntityReference.cpp" />
+    <ClCompile Include="..\src\XNode.cpp" />
+    <ClCompile Include="..\src\XNodeSet.cpp" />
+    <ClCompile Include="..\src\XParser.cpp" />
+    <ClCompile Include="..\src\XProcessingInstructionNode.cpp" />
+    <ClCompile Include="..\src\XTestNode.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\EnumValueImpl.h" />
+    <ClInclude Include="..\include\FieldFactoryImpl.h" />
+    <ClInclude Include="..\include\GeometryDefImpl.h" />
+    <ClInclude Include="..\include\GeometryFactoryImpl.h" />
+    <ClInclude Include="..\include\GeometryUtilImpl.h" />
+    <ClInclude Include="..\include\GErrorImpl.h" />
+    <ClInclude Include="..\include\GFieldImpl.h" />
+    <ClInclude Include="..\include\GFieldsImpl.h" />
+    <ClInclude Include="..\include\GLineStringWKB.h" />
+    <ClInclude Include="..\include\GLoggerImpl.h" />
+    <ClInclude Include="..\include\GMLWriterImpl.h" />
+    <ClInclude Include="..\include\GMultiLineStringWKB.h" />
+    <ClInclude Include="..\include\GMultiPointWKB.h" />
+    <ClInclude Include="..\include\GMultiPolygonWKB.h" />
+    <ClInclude Include="..\include\GPointWKB.h" />
+    <ClInclude Include="..\include\GPolygonWKB.h" />
+    <ClInclude Include="..\include\StringTokenizer.h" />
+    <ClInclude Include="..\include\WKTReader.h" />
+    <ClInclude Include="..\include\WKTWriter.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

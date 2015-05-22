@@ -211,7 +211,7 @@ namespace auge
 
 		void				SetChildText(const char* content);
 		XTextNode*			GetChildText();
-		XTextNode*			AddChildText(const char* content);
+		XTextNode*			AddChildText(const char* content, bool encoding=false);
 
 		XCommentNode*		AddChildComment(const char* content);
 	};
