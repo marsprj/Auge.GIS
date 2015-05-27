@@ -77,7 +77,8 @@ namespace auge
 		augeSpByond				= 7,
 		augeSpContains			= 8,
 		augeSpOverlaps			= 9,
-		augeSpBBox				= 10
+		augeSpBBox				= 10,
+		augeSpBeyond			= 11
 	}augeSpatialOperator;
 
 	/**
