@@ -45,7 +45,7 @@ namespace auge
 	{
 		return m_pgConnection.GetConnectionString();
 	}
-
+	
 	RESULTCODE WorkspacePgs::Open()
 	{	
 		if(m_pgConnection.IsOpen())

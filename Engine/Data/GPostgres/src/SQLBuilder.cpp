@@ -750,7 +750,7 @@ namespace auge
 			break;
 		case augeSpWithin:
 			{
-
+				rc = BuildWithinFilter(sql, pFeatureClass, static_cast<BinarySpatialFilter*>(pFilter));
 			}
 			break;
 		case augeSpByond:
@@ -819,6 +819,52 @@ namespace auge
 		//	extent.ymax);
 
 		//strWhere = szWhereClause;
+
+		return AG_SUCCESS;
+	}
+
+	/*
+	class BinarySpatialFilter : public SpatialFilter
+	{
+	public:
+	BinarySpatialFilter(){}
+	virtual ~BinarySpatialFilter(){}
+	public:
+	virtual		Expression*			GetPropertyName() = 0;
+	virtual		bool				GetExtent(GEnvelope& extent) = 0;
+	virtual		Geometry*			GetGeometry() = 0;
+	virtual		augeSpatialOperator	GetOperator() = 0;
+	};
+	*/
+	RESULTCODE SQLBuilder::BuildWithinFilter(std::string& sql,FeatureClassPgs* pFeatureClass, BinarySpatialFilter* pFilter)
+	{
+		RESULTCODE rc = AG_SUCCESS;
+		Geometry* pGeometry = pFilter->GetGeometry();
+		if(pGeometry==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pField==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* geo_field = pField->GetName();
+		const char* wkt = pGeometry->AsText(true);
+
+		char srid[AUGE_NAME_MAX] = {0};
+		g_snprintf(srid, AUGE_BUFFER_MAX,"%d",pField->GetGeometryDef()->GetSRID());
+
+		sql = "st_within(";
+		sql.append("st_geomfromtext(upper('");
+		sql.append(wkt);
+		sql.append("'),");
+		sql.append(srid);
+		sql.append("),");
+		sql.append(geo_field);
+		sql.append(")");
 
 		return AG_SUCCESS;
 	}
