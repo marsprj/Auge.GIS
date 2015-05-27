@@ -3,6 +3,7 @@
 #include "AugeField.h"
 
 #include "BinarySpatialFilterImpl.h"
+#include "DistanceBufferFilterImpl.h"
 
 namespace auge
 {
@@ -63,15 +64,15 @@ namespace auge
 		}
 		else if(!g_stricmp(type, "Equals"))
 		{
-			
+			pFilter = ReadBinarySpatial(pxFilter, augeSpEquals);
 		}
 		else if(!g_stricmp(type, "Disjoint"))
 		{
-
+			pFilter = ReadBinarySpatial(pxFilter, augeSpDisjoint);
 		}
 		else if(!g_stricmp(type, "Touches"))
 		{
-
+			pFilter = ReadBinarySpatial(pxFilter, augeSpTouchs);
 		}
 		else if(!g_stricmp(type, "Within"))
 		{
@@ -79,23 +80,23 @@ namespace auge
 		}
 		else if(!g_stricmp(type, "Overlaps"))
 		{
-
+			pFilter = ReadBinarySpatial(pxFilter, augeSpOverlaps);
 		}
 		else if(!g_stricmp(type, "Crosses"))
 		{
-
+			pFilter = ReadBinarySpatial(pxFilter, augeSpCrosses);
 		}
 		else if(!g_stricmp(type, "Intersects"))
 		{
-
+			pFilter = ReadBinarySpatial(pxFilter, augeSpIntersects);
 		}
 		else if(!g_stricmp(type, "Contains"))
 		{
-
+			pFilter = ReadBinarySpatial(pxFilter, augeSpContains);
 		}
 		else if(!g_stricmp(type, "DWithin"))
 		{
-
+			pFilter = ReadDistanceSpatial(pxFilter, augeSpDWithin);
 		}
 
 		return pFilter;
@@ -216,7 +217,73 @@ namespace auge
 
 		return pFilter;
 	}
+	
+	GFilter* FilterReaderImpl::ReadDistanceSpatial(XNode* pxSpatial, augeSpatialOperator oper)
+	{
+		DistanceBufferFilterImpl* pFilter = NULL;
+		pFilter = new DistanceBufferFilterImpl();
+		pFilter->SetOperator(oper);
 
+		const char* name = pxSpatial->GetName();
+
+		XNodeSet* pxNodes = pxSpatial->GetChildren();
+		if(pxNodes==NULL)
+		{
+			return NULL;
+		}
+
+		XNode* pxNode = NULL;
+		const char* nodeName = NULL;
+		g_uint count = pxNodes->Count();
+		for(g_uint i=0; i<count; i++)
+		{
+			pxNode = pxNodes->Item(i);
+			nodeName = pxNode->GetName();
+			if(g_stricmp(nodeName,"Envelope")==0)
+			{
+				GEnvelope extent;
+				if(ReadEnvelope(pxNode, extent))
+				{
+					pFilter->SetExtent(extent);
+					continue;
+				}
+			}
+			else if(g_stricmp(nodeName,"Distance")==0)
+			{
+				double distance = atof(pxNode->GetContent());
+				pFilter->SetDistance(distance);
+
+				XElement* pxElem = static_cast<XElement*>(pxNode);
+				XAttribute* pxAttr = pxElem->GetAttribute("unit");
+				if(pxAttr!=NULL)
+				{
+					const char* unit = pxAttr->GetValue();
+					pFilter->SetUnit(auge_uint_type_decode(unit));
+				}
+			}
+
+			Expression* pPropName = ReadExpression(pxNode);
+			if(pPropName)
+			{
+				pFilter->SetPropertyName(static_cast<PropertyName*>(pPropName));
+				continue;
+			}
+
+			Geometry* pGeometry = NULL;
+			GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+			GMLReader* reader = pGeometryFactory->CreateGMLReader();
+			pGeometry = reader->Read((XElement*)pxNode);
+			reader->Release();
+			if(pGeometry!=NULL)
+			{
+				pFilter->SetGeometry(pGeometry);
+				continue;
+			}
+		}
+		pxNodes->Release();
+
+		return pFilter;
+	}
 
 	GFilter* FilterReaderImpl::ReadBinaryComparison(XNode* pxComparison)
 	{

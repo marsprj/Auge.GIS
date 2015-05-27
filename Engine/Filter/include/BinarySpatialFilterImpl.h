@@ -30,7 +30,7 @@ namespace auge
 	private:
 		Expression			*m_pPropertyName;
 		Geometry			*m_pGeometry;
-		GEnvelope			m_envelope;
+		GEnvelope			m_extent;
 		augeSpatialOperator	m_operator;
 	};
 

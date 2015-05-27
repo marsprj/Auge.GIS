@@ -26,6 +26,7 @@ namespace auge
 		GFilter*			ReadBinaryLogical(XNode* pxLogical);
 		GFilter*			ReadUnaryLogic(XNode* pxLogical);
 		GFilter*			ReadIdFilter(XNode* pxIdFilter);
+		GFilter*			ReadDistanceSpatial(XNode* pxSpatial, augeSpatialOperator oper);
 		
 		// Expression
 		Expression*			ReadExpression(XNode* pxExpression);

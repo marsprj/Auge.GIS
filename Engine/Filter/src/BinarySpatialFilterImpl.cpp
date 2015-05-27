@@ -37,7 +37,7 @@ Expression* BinarySpatialFilterImpl::GetPropertyName()
 
 bool BinarySpatialFilterImpl::GetExtent(GEnvelope& extent)
 {
-	m_envelope = extent;
+	m_extent = extent;
 	return true;
 }
 
@@ -75,7 +75,7 @@ void BinarySpatialFilterImpl::SetPropertyName(PropertyName* pPropName)
 
 void BinarySpatialFilterImpl::SetExtent(GEnvelope& extent)
 {
-	m_envelope = extent;
+	m_extent = extent;
 }
 
 void BinarySpatialFilterImpl::SetGeometry(Geometry* pGeometry)

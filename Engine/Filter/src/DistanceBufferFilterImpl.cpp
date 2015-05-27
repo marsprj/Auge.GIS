@@ -67,4 +67,45 @@ namespace auge
 		return m_unit;
 	}
 
+	void DistanceBufferFilterImpl::SetDistance(double distance)
+	{
+		m_distance = distance;
+	}
+
+	void DistanceBufferFilterImpl::SetUnit(augeUnitType unit)
+	{
+		m_unit = unit;
+	}
+
+
+
+	void DistanceBufferFilterImpl::SetOperator(augeSpatialOperator oper)
+	{
+		m_operator = oper;
+	}
+
+	void DistanceBufferFilterImpl::SetPropertyName(PropertyName* pPropName)
+	{
+		if(m_pPropertyName!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pPropertyName);
+		}
+		m_pPropertyName = pPropName;
+	}
+
+	void DistanceBufferFilterImpl::SetExtent(GEnvelope& extent)
+	{
+		m_extent = extent;
+	}
+
+	void DistanceBufferFilterImpl::SetGeometry(Geometry* pGeometry)
+	{
+		if(m_pGeometry==NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pGeometry);
+		}
+		m_pGeometry = pGeometry;
+	}
+
+
 }

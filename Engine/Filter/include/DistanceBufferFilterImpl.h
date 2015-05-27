@@ -24,6 +24,14 @@ namespace auge
 
 		virtual		void				Release();
 
+	public:
+		void		SetOperator(augeSpatialOperator oper);
+		void		SetPropertyName(PropertyName* pPropName);
+		void		SetExtent(GEnvelope& extent);
+		void		SetGeometry(Geometry* pGeometry);
+		void		SetDistance(double distance);
+		void		SetUnit(augeUnitType unit);
+
 	private:
 		Expression			*m_pPropertyName;
 		Geometry			*m_pGeometry;
