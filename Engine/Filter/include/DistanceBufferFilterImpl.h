@@ -13,6 +13,7 @@ namespace auge
 		virtual ~DistanceBufferFilterImpl();
 
 	public:	
+		virtual		augeFilterType		GetType();
 		virtual		Expression*			GetPropertyName();
 		virtual		bool				GetExtent(GEnvelope& extent);
 		virtual		Geometry*			GetGeometry();

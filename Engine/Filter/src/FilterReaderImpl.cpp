@@ -2,6 +2,8 @@
 #include "AugeCore.h"
 #include "AugeField.h"
 
+#include "BinarySpatialFilterImpl.h"
+
 namespace auge
 {
 	FilterReaderImpl::FilterReaderImpl(GFields* pFields):
@@ -59,6 +61,42 @@ namespace auge
 		{
 			pFilter = ReadIdFilter(pxFilter);
 		}
+		else if(!g_stricmp(type, "Equals"))
+		{
+			
+		}
+		else if(!g_stricmp(type, "Disjoint"))
+		{
+
+		}
+		else if(!g_stricmp(type, "Touches"))
+		{
+
+		}
+		else if(!g_stricmp(type, "Within"))
+		{
+			pFilter = ReadBinarySpatial(pxFilter, augeSpWithin);
+		}
+		else if(!g_stricmp(type, "Overlaps"))
+		{
+
+		}
+		else if(!g_stricmp(type, "Crosses"))
+		{
+
+		}
+		else if(!g_stricmp(type, "Intersects"))
+		{
+
+		}
+		else if(!g_stricmp(type, "Contains"))
+		{
+
+		}
+		else if(!g_stricmp(type, "DWithin"))
+		{
+
+		}
 
 		return pFilter;
 	}
@@ -113,6 +151,72 @@ namespace auge
 
 		return pFilter;
 	}
+
+	/*
+	<?xml version="1.0" encoding="UTF-8"?>
+	<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml">
+		<Within>
+			<PropertyName>shape</PropertyName>
+			<gml:Point name="1" srsName="EPSG:63266405">
+				<gml:coordinates xmlns:gml="http://www.opengis.net/gml" decimal="." cs="," ts=" ">33.0860405,68.96354675</gml:coordinates>
+			</gml:Point>
+		</Within>
+	</ogc:Filter>
+	*/
+	GFilter* FilterReaderImpl::ReadBinarySpatial(XNode* pxSpatial, augeSpatialOperator oper)
+	{
+		BinarySpatialFilterImpl* pFilter = NULL;
+		pFilter = new BinarySpatialFilterImpl();
+		pFilter->SetOperator(oper);
+
+		const char* name = pxSpatial->GetName();
+
+		XNodeSet* pxNodes = pxSpatial->GetChildren();
+		if(pxNodes==NULL)
+		{
+			return NULL;
+		}
+
+		XNode* pxNode = NULL;
+		const char* nodeName = NULL;
+		g_uint count = pxNodes->Count();
+		for(g_uint i=0; i<count; i++)
+		{
+			pxNode = pxNodes->Item(i);
+			nodeName = pxNode->GetName();
+			if(g_stricmp(nodeName,"Envelope")==0)
+			{
+				GEnvelope extent;
+				if(ReadEnvelope(pxNode, extent))
+				{
+					pFilter->SetExtent(extent);
+					continue;
+				}
+			}
+
+			Expression* pPropName = ReadExpression(pxNode);
+			if(pPropName)
+			{
+				pFilter->SetPropertyName(static_cast<PropertyName*>(pPropName));
+				continue;
+			}
+
+			Geometry* pGeometry = NULL;
+			GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+			GMLReader* reader = pGeometryFactory->CreateGMLReader();
+			pGeometry = reader->Read((XElement*)pxNode);
+			reader->Release();
+			if(pGeometry!=NULL)
+			{
+				pFilter->SetGeometry(pGeometry);
+				continue;
+			}
+		}
+		pxNodes->Release();
+
+		return pFilter;
+	}
+
 
 	GFilter* FilterReaderImpl::ReadBinaryComparison(XNode* pxComparison)
 	{

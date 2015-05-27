@@ -5,6 +5,7 @@
 #include "IDFilterImpl.h"
 #include "BinaryComparisonFilterImpl.h"
 #include "BinaryLogicFilterImpl.h"
+#include "BinarySpatialFilterImpl.h"
 #include "UnaryLogicFilterImpl.h"
 #include "PropertyNameImpl.h"
 #include "LiteralImpl.h"
@@ -144,6 +145,11 @@ namespace auge
 	UnaryLogicFilter* FilterFactoryImpl::CreateUnaryLogicFilter()
 	{
 		return (new UnaryLogicFilterImpl());
+	}
+
+	BinarySpatialFilter* FilterFactoryImpl::CreateBinarySpatialFilter()
+	{
+		return (new BinarySpatialFilterImpl());
 	}
 
 	GQuery*	FilterFactoryImpl::CreateQuery()

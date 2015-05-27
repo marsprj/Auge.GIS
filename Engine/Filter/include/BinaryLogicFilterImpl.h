@@ -18,7 +18,7 @@ namespace auge
 		virtual		void				SetOperator(augeLogicalOperator	oper);
 		virtual		augeLogicalOperator	GetOperator();
 		virtual		bool				AddFilter(GFilter* pFilter);
-		virtual		EnumFilter*		GetFilters();
+		virtual		EnumFilter*			GetFilters();
 		virtual		void				Release();
 
 	private:

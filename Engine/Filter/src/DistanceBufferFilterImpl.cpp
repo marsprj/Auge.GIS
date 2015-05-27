@@ -26,6 +26,11 @@ namespace auge
 		}
 	}
 
+	augeFilterType DistanceBufferFilterImpl::GetType()
+	{
+		return augeFilterSpatial;
+	}
+
 	Expression* DistanceBufferFilterImpl::GetPropertyName()
 	{
 		return m_pPropertyName;

@@ -32,6 +32,8 @@ namespace auge
 		virtual BinaryLogicFilter*		CreateBinaryLogicFilter(const char* oper);
 		virtual UnaryLogicFilter*		CreateUnaryLogicFilter();
 
+		virtual BinarySpatialFilter*	CreateBinarySpatialFilter();
+
 		virtual GQuery*					CreateQuery();
 		virtual OrderBy*				CreateOrderBy();
 

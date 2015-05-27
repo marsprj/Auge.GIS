@@ -22,6 +22,7 @@ namespace auge
 		// Filter
 		GFilter*			ReadBBox(XNode* pxBBox);
 		GFilter*			ReadBinaryComparison(XNode* pxComparison);
+		GFilter*			ReadBinarySpatial(XNode* pxSpatial,augeSpatialOperator oper);
 		GFilter*			ReadBinaryLogical(XNode* pxLogical);
 		GFilter*			ReadUnaryLogic(XNode* pxLogical);
 		GFilter*			ReadIdFilter(XNode* pxIdFilter);

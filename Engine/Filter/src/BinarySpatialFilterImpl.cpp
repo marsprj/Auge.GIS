@@ -25,6 +25,11 @@ BinarySpatialFilterImpl::~BinarySpatialFilterImpl()
 	}
 }
 
+augeFilterType BinarySpatialFilterImpl::GetType()
+{
+	return augeFilterSpatial;
+}
+
 Expression* BinarySpatialFilterImpl::GetPropertyName()
 {
 	return m_pPropertyName;
@@ -53,5 +58,33 @@ void BinarySpatialFilterImpl::Release()
 		delete this;
 	}
 }	
+
+void BinarySpatialFilterImpl::SetOperator(augeSpatialOperator oper)
+{
+	m_operator = oper;
+}
+
+void BinarySpatialFilterImpl::SetPropertyName(PropertyName* pPropName)
+{
+	if(m_pPropertyName!=NULL)
+	{
+		AUGE_SAFE_RELEASE(m_pPropertyName);
+	}
+	m_pPropertyName = pPropName;
+}
+
+void BinarySpatialFilterImpl::SetExtent(GEnvelope& extent)
+{
+	m_envelope = extent;
+}
+
+void BinarySpatialFilterImpl::SetGeometry(Geometry* pGeometry)
+{
+	if(m_pGeometry==NULL)
+	{
+		AUGE_SAFE_RELEASE(m_pGeometry);
+	}
+	m_pGeometry = pGeometry;
+}
 
 }
