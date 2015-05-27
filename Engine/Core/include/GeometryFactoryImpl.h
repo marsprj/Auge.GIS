@@ -13,11 +13,13 @@ namespace auge
 	public:
 		virtual Geometry*			CreateGeometryFromWKB(g_uchar* wkb, bool attach=false);
 		virtual Geometry*			CreateGeometryFromWKT(const char* wkt);
+		virtual Geometry*			CreateGeometryFromGML(const char* gml);
 
 		virtual augeGeometryType	DecodeGeometryType(const char* type);
 		virtual const char*			Encode(augeGeometryType type);
 
 		virtual	GMLWriter*			CreateGMLWriter();
+		virtual GMLReader*			CreateGMLReader();
 	};
 }
 

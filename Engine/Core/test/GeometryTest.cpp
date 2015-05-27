@@ -182,6 +182,18 @@ void GeometryTest::GML_MultiPolygon_Test()
 	pWriter->Release();
 }
 
+void GeometryTest::GML_Point_Read()
+{
+	const char* gml = "<gml:Point xmlns:gml=\"http://www.opengis.net/gml\" name=\"1\" srsName=\"EPSG:63266405\"><gml:coordinates  decimal=\".\" cs=\",\" ts=\" \">33.0860405,68.96354675</gml:coordinates></gml:Point>";
+	auge::Geometry* pGeometry = NULL;
+	auge::GeometryFactory* pGeometryFactory = auge::augeGetGeometryFactoryInstance();
+	auge::GMLReader* reader = pGeometryFactory->CreateGMLReader();
+
+	pGeometry = reader->Read(gml);
+
+	reader->Release();
+}
+
 void GeometryTest::XML_Create_Test()
 {
 	auge::XElement  *pxNode = NULL;

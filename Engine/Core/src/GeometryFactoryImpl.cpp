@@ -11,6 +11,7 @@
 #include "WKTReader.h"
 
 #include "GMLWriterImpl.h"
+#include "GMLReaderImpl.h"
 
 #include "AugeCore.h"
 
@@ -128,6 +129,12 @@ namespace auge
 		return CreateGeometryFromWKB(wkb,true);
 	}
 
+	Geometry* GeometryFactoryImpl::CreateGeometryFromGML(const char* gml)
+	{
+		GMLReaderImpl reader;
+		return reader.Read(gml);
+	}
+
 	augeGeometryType GeometryFactoryImpl::DecodeGeometryType(const char* type)
 	{
 		augeGeometryType g_type = augeGTNull;
@@ -183,5 +190,10 @@ namespace auge
 	GMLWriter* GeometryFactoryImpl::CreateGMLWriter()
 	{
 		return (new GMLWriterImpl());
+	}
+
+	GMLReader* GeometryFactoryImpl::CreateGMLReader()
+	{
+		return (new GMLReaderImpl());
 	}
 }
