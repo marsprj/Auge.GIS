@@ -16,4 +16,5 @@ libGRasterDB_la_LIBADD=-lgcore -lgdal -lgraster
 libGRasterDB_la_SOURCES=\
 		RasterDatasetImpl.cpp \
 		WorkspaceRaster.cpp \
+		EnumDataSetImpl.cpp \
 		DataEngineImpl.cpp
