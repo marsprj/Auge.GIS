@@ -155,8 +155,8 @@ namespace auge
 
 		virtual RESULTCODE			Register(const char* name, const char* engine, const char* constr) = 0;
 		virtual RESULTCODE			Unregister(const char* name) = 0;
-		virtual RESULTCODE			Update(const char* name, const char* engine, const char* constr) = 0;
-		virtual RESULTCODE			Update(g_uint gid, const char* name, const char* engine, const char* constr) = 0;
+		//virtual RESULTCODE			Update(const char* name, const char* engine, const char* constr) = 0;
+		//virtual RESULTCODE			Update(g_uint gid, const char* name, const char* engine, const char* constr) = 0;
 
 		virtual bool				Has(const char* name) = 0;
 		virtual g_int				GetID(const char* name) = 0;
