@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml">
+	<Within>
+		<PropertyName>shape</PropertyName>
+		<gml:Point name="1" srsName="EPSG:63266405">
+			<gml:coordinates xmlns:gml="http://www.opengis.net/gml" decimal="." cs="," ts=" ">117,40</gml:coordinates>
+		</gml:Point>
+	</Within>
+</ogc:Filter>

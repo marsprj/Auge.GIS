@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+	<Within>
+		<PropertyName>shape</PropertyName>
+		<gml:Polygon name="1" srsName="EPSG:63266405">
+			<gml:outerBoundaryIs>
+				<gml:LinearRing>
+					<gml:posList>-98.5485,24.2633 ...</gml:posList>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Within>
+</ogc:Filter>

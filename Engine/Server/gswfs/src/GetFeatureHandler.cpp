@@ -276,6 +276,7 @@ namespace auge
 		{
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "No DataSource Named [%s]", sourceName);
+			pLogger->Error(msg);
 			GError* pError = augeGetErrorInstance();
 			pError->SetError(msg);
 			return NULL;
