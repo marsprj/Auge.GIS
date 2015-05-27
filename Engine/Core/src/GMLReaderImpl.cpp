@@ -130,7 +130,7 @@ namespace auge
 	
 	//	
 	//	xmlDocPtr doc = NULL;
-	//	xmlNodePtr pRootNode = NULL;
+	//	XNode* pRootNode = NULL;
 
 	//	doc = xmlParseMemory(szgml, strlen(szgml));
 	//	if(doc==NULL)
@@ -307,7 +307,6 @@ namespace auge
 		XNode* pxPointNode = NULL;
 
 		pxNodeSet->Reset();
-
 		while((pxPointMemberNode=pxNodeSet->Next())!=NULL)
 		{
 			pxPointNode = pxPointMemberNode->GetFirstChild();
@@ -348,26 +347,25 @@ namespace auge
 	{
 		int wkblen = 0;
 
-		//if(pxGeometry==NULL)
-		//	return 0;
+		if(pxGeometry==NULL)
+		{
+			return 0;
+		}
 
-		//
-		//xmlNodePtr plineStringMemberNode = NULL;
-		//xmlNodePtr pLineStringNode = NULL;
-		//plineStringMemberNode = pxGeometry->children;
-		//while(plineStringMemberNode!=NULL)
-		//{
-		//	pLineStringNode = plineStringMemberNode->children;
-		//	if(pLineStringNode==NULL)
-		//		continue;
-		//
-		//	wkblen += CalWKBLengthFromGMLLineString(pLineStringNode);
-		//
-		//	plineStringMemberNode = plineStringMemberNode->next;
-		//}
-	
-		//wkblen += sizeof(unsigned char) + (sizeof(int)<<1);
-	
+		XNode* pxLineStringNode = NULL;
+		XNode* pxLineStringMemberNode = NULL;
+		XNodeSet* pxNodeSet = pxGeometry->GetChildren();
+
+		pxNodeSet->Reset();
+		while((pxLineStringMemberNode=pxNodeSet->Next())!=NULL)
+		{
+			pxLineStringNode = pxLineStringMemberNode->GetFirstChild();
+			if(pxLineStringNode!=NULL)
+			{
+				wkblen += CalWKBLengthFromGMLLineString(static_cast<XElement*>(pxLineStringNode));
+			}
+		}
+		pxNodeSet->Release();	
 		return wkblen;
 	}
 
@@ -375,24 +373,32 @@ namespace auge
 	{
 		int wkblen = 0;
 
-		//if(pxGeometry==NULL)
-		//	return 0;
+		if(pxGeometry==NULL)
+		{
+			return 0;
+		}
 
-		//xmlNodePtr pPolygonMemberNode = NULL;
-		//xmlNodePtr pPolygonNode = NULL;
-		//pPolygonMemberNode = pxGeometry->children;
-		//while(pPolygonMemberNode!=NULL)
-		//{
-		//	pPolygonNode = pPolygonMemberNode->children;
-		//	if(pPolygonMemberNode==NULL)
-		//		continue;
-		//
-		//	wkblen += CalWKBLengthFromGMLPolygon(pPolygonNode);
-		//
-		//	pPolygonMemberNode = pPolygonMemberNode->next;
-		//}
-	
-		//wkblen += sizeof(unsigned char) + (sizeof(int)<<1);
+		XNode* pxPolygonNode = NULL;
+		XNode* pxPolygonMemberNode = NULL;
+		XNodeSet* pxNodeSet = NULL;
+
+		pxNodeSet = pxGeometry->GetChildren();
+		if(pxNodeSet==NULL)
+		{
+			return NULL;
+		}
+
+		pxNodeSet->Reset();
+		while((pxPolygonMemberNode=pxNodeSet->Next())!=NULL)
+		{
+			pxPolygonNode = pxPolygonMemberNode->GetFirstChild();
+			if(pxPolygonNode!=NULL)
+			{
+				wkblen += CalWKBLengthFromGMLPolygon(static_cast<XElement*>(pxPolygonNode));
+			}
+		}
+
+		pxNodeSet->Release();
 	
 		return wkblen;
 	}
@@ -410,19 +416,25 @@ namespace auge
 	{
 		int wkblen = 0;
 
-		//if(pxGeometry==NULL)
-		//	return 0;
+		if(pxLinearRing==NULL)
+		{
+			return 0;
+		}
 	
-		//xmlNodePtr pCoordsNode = pxGeometry->children;
-		//if(pCoordsNode==NULL)
-		//	return 0;
+		XNode* pxCoordsNode = pxLinearRing->GetFirstChild();
+		if(pxCoordsNode==NULL)
+		{
+			return 0;
+		}
 
-		//char* coords = (char*)xmlNodeGetContent(pCoordsNode);
-		//if(coords==NULL)
-		//	return 0;
+		const char* coords = pxCoordsNode->GetContent();
+		if(coords==NULL)
+		{
+			return 0;
+		}
 
-		//wkblen += sizeof(int);
-		//wkblen += CalWKBLengthFromGMLCoordinates(coords);
+		wkblen += sizeof(int);
+		wkblen += CalWKBLengthFromGMLCoordinates(coords);
 
 		return wkblen;
 	}
@@ -471,7 +483,7 @@ namespace auge
 	
 		bool ret = false;
 		//xmlDocPtr doc = NULL;
-		//xmlNodePtr pRootNode = NULL;
+		//XNode* pRootNode = NULL;
 	
 		//doc = xmlParseMemory(szgml, strlen(szgml));
 		//if(doc==NULL)
@@ -531,6 +543,10 @@ namespace auge
 		}
 
 		const char* coords = pxNode->GetContent();
+		if(coords==NULL)
+		{
+			return false;
+		}
 
 		pWKBPoint->byteOrder = coDefaultByteOrder;
 		pWKBPoint->wkbType = wkbPoint;
@@ -541,178 +557,205 @@ namespace auge
 
 	bool GMLReaderImpl::CreateWKBFromGMLLineString(WKBLineString* pWKBLineString, XElement* pxGeometry)
 	{
-		//if(pxGeometry==NULL)
-		//	return false;
+		if(pxGeometry==NULL)
+		{
+			return false;
+		}
 
-		//xmlNodePtr pNode = pxGeometry->children;
-		//if(pNode==NULL)
-		//	return false;
+		XNode* pxNode = pxGeometry->GetFirstChild();
+		if(pxNode==NULL)
+		{
+			return false;
+		}
+		
+		const char* coords = pxNode->GetContent();
+		if(coords==NULL)
+		{
+			return false;
+		}
 
-		//char* coords = strdup((char*)xmlNodeGetContent(pNode));
+		pWKBLineString->byteOrder = coDefaultByteOrder;
+		pWKBLineString->wkbType = wkbLineString;
+		pWKBLineString->numPoints = CreateWKBPointsFromGMLCoordinates(&(pWKBLineString->points[0]), coords);
 
-		//int ptcount = CreateWKBPointsFromGMLCoordinates(&(pWKBLineString->points[0]), coords);
-		//free(coords);
-		//if(ptcount == 0)
-		//{
-		//	return false;
-		//}
-
-		//pWKBLineString->byteOrder = coDefaultByteOrder;
-		//pWKBLineString->wkbType = wkbLineString;
-		//pWKBLineString->numPoints = ptcount;
-	
-	
 		return true;
 	}
 
 	bool GMLReaderImpl::CreateWKBFromGMLPolygon(WKBPolygon* pWKBPolygon, XElement* pxGeometry)
 	{
-		//if(pxGeometry==NULL)
-		//	return false;
+		if(pxGeometry==NULL)
+		{
+			return false;
+		}
 	
-		//xmlNodePtr pBoundNode = NULL;
-		//xmlNodePtr pLinearRingNode = NULL;
+		int numRings = 0;
+		char* ptr = NULL;
+		LinearRing* pLinearRing = NULL;
+		pLinearRing = (LinearRing*)(&(pWKBPolygon->rings[0]));
 
-		//int numRings = 0;
-		//char* ptr = NULL;
-		//LinearRing* pLinearRing = NULL;
-		//pLinearRing = (LinearRing*)(&(pWKBPolygon->rings[0]));
+		XNode* pxBoundNode = NULL;
+		XNode* pxLinearRingNode = NULL;
+		XNodeSet* pxNodeSet = NULL;
 
-		//pBoundNode = pxGeometry->children;
-		//while(pBoundNode!=NULL)
-		//{
-		//	pLinearRingNode = pBoundNode->children;
-		//	if(pLinearRingNode==NULL)
-		//		continue;
+		pxNodeSet = pxGeometry->GetChildren();
+		if(pxNodeSet==NULL)
+		{
+			return false;
+		}
 
-		//	CreateWKBFromGMLLinearRing(pLinearRing, pLinearRingNode);
+		pxNodeSet->Reset();
+		while((pxBoundNode=pxNodeSet->Next())!=NULL)
+		{
+			pxLinearRingNode = pxBoundNode->GetFirstChild();
+			if(pxLinearRingNode!=NULL)
+			{
+				CreateWKBFromGMLLinearRing(pLinearRing, pxLinearRingNode);
 
-		//	pBoundNode = pBoundNode->next;
+				ptr = (char*)pLinearRing;
+				pLinearRing = (LinearRing*)(ptr + CalWKBLinearRingLen(pLinearRing));
+				numRings++;
+			}
+		}
 
-		//	ptr = (char*)pLinearRing;
-		//	pLinearRing = (LinearRing*)(ptr + CalWKBLinearRingLen(pLinearRing));
-		//	numRings++;
-		//}
-
-		//pWKBPolygon->byteOrder = coDefaultByteOrder;
-		//pWKBPolygon->wkbType = wkbPolygon;
-		//pWKBPolygon->numRings = numRings;
+		pWKBPolygon->byteOrder = coDefaultByteOrder;
+		pWKBPolygon->wkbType = wkbPolygon;
+		pWKBPolygon->numRings = numRings;
 
 		return true;
 	}
 
 	bool GMLReaderImpl::CreateWKBFromGMLMultiPoint(WKBMultiPoint* pWKBMultiPoint, XElement* pxGeometry)
 	{
-		//if(pxGeometry==NULL)
-		//	return false;
+		if(pxGeometry==NULL)
+		{
+			return false;
+		}
 
-		//int numPoints = 0;
-		//xmlNodePtr pPointMemberNode = NULL;
-		//xmlNodePtr pPointNode = NULL;
+		int numPoints = 0;
+		XNode* pxPointMemberNode = NULL;
+		XNode* pxPointNode = NULL;
+		XNodeSet *pxNodeSet = NULL;
+		
+		pxNodeSet = pxGeometry->GetChildren();
+		if(pxNodeSet==NULL)
+		{
+			return false;
+		}
 
-		//WKBPoint* pWKBPoint = NULL;
-		//pWKBPoint = (WKBPoint*)(&(pWKBMultiPoint->points[0]));
+		WKBPoint* pWKBPoint = NULL;
+		pWKBPoint = (WKBPoint*)(&(pWKBMultiPoint->points[0]));
 
-		//pPointMemberNode = pxGeometry->children;
-		//while(pPointMemberNode!=NULL)
-		//{
-		//	pPointNode = pPointMemberNode->children;
-		//	if(pPointNode==NULL)
-		//		continue;
-		//		
-		//	CreateWKBFromGMLPoint(pWKBPoint, pPointNode);
-		//	pPointMemberNode = pPointMemberNode->next;
-		//	pWKBPoint++;
-		//	numPoints++;
-		//}
+		pxNodeSet->Reset();
+		while((pxPointMemberNode=pxNodeSet->Next())!=NULL)
+		{
+			pxPointNode = pxPointMemberNode->GetFirstChild();
+			if(pxPointNode!=NULL)
+			{
+				CreateWKBFromGMLPoint(pWKBPoint, static_cast<XElement*>(pxPointNode));
+				pWKBPoint++;
+				numPoints++;
+			}
+		}
 
-		//pWKBMultiPoint->byteOrder = coDefaultByteOrder;
-		//pWKBMultiPoint->wkbType = wkbMultiPoint;
-		//pWKBMultiPoint->numPoints = numPoints;
+		pWKBMultiPoint->byteOrder = coDefaultByteOrder;
+		pWKBMultiPoint->wkbType = wkbMultiPoint;
+		pWKBMultiPoint->numPoints = numPoints;
 
 		return true;
 	}
 
 	bool GMLReaderImpl::CreateWKBFromGMLMultiLineString(WKBMultiLineString* pWKBMultiLineString, XElement* pxGeometry)
 	{
-		//if(pxGeometry==NULL)
-		//	return false;
+		if(pxGeometry==NULL)
+		{
+			return false;
+		}
 	
-		//xmlNodePtr plineStringMemberNode = NULL;
-		//xmlNodePtr pLineStringNode = NULL;
+		XNode* pxlineStringMemberNode = NULL;
+		XNode* pxLineStringNode = NULL;
+		XNodeSet* pxNodeSet = NULL;
 
-		//int numLineStrings = 0;
-		//char* ptr = NULL;
-		//WKBLineString* pWKBLineString = NULL;
-		//pWKBLineString = (WKBLineString*)(&(pWKBMultiLineString->lineStrings[0]));
+		int numLineStrings = 0;
+		char* ptr = NULL;
+		WKBLineString* pWKBLineString = NULL;
+		pWKBLineString = (WKBLineString*)(&(pWKBMultiLineString->lineStrings[0]));
+		
+		pxNodeSet = pxGeometry->GetChildren();
+		if(pxNodeSet==NULL)
+		{
+			return false;
+		}
 
-		//plineStringMemberNode = pxGeometry->children;
+		while((pxlineStringMemberNode=pxNodeSet->Next())!=NULL)
+		{
+			pxLineStringNode = pxlineStringMemberNode->GetFirstChild();
+			if(pxLineStringNode!=NULL)
+			{
+				CreateWKBFromGMLLineString(pWKBLineString, static_cast<XElement*>(pxLineStringNode));
 
-		//while(plineStringMemberNode!=NULL)
-		//{
-		//	pLineStringNode = plineStringMemberNode->children;
-		//	if(pLineStringNode==NULL)
-		//		continue;
-		//
-		//	CreateWKBFromGMLLineString(pWKBLineString, pLineStringNode);
-		//
-		//	plineStringMemberNode = plineStringMemberNode->next;
-		//	ptr = (char*)pWKBLineString;
-		//	pWKBLineString = (WKBLineString*)(ptr + CalWKBLineStringLen(pWKBLineString));
-		//	numLineStrings++;
-		//}
+				ptr = (char*)pWKBLineString;
+				pWKBLineString = (WKBLineString*)(ptr + CalWKBLineStringLen(pWKBLineString));
+				numLineStrings++;
+			}
+		}
 
-		//pWKBMultiLineString->byteOrder = coDefaultByteOrder;
-		//pWKBMultiLineString->wkbType = wkbMultiLineString;
-		//pWKBMultiLineString->numLineStrings = numLineStrings;
+		pWKBMultiLineString->byteOrder = coDefaultByteOrder;
+		pWKBMultiLineString->wkbType = wkbMultiLineString;
+		pWKBMultiLineString->numLineStrings = numLineStrings;
 
 		return true;
 	}
 
 	bool GMLReaderImpl::CreateWKBFromGMLMultiPolygon(WKBMultiPolygon* pWKBMultiPolygon, XElement* pxGeometry)
 	{
-		//if(pxGeometry==NULL)
-		//	return false;
+		if(pxGeometry==NULL)
+		{
+			return false;
+		}
 	
-		//xmlNodePtr pPolygonMemberNode = NULL;
-		//xmlNodePtr pPolygonNode = NULL;
+		XNode* pxPolygonMemberNode = NULL;
+		XNode* pxPolygonNode = NULL;
+		XNodeSet* pxNodeSet = NULL;
 
-		//char* ptr = NULL;
-		//int numPolygons = 0;
-		//WKBPolygon* pWKBPolygon = NULL;
-		//pWKBPolygon = (WKBPolygon*)(&(pWKBMultiPolygon->polygons[0]));
+		char* ptr = NULL;
+		int numPolygons = 0;
+		WKBPolygon* pWKBPolygon = NULL;
+		pWKBPolygon = (WKBPolygon*)(&(pWKBMultiPolygon->polygons[0]));
 
-		//pPolygonMemberNode = pxGeometry->children;
-		//while(pPolygonMemberNode!=NULL)
-		//{
-		//	pPolygonNode = pPolygonMemberNode->children;
-		//	if(pPolygonMemberNode==NULL)
-		//		continue;
-		//
-		//	CreateWKBFromGMLPolygon(pWKBPolygon, pPolygonNode);
-		//
-		//	pPolygonMemberNode = pPolygonMemberNode->next;
+		pxNodeSet = pxGeometry->GetChildren();
+		if(pxNodeSet==NULL)
+		{
+			return false;
+		}
 
-		//	ptr = (char*)pWKBPolygon;
-		//	pWKBPolygon = (WKBPolygon*)(ptr + CalWKBPolygonLen(pWKBPolygon));
-		//	numPolygons++;
-		//}
+		pxNodeSet->Reset();
+		while((pxPolygonMemberNode=pxNodeSet->Next())!=NULL)
+		{
+			pxPolygonNode = pxPolygonMemberNode->GetFirstChild();
+			if(pxPolygonNode!=NULL)
+			{
+				CreateWKBFromGMLPolygon(pWKBPolygon, static_cast<XElement*>(pxPolygonNode));
 
-		//pWKBMultiPolygon->byteOrder = coDefaultByteOrder;
-		//pWKBMultiPolygon->wkbType = wkbMultiPolygon;
-		//pWKBMultiPolygon->numPolygons = numPolygons;
+				ptr = (char*)pWKBPolygon;
+				pWKBPolygon = (WKBPolygon*)(ptr + CalWKBPolygonLen(pWKBPolygon));
+				numPolygons++;
+			}
+		}
+
+		pWKBMultiPolygon->byteOrder = coDefaultByteOrder;
+		pWKBMultiPolygon->wkbType = wkbMultiPolygon;
+		pWKBMultiPolygon->numPolygons = numPolygons;
 	
 		return true;
 	}
 
 	bool GMLReaderImpl::CreateWKBFromGMLLinearRing(LinearRing* pLinearRing, XNode* pxLinearRing)
 	{
-		//int numPoints = 0;
-		//char* coords = strdup((char*)xmlNodeGetContent(pxGeometry));
-		//Point* pts = (Point*)(&(pLinearRing->points[0]));
-		//numPoints = CreateWKBPointsFromGMLCoordinates(pts, coords);
-		//pLinearRing->numPoints = numPoints;
-		//free(coords);
+		int numPoints = 0;
+		const char* coords = pxLinearRing->GetContent();
+		Point* pts = (Point*)(&(pLinearRing->points[0]));
+		numPoints = CreateWKBPointsFromGMLCoordinates(pts, coords);
+		pLinearRing->numPoints = numPoints;
 
 		return true;
 	}

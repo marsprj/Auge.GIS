@@ -15,7 +15,8 @@ class GeometryTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(GML_MultiPolygon_Test);
 	//CPPUNIT_TEST(Memory_Test);
 
-	CPPUNIT_TEST(GML_Point_Read);
+	//CPPUNIT_TEST(GML_Point_Read);
+	CPPUNIT_TEST(GML_LineString_Read);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -31,6 +32,7 @@ private:
 	void GML_MultiPolygon_Test();
 
 	void GML_Point_Read();
+	void GML_LineString_Read();
 
 	void XML_Create_Test();
 

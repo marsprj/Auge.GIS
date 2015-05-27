@@ -490,6 +490,46 @@ namespace auge
 		return true;
 	}
 
+	const char*	auge_uint_type_encode(augeUnitType unit)
+	{
+		switch(unit)
+		{
+		//case augeInches:
+		//	break;
+		//case augePoints:
+		//	break;
+		//case augeFeet:
+		//	break;
+		//case augeYards:
+		//	break;
+		//case augeMiles:
+		//	break;
+		//case augeNauticalMiles:
+		//	break;
+		//case augeMillimeters:
+		//	break;
+		//case augeCentimeters:
+		//	break;
+		case augeMeters:
+			return "meters";
+			break;
+		//case augeKilometers:
+		//	break;
+		//case augeDecimalDegrees:
+		//	break;
+		//case augeDecimeters:
+		//	break;
+		//case augeUnitsLast:
+		//	break;
+		}
+		return "";
+	}
+
+	augeUnitType auge_uint_type_decode(const char* unit)
+	{
+		return augeMeters;
+	}
+
 	void auge_rgb_2_hsv(g_byte r, g_byte g, g_byte b, float& h, float& s, float& v)
 	{
 		int min_v, max_v;

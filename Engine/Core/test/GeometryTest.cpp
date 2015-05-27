@@ -190,6 +190,21 @@ void GeometryTest::GML_Point_Read()
 	auge::GMLReader* reader = pGeometryFactory->CreateGMLReader();
 
 	pGeometry = reader->Read(gml);
+	pGeometry->Release();
+
+	reader->Release();
+}
+
+void GeometryTest::GML_LineString_Read()
+{
+	const char* gml = "<gml:LineString xmlns:gml=\"http://www.opengis.net/gml\"><gml:coordinates>1,2 3,4</gml:coordinates></gml:LineString>";
+	auge::Geometry* pGeometry = NULL;
+	auge::GeometryFactory* pGeometryFactory = auge::augeGetGeometryFactoryInstance();
+	auge::GMLReader* reader = pGeometryFactory->CreateGMLReader();
+
+	pGeometry = reader->Read(gml);
+	printf("%s\n", pGeometry->AsText());
+	pGeometry->Release();
 
 	reader->Release();
 }
