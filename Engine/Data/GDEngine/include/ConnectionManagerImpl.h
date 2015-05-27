@@ -22,6 +22,8 @@ namespace auge
 
 		virtual RESULTCODE			Register(const char* name, const char* engine, const char* constr);
 		virtual RESULTCODE			Unregister(const char* name);
+		virtual RESULTCODE			Update(const char* name, const char* engine, const char* constr);
+		virtual RESULTCODE			Update(g_uint gid, const char* name, const char* engine, const char* constr);
 
 		virtual bool				Has(const char* name);
 		virtual g_int				GetID(const char* name);
@@ -29,10 +31,16 @@ namespace auge
 		virtual RESULTCODE			Initialize(GConnection* pConnection);
 		virtual void				Unload();
 
+
+
 	private:
 		bool		CreateDataSourceTable();
-		Workspace*	CreateWorkspace(const char* name, const char* engine, const char* uri);
+		Workspace*	NewWorkspace(g_uint gid, const char* name, const char* engine, const char* uri, g_uint version);
+		Workspace*	LoadWorkspace(const char* name);
 		RESULTCODE	SaveWorkspace(const char* name, const char* engine, const char* uri);
+
+		bool		IsUpdated(Workspace* pWorkspace);
+		g_int		GetWorkspaceVersion(g_uint gid);
 
 	private:
 		GConnection* m_pConnection;

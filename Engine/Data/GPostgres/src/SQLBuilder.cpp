@@ -725,7 +725,7 @@ namespace auge
 			break;
 		case augeSpDWithin:
 			{
-
+				rc = BuildDWithinFilter(sql, pFeatureClass, static_cast<DistanceBufferFilter*>(pFilter));
 			}
 			break;
 		case augeSpEquals:
@@ -864,6 +864,46 @@ namespace auge
 		sql.append(srid);
 		sql.append("),");
 		sql.append(geo_field);
+		sql.append(")");
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE SQLBuilder::BuildDWithinFilter(std::string& sql,FeatureClassPgs* pFeatureClass, DistanceBufferFilter* pFilter)
+	{
+		RESULTCODE rc = AG_SUCCESS;
+		Geometry* pGeometry = pFilter->GetGeometry();
+		if(pGeometry==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pField==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* geo_field = pField->GetName();
+		const char* wkt = pGeometry->AsText(true);
+
+		char srid[AUGE_NAME_MAX] = {0};
+		g_snprintf(srid, AUGE_BUFFER_MAX,"%d",pField->GetGeometryDef()->GetSRID());
+
+		char distance[AUGE_NAME_MAX] = {0};
+		g_snprintf(distance, AUGE_BUFFER_MAX,"%f",pFilter->GetDistance());
+		//sboolean ST_DWithin(geometry g1, geometry g2, double precision distance_of_srid);
+
+		sql = "st_dwithin(";
+		sql.append("st_geomfromtext(upper('");
+		sql.append(wkt);
+		sql.append("'),");
+		sql.append(srid);
+
+		sql.append("),");
+		sql.append(geo_field);
+		sql.append(",");
+		sql.append(distance);
 		sql.append(")");
 
 		return AG_SUCCESS;

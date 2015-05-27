@@ -628,6 +628,54 @@ void OgcFilterTest::WithinFilteTest()
 	AUGE_SAFE_RELEASE(pxDoc);
 }
 
+void OgcFilterTest::DWithinFilteTest()
+{
+	const char* path = "E:\\Research\\Auge.GIS\\Engine\\Filter\\ogc\\DWithinFilter.xml";
+	auge::FilterFactory* pFactory = auge::augeGetFilterFactoryInstance();
+	auge::FilterReader* pFilterReader = pFactory->CreateFilerReader(NULL);
+	auge::GFilter* pFilter = NULL;
+
+	auge::XParser parser;
+	auge::XDocument	*pxDoc = NULL;
+	auge::XElement	*pxFilter = NULL;
+
+	pxDoc = parser.Parse(path);
+	pxFilter = pxDoc->GetRootNode();
+
+	pFilter = pFilterReader->Read(pxFilter);
+	CPPUNIT_ASSERT(pFilter!=NULL);
+
+	/**************************************************************/
+	auge::FeatureClass* pFeatureClass = NULL;
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	CPPUNIT_ASSERT(pFeatureClass!=NULL);
+
+	auge::FeatureCursor* pCursor = NULL;
+	pCursor = pFeatureClass->Query(pFilter);
+	CPPUNIT_ASSERT(pCursor!=NULL);
+
+	g_uint i=0;
+	auge::Geometry	*pGeometry = NULL;
+	auge::Feature	*pFeature = NULL;
+	while((pFeature=pCursor->NextFeature())!=NULL)
+	{	
+		//printf("\r%d",++i);
+		printf("%d\n",pFeature->GetFID());
+		pFeature->Release();
+	}
+	printf("\n");
+
+	AUGE_SAFE_RELEASE(pCursor);
+	AUGE_SAFE_RELEASE(pFeatureClass);
+
+	/**************************************************************/
+
+	AUGE_SAFE_RELEASE(pFilter);
+	pxDoc->Close();
+	AUGE_SAFE_RELEASE(pxDoc);
+}
+
+
 void QueryTest()
 {
 
