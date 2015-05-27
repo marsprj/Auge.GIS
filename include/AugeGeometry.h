@@ -233,6 +233,17 @@ namespace auge
 		virtual void		Release() = 0;
 	};
 
+	class GMLReader
+	{
+	protected:
+		GMLReader(){}
+		virtual ~GMLReader(){}
+	public:
+		virtual	Geometry*	Read(const char* gml) = 0;
+		virtual	Geometry*	Read(XElement *pxGeometry) = 0;
+		virtual void		Release() = 0;
+	};
+
 	class GeometryFactory
 	{
 	protected:
@@ -241,10 +252,12 @@ namespace auge
 	public:
 		virtual	Geometry*			CreateGeometryFromWKB(g_uchar* wkb, bool attach=false) = 0;
 		virtual Geometry*			CreateGeometryFromWKT(const char* wkt) = 0;
+		virtual Geometry*			CreateGeometryFromGML(const char* gml) = 0;
 		virtual augeGeometryType	DecodeGeometryType(const char* type) = 0;
 		virtual const char*			Encode(augeGeometryType type) = 0;
 
 		virtual	GMLWriter*			CreateGMLWriter() = 0;
+		virtual GMLReader*			CreateGMLReader() = 0;
 	};
 
 	class GeometryUtil
