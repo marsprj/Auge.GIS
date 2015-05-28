@@ -72,7 +72,8 @@ namespace auge
 				pWebResponse = DoGet(cgi);
 				break;
 			case augeHttpPost:
-				pWebResponse = DoPost(cgi);
+
+			pWebResponse = DoPost(cgi);
 				break;
 			}
 
@@ -146,6 +147,7 @@ namespace auge
 		if(conent_type==NULL)
 		{
 			szService = cgi["service"];
+			szService = "wfs";
 			pWebEngine = m_pWebEngineManager->GetEngine(szService);
 			if(pWebEngine==NULL)
 			{
@@ -184,6 +186,7 @@ namespace auge
 				//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.0.0\"  mapName=\"world\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\"  xmlns:world=\"undefined\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd\"><wfs:Query typeName=\"cities\"><ogc:Filter><ogc:BBOX><gml:Box><gml:coordinates>-195.75,-141.9375 164.25,150.1875</gml:coordinates></gml:Box></ogc:BBOX></ogc:Filter></wfs:Query></wfs:GetFeature>";
 				/* CreateDataSet */
 				//const char* xml_string = "<CreateDataSet service=\"dbs\" version=\"1.0.0\" sourceName=\"db1\" dataSetName=\"table1\"><Fields><Field><Name>ID</Name><Type>Int</Type><DefaultValue>0</DefaultValue></Field><Field><Name>Name</Name><Type>String</Type><Length>32</Length><Nullable>true</Nullable><DefaultValue>china</DefaultValue></Field><Field><Name>shape</Name><Type>Geometry</Type><Nullable>true</Nullable><GeometryDef><Type>Point</Type><SRID>4326</SRID></GeometryDef></Field></Fields></CreateDataSet>";
+				//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\" mapName=\"world\" xmlns:world=\"www.world.ac.cn\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\"><wfs:Query typeName=\"world:country\"><Filter><Within><PropertyName>shape</PropertyName><gml:Point name=\"1\" srsName=\"EPSG:63266405\"><gml:coordinates xmlns:gml=\"http://www.opengis.net/gml\" decimal=\".\" cs=\",\" ts=\" \">117,40</gml:coordinates></gml:Point></Within></Filter></wfs:Query></wfs:GetFeature>";
 				m_pLogger->Trace("[Request]",__FILE__, __LINE__);
 
 				XParser parser;
