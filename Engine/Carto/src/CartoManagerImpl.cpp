@@ -1333,17 +1333,22 @@ namespace auge
 			return rc;
 		}
 		
-		std::string sql;
-		sql.append("update g_style set s_text='");
-		sql.append((char*)buffer);
-		sql.append("' where s_name='");
-		sql.append(name);
-		sql.append("'");
+		//std::string sql;
+		//sql.append("update g_style set s_text='");
+		//sql.append((char*)buffer);
+		//sql.append("' where s_name='");
+		//sql.append(name);
+		//sql.append("'");
 
-		rc = m_pConnection->ExecuteSQL(sql.c_str());
+		//rc = m_pConnection->ExecuteSQL(sql.c_str());
+		//pxDoc->Release();
+
+		//return (rc==AG_SUCCESS);
+
+		rc = UpdateStyle(name, (char*)buffer);
 		pxDoc->Release();
 
-		return (rc==AG_SUCCESS);
+		return rc;
 	}
 
 	RESULTCODE CartoManagerImpl::UpdateStyle(const char* name, const char* text)
@@ -1354,14 +1359,31 @@ namespace auge
 		}
 
 		std::string sql;
-		sql.append("update g_style set s_text='");
-		sql.append(text);
-		sql.append("' where s_name='");
+		sql.append("select gf_style_update(1,'");
 		sql.append(name);
-		sql.append("'");
+		sql.append("','");
+		sql.append(text);
+		sql.append("')");
 
 		return m_pConnection->ExecuteSQL(sql.c_str());
 	}
+
+	//RESULTCODE CartoManagerImpl::UpdateStyle(const char* name, const char* text)
+	//{
+	//	if(name==NULL||text==NULL)
+	//	{
+	//		return AG_FAILURE;
+	//	}
+
+	//	std::string sql;
+	//	sql.append("update g_style set s_text='");
+	//	sql.append(text);
+	//	sql.append("' where s_name='");
+	//	sql.append(name);
+	//	sql.append("'");
+
+	//	return m_pConnection->ExecuteSQL(sql.c_str());
+	//}
 
 	RESULTCODE CartoManagerImpl::RemoveStyle(const char* name)
 	{

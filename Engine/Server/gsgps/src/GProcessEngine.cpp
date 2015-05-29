@@ -9,6 +9,7 @@
 #include "TileUpdateHandler.h"
 
 #include "BuildPyramidHandler.h"
+#include "FeatureImportHandler.h"
 
 namespace auge
 {
@@ -28,6 +29,7 @@ namespace auge
 		m_handlers.push_back(new UpdateTileHandler());
 
 		m_handlers.push_back(new BuildPyramidHandler());
+		m_handlers.push_back(new FeatureImportHandler());
 	}
 
 	GeoProcessingEngine::~GeoProcessingEngine()

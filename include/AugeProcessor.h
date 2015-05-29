@@ -83,6 +83,7 @@ namespace auge
 		virtual void		SetShapePath(const char* path) = 0;
 		virtual void		SetShapeName(const char* className) = 0;
 		virtual void		SetDataSourceName(const char* sourceName) = 0;
+		virtual void		SetTypeName(const char* typeName) = 0;
 	};
 
 	class GProcessorFactory

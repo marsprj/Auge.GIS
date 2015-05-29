@@ -15,16 +15,20 @@ namespace auge
 		virtual void		SetShapePath(const char* path);
 		virtual void		SetShapeName(const char* className);
 		virtual void		SetDataSourceName(const char* sourceName);
+		virtual void		SetTypeName(const char* typeName);
+
 		virtual RESULTCODE	Execute();
 		
 		const char*			GetShapePath();
 		const char*			GetShapeName();
 		const char*			GetDataSourceName();
+		const char*			GetTypeName();
 
 	private:
 		std::string m_shp_path;
 		std::string m_shp_name;
 		std::string m_db_source_name;
+		std::string m_db_type_name;
 	};
 }
 

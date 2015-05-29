@@ -32,10 +32,10 @@ namespace auge
 	ArchiveProcessor* GProcessorFactoryImpl::CreateArchiveProcessor()
 	{
 		ArchiveProcessor* procesor = NULL;
-//#ifdef WIN32
-//#else
+#ifdef WIN32
+#else
 		procesor = new ArchiveProcessorImpl();
-//#endif
+#endif
 		return procesor;
 	}
 

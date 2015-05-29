@@ -20,8 +20,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gscore", "..\..\gscore\32_x
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mgr", "..\..\mgr\32_x86_win_vc10\mgr.vcxproj", "{C315E5BD-713B-4812-9B05-8A0F6475DAB0}"
 	ProjectSection(ProjectDependencies) = postProject
-		{685A4C3A-5188-487A-AC43-376EBCEC73C6} = {685A4C3A-5188-487A-AC43-376EBCEC73C6}
-		{175ED294-86C6-45A1-9E7A-770AE765EB23} = {175ED294-86C6-45A1-9E7A-770AE765EB23}
+		{961093B5-A829-41C7-87A1-6CE75B065B5C} = {961093B5-A829-41C7-87A1-6CE75B065B5C}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsvrs", "..\..\gsvrs\32_x86_win_vc10\gsvrs.vcxproj", "{D8C7BCA3-AADF-430D-BD10-6F771418F31B}"
@@ -37,6 +36,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsims", "..\..\gsims\32_x86_win_vc10\gsims.vcxproj", "{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsdbs", "..\..\gsdbs\32_x86_win_vc10\gsdbs.vcxproj", "{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B27E9A32-8154-484F-B312-9532EA0469A0} = {B27E9A32-8154-484F-B312-9532EA0469A0}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUser", "..\..\..\User\32_x86_win_vc10\GUser.vcxproj", "{B38DA2F1-03B5-482B-B0F1-59C57403B03F}"
 EndProject

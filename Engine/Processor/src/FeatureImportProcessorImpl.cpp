@@ -51,6 +51,18 @@ namespace auge
 		}
 	}
 
+	void FeatureImportProcessorImpl::SetTypeName(const char* typeName)
+	{
+		if(typeName==NULL)
+		{
+			m_db_type_name.clear();
+		}
+		else
+		{
+			m_db_type_name = typeName;
+		}
+	}
+
 	const char*	FeatureImportProcessorImpl::GetShapePath()
 	{
 		return m_shp_path.empty() ? NULL : m_shp_path.c_str();
@@ -66,11 +78,17 @@ namespace auge
 		return m_db_source_name.empty() ? NULL : m_db_source_name.c_str();
 	}
 
+	const char* FeatureImportProcessorImpl::GetTypeName()
+	{
+		return m_db_type_name.empty() ? NULL : m_db_type_name.c_str();
+	}
+
 	RESULTCODE FeatureImportProcessorImpl::Execute()
 	{
 		const char* shp_path = GetShapePath();
 		const char* shp_name = GetShapeName();
 		const char* source_name = GetDataSourceName();
+		const char* type_name = GetTypeName();
 
 		GError*	 pError  = augeGetErrorInstance();
 		GLogger* pLogger = augeGetLoggerInstance();
@@ -93,6 +111,14 @@ namespace auge
 		if(source_name==NULL)
 		{
 			const char* msg = "Datasource Name not defined";
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return AG_FAILURE;
+		}
+
+		if(type_name==NULL)
+		{
+			const char* msg = "Type Name not defined";
 			pError->SetError(msg);
 			pLogger->Error(msg, __FILE__, __LINE__);
 			return AG_FAILURE;
@@ -153,7 +179,7 @@ namespace auge
 		GFields* pFields = pshpFeatureClass->GetFields();
 
 		FeatureClass* pdbFeatureClass = NULL;
-		pdbFeatureClass = pdbWorkspace->CreateFeatureClass(shp_name, pFields);
+		pdbFeatureClass = pdbWorkspace->CreateFeatureClass(type_name, pFields);
 		if(pdbFeatureClass==NULL)
 		{
 			pshpFeatureClass->Release();
