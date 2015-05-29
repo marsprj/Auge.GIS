@@ -158,7 +158,7 @@ namespace auge
 		{
 			char shp_name[AUGE_NAME_MAX];
 			char shp_path[AUGE_PATH_MAX];
-			strncpy(shp_name, zip_name, strlen(zip_file)-4);
+			auge_split_path(zip_name,NULL, NULL, shp_name, NULL);
 			//auge_make_path(shp_path, NULL, zip_path, shp_name, NULL);
 			//pWebResponse = ImportShapeFile(shp_path, shp_name, source_name, type_name);
 			auge_get_cwd(shp_path,AUGE_PATH_MAX);
