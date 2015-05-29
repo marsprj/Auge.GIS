@@ -295,7 +295,11 @@ namespace auge
 		m_cache_map_path = cache_map;
 
 		char upload_path[AUGE_PATH_MAX];
+#ifdef WIN32
 		auge_make_path(upload_path, NULL, cdir, "upload", NULL);
+#else
+		auge_make_path(upload_path, NULL, pdir, "upload", NULL);
+#endif 
 		if(g_access(upload_path, 4))
 		{
 			auge_mkdir(upload_path); 

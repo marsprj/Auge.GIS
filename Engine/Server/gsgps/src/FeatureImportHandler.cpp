@@ -105,7 +105,11 @@ namespace auge
 			shp_path = pWebContext->GetUploadPath();
 		}
 
-		if(g_strnicmp(shp_name,".zip", 4)==0)
+		char shp_ext[AUGE_EXT_MAX];
+		memset(shp_ext,0,AUGE_EXT_MAX);
+		auge_split_path(shp_name,NULL,NULL,NULL,shp_ext);
+
+		if(g_stricmp(shp_ext,".zip")==0)
 		{
 			// zip file
 #ifdef WIN32
