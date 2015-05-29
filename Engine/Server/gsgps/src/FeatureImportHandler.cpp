@@ -141,7 +141,7 @@ namespace auge
 
 		char zip_file[AUGE_PATH_MAX];
 		auge_make_path(zip_file, NULL, zip_path, zip_name,NULL);
-		archiver->AddFile(zip_file);
+		archiver->SetArchivePath(zip_file);
 		RESULTCODE rc = archiver->Decompress();
 		archiver->Release();
 
