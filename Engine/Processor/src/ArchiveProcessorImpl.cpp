@@ -149,7 +149,7 @@ namespace auge
 		archive_write_disk_set_standard_lookup(ext);
 		if((r = archive_read_open_filename(a, tpath, 10240)))
 		{
-			return AG_SUCCESS;
+			return AG_FAILURE;
 		}
 
 		while(true)
