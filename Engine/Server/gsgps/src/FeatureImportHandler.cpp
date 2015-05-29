@@ -162,7 +162,7 @@ namespace auge
 			//auge_make_path(shp_path, NULL, zip_path, shp_name, NULL);
 			//pWebResponse = ImportShapeFile(shp_path, shp_name, source_name, type_name);
 			auge_get_cwd(shp_path,AUGE_PATH_MAX);
-			pWebResponse = ImportShapeFile(auge_get_cwd(), shp_name, source_name, type_name);
+			pWebResponse = ImportShapeFile(shp_path, shp_name, source_name, type_name);
 		}
 
 		return pWebResponse;
