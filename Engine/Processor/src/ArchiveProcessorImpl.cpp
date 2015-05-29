@@ -204,7 +204,8 @@ namespace auge
 		archive_write_free(ext);
 
 
-		return r==ARCHIVE_OK ? AG_SUCCESS : AG_FAILURE;
+		//return r==ARCHIVE_OK ? AG_SUCCESS : AG_FAILURE;
+		return AG_SUCCESS;
 	}
 
 	void ArchiveProcessorImpl::Release()
