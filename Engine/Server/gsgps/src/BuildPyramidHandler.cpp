@@ -135,7 +135,7 @@ namespace auge
 
 		GEnvelope& viewer = pMap->GetExtent();
 
-		TileStoreGenerator* pProcessor = NULL;
+		MapTileStoreGenerator* pProcessor = NULL;
 		GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 		pProcessor = pFactory->CreateTileStoreGenerator();
 

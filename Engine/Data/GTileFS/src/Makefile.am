@@ -15,4 +15,5 @@ libGTileFS_la_SOURCES=\
 		PGISTileStore.cpp \
 		GoogleCRS84QuadTileStore.cpp \
 		WorkspaceTFS.cpp \
+		EnumTileStoreImpl.cpp \
 		DataEngineImpl.cpp

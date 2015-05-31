@@ -18,4 +18,5 @@ libGTileMgo_la_SOURCES=\
 		PGISTileStore.cpp \
 		GoogleCRS84QuadTileStore.cpp \
 		TileWorkspaceMongo.cpp \
+		EnumTileStoreImpl.cpp \
 		DataEngineTileMongo.cpp

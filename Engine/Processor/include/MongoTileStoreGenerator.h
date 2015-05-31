@@ -1,5 +1,5 @@
-#ifndef __AUGE_TILE_STORE_PROCESSOR_IMPL_H__
-#define __AUGE_TILE_STORE_PROCESSOR_IMPL_H__
+#ifndef __AUGE_MONGO_TILE_STORE_PROCESSOR_H__
+#define __AUGE_MONGO_TILE_STORE_PROCESSOR_H__
 
 #include "AugeCore.h"
 #include "AugeGeometry.h"
@@ -7,11 +7,11 @@
 
 namespace auge
 {
-	class FileSystemTileStoreGeneratorImpl : public MapTileStoreGenerator
+	class MongoTileStoreGenerator : public MapTileStoreGenerator
 	{
 	public:
-		FileSystemTileStoreGeneratorImpl();
-		virtual ~FileSystemTileStoreGeneratorImpl();
+		MongoTileStoreGenerator();
+		virtual ~MongoTileStoreGenerator();
 	public:
 		virtual	void		SetMap(Map* pMap);
 		virtual void		SetTileStore(TileStore* pTileStore);
@@ -29,4 +29,4 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_TILE_STORE_PROCESSOR_IMPL_H__
+#endif //__AUGE_MONGO_TILE_STORE_PROCESSOR_H__

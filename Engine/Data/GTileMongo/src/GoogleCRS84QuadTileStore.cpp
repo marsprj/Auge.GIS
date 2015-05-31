@@ -77,6 +77,11 @@ namespace auge
 		return m_tile_type;
 	}
 
+	const char* GoogleCRS84QuadTileStore::GetTileTypeAsString()
+	{
+		return AUGE_TILE_TYPE_GOOGLE_CRS84QUAD;
+	}
+
 	Tile* GoogleCRS84QuadTileStore::GetTile(g_uint level, g_uint64 row, g_uint64 col)
 	{
 		char key[AUGE_NAME_MAX] = {0};
@@ -285,10 +290,11 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE GoogleCRS84QuadTileStore::Create(TileWorkspaceMongo* pWorkspace, mongoc_gridfs_t *mgo_gridfs)
+	RESULTCODE GoogleCRS84QuadTileStore::Create(TileWorkspaceMongo* pWorkspace, mongoc_gridfs_t *mgo_gridfs, const char* name)
 	{
 		m_pWorkspace = pWorkspace;
 		m_gridfs = mgo_gridfs;
+		m_name = name;
 		return AG_SUCCESS;
 	}
 
@@ -307,7 +313,7 @@ namespace auge
 	inline
 	void GoogleCRS84QuadTileStore::MakeKey(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col)
 	{
-		g_snprintf(key, size,  "%dx%dx%d",level,row,col);
+		g_snprintf(key, size,  "%dx%lldx%lld",level,row,col);
 	}
 
 	RESULTCODE GoogleCRS84QuadTileStore::GetBoundingBox(GEnvelope& viewer, g_uint level, g_uint& r_min, g_uint& r_max, g_uint& c_min, g_uint& c_max)

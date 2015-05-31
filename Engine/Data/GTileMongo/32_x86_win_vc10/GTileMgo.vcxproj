@@ -84,6 +84,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DataEngineTileMongo.cpp" />
+    <ClCompile Include="..\src\EnumTileStoreImpl.cpp" />
     <ClCompile Include="..\src\GoogleCRS84QuadTileStore.cpp" />
     <ClCompile Include="..\src\PGISTileStore.cpp" />
     <ClCompile Include="..\src\TileImpl.cpp" />
@@ -91,6 +92,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\DataEngineTileMongo.h" />
+    <ClInclude Include="..\include\EnumTileStoreImpl.h" />
     <ClInclude Include="..\include\GoogleCRS84QuadTileStore.h" />
     <ClInclude Include="..\include\PGISTileStore.h" />
     <ClInclude Include="..\include\TileImpl.h" />

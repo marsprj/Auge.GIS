@@ -41,9 +41,11 @@ namespace auge
 		void	AddServiceProviderNode_1_0_0(XElement* pxParent);
 		void	AddOperationsMetadataNode_1_0_0(XElement* pxParent, const char* wmts_xlink);
 		void	AddTileLayerNode_1_0_0(XElement* pxParent,const char* sourceName);
+		void	AddTileLayersNode_1_0_0(XElement* pxParent, const char* sourceName);
 
 		void	AddTileMatrixSetNode_1_0_0(XElement* pxParent);
 		void	AddTileMatrixSet_GoogleCRS84Quad_1_0_0(XElement* pxParent);
+		void	AddTileMatrixSet_PGIS_1_0_0(XElement* pxParent);
 
 	private:
 		CapabilitiesRequest*	m_pRequest;

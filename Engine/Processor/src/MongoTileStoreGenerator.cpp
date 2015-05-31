@@ -1,4 +1,4 @@
-#include "FileSytemTileStoreGeneratorImpl.h"
+#include "MongoTileStoreGenerator.h"
 #include "AugeTile.h"
 #include "AugeFeature.h"
 #include "AugeGeometry.h"
@@ -6,7 +6,7 @@
 
 namespace auge
 {
-	FileSystemTileStoreGeneratorImpl::FileSystemTileStoreGeneratorImpl()
+	MongoTileStoreGenerator::MongoTileStoreGenerator()
 	{
 		m_pMap = NULL;
 		m_pTileStore = NULL;
@@ -14,37 +14,37 @@ namespace auge
 		m_end_level = 1;
 	}
 
-	FileSystemTileStoreGeneratorImpl::~FileSystemTileStoreGeneratorImpl()
+	MongoTileStoreGenerator::~MongoTileStoreGenerator()
 	{
 
 	}
 
-	void FileSystemTileStoreGeneratorImpl::SetMap(Map* pMap)
+	void MongoTileStoreGenerator::SetMap(Map* pMap)
 	{
 		m_pMap = pMap;
 	}
 
-	void FileSystemTileStoreGeneratorImpl::SetTileStore(TileStore* pTileStore)
+	void MongoTileStoreGenerator::SetTileStore(TileStore* pTileStore)
 	{
 		m_pTileStore = pTileStore;
 	}
 
-	void FileSystemTileStoreGeneratorImpl::SetStartLevel(g_uint l)
+	void MongoTileStoreGenerator::SetStartLevel(g_uint l)
 	{
 		m_start_level = l;
 	}
 
-	void FileSystemTileStoreGeneratorImpl::SetEndLevel(g_uint l)
+	void MongoTileStoreGenerator::SetEndLevel(g_uint l)
 	{
 		m_end_level = l;
 	}
 
-	void FileSystemTileStoreGeneratorImpl::SetViewer(GEnvelope& viewer)
+	void MongoTileStoreGenerator::SetViewer(GEnvelope& viewer)
 	{
 		m_viewer = viewer;
 	}
 
-	RESULTCODE FileSystemTileStoreGeneratorImpl::Execute()
+	RESULTCODE MongoTileStoreGenerator::Execute()
 	{
 		if(m_pMap==NULL)
 		{
@@ -64,11 +64,17 @@ namespace auge
 		}
 
 		g_uint counter = 0;
+		char t_uuid[AUGE_PATH_MAX] = {0};
 		char t_path[AUGE_PATH_MAX] = {0};
+		char t_cwd[AUGE_PATH_MAX] = {0};
 		Canvas* pCanvas = NULL;
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();		
 		GEnvelope viewer;
 		RESULTCODE rc = AG_FAILURE;
+
+		auge_get_cwd(t_cwd, AUGE_PATH_MAX);
+		auge_generate_uuid(t_uuid, AUGE_PATH_MAX);
+		auge_make_path(t_path, NULL, t_cwd, t_uuid,"png");
 
 		auge::GColor bgColor(255,255,255,255);		
 		for(g_uint l=m_start_level; l<=m_end_level; l++)
@@ -85,14 +91,14 @@ namespace auge
 					{
 						printf("\r[%d]:%d-%d-%d",counter++,l,r,c);
 
-						m_pTileStore->GetTilePath(t_path, AUGE_PATH_MAX, l, r, c);
-
 						pCanvas = pCartoFactory->CreateCanvas2D(256,256);
 						pCanvas->SetViewer(viewer);
-						////pCanvas->DrawBackground(bgColor);
+						//pCanvas->DrawBackground(bgColor);
 						pCanvas->Draw(m_pMap);
 						pCanvas->Save(t_path);
 						pCanvas->Release();
+
+						m_pTileStore->PutTile(l,r,c,t_path);
 					}
 				}
 			}

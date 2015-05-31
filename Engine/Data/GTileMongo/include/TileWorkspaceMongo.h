@@ -43,12 +43,17 @@ namespace auge
 		virtual TileStore*		OpenTileStore(const char* name);
 		virtual RESULTCODE		RemoveTileStore();
 
-	public:
+		virtual EnumTileStore*	GetTileStores();
+
+	private:
+		bool					FindTileStore(const char* name);
+		RESULTCODE				InsertTileStoreMeta(const char* name, const char* type, g_uint start_level, g_uint end_level, GEnvelope& extent);
 		
 	private:
 
-		mongoc_client_t*	m_mongo;
-		mongoc_database_t*	m_mongo_db;
+		mongoc_client_t*	 m_mongo;
+		mongoc_database_t*	 m_mongo_db;
+		mongoc_collection_t* m_mongo_meta;
 
 		std::string			m_name;
 		std::string			m_database;

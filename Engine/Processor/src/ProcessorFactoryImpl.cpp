@@ -1,5 +1,6 @@
 #include "ProcessorFactoryImpl.h"
 #include "FileSytemTileStoreGeneratorImpl.h"
+#include "MongoTileStoreGenerator.h"
 #include "FeatureImportProcessorImpl.h"
 
 #ifndef WIN32
@@ -24,9 +25,14 @@ namespace auge
 
 	}
 
-	TileStoreGenerator* GProcessorFactoryImpl::CreateTileStoreGenerator()
+	MapTileStoreGenerator* GProcessorFactoryImpl::CreateTileStoreGenerator()
 	{
-		return (new FileSystemileStoreGeneratorImpl());
+		return (new FileSystemTileStoreGeneratorImpl());
+	}
+
+	MapTileStoreGenerator* GProcessorFactoryImpl::CreateMongoTileStoreGenerator()
+	{
+		return (new MongoTileStoreGenerator());
 	}
 
 	ArchiveProcessor* GProcessorFactoryImpl::CreateArchiveProcessor()

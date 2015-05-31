@@ -26,6 +26,7 @@ namespace auge
 		virtual g_uint			GetCols(g_uint level);
 
 		virtual augeTileType	GetTileType();
+		virtual const char*		GetTileTypeAsString();
 		virtual	Tile*			GetTile(g_uint level, g_uint64 row, g_uint64 col);
 		virtual RESULTCODE		PutTile(g_uint level, g_uint64 row, g_uint64 col, const char* path);
 		virtual RESULTCODE		PutTile(g_uint level, g_uint64 row, g_uint64 col, unsigned char* data, size_t size);

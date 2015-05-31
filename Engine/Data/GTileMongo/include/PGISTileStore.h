@@ -1,13 +1,16 @@
 #ifndef __AUGE_PGIS_TILE_STORE_H__
 #define __AUGE_PGIS_TILE_STORE_H__
 
+#include <bson.h>
+#include <mongoc.h>
+
 #include "AugeTile.h"
 #include "AugeGeometry.h"
 #include <string>
 
 namespace auge
 {
-	class TileWorkspaceFS;
+	class TileWorkspaceMongo;
 
 	class PGISTileStore : public TileStore
 	{
@@ -18,7 +21,7 @@ namespace auge
 		virtual const char*		GetName();
 		virtual void			SetName(const char* name);
 
-		virtual GEnvelope&		GetTileExtent();
+		virtual GEnvelope&		GetExtent();
 		virtual GEnvelope&		GetFullExtent();
 		virtual void			GetTopLeftCorner(double &x, double &y);
 
@@ -26,6 +29,8 @@ namespace auge
 		virtual g_uint			GetCols(g_uint level);
 
 		virtual augeTileType	GetTileType();
+		virtual const char*		GetTileTypeAsString();
+
 		virtual	Tile*			GetTile(g_uint level, g_uint64 row, g_uint64 col);
 		virtual RESULTCODE		PutTile(g_uint level, g_uint64 row, g_uint64 col, const char* path);
 		virtual RESULTCODE		PutTile(g_uint level, g_uint64 row, g_uint64 col, unsigned char* data, size_t size);
@@ -35,10 +40,14 @@ namespace auge
 		virtual RESULTCODE		GetTilePath(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col);
 
 		virtual RESULTCODE		GetBoundingBox(GEnvelope& viewer, g_uint level, g_uint& r_min, g_uint& r_max, g_uint& c_min, g_uint& c_max);
+		virtual g_uint			GetOriginalLevel(GEnvelope& viewer, g_uint viewer_w, g_uint viewer_h);
 
 	public:
-		RESULTCODE		Create(TileWorkspaceFS* pWorkspace);
-		RESULTCODE		Create(TileWorkspaceFS* pWorkspace, const char* name, g_uint start_level, g_uint end_level, GEnvelope& extent);
+		RESULTCODE		Create(TileWorkspaceMongo* pWorkspace, mongoc_gridfs_t *mgo_gridfs, const char* name);
+		RESULTCODE		Create(TileWorkspaceMongo* pWorkspace, const char* name, g_uint start_level, g_uint end_level, GEnvelope& extent);
+
+	private:
+		void			MakeKey(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col);
 
 	private:
 		std::string		m_name;
@@ -55,7 +64,8 @@ namespace auge
 		g_uint			m_start_level;
 		g_uint			m_end_level;
 
-		TileWorkspaceFS* m_pWorkspace;
+		TileWorkspaceMongo* m_pWorkspace;
+		mongoc_gridfs_t*	m_gridfs;
 	};
 }
 

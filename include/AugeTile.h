@@ -15,6 +15,13 @@ namespace auge
 		augeTilePGIS
 	}augeTileType;
 
+	#define AUGE_TILE_TYPE_GOOGLE_CRS84QUAD		"GoogleCRS84Quad"
+	#define AUGE_TILE_TYPE_GOOGLE_CRS84SCALE	"GlobalCRS84Scale"
+	#define AUGE_TILE_TYPE_EPSG4326				"EPSG4326"
+	#define AUGE_TILE_TYPE_EPSG900913			"EPSG900913"
+	#define AUGE_TILE_TYPE_GLOBAL_CRS84PIXEL	"GlobalCRS84Pixel"
+	#define AUGE_TILE_TYPE_PGIS					"PGIS"
+
 	class Tile : public GObject
 	{
 	protected:
@@ -32,6 +39,8 @@ namespace auge
 		TileStore(){}
 		virtual ~TileStore(){}
 	public:
+		virtual const char*		GetName() = 0;
+
 		virtual GEnvelope&		GetExtent() = 0;
 		virtual GEnvelope&		GetFullExtent() = 0;
 		virtual void			GetTopLeftCorner(double &x, double &y) = 0;
@@ -40,6 +49,7 @@ namespace auge
 		virtual g_uint			GetCols(g_uint level) = 0;
 
 		virtual augeTileType	GetTileType() = 0;
+		virtual const char*		GetTileTypeAsString() = 0;
 		virtual	Tile*			GetTile(g_uint level, g_uint64 row, g_uint64 col) = 0;
 		virtual RESULTCODE		PutTile(g_uint level, g_uint64 row, g_uint64 col, const char* path) = 0;
 		virtual RESULTCODE		PutTile(g_uint level, g_uint64 row, g_uint64 col, g_uchar* data, size_t size) = 0;
@@ -53,6 +63,17 @@ namespace auge
 
 	};
 
+	class EnumTileStore
+	{
+	protected:
+		EnumTileStore(){}
+		virtual ~EnumTileStore(){}
+	public:
+		virtual	void			Reset() = 0;
+		virtual	TileStore*		Next() = 0;
+		virtual void			Release() = 0;
+	};
+
 	class TileWorkspace : virtual public Workspace
 	{
 	protected:
@@ -63,6 +84,8 @@ namespace auge
 		virtual RESULTCODE		CreateTileStore(const char* name, augeTileType type) = 0;
 		virtual RESULTCODE		CreateTileStore(const char* name, augeTileType type, g_uint start_level, g_uint end_level, GEnvelope& extent) = 0;
 		virtual RESULTCODE		RemoveTileStore() = 0;
+
+		virtual EnumTileStore*	GetTileStores() = 0;
 
 		//virtual GEnvelope&		GetExtent() = 0;
 		//virtual GEnvelope&		GetFullExtent() = 0;

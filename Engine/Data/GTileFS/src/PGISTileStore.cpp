@@ -1,5 +1,6 @@
 #include "WorkspaceTFS.h"
 #include "PGISTileStore.h"
+#include "TileImpl.h"
 #include <math.h>
 
 namespace auge
@@ -12,6 +13,7 @@ namespace auge
 		m_tile_format = "png";
 		m_full_extent.Set(-256.0f,-256.0f,256.0f,256.0f);
 		m_extent.Set(-180.0f,-90.0f,180.0f,90.0f);
+		m_name = "default";
 
 		m_pWorkspace = NULL;
 	}
@@ -71,9 +73,24 @@ namespace auge
 		return m_tile_type;
 	}
 
+	const char* PGISTileStore::GetTileTypeAsString()
+	{
+		return AUGE_TILE_TYPE_PGIS;
+	}
+
 	Tile* PGISTileStore::GetTile(g_uint level, g_uint64 row, g_uint64 col)
 	{
-		return NULL;
+		char t_path[AUGE_PATH_MAX] = {0};
+		RESULTCODE rc = GetTilePath(t_path, AUGE_PATH_MAX, level, row, col);
+		if(rc!=AG_SUCCESS)
+		{
+			return NULL;
+		}
+
+		TileImpl* pTile = new TileImpl();
+		pTile->Create(t_path);
+
+		return pTile;
 	}
 
 	RESULTCODE PGISTileStore::PutTile(g_uint level, g_uint64 row, g_uint64 col, const char* path)

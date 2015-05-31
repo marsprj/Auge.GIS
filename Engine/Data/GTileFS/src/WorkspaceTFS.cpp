@@ -1,6 +1,7 @@
 #include "WorkspaceTFS.h"
 #include "GoogleCRS84QuadTileStore.h"
 #include "PGISTileStore.h"
+#include "EnumTileStoreImpl.h"
 
 #include <math.h>
 
@@ -174,11 +175,11 @@ namespace auge
 	{
 		if(m_pTileStore==NULL)
 		{
-			GoogleCRS84QuadTileStore *pTileStore = new GoogleCRS84QuadTileStore();
-			pTileStore->Create(this);
-
-			//PGISTileStore* pTileStore = new PGISTileStore();
+			//GoogleCRS84QuadTileStore *pTileStore = new GoogleCRS84QuadTileStore();
 			//pTileStore->Create(this);
+
+			PGISTileStore* pTileStore = new PGISTileStore();
+			pTileStore->Create(this);
 
 			m_pTileStore = pTileStore;
 		}
@@ -192,6 +193,17 @@ namespace auge
 	RESULTCODE TileWorkspaceFS::RemoveTileStore()
 	{
 		return AG_SUCCESS;
+	}
+
+	EnumTileStore* TileWorkspaceFS::GetTileStores()
+	{
+		EnumTileStoreImpl* pEnumStore = new EnumTileStoreImpl();
+		TileStore* pTileStore = OpenTileStore(NULL);
+		if(pTileStore!=NULL)
+		{
+			pEnumStore->Add(pTileStore);
+		}
+		return pEnumStore;
 	}
 
 	const char*	TileWorkspaceFS::GetPath()

@@ -9,6 +9,7 @@
 #include "EnumMapImpl.h"
 #include "EnumColorMapImpl.h"
 #include "ColorMapImpl.h"
+#include "FeatureStyleImpl.h"
 
 namespace auge
 {
@@ -985,14 +986,14 @@ namespace auge
 	EnumStyle* CartoManagerImpl::GetStyles()
 	{
 		GResultSet* pResult = NULL;
-		const char* sql = "select gid, s_name,s_text,s_type from g_style";
+		const char* sql = "select gid, s_name,s_type from g_style";
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return NULL;
 		}
 
-		Style* pStyle = NULL;
+		FeatureStyleImpl* pStyle = NULL;
 		StyleReaderImpl reader;
 		EnumStyleImpl* pEnums = new EnumStyleImpl();
 		g_int count = pResult->GetCount();
@@ -1000,15 +1001,15 @@ namespace auge
 		{
 			g_int id = pResult->GetInt(i,0);
 			const char* name = pResult->GetString(i,1);
-			const char* text = pResult->GetString(i,2);
-			const char* type = pResult->GetString(i,3);
-
-			pStyle = reader.Read(text, strlen(text), NULL);		
+			const char* type = pResult->GetString(i,2);
+			
+			//pStyle = reader.Read(text, strlen(text), NULL);	
+			pStyle = new FeatureStyleImpl();
 			if(pStyle==NULL)
 			{
 				GLogger* pLogger = augeGetLoggerInstance();
 				pLogger->Error("Bad Style XML Document", __FILE__,__LINE__);
-				pLogger->Debug(text);
+				//pLogger->Debug(text);
 				continue;
 			}
 			pStyle->SetID(id);

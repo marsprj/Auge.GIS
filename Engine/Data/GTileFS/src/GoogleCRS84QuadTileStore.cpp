@@ -92,6 +92,11 @@ namespace auge
 		return m_tile_type;
 	}
 
+	const char* GoogleCRS84QuadTileStore::GetTileTypeAsString()
+	{
+		return AUGE_TILE_TYPE_GOOGLE_CRS84QUAD;
+	}
+
 	Tile* GoogleCRS84QuadTileStore::GetTile(g_uint level, g_uint64 row, g_uint64 col)
 	{
 		char t_path[AUGE_PATH_MAX] = {0};

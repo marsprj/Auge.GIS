@@ -106,7 +106,7 @@ void TileTest::WriteTest()
 			{
 				printf("\r[%d]:%d-%d-%d",counter++,l,r,c);
 				
-				pTileStore->GetExtent(viewer, l, r,c);
+				pTileStore->GetTileExtent(viewer, l, r,c);
 				pCanvas = pCartoFactory->CreateCanvas2D(256,256);
 				pCanvas->SetViewer(viewer);
 				//pCanvas->DrawBackground(bgColor);

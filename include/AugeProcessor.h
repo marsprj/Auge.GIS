@@ -30,11 +30,11 @@ namespace auge
 		virtual RESULTCODE	Execute() = 0;
 	};
 
-	class TileStoreGenerator : public GProcessor
+	class MapTileStoreGenerator : public GProcessor
 	{
 	protected:
-		TileStoreGenerator(){}
-		virtual ~TileStoreGenerator(){}
+		MapTileStoreGenerator(){}
+		virtual ~MapTileStoreGenerator(){}
 	public:
 		virtual	void	SetMap(Map* pMap) = 0;
 		virtual void	SetTileStore(TileStore* pTileStore) = 0;
@@ -42,7 +42,7 @@ namespace auge
 		virtual void	SetEndLevel(g_uint l) = 0;
 		virtual void	SetViewer(GEnvelope& viewer) = 0;
 	};
-
+	
 	class RasterTileStoreGenerator : public GProcessor
 	{
 	protected:
@@ -92,9 +92,10 @@ namespace auge
 		GProcessorFactory(){}
 		virtual ~GProcessorFactory(){}
 	public:
-		virtual TileStoreGenerator*		CreateTileStoreGenerator() = 0;
-		virtual ArchiveProcessor*		CreateArchiveProcessor() = 0;
-		virtual FeatureImportProcessor*	CreateFeatureImportProcessor() = 0;
+		virtual MapTileStoreGenerator*		CreateTileStoreGenerator() = 0;
+		virtual MapTileStoreGenerator*		CreateMongoTileStoreGenerator() = 0;
+		virtual ArchiveProcessor*			CreateArchiveProcessor() = 0;
+		virtual FeatureImportProcessor*		CreateFeatureImportProcessor() = 0;
 	};
 
 	extern "C"
