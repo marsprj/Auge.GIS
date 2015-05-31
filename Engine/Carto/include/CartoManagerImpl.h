@@ -42,6 +42,8 @@ namespace auge
 		virtual g_int			GetMapID(g_uint user, const char* name);
 		
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_id, g_uint style_id);
+		virtual Layer*			CreateWebLayer(const char* name, augeLayerType type, const char* url, g_uint map_id);
+
 		virtual RESULTCODE		RemoveLayers(const char* mapName);
 		virtual RESULTCODE		RemoveLayers(g_uint map_id);
 		virtual RESULTCODE		RemoveLayer(const char* mapName, const char* layerName);
@@ -75,7 +77,10 @@ namespace auge
 		virtual void			Cleanup();
 
 	private:
-		Layer*					CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, g_int source_id, g_int version, bool visible);
+		Layer*					CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url);
+		FeatureLayer*			CreateFeatureLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible);
+		QuadServerLayer*		CreateQuadServerLayer(int id, const char* name, const char* url, int version, bool visible);
+
 		FeatureLayer*			CreateFeatureLayer(const char* name, const char* f_name,g_uint source_id);
 		bool					HasLayer(const char* layerName, int mapID);
 

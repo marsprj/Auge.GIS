@@ -795,3 +795,22 @@ void MapTest::DrawRasterMap()
 	pCanvas->Release();
 	pMap->Release();
 }
+
+void MapTest::AddQuadServerLayer()
+{
+	//auge::QuadServerLayer* pQuadServerLayer = NULL;
+	//auge::CartoFactory* pFactory = auge::augeGetCartoFactoryInstance();
+	//pQuadServerLayer = pFactory->CreateQuadServerLayer();
+	//pQuadServerLayer->SetName("world");
+	//pQuadServerLayer->SetURL("http://ourgis.digitalearth.cn/QuadServer");
+
+	const char* name = "qs";
+	const char* url = "http://ourgis.digitalearth.cn/QuadServer";
+
+	auge::CartoManager* pCartoManager = NULL;
+	pCartoManager = auge::augeGetCartoManagerInstance();
+	auge::Map* pMap = pCartoManager->LoadMap("world");
+
+	pCartoManager->CreateWebLayer(name, auge::augeLayerQuadServer, url, pMap->GetID());
+
+}

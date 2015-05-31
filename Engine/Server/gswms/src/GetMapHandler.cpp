@@ -153,11 +153,20 @@ namespace auge
 				if(!strlen(sname))
 				{	// Default Style
 					//pCanvas->DrawLayer(pLayer);
-					Style* pStyle = pLayer->GetStyle();
-					if(pStyle!=NULL)
+					switch(pLayer->GetType())
 					{
-						sname = pStyle->GetName();
+					case augeLayerFeature:
+						{
+							FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+							Style* pStyle = pFeatureLayer->GetStyle();
+							if(pStyle!=NULL)
+							{
+								sname = pStyle->GetName();
+							}
+						}
+						break;
 					}
+					
 				}
 
 				DrawNamedLayer(pCanvas, pLayer, sname);

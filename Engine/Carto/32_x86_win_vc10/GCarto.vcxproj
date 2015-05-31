@@ -113,6 +113,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\PointSymbolizerImpl.h" />
     <ClInclude Include="..\include\PolygonLabel.h" />
     <ClInclude Include="..\include\PolygonSymbolizerImpl.h" />
+    <ClInclude Include="..\include\QuadServerLayerImpl.h" />
     <ClInclude Include="..\include\RasterLayerImpl.h" />
     <ClInclude Include="..\include\RasterStyleImpl.h" />
     <ClInclude Include="..\include\RasterSymbolizerImpl.h" />
@@ -155,6 +156,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\PointSymbolizerImpl.cpp" />
     <ClCompile Include="..\src\PolygonLabel.cpp" />
     <ClCompile Include="..\src\PolygonSymbolizerImpl.cpp" />
+    <ClCompile Include="..\src\QuadServerLayerImpl.cpp" />
     <ClCompile Include="..\src\RasterLayerImpl.cpp" />
     <ClCompile Include="..\src\RasterStyleImpl.cpp" />
     <ClCompile Include="..\src\RasterSymbolizerImpl.cpp" />

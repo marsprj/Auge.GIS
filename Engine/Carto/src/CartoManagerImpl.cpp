@@ -275,8 +275,8 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,visible,r_b,w_b,q_b,version from g_layer where m_id=%d order by gid", mid);
-
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,web_url from g_layer where m_id=%d order by gid", mid);
+		
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -286,7 +286,7 @@ namespace auge
 
 		Layer* pLayer = NULL;
 		int gid, d_id,s_id,l_type, version, visible;
-		const char* l_name, *f_name;
+		const char* l_name, *f_name,*web_url;
 		g_int count = pResult->GetCount();
 		for(g_int i=0; i<count; i++)
 		{
@@ -298,22 +298,23 @@ namespace auge
 			s_id   = pResult->GetInt(i, 5);
 			version= pResult->GetInt(i, 6);
 			visible= pResult->GetInt(i, 7);
+			web_url= pResult->GetString(i,11);
 
-			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, version,visible);
+			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, s_id, version,visible, web_url);
 			if(pLayer!=NULL)
 			{
 				pMap->AddLayer(pLayer);
-				switch(pLayer->GetType())
-				{
-				case augeLayerFeature:
-					{
-						FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-						FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-						Style* pStyle = GetStyle(s_id, pFeatureClass);
-						pLayer->SetStyle(pStyle);
-					}
-					break;
-				}
+				//switch(pLayer->GetType())
+				//{
+				//case augeLayerFeature:
+				//	{
+				//		FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+				//		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+				//		Style* pStyle = GetStyle(s_id, pFeatureClass);
+				//		pFeatureLayer->SetStyle(pStyle);
+				//	}
+				//	break;
+				//}
 			}
 		}
 		pResult->Release();
@@ -339,7 +340,8 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b from g_layer where m_id=%d order by gid", mid);
+		//g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,web_url from g_layer where m_id=%d order by gid", mid);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,web_url from g_layer where m_id=%d order by gid", mid);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -350,7 +352,7 @@ namespace auge
 
 		Layer* pLayer = NULL;
 		int gid, d_id,s_id,l_type,version,visible;
-		const char* l_name, *f_name;
+		const char* l_name, *f_name, *web_url;
 		g_int count = pResult->GetCount();
 		for(g_int i=0; i<count; i++)
 		{
@@ -362,24 +364,26 @@ namespace auge
 			s_id   = pResult->GetInt(i, 5);
 			version= pResult->GetInt(i, 6);
 			visible= pResult->GetInt(i, 7);
+			web_url= pResult->GetString(i,11);
 
-			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, version, visible);
+
+			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, s_id, version, visible, web_url);
 			if(pLayer!=NULL)
 			{
 				pMap->AddLayer(pLayer);
-				switch(pLayer->GetType())
-				{
-				case augeLayerFeature:
-					{
-						FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-						FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-						Style* pStyle = GetStyle(s_id, pFeatureClass);
-						pLayer->SetStyle(pStyle);
-					}
-					break;
-				case augeLayerRaster:
-					break;
-				}
+				//switch(pLayer->GetType())
+				//{
+				//case augeLayerFeature:
+				//	{
+				//		FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+				//		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+				//		Style* pStyle = GetStyle(s_id, pFeatureClass);
+				//		pFeatureLayer->SetStyle(pStyle);
+				//	}
+				//	break;
+				//case augeLayerRaster:
+				//	break;
+				//}
 			}
 		}
 		pResult->Release();
@@ -584,7 +588,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b from g_layer where m_id=%d order by gid", mid);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,web_url from g_layer where m_id=%d order by gid", mid);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -595,7 +599,7 @@ namespace auge
 
 		Layer* pLayer = NULL;
 		int gid, d_id,s_id,l_type,version,visible;
-		const char* l_name, *f_name;
+		const char* l_name, *f_name,*web_url;
 		g_int count = pResult->GetCount();
 		for(g_int i=0; i<count; i++)
 		{
@@ -607,24 +611,25 @@ namespace auge
 			s_id   = pResult->GetInt(i, 5);
 			version= pResult->GetInt(i, 6);
 			visible= pResult->GetInt(i, 7);
+			web_url= pResult->GetString(i,11);
 
-			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, version, visible);
+			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, s_id, version, visible, web_url);
 			if(pLayer!=NULL)
 			{
 				pMap->AddLayer(pLayer);
-				switch(pLayer->GetType())
-				{
-				case augeLayerFeature:
-					{
-						FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-						FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-						Style* pStyle = GetStyle(s_id, pFeatureClass);
-						pLayer->SetStyle(pStyle);
-					}
-					break;
-				case augeLayerRaster:
-					break;
-				}
+				//switch(pLayer->GetType())
+				//{
+				//case augeLayerFeature:
+				//	{
+				//		FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+				//		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+				//		Style* pStyle = GetStyle(s_id, pFeatureClass);
+				//		pFeatureLayer->SetStyle(pStyle);
+				//	}
+				//	break;
+				//case augeLayerRaster:
+				//	break;
+				//}
 			}
 		}
 		pResult->Release();
@@ -786,6 +791,59 @@ namespace auge
 		return pLayer;
 	}
 
+	Layer* CartoManagerImpl::CreateWebLayer(const char* name, augeLayerType type, const char* url, g_uint map_id)
+	{
+		if(name==NULL||url==NULL||m_pConnection==NULL)
+		{
+			return NULL;
+		}
+
+		if(HasLayer(name, map_id))
+		{
+			char msg[AUGE_MSG_MAX] = {0};
+			g_sprintf(msg, "Layer [%s] already exists.", name);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return NULL;
+		}
+
+		WebLayer* pWebLayer = NULL;
+		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
+		switch(type)
+		{
+		case augeLayerWMS:
+			break;
+		case augeLayerWMTS:
+			break;
+		case augeLayerWFS:
+			break;
+		case augeLayerQuadServer:
+			pWebLayer = pCartoFactory->CreateQuadServerLayer();
+			break;
+		}
+		if(pWebLayer==NULL)
+		{
+			return NULL;
+		}
+		
+		char sql[AUGE_SQL_MAX] = {0};
+		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_layer (l_name,l_type,f_name,m_id,d_id,s_id, web_url) values('%s',%d,'%s',%d,%d,%d,'%s') returning gid", name, type, "", map_id, "", "", url);
+
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+		int gid = pResult->GetInt(0,0);
+		pResult->Release();
+
+		pWebLayer->SetID(gid);
+		return pWebLayer;
+	}
+
 	g_int CartoManagerImpl::GetLayerID(const char* layerName, const char* mapName)
 	{
 		if(layerName==NULL||mapName==NULL)
@@ -833,7 +891,7 @@ namespace auge
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
-			return -1;
+			return false;
 		}
 		bool has = pResult->GetCount();
 		pResult->Release();
@@ -867,7 +925,31 @@ namespace auge
 		return pFLayer;
 	}
 
-	Layer* CartoManagerImpl::CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, g_int source_id, int version, bool visible)
+	Layer* CartoManagerImpl::CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url)
+	{
+		Layer* pLayer = NULL;
+		switch(type)
+		{
+		case augeLayerFeature:
+			{
+				pLayer = CreateFeatureLayer(id, name, f_name, source_id, style_id, version, visible);
+			}
+			break;
+		case augeLayerRaster:
+			{
+
+			}
+			break;
+		case augeLayerQuadServer:
+			{
+				pLayer = CreateQuadServerLayer(id, name, web_url, version, visible);
+			}
+		}
+
+		return pLayer;
+	}
+
+	FeatureLayer* CartoManagerImpl::CreateFeatureLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, int version, bool visible)
 	{
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
 
@@ -897,8 +979,29 @@ namespace auge
 		pFLayer->SetVersion(version);
 		pFLayer->SetVisiable(visible);
 		pFLayer->SetFeatureClass(pFeatureClass);
+
+		Style* pStyle = GetStyle(style_id, pFeatureClass);
+		pFLayer->SetStyle(pStyle);
 		
 		return pFLayer;
+	}
+	
+	QuadServerLayer* CartoManagerImpl::CreateQuadServerLayer(int id, const char* name, const char* url, int version, bool visible)
+	{
+		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
+		
+		QuadServerLayer* pLayer = pCartoFactory->CreateQuadServerLayer();
+		if(pLayer==NULL)
+		{
+			return NULL;
+		}
+
+		pLayer->SetName(name);
+		pLayer->SetID(id);
+		pLayer->SetVersion(version);
+		pLayer->SetVisiable(visible);
+		pLayer->SetURL(url);
+		return pLayer;
 	}
 
 	RESULTCODE CartoManagerImpl::RemoveLayers(const char* mapName)

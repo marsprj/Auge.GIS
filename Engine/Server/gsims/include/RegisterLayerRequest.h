@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "AugeCarto.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
@@ -30,20 +31,26 @@ namespace auge
 		const char* GetDataSource();
 		const char* GetLayerName();
 		const char* GetTableName();
+		const char* GetWebURL();
+		augeLayerType GetType();
 
+		void		SetType(const char* type);
 		void		SetVersion(const char* value);
 		void		SetMapName(const char* mapName);
 		void		SetDataSource(const char* dataSource);
 		void		SetLayerName(const char* layerName);
 		void		SetTableName(const char* tableName);
+		void		SetWebURL(const char* url);
 
 	private:
+		augeLayerType m_type;
 		std::string m_version;
 		std::string m_mime_type;
 		std::string m_map_name;
 		std::string m_data_source;
 		std::string m_layer_name;
 		std::string m_table_name;
+		std::string m_web_url;
 	};
 }
 

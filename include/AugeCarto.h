@@ -25,6 +25,11 @@ namespace auge
 		augeLayerFeature		 ,
 		augeLayerRaster			 ,
 		auerLayerTile			 ,
+		augeLayerWFS			 ,
+		augeLayerWMS			 ,
+		augeLayerWMTS			 ,
+		augeLayerQuadServer		 ,
+		augeLayerAMap			 
 	}augeLayerType;
 
 	class Layer;
@@ -80,8 +85,8 @@ namespace auge
 		virtual bool			IsVisiable() = 0;
 		virtual void			SetVisiable(bool flag) = 0;
 
-		virtual RESULTCODE		SetStyle(Style* pStyle) = 0;
-		virtual Style*			GetStyle() = 0;
+		//virtual RESULTCODE		SetStyle(Style* pStyle) = 0;
+		//virtual Style*			GetStyle() = 0;
 	};
 
 	class FeatureLayer : public Layer
@@ -93,6 +98,9 @@ namespace auge
 		virtual augeLayerType	GetType() = 0;
 		virtual RESULTCODE		SetFeatureClass(FeatureClass* pFeatureClass) = 0;
 		virtual FeatureClass*	GetFeatureClass() = 0;
+
+		virtual RESULTCODE		SetStyle(Style* pStyle) = 0;
+		virtual Style*			GetStyle() = 0;
 	};
 
 	class RasterLayer : public Layer
@@ -108,6 +116,37 @@ namespace auge
 		virtual RESULTCODE		SetRasterDataset(RasterDataset* pRasterDataset) = 0;
 		virtual RasterDataset*	GetRasterDataset() = 0;
 
+	};
+
+	class WebLayer : public Layer
+	{
+	protected:
+		WebLayer(){}
+		virtual ~WebLayer(){}
+	public:
+		virtual const char*		GetURL() = 0;
+		virtual RESULTCODE		SetURL(const char* url) = 0;
+	};
+
+	class WFSLayer : public WebLayer
+	{
+	protected:
+		WFSLayer(){}
+		virtual ~WFSLayer(){}
+	};
+
+	class WMSLayer : public WebLayer
+	{
+	protected:
+		WMSLayer(){}
+		virtual ~WMSLayer(){}
+	};
+
+	class QuadServerLayer : public WebLayer
+	{
+	protected:
+		QuadServerLayer(){}
+		virtual ~QuadServerLayer(){}
 	};
 
 	class Canvas : public GObject
@@ -247,6 +286,7 @@ namespace auge
 		virtual g_int			GetMapID(g_uint user, const char* name) = 0;
 
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_i, g_uint style_id) = 0;
+		virtual Layer*			CreateWebLayer(const char* name, augeLayerType type, const char* url, g_uint map_id) = 0;
 		virtual RESULTCODE		RemoveLayers(const char* mapName) = 0;
 		virtual RESULTCODE		RemoveLayers(g_uint map_id) = 0;
 		virtual RESULTCODE		RemoveLayer(const char* mapName, const char* layerName) = 0;
@@ -288,11 +328,13 @@ namespace auge
 		CartoFactory(){}
 		virtual ~CartoFactory(){}
 	public:
-		virtual Map*			CreateMap() = 0;
-		virtual FeatureLayer*	CreateFeatureLayer() = 0;
-		virtual RasterLayer*	CreateRasterLayer() = 0;
-		virtual Canvas*			CreateCanvas2D(g_uint width, g_uint height) = 0;
-		virtual Renderer*		CreateRenderer2D(g_uint width, g_uint height) = 0;
+		virtual Map*				CreateMap() = 0;
+		virtual FeatureLayer*		CreateFeatureLayer() = 0;
+		virtual RasterLayer*		CreateRasterLayer() = 0;
+		virtual QuadServerLayer*	CreateQuadServerLayer() = 0;
+
+		virtual Canvas*				CreateCanvas2D(g_uint width, g_uint height) = 0;
+		virtual Renderer*			CreateRenderer2D(g_uint width, g_uint height) = 0;
 	};
 
 

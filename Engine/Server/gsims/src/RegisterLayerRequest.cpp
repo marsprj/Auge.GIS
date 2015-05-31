@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
+		m_type = augeLayerNone;
 	}
 	
 	RegisterLayerRequest::~RegisterLayerRequest()
@@ -15,6 +16,7 @@ namespace auge
 
 	bool RegisterLayerRequest::Create(rude::CGI& cgi)
 	{
+		SetType(cgi["type"]);
 		SetVersion(cgi["version"]);
 		SetMapName(cgi["mapName"]);
 		SetDataSource(cgi["datasource"]);
@@ -36,6 +38,35 @@ namespace auge
 	const char*	RegisterLayerRequest::GetRequest()
 	{
 		return "RegisterLayer";
+	}
+
+	augeLayerType RegisterLayerRequest::GetType()
+	{
+		return m_type;
+	}
+
+	void RegisterLayerRequest::SetType(const char* type)
+	{
+		if(type==NULL)
+		{
+			m_type = augeLayerNone;
+		}
+		else if(g_stricmp(type,"Feature")==0)
+		{
+			m_type = augeLayerFeature;
+		}
+		else if(g_stricmp(type,"Raster")==0)
+		{
+			m_type = augeLayerRaster;
+		}
+		else if(g_stricmp(type,"QuadServer")==0)
+		{
+			m_type = augeLayerQuadServer;
+		}
+		else
+		{
+			m_type = augeLayerNone;
+		}
 	}
 
 	void RegisterLayerRequest::SetVersion(const char* value)
@@ -119,5 +150,22 @@ namespace auge
 	const char*	RegisterLayerRequest::GetTableName()
 	{
 		return m_table_name.c_str();
+	}
+
+	const char* RegisterLayerRequest::GetWebURL()
+	{
+		return m_web_url.empty() ? NULL : m_web_url.c_str();
+	}
+
+	void RegisterLayerRequest::SetWebURL(const char* url)
+	{
+		if(url==NULL)
+		{
+			m_web_url.clear();
+		}
+		else
+		{
+			m_web_url = url;
+		}
 	}
 }

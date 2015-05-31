@@ -28,7 +28,10 @@ class MapTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(DrawCountry);
 
 	//CPPUNIT_TEST(LoadColorMap);
-	CPPUNIT_TEST(DrawRasterMap);
+	//CPPUNIT_TEST(DrawRasterMap);
+	
+	CPPUNIT_TEST(AddQuadServerLayer);
+
 	
 	CPPUNIT_TEST_SUITE_END();
 public:
@@ -57,6 +60,8 @@ private:
 	void		LoadColorMap();
 
 	void		DrawRasterMap();
+
+	void		AddQuadServerLayer();
 
 private:
 	auge::Style* LoadSLD(const char* path);

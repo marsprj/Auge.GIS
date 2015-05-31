@@ -145,13 +145,31 @@ namespace auge
 				pxNode = pxLayer_2->AddChild("Abstract",NULL);
 				g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
 				pxNode = pxLayer_2->AddChild("CRS",NULL);
+
+
 				switch(pLayer->GetType())
 				{
 				case augeLayerFeature:
-					AddLayerGeomTypeNode(pxLayer_2, static_cast<FeatureLayer*>(pLayer));
+					{
+						FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+						AddLayerGeomTypeNode(pxLayer_2, pFeatureLayer);
+						Style* pStyle = pFeatureLayer->GetStyle();
+						if(pStyle!=NULL)
+						{
+							AddStyleNode(pxLayer_2, pStyle);
+						}
+					}
+					break;
+				case augeLayerRaster:
+					break;
+				case augeLayerQuadServer:
+					{
+						QuadServerLayer* pQuadServerLayer = static_cast<QuadServerLayer*>(pLayer);
+						AddWebURLNode(pxLayer_2, pQuadServerLayer->GetURL());
+					}
 					break;
 				}
-				
+
 				extent = pLayer->GetExtent();
 				if(!extent.IsValid())
 				{
@@ -159,11 +177,6 @@ namespace auge
 				}
 				AddLayerGeographicBoundingNode(pxLayer_2, extent);
 				AddLayerBoundingNode(pxLayer_2, extent, pMap->GetSRID());
-				Style* pStyle = pLayer->GetStyle();
-				if(pStyle!=NULL)
-				{
-					AddStyleNode(pxLayer_2, pStyle);
-				} 
 			}
 		}
 	}
@@ -374,5 +387,13 @@ namespace auge
 		pxNode->AddChildText(pLayer->GetName());
 
 		AddBoundingBoxNode(pxLayer, pLayer->GetExtent()); 
+	}
+
+	void DescribeMapResponse::AddWebURLNode(XElement* pxLayer, const char* url)
+	{
+		XElement* pxNode = NULL;
+		pxNode = pxLayer->AddChild("URL");
+		pxNode->AddChildText(url);
+
 	}
 }

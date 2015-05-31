@@ -273,11 +273,16 @@ namespace auge
 				AddLayerGeographicBoundingNode(pxLayer_2, extent);
 				AddLayerBoundingNode(pxLayer_2, extent, pMap->GetSRID());
 				// WMS_Capabilities-->Capability-->Layer-->Layer-->Style
-				Style* pStyle = pLayer->GetStyle();
-				if(pStyle!=NULL)
+				if(pLayer->GetType()==augeLayerFeature)
 				{
-					AddStyleNode(pxLayer_2, pStyle);
+					FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+					Style* pStyle = pFeatureLayer->GetStyle();
+					if(pStyle!=NULL)
+					{
+						AddStyleNode(pxLayer_2, pStyle);
+					}
 				}
+
 				//else
 				//{
 				//	pxNode = pxStyle->AddChild("Name",NULL);
@@ -486,35 +491,44 @@ namespace auge
 				g_sprintf(str, "%.6f", extent.m_ymax);
 				pxBounding->SetAttribute("maxy", str,NULL);
 				// WMS_Capabilities-->Capability-->Layer-->Layer-->Style
-				Style* pStyle = pLayer->GetStyle();
-				XElement* pxStyle = pxLayer_2->AddChild("Style", NULL);
-				if(pStyle!=NULL)
+				switch(pLayer->GetType())
 				{
-					pxNode = pxStyle->AddChild("Name",NULL);
-					pxNode->AddChildText(pStyle->GetName());
-					pxNode = pxStyle->AddChild("Title",NULL);
-					pxNode = pxStyle->AddChild("Abstract",NULL);
-					XElement* pxLegendURL = pxStyle->AddChild("LegendURL",NULL);
-					pxLegendURL->SetAttribute("width","20", NULL);
-					pxLegendURL->SetAttribute("height","20", NULL);
-					pxNode = pxLegendURL->AddChild("Format",NULL);
-					pxNode->SetChildText("image/png");
-					pxNode = pxLegendURL->AddChild("OnlineResource",NULL);
+				case augeLayerFeature:
+					{
+						FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+						Style* pStyle = pFeatureLayer->GetStyle();
+						XElement* pxStyle = pxLayer_2->AddChild("Style", NULL);
+						if(pStyle!=NULL)
+						{
+							pxNode = pxStyle->AddChild("Name",NULL);
+							pxNode->AddChildText(pStyle->GetName());
+							pxNode = pxStyle->AddChild("Title",NULL);
+							pxNode = pxStyle->AddChild("Abstract",NULL);
+							XElement* pxLegendURL = pxStyle->AddChild("LegendURL",NULL);
+							pxLegendURL->SetAttribute("width","20", NULL);
+							pxLegendURL->SetAttribute("height","20", NULL);
+							pxNode = pxLegendURL->AddChild("Format",NULL);
+							pxNode->SetChildText("image/png");
+							pxNode = pxLegendURL->AddChild("OnlineResource",NULL);
+						}
+						//else
+						//{
+						//	pxNode = pxStyle->AddChild("Name",NULL);
+						//	pxNode->SetChildText(pStyle->GetName());
+						//	pxNode = pxStyle->AddChild("Title",NULL);
+						//	pxNode->SetChildText(pStyle->GetName());
+						//	pxNode = pxStyle->AddChild("Abstract",NULL);
+						//	XElement* pxLegendURL = pxStyle->AddChild("LegendURL",NULL);
+						//	pxLegendURL->SetAttribute("width","20", NULL);
+						//	pxLegendURL->SetAttribute("height","20", NULL);
+						//	pxNode = pxLegendURL->AddChild("Format",NULL);
+						//	pxNode->SetChildText("image/png");
+						//	pxNode = pxLegendURL->AddChild("OnlineResource",NULL);
+						//} 
+					}
+					break;
 				}
-				//else
-				//{
-				//	pxNode = pxStyle->AddChild("Name",NULL);
-				//	pxNode->SetChildText(pStyle->GetName());
-				//	pxNode = pxStyle->AddChild("Title",NULL);
-				//	pxNode->SetChildText(pStyle->GetName());
-				//	pxNode = pxStyle->AddChild("Abstract",NULL);
-				//	XElement* pxLegendURL = pxStyle->AddChild("LegendURL",NULL);
-				//	pxLegendURL->SetAttribute("width","20", NULL);
-				//	pxLegendURL->SetAttribute("height","20", NULL);
-				//	pxNode = pxLegendURL->AddChild("Format",NULL);
-				//	pxNode->SetChildText("image/png");
-				//	pxNode = pxLegendURL->AddChild("OnlineResource",NULL);
-				//} 
+				
 			}
 		}
 

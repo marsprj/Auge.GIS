@@ -10,6 +10,9 @@
 
 namespace auge
 {
+	class Map;
+	class RegisterLayerRequest;
+
 	class RegisterLayerHandler : public WebHandler
 	{
 	public:
@@ -23,6 +26,10 @@ namespace auge
 
 		virtual WebResponse*	Execute(WebRequest* pWebRequest);
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
+
+	private:
+		WebResponse*	RegisterFeatureLayer(RegisterLayerRequest* pRequest, Map* pMap);
+		WebResponse*	RegisterQuadServerLayer(RegisterLayerRequest* pRequest, Map* pMap);
 	};
 }
 

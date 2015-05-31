@@ -2,6 +2,7 @@
 #include "MapImpl.h"
 #include "FeatureLayerImpl.h"
 #include "RasterLayerImpl.h"
+#include "QuadServerLayerImpl.h"
 
 #include "CanvasImpl.h"
 #include "RendererCairo.h"
@@ -37,6 +38,11 @@ namespace auge
 	RasterLayer* CartoFactoryImpl::CreateRasterLayer()
 	{
 		return (new RasterLayerImpl());
+	}
+
+	QuadServerLayer* CartoFactoryImpl::CreateQuadServerLayer()
+	{
+		return (new QuadServerLayerImpl());
 	}
 
 	Canvas*	CartoFactoryImpl::CreateCanvas2D(g_uint width, g_uint height)

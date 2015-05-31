@@ -41,6 +41,8 @@ namespace auge
 		void	AddLayerBoundingNode(XElement* pxParent, GEnvelope& extent, int srid);
 		void	AddStyleNode(XElement* pxParent, Style* pStyle);
 
+		void	AddWebURLNode(XElement* pxLayer, const char* url);
+
 		void	Cleanup();
 		
 	private:
