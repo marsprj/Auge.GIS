@@ -52,4 +52,5 @@ libgcarto_la_SOURCES=\
 		EnumMapImpl.cpp \
 		ExternalGraphicImpl.cpp \
 		EnumColorMapImpl.cpp \
+		QuadServerLayerImpl.cpp \
 		GraphicImpl.cpp
