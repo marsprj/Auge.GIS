@@ -1,5 +1,5 @@
-#include "CapabilitiesResponse.h"
-#include "CapabilitiesRequest.h"
+#include "WmtsCapabilitiesResponse.h"
+#include "WmtsCapabilitiesRequest.h"
 #include "AugeWebCore.h"
 #include "AugeService.h"
 #include "AugeCore.h"

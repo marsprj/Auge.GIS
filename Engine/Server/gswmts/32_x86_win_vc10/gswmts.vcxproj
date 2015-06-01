@@ -89,16 +89,19 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetTileHandler.cpp" />
     <ClCompile Include="..\src\GetTileRequest.cpp" />
     <ClCompile Include="..\src\GetTileResponse.cpp" />
+    <ClCompile Include="..\src\WmtsCapabilitiesHandler.cpp" />
+    <ClCompile Include="..\src\WmtsCapabilitiesRequest.cpp" />
+    <ClCompile Include="..\src\WmtsCapabilitiesResponse.cpp" />
     <ClCompile Include="..\src\WTileEngine.cpp" />
     <ClCompile Include="..\src\WTileRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\CapabilitiesHandler.h" />
-    <ClInclude Include="..\include\CapabilitiesRequest.h" />
-    <ClInclude Include="..\include\CapabilitiesResponse.h" />
     <ClInclude Include="..\include\GetTileHandler.h" />
     <ClInclude Include="..\include\GetTileRequest.h" />
     <ClInclude Include="..\include\GetTileResponse.h" />
+    <ClInclude Include="..\include\WmtsCapabilitiesHandler.h" />
+    <ClInclude Include="..\include\WmtsCapabilitiesRequest.h" />
+    <ClInclude Include="..\include\WmtsCapabilitiesResponse.h" />
     <ClInclude Include="..\include\WTileEngine.h" />
     <ClInclude Include="..\include\WTileRequest.h" />
   </ItemGroup>

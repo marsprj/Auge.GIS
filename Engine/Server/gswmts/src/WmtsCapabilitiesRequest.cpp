@@ -1,4 +1,4 @@
-#include "CapabilitiesRequest.h"
+#include "WmtsCapabilitiesRequest.h"
 
 namespace auge
 {	
