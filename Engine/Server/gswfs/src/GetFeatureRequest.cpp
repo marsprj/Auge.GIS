@@ -15,6 +15,7 @@ namespace auge
 		m_output_format = AUGE_WFS_OUTPUT_FORMAT_GML2;
 		m_max_features = 10;
 		m_offset = 0;
+		m_encoding = "GBK";
 
 		m_fields = NULL;
 		m_filter = NULL;
@@ -69,6 +70,23 @@ namespace auge
 		const char* sep = strstr(value,":");
 		m_full_name = value;
 		m_type_name = sep==NULL ? value : sep+1;
+	}
+
+	void GetFeatureRequest::SetEncoding(const char* encoding)
+	{
+		if((encoding==NULL)||(strlen(encoding)==0))
+		{
+			m_encoding = "GBK";
+		}
+		else
+		{
+			m_encoding = encoding;
+		}
+	}
+
+	const char* GetFeatureRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	//const char*	GetFeatureRequest::GetMimeType()
@@ -313,6 +331,8 @@ namespace auge
 		SetOffset(cgi["offset"]);
 		SetBBox(cgi["bbox"]);
 
+		SetEncoding(cgi["encoding"]);
+
 		m_filter = cgi["filter"];
 		m_fields = cgi["fields"];
 		//if(!m_extent.IsValid())
@@ -359,6 +379,12 @@ namespace auge
 		if(pxAttr!=NULL)
 		{
 			SetOffset(pxAttr->GetValue());
+		}
+
+		pxAttr = pxRoot->GetAttribute("encoding");
+		if(pxAttr!=NULL)
+		{
+			SetEncoding(pxAttr->GetValue());
 		}
 
 		XElement* pxQuery = (XElement*)pxRoot->GetFirstChild("Query");

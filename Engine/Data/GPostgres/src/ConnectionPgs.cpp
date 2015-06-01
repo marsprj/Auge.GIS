@@ -6,7 +6,8 @@ namespace auge
 {
 	ConnectionPgs::ConnectionPgs():
 	m_pgConnection(NULL),
-	m_geom_oid(-1)
+	m_geom_oid(-1),
+	m_client_encoding("GBK")
 	{
 
 	}
@@ -54,7 +55,7 @@ namespace auge
 		const char* szUser     = m_props.GetValue(AUGE_DB_USER);
 		const char* szPassword = m_props.GetValue(AUGE_DB_PASSWORD);
 		const char* szEncoding = m_props.GetValue(AUGE_DB_ENCODING);
-		if(szEncoding!=NULL)	m_client_encoding = szEncoding;
+		//if(szEncoding!=NULL)	m_client_encoding = szEncoding;
 
 		if(szServer==NULL||szDatabase==NULL||szUser==NULL||szPassword==NULL)
 		{

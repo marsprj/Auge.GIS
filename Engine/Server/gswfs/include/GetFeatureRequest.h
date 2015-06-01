@@ -44,6 +44,7 @@ namespace auge
 		g_int		GetOffset();
 		GEnvelope&	GetBBox();
 		GQuery*		GetQuery(FeatureClass* pFeatureClass);
+		const char* GetEncoding();
 
 		//void		SetVersion(const char* value);
 		//void		SetServiceName(const char* name);
@@ -53,6 +54,7 @@ namespace auge
 		void		SetMaxFeatures(const char* maxFeatures);
 		void		SetOffset(const char* offset);
 		void		SetBBox(const char* bbox);
+		void		SetEncoding(const char* encoding);
 		//void		SetQuery(const char* filter, const char* fields, const char* typeName, Map* pMap);
 
 		bool		Create(rude::CGI& cgi, Map* pMap);
@@ -77,6 +79,7 @@ namespace auge
 		std::string m_mime_type;
 		std::string m_output_format;
 		std::string m_bbox;
+		std::string m_encoding;
 		g_int		m_max_features;
 		g_int		m_offset;
 		GEnvelope	m_extent;

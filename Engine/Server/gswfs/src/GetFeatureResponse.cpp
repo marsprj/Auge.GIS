@@ -41,10 +41,12 @@ namespace auge
 
 		GLogger* pLogger = augeGetLoggerInstance();
 		XDocument* pxDoc = WriteDocument(); 
+
+		const char* encoding = m_pRequest->GetEncoding();
 		
 		int len = 0; 
 		g_uchar* buffer = NULL; 
-		pxDoc->WriteToString(&buffer, len,m_encoding.c_str(),1);
+		pxDoc->WriteToString(&buffer, len, encoding ,1);
 		pLogger->Info((char*)buffer, __FILE__, __LINE__);
 
 		pWriter->WriteHead(m_pRequest->GetMimeType(),false);
