@@ -11,11 +11,11 @@
 
 namespace auge
 {
-	class CapabilitiesRequest : public WTileRequest
+	class WmtsCapabilitiesRequest : public WTileRequest
 	{
 	public:
-		CapabilitiesRequest();
-		virtual ~CapabilitiesRequest();
+		WmtsCapabilitiesRequest();
+		virtual ~WmtsCapabilitiesRequest();
 
 	public:
 		virtual const char*		GetRequest();		

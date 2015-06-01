@@ -9,7 +9,7 @@ namespace auge
 {
 	class WTileEngine : public WebEngine
 	{
-		friend class CapabilitiesHandler;
+		friend class WmtsCapabilitiesHandler;
 
 	public:
 		WTileEngine();

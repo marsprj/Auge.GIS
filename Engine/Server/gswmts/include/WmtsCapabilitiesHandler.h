@@ -12,15 +12,15 @@ namespace auge
 {
 	class Map;
 	class WebContext;
-	class CapabilitiesRequest;
-	class CapabilitiesResponse;
+	class WmtsCapabilitiesRequest;
+	class WmtsCapabilitiesResponse;
 	class TileWorkspace;
 
-	class CapabilitiesHandler : public WebHandler
+	class WmtsCapabilitiesHandler : public WebHandler
 	{
 	public:
-		CapabilitiesHandler();
-		virtual ~CapabilitiesHandler();
+		WmtsCapabilitiesHandler();
+		virtual ~WmtsCapabilitiesHandler();
 	public:
 		virtual const char*		GetName();
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi);
@@ -33,8 +33,8 @@ namespace auge
 		
 
 	private:
-		CapabilitiesResponse*	WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName);
-		CapabilitiesResponse*	WriteCapabilities_1_3_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName);
+		WmtsCapabilitiesResponse*	WriteCapabilities_1_0_0(WmtsCapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName);
+		WmtsCapabilitiesResponse*	WriteCapabilities_1_3_0(WmtsCapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName);
 
 		void	SetRooteNode_1_0_0(XElement* pxRoot, const char* version);
 		void	AddServiceIdentificationNode_1_0_0(XElement* pxParent);
@@ -48,7 +48,7 @@ namespace auge
 		void	AddTileMatrixSet_PGIS_1_0_0(XElement* pxParent);
 
 	private:
-		CapabilitiesRequest*	m_pRequest;
+		WmtsCapabilitiesRequest*	m_pRequest;
 	};
 }
 

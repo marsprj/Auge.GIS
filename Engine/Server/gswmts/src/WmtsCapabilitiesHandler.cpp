@@ -10,24 +10,24 @@
 
 namespace auge
 {
-	CapabilitiesHandler::CapabilitiesHandler()
+	WmtsCapabilitiesHandler::WmtsCapabilitiesHandler()
 	{
 		m_pRequest = NULL;
 	}
 
-	CapabilitiesHandler::~CapabilitiesHandler()
+	WmtsCapabilitiesHandler::~WmtsCapabilitiesHandler()
 	{
 
 	}
 
-	const char*	CapabilitiesHandler::GetName()
+	const char*	WmtsCapabilitiesHandler::GetName()
 	{
 		return "GetCapabilities";
 	}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	WmtsCapabilitiesHandler::ParseRequest(rude::CGI& cgi)
 	{
-		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
+		WmtsCapabilitiesRequest* pRequest = new WmtsCapabilitiesRequest();
 		if(!pRequest->Create(cgi))
 		{ 
 			GLogger* pLogger = augeGetLoggerInstance();
@@ -40,20 +40,20 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	WebRequest*	WmtsCapabilitiesHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
 		WebRequest* pWebRequest = ParseRequest(cgi);
 		if(pWebRequest!=NULL)
 		{
-			CapabilitiesRequest* pWRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
+			WmtsCapabilitiesRequest* pWRequest = static_cast<WmtsCapabilitiesRequest*>(pWebRequest);
 			pWRequest->SetMapName(mapName);
 		}
 		return pWebRequest;
 	}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
+	WebRequest*	WmtsCapabilitiesHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
-		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
+		WmtsCapabilitiesRequest* pRequest = new WmtsCapabilitiesRequest();
 		//if(!pRequest->Create(cgi))
 		//{
 		//	GLogger* pLogger = augeGetLoggerInstance();
@@ -64,10 +64,10 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* WmtsCapabilitiesHandler::Execute(WebRequest* pWebRequest)
 	{
 		WebResponse* pWebResponse = NULL;
-		CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
+		WmtsCapabilitiesRequest* pRequest = static_cast<WmtsCapabilitiesRequest*>(pWebRequest);
 		
 		const char* version = pRequest->GetVersion();
 		if(strcmp(version,"1.0.0")==0)
@@ -90,10 +90,10 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WmtsCapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
 		WebResponse* pWebResponse = NULL;
-		CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
+		WmtsCapabilitiesRequest* pRequest = static_cast<WmtsCapabilitiesRequest*>(pWebRequest);
 		m_pRequest = pRequest;
 
 		const char* sourceName = pRequest->GetMapName();
@@ -127,7 +127,7 @@ namespace auge
 		return pWebResponse;
 	}
 	
-	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName) 
+	WmtsCapabilitiesResponse* WmtsCapabilitiesHandler::WriteCapabilities_1_0_0(WmtsCapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName) 
 	{
 		const char* cache_path = pWebContext->GetCacheProtocolPath(); 
 
@@ -170,18 +170,18 @@ namespace auge
 		pxDoc->Save(capa_path, pWebContext->GetResponseEncoding(), 1);
 		pxDoc->Release();
 
-		CapabilitiesResponse* pResponse = new CapabilitiesResponse(pRequest);
+		WmtsCapabilitiesResponse* pResponse = new WmtsCapabilitiesResponse(pRequest);
 		pResponse->SetPath(capa_path);
 		 
 		return pResponse;
 	}
 
-	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_3_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName)
+	WmtsCapabilitiesResponse* WmtsCapabilitiesHandler::WriteCapabilities_1_3_0(WmtsCapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName)
 	{
 		return WriteCapabilities_1_0_0(pRequest, pWebContext, sourceName);
 	}
 
-	void CapabilitiesHandler::SetRooteNode_1_0_0(XElement* pxRoot, const char* version)
+	void WmtsCapabilitiesHandler::SetRooteNode_1_0_0(XElement* pxRoot, const char* version)
 	{
 		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/wmts/1.0",NULL);
 		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/wmts/1.0","wmts");
@@ -193,7 +193,7 @@ namespace auge
 		pxRoot->SetAttribute("version", version, NULL);
 	}
 
-	void CapabilitiesHandler::AddServiceIdentificationNode_1_0_0(XElement* pxParent)
+	void WmtsCapabilitiesHandler::AddServiceIdentificationNode_1_0_0(XElement* pxParent)
 	{	
 		XElement *pxService = pxParent->AddChild("ServiceIdentification", "ows");
 		//XElement *pxNode = pxNode = pxService->AddChild("Name", "ows");
@@ -220,7 +220,7 @@ namespace auge
 		//pxConstraints->SetChildText("NONE");
 	}
 
-	void CapabilitiesHandler::AddServiceProviderNode_1_0_0(XElement* pxParent)
+	void WmtsCapabilitiesHandler::AddServiceProviderNode_1_0_0(XElement* pxParent)
 	{
 		XElement* pxProvider = pxParent->AddChild("ServiceProvider", "ows");
 		XElement* pxProviderName = pxProvider->AddChild("ProviderName","ows");
@@ -238,7 +238,7 @@ namespace auge
 		//pxNode = pxAddress->AddChild("Country","ows");
 	}
 
-	void CapabilitiesHandler::AddOperationsMetadataNode_1_0_0(XElement* pxParent, const char* wmts_xlink)
+	void WmtsCapabilitiesHandler::AddOperationsMetadataNode_1_0_0(XElement* pxParent, const char* wmts_xlink)
 	{
 		XElement* pxOperationsMetadata = pxParent->AddChild("OperationsMetadata", "ows");
 
@@ -280,7 +280,7 @@ namespace auge
 		}
 	}
 
-	void CapabilitiesHandler::AddTileLayersNode_1_0_0(XElement* pxParent, const char* sourceName)
+	void WmtsCapabilitiesHandler::AddTileLayersNode_1_0_0(XElement* pxParent, const char* sourceName)
 	{	
 		TileStore* pTileStore = NULL;
 		TileWorkspace* pTileWorkspace = NULL;
@@ -356,7 +356,7 @@ namespace auge
 		pEnumStore->Release();
 	}
 
-	void CapabilitiesHandler::AddTileLayerNode_1_0_0(XElement* pxParent, const char* sourceName)
+	void WmtsCapabilitiesHandler::AddTileLayerNode_1_0_0(XElement* pxParent, const char* sourceName)
 	{	
 		const char* name = "store1";
 		char str[AUGE_PATH_MAX];
@@ -417,13 +417,13 @@ namespace auge
 		}
 	}
 
-	void CapabilitiesHandler::AddTileMatrixSetNode_1_0_0(XElement* pxParent)
+	void WmtsCapabilitiesHandler::AddTileMatrixSetNode_1_0_0(XElement* pxParent)
 	{
 		AddTileMatrixSet_GoogleCRS84Quad_1_0_0(pxParent);
 		AddTileMatrixSet_PGIS_1_0_0(pxParent);
 	}
 
-	void CapabilitiesHandler::AddTileMatrixSet_GoogleCRS84Quad_1_0_0(XElement* pxParent)
+	void WmtsCapabilitiesHandler::AddTileMatrixSet_GoogleCRS84Quad_1_0_0(XElement* pxParent)
 	{
 		const char* tile_width = "256";
 		const char* tile_height= "256";
@@ -520,7 +520,7 @@ namespace auge
 		}
 	}
 
-	void CapabilitiesHandler::AddTileMatrixSet_PGIS_1_0_0(XElement* pxParent)
+	void WmtsCapabilitiesHandler::AddTileMatrixSet_PGIS_1_0_0(XElement* pxParent)
 	{
 		const char* tile_width = "256";
 		const char* tile_height= "256";

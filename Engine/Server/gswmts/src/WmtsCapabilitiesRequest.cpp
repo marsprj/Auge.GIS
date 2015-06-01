@@ -2,7 +2,7 @@
 
 namespace auge
 {	
-	CapabilitiesRequest::CapabilitiesRequest()
+	WmtsCapabilitiesRequest::WmtsCapabilitiesRequest()
 	//m_version("1.0.0"),
 	//m_mime_type("text/xml"),
 	//m_host(DEFAULT_HOST),
@@ -11,7 +11,7 @@ namespace auge
 		
 	}
 
-	CapabilitiesRequest::~CapabilitiesRequest()
+	WmtsCapabilitiesRequest::~WmtsCapabilitiesRequest()
 	{
 
 	}
@@ -26,7 +26,7 @@ namespace auge
 	//	return m_version.c_str();
 	//}
 
-	const char*	CapabilitiesRequest::GetRequest()
+	const char*	WmtsCapabilitiesRequest::GetRequest()
 	{
 		return "GetCapabilities";
 	}
@@ -96,7 +96,7 @@ namespace auge
 	//	return m_mime_type.c_str();
 	//}
 
-	bool CapabilitiesRequest::Create(rude::CGI& cgi)
+	bool WmtsCapabilitiesRequest::Create(rude::CGI& cgi)
 	{
 		const char* val = NULL;
 		SetVersion(cgi["version"]);

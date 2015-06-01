@@ -83,9 +83,6 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\CapabilitiesHandler.cpp" />
-    <ClCompile Include="..\src\CapabilitiesRequest.cpp" />
-    <ClCompile Include="..\src\CapabilitiesResponse.cpp" />
     <ClCompile Include="..\src\GetTileHandler.cpp" />
     <ClCompile Include="..\src\GetTileRequest.cpp" />
     <ClCompile Include="..\src\GetTileResponse.cpp" />
