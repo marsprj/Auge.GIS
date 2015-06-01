@@ -14,6 +14,7 @@ libgprocessor_la_LIBADD=-lgcore -larchive
 
 libgprocessor_la_SOURCES=\
 		FileSytemTileStoreGeneratorImpl.cpp \
+		MongoTileStoreGenerator.cpp \
 		ArchiveProcessorImpl.cpp \
 		FeatureImportProcessorImpl.cpp \
 		ProcessorFactoryImpl.cpp
