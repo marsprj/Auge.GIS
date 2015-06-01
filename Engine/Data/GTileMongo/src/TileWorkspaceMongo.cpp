@@ -290,15 +290,15 @@ namespace auge
 			memcpy(type, value, length);
 
 			mgo_gridfs = mongoc_client_get_gridfs(m_mongo, m_database.c_str(), name,&error);
-			if(mgo_gridfs!=NULL)
+			if(mgo_gridfs!=NULL) 
 			{
-				if(g_stricmp(type, "PGIS")==0)
+				if(g_stricmp(type, "GoogleCRS84Quad")==0)
 				{
 					GoogleCRS84QuadTileStore *pTileStoreGoogle = new GoogleCRS84QuadTileStore();
 					pTileStoreGoogle->Create(this, mgo_gridfs, name);
 					pTileStore = pTileStoreGoogle;
 				}
-				else if(g_stricmp(type, "GoogleCRS84Quad")==0)
+				else if(g_stricmp(type, "PGIS")==0)
 				{
 					PGISTileStore* pTileStorePGIS = new PGISTileStore();
 					pTileStorePGIS->Create(this, mgo_gridfs, name);

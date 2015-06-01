@@ -272,15 +272,15 @@ namespace auge
 		while((pTileStore=pEnumStore->Next())!=NULL)
 		{
 			char str[AUGE_PATH_MAX];
-			const char* name = pTileStore->GetName();
+			const char* tile_name = pTileStore->GetName();
 
 			XElement* pxLayer = pxParent->AddChild("Layer", NULL); 
 			XElement* pxTitle = pxLayer->AddChild("Title","ows");
-			pxTitle->AddChildText(name);
+			pxTitle->AddChildText(tile_name);
 			XElement* pxIdentifier = pxLayer->AddChild("Identifier","ows");
-			pxIdentifier->AddChildText(name);
+			pxIdentifier->AddChildText(tile_name);
 			XElement* pxAbstract = pxLayer->AddChild("Abstract","ows");
-			pxAbstract->AddChildText(name);
+			pxAbstract->AddChildText(tile_name);
 
 			GEnvelope& extent = pTileStore->GetExtent();
 			XElement* pxWGS84BoundingBox = pxLayer->AddChild("WGS84BoundingBox", "ows");
@@ -307,18 +307,28 @@ namespace auge
 			//pxTileMatrixSet->AddChildText("GoogleCRS84Quad");
 			pxTileMatrixSet->AddChildText(pTileStore->GetTileTypeAsString());
 
-			//XElement* pxResourceURL = pxLayer->AddChild("ResourceURL", NULL);
-			//pxResourceURL->SetAttribute("format", "image/png", NULL);
-			//pxResourceURL->SetAttribute("resourceType", "tile", NULL);
+			XElement* pxResourceURL = pxLayer->AddChild("ResourceURL", NULL);
+			pxResourceURL->SetAttribute("format", "image/png", NULL);
+			pxResourceURL->SetAttribute("resourceType", "tile", NULL);
 
-			//char strs[AUGE_PATH_MAX];
-			////g_snprintf(strs,AUGE_PATH_MAX,"http://localhost:8080/QuadServer/services/maps/wmts100/google/default/GOOGLE_TILE_STORE/{TileMatrix}/{TileRow}/{TileCol}.png");
-			////g_snprintf(str, AUGE_PATH_MAX, )
-			//g_snprintf(strs,AUGE_PATH_MAX, "http://%s/%s/%s/%s/mgr/default/GOOGLE_TILE_STORE/{TileMatrix}/{TileRow}/{TileCol}.png",m_pRequest->GetHost(),
+			char strs[AUGE_PATH_MAX];
+			//g_snprintf(strs,AUGE_PATH_MAX,"http://localhost:8080/QuadServer/services/maps/wmts100/google/default/GOOGLE_TILE_STORE/{TileMatrix}/{TileRow}/{TileCol}.png");
+			//g_snprintf(str, AUGE_PATH_MAX, )
+
+			//g_snprintf(strs,AUGE_PATH_MAX, "http://%s/%s/%s/%s/mgr/default/GOOGLE_TILE_STORE/{TileMatrix}/{TileRow}/{TileCol}.png",
+			//	m_pRequest->GetHost(),
 			//	AUGE_VIRTUAL_NAME,
 			//	m_pRequest->GetUser(),
 			//	sourceName); 
-			//pxResourceURL->SetAttribute("template", strs, NULL);
+
+			g_snprintf(strs,AUGE_PATH_MAX, "http://%s/ows/%s/%s/mgr?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=%s&STYLE=Default&FORMAT=image/png&TILEMATRIXSET=%s&TILEMATRIX={TileMatrix}&TILEROW={TileRow}&TILECOL={TileCol}",
+						m_pRequest->GetHost(),
+						m_pRequest->GetUser(),
+						sourceName,
+						tile_name,
+						pTileStore->GetTileTypeAsString());
+			//http://127.0.0.1:8088/ows/user1/tfs/mgr?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=pgis2&STYLE=Default&FORMAT=image/png&TILEMATRIXSET=GoogleCRS84Quad&TILEMATRIX=GoogleCRS84Quad:5&TILEROW=7&TILECOL=20
+			pxResourceURL->SetAttribute("template", strs, NULL);
 		}
 		pEnumStore->Release();
 	}
