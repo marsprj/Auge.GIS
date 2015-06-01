@@ -56,6 +56,16 @@ namespace auge
 		augeLayerType layerType = pRequest->GetType();
 		g_int styleID = -1;
 
+		if(layerType==augeLayerNone)
+		{
+			const char* msg = "Paramter [LayerType] is not defined";
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
 		if(mapName==NULL)
 		{
 			const char* msg = "Parameter mapName is null.";
@@ -86,10 +96,12 @@ namespace auge
 		switch(layerType)
 		{
 		case augeLayerFeature:
+			pWebResponse = RegisterFeatureLayer(pRequest, pMap);
 			break;
 		case augeLayerRaster:
 			break;
 		case augeLayerQuadServer:
+			pWebResponse = RegisterQuadServerLayer(pRequest, pMap);
 			break;
 		}
 		//Workspace *pWorkspace = NULL;

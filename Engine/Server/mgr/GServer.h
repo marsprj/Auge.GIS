@@ -15,7 +15,7 @@ namespace auge
 	class WebEngineManager;
 	class WebContext;
 	class GConnection;
-	class ConnectionManager;
+	class ConnectionManager; 
 	class CartoManager;
 	class ServiceManager;
 	class UserManager;
