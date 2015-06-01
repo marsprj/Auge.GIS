@@ -13,9 +13,9 @@ libgswmts_la_LDFLAGS=\
 libgswmts_la_LIBADD=-lgcore -lgcarto -lgscore
 
 libgswmts_la_SOURCES=\
-		CapabilitiesHandler.cpp \
-		CapabilitiesRequest.cpp \
-		CapabilitiesResponse.cpp \
+		WmtsCapabilitiesHandler.cpp \
+		WmtsCapabilitiesRequest.cpp \
+		WmtsCapabilitiesResponse.cpp \
 		GetTileHandler.cpp \
 		GetTileRequest.cpp \
 		GetTileResponse.cpp \
