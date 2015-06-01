@@ -4,7 +4,7 @@
 #include "AugeWebCore.h"
 
 #include "WTileRequest.h"
-#include "CapabilitiesHandler.h"
+#include "WmtsCapabilitiesHandler.h"
 #include "GetTileHandler.h"
 
 namespace auge
