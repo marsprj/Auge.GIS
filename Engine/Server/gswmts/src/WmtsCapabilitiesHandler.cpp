@@ -200,24 +200,11 @@ namespace auge
 		//pxNode->SetChildText("WMTS");
 		XElement *pxNode = pxNode = pxService->AddChild("Title", "ows");
 		pxNode->SetChildText("Auge Web Map Service");
-		//pxNode = pxNode = pxService->AddChild("Abstract", "ows");
-		//// WMTS_Capabilities-->ServiceIdentification-->KeywordList
-		//XElement *pxKeywords = pxService->AddChild("KeywordList", "ows");
-		//pxNode = pxNode = pxKeywords->AddChild("Keyword", "ows");
-		//pxNode->SetChildText("WMTS");
-		//pxNode = pxNode = pxKeywords->AddChild("Keyword", "ows"); 
-		//pxNode->SetChildText("AugeGIS");
 		// WMTS_Capabilities-->ServiceIdentification-->ServiceType
 		pxNode = pxService->AddChild("ServiceType", "ows");
 		pxNode->SetChildText("WMTS");
 		pxNode = pxService->AddChild("ServiceTypeVersion", "ows");
 		pxNode->SetChildText("1.0.0");
-		//// WMTS_Capabilities-->ServiceIdentification-->Fees
-		//XElement *pxFees = pxService->AddChild("Fees", "ows");
-		//pxFees->SetChildText("NONE");
-		//// WMTS_Capabilities-->ServiceIdentification-->AccessConstraints
-		//XElement *pxConstraints = pxService->AddChild("AccessConstraints", "ows");
-		//pxConstraints->SetChildText("NONE");
 	}
 
 	void WmtsCapabilitiesHandler::AddServiceProviderNode_1_0_0(XElement* pxParent)
@@ -227,15 +214,6 @@ namespace auge
 		pxProviderName->SetChildText("Auge GIS");
 		XElement* pxServiceContact = pxProvider->AddChild("ServiceContact","ows");
 		XElement* pxNode = pxServiceContact->AddChild("IndividualName","ows");
-		//pxNode = pxServiceContact->AddChild("PositionName","ows");
-		//XElement* pxContactInfo = pxServiceContact->AddChild("PositionName","ows");
-		//XElement* pxPhone = pxContactInfo->AddChild("Phone","ows");
-		//pxNode = pxPhone->AddChild("Voice","ows");
-		//pxNode = pxPhone->AddChild("Facsimile","ows");
-		//XElement* pxAddress = pxContactInfo->AddChild("Address","ows");
-		//pxNode = pxAddress->AddChild("City","ows");
-		//pxNode = pxAddress->AddChild("AdministrativeArea","ows");
-		//pxNode = pxAddress->AddChild("Country","ows");
 	}
 
 	void WmtsCapabilitiesHandler::AddOperationsMetadataNode_1_0_0(XElement* pxParent, const char* wmts_xlink)
@@ -266,17 +244,6 @@ namespace auge
 			XElement* pxAllowedValues = pxConstraint->AddChild("AllowedValues","ows");
 			XElement* pxValue = pxAllowedValues->AddChild("Value","ows");
 			pxValue->AddChildText("KVP");
-			//pxNode = pxHTTP->AddChild("Post", "ows");
-			//pxNode->SetAttribute("href",wmts_xlink,"xlink");
-			// Capabilities-->OperationsMetadata-->Operation-->Parameter(AcceptVersion)
-			//XElement* pxParameter = pxOperation->AddChild("Parameter", "ows");
-			//pxNode = pxParameter->AddChild("Value", "ows");
-			//pxNode->AddChildText("1.0.0");
-			//pxNode = pxParameter->AddChild("Value", "ows");
-			//pxNode->AddChildText("1.1.0"); 
-			//pxParameter = pxOperation->AddChild("AcceptFormats", "ows");
-			//pxNode = pxParameter->AddChild("Value", "ows");
-			//pxNode->AddChildText("text/xml");
 		}
 	}
 
