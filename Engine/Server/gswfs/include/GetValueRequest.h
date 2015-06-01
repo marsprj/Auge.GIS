@@ -35,6 +35,7 @@ namespace auge
 		void		SetUser(const char* user);
 		void		SetServiceName(const char* serviceName);
 		void		SetTypeName(const char* typeName);
+		void		SetEncoding(const char* encoding);
 
 		void		SetField(const char* field);
 		void		SetOrder(const char* order);
