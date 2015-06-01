@@ -7,7 +7,7 @@ namespace auge
 	m_version("1.0.0"),
 	m_mime_type("text/xml"),
 	m_order(augeOrderAsc),
-	m_encoding("GBK")
+	m_encoding(AUGE_DEFAULT_ENCODING)
 	{
 
 	}
@@ -91,6 +91,7 @@ namespace auge
 		SetOrder(cgi["order"]);
 		SetMapName(cgi["mapName"]);
 		SetSourceName(cgi["sourceName"]);
+		SetEncoding(cgi["encoding"]);
 		return true;
 	}
 
@@ -152,5 +153,17 @@ namespace auge
 	const char* GetValueRequest::GetEncoding()
 	{
 		return m_encoding.c_str();
+	}
+
+	void GetValueRequest::SetEncoding(const char* encoding)
+	{
+		if((encoding==NULL)||(strlen(encoding)==0))
+		{
+			m_encoding = AUGE_DEFAULT_ENCODING;
+		}
+		else
+		{
+			m_encoding = encoding;
+		}
 	}
 }

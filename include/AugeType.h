@@ -84,6 +84,8 @@ typedef unsigned long long  g_uint64;
 #define AUGE_DB_PASSWORD	"PASSWORD"
 #define AUGE_DB_ENCODING	"ENCODING"
 
+#define AUGE_DEFAULT_ENCODING	"GBK"
+
 #ifndef g_stricmp
 #	ifdef WIN32
 #		define g_stricmp	_stricmp
