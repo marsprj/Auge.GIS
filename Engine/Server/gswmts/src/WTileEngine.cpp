@@ -18,7 +18,9 @@ namespace auge
 	WTileEngine::WTileEngine()
 	{
 		m_handler = NULL;
-		m_handlers.push_back(new WmtsCapabilitiesHandler());
+		WmtsCapabilitiesHandler* hander = new WmtsCapabilitiesHandler();
+		hander->SetEngine(this);
+		m_handlers.push_back(hander);
 		m_handlers.push_back(new GetTileHandler());
 		
 	}

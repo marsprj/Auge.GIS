@@ -15,6 +15,7 @@ namespace auge
 	class WmtsCapabilitiesRequest;
 	class WmtsCapabilitiesResponse;
 	class TileWorkspace;
+	class WTileEngine;
 
 	class WmtsCapabilitiesHandler : public WebHandler
 	{
@@ -30,7 +31,8 @@ namespace auge
 		virtual WebResponse*	Execute(WebRequest* pWebRequest);
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
 
-		
+	public:
+		void	SetEngine(WTileEngine *pEngine);
 
 	private:
 		WmtsCapabilitiesResponse*	WriteCapabilities_1_0_0(WmtsCapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName);
@@ -49,6 +51,7 @@ namespace auge
 
 	private:
 		WmtsCapabilitiesRequest*	m_pRequest;
+		WTileEngine*				m_pEngine;
 	};
 }
 

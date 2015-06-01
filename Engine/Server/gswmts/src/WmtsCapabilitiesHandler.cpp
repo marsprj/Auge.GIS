@@ -13,11 +13,18 @@ namespace auge
 	WmtsCapabilitiesHandler::WmtsCapabilitiesHandler()
 	{
 		m_pRequest = NULL;
+		m_pEngine = NULL;
 	}
 
 	WmtsCapabilitiesHandler::~WmtsCapabilitiesHandler()
 	{
+		m_pRequest = NULL;
+		m_pEngine = NULL;
+	}
 
+	void WmtsCapabilitiesHandler::SetEngine(WTileEngine *pEngine)
+	{
+		m_pEngine = pEngine;
 	}
 
 	const char*	WmtsCapabilitiesHandler::GetName()
@@ -221,8 +228,8 @@ namespace auge
 		XElement* pxOperationsMetadata = pxParent->AddChild("OperationsMetadata", "ows");
 
 		// Service Handlers
-		WTileEngine* pFeatureEngine = (WTileEngine*)augeGetWebEngineInstance();
-		std::vector<WebHandler*>& handlers = pFeatureEngine->m_handlers;
+		//WTileEngine* pFeatureEngine = (WTileEngine*)augeGetWebEngineInstance();
+		std::vector<WebHandler*>& handlers = m_pEngine->m_handlers;
 		std::vector<WebHandler*>::iterator iter;
 		for(iter=handlers.begin(); iter!=handlers.end(); iter++)
 		{
