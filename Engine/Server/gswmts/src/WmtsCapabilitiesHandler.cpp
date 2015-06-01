@@ -331,7 +331,7 @@ namespace auge
 			pxTitle->SetChildText("Default Style");
 			pxIdentifier = pxStyle->AddChild("Identifier", "ows");
 			pxIdentifier->AddChildText("Default");
-
+			 
 			XElement* pxFormat = pxLayer->AddChild("Format",NULL);
 			pxFormat->AddChildText("image/png");
 
@@ -340,18 +340,18 @@ namespace auge
 			//pxTileMatrixSet->AddChildText("GoogleCRS84Quad");
 			pxTileMatrixSet->AddChildText(pTileStore->GetTileTypeAsString());
 
-			XElement* pxResourceURL = pxLayer->AddChild("ResourceURL", NULL);
-			pxResourceURL->SetAttribute("format", "image/png", NULL);
-			pxResourceURL->SetAttribute("resourceType", "tile", NULL);
+			//XElement* pxResourceURL = pxLayer->AddChild("ResourceURL", NULL);
+			//pxResourceURL->SetAttribute("format", "image/png", NULL);
+			//pxResourceURL->SetAttribute("resourceType", "tile", NULL);
 
-			char strs[AUGE_PATH_MAX];
-			//g_snprintf(strs,AUGE_PATH_MAX,"http://localhost:8080/QuadServer/services/maps/wmts100/google/default/GOOGLE_TILE_STORE/{TileMatrix}/{TileRow}/{TileCol}.png");
-			//g_snprintf(str, AUGE_PATH_MAX, )
-			g_snprintf(strs,AUGE_PATH_MAX, "http://%s/%s/%s/%s/mgr/default/GOOGLE_TILE_STORE/{TileMatrix}/{TileRow}/{TileCol}.png",m_pRequest->GetHost(),
-				AUGE_VIRTUAL_NAME,
-				m_pRequest->GetUser(),
-				sourceName); 
-			pxResourceURL->SetAttribute("template", strs, NULL);
+			//char strs[AUGE_PATH_MAX];
+			////g_snprintf(strs,AUGE_PATH_MAX,"http://localhost:8080/QuadServer/services/maps/wmts100/google/default/GOOGLE_TILE_STORE/{TileMatrix}/{TileRow}/{TileCol}.png");
+			////g_snprintf(str, AUGE_PATH_MAX, )
+			//g_snprintf(strs,AUGE_PATH_MAX, "http://%s/%s/%s/%s/mgr/default/GOOGLE_TILE_STORE/{TileMatrix}/{TileRow}/{TileCol}.png",m_pRequest->GetHost(),
+			//	AUGE_VIRTUAL_NAME,
+			//	m_pRequest->GetUser(),
+			//	sourceName); 
+			//pxResourceURL->SetAttribute("template", strs, NULL);
 		}
 		pEnumStore->Release();
 	}
