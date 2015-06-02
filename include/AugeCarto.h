@@ -169,6 +169,7 @@ namespace auge
 		virtual Renderer*		GetRenderer() = 0;
 
 		virtual RESULTCODE		Save(const char* path) = 0;
+		virtual RESULTCODE		Save(g_uint x, g_uint y, g_uint width, g_uint height, const char* path) = 0;
 	};
 
 	class Renderer : public GObject
@@ -211,7 +212,8 @@ namespace auge
 									augeFontWeight weight=augeFontWeightNormal) = 0;
 		virtual bool		GetTextExtent(const char* text, GEnvelope& extent) = 0;
 
-		virtual bool		SaveAsImage(const char* path) = 0;
+		virtual RESULTCODE	SaveAsImage(const char* path) = 0;
+		virtual RESULTCODE	SaveAsImage(g_uint x, g_uint y, g_uint width, g_uint height, const char* path) = 0;
 	};
 
 	class Transformation

@@ -489,6 +489,11 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	RESULTCODE CanvasImpl::Save(g_uint x, g_uint y, g_uint width, g_uint height, const char* path)
+	{
+		return AG_SUCCESS;
+	}
+
 	void CanvasImpl::DrawBackground(GColor& color)
 	{
 		m_pRenderer->FillRectangle(m_width, m_height, color);

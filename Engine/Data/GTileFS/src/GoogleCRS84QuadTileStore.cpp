@@ -58,16 +58,31 @@ namespace auge
 		y = -90;
 	}
 
-	g_uint GoogleCRS84QuadTileStore::GetRows(g_uint level)
+	g_uint64 GoogleCRS84QuadTileStore::GetRows(g_uint level)
 	{
 		float l = level > 20 ? 20 : level;
 		return pow(2, l-1);
 	}
 	
-	g_uint GoogleCRS84QuadTileStore::GetCols(g_uint level)
+	g_uint64 GoogleCRS84QuadTileStore::GetCols(g_uint level)
 	{
 		float l = level > 20 ? 20 : level;
 		return pow(2, l);
+	}
+
+	g_uint64 GoogleCRS84QuadTileStore::GetBlockRows(g_uint level)
+	{
+		return GetRows(level) >> (AUGE_TILE_BLOCK_SIZE >> 8);
+	}
+
+	g_uint64 GoogleCRS84QuadTileStore::GetBlockCols(g_uint level)
+	{
+		return 0;
+	}
+
+	TileBlock* GoogleCRS84QuadTileStore::GetBlock(g_uint level, g_uint64 row, g_uint64 col)
+	{
+		return NULL;
 	}
 
 	const char*	GoogleCRS84QuadTileStore::GetName()

@@ -7,6 +7,8 @@
 
 namespace auge
 {
+	class TileBlock;
+
 	class FileSystemTileStoreGeneratorImpl : public MapTileStoreGenerator
 	{
 	public:
@@ -19,6 +21,9 @@ namespace auge
 		virtual void		SetEndLevel(g_uint l);
 		virtual void		SetViewer(GEnvelope& viewer);
 		virtual RESULTCODE	Execute();
+
+	private:
+		RESULTCODE			BuildBlock(TileBlock* pBlock);
 
 	private:
 		Map*			m_pMap;

@@ -25,8 +25,12 @@ namespace auge
 		virtual GEnvelope&		GetFullExtent();
 		virtual void			GetTopLeftCorner(double &x, double &y);
 
-		virtual g_uint			GetRows(g_uint level);
-		virtual g_uint			GetCols(g_uint level);
+		virtual g_uint64		GetRows(g_uint level);
+		virtual g_uint64		GetCols(g_uint level);
+
+		virtual g_uint64		GetBlockRows(g_uint level);
+		virtual g_uint64		GetBlockCols(g_uint level);
+		virtual TileBlock*		GetBlock(g_uint level, g_uint64 row, g_uint64 col);
 
 		virtual augeTileType	GetTileType();
 		virtual const char*		GetTileTypeAsString();

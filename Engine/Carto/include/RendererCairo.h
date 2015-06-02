@@ -51,7 +51,8 @@ namespace auge
 		virtual bool		GetTextExtent(const char* text, GEnvelope& extent);
 
 	public:
-		virtual bool		SaveAsImage(const char* szPath);
+		virtual RESULTCODE	SaveAsImage(const char* szPath);
+		virtual RESULTCODE	SaveAsImage(g_uint x, g_uint y, g_uint width, g_uint height, const char* path);
 		virtual void		Relaese();
 
 	private:

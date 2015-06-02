@@ -38,16 +38,31 @@ namespace auge
 		y = -256;
 	}
 
-	g_uint PGISTileStore::GetRows(g_uint level)
+	g_uint64 PGISTileStore::GetRows(g_uint level)
 	{
 		float l = level > 20 ? 20 : level;
 		return pow(2, l);
 	}
 	
-	g_uint PGISTileStore::GetCols(g_uint level)
+	g_uint64 PGISTileStore::GetCols(g_uint level)
 	{
 		float l = level > 20 ? 20 : level;
 		return pow(2, l);
+	}
+	
+	g_uint64 PGISTileStore::GetBlockRows(g_uint level)
+	{
+		return GetRows(level) / (AUGE_TILE_BLOCK_SIZE >> 8);
+	}
+
+	g_uint64 PGISTileStore::GetBlockCols(g_uint level)
+	{
+		return GetCols(level) / (AUGE_TILE_BLOCK_SIZE >> 8);
+	}
+
+	TileBlock* PGISTileStore::GetBlock(g_uint level, g_uint64 row, g_uint64 col)
+	{
+		return NULL;
 	}
 
 	const char*	PGISTileStore::GetName()

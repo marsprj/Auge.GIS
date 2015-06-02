@@ -31,6 +31,7 @@ namespace auge
 		virtual Renderer*		GetRenderer();
 
 		virtual RESULTCODE		Save(const char* path);
+		virtual RESULTCODE		Save(g_uint x, g_uint y, g_uint width, g_uint height, const char* path);
 
 	private:
 		void		DrawLayer(FeatureLayer* pLayer, Rule* pRule);

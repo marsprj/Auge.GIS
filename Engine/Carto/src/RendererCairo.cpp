@@ -78,14 +78,21 @@ namespace auge
 		cairo_fill(m_cairo);
 	}
 
-	bool RendererCairo::SaveAsImage(const char* szPath)
+	RESULTCODE RendererCairo::SaveAsImage(const char* szPath)
 	{
 		if(szPath==NULL)
 		{
-			return false;
+			return AG_FAILURE;
 		}
 		cairo_surface_write_to_png(m_cairo_surface, szPath);
-		return true;
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE RendererCairo::SaveAsImage(g_uint x, g_uint y, g_uint width, g_uint height, const char* path)
+	{
+
+
+		return AG_SUCCESS;
 	}
 
 	void RendererCairo::DrawCircle(int cx, int cy, float radius, Stroke* pStroke)

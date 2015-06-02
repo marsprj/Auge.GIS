@@ -69,7 +69,8 @@ namespace auge
 					break;
 				case augeValueTypeString:
 					{
-						pxValue->AddChildText(pValue->GetString());
+						const char* value = pValue->GetString();
+						pxValue->AddChildText(value,true);
 					}
 					break;
 				}
