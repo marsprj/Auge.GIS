@@ -124,17 +124,12 @@ namespace auge
 	{
 		if(m_pxNode->type == XML_ELEMENT_NODE)
 		{
-			//char* content_utf8 = (char*)content;
-			//size_t size_utf8 = 0;
-			//char content_utf8[AUGE_PATH_MAX];
-			//memset(content_utf8, 0, AUGE_PATH_MAX);
-			//auge_encoding_convert_2("GBK", "UTF-8",content, strlen(content), (char*)content_utf8, &size_utf8);
 			xmlNode* node = NULL;
-			if(encoding)
-			{	
-				size_t content_len = strlen(content);
-				if(content_len==0)
-				{
+			size_t content_len = strlen(content);
+			if(content_len>0)
+			{
+				if(encoding)
+				{	
 					size_t size_utf8 = content_len << 1;
 					////char* content_utf8 = (char*)content;
 					//
@@ -154,8 +149,9 @@ namespace auge
 			}
 			else
 			{
-				node = xmlNewText((const xmlChar*)content);
+				node = xmlNewText((const xmlChar*)"");
 			}
+			
 
 			// Use the result, because node can be freed when merging text nodes:
 			node = xmlAddChild(m_pxNode, node); 
