@@ -139,7 +139,7 @@ namespace auge
 		const char* cache_path = pWebContext->GetCacheProtocolPath(); 
 
 		char wmts_xlink[AUGE_MSG_MAX];
-		g_sprintf(wmts_xlink, "http://%s/%s/%s/%s/mgr?",	pRequest->GetHost(),
+		g_sprintf(wmts_xlink, "http://%s/%s/%s/%s/wmts?",	pRequest->GetHost(),
 																	AUGE_VIRTUAL_NAME,
 																	pRequest->GetUser(),
 																	sourceName); 
