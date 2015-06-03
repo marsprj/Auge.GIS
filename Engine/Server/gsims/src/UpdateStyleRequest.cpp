@@ -104,18 +104,23 @@ namespace auge
 				m_style = NULL;
 			}
 			size_t len = strlen(style);
-			size_t len_gbk = len << 1;
-			m_style = (char*)malloc(len_gbk);
-			memset(m_style, 0, len_gbk);
-			g_int ret = auge_encoding_convert_2("UTF-8", "GBK", style, len, m_style, &len_gbk);
-			GLogger *pLogger = augeGetLoggerInstance();
-			pLogger->Debug(m_style, __FILE__,__LINE__);
-			if(ret<0)
-			{
-				strcpy(m_style, style);
-				//free(m_style);
-				//m_style = NULL;
-			}
+			m_style = (char*)malloc(len+1);
+			memset(m_style, 0, len+1);
+			memcpy(m_style, style, len);
+
+			//size_t len = strlen(style);
+			//size_t len_gbk = len << 1;
+			//m_style = (char*)malloc(len_gbk);
+			//memset(m_style, 0, len_gbk);
+			//g_int ret = auge_encoding_convert_2("UTF-8", "GBK", style, len, m_style, &len_gbk);
+			//GLogger *pLogger = augeGetLoggerInstance();
+			//pLogger->Debug(m_style, __FILE__,__LINE__);
+			//if(ret<0)
+			//{
+			//	strcpy(m_style, style);
+			//	//free(m_style);
+			//	//m_style = NULL;
+			//}
 		}
 		//if(style==NULL)
 		//{

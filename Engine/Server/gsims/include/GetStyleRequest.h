@@ -44,6 +44,6 @@ namespace auge
 -------------------------------------------------------------------------
 service=ims&version=1.0.0&request=GetStyle&name=point
 
-http://127.0.0.1:8088/ows/user1/mgr?
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=GetStyle&name=point
 http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=SetStyle&map=world&&layer=cities&style=point
 ************************************************************************/
