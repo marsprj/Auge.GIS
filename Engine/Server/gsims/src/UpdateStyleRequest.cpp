@@ -122,19 +122,10 @@ namespace auge
 			//	//m_style = NULL;
 			//}
 		}
-		//if(style==NULL)
-		//{
-		//	m_style.c_str();
-		//}
-		//else
-		//{
-		//	m_style = style;
-		//}
 	}
 	
 	const char*	UpdateStyleRequest::GetStyle()
 	{
-		//return m_style.c_str();
 		return m_style;
 	}
 
