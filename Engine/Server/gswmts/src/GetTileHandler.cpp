@@ -84,6 +84,9 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
+		char msg[AUGE_MSG_MAX];
+		g_sprintf(msg,"[SourceName]:%s",sourceName);
+		pLogger->Debug(msg,__FILE__,__LINE__);
 		const char* storeName = pRequest->GetStoreName();
 		if(storeName==NULL)
 		{
