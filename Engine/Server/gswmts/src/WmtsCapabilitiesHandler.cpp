@@ -328,13 +328,13 @@ namespace auge
 			//	m_pRequest->GetUser(),
 			//	sourceName); 
 
-			g_snprintf(strs,AUGE_PATH_MAX, "http://%s/ows/%s/%s/mgr?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=%s&STYLE=Default&FORMAT=image/png&TILEMATRIXSET=%s&TILEMATRIX={TileMatrix}&TILEROW={TileRow}&TILECOL={TileCol}",
+			g_snprintf(strs,AUGE_PATH_MAX, "http://%s/ows/%s/%s/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=%s&STYLE=Default&FORMAT=image/png&TILEMATRIXSET=%s&TILEMATRIX={TileMatrix}&TILEROW={TileRow}&TILECOL={TileCol}",
 						m_pRequest->GetHost(),
 						m_pRequest->GetUser(),
 						sourceName,
 						tile_name,
 						pTileStore->GetTileTypeAsString());
-			//http://127.0.0.1:8088/ows/user1/tfs/mgr?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=pgis2&STYLE=Default&FORMAT=image/png&TILEMATRIXSET=GoogleCRS84Quad&TILEMATRIX=GoogleCRS84Quad:5&TILEROW=7&TILECOL=20
+			//http://127.0.0.1:8088/ows/user1/tfs/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=pgis2&STYLE=Default&FORMAT=image/png&TILEMATRIXSET=GoogleCRS84Quad&TILEMATRIX=GoogleCRS84Quad:5&TILEROW=7&TILECOL=20
 			pxResourceURL->SetAttribute("template", strs, NULL);
 		}
 		pEnumStore->Release();
