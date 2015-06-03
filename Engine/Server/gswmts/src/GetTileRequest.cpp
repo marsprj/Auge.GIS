@@ -38,6 +38,9 @@ namespace auge
 		SetRow(cgi["tilerow"]);
 		SetCol(cgi["tilecol"]);
 
+		GLogger* pLogger = augeGetLoggerInstance();
+		pLogger->Debug(m_map_name.c_str(),__FILE__,__LINE__);
+
 		//SetServiceName(cgi["servicename"]);
 		return true;
 	}
