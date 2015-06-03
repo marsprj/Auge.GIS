@@ -226,15 +226,15 @@ namespace auge
 		TileStore* pTileStore = NULL;
 		if(g_stricmp(type, "PGIS")==0)
 		{
-			GoogleCRS84QuadTileStore *pTileStoreGoogle = new GoogleCRS84QuadTileStore();
-			pTileStoreGoogle->Create(this, mgo_gridfs, name);
-			pTileStore = pTileStoreGoogle;
-		}
-		else if(g_stricmp(type, "GoogleCRS84Quad")==0)
-		{
 			PGISTileStore* pTileStorePGIS = new PGISTileStore();
 			pTileStorePGIS->Create(this, mgo_gridfs, name);
 			pTileStore = pTileStorePGIS;
+		}
+		else if(g_stricmp(type, "GoogleCRS84Quad")==0)
+		{
+			GoogleCRS84QuadTileStore *pTileStoreGoogle = new GoogleCRS84QuadTileStore();
+			pTileStoreGoogle->Create(this, mgo_gridfs, name);
+			pTileStore = pTileStoreGoogle;
 		}		
 		
 		return pTileStore;
