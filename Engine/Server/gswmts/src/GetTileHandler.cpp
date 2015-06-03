@@ -104,7 +104,7 @@ namespace auge
 		{
 			char msg[AUGE_MSG_MAX];
 			g_snprintf(msg, AUGE_MSG_MAX, "Cannot Connect to DataSource [%s]",sourceName);
-			pLogger->Error(msg);
+			pLogger->Error(msg,__FILE__,__LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();			
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
