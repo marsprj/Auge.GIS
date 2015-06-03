@@ -6,11 +6,16 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
+		m_style = NULL;
 	}
 
 	UpdateStyleRequest::~UpdateStyleRequest()
 	{
-
+		if(m_style)
+		{
+			free(m_style);
+			m_style = NULL;
+		}
 	}
 
 	bool UpdateStyleRequest::Create(rude::CGI& cgi)
@@ -85,17 +90,47 @@ namespace auge
 	{
 		if(style==NULL)
 		{
-			m_style.c_str();
+			if(m_style!=NULL)
+			{
+				free(m_style);
+				m_style = NULL;
+			}
 		}
 		else
 		{
-			m_style = style;
+			if(m_style!=NULL)
+			{
+				free(m_style);
+				m_style = NULL;
+			}
+			size_t len = strlen(style);
+			size_t len_gbk = len << 1;
+			m_style = (char*)malloc(len_gbk);
+			memset(m_style, 0, len_gbk);
+			g_int ret = auge_encoding_convert_2("UTF-8", "GBK", style, len, m_style, &len_gbk);
+			GLogger *pLogger = augeGetLoggerInstance();
+			pLogger->Debug(m_style, __FILE__,__LINE__);
+			if(ret<0)
+			{
+				strcpy(m_style, style);
+				//free(m_style);
+				//m_style = NULL;
+			}
 		}
+		//if(style==NULL)
+		//{
+		//	m_style.c_str();
+		//}
+		//else
+		//{
+		//	m_style = style;
+		//}
 	}
 	
 	const char*	UpdateStyleRequest::GetStyle()
 	{
-		return m_style.c_str();
+		//return m_style.c_str();
+		return m_style;
 	}
 
 	void UpdateStyleRequest::SetType(const char* type)

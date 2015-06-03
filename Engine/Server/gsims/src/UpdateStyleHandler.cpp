@@ -55,6 +55,7 @@ namespace auge
 
 		const char* name = pRequest->GetName();
 		const char* text = pRequest->GetStyle();
+
 		RESULTCODE rc = pCartoManager->UpdateStyle(name, text);
 		if(rc!=AG_SUCCESS) 
 		{

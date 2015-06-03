@@ -42,7 +42,8 @@ namespace auge
 		std::string m_mime_type;
 		std::string m_name;
 		std::string m_type;
-		std::string m_style;
+		//std::string m_style;
+		char*		m_style;
 	};
 }
 

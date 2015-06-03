@@ -1456,7 +1456,7 @@ namespace auge
 	}
 
 	RESULTCODE CartoManagerImpl::UpdateStyle(const char* name, const char* text)
-	{
+	{	
 		if(name==NULL||text==NULL)
 		{
 			return AG_FAILURE;

@@ -28,7 +28,6 @@ namespace auge
 
 		GLogger* pLogger = augeGetLoggerInstance();
 		const char* typeName = m_pRequest->GetTypeName();
-
 		
 		XElement  *pxNode = NULL;
 		XElement  *pxRoot = NULL;

@@ -131,9 +131,19 @@ namespace auge
 			//auge_encoding_convert_2("GBK", "UTF-8",content, strlen(content), (char*)content_utf8, &size_utf8);
 			xmlNode* node = NULL;
 			if(encoding)
-			{
-				const char* content_utf8 = auge_encoding_convert("GBK", "UTF-8",content, strlen(content));
+			{	
+				size_t content_len = strlen(content);
+				size_t size_utf8 = content_len << 1;
+				////char* content_utf8 = (char*)content;
+				//
+				char* content_utf8 = new char[size_utf8];
+				memset(content_utf8, 0, size_utf8);
+				auge_encoding_convert_2("GBK", "UTF-8",content, content_len, (char*)content_utf8, &size_utf8);
 				node = xmlNewText((const xmlChar*)content_utf8);
+				delete[] content_utf8;
+
+				//const char* content_utf8 = auge_encoding_convert("GBK", "UTF-8",content, strlen(content));
+				//node = xmlNewText((const xmlChar*)content_utf8);
 			}
 			else
 			{
