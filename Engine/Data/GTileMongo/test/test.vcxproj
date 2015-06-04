@@ -39,8 +39,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\DevEnv\cppunit-1.13.2\include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;E:\DevEnv\cairo-dev_1.10.2-2_win32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\DevEnv\cppunit-1.13.2\lib;%AUGE_GIS_HOME%/Dist\32_x86_win_vc10\lib;E:\DevEnv\cairo-dev_1.10.2-2_win32\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\DevEnv\cppunit-1.13.2\include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;E:\DevEnv\cairo-dev_1.10.2-2_win32\include;E:\Research\Auge.GIS\Engine\Data\GTileMongo\mongo-c-driver\include\libmongoc-1.0;E:\Research\Auge.GIS\Engine\Data\GTileMongo\mongo-c-driver\include\libbson-1.0;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\DevEnv\cppunit-1.13.2\lib;%AUGE_GIS_HOME%/Dist\32_x86_win_vc10\lib;E:\DevEnv\cairo-dev_1.10.2-2_win32\lib;E:\Research\Auge.GIS\Engine\Data\GTileMongo\mongo-c-driver\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -56,7 +56,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>cppunitd.lib;GRasterFSD.lib;cairo.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cppunitd.lib;GRasterFSD.lib;cairo.lib;bson-1.0.lib;mongoc-1.0.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(OutDir)\$(TargetName).exe %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\binD</Command>
@@ -81,9 +81,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MongoTest.cpp" />
     <ClCompile Include="TileTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MongoTest.h" />
     <ClInclude Include="TileTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

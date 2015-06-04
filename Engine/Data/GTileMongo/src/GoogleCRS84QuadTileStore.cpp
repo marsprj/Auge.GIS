@@ -104,46 +104,49 @@ namespace auge
 
 		bson_error_t error;
 		mongoc_gridfs_file_t *mgo_file = NULL;
+		DWORD ts = GetTickCount();
 		mgo_file = mongoc_gridfs_find_one_by_filename(m_gridfs, key, &error);
+		DWORD te = GetTickCount();
+		printf("[ ±º‰]:%d∫¡√Î",te-ts);
 		if(!mgo_file)
 		{
 			return NULL;
 		}
 
-		mongoc_stream_t *mgo_stream = NULL;
-		mgo_stream = mongoc_stream_gridfs_new (mgo_file);
-		if(!mgo_stream)
-		{
-			mongoc_gridfs_file_destroy(mgo_file);
-			return NULL;
-		}
+		//mongoc_stream_t *mgo_stream = NULL;
+		//mgo_stream = mongoc_stream_gridfs_new (mgo_file);
+		//if(!mgo_stream)
+		//{
+		//	mongoc_gridfs_file_destroy(mgo_file);
+		//	return NULL;
+		//}
 
-		int64_t length = mongoc_gridfs_file_get_length(mgo_file);
-		g_uchar* buffer = (g_uchar*)malloc(length*sizeof(g_uchar));
-		memset(buffer, 0, length);
+		//int64_t length = mongoc_gridfs_file_get_length(mgo_file);
+		//g_uchar* buffer = (g_uchar*)malloc(length*sizeof(g_uchar));
+		//memset(buffer, 0, length);
 
-		g_uchar* ptr = buffer;
-		mongoc_iovec_t iov;
-		ssize_t r;
+		//g_uchar* ptr = buffer;
+		//mongoc_iovec_t iov;
+		//ssize_t r;
 
-		iov.iov_base = (char*)buffer;
-		iov.iov_len = length;
+		//iov.iov_base = (char*)buffer;
+		//iov.iov_len = length;
 
-		r = mongoc_stream_readv (mgo_stream, &iov, 1, -1, 0);
-		if(r<=0)
-		{
-			mongoc_stream_destroy (mgo_stream);
-			mongoc_gridfs_file_destroy(mgo_file);
-			return NULL;
-		}
-		
-		mongoc_stream_destroy (mgo_stream);
+		//r = mongoc_stream_readv (mgo_stream, &iov, 1, -1, 0);
+		//if(r<=0)
+		//{
+		//	mongoc_stream_destroy (mgo_stream);
+		//	mongoc_gridfs_file_destroy(mgo_file);
+		//	return NULL;
+		//}
+
+		//mongoc_stream_destroy (mgo_stream);
 		mongoc_gridfs_file_destroy(mgo_file);
 
 		TileImpl* pTile = new TileImpl();
-		pTile->SetData(buffer);
-		pTile->SetSize(length);
-		pTile->SetKey(key);
+		//pTile->SetData(buffer);
+		//pTile->SetSize(length);
+		//pTile->SetKey(key);
 
 		return pTile;
 	}

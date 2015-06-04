@@ -32,7 +32,8 @@ namespace auge
 		m_start_level = 1;
 		m_end_level = 18;
 		m_tile_format = "png";
-		m_full_extent.Set(-180.0f,-90.0f,180.0f,90.0f);
+		//m_full_extent.Set(-180.0f,-90.0f,180.0f,90.0f);
+		m_full_extent.Set(-256.0f,-256.0f,256.0f,256.0f);
 		m_extent = m_full_extent;
 		m_pWorkspace = NULL;
 	}

@@ -21,9 +21,15 @@
     <ClCompile Include="TileTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MongoTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MongoTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
