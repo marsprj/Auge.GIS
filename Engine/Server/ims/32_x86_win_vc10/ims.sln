@@ -17,6 +17,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GShape", "..\..\..\Data\GShape\32_x86_win_vc10\GShape.vcxproj", "{C17AA319-6571-48F3-BFD6-111B3B0445C5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gscore", "..\..\gscore\32_x86_win_vc10\gscore.vcxproj", "{A2755F3E-74F6-400D-A745-6BABA7BC3D05}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B082D314-56E0-4F40-8862-23C00E77EB24} = {B082D314-56E0-4F40-8862-23C00E77EB24}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mgr", "..\..\mgr\32_x86_win_vc10\mgr.vcxproj", "{C315E5BD-713B-4812-9B05-8A0F6475DAB0}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -30,11 +33,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mgr", "..\..\mgr\32_x86_win
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsvrs", "..\..\gsvrs\32_x86_win_vc10\gsvrs.vcxproj", "{D8C7BCA3-AADF-430D-BD10-6F771418F31B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uploader", "..\..\uploader\32_x86_win_vc10\uploader.vcxproj", "{E9DED101-D400-4337-B692-DC51D48527B1}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ims", "ims.vcxproj", "{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswms", "..\..\gswms\32_x86_win_vc10\gswms.vcxproj", "{C6045F1B-77E7-4716-84F1-E8E0B8A70290}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B082D314-56E0-4F40-8862-23C00E77EB24} = {B082D314-56E0-4F40-8862-23C00E77EB24}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswfs", "..\..\gswfs\32_x86_win_vc10\gswfs.vcxproj", "{685A4C3A-5188-487A-AC43-376EBCEC73C6}"
 EndProject
@@ -44,8 +48,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsdbs", "..\..\gsdbs\32_x86
 	ProjectSection(ProjectDependencies) = postProject
 		{B27E9A32-8154-484F-B312-9532EA0469A0} = {B27E9A32-8154-484F-B312-9532EA0469A0}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUser", "..\..\..\User\32_x86_win_vc10\GUser.vcxproj", "{B38DA2F1-03B5-482B-B0F1-59C57403B03F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GAuth", "..\..\..\Auth\32_x86_win_vc10\GAuth.vcxproj", "{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}"
 EndProject
@@ -109,10 +111,6 @@ Global
 		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Debug|Win32.Build.0 = Debug|Win32
 		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Release|Win32.ActiveCfg = Release|Win32
 		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Release|Win32.Build.0 = Release|Win32
-		{E9DED101-D400-4337-B692-DC51D48527B1}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E9DED101-D400-4337-B692-DC51D48527B1}.Debug|Win32.Build.0 = Debug|Win32
-		{E9DED101-D400-4337-B692-DC51D48527B1}.Release|Win32.ActiveCfg = Release|Win32
-		{E9DED101-D400-4337-B692-DC51D48527B1}.Release|Win32.Build.0 = Release|Win32
 		{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}.Debug|Win32.ActiveCfg = Debug|Win32
 		{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}.Debug|Win32.Build.0 = Debug|Win32
 		{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}.Release|Win32.ActiveCfg = Release|Win32
@@ -133,10 +131,6 @@ Global
 		{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}.Debug|Win32.Build.0 = Debug|Win32
 		{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}.Release|Win32.ActiveCfg = Release|Win32
 		{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}.Release|Win32.Build.0 = Release|Win32
-		{B38DA2F1-03B5-482B-B0F1-59C57403B03F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{B38DA2F1-03B5-482B-B0F1-59C57403B03F}.Debug|Win32.Build.0 = Debug|Win32
-		{B38DA2F1-03B5-482B-B0F1-59C57403B03F}.Release|Win32.ActiveCfg = Release|Win32
-		{B38DA2F1-03B5-482B-B0F1-59C57403B03F}.Release|Win32.Build.0 = Release|Win32
 		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Debug|Win32.ActiveCfg = Debug|Win32
 		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Debug|Win32.Build.0 = Debug|Win32
 		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Release|Win32.ActiveCfg = Release|Win32
