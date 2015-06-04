@@ -79,8 +79,6 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Data/GShape/Makefile
                  Engine/Data/GShape/src/Makefile
                  Engine/Data/GShape/test/Makefile
-		 Engine/Data/GRaster/Makefile
-                 Engine/Data/GRaster/src/Makefile
 		 Engine/Data/GRasterFS/Makefile
                  Engine/Data/GRasterFS/src/Makefile
 		 Engine/Data/GRasterDB/Makefile
