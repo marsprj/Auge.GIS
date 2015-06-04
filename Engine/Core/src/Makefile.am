@@ -3,11 +3,12 @@ lib_LTLIBRARIES=libgcore.la
 AM_CXXFLAGS=-D_LINUX
 
 AM_CPPFLAGS=-I../include \
-		-I$(top_srcdir)/include
+		-I$(top_srcdir)/include \
+		-I/opt/gdal-1.11.12/include
 
-libgcore_la_LDFLAGS=
+libgcore_la_LDFLAGS=-L/opt/gdal-1.11.12/lib
 
-libgcore_la_LIBADD=-lxml2 -llog4cplus -luuid
+libgcore_la_LIBADD=-lxml2 -llog4cplus -luuid -lgdal
 
 libgcore_la_SOURCES=\
 		FieldFactoryImpl.cpp \
