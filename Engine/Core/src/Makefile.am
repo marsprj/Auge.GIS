@@ -47,4 +47,7 @@ libgcore_la_SOURCES=\
 		XTestNode.cpp \
 		GMLWriterImpl.cpp \
 		GMLReaderImpl.cpp \
-		EnumValueImpl.cpp
+		EnumValueImpl.cpp \
+		RasterImpl.cpp \
+		RasterBandImpl.cpp \
+		RasterIOImpl.cpp
