@@ -116,7 +116,7 @@ namespace auge
 //------------------------------------------------------------------------------
 #ifdef WIN32
 #	ifndef AUGE_USER_EXPORTS
-#		define _AUGE_USER_NAME "GUser"
+#		define _AUGE_USER_NAME "GAuth"
 #		if defined(_DEBUG)
 #			if defined(_UNICODE)
 //#				define _AUGE_FILTER_CONFIGURATION "UD"

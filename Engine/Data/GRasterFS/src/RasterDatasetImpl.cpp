@@ -1,4 +1,6 @@
 #include "RasterDatasetImpl.h"
+#include "AugeCore.h"
+#include "AugeRaster.h"
 
 namespace auge
 {
