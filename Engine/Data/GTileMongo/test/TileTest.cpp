@@ -8,8 +8,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TileTest);
 
 void TileTest::setUp() 
 {
-	//const char* path = "SERVER=127.0.0.1;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
-	const char* path = "SERVER=192.168.111.160;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
+	const char* path = "SERVER=127.0.0.1;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
+	//const char* path = "SERVER=192.168.111.160;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
 	//const char* path = "SERVER=123.57.207.198;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
 
 	RESULTCODE rc = AG_FAILURE;
@@ -129,7 +129,7 @@ void TileTest::WriteTest()
 
 void TileTest::GetTile()
 {
-	auge::TileStore* pTileStore = m_pWorkspace->OpenTileStore("google_2");
+	auge::TileStore* pTileStore = m_pWorkspace->OpenTileStore("google");
 	
 	DWORD ts = GetTickCount();
 

@@ -84,8 +84,8 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
-		cairo_surface_write_to_png(m_cairo_surface, szPath);
-		return AG_SUCCESS;
+		cairo_status_t status = cairo_surface_write_to_png(m_cairo_surface, szPath);
+		return CAIRO_STATUS_SUCCESS;
 	}
 
 	RESULTCODE RendererCairo::SaveAsImage(g_uint x, g_uint y, g_uint width, g_uint height, const char* path)

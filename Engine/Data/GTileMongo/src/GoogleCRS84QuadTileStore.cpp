@@ -107,7 +107,7 @@ namespace auge
 		//DWORD ts = GetTickCount();
 		mgo_file = mongoc_gridfs_find_one_by_filename(m_gridfs, key, &error);
 		//DWORD te = GetTickCount();
-		//printf("[时间]:%d毫秒",te-ts);
+		//printf("[时间]:%d毫秒\n",te-ts);
 		if(!mgo_file)
 		{
 			return NULL;
