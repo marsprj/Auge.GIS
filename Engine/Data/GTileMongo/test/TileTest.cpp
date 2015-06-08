@@ -136,7 +136,7 @@ void TileTest::GetTile()
 	int count = 100;
 	for(int i=0; i<count; i++)
 	{
-		auge::Tile* pTile = pTileStore->GetTile(1,0,0);
+		auge::Tile* pTile = pTileStore->GetTile(1,0,0); 
 		pTile->Release();
 	}
 
