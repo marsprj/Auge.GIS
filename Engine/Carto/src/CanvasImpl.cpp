@@ -485,8 +485,8 @@ namespace auge
 
 	RESULTCODE	CanvasImpl::Save(const char* path)
 	{
-		m_pRenderer->SaveAsImage(path);
-		return AG_SUCCESS;
+		RESULTCODE rc = m_pRenderer->SaveAsImage(path);
+		return rc;
 	}
 
 	RESULTCODE CanvasImpl::Save(g_uint x, g_uint y, g_uint width, g_uint height, const char* path)
