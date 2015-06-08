@@ -104,10 +104,10 @@ namespace auge
 
 		bson_error_t error;
 		mongoc_gridfs_file_t *mgo_file = NULL;
-		DWORD ts = GetTickCount();
+		//DWORD ts = GetTickCount();
 		mgo_file = mongoc_gridfs_find_one_by_filename(m_gridfs, key, &error);
-		DWORD te = GetTickCount();
-		printf("[时间]:%d毫秒\n",te-ts);
+		//DWORD te = GetTickCount();
+		//printf("[时间]:%d毫秒\n",te-ts);
 		if(!mgo_file)
 		{
 			return NULL;
