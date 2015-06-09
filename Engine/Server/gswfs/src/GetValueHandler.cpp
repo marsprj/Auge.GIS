@@ -1,6 +1,7 @@
 #include "GetValueHandler.h"
 #include "GetValueRequest.h"
 #include "GetValueResponse.h"
+#include "GetMinMaxValueResponse.h"
 #include "AugeService.h"
 #include "AugeCarto.h"
 
@@ -88,6 +89,18 @@ namespace auge
 			return pExpResopnse;
 		}
 
+		const char* type = pRequest->GetType();
+		if(type==NULL)
+		{
+			const char* msg = "Parameter [type] is null";
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			pLogger->Error(msg);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			return pExpResponse;
+		}
+
 		FeatureClass* pFeatureClass = GetFeatureClass(pWebRequest, pWebContext);
 		if(pFeatureClass==NULL)
 		{
@@ -96,11 +109,33 @@ namespace auge
 			pExpResponse->SetMessage(pError->GetLastError());
 			return pExpResponse;
 		}
-
-		EnumValue* pValues = pFeatureClass->GetUniqueValue(field, pRequest->GetOrder());
-	 	GetValueResponse* pWebResponse = new GetValueResponse(pRequest);
-		pWebResponse->SetValues(pValues);
-
+		
+		WebResponse* pWebResponse = NULL;
+		if(strcmp(type,"unique")==0)
+		{
+			EnumValue* pValues = pFeatureClass->GetUniqueValue(field, pRequest->GetOrder());
+			GetValueResponse* pResponse = new GetValueResponse(pRequest);
+			pResponse->SetValues(pValues);
+			pWebResponse = pResponse;
+		}
+		else if(strcmp(type,"minmax")==0)
+		{
+			EnumValue* pValues = pFeatureClass->GetMinMaxValue(field);
+			GetMinMaxValueResponse* pResponse = new GetMinMaxValueResponse(pRequest);
+			pResponse->SetValues(pValues);
+			pWebResponse = pResponse;
+		}
+		else
+		{
+			const char* msg = "Parameter [type] is null";
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			pLogger->Error(msg);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			pWebResponse = pExpResponse;
+		}
+		
 		pFeatureClass->Release();
 
 		return pWebResponse;

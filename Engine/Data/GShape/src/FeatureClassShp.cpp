@@ -317,4 +317,9 @@ namespace auge
 	{
 		return NULL;
 	}
+
+	EnumValue* FeatureClassShp::GetMinMaxValue(const char* field)
+	{
+		return NULL;
+	}
 }

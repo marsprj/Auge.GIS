@@ -92,6 +92,7 @@ namespace auge
 		SetMapName(cgi["mapName"]);
 		SetSourceName(cgi["sourceName"]);
 		SetEncoding(cgi["encoding"]);
+		SetType(cgi["type"]);
 		return true;
 	}
 
@@ -165,5 +166,22 @@ namespace auge
 		{
 			m_encoding = encoding;
 		}
+	}
+
+	void GetValueRequest::SetType(const char* type)
+	{
+		if(type==NULL)
+		{
+			m_type.clear();
+		}
+		else
+		{
+			m_type = type;
+		}
+	}
+
+	const char* GetValueRequest::GetType()
+	{
+		return m_type.empty() ? NULL : m_type.c_str();
 	}
 }

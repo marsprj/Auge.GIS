@@ -38,6 +38,7 @@ namespace auge
 		virtual FeatureCursor*		Query(GQuery* pQuery, augeCursorType type=augeStaticCursor);
 
 		virtual EnumValue*			GetUniqueValue(const char* field, augeOrderType order=augeOrderAsc);
+		virtual EnumValue*			GetMinMaxValue(const char* field);
 
 		virtual RESULTCODE			RemoveFeature(GFilter* pFilter);
 

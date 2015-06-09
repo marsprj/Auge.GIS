@@ -87,6 +87,9 @@
     <ClCompile Include="..\src\GetFeatureResponseShapezip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\GetMinMaxValueResponse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\WFeatureEngine.h">
@@ -159,6 +162,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\GetFeatureResponseShapezip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\GetMinMaxValueResponse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

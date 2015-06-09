@@ -99,6 +99,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetGmlObjectHandler.cpp" />
     <ClCompile Include="..\src\GetGmlObjectRequest.cpp" />
     <ClCompile Include="..\src\GetGmlObjectResponse.cpp" />
+    <ClCompile Include="..\src\GetMinMaxValueResponse.cpp" />
     <ClCompile Include="..\src\GetValueHandler.cpp" />
     <ClCompile Include="..\src\GetValueRequest.cpp" />
     <ClCompile Include="..\src\GetValueResponse.cpp" />
@@ -125,6 +126,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetGmlObjectHandler.h" />
     <ClInclude Include="..\include\GetGmlObjectRequest.h" />
     <ClInclude Include="..\include\GetGmlObjectResponse.h" />
+    <ClInclude Include="..\include\GetMinMaxValueResponse.h" />
     <ClInclude Include="..\include\GetValueHandler.h" />
     <ClInclude Include="..\include\GetValueRequest.h" />
     <ClInclude Include="..\include\GetValueResponse.h" />

@@ -1454,4 +1454,15 @@ namespace auge
 		sql.append(order==augeOrderAsc?" asc":" desc");
 		return AG_SUCCESS;
 	}
+
+	RESULTCODE SQLBuilder::BuildGetMinMaxValueSQL(std::string& sql, const char* field_name, FeatureClassPgs* pFeatureClass)
+	{
+		sql = "select min(";
+		sql.append(field_name);
+		sql.append("), max(");
+		sql.append(field_name);
+		sql.append(") from ");
+		sql.append(pFeatureClass->GetName());
+		return AG_SUCCESS;
+	}
 }

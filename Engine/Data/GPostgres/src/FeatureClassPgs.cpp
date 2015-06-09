@@ -480,4 +480,64 @@ namespace auge
 		pResult->Release();
 		return pEnumValue;
 	}
+
+	EnumValue* FeatureClassPgs::GetMinMaxValue(const char* field)
+	{
+		if(!field)
+		{
+			return NULL;
+		}
+
+		GField* pField = GetFields()->GetField(field);
+		if(pField==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "No field[%s] in FeatureClass [%s]", field, GetName());
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
+			return NULL;
+		}
+
+		std::string sql;
+		SQLBuilder::BuildGetMinMaxValueSQL(sql, field, this);
+
+		GResultSet*  pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql.c_str());
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+
+		if(pResult->GetCount()==0)
+		{
+			pResult->Release();
+			return NULL;
+		}
+
+		GValue* pValue = NULL;
+		EnumValue* pEnumValue = new EnumValue();
+
+		for(int i=0; i<2; i++)
+		{
+			switch(pField->GetType())
+			{
+			case augeFieldTypeInt:
+				pValue = new GValue(pResult->GetInt(0,i));
+				break;
+			case augeFieldTypeDouble:
+				pValue = new GValue(pResult->GetDouble(0,i));
+				break;
+			case augeFieldTypeString:
+				pValue = new GValue(pResult->GetString(0,i));
+				break;
+			}
+			if(pValue)
+			{
+				pEnumValue->Add(pValue);
+			}
+		}
+
+		pResult->Release();
+		return pEnumValue;
+	}
 }

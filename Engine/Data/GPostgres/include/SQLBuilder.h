@@ -54,6 +54,8 @@ namespace auge
 		static RESULTCODE BuildFunctitonExpression(std::string &sql, FeatureClassPgs* pFeatureClass, Function* pExpression);
 
 		static RESULTCODE BuildGetUniqueValueSQL(std::string& sql, const char* field_name, FeatureClassPgs* pFeatureClass, augeOrderType order);
+		static RESULTCODE BuildGetMinMaxValueSQL(std::string& sql, const char* field_name, FeatureClassPgs* pFeatureClass);
+		
 
 		static void BuildInsertFeature(std::string& sql, const char* className, Feature* pFeature, g_uint srid);
 		static void BuildDeleteFeature(std::string& sql, GFilter* pFilter, FeatureClassPgs* pFeatureClass);
