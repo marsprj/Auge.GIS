@@ -128,7 +128,7 @@ namespace auge
 #endif
 
 		CloseSHPFile();
-		m_pshpHandle = ::SHPOpen(shp_path, "rb");
+		m_pshpHandle = SHPOpen(shp_path, "rb");
 		if(m_pshpHandle==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -136,10 +136,10 @@ namespace auge
 			pError->SetError(msg);
 			return false;
 		}
-		m_pdbfHandle = ::DBFOpen(dbf_path, "rb");
+		m_pdbfHandle = DBFOpen(dbf_path, "rb");
 		if(m_pshpHandle==NULL)
 		{
-			::SHPClose(m_pshpHandle);
+			SHPClose(m_pshpHandle);
 
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Cannot Open DBF file [%s].", dbf_path);
@@ -155,12 +155,12 @@ namespace auge
 	{
 		if(m_pshpHandle!=NULL)
 		{
-			::SHPClose(m_pshpHandle);
+			SHPClose(m_pshpHandle);
 			m_pshpHandle = NULL;
 		}
 		if(m_pdbfHandle!=NULL)
 		{
-			::DBFClose(m_pdbfHandle);
+			DBFClose(m_pdbfHandle);
 			m_pdbfHandle = NULL;
 		}
 	}
@@ -190,7 +190,7 @@ namespace auge
 		int nfields = m_pdbfHandle->nFields;
 		for(int i=0; i<nfields; i++)
 		{
-			dbfType = ::DBFGetFieldInfo(m_pdbfHandle, i, name, &width, &decimal);
+			dbfType = DBFGetFieldInfo(m_pdbfHandle, i, name, &width, &decimal);
 			ftype = GetFieldType(dbfType);
 
 			pField = pFactory->CreateField();
