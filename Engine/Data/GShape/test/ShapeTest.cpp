@@ -28,10 +28,6 @@ void ShapeTest::ReadTest()
 	auge::DataEngine* pDataEngine = NULL;
 	pDataEngine = auge::augeGetDataEngineInstance();
 
-	auge::DataEngineManager* pDataEngineManager = auge::augeGetDataEngineManagerInstance();
-	pDataEngineManager->Load();
-	pDataEngineManager->GetEngine("GShape");
-
 	auge::FeatureWorksapce* pWorkspace = NULL;
 	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pDataEngine->CreateWorkspace());
 	pWorkspace->SetConnectionString(path);
