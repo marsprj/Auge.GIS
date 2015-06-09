@@ -33,7 +33,7 @@ libgswfs_la_SOURCES=\
 		GetValueHandler.cpp \
 		GetValueRequest.cpp \
 		GetValueResponse.cpp \
-		GetMinMaxValueResponse \
+		GetMinMaxValueResponse.cpp \
 		GetCountHandler.cpp \
 		GetCountRequest.cpp \
 		GetCountResponse.cpp \
