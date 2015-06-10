@@ -308,15 +308,21 @@ namespace auge
 
 		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
 
+		const char* fname = pField->GetName();
+		int srid = pGeometryDef->GetSRID();
+		int dimen= pGeometryDef->GetDimension();
+		augeGeometryType type = pGeometryDef->GeometryType();
+		const char* gtype = pGeometryFactory->Encode(pGeometryDef->GeometryType());
+
 
 		char sql[AUGE_SQL_MAX] = {0};
 		g_snprintf(sql, AUGE_SQL_MAX, "select addgeometrycolumn('%s','%s','%s',%d,'%s',%d)",
 									  m_schema.c_str(),
 									  name,
-									  pField->GetName(),
-									  pGeometryDef->GetSRID(),
-									  pGeometryFactory->Encode(pGeometryDef->GeometryType()),
-									  pGeometryDef->GetDimension());
+									  fname,
+									  srid,
+									  gtype,
+									  dimen);
 		return m_pgConnection.ExecuteSQL(sql);
 	}
 
