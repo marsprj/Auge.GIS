@@ -14,4 +14,5 @@ include_HEADERS=AugeCarto.h \
 		AugeObject.h \
 		AugeService.h \
 		AugeType.h \
-		AugeWebEngine.h
+		AugeWebEngine.h \
+		AugeRaster.h

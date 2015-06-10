@@ -13,8 +13,14 @@ namespace auge
 		virtual ~IsLikeFilterImpl();
 
 	public:	
-		virtual		Expression*		GetPropertyName();
+		virtual		augeFilterType		GetType();
+		virtual	augeComparisonOperator	GetOperator();
+		virtual	void					SetOperator(augeComparisonOperator oper);
+
+		virtual		Expression*			GetPropertyName();
+		virtual		bool				SetPropertyName(Expression* pPropName);
 		virtual		Literal*			GetLiteral();
+		virtual		bool				SetLiteral(Literal* pLiteral);
 		virtual		const char*			GetWildCard();
 		virtual		const char*			GetSingleChar();
 		virtual		const char*			GetEscapeChar();

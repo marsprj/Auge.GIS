@@ -31,7 +31,7 @@ namespace auge
 		
 		static RESULTCODE BuildFilter(std::string& sql, FeatureClassPgs* pFeatureClass, GFilter* pFilter);
 		static RESULTCODE BuildIDFilter(std::string& sql,FeatureClassPgs* pFeatureClass, IDFilter* pFilter);
-		static RESULTCODE BuildComparisioFilter(std::string& sql,FeatureClassPgs* pFeatureClass, ComparisionFilter* pFilter);
+		static RESULTCODE BuildComparisionFilter(std::string& sql,FeatureClassPgs* pFeatureClass, ComparisonFilter* pFilter);
 		static RESULTCODE BuildLogicFilter(std::string& sql,FeatureClassPgs* pFeatureClass, LogicFilter* pFilter);
 		static RESULTCODE BuildSpatialFilter(std::string& sql,FeatureClassPgs* pFeatureClass, SpatialFilter* pFilter);
 

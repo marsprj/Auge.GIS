@@ -287,14 +287,109 @@ namespace auge
 
 	GFilter* FilterReaderImpl::ReadBinaryComparison(XNode* pxComparison)
 	{
-		BinaryComparisonFilter* pFilter = NULL;
+		GFilter* pFilter = NULL;
 		FilterFactory* pFactory = augeGetFilterFactoryInstance();
-
-		pFilter = pFactory->CreateBinaryComparisonFilter();
 
 		const char* type = pxComparison->GetName();
 		augeComparisonOperator oper = ParseComparisonOperator(type);
-		pFilter->SetOperator(oper);
+		
+		switch (oper)
+		{
+		case augeComOprIsBetween:
+			{
+				pFilter = ReadBetweenFilter(pxComparison);
+			}
+			break;
+		default:
+			{
+				BinaryComparisonFilter* pBinaryFilter = NULL;
+				pBinaryFilter = pFactory->CreateBinaryComparisonFilter();
+				pBinaryFilter->SetOperator(oper);
+				XNode *pxNode = NULL;
+				XNodeSet* pxNodeSet = pxComparison->GetChildren();
+				if(pxNodeSet==NULL)
+				{
+					pBinaryFilter->Release();
+					pxNodeSet->Release();
+					return NULL;
+				}
+
+				Expression* pExpression = NULL;
+
+				const char* nodeName = NULL;
+				pxNodeSet->Reset();
+				pxNode = pxNodeSet->Next();
+				if(pxNode==NULL)
+				{
+					pxNodeSet->Release();
+					return NULL;
+				}
+				pExpression = ReadExpression(pxNode);
+				if(pExpression==NULL)
+				{
+					pxNodeSet->Release();
+					return NULL;
+				}
+				pBinaryFilter->SetExpression1(pExpression);
+
+				pxNode = pxNodeSet->Next();
+				if(pxNode==NULL)
+				{
+					pBinaryFilter->Release();
+					pxNodeSet->Release();
+					return NULL;
+				}
+				pExpression = ReadExpression(pxNode);
+				if(pExpression==NULL)
+				{
+					pBinaryFilter->Release();
+					pxNodeSet->Release();
+					return NULL;
+				}
+				pBinaryFilter->SetExpression2(pExpression);
+
+				//while(!pxNodeSet->IsEOF())
+				//{
+				//	pxNode = pxNodeSet->Next();
+				//	nodeName = pxNode->GetName();
+				//	if(!g_stricmp(nodeName,"PropertyName"))
+				//	{
+				//		Expression* pPropName = ReadExpression(pxNode);
+				//		pFilter->SetExpression1(pPropName);
+				//	}
+				//	else if(!g_stricmp(nodeName,"Literal"))
+				//	{
+				//		Literal* pLiteral = ReadLiteral(pxNode);
+				//		pFilter->SetExpression2(pLiteral);
+				//	}
+				//}
+				pxNodeSet->Release();
+			}
+		}
+		return pFilter;
+	}
+
+	IsBetweenFilter* FilterReaderImpl::ReadBetweenFilter(XNode* pxComparison)
+	{
+		IsBetweenFilter* pFilter = NULL;
+		FilterFactory* pFactory = augeGetFilterFactoryInstance();
+		
+		XNode* pxPropName = pxComparison->GetFirstChild("PropertyName");
+		if(pxPropName==NULL)
+		{
+			pxPropName->Release();
+			return NULL;
+		}
+		
+		PropertyName* pPropName = static_cast<PropertyName*>(ReadExpression(pxPropName));
+		if(pPropName==NULL)
+		{
+			return NULL;
+		}
+		m_prop_name = pPropName->GetName();
+		pFilter = pFactory->CreateIsBetweenFilter();
+		pFilter->SetExpression(pPropName);
+		pPropName->Release();
 
 		XNode *pxNode = NULL;
 		XNodeSet* pxNodeSet = pxComparison->GetChildren();
@@ -305,55 +400,51 @@ namespace auge
 			return NULL;
 		}
 
-		Expression* pExpression = NULL;
-
 		const char* nodeName = NULL;
+		
 		pxNodeSet->Reset();
-		pxNode = pxNodeSet->Next();
-		if(pxNode==NULL)
+		while((pxNode=pxNodeSet->Next())!=NULL)
 		{
-			pxNodeSet->Release();
-			return NULL;
+			nodeName = pxNode->GetName();
+			if(!g_stricmp(nodeName,"UpperBoundary"))
+			{
+				XNode* pxLiteral = pxNode->GetFirstChild();
+				if(pxLiteral==NULL)
+				{
+					pFilter->Release();
+					break;
+				}
+				Expression* pExpression = ReadExpression(pxLiteral);
+				pxLiteral->Release();
+				if(pExpression==NULL)
+				{
+					pFilter->Release();
+					break;
+				}
+				pFilter->SetUpperBound(pExpression);
+				pExpression->Release();
+			}
+			else if(!g_stricmp(nodeName,"LowerBoundary"))
+			{
+				XNode* pxLiteral = pxNode->GetFirstChild();
+				if(pxLiteral==NULL)
+				{
+					pFilter->Release();
+					break;
+				}
+				Expression* pExpression = ReadExpression(pxLiteral);
+				pxLiteral->Release();
+				if(pExpression==NULL)
+				{
+					pFilter->Release();
+					break;
+				}
+				pFilter->SetLowerBound(pExpression);
+				pExpression->Release();
+			}
+			
 		}
-		pExpression = ReadExpression(pxNode);
-		if(pExpression==NULL)
-		{
-			pxNodeSet->Release();
-			return NULL;
-		}
-		pFilter->SetExpression1(pExpression);
 
-		pxNode = pxNodeSet->Next();
-		if(pxNode==NULL)
-		{
-			pFilter->Release();
-			pxNodeSet->Release();
-			return NULL;
-		}
-		pExpression = ReadExpression(pxNode);
-		if(pExpression==NULL)
-		{
-			pFilter->Release();
-			pxNodeSet->Release();
-			return NULL;
-		}
-		pFilter->SetExpression2(pExpression);
-
-		//while(!pxNodeSet->IsEOF())
-		//{
-		//	pxNode = pxNodeSet->Next();
-		//	nodeName = pxNode->GetName();
-		//	if(!g_stricmp(nodeName,"PropertyName"))
-		//	{
-		//		Expression* pPropName = ReadExpression(pxNode);
-		//		pFilter->SetExpression1(pPropName);
-		//	}
-		//	else if(!g_stricmp(nodeName,"Literal"))
-		//	{
-		//		Literal* pLiteral = ReadLiteral(pxNode);
-		//		pFilter->SetExpression2(pLiteral);
-		//	}
-		//}
 		pxNodeSet->Release();
 
 		return pFilter;
@@ -463,6 +554,14 @@ namespace auge
 			pExpsion = ReadLiteral(pxExpression);
 		}
 		else if(!g_stricmp(type, "Arithmetic"))
+		{
+
+		}
+		else if(!g_stricmp(type, "Function"))
+		{
+
+		}
+		else if(!g_stricmp(type, "Function"))
 		{
 
 		}
@@ -701,7 +800,7 @@ namespace auge
 		{
 			return augecomOprIsNull;
 		}
-		else if(!g_stricmp(oper, "PropertyIsIsBetween"))
+		else if(!g_stricmp(oper, "PropertyIsBetween"))
 		{
 			return augeComOprIsBetween;
 		}

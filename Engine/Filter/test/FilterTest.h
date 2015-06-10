@@ -8,7 +8,7 @@ class FilterTest : public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE(FilterTest);
 	//CPPUNIT_TEST(ReadArithmeticComparison);
 	//CPPUNIT_TEST(ReadBBox);
-	//CPPUNIT_TEST(ReadBetween);
+	CPPUNIT_TEST(ReadBetween);
 	//CPPUNIT_TEST(ReadBinaryComparison);
 	//CPPUNIT_TEST(ReadBinaryComparison_2);
 	//CPPUNIT_TEST(ReadBinaryLogical);
@@ -18,7 +18,7 @@ class FilterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(ReadLike);
 	//CPPUNIT_TEST(ReadNull);
 	//CPPUNIT_TEST(ReadSpatialAttribute);
-	CPPUNIT_TEST(ReadFilterText);
+	//CPPUNIT_TEST(ReadFilterText);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();

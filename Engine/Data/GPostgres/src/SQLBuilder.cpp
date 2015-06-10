@@ -376,7 +376,7 @@ namespace auge
 			break;
 		case augeFilterComparison:
 			{
-				BuildComparisioFilter(sql, pFeatureClass, static_cast<ComparisionFilter*>(pFilter));
+				BuildComparisionFilter(sql, pFeatureClass, static_cast<ComparisonFilter*>(pFilter));
 			}
 			break;
 		case augeFilterLogic:
@@ -420,7 +420,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE SQLBuilder::BuildComparisioFilter(std::string& sql,FeatureClassPgs* pFeatureClass, ComparisionFilter* pFilter)
+	RESULTCODE SQLBuilder::BuildComparisionFilter(std::string& sql,FeatureClassPgs* pFeatureClass, ComparisonFilter* pFilter)
 	{
 		augeComparisonOperator oper = pFilter->GetOperator();
 
@@ -493,8 +493,63 @@ namespace auge
 		return rc;
 	}
 
+	/*********************************************************/
+	/* select name from country where name like 'C%';        */
+	/*********************************************************/
 	RESULTCODE SQLBuilder::BuildIsLikeFilter(std::string& sql,FeatureClassPgs* pFeatureClass, IsLikeFilter *pFilter)
 	{
+		PropertyName* pPropName =  static_cast<PropertyName*>(pFilter->GetPropertyName());
+		if(pPropName==NULL)
+		{
+			return AG_FAILURE;
+		}
+		Literal* pLiteral = static_cast<Literal*>(pFilter->GetLiteral());
+		if(pLiteral==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* fname = pPropName->GetName();
+		if(fname==NULL)
+		{
+			return AG_FAILURE;
+		}
+		GValue* pValue = pLiteral->GetValue();
+		if(pValue==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* singleChar = pFilter->GetSingleChar();
+		const char* escapeChar = pFilter->GetEscapeChar();
+
+		const char* contidion = pValue->GetString();
+		char contidion_2[AUGE_MSG_MAX];
+		memset(contidion_2, 0, AUGE_MSG_MAX);
+		size_t len = strlen(contidion);
+		char* ptr1 = (char*)contidion;
+		char* ptr2 = contidion_2;
+		for(size_t i=0; i<len; i++, ptr1++, ptr2++)
+		{
+			if((*ptr1)==(*singleChar))
+			{
+				*ptr2 = '?';
+			}
+			else if((*ptr1)==(*escapeChar))
+			{
+				*ptr2 = '%';
+			}
+			else
+			{
+				*ptr2 = *ptr1;
+			}
+		}
+
+		sql  = fname;
+		sql.append(" like '");
+		sql.append(contidion_2);
+		sql.append("'");
+
 		return AG_SUCCESS;
 	}
 
@@ -543,7 +598,7 @@ namespace auge
 		}
 
 		sql.append(strExp);
-		sql.append(" BWTWEEN (");
+		sql.append(" BETWEEN (");
 		sql.append(strLower);
 		sql.append(") AND (");
 		sql.append(strUpper);
@@ -1032,7 +1087,7 @@ namespace auge
 			break;
 		case augeValueTypeDouble:
 			{
-				g_snprintf(str, AUGE_BUFFER_MAX,"%d",pValue->GetDouble());
+				g_snprintf(str, AUGE_BUFFER_MAX,"%f",pValue->GetDouble());
 				sql.append(str);
 			}
 			break;

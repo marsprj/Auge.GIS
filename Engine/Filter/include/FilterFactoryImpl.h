@@ -27,6 +27,7 @@ namespace auge
 
 		virtual IsBetweenFilter*		CreateIsBetweenFilter();
 		virtual IsBetweenFilter*		CreateIsBetweenFilter(Expression* pPropertyName,Expression* pLowerBound,Expression* pUpperBound);
+		virtual IsLikeFilter*			CreateIsLikeFilter(Expression* pPropertyName, Literal* pLiteral);
 
 		virtual BinaryComparisonFilter*	CreateBinaryComparisonFilter();
 		virtual BinaryLogicFilter*		CreateBinaryLogicFilter(const char* oper);

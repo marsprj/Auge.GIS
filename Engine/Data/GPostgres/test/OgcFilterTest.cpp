@@ -3,7 +3,7 @@
 #include "AugeCore.h"
 #include "AugeXML.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(OgcFilterTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(OgcFilterTest);
 
 void OgcFilterTest::setUp() 
 {

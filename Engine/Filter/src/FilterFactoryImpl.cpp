@@ -2,6 +2,7 @@
 #include "LiteralImpl.h"
 #include "BBoxFilterImpl.h"
 #include "IsBetweenFilterImpl.h"
+#include "IsLikeFilterImpl.h"
 #include "IDFilterImpl.h"
 #include "BinaryComparisonFilterImpl.h"
 #include "BinaryLogicFilterImpl.h"
@@ -115,6 +116,20 @@ namespace auge
 		pIsBetween->SetUpperBound(pUpperBound);
 
 		return pIsBetween;
+	}
+
+	IsLikeFilter* FilterFactoryImpl::CreateIsLikeFilter(Expression* pPropertyName, Literal* pLiteral)
+	{
+		if(pPropertyName==NULL||pLiteral==NULL)
+		{
+			return NULL;
+		}
+
+		IsLikeFilterImpl* pIsLike = new IsLikeFilterImpl();
+		pIsLike->SetPropertyName(pPropertyName);
+		pIsLike->SetLiteral(pLiteral);
+
+		return pIsLike;
 	}
 
 	BinaryComparisonFilter* FilterFactoryImpl::CreateBinaryComparisonFilter()

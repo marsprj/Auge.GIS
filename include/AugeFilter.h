@@ -133,11 +133,11 @@ namespace auge
 	/**
 	 * ComparisionFilter
 	 */
-	class ComparisionFilter : public GFilter
+	class ComparisonFilter : public GFilter
 	{
 	public:
-		ComparisionFilter(){}
-		virtual ~ComparisionFilter(){}
+		ComparisonFilter(){}
+		virtual ~ComparisonFilter(){}
 	public:
 		virtual	augeComparisonOperator	GetOperator() = 0;
 		virtual	void					SetOperator(augeComparisonOperator oper) = 0;
@@ -174,7 +174,7 @@ namespace auge
 	/**
 	 * IsBetweenFilter
 	 */
-	class IsBetweenFilter : public ComparisionFilter
+	class IsBetweenFilter : public ComparisonFilter
 	{
 	public:
 		IsBetweenFilter(){}
@@ -194,7 +194,7 @@ namespace auge
 	/**
 	 * IsLikeFilter
 	 */
-	class IsLikeFilter : public ComparisionFilter
+	class IsLikeFilter : public ComparisonFilter
 	{
 	public:
 		IsLikeFilter(){}
@@ -202,7 +202,9 @@ namespace auge
 
 	public:	
 		virtual		Expression*			GetPropertyName()	= 0;
+		virtual		bool				SetPropertyName(Expression* pPropName) = 0;
 		virtual		Literal*			GetLiteral()	= 0;
+		virtual		bool				SetLiteral(Literal* pLiteral) = 0;
 		virtual		const char*			GetWildCard() = 0;
 		virtual		const char*			GetSingleChar() = 0;
 		virtual		const char*			GetEscapeChar() = 0;
@@ -211,7 +213,7 @@ namespace auge
 	/**
 	 * IsNullFilter
 	 */
-	class IsNullFilter : public ComparisionFilter
+	class IsNullFilter : public ComparisonFilter
 	{
 	public:
 		IsNullFilter(){}
@@ -221,7 +223,7 @@ namespace auge
 		virtual		Expression*		GetPropertyName()	= 0;
 	};
 
-	class BinaryComparisonFilter : public ComparisionFilter
+	class BinaryComparisonFilter : public ComparisonFilter
 	{
 	public:
 		BinaryComparisonFilter(){}
@@ -536,6 +538,7 @@ namespace auge
 		virtual IsBetweenFilter*		CreateIsBetweenFilter(Expression* pPropertyName,
 															  Expression* pLowerBound,
 															  Expression* pUpperBound) = 0;
+		virtual IsLikeFilter*			CreateIsLikeFilter(Expression* pPropertyName, Literal* pLiteral) = 0;
 
 		virtual BinaryComparisonFilter*	CreateBinaryComparisonFilter() = 0;
 		virtual BinaryLogicFilter*		CreateBinaryLogicFilter(const char* oper) = 0;

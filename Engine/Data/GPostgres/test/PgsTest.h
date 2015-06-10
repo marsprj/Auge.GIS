@@ -12,10 +12,13 @@ class PgsTest : public CppUnit::TestFixture
 //	CPPUNIT_TEST(ReadTest);
 //	CPPUNIT_TEST(QueryExent);
 //	CPPUNIT_TEST(QueryBinaryComparision);
+//	CPPUNIT_TEST(QueryBetween);
+	CPPUNIT_TEST(QueryBetween_2);
+//	CPPUNIT_TEST(QueryLike);
 //	CPPUNIT_TEST(QueryTest);
 //	CPPUNIT_TEST(QueryTest_2);
 //	CPPUNIT_TEST(GetUniqueValue);
-	CPPUNIT_TEST(GetNullValue);
+//	CPPUNIT_TEST(GetNullValue);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -25,6 +28,9 @@ private:
 	void ReadTest();
 	void QueryExent();
 	void QueryBinaryComparision();
+	void QueryBetween();
+	void QueryBetween_2();
+	void QueryLike();
 
 	void QueryTest();
 	void QueryTest_2();

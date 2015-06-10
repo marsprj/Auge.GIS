@@ -59,7 +59,6 @@ void ShapeTest::ReadTest()
 		printf("[name]:%s\n", pFeature->GetString("name"));
 		printf("[%d]:%s\n", pFeature->GetFID(),pGeometry->AsText());
 		
-
 		pFeature->Release();
 	}
 	printf("\n");

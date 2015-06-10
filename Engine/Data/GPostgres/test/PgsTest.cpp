@@ -2,7 +2,7 @@
 #include "AugeCore.h"
 #include "AugeFeature.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
 
 void PgsTest::setUp() 
 {
@@ -111,6 +111,125 @@ void PgsTest::QueryBinaryComparision()
 
 	auge::FeatureClass* pFeatureClass = NULL;
 	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	CPPUNIT_ASSERT(pFeatureClass!=NULL);
+
+	auge::FeatureCursor* pCursor = NULL;
+	pCursor = pFeatureClass->Query(pFilter);
+	CPPUNIT_ASSERT(pCursor!=NULL);
+
+	g_uint i=0;
+	auge::Geometry	*pGeometry = NULL;
+	auge::Feature	*pFeature = NULL;
+	while((pFeature=pCursor->NextFeature())!=NULL)
+	{	
+		printf("\r%d",++i);
+		pFeature->Release();
+	}
+	printf("\n");
+
+	AUGE_SAFE_RELEASE(pFilter);
+	AUGE_SAFE_RELEASE(pCursor);
+	AUGE_SAFE_RELEASE(pFeatureClass);
+}
+
+void PgsTest::QueryBetween()
+{
+	auge::ComparisonFilter* pFilter = NULL;
+	auge::FilterFactory* pFactory = auge::augeGetFilterFactoryInstance();
+
+	//	auge::PropertyName* pProp = pFactory->CreatePropertyName("country");
+	//	auge::GValue* pValue = new auge::GValue("China");
+	//	auge::Literal* pLiteral = pFactory->CreateLiteral(pValue);
+
+	auge::PropertyName* pProp = pFactory->CreatePropertyName("id");
+	auge::GValue* pValue = new auge::GValue(10);
+	auge::Literal* pLowerBound = pFactory->CreateLiteral(pValue);
+	pValue = new auge::GValue(20);
+	auge::Literal* pUpperBound = pFactory->CreateLiteral(pValue);
+
+	pFilter = pFactory->CreateIsBetweenFilter(pProp, pLowerBound, pUpperBound);
+
+	auge::FeatureClass* pFeatureClass = NULL;
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	CPPUNIT_ASSERT(pFeatureClass!=NULL);
+
+	auge::FeatureCursor* pCursor = NULL;
+	pCursor = pFeatureClass->Query(pFilter);
+	CPPUNIT_ASSERT(pCursor!=NULL);
+
+	g_uint i=0;
+	auge::Geometry	*pGeometry = NULL;
+	auge::Feature	*pFeature = NULL;
+	while((pFeature=pCursor->NextFeature())!=NULL)
+	{	
+		printf("\r%d",++i);
+		pFeature->Release();
+	}
+	printf("\n");
+
+	AUGE_SAFE_RELEASE(pFilter);
+	AUGE_SAFE_RELEASE(pCursor);
+	AUGE_SAFE_RELEASE(pFeatureClass);
+}
+
+void PgsTest::QueryBetween_2()
+{
+
+	auge::FeatureClass* pFeatureClass = NULL;
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	CPPUNIT_ASSERT(pFeatureClass!=NULL);
+
+	auge::GFilter* pFilter = NULL;
+	auge::FilterFactory* pFactory = auge::augeGetFilterFactoryInstance();
+	auge::FilterReader* reader = pFactory->CreateFilerReader(pFeatureClass->GetFields());
+
+	auge::XParser parser;
+	auge::XDocument	*pxDoc = NULL;
+	auge::XElement	*pxFilter = NULL;
+
+	const char* path = "E:\\Research\\Auge.GIS\\Engine\\Filter\\ogc\\Between.xml";
+	pxDoc = parser.Parse(path);
+	pxFilter = pxDoc->GetRootNode();
+
+	pFilter = reader->Read(pxFilter);
+
+
+	auge::FeatureCursor* pCursor = NULL;
+	pCursor = pFeatureClass->Query(pFilter);
+	CPPUNIT_ASSERT(pCursor!=NULL);
+
+	g_uint i=0;
+	auge::Geometry	*pGeometry = NULL;
+	auge::Feature	*pFeature = NULL;
+	while((pFeature=pCursor->NextFeature())!=NULL)
+	{	
+		printf("\r%d",++i);
+		pFeature->Release();
+	}
+	printf("\n");
+
+	AUGE_SAFE_RELEASE(pFilter);
+	AUGE_SAFE_RELEASE(pCursor);
+	AUGE_SAFE_RELEASE(pFeatureClass);
+}
+
+void PgsTest::QueryLike()
+{
+	auge::ComparisonFilter* pFilter = NULL;
+	auge::FilterFactory* pFactory = auge::augeGetFilterFactoryInstance();
+
+	//	auge::PropertyName* pProp = pFactory->CreatePropertyName("country");
+	//	auge::GValue* pValue = new auge::GValue("China");
+	//	auge::Literal* pLiteral = pFactory->CreateLiteral(pValue);
+
+	auge::PropertyName* pProp = pFactory->CreatePropertyName("name");
+	auge::GValue* pValue = new auge::GValue("C!");
+	auge::Literal* pLiteral = pFactory->CreateLiteral(pValue);
+
+	pFilter = pFactory->CreateIsLikeFilter(pProp, pLiteral);
+
+	auge::FeatureClass* pFeatureClass = NULL;
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("country");
 	CPPUNIT_ASSERT(pFeatureClass!=NULL);
 
 	auge::FeatureCursor* pCursor = NULL;
