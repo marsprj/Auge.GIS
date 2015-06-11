@@ -39,9 +39,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\log4cplus-1.1.2\include;E:\DevEnv\GnuWin32\include;E:\DevEnv\gdal-1.11.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\log4cplus-1.1.2\include;E:\DevEnv\GnuWin32\include;$(IncludePath)</IncludePath>
     <TargetName>$(ProjectName)D</TargetName>
-    <LibraryPath>E:\DevEnv\log4cplus-1.1.2\lib;E:\DevEnv\GnuWin32\lib;E:\DevEnv\gdal-1.11.1\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>E:\DevEnv\log4cplus-1.1.2\lib;E:\DevEnv\GnuWin32\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -54,12 +54,12 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GCORE_EXPORTS;AUGE_EXPORTS;AUGE_GEOMETRY_EXPORTS;AUGE_FIELD_EXPORTS;AUGE_RASTER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GCORE_EXPORTS;AUGE_EXPORTS;AUGE_GEOMETRY_EXPORTS;AUGE_FIELD_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>log4cplusD.lib;libxml2.lib;libiconv.lib;rpcrt4.lib;gdal_i.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cplusD.lib;libxml2.lib;libiconv.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(OutDir)\$(TargetName).dll %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\binD
@@ -116,9 +116,6 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GMultiPolygonWKB.h" />
     <ClInclude Include="..\include\GPointWKB.h" />
     <ClInclude Include="..\include\GPolygonWKB.h" />
-    <ClInclude Include="..\include\RasterBandImpl.h" />
-    <ClInclude Include="..\include\RasterImpl.h" />
-    <ClInclude Include="..\include\RasterIOImpl.h" />
     <ClInclude Include="..\include\StringTokenizer.h" />
     <ClInclude Include="..\include\WKTReader.h" />
     <ClInclude Include="..\include\WKTWriter.h" />
@@ -146,9 +143,6 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GPolygonWKB.cpp" />
     <ClCompile Include="..\src\GPropertySet.cpp" />
     <ClCompile Include="..\src\GValue.cpp" />
-    <ClCompile Include="..\src\RasterBandImpl.cpp" />
-    <ClCompile Include="..\src\RasterImpl.cpp" />
-    <ClCompile Include="..\src\RasterIOImpl.cpp" />
     <ClCompile Include="..\src\StringTokenizer.cpp" />
     <ClCompile Include="..\src\WKTReader.cpp" />
     <ClCompile Include="..\src\WKTWriter.cpp" />

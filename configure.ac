@@ -71,6 +71,8 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Carto/test/Makefile
                  Engine/Core/Makefile
                  Engine/Core/src/Makefile
+                 Engine/Data/Raster/Makefile
+                 Engine/Data/Raster/src/Makefile
                  Engine/Data/GDEngine/Makefile
                  Engine/Data/GDEngine/src/Makefile
                  Engine/Data/GPostgres/Makefile

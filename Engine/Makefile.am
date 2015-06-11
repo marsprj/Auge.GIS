@@ -1,2 +1,2 @@
 AUTOMAKE_OPTION=foreign
-SUBDIRS=Core Filter Data Carto Processor Auth Server
+SUBDIRS=Core Raster Filter Data Carto Processor Auth Server

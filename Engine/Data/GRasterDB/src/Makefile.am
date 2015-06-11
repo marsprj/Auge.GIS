@@ -8,9 +8,10 @@ AM_CPPFLAGS=-I../include \
 
 libGRasterDB_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
+		-L$(top_srcdir)/Engine/Raster/src \
 		-L/opt/gdal-1.11.12/lib
 
-libGRasterDB_la_LIBADD=-lgcore -lgdal
+libGRasterDB_la_LIBADD=-lgcore -lgraster
 
 libGRasterDB_la_SOURCES=\
 		RasterDatasetImpl.cpp \
