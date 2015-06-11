@@ -8,10 +8,11 @@ AM_CPPFLAGS=-I../include \
 
 libGPostgres_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
+		-L$(top_srcdir)/Engine/Raster/src \
 		-L$(top_srcdir)/Engine/Filter/src \
 		-L$(PGHOME)/lib
 
-libGPostgres_la_LIBADD=-lgcore -lgfilter -lpq
+libGPostgres_la_LIBADD=-lgcore -lgraster -lgfilter -lpq
 
 libGPostgres_la_SOURCES=\
 		ConnectionPgs.cpp \
