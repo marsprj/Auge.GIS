@@ -94,34 +94,34 @@ namespace auge
 	}
 }
 
-////==============================================================================
-////------------------------------------------------------------------------------
-//// 连接所需动态库
-////------------------------------------------------------------------------------
-//#ifdef WIN32
-//#	ifndef AUGE_RASTER_EXPORTS
-//#		define _AUGE_RASTER_NAME "GRaster"
-//#		if defined(_DEBUG)
-//#			if defined(_UNICODE)
-////#				define _AUGE_FILTER_CONFIGURATION "UD"
-//#				define _AUGE_FILTER_CONFIGURATION "D"
-//#			else
-//#				define _AUGE_FILTER_CONFIGURATION "D"
-//#			endif // _UNICODE
-//#		else
-//#			if defined(_UNICODE)
-//#				define _AUGE_FILTER_CONFIGURATION "U"
-//#			else
-//#				define _AUGE_FILTER_CONFIGURATION ""
-//#			endif // _UNICODE
-//#		endif // _DEBUG
-//#		pragma comment(lib, _AUGE_RASTER_NAME _AUGE_FILTER_CONFIGURATION ".lib")
-//#		pragma message("Automatically linking with " _AUGE_RASTER_NAME _AUGE_FILTER_CONFIGURATION ".dll")
-//#		undef _AUGE_FILTER_CONFIGURATION
-//#		undef _AUGE_RASTER_NAME
-//#	endif // AUGE_FILTER_EXPORTS 
-//#endif
-////==============================================================================
+//==============================================================================
+//------------------------------------------------------------------------------
+// 连接所需动态库
+//------------------------------------------------------------------------------
+#ifdef WIN32
+#	ifndef AUGE_RASTER_EXPORTS
+#		define _AUGE_RASTER_NAME "GRaster"
+#		if defined(_DEBUG)
+#			if defined(_UNICODE)
+//#				define _AUGE_FILTER_CONFIGURATION "UD"
+#				define _AUGE_FILTER_CONFIGURATION "D"
+#			else
+#				define _AUGE_FILTER_CONFIGURATION "D"
+#			endif // _UNICODE
+#		else
+#			if defined(_UNICODE)
+#				define _AUGE_FILTER_CONFIGURATION "U"
+#			else
+#				define _AUGE_FILTER_CONFIGURATION ""
+#			endif // _UNICODE
+#		endif // _DEBUG
+#		pragma comment(lib, _AUGE_RASTER_NAME _AUGE_FILTER_CONFIGURATION ".lib")
+#		pragma message("Automatically linking with " _AUGE_RASTER_NAME _AUGE_FILTER_CONFIGURATION ".dll")
+#		undef _AUGE_FILTER_CONFIGURATION
+#		undef _AUGE_RASTER_NAME
+#	endif // AUGE_FILTER_EXPORTS 
+#endif
+//==============================================================================
 
 
 #endif //__AUGE_RASTER_H__
