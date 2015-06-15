@@ -30,7 +30,8 @@ namespace auge
 
 		std::string sql;
 		SQLBuilder::BuildInsertFeature(sql, m_pFeatureClass->GetName(), pFeature, m_pFeatureClass->GetSRID());
-		return m_pgConnection->ExecuteSQL(sql.c_str());
+		//return m_pgConnection->ExecuteSQL(sql.c_str());
+		return AG_SUCCESS;
 	}
 
 	RESULTCODE FeatureInsertCommandPgs::Commit()
