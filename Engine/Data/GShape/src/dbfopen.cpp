@@ -761,6 +761,7 @@ static void *DBFReadAttribute(DBFHandle psDBF, int hEntity, int iField,
 
 	nRecordOffset = ((long)psDBF->nRecordLength) * hEntity + psDBF->nHeaderLength;
 	printf("[nRecordOffset]:%ld\n",nRecordOffset);
+	printf("[nRecordLength]:%ld\n",psDBF->nRecordLength);
 
 	if( fseek( psDBF->fp, nRecordOffset, 0 ) != 0 )
         {

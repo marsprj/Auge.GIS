@@ -391,7 +391,7 @@ namespace auge
 		m_prop_name = pPropName->GetName();
 		pFilter = pFactory->CreateIsBetweenFilter();
 		pFilter->SetExpression(pPropName);
-		pPropName->Release();
+		//pPropName->Release();
 
 		XNode *pxNode = NULL;
 		XNodeSet* pxNodeSet = pxComparison->GetChildren();
@@ -417,7 +417,7 @@ namespace auge
 					break;
 				}
 				Expression* pExpression = ReadExpression(pxLiteral);
-				pxLiteral->Release();
+				//pxLiteral->Release();
 				if(pExpression==NULL)
 				{
 					pFilter->Release();
@@ -435,7 +435,7 @@ namespace auge
 					break;
 				}
 				Expression* pExpression = ReadExpression(pxLiteral);
-				pxLiteral->Release();
+				//pxLiteral->Release();
 				if(pExpression==NULL)
 				{
 					pFilter->Release();
