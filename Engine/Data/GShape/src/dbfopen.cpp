@@ -760,6 +760,7 @@ static void *DBFReadAttribute(DBFHandle psDBF, int hEntity, int iField,
 	DBFFlushRecord( psDBF );
 
 	nRecordOffset = ((long)psDBF->nRecordLength) * hEntity + psDBF->nHeaderLength;
+	printf("[nRecordOffset]:%ld\n",nRecordOffset);
 
 	if( fseek( psDBF->fp, nRecordOffset, 0 ) != 0 )
         {
