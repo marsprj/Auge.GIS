@@ -302,51 +302,53 @@ namespace auge
 			break;
 		default:
 			{
-				BinaryComparisonFilter* pBinaryFilter = NULL;
-				pBinaryFilter = pFactory->CreateBinaryComparisonFilter();
-				pBinaryFilter->SetOperator(oper);
-				XNode *pxNode = NULL;
-				XNodeSet* pxNodeSet = pxComparison->GetChildren();
-				if(pxNodeSet==NULL)
-				{
-					pBinaryFilter->Release();
-					pxNodeSet->Release();
-					return NULL;
-				}
+				pFilter = ReadComparison(pxComparison, oper);
+				//BinaryComparisonFilter* pBinaryFilter = NULL;
+				//pBinaryFilter = pFactory->CreateBinaryComparisonFilter();
+				//pBinaryFilter->SetOperator(oper);
+				//XNode *pxNode = NULL;
+				//XNodeSet* pxNodeSet = pxComparison->GetChildren();
+				//if(pxNodeSet==NULL)
+				//{
+				//	pBinaryFilter->Release();
+				//	pxNodeSet->Release();
+				//	return NULL;
+				//}
 
-				Expression* pExpression = NULL;
+				//Expression* pExpression = NULL;
 
-				const char* nodeName = NULL;
-				pxNodeSet->Reset();
-				pxNode = pxNodeSet->Next();
-				if(pxNode==NULL)
-				{
-					pxNodeSet->Release();
-					return NULL;
-				}
-				pExpression = ReadExpression(pxNode);
-				if(pExpression==NULL)
-				{
-					pxNodeSet->Release();
-					return NULL;
-				}
-				pBinaryFilter->SetExpression1(pExpression);
+				//const char* nodeName = NULL;
+				//pxNodeSet->Reset();
+				//pxNode = pxNodeSet->Next();
+				//if(pxNode==NULL)
+				//{
+				//	pxNodeSet->Release();
+				//	return NULL;
+				//}
+				//pExpression = ReadExpression(pxNode);
+				//if(pExpression==NULL)
+				//{
+				//	pxNodeSet->Release();
+				//	return NULL;
+				//}
+				//pBinaryFilter->SetExpression1(pExpression);
 
-				pxNode = pxNodeSet->Next();
-				if(pxNode==NULL)
-				{
-					pBinaryFilter->Release();
-					pxNodeSet->Release();
-					return NULL;
-				}
-				pExpression = ReadExpression(pxNode);
-				if(pExpression==NULL)
-				{
-					pBinaryFilter->Release();
-					pxNodeSet->Release();
-					return NULL;
-				}
-				pBinaryFilter->SetExpression2(pExpression);
+				//pxNode = pxNodeSet->Next();
+				//if(pxNode==NULL)
+				//{
+				//	pBinaryFilter->Release();
+				//	pxNodeSet->Release();
+				//	return NULL;
+				//}
+				//pExpression = ReadExpression(pxNode);
+				//if(pExpression==NULL)
+				//{
+				//	pBinaryFilter->Release();
+				//	pxNodeSet->Release();
+				//	return NULL;
+				//}
+				//pBinaryFilter->SetExpression2(pExpression);
+				//pFilter = pBinaryFilter;
 
 				//while(!pxNodeSet->IsEOF())
 				//{
@@ -363,7 +365,7 @@ namespace auge
 				//		pFilter->SetExpression2(pLiteral);
 				//	}
 				//}
-				pxNodeSet->Release();
+				//pxNodeSet->Release();
 			}
 		}
 		return pFilter;
@@ -448,6 +450,58 @@ namespace auge
 		pxNodeSet->Release();
 
 		return pFilter;
+	}
+
+	GFilter* FilterReaderImpl::ReadComparison(XNode* pxComparison,augeComparisonOperator oper)
+	{
+		BinaryComparisonFilter* pBinaryFilter = NULL;
+		FilterFactory* pFactory = augeGetFilterFactoryInstance();
+		pBinaryFilter = pFactory->CreateBinaryComparisonFilter();
+		pBinaryFilter->SetOperator(oper);
+		XNode *pxNode = NULL;
+		XNodeSet* pxNodeSet = pxComparison->GetChildren();
+		if(pxNodeSet==NULL)
+		{
+			pBinaryFilter->Release();
+			pxNodeSet->Release();
+			return NULL;
+		}
+
+		Expression* pExpression = NULL;
+
+		const char* nodeName = NULL;
+		pxNodeSet->Reset();
+		pxNode = pxNodeSet->Next();
+		if(pxNode==NULL)
+		{
+			pxNodeSet->Release();
+			return NULL;
+		}
+		pExpression = ReadExpression(pxNode);
+		if(pExpression==NULL)
+		{
+			pxNodeSet->Release();
+			return NULL;
+		}
+		pBinaryFilter->SetExpression1(pExpression);
+
+		pxNode = pxNodeSet->Next();
+		if(pxNode==NULL)
+		{
+			pBinaryFilter->Release();
+			pxNodeSet->Release();
+			return NULL;
+		}
+		pExpression = ReadExpression(pxNode);
+		if(pExpression==NULL)
+		{
+			pBinaryFilter->Release();
+			pxNodeSet->Release();
+			return NULL;
+		}
+		pxNodeSet->Release();
+		pBinaryFilter->SetExpression2(pExpression);
+		return pBinaryFilter;
 	}
 
 	GFilter* FilterReaderImpl::ReadBinaryLogical(XNode* pxLogical)
