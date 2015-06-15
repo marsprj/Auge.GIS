@@ -737,7 +737,7 @@ static void *DBFReadAttribute(DBFHandle psDBF, int hEntity, int iField,
                               char chReqType )
 
 {
-    int	       	nRecordOffset;
+    long	       	nRecordOffset;
     unsigned char	*pabyRec;
     void	*pReturnField = NULL;
 
@@ -759,7 +759,7 @@ static void *DBFReadAttribute(DBFHandle psDBF, int hEntity, int iField,
     {
 	DBFFlushRecord( psDBF );
 
-	nRecordOffset = psDBF->nRecordLength * hEntity + psDBF->nHeaderLength;
+	nRecordOffset = ((long)psDBF->nRecordLength) * hEntity + psDBF->nHeaderLength;
 
 	if( fseek( psDBF->fp, nRecordOffset, 0 ) != 0 )
         {
