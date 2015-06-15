@@ -185,6 +185,12 @@ namespace auge
 		pCanvas->Release();
 		GetMapResponse* pMapResponse = new GetMapResponse(pRequest);
 		pMapResponse->SetPath(img_path);
+
+		char img_fname[AUGE_NAME_MAX];
+		memset(img_fname,0,AUGE_NAME_MAX);
+		auge_make_path(img_fname, NULL, NULL, img_name, img_sfix);
+		pCartoManager->SetMapThumbnail(-1, pMap->GetID(), img_fname);
+
 		return pMapResponse;
 	}
 

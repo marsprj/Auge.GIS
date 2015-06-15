@@ -18,10 +18,11 @@ void ShapeTest::tearDown()
 
 void ShapeTest::ReadTest()
 {
-	//const char* path = "DATABASE=d:\\geobeans\\data\\world";
+	const char* path = "DATABASE=d:\\geobeans\\data\\world";
 	//const char* path = "DATABASE=/home/auge/world";
 	//const char* className = "rivers";
-	const char* path = "DATABASE=C:\\Users\\renyc\\Desktop\\aaa";
+	//const char* path = "DATABASE=C:\\Users\\renyc\\Desktop\\aaa";
+	//const char* path = "DATABASE=C:\\Users\\renyc\\Desktop\\aaa";
 	const char* className = "country";
 
 	RESULTCODE rc = AG_FAILURE;

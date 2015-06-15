@@ -19,6 +19,9 @@ namespace auge
 
 		virtual const char*	GetURI();
 		virtual RESULTCODE	SetURI(const char* uri);
+
+		virtual const char*	GetUUID();
+		virtual const char*	GetThumbnail();
 		
 		virtual GEnvelope&	GetExtent();
 		virtual void		SetExtent(double xmin, double ymin, double xmax, double ymax);
@@ -30,8 +33,10 @@ namespace auge
 		virtual Layer*		GetLayer(const char* szName);
 
 		virtual RESULTCODE	AddLayer(Layer* pLayer);
-
 		
+	public:
+		void		SetUUID(const char* uuid);
+		void		SetThumbnail(const char* thumbnail);
 
 	private:
 		void		Cleanup();
@@ -39,6 +44,8 @@ namespace auge
 	private:
 		std::string m_name;
 		std::string m_uri;
+		std::string m_uuid;
+		std::string m_thumbnail;
 		GEnvelope	m_exent;
 		g_int		m_srid;
 		//std::map<std::string, Layer*> m_layers;

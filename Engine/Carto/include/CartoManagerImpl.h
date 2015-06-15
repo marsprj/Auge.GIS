@@ -40,6 +40,7 @@ namespace auge
 		virtual Map*			CreateMap(g_uint user, const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax);
 		virtual RESULTCODE		RemoveMap(g_uint user, const char* name);
 		virtual g_int			GetMapID(g_uint user, const char* name);
+		virtual RESULTCODE		SetMapThumbnail(g_uint user, g_uint map_id, const char* thumbnail);
 		
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_id, g_uint style_id);
 		virtual Layer*			CreateWebLayer(const char* name, augeLayerType type, const char* url, g_uint map_id);

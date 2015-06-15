@@ -53,6 +53,9 @@ namespace auge
 		virtual const char*		GetURI() = 0;
 		virtual RESULTCODE		SetURI(const char* uri) = 0;
 
+		virtual const char*		GetUUID() = 0;
+		virtual const char*		GetThumbnail() = 0;
+
 		virtual GEnvelope&		GetExtent() = 0;
 		virtual void			SetExtent(double xmin, double ymin, double xmax, double ymax) = 0;
 		virtual g_int			GetSRID() = 0;
@@ -286,6 +289,7 @@ namespace auge
 		virtual Map*			CreateMap(g_uint user, const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax) = 0;
 		virtual RESULTCODE		RemoveMap(g_uint user, const char* name) = 0;
 		virtual g_int			GetMapID(g_uint user, const char* name) = 0;
+		virtual RESULTCODE		SetMapThumbnail(g_uint user, g_uint map_id, const char* thumbnail) = 0;
 
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_i, g_uint style_id) = 0;
 		virtual Layer*			CreateWebLayer(const char* name, augeLayerType type, const char* url, g_uint map_id) = 0;

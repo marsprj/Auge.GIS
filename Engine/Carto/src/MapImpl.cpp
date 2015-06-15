@@ -46,6 +46,23 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	const char*	MapImpl::GetUUID()
+	{
+		return m_uuid.c_str();
+	}
+
+	void MapImpl::SetUUID(const char* uuid)
+	{
+		if(uuid==NULL)
+		{
+			m_uuid.clear();
+		}
+		else
+		{
+			m_uuid = uuid;
+		}
+	}
+
 	g_uint MapImpl::GetLayerCount()
 	{
 		return m_layers.size();
@@ -171,5 +188,22 @@ namespace auge
 	void MapImpl::SetSRID(g_int srid)
 	{
 		m_srid = srid;
+	}
+
+	void MapImpl::SetThumbnail(const char* thumbnail)
+	{
+		if(thumbnail==NULL)
+		{
+			m_thumbnail.clear();
+		}
+		else
+		{
+			m_thumbnail = thumbnail;
+		}
+	}
+
+	const char* MapImpl::GetThumbnail()
+	{
+		return m_thumbnail.c_str();
 	}
 }

@@ -312,6 +312,18 @@ namespace auge
 				AddLayerNode(pxLayers, pLayer);
 			}
 		}
+
+		XElement* pxThumbnail = pxMap->AddChild("Thumbnail");
+		AddThumbnailNode(pxThumbnail, pMap); 
+
+	}
+
+	void DescribeMapResponse::AddThumbnailNode(XElement* pxThumbnail, Map* pMap)
+	{
+		char thumbnail[AUGE_PATH_MAX];
+		memset(thumbnail,0,AUGE_PATH_MAX);
+		g_snprintf(thumbnail, AUGE_PATH_MAX, "http://%s:%s/thumbnail/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), pMap->GetThumbnail());
+		pxThumbnail->SetAttribute("xlink",thumbnail,NULL);
 	}
 
 	void DescribeMapResponse::AddMapNode(XDocument* pxDoc, Map* pMap)

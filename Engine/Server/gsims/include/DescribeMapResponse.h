@@ -42,6 +42,7 @@ namespace auge
 		void	AddStyleNode(XElement* pxParent, Style* pStyle);
 
 		void	AddWebURLNode(XElement* pxLayer, const char* url);
+		void	AddThumbnailNode(XElement* pxThumbnail, Map* pMap);
 
 		void	Cleanup();
 		

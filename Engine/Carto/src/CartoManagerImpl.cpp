@@ -110,14 +110,16 @@ namespace auge
 		double xmax = pResult->GetDouble(row,6);
 		double ymax = pResult->GetDouble(row,7);
 		g_int  srid = pResult->GetInt(row,8);
+		const char* thumbnail = pResult->GetString(row,9);
 
-		Map* pMap = new MapImpl();
+		MapImpl* pMap = new MapImpl();
 		pMap->SetID(mid);
 		pMap->SetURI(uri);
 		pMap->SetName(name);
 		pMap->SetVersion(version);
 		pMap->SetExtent(xmin, ymin,xmax,ymax);
 		pMap->SetSRID(srid);
+		pMap->SetThumbnail(thumbnail);
 		return pMap;
 	}
 
@@ -129,7 +131,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid from g_map where gid=%d", mid);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail from g_map where gid=%d", mid);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -175,7 +177,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid from g_map where m_name='%s'", name);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail from g_map where m_name='%s'", name);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -220,7 +222,7 @@ namespace auge
 			return NULL;
 		}
 
-		const char* sql = "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid from g_map";
+		const char* sql = "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail from g_map";
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -398,8 +400,13 @@ namespace auge
 		{
 			return NULL;
 		}
+
+		char uuid[AUGE_PATH_MAX];
+		memset(uuid, 0, AUGE_PATH_MAX);
+		auge_generate_uuid(uuid, AUGE_PATH_MAX);
+
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_map (m_name) values('%s') returning gid", name);
+		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_map (m_name,m_uuid) values('%s','%s') returning gid", name, uuid);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -424,8 +431,12 @@ namespace auge
 		{
 			return NULL;
 		}
+		char uuid[AUGE_PATH_MAX];
+		memset(uuid, 0, AUGE_PATH_MAX);
+		auge_generate_uuid(uuid, AUGE_PATH_MAX);
+
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_map (m_name, minx, miny, maxx, maxy,srid) values('%s',%f,%f,%f,%f,%d) returning gid", name, xmin, ymin, xmax, ymax,srid);
+		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_map (m_name, minx, miny, maxx, maxy,srid,m_uuid) values('%s',%f,%f,%f,%f,%d,'%s') returning gid", name, xmin, ymin, xmax, ymax,srid,uuid);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -488,6 +499,19 @@ namespace auge
 		return mapID;
 	}
 
+	RESULTCODE CartoManagerImpl::SetMapThumbnail(g_uint user, g_uint map_id, const char* thumbnail)
+	{
+		if(thumbnail==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, "update g_map set thumbnail='%s' where gid=%d", thumbnail, map_id);
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
 	//////////////////////////////////////////////////////////////////////////
 	// Map Operation With User Begin
 	//////////////////////////////////////////////////////////////////////////
@@ -517,7 +541,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid from g_map where m_name='%s' and user_id=%d", mapName,user);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail from g_map where m_name='%s' and user_id=%d", mapName,user);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -546,7 +570,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX];
-		sprintf(sql, "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid from g_map where user_id=%d", user);
+		sprintf(sql, "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail from g_map where user_id=%d", user);
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -1684,6 +1708,7 @@ namespace auge
 							"  maxx double precision DEFAULT -90," \
 							"  miny double precision DEFAULT  180," \
 							"  maxy double precision DEFAULT  90," \
+							"  m_uuid character varying(128) DEFAULT ''::character varying," \
 							"  CONSTRAINT g_map_pkey PRIMARY KEY (gid )," \
 							"  CONSTRAINT g_map_user_fk FOREIGN KEY (user_id)" \
 							"  REFERENCES g_user (gid) MATCH SIMPLE " \
