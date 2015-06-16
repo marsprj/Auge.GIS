@@ -8,18 +8,18 @@
 
 namespace auge
 {
-	ProcessorCapabilitiesResponse::ProcessorCapabilitiesResponse(ProcessorCapabilitiesRequest* pRequest)
+	GeoProcessingCapabilitiesResponse::GeoProcessingCapabilitiesResponse(GeoProcessingCapabilitiesRequest* pRequest)
 	{
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
 	}
 
-	ProcessorCapabilitiesResponse::~ProcessorCapabilitiesResponse()
+	GeoProcessingCapabilitiesResponse::~GeoProcessingCapabilitiesResponse()
 	{
 
 	}
 
-	RESULTCODE ProcessorCapabilitiesResponse::Write(WebWriter* pWriter)
+	RESULTCODE GeoProcessingCapabilitiesResponse::Write(WebWriter* pWriter)
 	{
 		if(pWriter==NULL)
 		{
@@ -52,7 +52,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void ProcessorCapabilitiesResponse::SetPath(const char* path)
+	void GeoProcessingCapabilitiesResponse::SetPath(const char* path)
 	{
 		m_path = path;
 	}

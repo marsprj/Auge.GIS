@@ -2,10 +2,10 @@
 
 namespace auge
 {
-	std::string ProcessorCapabilitiesRequest::DEFAULT_HOST   = "127.0.0.1";
-	std::string ProcessorCapabilitiesRequest::DEFAULT_METHOD = "gps";
+	std::string GeoProcessingCapabilitiesRequest::DEFAULT_HOST   = "127.0.0.1";
+	std::string GeoProcessingCapabilitiesRequest::DEFAULT_METHOD = "gps";
 
-	ProcessorCapabilitiesRequest::ProcessorCapabilitiesRequest():
+	GeoProcessingCapabilitiesRequest::GeoProcessingCapabilitiesRequest():
 	m_version("1.0.0"),
 	m_mime_type("text/xml"),
 	m_host(DEFAULT_HOST),
@@ -14,27 +14,27 @@ namespace auge
 		
 	}
 
-	ProcessorCapabilitiesRequest::~ProcessorCapabilitiesRequest()
+	GeoProcessingCapabilitiesRequest::~GeoProcessingCapabilitiesRequest()
 	{
 
 	}
 
-	const char*	ProcessorCapabilitiesRequest::GetEngine()
+	const char*	GeoProcessingCapabilitiesRequest::GetEngine()
 	{
 		return "gps";
 	}
 
-	const char*	ProcessorCapabilitiesRequest::GetVersion()
+	const char*	GeoProcessingCapabilitiesRequest::GetVersion()
 	{
 		return m_version.c_str();
 	}
 
-	const char*	ProcessorCapabilitiesRequest::GetRequest()
+	const char*	GeoProcessingCapabilitiesRequest::GetRequest()
 	{
 		return "GetCapabilities";
 	}
 
-	void ProcessorCapabilitiesRequest::SetVersion(const char* value)
+	void GeoProcessingCapabilitiesRequest::SetVersion(const char* value)
 	{
 		if(value==NULL)
 		{
@@ -43,12 +43,12 @@ namespace auge
 		m_version = value;
 	}
 
-	const char*	ProcessorCapabilitiesRequest::GetMimeType()
+	const char*	GeoProcessingCapabilitiesRequest::GetMimeType()
 	{
 		return m_mime_type.c_str();
 	}
 
-	bool ProcessorCapabilitiesRequest::Create(rude::CGI& cgi)
+	bool GeoProcessingCapabilitiesRequest::Create(rude::CGI& cgi)
 	{
 		const char* val = NULL;
 		SetVersion(cgi["version"]);
@@ -56,7 +56,7 @@ namespace auge
 		return true;
 	}
 
-	void ProcessorCapabilitiesRequest::SetUser(const char* user)
+	void GeoProcessingCapabilitiesRequest::SetUser(const char* user)
 	{
 		if(user==NULL)
 		{
@@ -68,12 +68,12 @@ namespace auge
 		}
 	}
 
-	const char* ProcessorCapabilitiesRequest::GetUser()
+	const char* GeoProcessingCapabilitiesRequest::GetUser()
 	{
 		return m_user.c_str();
 	}
 
-	void ProcessorCapabilitiesRequest::SetRequestMethod(const char* method)
+	void GeoProcessingCapabilitiesRequest::SetRequestMethod(const char* method)
 	{
 		if(method==NULL)
 		{
@@ -89,7 +89,7 @@ namespace auge
 		}
 	}
 
-	void ProcessorCapabilitiesRequest::SetHost(const char* host)
+	void GeoProcessingCapabilitiesRequest::SetHost(const char* host)
 	{
 		if(host==NULL)
 		{
@@ -105,17 +105,17 @@ namespace auge
 		}
 	}
 
-	const char* ProcessorCapabilitiesRequest::GetRequestMethod()
+	const char* GeoProcessingCapabilitiesRequest::GetRequestMethod()
 	{
 		return m_request_method.c_str();
 	}
 
-	const char* ProcessorCapabilitiesRequest::GetHost()
+	const char* GeoProcessingCapabilitiesRequest::GetHost()
 	{
 		return m_host.c_str();
 	}
 
-	void ProcessorCapabilitiesRequest::Info()
+	void GeoProcessingCapabilitiesRequest::Info()
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 		char str[AUGE_MSG_MAX];

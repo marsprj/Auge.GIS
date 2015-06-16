@@ -11,14 +11,16 @@
 namespace auge
 {
 	class WebContext;
-	class ProcessorCapabilitiesRequest;
-	class ProcessorCapabilitiesResponse;
+	class GeoProcessingCapabilitiesRequest;
+	class GeoProcessingCapabilitiesResponse;
+	class GeoProcessingEngine;
 
-	class ProcessorCapabilitiesHandler : public WebHandler
+	class GeoProcessingCapabilitiesHandler : public WebHandler
 	{
 	public:
-		ProcessorCapabilitiesHandler();
-		virtual ~ProcessorCapabilitiesHandler();
+		GeoProcessingCapabilitiesHandler();
+		GeoProcessingCapabilitiesHandler(GeoProcessingEngine *pEngine);
+		virtual ~GeoProcessingCapabilitiesHandler();
 	public:
 		virtual const char*		GetName();
 
@@ -30,8 +32,8 @@ namespace auge
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
 
 	private:
-		ProcessorCapabilitiesResponse*	WriteCapabilities_1_0_0(ProcessorCapabilitiesRequest* pRequest, WebContext* pWebContext);
-		ProcessorCapabilitiesResponse*	WriteCapabilities_1_3_0(ProcessorCapabilitiesRequest* pRequest, WebContext* pWebContext);
+		GeoProcessingCapabilitiesResponse*	WriteCapabilities_1_0_0(GeoProcessingCapabilitiesRequest* pRequest, WebContext* pWebContext);
+		GeoProcessingCapabilitiesResponse*	WriteCapabilities_1_3_0(GeoProcessingCapabilitiesRequest* pRequest, WebContext* pWebContext);
 
 		//virtual WebRequest*	ParseRequest(rude::CGI& cgi, WebContext* pWebContext=NULL, Map* pMap=NULL);
 		//virtual WebRequest*	ParseRequest(XDocument* pxDoc, WebContext* pWebContext=NULL, Map* pMap=NULL);
@@ -48,6 +50,7 @@ namespace auge
 
 	protected:
 		void*	m_handler;
+		GeoProcessingEngine *m_pEngine;
 		std::vector<WebHandler*>	m_handlers;
 	};
 }

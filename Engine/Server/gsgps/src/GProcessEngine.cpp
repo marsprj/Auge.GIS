@@ -24,7 +24,7 @@ namespace auge
 	{
 		m_handler = NULL;
 
-		m_handlers.push_back(new ProcessorCapabilitiesHandler());
+		m_handlers.push_back(new GeoProcessingCapabilitiesHandler(this));
 		m_handlers.push_back(new CentroidHandler());
 		m_handlers.push_back(new BufferHandler());
 
