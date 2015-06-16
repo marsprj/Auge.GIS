@@ -7,24 +7,24 @@
 
 namespace auge
 {
-	CapabilitiesHandler::CapabilitiesHandler()
+	ProcessorCapabilitiesHandler::ProcessorCapabilitiesHandler()
 	{
 
 	}
 
-	CapabilitiesHandler::~CapabilitiesHandler()
+	ProcessorCapabilitiesHandler::~ProcessorCapabilitiesHandler()
 	{
 
 	}
 
-	const char*	CapabilitiesHandler::GetName()
+	const char*	ProcessorCapabilitiesHandler::GetName()
 	{
 		return "GetCapabilities";
 	}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	ProcessorCapabilitiesHandler::ParseRequest(rude::CGI& cgi)
 	{
-		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
+		ProcessorCapabilitiesRequest* pRequest = new ProcessorCapabilitiesRequest();
 		if(!pRequest->Create(cgi))
 		{
 			GLogger* pLogger = augeGetLoggerInstance();
@@ -36,14 +36,14 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	WebRequest*	ProcessorCapabilitiesHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
 		return ParseRequest(cgi);
 	}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
+	WebRequest*	ProcessorCapabilitiesHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
-		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
+		ProcessorCapabilitiesRequest* pRequest = new ProcessorCapabilitiesRequest();
 		//if(!pRequest->Create(cgi))
 		//{
 		//	GLogger* pLogger = augeGetLoggerInstance();
@@ -54,10 +54,10 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* ProcessorCapabilitiesHandler::Execute(WebRequest* pWebRequest)
 	{
 		WebResponse* pWebResponse = NULL;
-		CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
+		ProcessorCapabilitiesRequest* pRequest = static_cast<ProcessorCapabilitiesRequest*>(pWebRequest);
 
 		const char* version = pRequest->GetVersion();
 		if(strcmp(version,"1.0.0")==0)
@@ -80,10 +80,10 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* ProcessorCapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
 		WebResponse* pWebResponse = NULL;
-		CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
+		ProcessorCapabilitiesRequest* pRequest = static_cast<ProcessorCapabilitiesRequest*>(pWebRequest);
 
 		const char* version = pRequest->GetVersion();
 		if(strcmp(version,"1.0.0")==0)
@@ -106,7 +106,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext) 
+	ProcessorCapabilitiesResponse* ProcessorCapabilitiesHandler::WriteCapabilities_1_0_0(ProcessorCapabilitiesRequest* pRequest, WebContext* pWebContext) 
 	{
 		const char* cache_path = pWebContext->GetCacheProtocolPath();
 
@@ -146,19 +146,19 @@ namespace auge
 		pxDoc->Save(capa_path, pWebContext->GetResponseEncoding(), 1);
 		pxDoc->Release();
 
-		CapabilitiesResponse* pResponse = new CapabilitiesResponse(pRequest);
+		ProcessorCapabilitiesResponse* pResponse = new ProcessorCapabilitiesResponse(pRequest);
 		pResponse->SetPath(capa_path);
 
 		return pResponse;
 	}
 
-	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_3_0(CapabilitiesRequest* pRequest, WebContext* pWebContext)
+	ProcessorCapabilitiesResponse* ProcessorCapabilitiesHandler::WriteCapabilities_1_3_0(ProcessorCapabilitiesRequest* pRequest, WebContext* pWebContext)
 	{
 		//return WriteCapabilities_1_0_0(pRequest, pWebContext);
 		return NULL;
 	}
 
-	void CapabilitiesHandler::SetRooteNode_1_1_0(XElement* pxRoot, const char* version)
+	void ProcessorCapabilitiesHandler::SetRooteNode_1_1_0(XElement* pxRoot, const char* version)
 	{
 		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/gps",NULL);
 		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/gps","gps");
@@ -169,7 +169,7 @@ namespace auge
 		pxRoot->SetAttribute("version", version, NULL); 
 	}
 
-	void CapabilitiesHandler::AddServiceIdentificationNode_1_1_0(XElement* pxParent)
+	void ProcessorCapabilitiesHandler::AddServiceIdentificationNode_1_1_0(XElement* pxParent)
 	{	
 		XElement *pxService = pxParent->AddChild("ServiceIdentification", "ows");
 		XElement *pxNode = pxNode = pxService->AddChild("Name", "ows");
@@ -196,7 +196,7 @@ namespace auge
 		pxConstraints->SetChildText("NONE");
 	}
 
-	void CapabilitiesHandler::AddServiceProviderNode_1_1_0(XElement* pxParent)
+	void ProcessorCapabilitiesHandler::AddServiceProviderNode_1_1_0(XElement* pxParent)
 	{
 		XElement* pxProvider = pxParent->AddChild("ServiceProvider", "ows");
 		XElement* pxProviderName = pxProvider->AddChild("ProviderName","ows");
@@ -214,7 +214,7 @@ namespace auge
 		pxNode = pxAddress->AddChild("Country","ows");
 	}
 
-	void CapabilitiesHandler::AddOperationsMetadataNode_1_1_0(XElement* pxParent, const char* gps_xlink)
+	void ProcessorCapabilitiesHandler::AddOperationsMetadataNode_1_1_0(XElement* pxParent, const char* gps_xlink)
 	{
 		XElement* pxOperationsMetadata = pxParent->AddChild("OperationsMetadata", "ows");
 
@@ -250,7 +250,7 @@ namespace auge
 		}
 	}
 
-	void CapabilitiesHandler::AddProcessOfferingsNode_1_1_0(XElement* pxParent, const char* gps_xlink)
+	void ProcessorCapabilitiesHandler::AddProcessOfferingsNode_1_1_0(XElement* pxParent, const char* gps_xlink)
 	{
 		XElement* pxProcessOfferings = pxParent->AddChild("ProcessOfferings", "gps");
 		XElement* pxProecess = pxProcessOfferings->AddChild("Process","gps");
@@ -267,7 +267,7 @@ namespace auge
 		pxMetadata->SetAttribute("title","polygon","xlink");
 	}
 
-	void CapabilitiesHandler::AddLanguagesNode_1_1_0(XElement* pxParent, const char* gps_xlink)
+	void ProcessorCapabilitiesHandler::AddLanguagesNode_1_1_0(XElement* pxParent, const char* gps_xlink)
 	{
 		XElement* pxDefault = pxParent->AddChild("Default", "ows");
 		XElement* pxLanguage = pxDefault->AddChild("Language", "ows");

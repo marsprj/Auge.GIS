@@ -10,11 +10,11 @@
 
 namespace auge
 {
-	class CapabilitiesRequest : public WebRequest
+	class ProcessorCapabilitiesRequest : public WebRequest
 	{
 	public:
-		CapabilitiesRequest();
-		virtual ~CapabilitiesRequest();
+		ProcessorCapabilitiesRequest();
+		virtual ~ProcessorCapabilitiesRequest();
 
 	public:
 		virtual const char*		GetUser();

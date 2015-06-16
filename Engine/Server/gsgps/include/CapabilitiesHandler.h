@@ -11,14 +11,14 @@
 namespace auge
 {
 	class WebContext;
-	class CapabilitiesRequest;
-	class CapabilitiesResponse;
+	class ProcessorCapabilitiesRequest;
+	class ProcessorCapabilitiesResponse;
 
-	class CapabilitiesHandler : public WebHandler
+	class ProcessorCapabilitiesHandler : public WebHandler
 	{
 	public:
-		CapabilitiesHandler();
-		virtual ~CapabilitiesHandler();
+		ProcessorCapabilitiesHandler();
+		virtual ~ProcessorCapabilitiesHandler();
 	public:
 		virtual const char*		GetName();
 
@@ -30,8 +30,8 @@ namespace auge
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
 
 	private:
-		CapabilitiesResponse*	WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext);
-		CapabilitiesResponse*	WriteCapabilities_1_3_0(CapabilitiesRequest* pRequest, WebContext* pWebContext);
+		ProcessorCapabilitiesResponse*	WriteCapabilities_1_0_0(ProcessorCapabilitiesRequest* pRequest, WebContext* pWebContext);
+		ProcessorCapabilitiesResponse*	WriteCapabilities_1_3_0(ProcessorCapabilitiesRequest* pRequest, WebContext* pWebContext);
 
 		//virtual WebRequest*	ParseRequest(rude::CGI& cgi, WebContext* pWebContext=NULL, Map* pMap=NULL);
 		//virtual WebRequest*	ParseRequest(XDocument* pxDoc, WebContext* pWebContext=NULL, Map* pMap=NULL);

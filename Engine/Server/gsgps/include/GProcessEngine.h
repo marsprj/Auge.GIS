@@ -16,7 +16,7 @@ namespace auge
 
 	class GeoProcessingEngine : public WebEngine
 	{
-		friend class CapabilitiesHandler;
+		friend class ProcessorCapabilitiesHandler;
 
 	public:
 		GeoProcessingEngine();

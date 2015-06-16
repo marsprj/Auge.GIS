@@ -8,18 +8,18 @@
 
 namespace auge
 {
-	CapabilitiesResponse::CapabilitiesResponse(CapabilitiesRequest* pRequest)
+	ProcessorCapabilitiesResponse::ProcessorCapabilitiesResponse(ProcessorCapabilitiesRequest* pRequest)
 	{
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
 	}
 
-	CapabilitiesResponse::~CapabilitiesResponse()
+	ProcessorCapabilitiesResponse::~ProcessorCapabilitiesResponse()
 	{
 
 	}
 
-	RESULTCODE CapabilitiesResponse::Write(WebWriter* pWriter)
+	RESULTCODE ProcessorCapabilitiesResponse::Write(WebWriter* pWriter)
 	{
 		if(pWriter==NULL)
 		{
@@ -52,7 +52,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void CapabilitiesResponse::SetPath(const char* path)
+	void ProcessorCapabilitiesResponse::SetPath(const char* path)
 	{
 		m_path = path;
 	}

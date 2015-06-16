@@ -2,10 +2,10 @@
 
 namespace auge
 {
-	std::string CapabilitiesRequest::DEFAULT_HOST   = "127.0.0.1";
-	std::string CapabilitiesRequest::DEFAULT_METHOD = "gps";
+	std::string ProcessorCapabilitiesRequest::DEFAULT_HOST   = "127.0.0.1";
+	std::string ProcessorCapabilitiesRequest::DEFAULT_METHOD = "gps";
 
-	CapabilitiesRequest::CapabilitiesRequest():
+	ProcessorCapabilitiesRequest::ProcessorCapabilitiesRequest():
 	m_version("1.0.0"),
 	m_mime_type("text/xml"),
 	m_host(DEFAULT_HOST),
@@ -14,27 +14,27 @@ namespace auge
 		
 	}
 
-	CapabilitiesRequest::~CapabilitiesRequest()
+	ProcessorCapabilitiesRequest::~ProcessorCapabilitiesRequest()
 	{
 
 	}
 
-	const char*	CapabilitiesRequest::GetEngine()
+	const char*	ProcessorCapabilitiesRequest::GetEngine()
 	{
 		return "gps";
 	}
 
-	const char*	CapabilitiesRequest::GetVersion()
+	const char*	ProcessorCapabilitiesRequest::GetVersion()
 	{
 		return m_version.c_str();
 	}
 
-	const char*	CapabilitiesRequest::GetRequest()
+	const char*	ProcessorCapabilitiesRequest::GetRequest()
 	{
 		return "GetCapabilities";
 	}
 
-	void CapabilitiesRequest::SetVersion(const char* value)
+	void ProcessorCapabilitiesRequest::SetVersion(const char* value)
 	{
 		if(value==NULL)
 		{
@@ -43,12 +43,12 @@ namespace auge
 		m_version = value;
 	}
 
-	const char*	CapabilitiesRequest::GetMimeType()
+	const char*	ProcessorCapabilitiesRequest::GetMimeType()
 	{
 		return m_mime_type.c_str();
 	}
 
-	bool CapabilitiesRequest::Create(rude::CGI& cgi)
+	bool ProcessorCapabilitiesRequest::Create(rude::CGI& cgi)
 	{
 		const char* val = NULL;
 		SetVersion(cgi["version"]);
@@ -56,7 +56,7 @@ namespace auge
 		return true;
 	}
 
-	void CapabilitiesRequest::SetUser(const char* user)
+	void ProcessorCapabilitiesRequest::SetUser(const char* user)
 	{
 		if(user==NULL)
 		{
@@ -68,12 +68,12 @@ namespace auge
 		}
 	}
 
-	const char* CapabilitiesRequest::GetUser()
+	const char* ProcessorCapabilitiesRequest::GetUser()
 	{
 		return m_user.c_str();
 	}
 
-	void CapabilitiesRequest::SetRequestMethod(const char* method)
+	void ProcessorCapabilitiesRequest::SetRequestMethod(const char* method)
 	{
 		if(method==NULL)
 		{
@@ -89,7 +89,7 @@ namespace auge
 		}
 	}
 
-	void CapabilitiesRequest::SetHost(const char* host)
+	void ProcessorCapabilitiesRequest::SetHost(const char* host)
 	{
 		if(host==NULL)
 		{
@@ -105,17 +105,17 @@ namespace auge
 		}
 	}
 
-	const char* CapabilitiesRequest::GetRequestMethod()
+	const char* ProcessorCapabilitiesRequest::GetRequestMethod()
 	{
 		return m_request_method.c_str();
 	}
 
-	const char* CapabilitiesRequest::GetHost()
+	const char* ProcessorCapabilitiesRequest::GetHost()
 	{
 		return m_host.c_str();
 	}
 
-	void CapabilitiesRequest::Info()
+	void ProcessorCapabilitiesRequest::Info()
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 		char str[AUGE_MSG_MAX];
