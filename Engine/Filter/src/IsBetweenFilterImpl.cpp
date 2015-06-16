@@ -108,7 +108,10 @@ namespace auge
 
 	void IsBetweenFilterImpl::Release()
 	{
-		delete this;
+		if(!ReleaseRef())
+		{
+			delete this;
+		}
 	}
 
 }

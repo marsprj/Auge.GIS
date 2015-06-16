@@ -237,11 +237,13 @@ namespace auge
 		//	break;
 		//}
 
+		int fid = 0;
 		g_uchar* wkb = NULL;
 		auge::Geometry	*pGeometry = NULL;
 		auge::Feature	*pFeature = NULL;
 		while((pFeature=pCursor->NextFeature())!=NULL)
 		{	
+			fid = pFeature->GetFID();
 			pGeometry = pFeature->GetGeometry();
 			if(pGeometry!=NULL)
 			{

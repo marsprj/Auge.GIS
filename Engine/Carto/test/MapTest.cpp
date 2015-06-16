@@ -20,8 +20,8 @@ void MapTest::setUp()
 	pEngineManager->Load();
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
-	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -90,7 +90,9 @@ void MapTest::DrawMap()
 	auge::Canvas* pCanvas = NULL;
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
-	auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
+	//auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
+	//auge::GEnvelope viewer(90.46,22.41,127.08,41.15);
+	auge::GEnvelope viewer(82.41,18.29,135.14,45.27);
 	pCanvas = pCartoFactory->CreateCanvas2D(800, 600);
 	pCanvas->SetViewer(viewer);
 
