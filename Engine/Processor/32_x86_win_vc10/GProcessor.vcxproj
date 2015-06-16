@@ -82,6 +82,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\BufferProcessorImpl.cpp" />
     <ClCompile Include="..\src\FeatureImportProcessorImpl.cpp" />
     <ClCompile Include="..\src\FileSytemTileStoreGeneratorImpl.cpp" />
     <ClCompile Include="..\src\MongoTileStoreGenerator.cpp" />
@@ -90,6 +91,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\AugeProcessor.h" />
+    <ClInclude Include="..\include\BufferProcessorImpl.h" />
     <ClInclude Include="..\include\FeatureImportProcessorImpl.h" />
     <ClInclude Include="..\include\FileSytemTileStoreGeneratorImpl.h" />
     <ClInclude Include="..\include\MongoTileStoreGenerator.h" />

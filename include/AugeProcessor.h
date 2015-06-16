@@ -20,6 +20,7 @@ namespace auge
 	class GEnvelope;
 	class TileStore;
 	class Raster;
+	class Geometry;
 
 	class GProcessor : public GObject
 	{
@@ -28,6 +29,21 @@ namespace auge
 		virtual ~GProcessor(){}
 	public:
 		virtual RESULTCODE	Execute() = 0;
+	};
+
+	class BufferProcessor : public GProcessor
+	{
+	protected:
+		BufferProcessor(){}
+		virtual ~BufferProcessor(){}
+	public:
+		virtual	void		SetGeometry(Geometry* pGeometry) = 0;
+		virtual Geometry*	GetGeometry() = 0;
+		
+		virtual void		SetRadius(double radius) = 0;
+		virtual double		GetRadius() = 0;
+
+		virtual Geometry*	GetResultGeometry() = 0;
 	};
 
 	class MapTileStoreGenerator : public GProcessor

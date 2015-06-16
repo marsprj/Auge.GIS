@@ -6,6 +6,7 @@
 #include "GProcessEngine.h"
 #include "CapabilitiesHandler.h"
 #include "CentroidHandler.h"
+#include "BufferHandler.h"
 #include "TileUpdateHandler.h"
 
 #include "BuildPyramidHandler.h"
@@ -25,6 +26,7 @@ namespace auge
 
 		m_handlers.push_back(new CapabilitiesHandler());
 		m_handlers.push_back(new CentroidHandler());
+		m_handlers.push_back(new BufferHandler());
 
 		m_handlers.push_back(new UpdateTileHandler());
 

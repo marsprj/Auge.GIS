@@ -73,6 +73,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GProcessor", "..\..\..\Proc
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsgps", "..\..\gsgps\32_x86_win_vc10\gsgps.vcxproj", "{961093B5-A829-41C7-87A1-6CE75B065B5C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{075E99AE-8CDC-452A-BDD8-3E789ED20A7A} = {075E99AE-8CDC-452A-BDD8-3E789ED20A7A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswmts", "..\..\gswmts\32_x86_win_vc10\gswmts.vcxproj", "{CA2105E9-5D81-4D6A-8D32-1E992F46F9A7}"
 EndProject

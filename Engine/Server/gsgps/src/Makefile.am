@@ -22,6 +22,9 @@ libgsgps_la_SOURCES=\
 		CentroidHandler.cpp \
 		CentroidRequest.cpp \
 		CentroidResponse.cpp \
+		BufferHandler.cpp \
+		BufferRequest.cpp \
+		BufferResponse.cpp \
 		ThreadManager.cpp \
 		TileUpdateHandler.cpp \
 		TileUpdateRequest.cpp \

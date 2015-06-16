@@ -40,8 +40,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)D</TargetName>
-    <IncludePath>../include;../../Depends/include/;../../Depends/include/fcgi;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
-    <LibraryPath>../../Depends/lib;%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;E:\DevEnv\GnuWin32\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <IncludePath>../include;../../Depends/include/;../../Depends/include/fcgi;E:\DevEnv\OSGeo4W\include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include</IncludePath>
+    <LibraryPath>../../Depends/lib;E:\DevEnv\OSGeo4W\lib;%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;E:\DevEnv\GnuWin32\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -57,7 +57,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>rudecgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>rudecgi.lib;geos_c_i.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(OutDir)\$(TargetName).dll %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\binD
@@ -83,6 +83,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\BufferHandler.cpp" />
+    <ClCompile Include="..\src\BufferRequest.cpp" />
+    <ClCompile Include="..\src\BufferResponse.cpp" />
     <ClCompile Include="..\src\BuildPyramidHandler.cpp" />
     <ClCompile Include="..\src\BuildPyramidRequest.cpp" />
     <ClCompile Include="..\src\CapabilitiesHandler.cpp" />
@@ -100,6 +103,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\TileUpdateRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\BufferHandler.h" />
+    <ClInclude Include="..\include\BufferRequest.h" />
+    <ClInclude Include="..\include\BufferResponse.h" />
     <ClInclude Include="..\include\BuildPyramidHandler.h" />
     <ClInclude Include="..\include\BuildPyramidRequest.h" />
     <ClInclude Include="..\include\CapabilitiesHandler.h" />
