@@ -30,11 +30,15 @@ namespace auge
 
 		const char* GetTypeName();
 		const char*	GetSourceName();
-		const char* GetOutputFormat();
+
 		const char* GetDistanceField();
 		double		GetDistance();
 		GFilter*	GetFilter();
-		
+
+		const char* GetOutputFormat();
+		const char* GetOutSourceName();
+		const char* GetOutTypeName();
+				
 	public:
 		bool		Create(rude::CGI& cgi);
 		void		SetUser(const char* user);
@@ -50,6 +54,9 @@ namespace auge
 		void		SetDistance(const char* distance);
 		void		SetDistanceField(const char* distance_field);
 
+		void		SetOutSourceName(const char* sourceName);
+		void		GetOutTypeName(const char* typeName);
+
 		void		SetFilter(XElement* pxFilter);
 		
 		void		Info();
@@ -61,8 +68,12 @@ namespace auge
 		std::string m_host;
 		std::string m_request_method;
 
-		std::string m_source_name;
-		std::string m_type_name;
+		std::string m_in_source_name;
+		std::string m_in_type_name;
+
+		std::string m_out_source_name;
+		std::string m_out_type_name;
+
 		std::string m_output_format;
 		std::string m_distance_field;
 		double		m_distance;

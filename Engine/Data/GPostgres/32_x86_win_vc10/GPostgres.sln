@@ -21,6 +21,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GShape", "..\..\GShape\32_x86_win_vc10\GShape.vcxproj", "{C17AA319-6571-48F3-BFD6-111B3B0445C5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shp2pgs", "..\shp2pgs\shp2pgs.vcxproj", "{5AADD3E1-0DC7-4263-AA04-D53422A5C2B8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C17AA319-6571-48F3-BFD6-111B3B0445C5} = {C17AA319-6571-48F3-BFD6-111B3B0445C5}
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698} = {5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,11 +7,14 @@ int main(int argc, char** argv)
 	//const char* shpName = argv[1];
 	//const char* className = argv[2];
 
-	const char* shp_constr = "DATABASE=G:\\Data\\shape\\osm";
+	//const char* shp_constr = "DATABASE=G:\\Data\\shape\\osm";
 	//const char* shp_constr = "DATABASE=D:\\GeoBeans\\data\\world";
+	//const char* shp_constr = "DATABASE=H:\\Data\\data\\中国_WGS84\\全国_shap\\行政区划 - 副本";
+	const char* shp_constr = "DATABASE=G:\\temp\\全国_shap";
 	//const char* pgs_constr = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* pgs_constr = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=ourgis;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* pgs_constr = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=osm;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	//const char* pgs_constr = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=osm;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* pgs_constr = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=base;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 
 	RESULTCODE rc = AG_FAILURE;
 	//const char* className = "cities";
@@ -24,8 +27,8 @@ int main(int argc, char** argv)
 	//const char* shpName = "World_coastline_os";
 	//const char* className = "World_coastline_os";
 
-	const char* shpName = "World_location_os";
-	const char* className = "osm_location_os";
+	const char* shpName = "china_gas_station_point";
+	const char* className = "china_gas_station_point";
 	
 	auge::DataEngine* pshpEngine = NULL;
 	auge::DataEngine* ppgsEngine = NULL;
@@ -59,6 +62,7 @@ int main(int argc, char** argv)
 	pshpFeatureClass = pshpWorkspace->OpenFeatureClass(shpName);
 	pFields = pshpFeatureClass->GetFields();
 
+	ppgsWorkspace->RemoveFeatureClass(className);
 	ppgsFeatureClass = ppgsWorkspace->OpenFeatureClass(className);
 	if(ppgsFeatureClass==NULL)
 	{

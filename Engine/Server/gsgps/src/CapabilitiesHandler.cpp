@@ -216,43 +216,62 @@ namespace auge
 		XElement* pxAddress = pxContactInfo->AddChild("Address","ows");
 		pxNode = pxAddress->AddChild("City","ows");
 		pxNode = pxAddress->AddChild("AdministrativeArea","ows");
-		pxNode = pxAddress->AddChild("Country","ows");
+		pxNode = pxAddress->AddChild("Country","ows"); 
 	}
 
 	void GeoProcessingCapabilitiesHandler::AddOperationsMetadataNode_1_1_0(XElement* pxParent, const char* gps_xlink)
 	{
 		XElement* pxOperationsMetadata = pxParent->AddChild("OperationsMetadata", "ows");
 
+		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_feature_handlers, "Feature", "ÒªËØ", gps_xlink);
+		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_geometry_handlers, "Geometry", "¿Õ¼ä·ÖÎö", gps_xlink);
+		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_tile_handlers, "Feature", "ÍßÆ¬½ð×ÖËþ", gps_xlink);
+
+	}
+
+	void GeoProcessingCapabilitiesHandler::AddOperationsNodes_1_1_0(XElement* pxParent, std::vector<WebHandler*>& handlers, const char* type, const char* description, const char* gps_xlink)
+	{
+		XElement* pxOperationset = pxParent->AddChild("OperationsSet", NULL);
+		pxOperationset->SetAttribute("type", type, NULL);
+		pxOperationset->SetAttribute("description", auge_encoding_convert("GBK", "UTF-8", description,strlen(description)), NULL);
+		
 		// Service Handlers
 		GeoProcessingEngine* pFeatureEngine = m_pEngine;
-		std::vector<WebHandler*>& handlers = pFeatureEngine->m_handlers;
+		//std::vector<WebHandler*>& handlers = pFeatureEngine->m_feature_handlers;
 		std::vector<WebHandler*>::iterator iter;
 		for(iter=handlers.begin(); iter!=handlers.end(); iter++)
 		{
 			WebHandler* handler = *iter;
 
 			// WPS_Capabilities-->OperationsMetadata-->Operation (GetCapabilities)
-			XElement* pxOperation = pxOperationsMetadata->AddChild("Operation", "ows");
-			pxOperation->SetAttribute("name", handler->GetName(),NULL);
-			// WPS_Capabilities-->OperationsMetadata-->Operation-->DCP
-			XElement* pxDCP = pxOperation->AddChild("DCP", "ows");
-			// WPS_Capabilities-->OperationsMetadata-->Operation-->DCP-->HTTP
-			XElement* pxHTTP = pxDCP->AddChild("HTTP", "ows");
-			// WPS_Capabilities-->OperationsMetadata-->Operation-->DCP-->Get/Post
-			XElement* pxNode = pxHTTP->AddChild("Get", "ows");
-			pxNode->SetAttribute("href",gps_xlink,"xlink");
-			pxNode = pxHTTP->AddChild("Post", "ows");
-			pxNode->SetAttribute("href",gps_xlink,"xlink");
-			// WPS_Capabilities-->OperationsMetadata-->Operation-->Parameter(AcceptVersion)
-			XElement* pxParameter = pxOperation->AddChild("Parameter", "ows");
-			pxNode = pxParameter->AddChild("Value", "ows");
-			pxNode->AddChildText("1.0.0");
-			pxNode = pxParameter->AddChild("Value", "ows");
-			pxNode->AddChildText("1.1.0"); 
-			pxParameter = pxOperation->AddChild("AcceptFormats", "ows");
-			pxNode = pxParameter->AddChild("Value", "ows");
-			pxNode->AddChildText("text/xml");
+			XElement* pxOperation = pxOperationset->AddChild("Operation", "ows");
+			
+			AddOperationNode(handler, pxOperation, gps_xlink);
 		}
+	}
+
+
+	void GeoProcessingCapabilitiesHandler::AddOperationNode(WebHandler* handler, XElement* pxOperation, const char* gps_xlink)
+	{
+		pxOperation->SetAttribute("name", handler->GetName(),NULL);
+		// WPS_Capabilities-->OperationsMetadata-->Operation-->DCP
+		XElement* pxDCP = pxOperation->AddChild("DCP", "ows");
+		// WPS_Capabilities-->OperationsMetadata-->Operation-->DCP-->HTTP
+		XElement* pxHTTP = pxDCP->AddChild("HTTP", "ows");
+		// WPS_Capabilities-->OperationsMetadata-->Operation-->DCP-->Get/Post
+		XElement* pxNode = pxHTTP->AddChild("Get", "ows");
+		pxNode->SetAttribute("href",gps_xlink,"xlink");
+		pxNode = pxHTTP->AddChild("Post", "ows");
+		pxNode->SetAttribute("href",gps_xlink,"xlink");
+		// WPS_Capabilities-->OperationsMetadata-->Operation-->Parameter(AcceptVersion)
+		XElement* pxParameter = pxOperation->AddChild("Parameter", "ows");
+		pxNode = pxParameter->AddChild("Value", "ows");
+		pxNode->AddChildText("1.0.0");
+		pxNode = pxParameter->AddChild("Value", "ows");
+		pxNode->AddChildText("1.1.0"); 
+		pxParameter = pxOperation->AddChild("AcceptFormats", "ows");
+		pxNode = pxParameter->AddChild("Value", "ows");
+		pxNode->AddChildText("text/xml");
 	}
 
 	void GeoProcessingCapabilitiesHandler::AddProcessOfferingsNode_1_1_0(XElement* pxParent, const char* gps_xlink)

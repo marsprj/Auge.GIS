@@ -61,12 +61,18 @@ namespace auge
 
 	private:
 		void			CleanupHandlers();
+		void			CleanupHandlers(std::vector<WebHandler*>& handlers);
+
 		WebHandler*		GetHandler(const char* name);
+		WebHandler*		GetHandler(const char* name, std::vector<WebHandler*>& handlers);
 
 
 	protected:
 		void*	m_handler;
-		std::vector<WebHandler*>	m_handlers;
+		GeoProcessingCapabilitiesHandler* m_pcapHandler;
+		std::vector<WebHandler*>	m_feature_handlers;
+		std::vector<WebHandler*>	m_geometry_handlers;
+		std::vector<WebHandler*>	m_tile_handlers;
 	};
 }
 

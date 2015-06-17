@@ -169,35 +169,35 @@ namespace auge
 
 	const char* BufferRequest::GetTypeName()
 	{
-		return m_type_name.c_str();
+		return m_in_type_name.c_str();
 	}
 
 	void BufferRequest::SetTypeName(const char* typeName)
 	{
 		if(typeName==NULL)
 		{
-			m_type_name.clear();
+			m_in_type_name.clear();
 		}
 		else
 		{
-			m_type_name = typeName;
+			m_in_type_name = typeName;
 		}
 	}
 
 	const char* BufferRequest::GetSourceName()
 	{
-		return m_source_name.empty() ? NULL : m_source_name.c_str();
+		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
 	}
 
 	void BufferRequest::SetSourceName(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
-			m_source_name.clear();
+			m_in_source_name.clear();
 		}
 		else
 		{
-			m_source_name = sourceName;
+			m_in_source_name = sourceName;
 		}
 	}
 

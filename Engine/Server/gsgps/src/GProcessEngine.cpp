@@ -24,19 +24,20 @@ namespace auge
 	{
 		m_handler = NULL;
 
-		m_handlers.push_back(new GeoProcessingCapabilitiesHandler(this));
-		m_handlers.push_back(new CentroidHandler());
-		m_handlers.push_back(new BufferHandler());
+		m_pcapHandler = new GeoProcessingCapabilitiesHandler(this);
+		m_geometry_handlers.push_back(new CentroidHandler());
+		m_geometry_handlers.push_back(new BufferHandler());
 
-		m_handlers.push_back(new UpdateTileHandler());
+		m_tile_handlers.push_back(new UpdateTileHandler());
+		m_tile_handlers.push_back(new BuildPyramidHandler());
 
-		m_handlers.push_back(new BuildPyramidHandler());
-		m_handlers.push_back(new FeatureImportHandler());
+		m_feature_handlers.push_back(new FeatureImportHandler());
 	}
 
 	GeoProcessingEngine::~GeoProcessingEngine()
 	{
 		m_handler = NULL;
+		m_pcapHandler->Release();
 		CleanupHandlers();
 	}
 
@@ -52,20 +53,53 @@ namespace auge
 
 	void GeoProcessingEngine::CleanupHandlers()
 	{
+		CleanupHandlers(m_feature_handlers);
+		CleanupHandlers(m_geometry_handlers);
+		CleanupHandlers(m_tile_handlers);
+	}
+
+	void GeoProcessingEngine::CleanupHandlers(std::vector<WebHandler*>& handlers)
+	{
 		WebHandler* pHandler = NULL;
 		std::vector<WebHandler*>::iterator iter;
-		for(iter=m_handlers.begin(); iter!=m_handlers.end(); iter++)
+		for(iter=handlers.begin(); iter!=handlers.end(); iter++)
 		{
 			pHandler = *iter;
 			pHandler->Release();
 		}
-		m_handlers.clear();
+		handlers.clear();
 	}
 
 	WebHandler*	GeoProcessingEngine::GetHandler(const char* name)
 	{
+		if(g_stricmp(m_pcapHandler->GetName(), name)==0)
+		{
+			return m_pcapHandler;
+		}
+
+		WebHandler* handler = NULL;
+		handler = GetHandler(name, m_feature_handlers);
+		if(handler!=NULL)
+		{
+			return handler;
+		}
+		handler = GetHandler(name, m_geometry_handlers);
+		if(handler!=NULL)
+		{
+			return handler;
+		}
+		handler = GetHandler(name, m_tile_handlers);
+		if(handler!=NULL)
+		{
+			return handler;
+		}
+		return NULL;
+	}
+
+	WebHandler*	GeoProcessingEngine::GetHandler(const char* name, std::vector<WebHandler*>& handlers)
+	{
 		std::vector<WebHandler*>::iterator iter;
-		for(iter=m_handlers.begin(); iter!=m_handlers.end(); iter++)
+		for(iter=handlers.begin(); iter!=handlers.end(); iter++)
 		{
 			if(g_stricmp((*iter)->GetName(), name)==0)
 			{

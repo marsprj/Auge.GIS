@@ -48,6 +48,9 @@ namespace auge
 		void					AddProcessOfferingsNode_1_1_0(XElement* pxParent, const char* wps_xlink);
 		void					AddLanguagesNode_1_1_0(XElement* pxParent, const char* wps_xlink);
 
+		void					AddOperationsNodes_1_1_0(XElement* pxParent, std::vector<WebHandler*>& handlers, const char* type, const char* description, const char* gps_xlink);
+		void					AddOperationNode(WebHandler* handler, XElement* pxOperation, const char* gps_xlink);
+
 	protected:
 		void*	m_handler;
 		GeoProcessingEngine *m_pEngine;
