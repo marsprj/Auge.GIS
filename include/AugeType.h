@@ -61,6 +61,7 @@ typedef unsigned long long  g_uint64;
 #define	AUGE_PATH_MAX		1024
 #define	AUGE_NAME_MAX		256
 #define	AUGE_EXT_MAX		8
+#define	AUGE_DRV_MAX		8
 #define	AUGE_MSG_MAX		256
 #define	AUGE_MSG_LONG_MAX	1024
 #define AUGE_BUFFER_MAX		4096

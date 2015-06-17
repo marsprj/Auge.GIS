@@ -86,7 +86,7 @@ namespace auge
 		{
 			pField = pFieldFactory->CreateField();
 			pField_2 = pField->Field_2();
-			pField_2->SetName(str);
+			pField_2->SetName(ptr);
 			pField_2->SetType(augeFieldTypeString);
 			pField_2->SetLength(0);
 			pFields->Add(pField);

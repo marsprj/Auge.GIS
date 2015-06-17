@@ -46,6 +46,17 @@ namespace auge
 		virtual Geometry*	GetResultGeometry() = 0;
 	};
 
+	class CsvImportProcessor : public GProcessor
+	{
+	protected:
+		CsvImportProcessor(){}
+		virtual ~CsvImportProcessor(){}
+	public:
+		virtual	void		SetCvsPath(const char* path) = 0;
+		virtual void		SetDataSource(const char* sourceName) = 0;
+		virtual void		SetDatasetName(const char* datasetName) = 0;
+	};
+
 	class MapTileStoreGenerator : public GProcessor
 	{
 	protected:
@@ -112,6 +123,8 @@ namespace auge
 		virtual MapTileStoreGenerator*		CreateMongoTileStoreGenerator() = 0;
 		virtual ArchiveProcessor*			CreateArchiveProcessor() = 0;
 		virtual FeatureImportProcessor*		CreateFeatureImportProcessor() = 0;
+
+		virtual CsvImportProcessor*			CreateCsvImportProcessor() = 0;
 	};
 
 	extern "C"

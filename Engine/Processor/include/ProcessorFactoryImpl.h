@@ -15,6 +15,8 @@ namespace auge
 		virtual MapTileStoreGenerator*		CreateMongoTileStoreGenerator();
 		virtual ArchiveProcessor*			CreateArchiveProcessor();
 		virtual FeatureImportProcessor*		CreateFeatureImportProcessor();
+
+		virtual CsvImportProcessor*			CreateCsvImportProcessor();
 	};
 }
 

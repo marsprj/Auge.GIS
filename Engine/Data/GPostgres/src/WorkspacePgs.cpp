@@ -93,6 +93,38 @@ namespace auge
 		return pFeatureClass;
 	}
 
+	//FeatureClass* WorkspacePgs::CreateFeatureClass(const char* name, GFields* pFields)
+	//{
+	//	if(name==NULL||pFields==NULL)
+	//	{
+	//		return NULL;
+	//	}
+	//	if(pFields->Count()==0)
+	//	{
+	//		return NULL;
+	//	}
+	//	GField* pField = pFields->GetGeometryField();
+	//	if(pField==NULL)
+	//	{
+	//		return NULL;
+	//	}
+
+	//	RESULTCODE rc = AG_FAILURE;
+	//	rc = CreateTable(name, pFields);
+	//	if(rc!=AG_SUCCESS)
+	//	{
+	//		return NULL;
+	//	}
+	//	rc = AddGeometryColumn(name, pField);
+	//	if(rc!=AG_SUCCESS)
+	//	{
+	//		RemoveTable(name);
+	//		return NULL;
+	//	}
+
+	//	return OpenFeatureClass(name);
+	//}
+
 	FeatureClass* WorkspacePgs::CreateFeatureClass(const char* name, GFields* pFields)
 	{
 		if(name==NULL||pFields==NULL)
@@ -103,11 +135,6 @@ namespace auge
 		{
 			return NULL;
 		}
-		GField* pField = pFields->GetGeometryField();
-		if(pField==NULL)
-		{
-			return NULL;
-		}
 
 		RESULTCODE rc = AG_FAILURE;
 		rc = CreateTable(name, pFields);
@@ -115,11 +142,15 @@ namespace auge
 		{
 			return NULL;
 		}
-		rc = AddGeometryColumn(name, pField);
-		if(rc!=AG_SUCCESS)
+		GField* pField = pFields->GetGeometryField();
+		if(pField!=NULL)
 		{
-			RemoveTable(name);
-			return NULL;
+			rc = AddGeometryColumn(name, pField);
+			if(rc!=AG_SUCCESS)
+			{
+				RemoveTable(name);
+				return NULL;
+			}
 		}
 
 		return OpenFeatureClass(name);
