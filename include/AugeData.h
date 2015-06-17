@@ -108,7 +108,7 @@ namespace auge
 		Row(){}
 		virtual ~Row(){}
 	public:
-		virtual GValue*				GetValue(g_uint i)		const = 0;
+		//virtual GValue*				GetValue(g_uint i)		const = 0;
 		virtual bool				GetBool(g_uint i)		const = 0;
 		virtual char				GetChar(g_uint i)		const = 0;
 		virtual short				GetShort(g_uint i)		const = 0;
@@ -122,7 +122,7 @@ namespace auge
 		//virtual const AgBlob*	GetBlob(g_uint i)		const = 0;
 		//virtual const TIME_STRU*GetTime(g_uint i)		const = 0;
 
-		virtual GValue*				GetValue(const char* name)		const = 0;
+		//virtual GValue*				GetValue(const char* name)		const = 0;
 		virtual bool				GetBool(const char* name)		const = 0;
 		virtual char				GetChar(const char* name)		const = 0;
 		virtual short				GetShort(const char* name)		const = 0;
