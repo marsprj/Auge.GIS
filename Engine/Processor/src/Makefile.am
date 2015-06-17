@@ -13,6 +13,7 @@ libgprocessor_la_LDFLAGS=\
 libgprocessor_la_LIBADD=-lgcore -larchive
 
 libgprocessor_la_SOURCES=\
+		BufferProcessorImpl.cpp \
 		FileSytemTileStoreGeneratorImpl.cpp \
 		MongoTileStoreGenerator.cpp \
 		ArchiveProcessorImpl.cpp \
