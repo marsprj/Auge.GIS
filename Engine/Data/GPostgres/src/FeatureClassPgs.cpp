@@ -257,6 +257,11 @@ namespace auge
 		return pCursor;
 	}
 
+	Cursor* FeatureClassPgs::GetRows()
+	{
+		return NULL;
+	}
+
 	RESULTCODE FeatureClassPgs::RemoveFeature(GFilter* pFilter)
 	{
 		RESULTCODE rc = AG_FAILURE;

@@ -257,6 +257,11 @@ namespace auge
 		return Query();
 	}
 
+	//Cursor*	FeatureClassShp::GetRows()
+	//{
+	//	return NULL;
+	//}
+
 	augeGeometryType FeatureClassShp::GetGeometryType(int shpType)
 	{
 		switch(shpType)

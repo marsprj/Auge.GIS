@@ -72,8 +72,7 @@ namespace auge
 				pWebResponse = DoGet(cgi);
 				break;
 			case augeHttpPost:
-
-			pWebResponse = DoPost(cgi);
+				pWebResponse = DoPost(cgi);
 				break;
 			}
 
@@ -187,6 +186,7 @@ namespace auge
 				/* CreateDataSet */
 				//const char* xml_string = "<CreateDataSet service=\"dbs\" version=\"1.0.0\" sourceName=\"db1\" dataSetName=\"table1\"><Fields><Field><Name>ID</Name><Type>Int</Type><DefaultValue>0</DefaultValue></Field><Field><Name>Name</Name><Type>String</Type><Length>32</Length><Nullable>true</Nullable><DefaultValue>china</DefaultValue></Field><Field><Name>shape</Name><Type>Geometry</Type><Nullable>true</Nullable><GeometryDef><Type>Point</Type><SRID>4326</SRID></GeometryDef></Field></Fields></CreateDataSet>";
 				//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\" mapName=\"world\" xmlns:world=\"www.world.ac.cn\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\"><wfs:Query typeName=\"world:country\"><Filter><Within><PropertyName>shape</PropertyName><gml:Point name=\"1\" srsName=\"EPSG:63266405\"><gml:coordinates xmlns:gml=\"http://www.opengis.net/gml\" decimal=\".\" cs=\",\" ts=\" \">117,40</gml:coordinates></gml:Point></Within></Filter></wfs:Query></wfs:GetFeature>";
+				//const char* xml_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><wfs:GetCount xmlns:world=\"www.world.ac.cn\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" service=\"WFS\" version=\"1.0.0\" outputFormat=\"GML2\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\" mapName=\"map429\"><wfs:Query typeName=\"cites\"><ogc:Filter><ogc:PropertyIsEqualTo><ogc:PropertyName>country</ogc:PropertyName><ogc:Literal>Albania</ogc:Literal></ogc:PropertyIsEqualTo></ogc:Filter></wfs:Query></wfs:GetCount>";
 				m_pLogger->Trace("[Request]",__FILE__, __LINE__);
 
 				XParser parser;

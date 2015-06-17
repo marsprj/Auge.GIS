@@ -250,7 +250,6 @@ namespace auge
 		}
 	}
 
-
 	void GeoProcessingCapabilitiesHandler::AddOperationNode(WebHandler* handler, XElement* pxOperation, const char* gps_xlink)
 	{
 		pxOperation->SetAttribute("name", handler->GetName(),NULL);

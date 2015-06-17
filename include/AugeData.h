@@ -19,6 +19,8 @@
 
 namespace auge
 {
+	class GField;
+	class GFields;
 	class Raster;
 	class DataEngine;
 	class Workspace;
@@ -30,6 +32,7 @@ namespace auge
 
 	typedef enum
 	{
+		augeDataSetAttribute	= 0,
 		augeDataSetFeature,
 		augeDataSetRaster,
 		augeDataSetTile
@@ -99,14 +102,67 @@ namespace auge
 		virtual void			Release() = 0;
 	};
 
+	class Row : public GObject
+	{
+	protected:
+		Row(){}
+		virtual ~Row(){}
+	public:
+		virtual GValue*				GetValue(g_uint i)		const = 0;
+		virtual bool				GetBool(g_uint i)		const = 0;
+		virtual char				GetChar(g_uint i)		const = 0;
+		virtual short				GetShort(g_uint i)		const = 0;
+		virtual int					GetInt(g_uint i)		const = 0;
+		virtual long				GetLong(g_uint i)		const = 0;
+		virtual float				GetFloat(g_uint i)		const = 0;
+		virtual double				GetDouble(g_uint i)		const = 0;
+		virtual int64				GetInt64(g_uint i)		const = 0;
+		virtual const char*			GetString(g_uint i)		const = 0;
+		//virtual const AgString*	GetString(g_uint i)		const = 0;
+		//virtual const AgBlob*	GetBlob(g_uint i)		const = 0;
+		//virtual const TIME_STRU*GetTime(g_uint i)		const = 0;
+
+		virtual GValue*				GetValue(const char* name)		const = 0;
+		virtual bool				GetBool(const char* name)		const = 0;
+		virtual char				GetChar(const char* name)		const = 0;
+		virtual short				GetShort(const char* name)		const = 0;
+		virtual int					GetInt(const char* name)		const = 0;
+		virtual long				GetLong(const char* name)		const = 0;
+		virtual float				GetFloat(const char* name)		const = 0;
+		virtual double				GetDouble(const char* name)		const = 0;
+		virtual int64				GetInt64(const char* name)		const = 0;
+		virtual const char*			GetString(const char* name)		const = 0;
+	};
+
+	class Cursor : public GObject
+	{
+	protected:
+		Cursor(){}
+		virtual ~Cursor(){}
+	public:
+		virtual Row*				NextRow() = 0;
+		virtual DataSet*			GetDataSet() = 0;
+	};
+
 	class DataSet : public GObject
 	{
 	protected:
 		DataSet(){}
 		virtual ~DataSet(){}
 	public:
-		virtual const char*		GetName() = 0;
-		virtual augeDataSetType	GetType() = 0;
+		virtual const char*			GetName() = 0;
+		virtual augeDataSetType		GetType() = 0;
+	};
+
+	class AttributeDataSet : public DataSet
+	{
+	protected:
+		AttributeDataSet(){}
+		virtual ~AttributeDataSet(){}
+	public:
+		virtual GFields*			GetFields() = 0;
+		virtual GField*				GetField(const char* name) = 0;
+		virtual Cursor*				GetRows() = 0;
 	};
 
 	class EnumDataSet : public GObject
