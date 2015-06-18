@@ -375,6 +375,12 @@ namespace auge
 			SetOutputFormat(pxAttr->GetValue());
 		}
 
+		pxAttr = pxRoot->GetAttribute("maxFeatures");
+		if(pxAttr!=NULL)
+		{
+			SetMaxFeatures(pxAttr->GetValue());
+		}
+
 		pxAttr = pxRoot->GetAttribute("offset");
 		if(pxAttr!=NULL)
 		{
