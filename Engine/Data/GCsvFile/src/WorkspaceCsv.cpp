@@ -111,7 +111,7 @@ namespace auge
 
 	RESULTCODE WorkspaceCsv::RemoveDataSet(const char* name)
 	{
-		return NULL;
+		return AG_SUCCESS;
 	}
 
 	FeatureClass* WorkspaceCsv::OpenFeatureClass(const char* name)

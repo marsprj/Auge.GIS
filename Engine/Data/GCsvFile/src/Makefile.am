@@ -8,11 +8,11 @@ AM_CPPFLAGS=-I../include \
 libGCsvFile_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src
 
-libGCsvFile_la_LIBADD=-lgcore -lgfilter
+libGCsvFile_la_LIBADD=-lgcore
 
 libGCsvFile_la_SOURCES=\
 		DataEngineImpl.cpp \
 		CursorImpl.cpp \
-		DataSetCsv.cpp \
+		DataSetCvs.cpp \
 		RowImpl.cpp \
 		WorkspaceCsv.cpp

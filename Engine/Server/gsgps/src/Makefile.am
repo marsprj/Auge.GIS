@@ -4,7 +4,7 @@ AM_CXXFLAGS=-D_LINUX
 
 AM_CPPFLAGS=-I../include \
 		-I$(top_srcdir)/include \
-		-L$(GEOS_HOME)/include
+		-I$(GEOS_HOME)/include
 
 libgsgps_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
