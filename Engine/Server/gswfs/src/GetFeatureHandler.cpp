@@ -80,6 +80,7 @@ namespace auge
 		{
 			pRequest->SetMapName(mapName);
 		}
+		pRequest->Info();
 		return pRequest;
 	}
 
