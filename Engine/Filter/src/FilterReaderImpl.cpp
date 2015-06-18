@@ -480,7 +480,8 @@ namespace auge
 			return NULL;
 		}
 		const char* literal = pxLiteral->GetContent();
-		Literal* pLiteral = pFactory->CreateLiteral(new GValue(literal));
+		const char* gbk_literal = auge_encoding_convert("UTF-8","GBK",literal,strlen(literal));
+		Literal* pLiteral = pFactory->CreateLiteral(new GValue(gbk_literal));
 		
 		m_prop_name = pPropName->GetName();
 		pFilter = pFactory->CreateIsLikeFilter(pPropName, pLiteral);
@@ -673,8 +674,9 @@ namespace auge
 			return NULL;
 		}
 
+		const char* gbk_content = auge_encoding_convert("UTF-8","GBK",content, strlen(content));
 		FilterFactory* pFactory = augeGetFilterFactoryInstance();
-		PropertyName* pPropName = pFactory->CreatePropertyName(content);
+		PropertyName* pPropName = pFactory->CreatePropertyName(gbk_content);
 		m_prop_name = content;
 
 		return pPropName;
