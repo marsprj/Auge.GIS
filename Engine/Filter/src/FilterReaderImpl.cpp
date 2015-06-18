@@ -746,19 +746,7 @@ namespace auge
 					break;
 				case augeFieldTypeString:
 					{
-						//GLogger* pLogger = augeGetLoggerInstance();
-						//pLogger->Trace(content,__FILE__,__LINE__);
-						//const char* gbk_content;
-						//if(content==NULL)
-						//{
-						//	gbk_content = "";
-						//}
-						//else
-						//{
-						//	gbk_content = auge_encoding_convert("UTF-8","GBK",content, strlen(content));
-						//}
 						pValue = new GValue(content==NULL?"":content);
-						//pValue = new GValue(gbk_content);
 					}
 					break;
 				case augeFieldTypeTime:	
