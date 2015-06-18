@@ -18,6 +18,7 @@ libgcarto_la_SOURCES=\
 		ColorMapImp.cpp \
 		ColorMapImpl.cpp \
 		FeatureLayerImpl.cpp \
+		GraphicLayerImpl.cpp \
 		FeatureStyleImpl.cpp \
 		FillImpl.cpp \
 		FontImpl.cpp \

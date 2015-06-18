@@ -23,6 +23,7 @@ namespace auge
 	{
 		augeLayerNone		=	0,
 		augeLayerFeature		 ,
+		augeLayerGraphic		 ,
 		augeLayerRaster			 ,
 		auerLayerTile			 ,
 		augeLayerWFS			 ,
@@ -97,6 +98,20 @@ namespace auge
 	protected:
 		FeatureLayer(){}
 		virtual ~FeatureLayer(){}
+	public:
+		virtual augeLayerType	GetType() = 0;
+		virtual RESULTCODE		SetFeatureClass(FeatureClass* pFeatureClass) = 0;
+		virtual FeatureClass*	GetFeatureClass() = 0;
+
+		virtual RESULTCODE		SetStyle(Style* pStyle) = 0;
+		virtual Style*			GetStyle() = 0;
+	};
+
+	class GraphicLayer : public Layer
+	{
+	protected:
+		GraphicLayer(){}
+		virtual ~GraphicLayer(){}
 	public:
 		virtual augeLayerType	GetType() = 0;
 		virtual RESULTCODE		SetFeatureClass(FeatureClass* pFeatureClass) = 0;
@@ -336,6 +351,7 @@ namespace auge
 	public:
 		virtual Map*				CreateMap() = 0;
 		virtual FeatureLayer*		CreateFeatureLayer() = 0;
+		virtual GraphicLayer*		CreateGraphicLayer() = 0;
 		virtual RasterLayer*		CreateRasterLayer() = 0;
 		virtual QuadServerLayer*	CreateQuadServerLayer() = 0;
 

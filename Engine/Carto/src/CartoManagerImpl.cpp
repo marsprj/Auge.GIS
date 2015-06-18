@@ -784,9 +784,10 @@ namespace auge
 		switch(type)
 		{
 		case augeLayerFeature:
-			{
-				pLayer = CreateFeatureLayer(name, f_name, source_id);
-			}
+			pLayer = CreateFeatureLayer(name, f_name, source_id);
+			break;
+		case augeLayerGraphic:
+			pLayer = CreateGraphicLayer(name, f_name, source_id);
 			break;
 		case augeLayerRaster:
 			break;
@@ -949,25 +950,48 @@ namespace auge
 		return pFLayer;
 	}
 
+	GraphicLayer* CartoManagerImpl::CreateGraphicLayer(const char* name, const char* f_name, g_uint source_id)
+	{
+		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
+
+		GraphicLayer* pGLayer = pCartoFactory->CreateGraphicLayer();
+		pGLayer->SetName(f_name);
+
+		FeatureWorksapce* pWorkspace = NULL;
+		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+
+		pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
+		if(pWorkspace==NULL)
+		{
+			return NULL;
+		}
+
+		FeatureClass* pFeatureClass = NULL;
+		pFeatureClass = pWorkspace->OpenFeatureClass(f_name);
+		if(pFeatureClass==NULL)
+		{
+			return NULL;
+		}
+
+		pGLayer->SetFeatureClass(pFeatureClass);
+		return pGLayer;
+	}
+
 	Layer* CartoManagerImpl::CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url)
 	{
 		Layer* pLayer = NULL;
 		switch(type)
 		{
 		case augeLayerFeature:
-			{
-				pLayer = CreateFeatureLayer(id, name, f_name, source_id, style_id, version, visible);
-			}
+			pLayer = CreateFeatureLayer(id, name, f_name, source_id, style_id, version, visible);
+			break;
+		case augeLayerGraphic:
+			pLayer = CreateGraphicLayer(id, name, f_name, source_id, style_id, version, visible);
 			break;
 		case augeLayerRaster:
-			{
-
-			}
 			break;
 		case augeLayerQuadServer:
-			{
-				pLayer = CreateQuadServerLayer(id, name, web_url, version, visible);
-			}
+			pLayer = CreateQuadServerLayer(id, name, web_url, version, visible);
 		}
 
 		return pLayer;
@@ -1008,6 +1032,43 @@ namespace auge
 		pFLayer->SetStyle(pStyle);
 		
 		return pFLayer;
+	}
+
+	GraphicLayer* CartoManagerImpl::CreateGraphicLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, int version, bool visible)
+	{
+		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
+
+		FeatureWorksapce* pWorkspace = NULL;
+		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+
+		pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
+		if(pWorkspace==NULL)
+		{
+			return NULL;
+		}
+		FeatureClass* pFeatureClass = NULL;
+		pFeatureClass = pWorkspace->OpenFeatureClass(f_name);
+		if(pFeatureClass==NULL)
+		{
+			return NULL;
+		}
+
+		GraphicLayer* pGLayer = pCartoFactory->CreateGraphicLayer();
+		if(pGLayer==NULL)
+		{
+			pFeatureClass->Release();
+			return NULL;
+		}
+		pGLayer->SetName(name);
+		pGLayer->SetID(id);
+		pGLayer->SetVersion(version);
+		pGLayer->SetVisiable(visible);
+		pGLayer->SetFeatureClass(pFeatureClass);
+
+		Style* pStyle = GetStyle(style_id, pFeatureClass);
+		pGLayer->SetStyle(pStyle);
+
+		return pGLayer;
 	}
 	
 	QuadServerLayer* CartoManagerImpl::CreateQuadServerLayer(int id, const char* name, const char* url, int version, bool visible)

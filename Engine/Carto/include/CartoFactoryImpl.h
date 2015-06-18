@@ -13,6 +13,7 @@ namespace auge
 	public:
 		virtual Map*				CreateMap();
 		virtual FeatureLayer*		CreateFeatureLayer();
+		virtual GraphicLayer*		CreateGraphicLayer();
 		virtual RasterLayer*		CreateRasterLayer();
 		virtual QuadServerLayer*	CreateQuadServerLayer();
 

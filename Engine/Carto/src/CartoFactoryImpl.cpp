@@ -1,6 +1,7 @@
 #include "CartoFactoryImpl.h"
 #include "MapImpl.h"
 #include "FeatureLayerImpl.h"
+#include "GraphicLayerImpl.h"
 #include "RasterLayerImpl.h"
 #include "QuadServerLayerImpl.h"
 
@@ -33,6 +34,11 @@ namespace auge
 	FeatureLayer* CartoFactoryImpl::CreateFeatureLayer()
 	{
 		return (new FeatureLayerImpl());
+	}
+
+	GraphicLayer* CartoFactoryImpl::CreateGraphicLayer()
+	{
+		return (new GraphicLayerImpl());
 	}
 
 	RasterLayer* CartoFactoryImpl::CreateRasterLayer()
