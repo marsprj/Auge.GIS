@@ -12,7 +12,7 @@ libGCsvFile_la_LIBADD=-lgcore -lgfilter
 
 libGCsvFile_la_SOURCES=\
 		DataEngineImpl.cpp \
-		Cursor.cpp \
+		CursorImpl.cpp \
 		DataSetCsv.cpp \
 		RowImpl.cpp \
 		WorkspaceCsv.cpp

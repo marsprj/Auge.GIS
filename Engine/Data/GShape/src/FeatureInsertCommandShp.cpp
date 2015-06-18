@@ -25,6 +25,9 @@ namespace auge
 	{
 		::SHPFlush(m_pFeatureClass->m_pshpHandle);
 		::DBFFlush(m_pFeatureClass->m_pdbfHandle);
+
+		
+
 		return AG_SUCCESS;
 	}
 

@@ -145,6 +145,15 @@ namespace auge
 		{
 			return NULL;
 		}
+		//pshpHandle->adBoundsMin[0] = 115.472881;
+		//pshpHandle->adBoundsMin[1] = 39.032912;
+		//pshpHandle->adBoundsMin[2] = 0;
+		//pshpHandle->adBoundsMin[3] = 0;
+		//pshpHandle->adBoundsMax[0] = 117.614216;
+		//pshpHandle->adBoundsMax[1] = 40.954599;
+		//pshpHandle->adBoundsMax[2] = 0;
+		//pshpHandle->adBoundsMax[3] = 0;
+
 		pdbfHandle = ::DBFCreate(dbf_path);
 		if(pdbfHandle==NULL)
 		{
