@@ -525,7 +525,7 @@ namespace auge
 		const char* contidion = pValue->GetString();
 		char contidion_2[AUGE_MSG_MAX];
 		memset(contidion_2, 0, AUGE_MSG_MAX);
-		size_t len = strlen(contidion);
+		size_t len = strlen(contidion); 
 		char* ptr1 = (char*)contidion;
 		char* ptr2 = contidion_2;
 		for(size_t i=0; i<len; i++, ptr1++, ptr2++)
