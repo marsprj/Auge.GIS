@@ -372,6 +372,8 @@ namespace auge
 		pxAttr = pxRoot->GetAttribute("outputFormat");
 		if(pxAttr!=NULL)
 		{
+			GLogger* pLogger  = augeGetLoggerInstance();
+			pLogger->Trace(pxAttr->GetValue(),__FILE__,__LINE__);
 			SetOutputFormat(pxAttr->GetValue());
 		}
 
