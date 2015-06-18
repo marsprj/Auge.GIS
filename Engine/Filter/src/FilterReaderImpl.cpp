@@ -755,8 +755,8 @@ namespace auge
 						{
 							gbk_content = auge_encoding_convert("UTF-8","GBK",content, strlen(content));
 						}
-						pValue = new GValue(content==NULL?"":content);
-						//pValue = new GValue(content);
+						//pValue = new GValue(content==NULL?"":content);
+						pValue = new GValue(gbk_content);
 					}
 					break;
 				case augeFieldTypeTime:	
