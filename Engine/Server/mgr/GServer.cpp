@@ -73,7 +73,7 @@ namespace auge
 				break;
 			case augeHttpPost:
 				pWebResponse = DoPost(cgi);
-				break;
+			break;
 			}
 
 			pWebResponse->Write(pWebWriter);
@@ -188,6 +188,7 @@ namespace auge
 				//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\" mapName=\"world\" xmlns:world=\"www.world.ac.cn\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\"><wfs:Query typeName=\"world:country\"><Filter><Within><PropertyName>shape</PropertyName><gml:Point name=\"1\" srsName=\"EPSG:63266405\"><gml:coordinates xmlns:gml=\"http://www.opengis.net/gml\" decimal=\".\" cs=\",\" ts=\" \">117,40</gml:coordinates></gml:Point></Within></Filter></wfs:Query></wfs:GetFeature>";
 				//const char* xml_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><wfs:GetCount xmlns:world=\"www.world.ac.cn\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" service=\"WFS\" version=\"1.0.0\" outputFormat=\"GML2\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\" mapName=\"map429\"><wfs:Query typeName=\"cites\"><ogc:Filter><ogc:PropertyIsEqualTo><ogc:PropertyName>country</ogc:PropertyName><ogc:Literal>Albania</ogc:Literal></ogc:PropertyIsEqualTo></ogc:Filter></wfs:Query></wfs:GetCount>";
 				//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\"	mapName=\"map429\"	maxFeatures=\"20\"	offset=\"15\"	xmlns:world=\"http://www.radi.ac.cn/world\"	xmlns:wfs=\"http://www.opengis.net/wfs\"	xmlns:ogc=\"http://www.opengis.net/ogc\"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"	xsi:schemaLocation=\"http://www.opengis.net/wfs	http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\">	<wfs:Query typeName=\"world:cites\">	<wfs:PropertyName>world:gid</wfs:PropertyName>	<wfs:PropertyName>world:name</wfs:PropertyName>	<wfs:PropertyName>world:geom</wfs:PropertyName>	</wfs:Query></wfs:GetFeature>";
+				//const char* xml_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><wfs:GetCount xmlns:world=\"www.world.ac.cn\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" service=\"WFS\" version=\"1.0.0\" outputFormat=\"GML2\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\" mapName=\"map429\"><wfs:Query typeName=\"a\"><ogc:Filter><ogc:PropertyIsIsLike escapeChar=\"!\" singleChar=\"#\" wildCard=\"*\"><ogc:PropertyName>name</ogc:PropertyName><ogc:Literal>Al*</ogc:Literal></ogc:PropertyIsIsLike></ogc:Filter></wfs:Query></wfs:GetCount>";
 				m_pLogger->Trace("[Request]",__FILE__, __LINE__);
 
 				XParser parser;

@@ -520,6 +520,7 @@ namespace auge
 
 		const char* singleChar = pFilter->GetSingleChar();
 		const char* escapeChar = pFilter->GetEscapeChar();
+		const char* wildChar = pFilter->GetWildCard();
 
 		const char* contidion = pValue->GetString();
 		char contidion_2[AUGE_MSG_MAX];
@@ -533,7 +534,7 @@ namespace auge
 			{
 				*ptr2 = '?';
 			}
-			else if((*ptr1)==(*escapeChar))
+			else if((*ptr1)==(*wildChar))
 			{
 				*ptr2 = '%';
 			}

@@ -300,6 +300,11 @@ namespace auge
 				pFilter = ReadBetweenFilter(pxComparison);
 			}
 			break;
+		case augeComOprIsLike:
+			{
+				pFilter = ReadLikeFilter(pxComparison);
+			}
+			break;
 		default:
 			{
 				pFilter = ReadComparison(pxComparison, oper);
@@ -448,6 +453,39 @@ namespace auge
 		}
 
 		pxNodeSet->Release();
+
+		return pFilter;
+	}
+
+	IsLikeFilter* FilterReaderImpl::ReadLikeFilter(XNode* pxLike)
+	{
+		IsLikeFilter* pFilter = NULL;
+		FilterFactory* pFactory = augeGetFilterFactoryInstance();
+
+		XNode* pxPropName = pxLike->GetFirstChild("PropertyName");
+		if(pxPropName==NULL)
+		{	
+			return NULL;
+		}
+
+		XNode* pxLiteral = pxLike->GetFirstChild("Literal");
+		if(pxLiteral==NULL)
+		{
+			return NULL;
+		}
+
+		PropertyName* pPropName = static_cast<PropertyName*>(ReadExpression(pxPropName));
+		if(pPropName==NULL)
+		{	
+			return NULL;
+		}
+		const char* literal = pxLiteral->GetContent();
+		Literal* pLiteral = pFactory->CreateLiteral(new GValue(literal));
+		
+		m_prop_name = pPropName->GetName();
+		pFilter = pFactory->CreateIsLikeFilter(pPropName, pLiteral);
+		pPropName->Release();
+		pLiteral->Release();
 
 		return pFilter;
 	}
