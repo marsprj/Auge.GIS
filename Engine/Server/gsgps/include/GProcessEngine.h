@@ -13,6 +13,7 @@ namespace auge
 	//class GetServiceRequest;
 	//class RegisterHandlerRequest;
 	//class RegisterDataSourceRequest;
+	class GeoProcessingCapabilitiesHandler;
 
 	class GeoProcessingEngine : public WebEngine
 	{
