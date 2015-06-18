@@ -532,7 +532,7 @@ namespace auge
 			"	band_count integer," \
 			"	srid integer," \
 			"	width integer DEFAULT 256," \
-			"	height integer DEFAULT 256" \
+			"	height integer DEFAULT 256," \
 			"	minx double precision," \
 			"	miny double precision," \
 			"	maxx double precision," \

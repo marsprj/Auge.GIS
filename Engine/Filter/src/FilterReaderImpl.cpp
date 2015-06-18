@@ -746,6 +746,15 @@ namespace auge
 					break;
 				case augeFieldTypeString:
 					{
+						const char* gbk_content;
+						if(content==NULL)
+						{
+							gbk_content = "";
+						}
+						else
+						{
+							gbk_content = auge_encoding_convert("UTF-8","GBK",content, strlen(content));
+						}
 						pValue = new GValue(content==NULL?"":content);
 						//pValue = new GValue(content);
 					}
