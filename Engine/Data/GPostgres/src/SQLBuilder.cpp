@@ -273,8 +273,6 @@ namespace auge
 	{
 		sql = "select count(*)";
 		sql.append(" from ");
-
-		sql.append(" from ");
 		sql.append(pFeatureClass->GetName());
 
 		if(pFilter!=NULL)

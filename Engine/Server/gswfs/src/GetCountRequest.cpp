@@ -92,7 +92,7 @@ namespace auge
 		}
 
 		XElement* pxRoot = m_pxDoc->GetRootNode();
-		XElement* pxQuery = (XElement*)pxRoot->GetFirstChild("Filter");
+		XElement* pxQuery = (XElement*)pxRoot->GetFirstChild("Query");
 		if(pxQuery==NULL)
 		{
 			return NULL;
@@ -190,53 +190,6 @@ namespace auge
 		{
 			return false;
 		}
-
-		//Layer* pLayer = NULL;
-		//pLayer = pMap->GetLayer(m_type_name.c_str());
-		//if(pLayer==NULL)
-		//{
-		//	return false;
-		//}
-		//if(pLayer->GetType()!=augeLayerFeature)
-		//{
-		//	return false;
-		//}
-		//FeatureLayer* pFLayer = NULL;
-		//FeatureClass* pFeatureClass = NULL;
-		//pFLayer = static_cast<FeatureLayer*>(pLayer);
-		//pFeatureClass = pFLayer->GetCountClass();
-		//if(pFeatureClass==NULL)
-		//{
-		//	return false;
-		//}
-
-		//FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
-		//m_pQuery = pFilterFactory->CreateQuery();
-
-		//XElement* pxFilter = (XElement*)pxQuery->GetFirstChild("Filter");
-		//if(pxFilter!=NULL)
-		//{
-		//	GFilter* pFilter = NULL;
-		//	FilterReader* reader = pFilterFactory->CreateFilerReader(pFeatureClass->GetFields());
-		//	pFilter = reader->Read(pxFilter);
-		//	m_pQuery->SetFilter(pFilter);
-
-		//}
-
-		////PropertyName
-		//char field_name[AUGE_NAME_MAX];
-		//const char* property_name;
-		//XNode* pxNode = NULL;
-		//XNodeSet* pxNodeSet = pxQuery->GetChildren("PropertyName");
-		//pxNodeSet->Reset();
-		//while((pxNode=pxNodeSet->Next())!=NULL)
-		//{
-		//	property_name = pxNode->GetContent();
-		//	ParseFieldName(property_name, field_name, AUGE_NAME_MAX);
-		//	m_pQuery->AddSubField(field_name);
-
-		//}
-		//pxNodeSet->Release();
 
 		return true;
 	}
