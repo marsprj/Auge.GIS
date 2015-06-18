@@ -884,7 +884,7 @@ namespace auge
 		{
 			return augeComOprGreaterThanOrEqualTo;
 		}
-		else if(!g_stricmp(oper, "PropertyIsIsLike"))
+		else if(!g_stricmp(oper, "PropertyIsLike"))
 		{
 			return augeComOprIsLike;
 		}

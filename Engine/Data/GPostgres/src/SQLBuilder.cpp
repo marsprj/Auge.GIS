@@ -522,6 +522,9 @@ namespace auge
 		const char* escapeChar = pFilter->GetEscapeChar();
 		const char* wildChar = pFilter->GetWildCard();
 
+		GLogger *pLogger = augeGetLoggerInstance();
+		pLogger->Trace(wildChar,__FILE__,__LINE__);
+
 		const char* contidion = pValue->GetString();
 		char contidion_2[AUGE_MSG_MAX];
 		memset(contidion_2, 0, AUGE_MSG_MAX);
