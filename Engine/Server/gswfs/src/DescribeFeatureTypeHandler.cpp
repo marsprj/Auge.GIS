@@ -481,8 +481,10 @@ namespace auge
 		for(g_uint i=0; i<count; i++)
 		{
 			pField = pFields->GetField(i);
-			pxElement = pxSequence->AddChild("element", "xsd");		
-			pxElement->SetAttribute("name",pField->GetName(), NULL);
+			pxElement = pxSequence->AddChild("element", "xsd");
+			const char* fname = pField->GetName();
+			const char* utf8_name = auge_encoding_convert("GBK","UTF-8",fname,strlen(fname));
+			pxElement->SetAttribute("name",utf8_name, NULL);
 			pxElement->SetAttribute("nillable",pField->IsNullable()?"true":"false", NULL);
 			pxElement->SetAttribute("minOccurs","0", NULL);
 			pxElement->SetAttribute("maxOccurs","1", NULL);
