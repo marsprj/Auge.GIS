@@ -30,6 +30,7 @@ namespace auge
 		virtual void			Close();
 		virtual bool			IsOpen();
 
+		virtual EnumDataSet*	GetDataSets();
 		virtual DataSet*		OpenDataSet(const char* name);
 		virtual RESULTCODE		RemoveDataSet(const char* name);
 

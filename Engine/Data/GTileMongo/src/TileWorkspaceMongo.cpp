@@ -121,6 +121,11 @@ namespace auge
 		return m_mongo;
 	}
 
+	EnumDataSet* TileWorkspaceMongo::GetDataSets()
+	{
+		return NULL;
+	}
+
 	DataSet* TileWorkspaceMongo::OpenDataSet(const char* name)
 	{
 		return NULL;

@@ -101,6 +101,11 @@ namespace auge
 		return true;
 	}
 
+	EnumDataSet* TileWorkspaceFS::GetDataSets()
+	{
+		return NULL;
+	}
+
 	DataSet* TileWorkspaceFS::OpenDataSet(const char* name)
 	{
 		return NULL;

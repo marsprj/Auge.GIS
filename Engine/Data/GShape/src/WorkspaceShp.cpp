@@ -199,10 +199,10 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	//EnumDataSet* WorkspaceShp::GetDataSets()
-	//{
-	//	return NULL;
-	//}
+	EnumDataSet* WorkspaceShp::GetDataSets()
+	{
+		return GetFeatureClasses();
+	}
 
 	EnumDataSet* WorkspaceShp::GetFeatureClasses()
 	{

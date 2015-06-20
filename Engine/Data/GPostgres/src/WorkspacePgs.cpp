@@ -4,6 +4,7 @@
 #include "SQLBuilder.h"
 #include "EnumDataSetImpl.h"
 #include "RasterDatasetImpl.h"
+#include "AttributeDataSetPgs.h"
 
 namespace auge
 {	
@@ -203,10 +204,52 @@ namespace auge
 		return pEnum;
 	}
 
-	//EnumDataSet* WorkspacePgs::GetDataSets()
-	//{
-	//	return GetFeatureClasses();
-	//}
+	EnumDataSet* WorkspacePgs::GetDataSets()
+	{
+		EnumDataSetImpl* pEnumDataset = (EnumDataSetImpl*)(GetFeatureClasses());
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, "select tablename from pg_tables where schemaname='%s'",m_schema.c_str());
+
+		PGresult* pgResult = m_pgConnection.PgExecute(sql);
+		if(pgResult!=NULL)
+		{	
+			const char* tname = NULL;
+			DataSet* pDataset = NULL;
+			g_uint count = PQntuples(pgResult);
+			for(g_uint i=0; i<count; i++)
+			{
+				tname = PQgetvalue(pgResult,i,0);
+				if((g_stricmp(tname,"spatial_ref_sys")==0)||(g_stricmp(tname,"g_catalog")==0))
+				{
+					continue;
+				}
+
+				bool found = false;
+				
+				pEnumDataset->Reset();
+				while((pDataset=pEnumDataset->Next())!=NULL)
+				{
+					if(g_stricmp(tname,pDataset->GetName())==0)
+					{
+						found = true;
+						break;
+					}
+				}
+				if(!found)
+				{
+					AttributeDataSetPgs* pattrDataset = new AttributeDataSetPgs();
+					pattrDataset->Create(tname, this, pgResult);
+					pEnumDataset->Add(pattrDataset);
+				}
+			}
+			
+			PQclear(pgResult);
+		}
+
+		return pEnumDataset;
+	}
 
 	DataSet* WorkspacePgs::OpenDataSet(const char* name)
 	{

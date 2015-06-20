@@ -26,4 +26,5 @@ libGPostgres_la_SOURCES=\
 		SQLBuilder.cpp \
 		WorkspacePgs.cpp \
 		RasterDatasetImpl.cpp \
+		AttributeDataSetPgs.cpp \
 		EnumDataSetImpl.cpp

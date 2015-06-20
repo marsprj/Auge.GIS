@@ -594,6 +594,22 @@ namespace auge
 			pxNode->AddChildText(str);
 		}
 	}
+
+	void CapabilitiesHandler::AddAttributeDatasetsNode_1_1_0(XElement* pxParent, const char* name, AttributeDataSet* pattrDataset)
+	{
+		char str[AUGE_NAME_MAX] = {0};
+		XElement* pxType = pxParent->AddChild("FeatureType", NULL);
+		XElement* pxNode = pxType->AddChild("Name",NULL);
+		pxNode->SetChildText(name);
+		pxNode = pxType->AddChild("Tile",NULL);
+		pxNode->SetChildText(pattrDataset->GetName());
+		pxNode = pxType->AddChild("Abstract",NULL);
+
+		//Keywords
+		XElement* pxKeywords = pxType->AddChild("KeywordList", "ows");
+		pxNode = pxKeywords->AddChild("Keyword", "ows");
+		pxNode->SetChildText(pattrDataset->GetName());		
+	}
 	
 	WebResponse* CapabilitiesHandler::ExecuteBySource(CapabilitiesRequest* pWebRequest, WebContext* pWebContext)
 	{
@@ -680,19 +696,31 @@ namespace auge
 
 		// WFS_Capabilities-->FeatureTypeList->FeatureType
 		DataSet* pDataSet = NULL;
+		const char* datasetName = NULL;
+		augeDataSetType type = augeDataSetAttribute;
 		FeatureWorksapce* pFeatureWorkspace = dynamic_cast<FeatureWorksapce*>(pWorkspace);
-		EnumDataSet* pDataSets = pFeatureWorkspace->GetFeatureClasses();
+		//EnumDataSet* pDataSets = pFeatureWorkspace->GetFeatureClasses();
+		EnumDataSet* pDataSets = pFeatureWorkspace->GetDataSets();
 		if(pDataSets!=NULL)
 		{
 			pDataSets->Reset();
 			while((pDataSet=pDataSets->Next())!=NULL)
 			{
-				switch(pDataSet->GetType())
+				datasetName = pDataSet->GetName();
+				type = pDataSet->GetType();
+
+				switch(type)
 				{
 				case augeDataSetFeature:
 					{
 						FeatureClass* pFeatureClass = static_cast<FeatureClass*>(pDataSet);
 						AddFeatureTypeNode_1_1_0(pxTypeList, pFeatureClass->GetName(), pFeatureClass);
+					}
+					break;
+				case augeDataSetAttribute:
+					{
+						AttributeDataSet* pattrDataset = static_cast<AttributeDataSet*>(pDataSet);
+						AddAttributeDatasetsNode_1_1_0(pxTypeList, pattrDataset->GetName(), pattrDataset);
 					}
 					break;
 				case augeDataSetRaster:

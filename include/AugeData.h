@@ -84,7 +84,7 @@ namespace auge
 		virtual void			Close() = 0;
 		virtual bool			IsOpen() = 0;
 		
-		//virtual EnumDataSet*	GetDataSets() = 0;
+		virtual EnumDataSet*	GetDataSets() = 0;
 		virtual DataSet*		OpenDataSet(const char* name) = 0;
 		virtual RESULTCODE		RemoveDataSet(const char* name) = 0;
 

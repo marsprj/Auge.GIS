@@ -13,6 +13,7 @@ namespace auge
 	class Map;
 	class WebContext;
 	class FeatureClass;
+	class AttributeDataSet;
 	class Workspace;
 	class CapabilitiesRequest;
 	class CapabilitiesResponse;
@@ -48,6 +49,8 @@ namespace auge
 		void					AddOperationsMetadataNode_1_1_0(XElement* pxParent, const char* wfs_xlink);
 		XElement*				AddFeatureTypeListNode_1_1_0(XElement* pxParent);
 		void					AddFeatureTypeNode_1_1_0(XElement* pxParent, const char* typeName, FeatureClass* pFeatureClass);
+		void					AddAttributeDatasetsNode_1_1_0(XElement* pxParent, const char* name, AttributeDataSet* pattrDataset);
+		
 
 		WebResponse*			ExecuteBySource(CapabilitiesRequest* pWebRequest, WebContext* pWebContext);
 	};
