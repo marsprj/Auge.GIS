@@ -94,6 +94,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\DataEngineImpl.h" />
     <ClInclude Include="..\include\DataSetCvs.h" />
     <ClInclude Include="..\include\RowImpl.h" />
+    <ClInclude Include="..\include\WorkspaceCsv.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

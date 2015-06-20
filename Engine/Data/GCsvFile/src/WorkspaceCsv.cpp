@@ -89,6 +89,11 @@ namespace auge
 		return true;
 	}
 
+	EnumDataSet* WorkspaceCsv::GetDataSets()
+	{
+		return NULL;
+	}
+
 	DataSet* WorkspaceCsv::OpenDataSet(const char* name)
 	{
 		if(name==NULL)
