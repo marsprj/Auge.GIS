@@ -15,14 +15,14 @@ namespace auge
 	class FeatureClass;
 	class AttributeDataSet;
 	class Workspace;
-	class CapabilitiesRequest;
-	class CapabilitiesResponse;
+	class WFSCapabilitiesRequest;
+	class WFSCapabilitiesResponse;
 
-	class CapabilitiesHandler : public WebHandler
+	class WFSCapabilitiesHandler : public WebHandler
 	{
 	public:
-		CapabilitiesHandler();
-		virtual ~CapabilitiesHandler();
+		WFSCapabilitiesHandler();
+		virtual ~WFSCapabilitiesHandler();
 	public:
 		virtual const char*		GetName();
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi);
@@ -35,12 +35,12 @@ namespace auge
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 	private:
-		WebResponse*			ExecuteByMap(CapabilitiesRequest* pWebRequest, WebContext* pWebContext);
-		CapabilitiesResponse*	WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
-		CapabilitiesResponse*	WriteCapabilities_1_1_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
+		WebResponse*			ExecuteByMap(WFSCapabilitiesRequest* pWebRequest, WebContext* pWebContext);
+		WFSCapabilitiesResponse*	WriteCapabilities_1_0_0(WFSCapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
+		WFSCapabilitiesResponse*	WriteCapabilities_1_1_0(WFSCapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
 
-		CapabilitiesResponse*	WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Workspace* pWorkspace);
-		CapabilitiesResponse*	WriteCapabilities_1_1_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Workspace* pWorkspace);
+		WFSCapabilitiesResponse*	WriteCapabilities_1_0_0(WFSCapabilitiesRequest* pRequest, WebContext* pWebContext, Workspace* pWorkspace);
+		WFSCapabilitiesResponse*	WriteCapabilities_1_1_0(WFSCapabilitiesRequest* pRequest, WebContext* pWebContext, Workspace* pWorkspace);
 
 
 		void					SetRooteNode_1_1_0(XElement* pxRoot, const char* version);
@@ -52,7 +52,7 @@ namespace auge
 		void					AddAttributeDatasetsNode_1_1_0(XElement* pxParent, const char* name, AttributeDataSet* pattrDataset);
 		
 
-		WebResponse*			ExecuteBySource(CapabilitiesRequest* pWebRequest, WebContext* pWebContext);
+		WebResponse*			ExecuteBySource(WFSCapabilitiesRequest* pWebRequest, WebContext* pWebContext);
 	};
 }
 

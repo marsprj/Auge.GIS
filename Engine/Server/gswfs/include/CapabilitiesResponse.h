@@ -6,13 +6,13 @@
 
 namespace auge
 {
-	class CapabilitiesRequest;
+	class WFSCapabilitiesRequest;
 
-	class CapabilitiesResponse : public WebResponse
+	class WFSCapabilitiesResponse : public WebResponse
 	{
 	public:
-		CapabilitiesResponse(CapabilitiesRequest* pRequest);
-		virtual ~CapabilitiesResponse();
+		WFSCapabilitiesResponse(WFSCapabilitiesRequest* pRequest);
+		virtual ~WFSCapabilitiesResponse();
 	public:
 		virtual	RESULTCODE		Write();
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
@@ -21,7 +21,7 @@ namespace auge
 		void	SetPath(const char* path);
 
 	private:
-		CapabilitiesRequest*	m_pRequest;
+		WFSCapabilitiesRequest*	m_pRequest;
 		std::string		m_path;
 	};
 }

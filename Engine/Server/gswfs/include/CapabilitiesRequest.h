@@ -10,11 +10,11 @@
 
 namespace auge
 {
-	class CapabilitiesRequest : public WFeatureRequest
+	class WFSCapabilitiesRequest : public WFeatureRequest
 	{
 	public:
-		CapabilitiesRequest();
-		virtual ~CapabilitiesRequest();
+		WFSCapabilitiesRequest();
+		virtual ~WFSCapabilitiesRequest();
 	public:
 		//virtual const char*		GetEngine();
 		//virtual const char*		GetUser();

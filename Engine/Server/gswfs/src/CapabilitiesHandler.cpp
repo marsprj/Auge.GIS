@@ -8,24 +8,24 @@
 
 namespace auge
 {
-	CapabilitiesHandler::CapabilitiesHandler()
+	WFSCapabilitiesHandler::WFSCapabilitiesHandler()
 	{
 
 	}
 
-	CapabilitiesHandler::~CapabilitiesHandler()
+	WFSCapabilitiesHandler::~WFSCapabilitiesHandler()
 	{
 
 	}
 
-	const char*	CapabilitiesHandler::GetName()
+	const char*	WFSCapabilitiesHandler::GetName()
 	{
 		return "GetCapabilities";
 	}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	WFSCapabilitiesHandler::ParseRequest(rude::CGI& cgi)
 	{
-		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
+		WFSCapabilitiesRequest* pRequest = new WFSCapabilitiesRequest();
 		if(!pRequest->Create(cgi))
 		{
 			GLogger* pLogger = augeGetLoggerInstance();
@@ -39,12 +39,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	WebRequest*	WFSCapabilitiesHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
 		WebRequest* pWebRequest = ParseRequest(cgi);
 		if(pWebRequest!=NULL)
 		{
-			CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
+			WFSCapabilitiesRequest* pRequest = static_cast<WFSCapabilitiesRequest*>(pWebRequest);
 			pRequest->SetMapName(mapName);
 		}
 		return pWebRequest;
@@ -66,9 +66,9 @@ namespace auge
 	//	return pRequest;
 	//}
 
-	WebRequest*	CapabilitiesHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
+	WebRequest*	WFSCapabilitiesHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
-		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
+		WFSCapabilitiesRequest* pRequest = new WFSCapabilitiesRequest();
 		//if(!pRequest->Create(cgi))
 		//{
 		//	GLogger* pLogger = augeGetLoggerInstance();
@@ -79,10 +79,10 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* WFSCapabilitiesHandler::Execute(WebRequest* pWebRequest)
 	{
 		WebResponse* pWebResponse = NULL;
-		CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
+		WFSCapabilitiesRequest* pRequest = static_cast<WFSCapabilitiesRequest*>(pWebRequest);
 		
 		const char* version = pRequest->GetVersion();
 		if(strcmp(version,"1.0.0")==0)
@@ -105,10 +105,10 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WFSCapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
 		WebResponse* pWebResponse = NULL;
-		CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
+		WFSCapabilitiesRequest* pRequest = static_cast<WFSCapabilitiesRequest*>(pWebRequest);
 
 		if(pRequest->IsValidSource())
 		{
@@ -153,7 +153,7 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	// ExecuteByMap
 	//////////////////////////////////////////////////////////////////////////
-	WebResponse* CapabilitiesHandler::ExecuteByMap(CapabilitiesRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WFSCapabilitiesHandler::ExecuteByMap(WFSCapabilitiesRequest* pWebRequest, WebContext* pWebContext)
 	{
 		WebResponse* pWebResponse = NULL;
 		const char* mapName = pWebRequest->GetMapName();
@@ -199,7 +199,7 @@ namespace auge
 	}
 
 	// 1.1.0 in fact
-	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap) 
+	WFSCapabilitiesResponse* WFSCapabilitiesHandler::WriteCapabilities_1_0_0(WFSCapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap) 
 	{
 		return WriteCapabilities_1_1_0(pRequest, pWebContext, pMap);
 	}
@@ -384,7 +384,7 @@ namespace auge
 	//}
 	
 
-	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_1_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap)
+	WFSCapabilitiesResponse* WFSCapabilitiesHandler::WriteCapabilities_1_1_0(WFSCapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap)
 	{
 		const char* cache_path = pWebContext->GetCacheProtocolPath();
 		const char* ns = pWebContext->GetService() ? pWebContext->GetService() : pMap->GetName();
@@ -443,13 +443,13 @@ namespace auge
 		pxDoc->Save(capa_path, pWebContext->GetResponseEncoding(), 1);
 		pxDoc->Release();
 
-		CapabilitiesResponse* pResponse = new CapabilitiesResponse(pRequest);
+		WFSCapabilitiesResponse* pResponse = new WFSCapabilitiesResponse(pRequest);
 		pResponse->SetPath(capa_path);
 
 		return pResponse;
 	}
 
-	void CapabilitiesHandler::SetRooteNode_1_1_0(XElement* pxRoot, const char* version)
+	void WFSCapabilitiesHandler::SetRooteNode_1_1_0(XElement* pxRoot, const char* version)
 	{
 		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/wfs",NULL);
 		pxRoot->SetNamespaceDeclaration("http://www.opengis.net/wfs","wfs");
@@ -460,7 +460,7 @@ namespace auge
 		pxRoot->SetAttribute("version", version, NULL);
 	}
 
-	void CapabilitiesHandler::AddServiceIdentificationNode_1_1_0(XElement* pxParent)
+	void WFSCapabilitiesHandler::AddServiceIdentificationNode_1_1_0(XElement* pxParent)
 	{	
 		XElement *pxService = pxParent->AddChild("ServiceIdentification", "ows");
 		XElement *pxNode = pxNode = pxService->AddChild("Name", "ows");
@@ -487,7 +487,7 @@ namespace auge
 		pxConstraints->SetChildText("NONE");
 	}
 
-	void CapabilitiesHandler::AddServiceProviderNode_1_1_0(XElement* pxParent)
+	void WFSCapabilitiesHandler::AddServiceProviderNode_1_1_0(XElement* pxParent)
 	{
 		XElement* pxProvider = pxParent->AddChild("ServiceProvider", "ows");
 		XElement* pxProviderName = pxProvider->AddChild("ProviderName","ows");
@@ -505,7 +505,7 @@ namespace auge
 		pxNode = pxAddress->AddChild("Country","ows");
 	}
 
-	void CapabilitiesHandler::AddOperationsMetadataNode_1_1_0(XElement* pxParent, const char* wfs_xlink)
+	void WFSCapabilitiesHandler::AddOperationsMetadataNode_1_1_0(XElement* pxParent, const char* wfs_xlink)
 	{
 		XElement* pxOperationsMetadata = pxParent->AddChild("OperationsMetadata", "ows");
 
@@ -541,7 +541,7 @@ namespace auge
 		}
 	}
 
-	XElement* CapabilitiesHandler::AddFeatureTypeListNode_1_1_0(XElement* pxParent)
+	XElement* WFSCapabilitiesHandler::AddFeatureTypeListNode_1_1_0(XElement* pxParent)
 	{
 		XElement* pxTypeList = pxParent->AddChild("FeatureTypeList", "ows");
 		XElement* pxOperations = pxTypeList->AddChild("Operations", "ows");
@@ -558,7 +558,7 @@ namespace auge
 		return pxTypeList;
 	}
 
-	void CapabilitiesHandler::AddFeatureTypeNode_1_1_0(XElement* pxParent, const char* typeName, FeatureClass* pFeatureClass)
+	void WFSCapabilitiesHandler::AddFeatureTypeNode_1_1_0(XElement* pxParent, const char* typeName, FeatureClass* pFeatureClass)
 	{
 		char str[AUGE_NAME_MAX] = {0};
 		XElement* pxType = pxParent->AddChild("FeatureType", NULL);
@@ -595,7 +595,7 @@ namespace auge
 		}
 	}
 
-	void CapabilitiesHandler::AddAttributeDatasetsNode_1_1_0(XElement* pxParent, const char* name, AttributeDataSet* pattrDataset)
+	void WFSCapabilitiesHandler::AddAttributeDatasetsNode_1_1_0(XElement* pxParent, const char* name, AttributeDataSet* pattrDataset)
 	{
 		char str[AUGE_NAME_MAX] = {0};
 		XElement* pxType = pxParent->AddChild("FeatureType", NULL);
@@ -611,7 +611,7 @@ namespace auge
 		pxNode->SetChildText(pattrDataset->GetName());		
 	}
 	
-	WebResponse* CapabilitiesHandler::ExecuteBySource(CapabilitiesRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WFSCapabilitiesHandler::ExecuteBySource(WFSCapabilitiesRequest* pWebRequest, WebContext* pWebContext)
 	{
 		WebResponse* pWebResponse = NULL;
 		const char* sourceName = pWebRequest->GetSourceName();
@@ -655,12 +655,12 @@ namespace auge
 		return pWebResponse;
 	}
 
-	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_0_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Workspace* pWorkspace)
+	WFSCapabilitiesResponse* WFSCapabilitiesHandler::WriteCapabilities_1_0_0(WFSCapabilitiesRequest* pRequest, WebContext* pWebContext, Workspace* pWorkspace)
 	{
 		return WriteCapabilities_1_1_0(pRequest, pWebContext, pWorkspace);
 	}
 
-	CapabilitiesResponse* CapabilitiesHandler::WriteCapabilities_1_1_0(CapabilitiesRequest* pRequest, WebContext* pWebContext, Workspace* pWorkspace)
+	WFSCapabilitiesResponse* WFSCapabilitiesHandler::WriteCapabilities_1_1_0(WFSCapabilitiesRequest* pRequest, WebContext* pWebContext, Workspace* pWorkspace)
 	{
 		const char* cache_path = pWebContext->GetCacheProtocolPath();
 		const char* ns = pWorkspace->GetName();
@@ -737,7 +737,7 @@ namespace auge
 		pxDoc->Save(capa_path, pWebContext->GetResponseEncoding(), 1);
 		pxDoc->Release();
 
-		CapabilitiesResponse* pResponse = new CapabilitiesResponse(pRequest);
+		WFSCapabilitiesResponse* pResponse = new WFSCapabilitiesResponse(pRequest);
 		pResponse->SetPath(capa_path);
 
 		return pResponse;

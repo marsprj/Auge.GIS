@@ -25,7 +25,7 @@ namespace auge
 	{
 		m_handler = NULL;
 
-		m_handlers.push_back(new CapabilitiesHandler());
+		m_handlers.push_back(new WFSCapabilitiesHandler());
 		m_handlers.push_back(new DescribeFeatureTypeHandler());
 		m_handlers.push_back(new GetFeatureHandler());
 		m_handlers.push_back(new GetGmlObjectHandler());

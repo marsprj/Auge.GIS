@@ -5,12 +5,12 @@ namespace auge
 	//std::string CapabilitiesRequest::DEFAULT_HOST   = "127.0.0.1";
 	//std::string CapabilitiesRequest::DEFAULT_METHOD = "wms";
 
-	CapabilitiesRequest::CapabilitiesRequest()
+	WFSCapabilitiesRequest::WFSCapabilitiesRequest()
 	{
 
 	}
 
-	CapabilitiesRequest::~CapabilitiesRequest()
+	WFSCapabilitiesRequest::~WFSCapabilitiesRequest()
 	{
 
 	}
@@ -25,7 +25,7 @@ namespace auge
 	//	return m_version.c_str();
 	//}
 
-	const char*	CapabilitiesRequest::GetRequest()
+	const char*	WFSCapabilitiesRequest::GetRequest()
 	{
 		return "GetCapabilities";
 	}
@@ -78,7 +78,7 @@ namespace auge
 		return m_mime_type.c_str();
 	}*/
 
-	bool CapabilitiesRequest::Create(rude::CGI& cgi)
+	bool WFSCapabilitiesRequest::Create(rude::CGI& cgi)
 	{
 		const char* val = NULL;
 		SetVersion(cgi["version"]);

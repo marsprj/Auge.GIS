@@ -12,7 +12,7 @@ namespace auge
 
 	class WFeatureEngine : public WebEngine
 	{
-		friend class CapabilitiesHandler;
+		friend class WFSCapabilitiesHandler;
 
 	public:
 		WFeatureEngine();

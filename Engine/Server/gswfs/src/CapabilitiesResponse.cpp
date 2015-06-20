@@ -4,13 +4,13 @@
 
 namespace auge
 {
-	CapabilitiesResponse::CapabilitiesResponse(CapabilitiesRequest* pRequest)
+	WFSCapabilitiesResponse::WFSCapabilitiesResponse(WFSCapabilitiesRequest* pRequest)
 	{
 		m_pRequest = pRequest;
 		m_pRequest->AddRef(); 
 	}
 
-	CapabilitiesResponse::~CapabilitiesResponse()
+	WFSCapabilitiesResponse::~WFSCapabilitiesResponse()
 	{
 		if(m_pRequest!=NULL)
 		{
@@ -18,7 +18,7 @@ namespace auge
 		}
 	}
 
-	RESULTCODE CapabilitiesResponse::Write(WebWriter* pWriter)
+	RESULTCODE WFSCapabilitiesResponse::Write(WebWriter* pWriter)
 	{
 		if(pWriter==NULL)
 		{
@@ -51,12 +51,12 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void CapabilitiesResponse::SetPath(const char* path)
+	void WFSCapabilitiesResponse::SetPath(const char* path)
 	{
 		m_path = path;
 	}
 
-	RESULTCODE CapabilitiesResponse::Write()
+	RESULTCODE WFSCapabilitiesResponse::Write()
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 		pLogger->Debug(m_path.c_str(), __FILE__, __LINE__);
