@@ -113,7 +113,7 @@ namespace auge
 		else
 		{
 			FeatureWorksapce* pFeatureWorkspace = dynamic_cast<FeatureWorksapce*>(pWorkspace);
-			EnumDataSet* pDataSets = pFeatureWorkspace->GetFeatureClasses();
+			EnumDataSet* pDataSets = pFeatureWorkspace->GetDataSets();
 			GetDataSetResponse* pResponse = new GetDataSetResponse(pRequest);
 			pResponse->SetDataSets(pDataSets);
 			pWebResponse = pResponse;

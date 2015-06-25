@@ -221,7 +221,7 @@ namespace auge
 			for(g_uint i=0; i<count; i++)
 			{
 				tname = PQgetvalue(pgResult,i,0);
-				if((g_stricmp(tname,"spatial_ref_sys")==0)||(g_stricmp(tname,"g_catalog")==0))
+				if((g_stricmp(tname,"spatial_ref_sys")==0)||(g_stricmp(tname,"g_raster_catalog")==0))
 				{
 					continue;
 				}

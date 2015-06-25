@@ -17,6 +17,8 @@ namespace auge
 			return "Feature";
 		case augeDataSetRaster:
 			return "Raster";
+		case augeDataSetAttribute:
+			return "Attribute";
 		}
 	}
 
