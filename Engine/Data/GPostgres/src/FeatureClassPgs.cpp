@@ -145,7 +145,7 @@ namespace auge
 
 		if(!GetMetaData())
 		{
-			return false;
+			//return false;
 		}
 
 		if(!CreateFields(pgResult))

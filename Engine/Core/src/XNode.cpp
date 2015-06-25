@@ -43,7 +43,8 @@ namespace auge
 
 	XElement* XNode::AddChild(const char* name, const char* ns_prefix)
 	{
-		xmlNodePtr pxmlChild = CreateNewChildNode(name, ns_prefix);
+		const char* utf8_name = auge_encoding_convert("GBK","UTF-8",name,strlen(name));
+		xmlNodePtr pxmlChild = CreateNewChildNode(utf8_name, ns_prefix);
 		if(pxmlChild==NULL)
 		{
 			return NULL;
