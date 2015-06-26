@@ -236,7 +236,6 @@ namespace auge
 			property_name = pxNode->GetContent();
 			ParseFieldName(property_name, field_name, AUGE_NAME_MAX);
 			pQuery->AddSubField(field_name);
-
 		}
 
 		if(m_max_features>0)

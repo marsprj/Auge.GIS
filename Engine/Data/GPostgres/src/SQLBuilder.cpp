@@ -327,6 +327,7 @@ namespace auge
 		GFields *pFields = pFeatureClass->GetFields();
 		int count = pQuery->GetSubFieldCount();
 
+		bool hasid = false;
 		bool first = true;
 		for(g_uint i=0; i<count; i++)
 		{
@@ -340,6 +341,14 @@ namespace auge
 			}
 
 			fname = pQuery->GetSubField(i);
+			if(!hasid)
+			{
+				if(strcmp(fname,"gid")==0)
+				{
+					hasid = true;
+				}
+			}
+			
 			pField = pFields->GetField(fname);
 			if(pField==NULL)
 			{
@@ -358,6 +367,17 @@ namespace auge
 				{
 					fields.append(fname);
 				}
+			}
+		}
+		if(!hasid)
+		{
+			if(fields.empty())
+			{
+				fields = "gid";
+			}
+			else
+			{
+				fields.append(",gid");
 			}
 		}
 	}
