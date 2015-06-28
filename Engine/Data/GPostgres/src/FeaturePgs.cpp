@@ -301,7 +301,10 @@ namespace auge
 			break;
 		case augeFieldTypeTime:	
 			{
-
+				TIME_STRU tim;
+				memset(&tim,0, sizeof(TIME_STRU));
+				sscanf(value,"%d-%2d-%2d %2d:%2d:%2d",&(tim.usYear),&(tim.usMonth),&(tim.usDay),&(tim.usHour),&(tim.usMinute),&(tim.usSecond));
+				pValue = new GValue(&tim,true);
 			}
 			break;
 		case augeFieldTypeBool:			 

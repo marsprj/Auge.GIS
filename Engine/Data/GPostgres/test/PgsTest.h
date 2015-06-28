@@ -13,12 +13,14 @@ class PgsTest : public CppUnit::TestFixture
 //	CPPUNIT_TEST(QueryExent);
 //	CPPUNIT_TEST(QueryBinaryComparision);
 //	CPPUNIT_TEST(QueryBetween);
-	CPPUNIT_TEST(QueryBetween_2);
+//	CPPUNIT_TEST(QueryBetween_2);
 //	CPPUNIT_TEST(QueryLike);
 //	CPPUNIT_TEST(QueryTest);
 //	CPPUNIT_TEST(QueryTest_2);
 //	CPPUNIT_TEST(GetUniqueValue);
 //	CPPUNIT_TEST(GetNullValue);
+//	CPPUNIT_TEST(GetAQI);
+	CPPUNIT_TEST(GetAQIQuery);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -38,6 +40,9 @@ private:
 	void GetUniqueValue();
 
 	void GetNullValue();
+
+	void GetAQI();
+	void GetAQIQuery();
 
 private:
 	auge::FeatureWorksapce* m_pWorkspace;

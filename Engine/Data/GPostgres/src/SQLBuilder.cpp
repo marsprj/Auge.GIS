@@ -1128,7 +1128,11 @@ namespace auge
 			break;
 		case augeValueTypeTime:	
 			{
-
+				TIME_STRU* tim = pValue->GetTime();
+				sprintf(str,"%d-%02d-%02d %02d:%02d:%02d",tim->usYear,tim->usMonth,tim->usDay,tim->usHour,tim->usMinute,tim->usSecond);
+				sql.append("'");
+				sql.append(str);
+				sql.append("'");
 			}
 			break;
 		case augeValueTypeBool:			 

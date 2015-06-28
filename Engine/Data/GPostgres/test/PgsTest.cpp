@@ -8,7 +8,8 @@ void PgsTest::setUp()
 {
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=GISDB;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=test;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	//const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
 	pLogger->Initialize();
@@ -360,4 +361,65 @@ void PgsTest::GetNullValue()
 
 	pCursor->Release();
 	pFeatureClass->Release();
+}
+
+void PgsTest::GetAQI()
+{
+	auge::FeatureClass* pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi_2");
+
+	auge::GValue* pValue = NULL;
+	auge::Feature* pFeature = NULL;
+	auge::FeatureCursor* pCursor = pFeatureClass->Query();
+	while((pFeature=pCursor->NextFeature())!=NULL)
+	{
+		
+		pValue = pFeature->GetValue("time_point");
+		TIME_STRU* tim = pValue->GetTime();
+		pValue->Release();
+		
+		pFeature->Release();
+	}
+
+	pCursor->Release();
+	pFeatureClass->Release();
+}
+
+void PgsTest::GetAQIQuery()
+{
+	auge::FeatureClass* pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi_2");
+
+	TIME_STRU tim;
+	memset(&tim,0,sizeof(TIME_STRU));
+	tim.usYear = 2015;
+	tim.usMonth= 6;
+	tim.usDay = 28;
+	tim.usHour = 17;
+	tim.usMinute = 0;
+	tim.usSecond = 0;
+	auge::GValue* pValue = new auge::GValue(&tim,true);
+
+	auge::FilterFactory* pFactory = auge::augeGetFilterFactoryInstance();
+	auge::BinaryComparisonFilter* pFilter = pFactory->CreateBinaryComparisonFilter();
+	auge::PropertyName* pPropName = pFactory->CreatePropertyName("time_point");
+	auge::Literal* pLiteral = pFactory->CreateLiteral(pValue);
+	pFilter->SetExpression1(pPropName);
+	pFilter->SetExpression2(pLiteral);
+	pFilter->SetOperator(auge::augeComOprEqual);
+
+	//auge::GValue* pValue = NULL;
+	auge::Feature* pFeature = NULL;
+	auge::FeatureCursor* pCursor = pFeatureClass->Query(pFilter);
+	while((pFeature=pCursor->NextFeature())!=NULL)
+	{
+
+		pValue = pFeature->GetValue("time_point");
+		TIME_STRU* tim = pValue->GetTime();
+		pValue->Release();
+
+		pFeature->Release();
+	}
+
+	pCursor->Release();
+	pFeatureClass->Release();
+	pFilter->Release();
 }
