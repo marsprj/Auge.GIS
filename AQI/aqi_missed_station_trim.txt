@@ -1,0 +1,47 @@
+南阳,环保局　
+商丘,环境监测站　
+商丘,粮食局　
+商丘,睢阳区环保局　
+商丘,第三人民医院　
+榆林,红石峡森林公园　
+榆林,世纪广场　
+榆林,环保监测大楼　
+焦作,市监测站　
+焦作,市环保局　
+牡丹江,环保大楼　
+牡丹江,文化广场
+贵港,江南子站　
+驻马店,市一纸厂　
+驻马店,市彩印厂　
+驻马店,天方二分厂　
+鸡西,环保局　
+鸡西,自来水公司　
+鸡西,白酒厂　
+鸡西,气象局　
+黑河,交通局　
+黑河,地震局　
+
+update gc_aqi set position_name='新建' where area='七台河' and position_name='新建　';
+update gc_aqi_station set station='二  印' where station='二印';
+update gc_aqi set position_name='环保局' where area='南阳' and position_name='环保局　';
+update gc_aqi set position_name='环保局' where area='南阳' and position_name='环保局　';
+update gc_aqi set position_name='环境监测站' where area='商丘' and position_name='环境监测站　';
+update gc_aqi set position_name='粮食局' where area='商丘' and position_name='粮食局　';
+update gc_aqi set position_name='睢阳区环保局' where area='商丘' and position_name='睢阳区环保局';
+update gc_aqi set position_name='第三人民医院' where area='商丘' and position_name='第三人民医院　';
+update gc_aqi set position_name='红石峡森林公园' where area='榆林' and position_name='红石峡森林公园　';
+update gc_aqi set position_name='世纪广场' where area='榆林' and position_name='世纪广场　';
+update gc_aqi set position_name='环保监测大楼' where area='榆林' and position_name='环保监测大楼';
+update gc_aqi set position_name='环保监测大楼' where area='焦作' and position_name='环保监测大楼　';
+update gc_aqi set position_name='市环保局' where area='焦作' and position_name='市环保局　';
+update gc_aqi set position_name='环保大楼' where area='牡丹江' and position_name='环保大楼　';
+update gc_aqi set position_name='江南子站' where area='贵港' and position_name='江南子站　';
+update gc_aqi set position_name='市一纸厂' where area='驻马店' and position_name='市一纸厂　';
+update gc_aqi set position_name='市彩印厂' where area='驻马店' and position_name='市彩印厂　';
+update gc_aqi set position_name='天方二分厂' where area='驻马店' and position_name='天方二分厂　';
+update gc_aqi set position_name='环保局' where area='鸡西' and position_name='环保局　';
+update gc_aqi set position_name='自来水公司' where area='鸡西' and position_name='自来水公司　';
+update gc_aqi set position_name='白酒厂' where area='鸡西' and position_name='白酒厂　';
+update gc_aqi set position_name='气象局' where area='鸡西' and position_name='气象局　';
+update gc_aqi set position_name='交通局' where area='黑河' and position_name='交通局　';
+update gc_aqi set position_name='地震局' where area='黑河' and position_name='地震局　';
