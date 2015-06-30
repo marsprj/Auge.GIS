@@ -241,6 +241,15 @@ namespace auge
 		return PQgetvalue(m_pgResult, m_index, i);
 	}
 
+	TIME_STRU* FeaturePgs::GetTime(g_uint i)		const
+	{
+		const char* value = PQgetvalue(m_pgResult, m_index, i);
+		TIME_STRU *tim = (TIME_STRU*)malloc(sizeof(TIME_STRU));
+		memset(tim,0, sizeof(TIME_STRU));
+		sscanf(value,"%d-%2d-%2d %2d:%2d:%2d",&(tim->usYear),&(tim->usMonth),&(tim->usDay),&(tim->usHour),&(tim->usMinute),&(tim->usSecond));
+		return tim;
+	}
+
 	GValue*	FeaturePgs::GetValue(const char* name) const
 	{
 		if(name==NULL)

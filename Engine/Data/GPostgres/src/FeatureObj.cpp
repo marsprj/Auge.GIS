@@ -95,6 +95,11 @@ namespace auge
 		return GetString(m_pFields->GetField(i)->GetName());
 	}
 
+	TIME_STRU* FeatureObj::GetTime(g_uint i)		const
+	{
+		return NULL;
+	}
+
 	GValue*	FeatureObj::GetValue(const char* name) const
 	{
 		if(name==NULL)

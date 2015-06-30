@@ -105,7 +105,7 @@ namespace auge
 		virtual const char*			GetString(g_uint i)		const = 0;
 		//virtual const AgString*	GetString(g_uint i)		const = 0;
 		//virtual const AgBlob*	GetBlob(g_uint i)		const = 0;
-		//virtual const TIME_STRU*GetTime(g_uint i)		const = 0;
+		virtual TIME_STRU*			GetTime(g_uint i)		const = 0;
 
 		virtual GValue*				GetValue(const char* name)		const = 0;
 		virtual bool				GetBool(const char* name)		const = 0;

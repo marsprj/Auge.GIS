@@ -334,6 +334,11 @@ namespace auge
 		return ::DBFReadStringAttribute(m_pDBFHandle, m_fid, i);
 	}
 
+	TIME_STRU* FeatureShp::GetTime(g_uint i)		const
+	{
+		return NULL;
+	}
+
 	GValue*	FeatureShp::GetValue(const char* name) const
 	{
 		return GetValue(m_pFields->FindField(name));

@@ -33,6 +33,7 @@ namespace auge
 		virtual double			GetDouble(g_uint i)		const;
 		virtual int64			GetInt64(g_uint i)		const;
 		virtual const char*		GetString(g_uint i)		const;
+		virtual TIME_STRU*		GetTime(g_uint i)		const;
 
 		virtual GValue*			GetValue(const char* name)		const;
 		virtual bool			GetBool(const char* name)		const;

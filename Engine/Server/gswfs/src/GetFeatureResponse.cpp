@@ -174,7 +174,10 @@ namespace auge
 						break;
 					case augeFieldTypeTime:	
 						{
-
+							TIME_STRU* pTimeStru = pFeature->GetTime(i);
+							g_snprintf(str, AUGE_BUFFER_MAX,"%4d-%02d-%02d %02d:%02d:%02d",pTimeStru->usYear,pTimeStru->usMonth,pTimeStru->usDay,pTimeStru->usHour,pTimeStru->usMinute,pTimeStru->usSecond);
+							pxValue->AddChildText(str,false);
+							free(pTimeStru);
 						}
 						break;
 					case augeFieldTypeBool:			 

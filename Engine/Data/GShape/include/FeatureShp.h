@@ -33,7 +33,7 @@ namespace auge
 		virtual const char*		GetString(g_uint i)		const;
 		//virtual const AgString*	GetString(g_uint i)		const;
 		//virtual const AgBlob*	GetBlob(g_uint i)		const;
-		//virtual const TIME_STRU*GetTime(g_uint i)		const;
+		virtual TIME_STRU*		GetTime(g_uint i)		const;
 
 		virtual GValue*			GetValue(const char* name)		const;
 		virtual bool			GetBool(const char* name)		const;

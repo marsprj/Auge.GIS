@@ -9,6 +9,7 @@ update gc_aqi set position_name='市监测站' where area='焦作' and position_name='
 update gc_aqi set position_name='文化广场' where area='牡丹江' and position_name='文化广场　';
 update gc_aqi set position_name='新建' where area='七台河' and position_name='新建　';
 update gc_aqi_station set station='二  印' where station='二印';
+update gc_aqi set position_name='二印' where area='三门峡' and position_name='二  印';
 update gc_aqi set position_name='环保局' where area='南阳' and position_name='环保局　';
 update gc_aqi set position_name='环保局' where area='南阳' and position_name='环保局　';
 update gc_aqi set position_name='环境监测站' where area='商丘' and position_name='环境监测站　';
