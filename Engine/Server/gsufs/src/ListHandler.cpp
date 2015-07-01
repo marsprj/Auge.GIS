@@ -4,6 +4,11 @@
 
 #include "AugeWebCore.h"
 
+#ifndef WIN32
+#include <sys/types.h>
+#include <dirent.h>
+#endif
+
 namespace auge
 {
 	ListHandler::ListHandler()
@@ -49,56 +54,6 @@ namespace auge
 	{
 		ListRequest* pRequest = static_cast<ListRequest*>(pWebRequest);
 		WebResponse* pWebResponse = NULL;
-
-		/*const char* sourceName = pRequest->GetSourceName();
-		const char* dataSetName= pRequest->GetDataSetName();
-
-		if(sourceName==NULL)
-		{
-			const char* msg = "Parameter [sourceName] is NULL";
-			GLogger* pLogger = augeGetLoggerInstance();
-			pLogger->Error(msg, __FILE__, __LINE__);
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(msg);
-			return pExpResponse;
-		}
-
-		Workspace* pWorkspace = NULL;
-		ConnectionManager* pConnectionManager = augeGetConnectionManagerInstance();
-		pWorkspace = pConnectionManager->GetWorkspace(sourceName);
-		if( pWorkspace==NULL )
-		{
-			char msg[AUGE_PATH_MAX] = {0};
-			g_sprintf(msg, "Cannot load datasource [%s].", sourceName);
-			GLogger* pLogger = augeGetLoggerInstance();
-			pLogger->Error(msg, __FILE__, __LINE__);
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(msg);
-			return pExpResponse;
-		}
-
-		DataSet* pDataSet = pWorkspace->OpenDataSet(dataSetName);
-		if(pDataSet==NULL)
-		{
-			char msg[AUGE_PATH_MAX] = {0};
-			g_sprintf(msg, "Cannot load data set [%s].", dataSetName);
-			GLogger* pLogger = augeGetLoggerInstance();
-			pLogger->Error(msg, __FILE__, __LINE__);
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(msg);
-			return pExpResponse;
-		}
-
-		
-		switch(pDataSet->GetType())
-		{
-		case augeDataSetFeature:
-			pWebResponse = DrawFeature(static_cast<FeatureClass*>(pDataSet),pRequest);
-			break;
-		case augeDataSetRaster:
-			break;
-		}*/
-
 		return pWebResponse;
 	}
 
@@ -169,8 +124,28 @@ namespace auge
 		}
 		::FindClose(hFind);
 #else
+		DIR *dp = opendir(local_path);
+		if(dp!=NULL)
+		{
+			struct dirent* dirp = NULL;
+			while((dirp = readdir(dp))!=NULL)
+			{	
+				if(dirp->d_name[0]=='.')
+				{
+					continue;
+				}
+				else if(dirp->d_type=='\004')
+				{
+					pListResponse->AddFile(dirp->d_name,true);
+				}
+				else if(dirp->d_type=='\b')
+				{
+					pListResponse->AddFile(dirp->d_name,false);
+				}
+			}
+			closedir(dp);
+		}
 #endif
-
 		return pListResponse;
 	}
 }

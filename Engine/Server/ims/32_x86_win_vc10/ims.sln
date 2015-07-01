@@ -83,6 +83,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GRaster", "..\..\..\Raster\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCsvFile", "..\..\..\Data\GCsvFile\32_x86_win_vc10\GCsvFile.vcxproj", "{972649C7-4098-4683-8335-93AABEB2C453}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsufs", "..\..\gsufs\32_x86_win_vc10\gsufs.vcxproj", "{BC26607E-6440-4F4E-9CD1-E9A7695F293B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -189,6 +191,10 @@ Global
 		{972649C7-4098-4683-8335-93AABEB2C453}.Debug|Win32.Build.0 = Debug|Win32
 		{972649C7-4098-4683-8335-93AABEB2C453}.Release|Win32.ActiveCfg = Release|Win32
 		{972649C7-4098-4683-8335-93AABEB2C453}.Release|Win32.Build.0 = Release|Win32
+		{BC26607E-6440-4F4E-9CD1-E9A7695F293B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BC26607E-6440-4F4E-9CD1-E9A7695F293B}.Debug|Win32.Build.0 = Debug|Win32
+		{BC26607E-6440-4F4E-9CD1-E9A7695F293B}.Release|Win32.ActiveCfg = Release|Win32
+		{BC26607E-6440-4F4E-9CD1-E9A7695F293B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
