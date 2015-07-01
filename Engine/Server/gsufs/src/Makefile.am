@@ -12,7 +12,11 @@ libgsufs_la_LDFLAGS=\
 libgsufs_la_LIBADD=-lgcore -lgscore
 
 libgsufs_la_SOURCES=\
-		    WFileSystemEngine.cpp \
+		    CreateFolderHandler.cpp \
+		    CreateFolderRequest.cpp \
+		    RemoveFolderHandler.cpp \
+		    RemoveFolderRequest.cpp \
 		    ListRequest.cpp \
 		    ListResponse.cpp \
-		    ListHandler.cpp
+		    ListHandler.cpp \
+		    WFileSystemEngine.cpp

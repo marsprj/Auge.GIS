@@ -126,7 +126,7 @@ namespace auge
 #ifdef WIN32
 		return rmdir(path);
 #else
-		return rmdir();
+		return rmdir(path);
 #endif
 	}
 
