@@ -126,6 +126,9 @@
     <ClCompile Include="..\src\XTestNode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\GMLReaderImpl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\EnumValueImpl.h">
@@ -183,6 +186,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\include\WKTWriter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\GMLReaderImpl.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

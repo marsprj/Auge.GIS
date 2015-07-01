@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(Configuration)</IntDir>
-    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\log4cplus-1.1.2\include;E:\DevEnv\GnuWin32\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\log4cplus-1.1.2\include;E:\DevEnv\GnuWin32\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>E:\DevEnv\log4cplus-1.1.2\lib;E:\DevEnv\GnuWin32\lib;E:\DevEnv\gdal-1.11.1\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
     <TargetName>$(ProjectName)D</TargetName>
   </PropertyGroup>
@@ -101,6 +101,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc12\lib
     <ClCompile Include="..\src\GFunction.cpp" />
     <ClCompile Include="..\src\GLineStringWKB.cpp" />
     <ClCompile Include="..\src\GLoggerImpl.cpp" />
+    <ClCompile Include="..\src\GMLReaderImpl.cpp" />
     <ClCompile Include="..\src\GMLWriterImpl.cpp" />
     <ClCompile Include="..\src\GMultiLineStringWKB.cpp" />
     <ClCompile Include="..\src\GMultiPointWKB.cpp" />
@@ -137,6 +138,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc12\lib
     <ClInclude Include="..\include\GFieldsImpl.h" />
     <ClInclude Include="..\include\GLineStringWKB.h" />
     <ClInclude Include="..\include\GLoggerImpl.h" />
+    <ClInclude Include="..\include\GMLReaderImpl.h" />
     <ClInclude Include="..\include\GMLWriterImpl.h" />
     <ClInclude Include="..\include\GMultiLineStringWKB.h" />
     <ClInclude Include="..\include\GMultiPointWKB.h" />
