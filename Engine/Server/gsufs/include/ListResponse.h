@@ -6,8 +6,10 @@
 #include <vector>
 #include <string>
 
-#include <io.h>
+#ifdef WIN32
+#	include <io.h>
 #include <sys\stat.h>
+#endif
 
 namespace auge
 {	
