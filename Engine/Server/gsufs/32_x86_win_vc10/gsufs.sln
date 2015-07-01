@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsufs", "gsufs.vcxproj", "{BC26607E-6440-4F4E-9CD1-E9A7695F293B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mgr", "..\..\mgr\32_x86_win_vc10\mgr.vcxproj", "{C315E5BD-713B-4812-9B05-8A0F6475DAB0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BC26607E-6440-4F4E-9CD1-E9A7695F293B} = {BC26607E-6440-4F4E-9CD1-E9A7695F293B}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswfs", "..\..\gswfs\32_x86_win_vc10\gswfs.vcxproj", "{685A4C3A-5188-487A-AC43-376EBCEC73C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC26607E-6440-4F4E-9CD1-E9A7695F293B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BC26607E-6440-4F4E-9CD1-E9A7695F293B}.Debug|Win32.Build.0 = Debug|Win32
+		{BC26607E-6440-4F4E-9CD1-E9A7695F293B}.Release|Win32.ActiveCfg = Release|Win32
+		{BC26607E-6440-4F4E-9CD1-E9A7695F293B}.Release|Win32.Build.0 = Release|Win32
+		{C315E5BD-713B-4812-9B05-8A0F6475DAB0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C315E5BD-713B-4812-9B05-8A0F6475DAB0}.Debug|Win32.Build.0 = Debug|Win32
+		{C315E5BD-713B-4812-9B05-8A0F6475DAB0}.Release|Win32.ActiveCfg = Release|Win32
+		{C315E5BD-713B-4812-9B05-8A0F6475DAB0}.Release|Win32.Build.0 = Release|Win32
+		{685A4C3A-5188-487A-AC43-376EBCEC73C6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{685A4C3A-5188-487A-AC43-376EBCEC73C6}.Debug|Win32.Build.0 = Debug|Win32
+		{685A4C3A-5188-487A-AC43-376EBCEC73C6}.Release|Win32.ActiveCfg = Release|Win32
+		{685A4C3A-5188-487A-AC43-376EBCEC73C6}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
