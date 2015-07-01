@@ -91,14 +91,17 @@ namespace auge
 		}
 
 		ListResponse* pListResponse = new ListResponse(pRequest);
+		pListResponse->SetPath(local_path);
 
 #ifdef WIN32
 		
 		HANDLE hFind = NULL;
 		WIN32_FIND_DATAA wfd;
 
+		char fpath[AUGE_PATH_MAX];
 		char filter[AUGE_PATH_MAX];
 		auge_make_path(filter,NULL,local_path,"*",NULL);
+
 
 		hFind = ::FindFirstFile(filter, &wfd);
 		if(hFind == INVALID_HANDLE_VALUE)

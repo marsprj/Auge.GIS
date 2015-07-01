@@ -4,6 +4,10 @@
 #include "AugeWebEngine.h"
 #include "AugeXML.h"
 #include <vector>
+#include <string>
+
+#include <io.h>
+#include <sys\stat.h>
 
 namespace auge
 {	
@@ -14,6 +18,11 @@ namespace auge
 		{
 			char fname[32];
 			int	 isfolder;
+#ifdef WIN32
+			struct _stat fstat;
+#else
+			struct stat fstat;
+#endif
 		}g_file_t;
 
 	public:
@@ -24,9 +33,12 @@ namespace auge
 	
 	public:
 		void	AddFile(const char* name, bool isfolder);
+		void	SetPath(const char* path);
+
 	private:
 		ListRequest				*m_pRequest;
 		std::vector<g_file_t*>	m_files;	
+		std::string				m_path;
 	};
 }
 

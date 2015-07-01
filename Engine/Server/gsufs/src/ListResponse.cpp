@@ -2,6 +2,9 @@
 #include "ListResponse.h"
 #include "AugeService.h"
 
+#include <math.h>
+#include <time.h>
+
 namespace auge
 {
 	ListResponse::ListResponse(ListRequest* pRequest)
@@ -22,6 +25,11 @@ namespace auge
 		m_files.clear();
 	}
 
+	void ListResponse::SetPath(const char* path)
+	{
+		m_path = path;
+	}
+
 	RESULTCODE ListResponse::Write(WebWriter* pWriter)
 	{
 		if(pWriter==NULL)
@@ -29,6 +37,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		char str[AUGE_NAME_MAX];
 		const char* fname = NULL;
 		XElement  *pxNode = NULL;
 		XElement  *pxRoot = NULL;
@@ -47,7 +56,21 @@ namespace auge
 #else
 			fname = f->fname;
 #endif
+			// name
 			pxNode->SetAttribute("name",fname,NULL);
+			// last access time
+			pxNode->SetAttribute("access_time",ctime((const time_t *)&(f->fstat.st_atime)),NULL);
+			// last modified time
+			pxNode->SetAttribute("last_modified_time",ctime((const time_t *)&(f->fstat.st_mtime)),NULL);
+
+			if(!f->isfolder) 
+			{ 
+				// file size
+				memset(str, 0, AUGE_NAME_MAX);
+				g_sprintf(str, "%dKB", (int)((f->fstat.st_size>>10))+1);
+				pxNode->SetAttribute("size",str,NULL);
+			}
+			
 		}
 
 		int len = 0;
@@ -64,9 +87,19 @@ namespace auge
 
 	void ListResponse::AddFile(const char* name, bool isfolder)
 	{
+		char fpath[AUGE_PATH_MAX];
+		memset(fpath,0,AUGE_PATH_MAX);
+		auge_make_path(fpath, NULL, m_path.c_str(), name,NULL);
+
 		g_file_t* f = (g_file_t*)malloc(sizeof(g_file_t));
 		strcpy(f->fname,name);
 		f->isfolder = isfolder ? 1 : 0;
+
+#ifdef WIN32
+		_stat(fpath, &(f->fstat));
+#else
+		stat(fpath, &(f->fstat));
+#endif
 		m_files.push_back(f);
 	}
 }
