@@ -15,7 +15,7 @@ namespace auge
 		m_output_format = AUGE_WFS_OUTPUT_FORMAT_GML2;
 		m_max_features = 10;
 		m_offset = 0;
-		m_encoding = "GBK";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 
 		m_fields = NULL;
 		m_filter = NULL;
@@ -76,7 +76,7 @@ namespace auge
 	{
 		if((encoding==NULL)||(strlen(encoding)==0))
 		{
-			m_encoding = "GBK";
+			m_encoding = AUGE_DEFAULT_ENCODING;
 		}
 		else
 		{

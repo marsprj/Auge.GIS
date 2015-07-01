@@ -10,6 +10,7 @@ namespace auge
 		m_bgColor.Set(255,255,255,0);
 		m_transparent = true;
 		m_mime_type = "image/png";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 
 	GetFeatureInfoRequest::~GetFeatureInfoRequest()
@@ -55,6 +56,11 @@ namespace auge
 	bool GetFeatureInfoRequest::IsTransparent()
 	{
 		return m_transparent;
+	}
+
+	const char* GetFeatureInfoRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	const char* GetFeatureInfoRequest::GetMimeType()

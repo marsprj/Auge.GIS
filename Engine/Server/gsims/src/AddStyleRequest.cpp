@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 
 	AddStyleRequest::~AddStyleRequest()
@@ -35,6 +36,11 @@ namespace auge
 	const char*	AddStyleRequest::GetRequest()
 	{
 		return "AddStyle";
+	}
+
+	const char* AddStyleRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void AddStyleRequest::SetVersion(const char* value)

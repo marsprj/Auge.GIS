@@ -9,6 +9,7 @@ namespace auge
 	BufferRequest::BufferRequest():
 	m_version("1.0.0"),
 		m_mime_type("text/xml"),
+		m_encoding("GBK"),
 		m_pFilter(NULL),
 		m_output_format("GML2"),
 		m_host(DEFAULT_HOST),
@@ -68,6 +69,11 @@ namespace auge
 		SetDistanceField(cgi["distancefield"]);
 
 		return true;
+	}
+
+	const char*	BufferRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	double BufferRequest::GetDistance()

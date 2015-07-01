@@ -7,6 +7,7 @@ namespace auge
 		m_version = "1.0.0";
 		m_mime_type = "image/png";
 		m_format = "image/png";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 
 	GetPreviewRequest::~GetPreviewRequest()
@@ -38,6 +39,11 @@ namespace auge
 	const char*	GetPreviewRequest::GetRequest()
 	{
 		return "GetPreview";
+	}
+
+	const char* GetPreviewRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void GetPreviewRequest::SetVersion(const char* value)

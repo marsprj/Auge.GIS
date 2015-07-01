@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
+		m_encoding =AUGE_DB_ENCODING;
 	}
 
 	RemoveServiceRequest::~RemoveServiceRequest()
@@ -33,6 +34,11 @@ namespace auge
 	const char*	RemoveServiceRequest::GetRequest()
 	{
 		return "RemoveService";
+	}
+
+	const char* RemoveServiceRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void RemoveServiceRequest::SetVersion(const char* value)

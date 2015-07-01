@@ -8,7 +8,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
-		m_encoding = "GBK";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 		m_pxDoc = NULL;
 		m_pFields = NULL;
 	}
@@ -53,6 +53,11 @@ namespace auge
 	const char*	CreateDataSetRequest::GetDataSetName()
 	{
 		return m_dataset_name.c_str();
+	}
+
+	const char*	CreateDataSetRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void CreateDataSetRequest::SetVersion(const char* value)

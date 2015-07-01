@@ -34,6 +34,11 @@ namespace auge
 		return "GetCapabilities";
 	}
 
+	const char* WMapRequest::GetEncoding()
+	{
+		return  m_encoding.c_str();
+	}
+
 	//const char*	WMapRequest::GetServiceName()
 	//{
 	//	return m_service_name.c_str();

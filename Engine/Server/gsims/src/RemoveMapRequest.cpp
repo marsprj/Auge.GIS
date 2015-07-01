@@ -35,6 +35,11 @@ namespace auge
 		return "RemoveMap";
 	}
 
+	const char* RemoveMapRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
+	}
+
 	void RemoveMapRequest::SetVersion(const char* value)
 	{
 		if(value==NULL)

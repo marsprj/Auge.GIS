@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 	
 	UnRegisterLayerRequest::~UnRegisterLayerRequest()
@@ -34,6 +35,11 @@ namespace auge
 	const char*	UnRegisterLayerRequest::GetRequest()
 	{
 		return "UnRegisterLayer";
+	}
+
+	const char*	UnRegisterLayerRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void UnRegisterLayerRequest::SetVersion(const char* value)

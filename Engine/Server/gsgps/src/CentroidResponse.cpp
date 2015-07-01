@@ -18,7 +18,7 @@ namespace auge
 		m_pCursor = NULL;
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
-		m_encoding = "GBK";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 
 	CentroidResponse::~CentroidResponse()

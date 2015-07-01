@@ -8,7 +8,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
-		m_encoding = "GBK";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 		
 	}
 
@@ -70,6 +70,11 @@ namespace auge
 	const char* CreateUserRequest::GetRole()
 	{
 		return m_role.c_str();
+	}
+
+	const char* CreateUserRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void CreateUserRequest::Release()

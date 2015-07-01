@@ -7,4 +7,5 @@
 	<Engine description="Web Database Sevice" path="" id="gsdbs"/>
 	<Engine description="Web User Sevice" path="" id="gsauth"/>
 	<Engine description="GeoProcessing Sevice" path="" id="gsgps"/>
+	<Engine description="User FileSystem Service" path="" id="gsufs"/>
 </Engines>

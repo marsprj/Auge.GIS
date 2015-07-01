@@ -24,6 +24,7 @@ namespace auge
 		virtual const char*		GetVersion();
 		virtual const char*		GetRequest();
 		virtual const char*		GetMimeType();
+		virtual const char*		GetEncoding();
 
 		virtual const char*		GetHost();
 		virtual const char*		GetRequestMethod();
@@ -59,6 +60,7 @@ namespace auge
 		std::string m_source_name;
 		std::string m_type_name;
 		std::string m_output_format;
+		std::string m_encoding;
 
 		GFilter*	m_pFilter;
 

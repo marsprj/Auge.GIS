@@ -45,6 +45,11 @@ namespace auge
 		return true;
 	}
 
+	const char*	GetTileRequest::GetEncoding()
+	{
+		return "GBK";
+	}
+
 	const char* GetTileRequest::GetStoreName()
 	{
 		return m_store_name.empty() ? NULL : m_store_name.c_str();

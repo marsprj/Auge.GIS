@@ -9,7 +9,8 @@ namespace auge
 	m_version("1.0.0"),
 	m_mime_type("text/xml"),
 	m_host(DEFAULT_HOST),
-	m_request_method(DEFAULT_METHOD)
+	m_request_method(DEFAULT_METHOD),
+	m_encoding(AUGE_DEFAULT_ENCODING)
 	{
 		
 	}
@@ -32,6 +33,11 @@ namespace auge
 	const char*	CapabilitiesRequest::GetRequest()
 	{
 		return "GetCapabilities";
+	}
+
+	const char* CapabilitiesRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void CapabilitiesRequest::SetVersion(const char* value)

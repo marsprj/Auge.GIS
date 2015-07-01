@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 
 	DescribeMapRequest::~DescribeMapRequest()
@@ -33,6 +34,11 @@ namespace auge
 	const char*	DescribeMapRequest::GetRequest()
 	{
 		return "DescribeMap";
+	}
+
+	const char* DescribeMapRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void DescribeMapRequest::SetVersion(const char* value)

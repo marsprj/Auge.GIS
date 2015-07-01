@@ -8,6 +8,7 @@ namespace auge
 	GetColorMapRequest::GetColorMapRequest():
 	m_version("1.0.0"),
 		m_mime_type("text/xml"),
+		m_encoding(AUGE_DEFAULT_ENCODING),
 		m_count(2),
 		m_id(-1),
 		m_host(DEFAULT_HOST),
@@ -34,6 +35,11 @@ namespace auge
 	const char*	GetColorMapRequest::GetRequest()
 	{
 		return "GetColorMap";
+	}
+
+	const char* GetColorMapRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void GetColorMapRequest::SetVersion(const char* value)

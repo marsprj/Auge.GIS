@@ -9,6 +9,7 @@ namespace auge
 	m_version("1.0.0"),
 	m_mime_type("text/xml"),
 	m_output_format("GML2"),
+	m_encoding(AUGE_DEFAULT_ENCODING),
 	m_host(DEFAULT_HOST),
 	m_request_method(DEFAULT_METHOD)
 	{
@@ -33,6 +34,11 @@ namespace auge
 	const char*	UpdateTileRequest::GetRequest()
 	{
 		return "UpdateTile";
+	}
+
+	const char* UpdateTileRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void UpdateTileRequest::SetVersion(const char* value)

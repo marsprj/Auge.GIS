@@ -28,6 +28,7 @@ namespace auge
 		virtual const char*		GetVersion();
 		virtual const char*		GetRequest();
 		virtual const char*		GetMimeType();
+		virtual const char*		GetEncoding();
 
 	public:
 		const char*	GetSourceName();

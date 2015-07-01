@@ -21,6 +21,7 @@ namespace auge
 		virtual const char*		GetVersion();
 		virtual const char*		GetRequest();
 		virtual const char*		GetMimeType();
+		virtual const char*		GetEncoding();
 
 	public:
 		bool		Create(rude::CGI& cgi);
@@ -37,6 +38,7 @@ namespace auge
 		std::string m_mime_type;
 		std::string m_data_engine;
 		std::string m_uri;
+		std::string m_encoding;
 	};
 }
 

@@ -23,6 +23,7 @@ namespace auge
 		virtual const char*		GetRequest();
 		virtual const char*		GetMimeType();
 		virtual const char*		GetMapName();
+		virtual const char*		GetEncoding();
 
 		virtual const char*		GetHost();
 		virtual const char*		GetRequestMethod();
@@ -43,6 +44,7 @@ namespace auge
 		std::string m_request_method;
 		//std::string m_service_name;
 		std::string m_map_name;
+		std::string m_encoding;
 
 		//std::string m_name;
 

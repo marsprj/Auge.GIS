@@ -12,7 +12,8 @@ namespace auge
 	m_pFilter(NULL),
 	m_output_format("GML2"),
 	m_host(DEFAULT_HOST),
-	m_request_method(DEFAULT_METHOD)
+	m_request_method(DEFAULT_METHOD),
+	m_encoding(AUGE_DEFAULT_ENCODING)
 	{
 		
 	}
@@ -127,6 +128,11 @@ namespace auge
 	const char* CentroidRequest::GetTypeName()
 	{
 		return m_type_name.c_str();
+	}
+
+	const char* CentroidRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void CentroidRequest::SetTypeName(const char* typeName)

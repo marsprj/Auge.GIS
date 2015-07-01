@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 
 	GetServiceRequest::~GetServiceRequest()
@@ -33,6 +34,11 @@ namespace auge
 	const char*	GetServiceRequest::GetRequest()
 	{
 		return "GetService";
+	}
+
+	const char* GetServiceRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void GetServiceRequest::SetVersion(const char* value)

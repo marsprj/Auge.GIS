@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 
 	TryConnectionRequest::~TryConnectionRequest()
@@ -34,6 +35,11 @@ namespace auge
 	const char*	TryConnectionRequest::GetRequest()
 	{
 		return "TryConnection";
+	}
+
+	const char* TryConnectionRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void TryConnectionRequest::SetVersion(const char* value)

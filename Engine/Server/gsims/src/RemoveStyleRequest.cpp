@@ -35,6 +35,11 @@ namespace auge
 		return "RemoveStyle";
 	}
 
+	const char* RemoveStyleRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
+	}
+
 	void RemoveStyleRequest::SetVersion(const char* value)
 	{
 		if(value==NULL)

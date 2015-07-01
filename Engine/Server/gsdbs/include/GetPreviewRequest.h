@@ -22,6 +22,7 @@ namespace auge
 		virtual const char*		GetRequest();
 		virtual const char*		GetMimeType();
 		virtual const char*		GetFormat();
+		virtual const char*		GetEncoding();
 
 		virtual const char*		GetSourceName();
 		virtual const char*		GetDataSetName();
@@ -45,6 +46,7 @@ namespace auge
 		std::string m_source_name;
 		std::string m_dataset_name;
 		std::string m_format;
+		std::string m_encoding;
 		g_int		m_width;
 		g_int		m_height;
 		GEnvelope	m_extent;

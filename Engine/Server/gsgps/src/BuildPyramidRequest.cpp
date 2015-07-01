@@ -12,7 +12,8 @@ namespace auge
 		m_start_level(-1),
 		m_end_level(-1),
 		m_host(DEFAULT_HOST),
-		m_request_method(DEFAULT_METHOD)
+		m_request_method(DEFAULT_METHOD),
+		m_encoding(AUGE_DEFAULT_ENCODING)
 	{
 
 	}
@@ -35,6 +36,11 @@ namespace auge
 	const char*	BuildPyramidRequest::GetRequest()
 	{
 		return "BuildPyramid";
+	}
+
+	const char* BuildPyramidRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void BuildPyramidRequest::SetVersion(const char* value)

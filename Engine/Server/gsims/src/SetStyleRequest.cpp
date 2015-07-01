@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 	
 	SetStyleRequest::~SetStyleRequest()
@@ -20,6 +21,11 @@ namespace auge
 		SetLayerName(cgi["layer"]);
 		SetStyleName(cgi["style"]);
 		 return true;
+	}
+
+	const char* SetStyleRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	const char*	SetStyleRequest::GetEngine()

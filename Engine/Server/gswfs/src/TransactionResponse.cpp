@@ -11,7 +11,7 @@ namespace auge
 	{
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
-		m_encoding = "GBK";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 		m_num_insert = 0;
 		m_num_update = 0;
 		m_num_delete = 0;

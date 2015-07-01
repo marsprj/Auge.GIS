@@ -8,6 +8,7 @@ namespace auge
 	WFeatureRequest::WFeatureRequest():
 	m_version("1.0.0"),
 		m_mime_type("text/xml"),
+		m_encoding("GBK"),
 		m_host(DEFAULT_HOST),
 		m_request_method(DEFAULT_METHOD)
 	{
@@ -32,6 +33,11 @@ namespace auge
 	const char*	WFeatureRequest::GetRequest()
 	{
 		return "GetCapabilities";
+	}
+
+	const char*	WFeatureRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	//const char*	WFeatureRequest::GetServiceName()

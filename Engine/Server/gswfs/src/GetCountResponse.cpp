@@ -12,7 +12,7 @@ namespace auge
 		m_count = 0;
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
-		m_encoding = "GBK";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 
 	GetCountResponse::~GetCountResponse()

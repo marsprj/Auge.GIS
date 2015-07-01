@@ -19,6 +19,7 @@ namespace auge
 
 	public:
 		virtual const char*		GetRequest();
+		virtual const char*		GetEncoding();
 
 		const char* GetStoreName();
 		const char*	GetStyle();

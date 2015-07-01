@@ -5,11 +5,17 @@ namespace auge
 	FeatureImportRequest::FeatureImportRequest()
 	{
 		m_srid = 4326;
+		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 
 	FeatureImportRequest::~FeatureImportRequest()
 	{
 
+	}
+
+	const char*	FeatureImportRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	const char*	FeatureImportRequest::GetUser()

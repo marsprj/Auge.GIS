@@ -35,6 +35,11 @@ namespace auge
 		return "UnRegisterDataSource";
 	}
 
+	const char* UnRegisterDataSourceRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
+	}
+
 	void UnRegisterDataSourceRequest::SetVersion(const char* value)
 	{
 		if(value==NULL)

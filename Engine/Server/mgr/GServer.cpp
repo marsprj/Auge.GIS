@@ -66,15 +66,15 @@ namespace auge
 
 			g_ulong ts = auge_get_time();
 
-			//switch(GetMethod())
-			//{
-			//case augeHttpGet:
-			//	pWebResponse = DoGet(cgi);
-			//	break;
-			//case augeHttpPost:
+			switch(GetMethod())
+			{
+			case augeHttpGet:
+				pWebResponse = DoGet(cgi);
+				break;
+			case augeHttpPost:
 				pWebResponse = DoPost(cgi);
-			//	break;
-			//}
+				break;
+			}
 
 			pWebResponse->Write(pWebWriter);
 			AUGE_SAFE_RELEASE(pWebResponse);

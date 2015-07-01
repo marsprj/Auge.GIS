@@ -20,6 +20,7 @@ namespace auge
 		virtual const char*		GetEngine();
 		virtual const char*		GetVersion();
 		virtual const char*		GetRequest();
+		virtual const char*		GetEncoding();
 
 	public:
 
@@ -52,6 +53,7 @@ namespace auge
 		std::string m_mime_type;
 		GColor		m_bgColor;
 		bool		m_transparent;
+		std::string m_encoding;
 
 		std::vector<std::string> m_layers;
 		std::vector<std::string> m_styles;

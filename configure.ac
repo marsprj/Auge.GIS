@@ -116,6 +116,8 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Server/gsdbs/src/Makefile
                  Engine/Server/gsgps/Makefile
                  Engine/Server/gsgps/src/Makefile
+		 Engine/Server/gsufs/Makefile
+                 Engine/Server/gsufs/src/Makefile
 		 Engine/Server/gsauth/Makefile
                  Engine/Server/gsauth/src/Makefile
                  Engine/Server/ims/Makefile

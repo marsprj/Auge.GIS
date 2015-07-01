@@ -5,7 +5,6 @@
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
 #include <string>
-#include <vector>
 #include <rude/cgi.h>
 #include "WTileRequest.h"
 
@@ -18,7 +17,7 @@ namespace auge
 		virtual ~WmtsCapabilitiesRequest();
 
 	public:
-		virtual const char*		GetRequest();		
+		virtual const char*		GetRequest();	
 	public:
 		bool		Create(rude::CGI& cgi);
 	private:

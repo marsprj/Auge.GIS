@@ -21,6 +21,7 @@ namespace auge
 		virtual const char*		GetVersion();
 		virtual const char*		GetRequest();
 		virtual const char*		GetMimeType();
+		virtual const char*		GetEncoding();
 
 		
 	public:
@@ -44,6 +45,7 @@ namespace auge
 		std::string m_name;
 		std::string m_type;
 		std::string m_style;
+		std::string m_encoding;
 	};
 }
 

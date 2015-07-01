@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
+		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 
 	RegisterDataSourceRequest::~RegisterDataSourceRequest()
@@ -35,6 +36,11 @@ namespace auge
 	const char*	RegisterDataSourceRequest::GetRequest()
 	{
 		return "RegisterDataSource";
+	}
+
+	const char* RegisterDataSourceRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void RegisterDataSourceRequest::SetVersion(const char* value)

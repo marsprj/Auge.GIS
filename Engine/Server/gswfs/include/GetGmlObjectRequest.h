@@ -4,13 +4,14 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "WFeatureRequest.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
 
 namespace auge
 {
-	class GetGmlObjectRequest : public WebRequest
+	class GetGmlObjectRequest : public WFeatureRequest
 	{
 	public:
 		GetGmlObjectRequest();
