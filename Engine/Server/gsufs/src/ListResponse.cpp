@@ -92,14 +92,15 @@ namespace auge
 		auge_make_path(fpath, NULL, m_path.c_str(), name,NULL);
 
 		g_file_t* f = (g_file_t*)malloc(sizeof(g_file_t));
-		strcpy(f->fname,name);
-		f->isfolder = isfolder ? 1 : 0;
+		strcpy(f->fname,name);	
 
 #ifdef WIN32
 		_stat(fpath, &(f->fstat));
 #else
 		stat(fpath, &(f->fstat));
 #endif
+		S_ISDIR()
+
 		m_files.push_back(f);
 	}
 }
