@@ -113,6 +113,23 @@ namespace auge
 #endif
 	}
 
+	g_int auge_rmdir(const char* path)
+	{
+		if(path==NULL)
+		{
+			return -1;
+		}
+		if(g_access(path,4))
+		{
+			return -1;
+		}
+#ifdef WIN32
+		return rmdir(path);
+#else
+		return rmdir();
+#endif
+	}
+
 	g_int auge_find_last_char(const char *str, char ch)
 	{
 		if(str==NULL)

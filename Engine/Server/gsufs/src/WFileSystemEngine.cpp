@@ -5,6 +5,8 @@
 #include "AugeWebCore.h"
 
 #include "ListHandler.h"
+#include "CreateFolderHandler.h"
+#include "RemoveFolderHandler.h"
 
 namespace auge
 {
@@ -19,6 +21,8 @@ namespace auge
 		m_handler = NULL;
 
 		m_handlers.push_back(new ListHandler());
+		m_handlers.push_back(new CreateFolderHandler());
+		m_handlers.push_back(new RemoveFolderHandler());
 	}
 
 	WFileSystemEngine::~WFileSystemEngine()
