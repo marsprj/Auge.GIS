@@ -7,6 +7,7 @@
 #include "ListHandler.h"
 #include "CreateFolderHandler.h"
 #include "RemoveFolderHandler.h"
+#include "RemoveFileHandler.h"
 
 namespace auge
 {
@@ -23,6 +24,7 @@ namespace auge
 		m_handlers.push_back(new ListHandler());
 		m_handlers.push_back(new CreateFolderHandler());
 		m_handlers.push_back(new RemoveFolderHandler());
+		m_handlers.push_back(new RemoveFileHandler());
 	}
 
 	WFileSystemEngine::~WFileSystemEngine()

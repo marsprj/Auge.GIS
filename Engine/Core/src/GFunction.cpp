@@ -123,11 +123,21 @@ namespace auge
 		{
 			return -1;
 		}
-#ifdef WIN32
 		return rmdir(path);
-#else
-		return rmdir(path);
-#endif
+	}
+
+	g_int auge_remove_file(const char* path)
+	{
+		if(path==NULL)
+		{
+			return -1;
+		}
+		if(g_access(path,4))
+		{
+			return -1;
+		}
+		
+		return remove(path);
 	}
 
 	g_int auge_find_last_char(const char *str, char ch)

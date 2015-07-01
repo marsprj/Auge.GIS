@@ -340,6 +340,7 @@ namespace auge
 		AUGE_API void		auge_split_path( const char *path, char *drive, char *dir, char *fname, char *ext);
 		AUGE_API g_int		auge_mkdir(const char* path);
 		AUGE_API g_int		auge_rmdir(const char* path);
+		AUGE_API g_int		auge_remove_file(const char* path);
 
 		AUGE_API g_int		auge_find_last_char(const char *str, char ch);
 		AUGE_API void		auge_str_upper(char* str);
