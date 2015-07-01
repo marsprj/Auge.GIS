@@ -56,21 +56,24 @@ namespace auge
 #else
 			fname = f->fname;
 #endif
-			// name
+			// name 
 			pxNode->SetAttribute("name",fname,NULL);
 			// last access time
-			pxNode->SetAttribute("access_time",ctime((const time_t *)&(f->fstat.st_atime)),NULL);
+			strftime(str,AUGE_NAME_MAX,"%Y-%m-%d %H:%M:%S", localtime((const time_t *)&(f->fstat.st_atime)));
+			pxNode->SetAttribute("access_time",str,NULL);
+			//pxNode->SetAttribute("access_time",ctime((const time_t *)&(f->fstat.st_atime)),NULL);
 			// last modified time
-			pxNode->SetAttribute("last_modified_time",ctime((const time_t *)&(f->fstat.st_mtime)),NULL);
+			strftime(str,AUGE_NAME_MAX,"%Y-%m-%d %H:%M:%S", localtime((const time_t *)&(f->fstat.st_mtime)));
+			pxNode->SetAttribute("last_modified_time",str,NULL);
+			//pxNode->SetAttribute("last_modified_time",ctime((const time_t *)&(f->fstat.st_mtime)),NULL);
 
 			if(!f->isfolder) 
 			{ 
 				// file size
 				memset(str, 0, AUGE_NAME_MAX);
-				g_sprintf(str, "%dKB", (int)((f->fstat.st_size>>10))+1);
+				g_sprintf(str, "%d KB", (int)((f->fstat.st_size>>10))+1);
 				pxNode->SetAttribute("size",str,NULL);
 			}
-			
 		}
 
 		int len = 0;
@@ -85,7 +88,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void ListResponse::AddFile(const char* name, bool isfolder)
+	void ListResponse::AddFile(const char* name)
 	{
 		char fpath[AUGE_PATH_MAX];
 		memset(fpath,0,AUGE_PATH_MAX);
@@ -99,7 +102,7 @@ namespace auge
 #else
 		stat(fpath, &(f->fstat));
 #endif
-		S_ISDIR()
+		f->isfolder = S_ISDIR(f->fstat.st_mode) ? true : false;
 
 		m_files.push_back(f);
 	}

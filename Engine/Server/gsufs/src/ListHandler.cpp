@@ -112,17 +112,9 @@ namespace auge
 
 		while(::FindNextFile(hFind, &wfd)==TRUE)
 		{
-			if(wfd.cFileName[0]=='.')
+			if(wfd.cFileName[0]!='.')
 			{
-				continue;
-			}
-			if (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-			{
-				pListResponse->AddFile(wfd.cFileName,true);
-			}
-			else
-			{
-				pListResponse->AddFile(wfd.cFileName,false);
+				pListResponse->AddFile(wfd.cFileName);
 			}
 		}
 		::FindClose(hFind);
@@ -133,17 +125,9 @@ namespace auge
 			struct dirent* dirp = NULL;
 			while((dirp = readdir(dp))!=NULL)
 			{	
-				if(dirp->d_name[0]=='.')
+				if(dirp->d_name[0]!='.')
 				{
-					continue;
-				}
-				else if(dirp->d_type=='\004')
-				{
-					pListResponse->AddFile(dirp->d_name,true);
-				}
-				else if(dirp->d_type=='\b')
-				{
-					pListResponse->AddFile(dirp->d_name,false);
+					pListResponse->AddFile(dirp->d_name);
 				}
 			}
 			closedir(dp);

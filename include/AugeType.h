@@ -76,7 +76,10 @@ typedef unsigned long long  g_uint64;
 #	define NAME_MAX	256
 #endif
 
-
+#ifdef WIN32
+#define S_ISREG(m) (((m) & 0170000) == (0100000))   
+#define S_ISDIR(m) (((m) & 0170000) == (0040000))  
+#endif
 
 #define AUGE_DB_SERVER		"SERVER"
 #define AUGE_DB_INSTANCE	"INSTANCE"

@@ -34,7 +34,7 @@ namespace auge
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 	
 	public:
-		void	AddFile(const char* name, bool isfolder);
+		void	AddFile(const char* name);
 		void	SetPath(const char* path);
 
 	private:
