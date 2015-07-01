@@ -140,6 +140,24 @@ namespace auge
 		return remove(path);
 	}
 
+	g_int auge_rename(const char* src, const char* des)
+	{
+		if(src==NULL||des==NULL)
+		{
+			return -1;
+		}
+		if(g_access(src,4))
+		{
+			return -1;
+		}
+		if(!g_access(des,4))
+		{
+			return -1;
+		}
+
+		return rename(src,des);
+	}
+
 	g_int auge_find_last_char(const char *str, char ch)
 	{
 		if(str==NULL)

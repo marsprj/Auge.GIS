@@ -88,6 +88,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\ListHandler.cpp" />
     <ClCompile Include="..\src\ListRequest.cpp" />
     <ClCompile Include="..\src\ListResponse.cpp" />
+    <ClCompile Include="..\src\MoveHandler.cpp" />
+    <ClCompile Include="..\src\MoveRequest.cpp" />
     <ClCompile Include="..\src\RemoveFileHandler.cpp" />
     <ClCompile Include="..\src\RemoveFileRequest.cpp" />
     <ClCompile Include="..\src\RemoveFolderHandler.cpp" />
@@ -100,6 +102,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\ListHandler.h" />
     <ClInclude Include="..\include\ListRequest.h" />
     <ClInclude Include="..\include\ListResponse.h" />
+    <ClInclude Include="..\include\MoveHandler.h" />
+    <ClInclude Include="..\include\MoveRequest.h" />
     <ClInclude Include="..\include\RemoveFileHandler.h" />
     <ClInclude Include="..\include\RemoveFileRequest.h" />
     <ClInclude Include="..\include\RemoveFolderHandler.h" />

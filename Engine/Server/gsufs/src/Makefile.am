@@ -18,6 +18,8 @@ libgsufs_la_SOURCES=\
 		    RemoveFolderRequest.cpp \
 		    RemoveFileHandler.cpp \
 		    RemoveFileRequest.cpp \
+		    MoveHandler.cpp \
+		    MoveRequest.cpp \
 		    ListRequest.cpp \
 		    ListResponse.cpp \
 		    ListHandler.cpp \
