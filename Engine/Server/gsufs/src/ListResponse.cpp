@@ -44,7 +44,7 @@ namespace auge
 		XDocument *pxDoc = new XDocument(); 
 		// FeatureCollection
 		pxRoot = pxDoc->CreateRootNode("Files", NULL,NULL);
-
+		
 		g_file_t* f = NULL;
 		std::vector<g_file_t*>::iterator iter;
 		for(iter=m_files.begin(); iter!=m_files.end(); iter++)
