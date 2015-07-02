@@ -28,6 +28,9 @@ libgsrds_la_SOURCES=\
 		    DescribeRasterHandler.cpp \
 		    DescribeRasterRequest.cpp \
 		    DescribeRasterResponse.cpp \
+		    GetValueHandler.cpp \
+		    GetValueRequest.cpp \
+		    GetValueResponse.cpp \
 		    MoveHandler.cpp \
 		    MoveRequest.cpp \
 		    ListRequest.cpp \

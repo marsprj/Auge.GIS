@@ -49,6 +49,7 @@ namespace auge
 
 		std::string m_name;
 		std::string m_path;
+		std::string m_source_name;
 
 		double	m_x;
 		double	m_y;
@@ -63,7 +64,13 @@ namespace auge
 
 [ HTTP Post ]
 -------------------------------------------------------------------------
-service=rds&version=1.0.0&request=GetValue&name=1.png&Path=/
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&name=1.png&Path=/
+service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&name=1.png&Path=/
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&name=1.png&Path=/
+
+service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&name=16km.tif&sx=1&sy=1&Path=/
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&name=16km.tif&sourceName=rsdb&sx=1&sy=1&Path=/
+
+service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&name=16km.tif&x=116&y=39&Path=/
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&name=16km.tif&sourceName=rsdb&sx=1&sy=1&Path=/
 
 ************************************************************************/

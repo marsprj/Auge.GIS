@@ -11,6 +11,11 @@ namespace auge
 {	
 	class GetValueResponse : public WebResponse
 	{
+		typedef struct  
+		{
+			short	band;
+			char	value[16];
+		}pixel_value_t;
 	public:
 		GetValueResponse(GetValueRequest* pRequest);
 		virtual ~GetValueResponse();
@@ -18,12 +23,13 @@ namespace auge
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 	
 	public:
-		void	AddFile(const char* name);
-		void	SetPath(const char* path);
+		void		Create(int bands);
+		void		SetValue(int index, short band, const char* value);
 
 	private:
 		GetValueRequest		*m_pRequest;
-		std::string				m_path;
+		pixel_value_t		*m_values;
+		g_uint				m_bands;
 	};
 }
 

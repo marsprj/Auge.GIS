@@ -88,6 +88,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GAuth", "Engine\Auth\32_x86
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCarto", "Engine\Carto\32_x86_win_vc10\GCarto.vcxproj", "{1BA6BCF9-52DA-46D1-A096-DA9A72C8C4B6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{100D02DB-8009-47C0-8D10-B9A3BB44556A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32

@@ -138,7 +138,7 @@ namespace auge
 		return true;
 	}
 
-	bool RasterImpl::GetRasterPosition(double mx, double my, g_uint& rx, g_uint& ry)
+	bool RasterImpl::GetRasterPosition(double mx, double my, g_int& rx, g_int& ry)
 	{
 		if(!m_extent.Contain(mx,my))
 		{

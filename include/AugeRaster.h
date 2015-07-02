@@ -55,7 +55,7 @@ namespace auge
 		virtual g_uint			GetPixelSize() = 0;
 
 		virtual bool			GetMapPosition(g_uint rx, g_uint ry, double& mx, double& my) = 0;
-		virtual bool			GetRasterPosition(double mx, double my, g_uint& rx, g_uint& ry) = 0;
+		virtual bool			GetRasterPosition(double mx, double my, g_int& rx, g_int& ry) = 0;
 
 		virtual const char*		GetPath() = 0;
 	};

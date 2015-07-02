@@ -37,7 +37,7 @@ namespace auge
 
 		virtual GEnvelope&		GetExtent();
 		virtual bool			GetMapPosition(g_uint rx, g_uint ry, double& mx, double& my);
-		virtual bool			GetRasterPosition(double mx, double my, g_uint& rx, g_uint& ry);
+		virtual bool			GetRasterPosition(double mx, double my, g_int& rx, g_int& ry);
 
 		virtual const char*		GetPath();
 

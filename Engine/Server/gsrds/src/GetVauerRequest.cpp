@@ -100,7 +100,7 @@ namespace auge
 
 	void GetValueRequest::SetIX(const char* ix)
 	{
-		if(ix==NULL)
+		if((ix==NULL)||(strlen(ix)==0))
 		{
 			m_image_x = -1;
 		}
@@ -112,7 +112,7 @@ namespace auge
 
 	void GetValueRequest::SetIY(const char* iy)
 	{
-		if(iy==NULL)
+		if((iy==NULL)||(strlen(iy)==0))
 		{
 			m_image_y = -1;
 		}
@@ -144,6 +144,26 @@ namespace auge
 		{
 			m_y = atof(y);
 		}
+	}
+
+	g_int GetValueRequest::GetIX()
+	{
+		return m_image_x;
+	}
+
+	g_int GetValueRequest::GetIY()
+	{
+		return m_image_y;
+	}
+
+	double GetValueRequest::GetX()
+	{
+		return m_x;
+	}
+
+	double GetValueRequest::GetY()
+	{
+		return m_y;
 	}
 
 	void GetValueRequest::SetSourceName(const char* sourceName)

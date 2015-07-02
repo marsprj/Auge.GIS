@@ -2,12 +2,11 @@
 #include "GetValueRequest.h"
 #include "GetValueResponse.h"
 
+#include "AugeRaster.h"
+#include "AugeData.h"
+#include "AugeCore.h"
 #include "AugeWebCore.h"
 
-#ifndef WIN32
-#include <sys/types.h>
-#include <dirent.h>
-#endif
 
 namespace auge
 {
@@ -149,16 +148,15 @@ namespace auge
 			memset(msg,0,AUGE_MSG_MAX);
 			g_sprintf(msg,"Fail to get Raster [%s]", raster_name);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(pError->GetLastError());
-			pLogger->Error(pError->GetLastError(),__FILE__,__LINE__);
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg,__FILE__,__LINE__);
 
 			return pExpResponse;
 		}
 
-		RasterBand* pBand = NULL;
 		Raster* pRaster = pRasterDataset->GetRaster();
 
-		int rx=0; ry=0;
+		g_int rx=0, ry=0;
 		if((pRequest->GetIX()>=0)&&(pRequest->GetIX()>=0))
 		{
 			rx = pRequest->GetIX();
@@ -166,24 +164,67 @@ namespace auge
 		}
 		else
 		{
-			pRaster->GetRasterPosition(pRequest->GetX(), pRequest->GetY(),&rx, &ry);
+			pRaster->GetRasterPosition(pRequest->GetX(), pRequest->GetY(),rx, ry);
 		}
 		
 		g_uint width = pRaster->GetWidth();
 		g_uint height = pRaster->GetHeight();
+		if((rx<0||rx>width)||((ry<0||ry>height)))
+		{
+			pRasterDataset->Release();
 
+			char msg[AUGE_MSG_MAX];
+			memset(msg,0,AUGE_MSG_MAX);
+			g_sprintf(msg,"[%d %d] is out of bounding box", rx,ry);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg,__FILE__,__LINE__);
+
+			return pExpResponse;
+		}
+
+		GetValueResponse* pWebResponse = new GetValueResponse(pRequest);
+		pWebResponse->Create(pRaster->GetBandCount());
+
+		char str[AUGE_NAME_MAX];
+		RasterBand* pBand = NULL;
 		g_uint nband = pRaster->GetBandCount();
 		for(g_uint i=0; i<nband; i++)
 		{
 			pBand = pRaster->GetBand(i);
-			
+			void* val = pBand->GetData(rx,ry);
+
+			memset(str,0,AUGE_NAME_MAX);
+			switch(pRaster->GetPixelType())
+			{
+			case augePixelByte:
+				g_sprintf(str,"%d",*(g_uchar*)val);
+				break;
+			case augePixelUInt16:
+				g_sprintf(str,"%d",*(unsigned short*)val);
+				break;
+			case augePixelInt16:
+				g_sprintf(str,"%d",*(short*)val);
+				break;
+			case augePixelUInt32:
+				g_sprintf(str,"%d",*(unsigned int*)val);
+				break;
+			case augePixelInt32:
+				g_sprintf(str,"%d",*(int*)val);
+				break;
+			case augePixelFloat32:
+				g_sprintf(str,"%f",*(float*)val);
+				break;
+			case augePixelDouble:
+				g_sprintf(str,"%f",*(double*)val);
+				break;
+			}
+
+			pWebResponse->SetValue(i,i,str);
 		}
 
 		pRasterDataset->Release();
-
 		
-		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
-		pSusResponse->SetRequest(pRequest->GetName());
-		return pSusResponse;
+		return pWebResponse;
 	}
 }
