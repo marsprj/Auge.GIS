@@ -9,7 +9,6 @@
 namespace auge
 {
 	class GetRasterRequest;
-	class FeatureClass;
 
 	class GetRasterHandler : public WebHandler
 	{

@@ -9,7 +9,6 @@
 namespace auge
 {
 	class AddRasterRequest;
-	class FeatureClass;
 
 	class AddRasterHandler : public WebHandler
 	{

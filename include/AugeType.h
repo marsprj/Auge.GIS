@@ -48,10 +48,10 @@ typedef unsigned long long  g_uint64;
 #define FLOAT_ZERO          (+1.401298E-45f)
 #endif
 
-#ifndef DOUBLE_MIN
-#define DOUBLE_MIN          (-1.7976931348623158e+308)
-#define DOUBLE_MAX          (+1.7976931348623158e+308)
-#define DOUBLE_ZERO         (+2.2250738585072014e-308)
+#ifndef AUGE_DOUBLE_MIN
+#define AUGE_DOUBLE_MIN          (-1.7976931348623158e+308)
+#define AUGE_DOUBLE_MAX          (+1.7976931348623158e+308)
+#define AUGE_DOUBLE_ZERO         (+2.2250738585072014e-308)
 #endif
 
 #ifndef AUGE_VIRTUAL_NAME

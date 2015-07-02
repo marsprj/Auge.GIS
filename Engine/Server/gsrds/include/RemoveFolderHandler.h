@@ -9,7 +9,6 @@
 namespace auge
 {
 	class RemoveFolderRequest;
-	class FeatureClass;
 
 	class RemoveFolderHandler : public WebHandler
 	{

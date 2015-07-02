@@ -14,6 +14,7 @@
 #include "AddRasterHandler.h"
 #include "RemoveRasterHandler.h"
 #include "DescribeRasterHandler.h"
+#include "GetValueHandler.h"
 
 namespace auge
 {
@@ -37,6 +38,8 @@ namespace auge
 		m_handlers.push_back(new AddRasterHandler());
 		m_handlers.push_back(new RemoveRasterHandler());
 		m_handlers.push_back(new DescribeRasterHandler());
+
+		m_handlers.push_back(new GetValueHandler());
 	}
 
 	WRasterEngine::~WRasterEngine()
@@ -101,50 +104,6 @@ namespace auge
 
 	WebRequest*	WRasterEngine::ParseRequest(const char* url)
 	{
-		//GPropertySet props;
-		//props.Parse(url,"&");
-
-		//const char* request = props.GetValue("request");
-		//if(request==NULL)
-		//{
-		//	GLogger* pLogger = augeGetLoggerInstance();
-		//	pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
-		//	return NULL;
-		//}
-
-		//WebRequest* pWebRequest = NULL;
-		//if(g_stricmp(request, "GetCapabilities")==0)
-		//{
-		//	GetCapabilitiesRequest* pRequest = new GetCapabilitiesRequest();
-		//	if(!pRequest->Create(props))
-		//	{
-		//		GLogger* pLogger = augeGetLoggerInstance();
-		//		pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
-		//		pRequest->Release();
-		//		pRequest = NULL;
-		//	}
-		//	pWebRequest = pRequest;
-		//}
-		//else if(g_stricmp(request, "GetMap")==0)
-		//{
-		//	GetMapRequest* pRequest = new GetMapRequest();
-
-		//	if(!pRequest->Create(props))
-		//	{
-		//		GLogger* pLogger = augeGetLoggerInstance();
-		//		pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
-		//		pRequest->Release();
-		//		pRequest = NULL;
-		//	}
-		//	pWebRequest = pRequest;
-
-		//}
-		//else if(g_stricmp(request, "GetFeatureInfo")==0)
-		//{
-
-		//}
-		//return pWebRequest;
-
 		return NULL;
 	}
 

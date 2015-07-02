@@ -9,7 +9,6 @@
 namespace auge
 {
 	class ListRequest;
-	class FeatureClass;
 
 	class ListHandler : public WebHandler
 	{

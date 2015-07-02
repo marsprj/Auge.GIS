@@ -9,7 +9,6 @@
 namespace auge
 {
 	class MoveRequest;
-	class FeatureClass;
 
 	class MoveHandler : public WebHandler
 	{

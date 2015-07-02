@@ -9,7 +9,6 @@
 namespace auge
 {
 	class RemoveRasterRequest;
-	class FeatureClass;
 
 	class RemoveRasterHandler : public WebHandler
 	{
