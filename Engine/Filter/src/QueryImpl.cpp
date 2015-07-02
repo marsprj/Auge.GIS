@@ -6,7 +6,9 @@ namespace auge
 {
 	GQueryImpl::GQueryImpl():
 	m_pOrderBy(NULL),
-		m_pFilter(NULL)
+	m_pFilter(NULL),
+	m_maxFeatures(-1),
+	m_offset(0)
 	{
 
 	}

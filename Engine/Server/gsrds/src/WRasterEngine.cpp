@@ -11,6 +11,8 @@
 #include "MoveHandler.h"
 
 #include "GetRasterHandler.h"
+#include "AddRasterHandler.h"
+#include "DescribeRasterHandler.h"
 
 namespace auge
 {
@@ -31,6 +33,8 @@ namespace auge
 		m_handlers.push_back(new MoveHandler());
 
 		m_handlers.push_back(new GetRasterHandler());
+		m_handlers.push_back(new AddRasterHandler());
+		m_handlers.push_back(new DescribeRasterHandler());
 	}
 
 	WRasterEngine::~WRasterEngine()

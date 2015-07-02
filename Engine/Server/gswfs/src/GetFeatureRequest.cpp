@@ -13,7 +13,7 @@ namespace auge
 		m_version = "1.1.0";
 		m_mime_type = "text/xml";
 		m_output_format = AUGE_WFS_OUTPUT_FORMAT_GML2;
-		m_max_features = 10;
+		m_max_features = -1;
 		m_offset = 0;
 		m_encoding = AUGE_DEFAULT_ENCODING;
 

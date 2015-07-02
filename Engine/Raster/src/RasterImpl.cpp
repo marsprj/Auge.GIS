@@ -31,6 +31,18 @@ namespace auge
 		return m_alias.c_str();
 	}
 
+	void RasterImpl::SetAlias(const char* alias)
+	{
+		if(alias==NULL)
+		{
+			m_alias.clear();
+		}
+		else
+		{
+			m_alias = alias;
+		}
+	}
+
 	//augeDataSetType RasterImpl::GetType()
 	//{
 	//	return augeDataSetRaster;

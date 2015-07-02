@@ -20,6 +20,8 @@ namespace auge
 	public:
 		virtual const char*		GetName();
 		virtual const char*		GetAlias();
+		virtual void			SetAlias(const char* alias);
+
 		//virtual augeDataSetType	GetType();
 		virtual const char*		GetFormat();
 

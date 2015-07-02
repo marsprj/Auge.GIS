@@ -83,8 +83,13 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\AddRasterHandler.cpp" />
+    <ClCompile Include="..\src\AddRasterRequest.cpp" />
     <ClCompile Include="..\src\CreateFolderHandler.cpp" />
     <ClCompile Include="..\src\CreateFolderRequest.cpp" />
+    <ClCompile Include="..\src\DescribeRasterHandler.cpp" />
+    <ClCompile Include="..\src\DescribeRasterRequest.cpp" />
+    <ClCompile Include="..\src\DescribeRasterResponse.cpp" />
     <ClCompile Include="..\src\GetRasterHandler.cpp" />
     <ClCompile Include="..\src\GetRasterRequest.cpp" />
     <ClCompile Include="..\src\GetRasterResponse.cpp" />
@@ -100,8 +105,13 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\WRasterEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\AddRasterHandler.h" />
+    <ClInclude Include="..\include\AddRasterRequest.h" />
     <ClInclude Include="..\include\CreateFolderHandler.h" />
     <ClInclude Include="..\include\CreateFolderRequest.h" />
+    <ClInclude Include="..\include\DescribeRasterHandler.h" />
+    <ClInclude Include="..\include\DescribeRasterRequest.h" />
+    <ClInclude Include="..\include\DescribeRasterResponse.h" />
     <ClInclude Include="..\include\GetRasterHandler.h" />
     <ClInclude Include="..\include\GetRasterRequest.h" />
     <ClInclude Include="..\include\GetRasterResponse.h" />

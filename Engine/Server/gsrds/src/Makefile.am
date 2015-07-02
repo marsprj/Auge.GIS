@@ -21,6 +21,11 @@ libgsrds_la_SOURCES=\
 		    GetRasterHandler.cpp \
 		    GetRasterRequest.cpp \
 		    GetRasterResponse.cpp \
+		    AddRasterHandler.cpp \
+		    AddRasterRequest.cpp \
+		    DescribeRasterHandler.cpp \
+		    DescribeRasterRequest.cpp \
+		    DescribeRasterResponse.cpp \
 		    MoveHandler.cpp \
 		    MoveRequest.cpp \
 		    ListRequest.cpp \
