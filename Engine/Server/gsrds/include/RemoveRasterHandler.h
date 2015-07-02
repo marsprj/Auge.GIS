@@ -1,5 +1,5 @@
-#ifndef __AUGE_RDS_GET_RASTER__HANDLER_H__
-#define __AUGE_RDS_GET_RASTER__HANDLER_H__
+#ifndef __AUGE_RDS_REMOVE_RASTER_HANDLER_H__
+#define __AUGE_RDS_REMOVE_RASTER_HANDLER_H__
 
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
@@ -8,14 +8,14 @@
 
 namespace auge
 {
-	class GetRasterRequest;
+	class RemoveRasterRequest;
 	class FeatureClass;
 
-	class GetRasterHandler : public WebHandler
+	class RemoveRasterHandler : public WebHandler
 	{
 	public:
-		GetRasterHandler();
-		virtual ~GetRasterHandler();
+		RemoveRasterHandler();
+		virtual ~RemoveRasterHandler();
 	public:
 		virtual const char*		GetName();
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi);
@@ -27,4 +27,4 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_RDS_GET_RASTER__HANDLER_H__
+#endif //__AUGE_RDS_REMOVE_RASTER_HANDLER_H__

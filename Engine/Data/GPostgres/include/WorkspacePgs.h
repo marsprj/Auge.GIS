@@ -48,6 +48,7 @@ namespace auge
 		virtual EnumDataSet*	GetRasterDatasets();
 		virtual RasterDataset*	OpenRasterDataset(const char* name);
 		virtual RESULTCODE		AddRaster(Raster* pRaster);
+		virtual RESULTCODE		RemoveRaster(const char* name);
 
 	private:
 		// Table

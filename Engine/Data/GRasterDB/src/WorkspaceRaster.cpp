@@ -105,7 +105,7 @@ namespace auge
 
 	RESULTCODE WorkspaceRasterDB::RemoveDataSet(const char* name)
 	{
-		return AG_SUCCESS;
+		return RemoveRaster(name);
 	}
 
 	EnumDataSet* WorkspaceRasterDB::GetRasterDatasets()
@@ -265,6 +265,18 @@ namespace auge
 												extent.m_xmax,
 												extent.m_ymax,
 												uuid);
+		return m_pCnnection->ExecuteSQL(sql);
+	}
+
+	RESULTCODE WorkspaceRasterDB::RemoveRaster(const char* name)
+	{
+		if(name==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		char sql[AUGE_SQL_MAX] = {0};
+		g_sprintf(sql, "delete from g_raster_catalog where name='%s'",name);
 		return m_pCnnection->ExecuteSQL(sql);
 	}
 

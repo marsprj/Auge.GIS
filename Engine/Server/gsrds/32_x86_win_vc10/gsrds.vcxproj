@@ -102,6 +102,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RemoveFileRequest.cpp" />
     <ClCompile Include="..\src\RemoveFolderHandler.cpp" />
     <ClCompile Include="..\src\RemoveFolderRequest.cpp" />
+    <ClCompile Include="..\src\RemoveRasterHandler.cpp" />
+    <ClCompile Include="..\src\RemoveRasterRequest.cpp" />
     <ClCompile Include="..\src\WRasterEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +126,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RemoveFileRequest.h" />
     <ClInclude Include="..\include\RemoveFolderHandler.h" />
     <ClInclude Include="..\include\RemoveFolderRequest.h" />
+    <ClInclude Include="..\include\RemoveRasterHandler.h" />
+    <ClInclude Include="..\include\RemoveRasterRequest.h" />
     <ClInclude Include="..\include\WRasterEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

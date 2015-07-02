@@ -1,8 +1,8 @@
-#include "GetRasterHandler.h"
-#include "GetRasterRequest.h"
-#include "GetRasterResponse.h"
-
+#include "RemoveRasterHandler.h"
+#include "RemoveRasterRequest.h"
 #include "AugeWebCore.h"
+#include "AugeData.h"
+#include "AugeRaster.h"
 
 #ifndef WIN32
 #include <sys/types.h>
@@ -11,24 +11,24 @@
 
 namespace auge
 {
-	GetRasterHandler::GetRasterHandler()
+	RemoveRasterHandler::RemoveRasterHandler()
 	{
 
 	}
 
-	GetRasterHandler::~GetRasterHandler()
+	RemoveRasterHandler::~RemoveRasterHandler()
 	{
 
 	}
 
-	const char*	GetRasterHandler::GetName()
+	const char*	RemoveRasterHandler::GetName()
 	{
-		return "GetRaster";
+		return "RemoveRaster";
 	}
 
-	WebRequest*	GetRasterHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	RemoveRasterHandler::ParseRequest(rude::CGI& cgi)
 	{
-		GetRasterRequest* pRequest = new GetRasterRequest();
+		RemoveRasterRequest* pRequest = new RemoveRasterRequest();
 
 		if(!pRequest->Create(cgi))
 		{
@@ -40,27 +40,27 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetRasterHandler::ParseRequest(rude::CGI& cgi,const char* mapName)
+	WebRequest*	RemoveRasterHandler::ParseRequest(rude::CGI& cgi,const char* mapName)
 	{
 		return ParseRequest(cgi);
 	}
 
-	WebRequest*	GetRasterHandler::ParseRequest(XDocument* pxDoc,const char* mapName)
+	WebRequest*	RemoveRasterHandler::ParseRequest(XDocument* pxDoc,const char* mapName)
 	{
 		return NULL;
 	}
 
-	WebResponse* GetRasterHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* RemoveRasterHandler::Execute(WebRequest* pWebRequest)
 	{
-		GetRasterRequest* pRequest = static_cast<GetRasterRequest*>(pWebRequest);
+		RemoveRasterRequest* pRequest = static_cast<RemoveRasterRequest*>(pWebRequest);
 		WebResponse* pWebResponse = NULL;
 		return pWebResponse;
 	}
 
-	WebResponse* GetRasterHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* RemoveRasterHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
-		GetRasterRequest* pRequest = static_cast<GetRasterRequest*>(pWebRequest);
+		RemoveRasterRequest* pRequest = static_cast<RemoveRasterRequest*>(pWebRequest);
 
 		const char* root_path = pWebContext->GetUploadPath();
 		const char* rqut_path = pRequest->GetPath();
@@ -75,30 +75,36 @@ namespace auge
 
 			return pExpResponse;
 		}
-
-		if(rqut_path==NULL)
+		const char* sourceName = pRequest->GetSourceName();
+		if(sourceName==NULL)
 		{
-			const char* msg = "Parameter [Path] is NULL";
+			const char* msg = "Parameter [SourceName] is NULL";
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
 			pLogger->Error(msg,__FILE__,__LINE__);
 
 			return pExpResponse;
 		}
+		//if(rqut_path==NULL)
+		//{
+		//	const char* msg = "Parameter [Path] is NULL";
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	pExpResponse->SetMessage(msg);
+		//	pLogger->Error(msg,__FILE__,__LINE__);
 
-		char local_path[AUGE_PATH_MAX];
-		memset(local_path,0,AUGE_PATH_MAX);
-		auge_make_path(local_path,NULL,root_path,rqut_path+1,NULL);
+		//	return pExpResponse;
+		//}
 
-		char raster_path[AUGE_PATH_MAX];
-		memset(raster_path,0,AUGE_PATH_MAX);
-		auge_make_path(raster_path,NULL,local_path,raster_name,NULL);
-
-		if(g_access(raster_path,4))
+		Workspace* pWorkspace = NULL;
+		RasterWorkspace* pRasterWorkspace = NULL;
+		ConnectionManager* pConnectionManager = NULL;
+		pConnectionManager = augeGetConnectionManagerInstance();
+		pWorkspace = pConnectionManager->GetWorkspace(sourceName);
+		if(pWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
 			memset(msg,0,AUGE_MSG_MAX);
-			g_sprintf(msg,"Folder [%s] does not have Raster [%s] in folder  does not exist.", rqut_path, raster_name);
+			g_sprintf(msg,"Cannot Get DataSource [%s]", sourceName);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
 			pLogger->Error(msg,__FILE__,__LINE__);
@@ -106,9 +112,32 @@ namespace auge
 			return pExpResponse;
 		}
 
-		GetRasterResponse* pGetRasterResponse = new GetRasterResponse(pRequest);
-		pGetRasterResponse->SetPath(raster_path);
+		pRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
+		//if(pRasterWorkspace==NULL)
+		//{
+		//	char msg[AUGE_MSG_MAX];
+		//	memset(msg,0,AUGE_MSG_MAX);
+		//	g_sprintf(msg,"Cannot Get DataSource [%s]", sourceName);
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	pExpResponse->SetMessage(msg);
+		//	pLogger->Error(msg,__FILE__,__LINE__);
 
-		return pGetRasterResponse;
+		//	return pExpResponse;
+		//}
+
+		RESULTCODE rc = pRasterWorkspace->RemoveRaster(raster_name);
+		if(rc!=AG_SUCCESS)
+		{
+			GError* pError = augeGetErrorInstance();
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			pLogger->Error(pError->GetLastError(),__FILE__,__LINE__);
+
+			return pExpResponse; 
+		}
+		
+		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
+		pSusResponse->SetRequest(pRequest->GetRequest());
+		return pSusResponse;
 	}
 }

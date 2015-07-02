@@ -12,6 +12,7 @@
 
 #include "GetRasterHandler.h"
 #include "AddRasterHandler.h"
+#include "RemoveRasterHandler.h"
 #include "DescribeRasterHandler.h"
 
 namespace auge
@@ -34,6 +35,7 @@ namespace auge
 
 		m_handlers.push_back(new GetRasterHandler());
 		m_handlers.push_back(new AddRasterHandler());
+		m_handlers.push_back(new RemoveRasterHandler());
 		m_handlers.push_back(new DescribeRasterHandler());
 	}
 
