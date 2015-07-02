@@ -98,7 +98,7 @@ namespace auge
 		{
 			char msg[AUGE_MSG_MAX];
 			memset(msg,0,AUGE_MSG_MAX);
-			g_sprintf(msg,"Path [%s] does not exist.", rqut_path);
+			g_sprintf(msg,"Folder [%s] does not have Raster [%s] in folder  does not exist.", rqut_path, raster_name);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
 			pLogger->Error(msg,__FILE__,__LINE__);
