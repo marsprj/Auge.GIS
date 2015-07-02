@@ -26,4 +26,4 @@ libgsrds_la_SOURCES=\
 		    ListRequest.cpp \
 		    ListResponse.cpp \
 		    ListHandler.cpp \
-		    WFileSystemEngine.cpp
+		    WRasterEngine.cpp
