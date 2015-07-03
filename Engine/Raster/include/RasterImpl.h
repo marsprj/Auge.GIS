@@ -40,6 +40,7 @@ namespace auge
 		virtual bool			GetRasterPosition(double mx, double my, g_int& rx, g_int& ry);
 
 		virtual const char*		GetPath();
+		virtual void			SetPath(const char* path);
 
 	public:
 		bool	Create(const char* name, const char* path);

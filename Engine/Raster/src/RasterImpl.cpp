@@ -232,6 +232,18 @@ namespace auge
 		return m_path.c_str();
 	}
 
+	void RasterImpl::SetPath(const char* path)
+	{
+		if(path==NULL)
+		{
+			m_path.clear();
+		}
+		else
+		{
+			m_path = path;
+		}
+	}
+
 	g_uint RasterImpl::GetPixelSize(GDALDataType type)
 	{
 		g_uint pixel_size = 1;

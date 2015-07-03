@@ -123,7 +123,6 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\WorkspacePgs.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\GShape\32_x86_win_vc10\GShape.sln" />
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

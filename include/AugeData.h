@@ -265,6 +265,8 @@ namespace auge
 	public:
 		//virtual void			SetConnection(GConnection* pConnection) = 0;
 
+		virtual const char*		GetRepository() = 0;
+
 		virtual EnumDataSet*	GetRasterDatasets() = 0;
 		virtual RasterDataset*	OpenRasterDataset(const char* name) = 0;
 		//virtual RESULTCODE		RemoverRasterDataset(const char* name) = 0;

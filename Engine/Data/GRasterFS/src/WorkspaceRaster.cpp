@@ -35,6 +35,11 @@ namespace auge
 		}
 	}
 
+	const char*	WorkspaceRaster::GetRepository()
+	{
+		return NULL;
+	}
+
 	RESULTCODE WorkspaceRaster::SetConnectionString(const char* conn_string)
 	{
 		if(conn_string==NULL)

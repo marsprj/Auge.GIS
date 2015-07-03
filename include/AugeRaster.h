@@ -58,6 +58,7 @@ namespace auge
 		virtual bool			GetRasterPosition(double mx, double my, g_int& rx, g_int& ry) = 0;
 
 		virtual const char*		GetPath() = 0;
+		virtual void			SetPath(const char* path) = 0;
 	};
 
 	class RasterBand : public GObject

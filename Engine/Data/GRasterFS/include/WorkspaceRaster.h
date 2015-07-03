@@ -17,6 +17,8 @@ namespace auge
 		virtual const char*		GetName();
 		virtual void			SetName(const char* name);
 
+		virtual const char*		GetRepository();
+
 		virtual	RESULTCODE		SetConnectionString(const char* conn_string);
 		virtual const char*		GetConnectionString();
 

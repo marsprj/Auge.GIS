@@ -79,7 +79,7 @@ namespace auge
 		pxNode = pxBounding->AddChild("LowerLeft");
 		pxNode->AddChildText(str);
 
-		g_sprintf(str,"%f %f",extent.m_xmin,extent.m_ymin);
+		g_sprintf(str,"%f %f",extent.m_xmax,extent.m_ymax);
 		pxNode = pxBounding->AddChild("UpperRight");
 		pxNode->AddChildText(str);
 

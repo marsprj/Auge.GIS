@@ -26,8 +26,17 @@ namespace auge
 	{
 		if(m_pRaster==NULL)
 		{
+			char raster_path[AUGE_PATH_MAX];
+			memset(raster_path,0,AUGE_PATH_MAX);
+			auge_make_path(raster_path, NULL, m_path.c_str(), m_name.c_str(),NULL);
+
+			char local_path[AUGE_PATH_MAX];
+			memset(local_path,0,AUGE_PATH_MAX);
+			auge_make_path(local_path, NULL, m_pWoskspace->GetRepository(), raster_path+1, NULL);
+
 			RasterIO* pRasterIO = augeGetRasterIOInstance();
-			m_pRaster = pRasterIO->Read(m_path.c_str());
+			
+			m_pRaster = pRasterIO->Read(local_path);
 		}
 		return m_pRaster;
 	}

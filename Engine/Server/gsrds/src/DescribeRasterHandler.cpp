@@ -136,7 +136,20 @@ namespace auge
 			return pExpResponse;
 		}
 		
-		const char* raster_path = pRasterDataset->GetRaster()->GetPath();
+		Raster* pRaster = pRasterDataset->GetRaster();
+		if(pRaster==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			memset(msg,0,AUGE_MSG_MAX);
+			g_sprintf(msg,"Cannot load raster [%s]", raster_name);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg,__FILE__,__LINE__);
+
+			return pExpResponse;
+		}
+
+		const char* raster_path = pRaster->GetPath();
 		if(g_access(raster_path,4))
 		{
 			pRasterDataset->Release();

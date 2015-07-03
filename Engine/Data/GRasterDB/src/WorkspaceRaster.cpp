@@ -12,6 +12,12 @@ namespace auge
 	{
 		m_pCnnection = NULL;
 		g_catalog_table = "g_raster_catalog";
+		g_config_table  = "g_raster_config";
+#ifdef WIN32
+		m_repository = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload";
+#else
+		m_repository = "/opt/auge/upload";
+#endif
 	}
 
 	WorkspaceRasterDB::~WorkspaceRasterDB()
@@ -34,6 +40,11 @@ namespace auge
 		{
 			m_name.clear();
 		}
+	}
+
+	const char* WorkspaceRasterDB::GetRepository()
+	{
+		return m_repository.c_str();
 	}
 
 	RESULTCODE WorkspaceRasterDB::SetConnectionString(const char* conn_string)
@@ -69,6 +80,10 @@ namespace auge
 			if(!m_pCnnection->HasTable(g_catalog_table.c_str()))
 			{
 				CreateCatalogTable();
+			}
+			if(!m_pCnnection->HasTable(g_config_table.c_str()))
+			{
+				CreateConfigTable();
 			}
 		}
 		return rc;
@@ -310,6 +325,18 @@ namespace auge
 									"	CONSTRAINT g_raster_catalog_name_uk UNIQUE (name, format)" \
 									")";
 		g_sprintf(sql, format, g_catalog_table.c_str());
+		return m_pCnnection->ExecuteSQL(sql);
+	}
+
+	RESULTCODE WorkspaceRasterDB::CreateConfigTable()
+	{
+		char sql[AUGE_SQL_MAX];
+		const char* format = "CREATE TABLE %s(" \
+			"	gid serial NOT NULL," \
+			"	key character varying(32) NOT NULL," \
+			"	value character varying(64) NOT NULL" \
+			")";
+		g_sprintf(sql, format, g_config_table.c_str());
 		return m_pCnnection->ExecuteSQL(sql);
 	}
 	//////////////////////////////////////////////////////////////////////////

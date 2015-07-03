@@ -71,6 +71,6 @@ service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&name=16km.tif&sx=1&sy
 http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&name=16km.tif&sourceName=rsdb&sx=1&sy=1&Path=/
 
 service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&name=16km.tif&x=116&y=39&Path=/
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&name=16km.tif&sourceName=rsdb&sx=1&sy=1&Path=/
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&name=16km.tif&x=116&y=39&Path=/
 
 ************************************************************************/

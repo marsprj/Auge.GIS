@@ -1915,7 +1915,7 @@ namespace auge
 							"  gid serial NOT NULL," \
 							"  user_id integer NOT NULL DEFAULT 1," \
 							"  m_name character varying(32) NOT NULL," \
-							"  m_layers character varying(32) NOT NULL," \
+							"  m_layers character varying(1024) NOT NULL," \
 							"  m_uri  character varying(128) NOT NULL," \
 							"  srid integer DEFAULT 4326," \
 							"  version integer DEFAULT 1," \
@@ -1923,6 +1923,10 @@ namespace auge
 							"  maxx double precision DEFAULT -90," \
 							"  miny double precision DEFAULT  180," \
 							"  maxy double precision DEFAULT  90," \
+							"  v_minx double precision DEFAULT -180," \
+							"  v_maxx double precision DEFAULT -90," \
+							"  v_miny double precision DEFAULT  180," \
+							"  v_maxy double precision DEFAULT  90," \
 							"  m_uuid character varying(128) DEFAULT ''::character varying," \
 							"  CONSTRAINT g_map_pkey PRIMARY KEY (gid )," \
 							"  CONSTRAINT g_map_user_fk FOREIGN KEY (user_id)" \

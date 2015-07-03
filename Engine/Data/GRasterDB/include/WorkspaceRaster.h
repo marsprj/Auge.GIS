@@ -19,6 +19,8 @@ namespace auge
 		virtual	DataEngine*		GetEngine();
 		virtual void			Release();
 
+		virtual const char*		GetRepository();
+
 		virtual	RESULTCODE		SetConnectionString(const char* conn_string);
 		virtual const char*		GetConnectionString();
 		virtual void			SetConnection(GConnection* pConnection);
@@ -41,11 +43,16 @@ namespace auge
 
 	private:
 		RESULTCODE				CreateCatalogTable();
+		RESULTCODE				CreateConfigTable();
 	private:
 		GConnection *m_pCnnection;
 		std::string	m_name;
 		std::string	m_path;
+
+		std::string m_repository;
+
 		std::string g_catalog_table;
+		std::string g_config_table;
 	};
 }
 

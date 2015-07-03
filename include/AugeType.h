@@ -87,6 +87,7 @@ typedef unsigned long long  g_uint64;
 #define AUGE_DB_USER		"USER"
 #define AUGE_DB_PASSWORD	"PASSWORD"
 #define AUGE_DB_ENCODING	"ENCODING"
+#define AUGE_DB_REPOSITORY	"REPOSITORY"
 
 #define AUGE_DEFAULT_ENCODING	"GBK"
 

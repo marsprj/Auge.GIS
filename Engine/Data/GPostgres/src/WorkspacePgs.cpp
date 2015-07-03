@@ -12,6 +12,11 @@ namespace auge
 	m_schema("public")
 	{
 		g_catalog_table = "g_raster_catalog";
+#ifdef WIN32
+		m_repository = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload";
+#else
+		m_repository = "/opt/auge/upload";
+#endif
 	}
 
 	WorkspacePgs::~WorkspacePgs()
@@ -39,6 +44,19 @@ namespace auge
 	
 	RESULTCODE WorkspacePgs::SetConnectionString(const char* conn_string)
 	{
+		//if(conn_string==NULL)
+		//{
+		//	return AG_FAILURE;
+		//}
+
+		//GPropertySet props;
+		//props.Parse(conn_string);
+		//const char* repository = props.GetValue(AUGE_DB_REPOSITORY);
+		//if(repository==NULL)
+		//	m_repository.clear();
+		//else
+		//	m_repository = repository;
+
 		return m_pgConnection.SetConnectionString(conn_string);
 	}
 	
@@ -455,6 +473,11 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	// Raster Begin
 	//////////////////////////////////////////////////////////////////////////
+
+	const char*	WorkspacePgs::GetRepository()
+	{
+		return m_repository.c_str();
+	}
 
 	EnumDataSet* WorkspacePgs::GetRasterDatasets()
 	{

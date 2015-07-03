@@ -50,6 +50,8 @@ namespace auge
 		virtual RESULTCODE		AddRaster(Raster* pRaster);
 		virtual RESULTCODE		RemoveRaster(const char* name);
 
+		virtual const char*		GetRepository();
+
 	private:
 		// Table
 		RESULTCODE				CreateTable(const char* name, GFields* pFields);
@@ -70,6 +72,7 @@ namespace auge
 		std::string		m_name;
 		std::string		m_schema;
 
+		std::string		m_repository;
 		std::string		g_catalog_table;
 	};
 }

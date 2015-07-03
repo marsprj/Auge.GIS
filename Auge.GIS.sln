@@ -90,6 +90,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCarto", "Engine\Carto\32_x
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{100D02DB-8009-47C0-8D10-B9A3BB44556A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsrds", "Engine\Server\gsrds\32_x86_win_vc10\gsrds.vcxproj", "{320AD0BC-A414-45E1-821E-419EFD49E16C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -196,6 +198,10 @@ Global
 		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Debug|Win32.Build.0 = Debug|Win32
 		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Release|Win32.ActiveCfg = Release|Win32
 		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Release|Win32.Build.0 = Release|Win32
+		{320AD0BC-A414-45E1-821E-419EFD49E16C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{320AD0BC-A414-45E1-821E-419EFD49E16C}.Debug|Win32.Build.0 = Debug|Win32
+		{320AD0BC-A414-45E1-821E-419EFD49E16C}.Release|Win32.ActiveCfg = Release|Win32
+		{320AD0BC-A414-45E1-821E-419EFD49E16C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
