@@ -20,8 +20,8 @@ void MapTest::setUp()
 	pEngineManager->Load();
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
-	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -106,6 +106,7 @@ void MapTest::DrawMap()
 	pCanvas->Save("g:\\temp\\map\\map.png");
 	//pCanvas->Save("/home/renyc/map/map.png");
 
+	pCartoManager->UpdateMapLayers(pMap);
 	//m_pConnection->Close();
 	//AUGE_SAFE_RELEASE(m_pConnection);
 	AUGE_SAFE_RELEASE(pMap);

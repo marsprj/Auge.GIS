@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1BA6BCF9-52DA-46D1-A096-DA9A72C8C4B6}</ProjectGuid>
+    <ProjectGuid>{B6F892A7-59B5-48D6-A97C-8BC432B49E92}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GCarto</RootNamespace>
   </PropertyGroup>
@@ -40,8 +40,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)D</TargetName>
-    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\cairo-dev_1.10.2-2_win32\include;E:\DevEnv\GnuWin32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;E:\DevEnv\cairo-dev_1.10.2-2_win32\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\cairo-dev_1.10.2-2_win32\include;E:\DevEnv\GnuWin32\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
+    <LibraryPath>%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;E:\DevEnv\cairo-dev_1.10.2-2_win32\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -57,7 +57,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>cairo.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cairo.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(OutDir)\$(TargetName).dll %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\binD
@@ -83,15 +83,55 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\AugeCarto.h" />
-    <ClInclude Include="..\..\..\include\AugeCore.h" />
-    <ClInclude Include="..\..\..\include\AugeFilter.h" />
-    <ClInclude Include="..\..\..\include\AugeStyle.h" />
-    <ClInclude Include="..\..\..\include\AugeType.h" />
-    <ClInclude Include="..\..\Data\GShape\test\ShapeTest.h" />
+    <ClCompile Include="..\src\CanvasImpl.cpp" />
+    <ClCompile Include="..\src\CartoFactoryImpl.cpp" />
+    <ClCompile Include="..\src\CartoManagerImpl.cpp" />
+    <ClCompile Include="..\src\ColorMapImp.cpp" />
+    <ClCompile Include="..\src\ColorMapImpl.cpp" />
+    <ClCompile Include="..\src\EnumColorMapImpl.cpp" />
+    <ClCompile Include="..\src\EnumMapImpl.cpp" />
+    <ClCompile Include="..\src\EnumStyleImpl.cpp" />
+    <ClCompile Include="..\src\ExternalGraphicImpl.cpp" />
+    <ClCompile Include="..\src\FeatureLayerImpl.cpp" />
+    <ClCompile Include="..\src\FeatureStyleImpl.cpp" />
+    <ClCompile Include="..\src\FillImpl.cpp" />
+    <ClCompile Include="..\src\FontImpl.cpp" />
+    <ClCompile Include="..\src\GraphicImpl.cpp" />
+    <ClCompile Include="..\src\GraphicLayerImpl.cpp" />
+    <ClCompile Include="..\src\Label.cpp" />
+    <ClCompile Include="..\src\LabelSet.cpp" />
+    <ClCompile Include="..\src\LineLabel.cpp" />
+    <ClCompile Include="..\src\LineSymbolizerImpl.cpp" />
+    <ClCompile Include="..\src\MapImpl.cpp" />
+    <ClCompile Include="..\src\Maplex.cpp" />
+    <ClCompile Include="..\src\MapManager.cpp" />
+    <ClCompile Include="..\src\MarkImpl.cpp" />
+    <ClCompile Include="..\src\PointLabel.cpp" />
+    <ClCompile Include="..\src\PointSymbolizerImpl.cpp" />
+    <ClCompile Include="..\src\PolygonLabel.cpp" />
+    <ClCompile Include="..\src\PolygonSymbolizerImpl.cpp" />
+    <ClCompile Include="..\src\QuadServerLayerImpl.cpp" />
+    <ClCompile Include="..\src\RasterLayerImpl.cpp" />
+    <ClCompile Include="..\src\RasterStyleImpl.cpp" />
+    <ClCompile Include="..\src\RasterSymbolizerImpl.cpp" />
+    <ClCompile Include="..\src\RendererCairo.cpp" />
+    <ClCompile Include="..\src\RuleImpl.cpp" />
+    <ClCompile Include="..\src\StrokeImpl.cpp" />
+    <ClCompile Include="..\src\StyleFactoryImpl.cpp" />
+    <ClCompile Include="..\src\StyleReaderImpl.cpp" />
+    <ClCompile Include="..\src\StyleReader_1_0_0.cpp" />
+    <ClCompile Include="..\src\StyleWriterImpl.cpp" />
+    <ClCompile Include="..\src\StyleWriter_1_0_0.cpp" />
+    <ClCompile Include="..\src\SymbolGeometry.cpp" />
+    <ClCompile Include="..\src\SymbolManagerImpl.cpp" />
+    <ClCompile Include="..\src\TextSymbolizerImpl.cpp" />
+    <ClCompile Include="..\src\TransformImpl.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="..\include\CanvasImpl.h" />
     <ClInclude Include="..\include\CartoFactoryImpl.h" />
     <ClInclude Include="..\include\CartoManagerImpl.h" />
+    <ClInclude Include="..\include\ColorMapImp.h" />
     <ClInclude Include="..\include\ColorMapImpl.h" />
     <ClInclude Include="..\include\EnumColorMapImpl.h" />
     <ClInclude Include="..\include\EnumMapImpl.h" />
@@ -131,49 +171,6 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\SymbolManagerImpl.h" />
     <ClInclude Include="..\include\TextSymbolizerImpl.h" />
     <ClInclude Include="..\include\TransformImpl.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\CanvasImpl.cpp" />
-    <ClCompile Include="..\src\CartoFactoryImpl.cpp" />
-    <ClCompile Include="..\src\CartoManagerImpl.cpp" />
-    <ClCompile Include="..\src\ColorMapImpl.cpp" />
-    <ClCompile Include="..\src\EnumColorMapImpl.cpp" />
-    <ClCompile Include="..\src\EnumMapImpl.cpp" />
-    <ClCompile Include="..\src\EnumStyleImpl.cpp" />
-    <ClCompile Include="..\src\ExternalGraphicImpl.cpp" />
-    <ClCompile Include="..\src\FeatureLayerImpl.cpp" />
-    <ClCompile Include="..\src\FeatureStyleImpl.cpp" />
-    <ClCompile Include="..\src\FillImpl.cpp" />
-    <ClCompile Include="..\src\FontImpl.cpp" />
-    <ClCompile Include="..\src\GraphicImpl.cpp" />
-    <ClCompile Include="..\src\GraphicLayerImpl.cpp" />
-    <ClCompile Include="..\src\Label.cpp" />
-    <ClCompile Include="..\src\LabelSet.cpp" />
-    <ClCompile Include="..\src\LineLabel.cpp" />
-    <ClCompile Include="..\src\LineSymbolizerImpl.cpp" />
-    <ClCompile Include="..\src\MapImpl.cpp" />
-    <ClCompile Include="..\src\Maplex.cpp" />
-    <ClCompile Include="..\src\MarkImpl.cpp" />
-    <ClCompile Include="..\src\PointLabel.cpp" />
-    <ClCompile Include="..\src\PointSymbolizerImpl.cpp" />
-    <ClCompile Include="..\src\PolygonLabel.cpp" />
-    <ClCompile Include="..\src\PolygonSymbolizerImpl.cpp" />
-    <ClCompile Include="..\src\QuadServerLayerImpl.cpp" />
-    <ClCompile Include="..\src\RasterLayerImpl.cpp" />
-    <ClCompile Include="..\src\RasterStyleImpl.cpp" />
-    <ClCompile Include="..\src\RasterSymbolizerImpl.cpp" />
-    <ClCompile Include="..\src\RendererCairo.cpp" />
-    <ClCompile Include="..\src\RuleImpl.cpp" />
-    <ClCompile Include="..\src\StrokeImpl.cpp" />
-    <ClCompile Include="..\src\StyleFactoryImpl.cpp" />
-    <ClCompile Include="..\src\StyleReaderImpl.cpp" />
-    <ClCompile Include="..\src\StyleReader_1_0_0.cpp" />
-    <ClCompile Include="..\src\StyleWriterImpl.cpp" />
-    <ClCompile Include="..\src\StyleWriter_1_0_0.cpp" />
-    <ClCompile Include="..\src\SymbolGeometry.cpp" />
-    <ClCompile Include="..\src\SymbolManagerImpl.cpp" />
-    <ClCompile Include="..\src\TextSymbolizerImpl.cpp" />
-    <ClCompile Include="..\src\TransformImpl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -662,7 +662,7 @@ namespace auge
 			return false;
 		}
 
-		g_uint r_xmin=0, r_ymin=0, r_xmax=0, r_ymax=0;
+		g_int r_xmin=0, r_ymin=0, r_xmax=0, r_ymax=0;
 		pRaster->GetRasterPosition(visible_extent.m_xmin, visible_extent.m_ymax, r_xmin, r_ymin);
 		pRaster->GetRasterPosition(visible_extent.m_xmax, visible_extent.m_ymin, r_xmax, r_ymax);
 

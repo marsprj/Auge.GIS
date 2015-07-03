@@ -27,7 +27,7 @@ namespace auge
 		virtual Map*			CreateMap(const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax);
 		virtual RESULTCODE		RemoveMap(const char* name);
 		virtual g_int			GetMapID(const char* name);
-
+		
 		//------------------------------------------------------------------------
 		// Map User Methods
 		//------------------------------------------------------------------------
@@ -39,6 +39,11 @@ namespace auge
 		virtual Map*			CreateMap(g_uint user, const char* name);
 		virtual Map*			CreateMap(g_uint user, const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax);
 		virtual RESULTCODE		RemoveMap(g_uint user, const char* name);
+		
+		virtual RESULTCODE		UpdateMapLayers(Map* pMap);
+		virtual RESULTCODE		UpdateMapLayers(g_uint mapID, const char* layers);
+		virtual RESULTCODE		UpdateMapLayers(const char* mapName, const char* layers);
+
 		virtual g_int			GetMapID(g_uint user, const char* name);
 		virtual RESULTCODE		SetMapThumbnail(g_uint user, g_uint map_id, const char* thumbnail);
 		
@@ -78,6 +83,9 @@ namespace auge
 		virtual void			Cleanup();
 
 	private:
+		RESULTCODE				LoadLayers(Map* pMap);
+		RESULTCODE				GetMapLayers(std::string& map_layers, g_uint mapID);
+
 		Layer*					CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url);
 		FeatureLayer*			CreateFeatureLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible);
 		GraphicLayer*			CreateGraphicLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible);

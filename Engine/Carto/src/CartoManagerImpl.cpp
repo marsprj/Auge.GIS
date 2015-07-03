@@ -145,23 +145,6 @@ namespace auge
 			return NULL;
 		}
 
-		//const char* name = pResult->GetString(0,0);
-		//const char* uri = pResult->GetString(0,1);
-		//g_int version = pResult->GetInt(0,2);
-		//double xmin = pResult->GetDouble(0,3);
-		//double ymin = pResult->GetDouble(0,4);
-		//double xmax = pResult->GetDouble(0,5);
-		//double ymax = pResult->GetDouble(0,6);
-		//g_int  srid = pResult->GetInt(0,7);
-
-		//Map* pMap = new MapImpl();
-		//pMap->SetID(mid);
-		//pMap->SetName(name);
-		//pMap->SetURI(uri);
-		//pMap->SetVersion(version);
-		//pMap->SetExtent(xmin, ymin,xmax,ymax);
-		//pMap->SetSRID(srid);
-
 		Map* pMap = CreateMap(pResult, 0);
 
 		pResult->Release();
@@ -190,26 +173,8 @@ namespace auge
 			pResult->Release();
 			return NULL;
 		}
-	
-		//g_int mid = pResult->GetInt(0,0);
-		//const char* uri = pResult->GetString(0,1);
-		//g_int version = pResult->GetInt(0,2);
-		//double xmin = pResult->GetDouble(0,3);
-		//double ymin = pResult->GetDouble(0,4);
-		//double xmax = pResult->GetDouble(0,5);
-		//double ymax = pResult->GetDouble(0,6);
-		//g_int  srid = pResult->GetInt(0,7);
-
-		//Map* pMap = new MapImpl();
-		//pMap->SetID(mid);
-		//pMap->SetName(name);
-		//pMap->SetURI(uri);
-		//pMap->SetVersion(version);
-		//pMap->SetExtent(xmin, ymin,xmax,ymax);
-		//pMap->SetSRID(srid);
 
 		Map* pMap = CreateMap(pResult, 0);
-
 		pResult->Release();
 
 		return pMap;
@@ -323,6 +288,77 @@ namespace auge
 		return pMap;
 	}
 
+	//Map* CartoManagerImpl::LoadMap(const char* name)
+	//{
+	//	if(name==NULL || m_pConnection==NULL)
+	//	{
+	//		return NULL;
+	//	}
+
+	//	Map* pMap = GetMap(name);
+	//	if(pMap==NULL)
+	//	{
+	//		return NULL;
+	//	}
+	//	g_int mid = pMap->GetID();
+	//	if(mid<0)
+	//	{
+	//		return NULL;
+	//	}
+
+	//	char sql[AUGE_SQL_MAX] = {0};
+	//	//g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,web_url from g_layer where m_id=%d order by gid", mid);
+	//	g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,web_url from g_layer where m_id=%d order by gid", mid);
+
+	//	GResultSet* pResult = NULL;
+	//	pResult = m_pConnection->ExecuteQuery(sql);
+	//	if(pResult==NULL)
+	//	{
+	//		return NULL;
+	//	}
+
+	//	Layer* pLayer = NULL;
+	//	int gid, d_id,s_id,l_type,version,visible;
+	//	const char* l_name, *f_name, *web_url;
+	//	g_int count = pResult->GetCount();
+	//	for(g_int i=0; i<count; i++)
+	//	{
+	//		gid = pResult->GetInt(i, 0);
+	//		l_name = pResult->GetString(i, 1);
+	//		l_type = pResult->GetInt(i, 2);
+	//		f_name = pResult->GetString(i, 3);
+	//		d_id   = pResult->GetInt(i, 4);
+	//		s_id   = pResult->GetInt(i, 5);
+	//		version= pResult->GetInt(i, 6);
+	//		visible= pResult->GetInt(i, 7);
+	//		web_url= pResult->GetString(i,11);
+
+
+	//		pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, s_id, version, visible, web_url);
+	//		if(pLayer!=NULL)
+	//		{
+	//			pMap->AddLayer(pLayer);
+	//			//switch(pLayer->GetType())
+	//			//{
+	//			//case augeLayerFeature:
+	//			//	{
+	//			//		FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+	//			//		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+	//			//		Style* pStyle = GetStyle(s_id, pFeatureClass);
+	//			//		pFeatureLayer->SetStyle(pStyle);
+	//			//	}
+	//			//	break;
+	//			//case augeLayerRaster:
+	//			//	break;
+	//			//}
+	//		}
+	//	}
+	//	pResult->Release();
+	//	return pMap;
+
+	//	//return LoadMap(mid);
+	//}
+
 	Map* CartoManagerImpl::LoadMap(const char* name)
 	{
 		if(name==NULL || m_pConnection==NULL)
@@ -341,9 +377,25 @@ namespace auge
 			return NULL;
 		}
 
+		LoadLayers(pMap);
+
+		return pMap;
+
+		//return LoadMap(mid);
+	}
+
+	RESULTCODE CartoManagerImpl::LoadLayers(Map* pMap)
+	{
+		RESULTCODE rc = AG_FAILURE;
+		std::string map_layers;
+		rc = GetMapLayers(map_layers, pMap->GetID());
+		if(rc!=AG_SUCCESS)
+		{
+			return rc;
+		}
+
 		char sql[AUGE_SQL_MAX] = {0};
-		//g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,web_url from g_layer where m_id=%d order by gid", mid);
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,web_url from g_layer where m_id=%d order by gid", mid);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,web_url from g_layer where gid in (%s)", map_layers.c_str());
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -353,45 +405,65 @@ namespace auge
 		}
 
 		Layer* pLayer = NULL;
-		int gid, d_id,s_id,l_type,version,visible;
-		const char* l_name, *f_name, *web_url;
-		g_int count = pResult->GetCount();
-		for(g_int i=0; i<count; i++)
+		int gid, d_id,s_id,l_type, version, visible;
+		const char* l_name, *f_name,*web_url;
+
+		int layer_id = 0;
+		int count = pResult->GetCount();
+		char* str = strdup(map_layers.c_str());
+		char* ptr = strtok(str,",");
+		while(ptr!=NULL)
 		{
-			gid = pResult->GetInt(i, 0);
-			l_name = pResult->GetString(i, 1);
-			l_type = pResult->GetInt(i, 2);
-			f_name = pResult->GetString(i, 3);
-			d_id   = pResult->GetInt(i, 4);
-			s_id   = pResult->GetInt(i, 5);
-			version= pResult->GetInt(i, 6);
-			visible= pResult->GetInt(i, 7);
-			web_url= pResult->GetString(i,11);
-
-
-			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, s_id, version, visible, web_url);
-			if(pLayer!=NULL)
+			for(int i=0; i<count; i++)
 			{
-				pMap->AddLayer(pLayer);
-				//switch(pLayer->GetType())
-				//{
-				//case augeLayerFeature:
-				//	{
-				//		FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-				//		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-				//		Style* pStyle = GetStyle(s_id, pFeatureClass);
-				//		pFeatureLayer->SetStyle(pStyle);
-				//	}
-				//	break;
-				//case augeLayerRaster:
-				//	break;
-				//}
-			}
-		}
-		pResult->Release();
-		return pMap;
+				layer_id = atoi(ptr);
+				if(pResult->GetInt(i,0)==layer_id)
+				{
+					gid = pResult->GetInt(i, 0);
+					l_name = pResult->GetString(i, 1);
+					l_type = pResult->GetInt(i, 2);
+					f_name = pResult->GetString(i, 3);
+					d_id   = pResult->GetInt(i, 4);
+					s_id   = pResult->GetInt(i, 5);
+					version= pResult->GetInt(i, 6);
+					visible= pResult->GetInt(i, 7);
+					web_url= pResult->GetString(i,11);
 
-		//return LoadMap(mid);
+					pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, s_id, version,visible, web_url);
+					if(pLayer!=NULL)
+					{
+						pMap->AddLayer(pLayer);
+					}
+				}
+			}
+
+			ptr = strtok(NULL,",");
+		}
+
+		free(str);
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE CartoManagerImpl::GetMapLayers(std::string& map_layers, g_uint mapID)
+	{
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_sprintf(sql, "select m_layers from g_map where gid=%d", mapID);
+		
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return AG_FAILURE;
+		}
+		if(!pResult->GetCount())
+		{
+			pResult->Release();
+			return AG_FAILURE;
+		}
+		map_layers = pResult->GetString(0,0);
+		pResult->Release();
+		return AG_SUCCESS;
 	}
 
 	Map* CartoManagerImpl::CreateMap(const char* name)
@@ -1104,6 +1176,60 @@ namespace auge
 		return RemoveLayers(mapID);
 	}
 
+	RESULTCODE CartoManagerImpl::UpdateMapLayers(Map* pMap)
+	{
+		if(pMap==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		char layge_id[AUGE_NAME_MAX];
+		char layers[AUGE_MSG_MAX];
+		memset(layers,0,AUGE_MSG_MAX);
+
+		Layer* pLayer = NULL;
+		int count = pMap->GetLayerCount();
+		for(int i=count-1;i>=0;i--)
+		{
+			pLayer = pMap->GetLayer(i);
+			if(pLayer!=NULL)
+			{
+				sprintf(layge_id,"%d",pLayer->GetID());				
+				strcat(layers,layge_id);
+				if(i)
+				{
+					strcat(layers,",");
+				}
+			}
+		}
+
+		char sql[AUGE_SQL_MAX];
+		sprintf(sql, "update g_map set m_layers='%s' where gid=%d", layers,pMap->GetID());
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	RESULTCODE CartoManagerImpl::UpdateMapLayers(g_uint mapID, const char* layers)
+	{
+		if(mapID<0||layers==NULL)
+		{
+			return AG_FAILURE;
+		}
+		char sql[AUGE_SQL_MAX];
+		sprintf(sql, "update g_map set m_layers='%s' where gid=%d", layers,mapID);
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	RESULTCODE CartoManagerImpl::UpdateMapLayers(const char* mapName, const char* layers)
+	{
+		if(mapName==NULL||layers==NULL)
+		{
+			return AG_FAILURE;
+		}
+		char sql[AUGE_SQL_MAX];
+		sprintf(sql, "update g_map set m_layers='%s' where m_name=%d", layers,mapName);
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
 	RESULTCODE CartoManagerImpl::RemoveLayers(g_uint map_id)
 	{
 		char sql[AUGE_SQL_MAX] = {0};
@@ -1762,6 +1888,7 @@ namespace auge
 							"  gid serial NOT NULL," \
 							"  user_id integer NOT NULL DEFAULT 1," \
 							"  m_name character varying(32) NOT NULL," \
+							"  m_layers character varying(32) NOT NULL," \
 							"  m_uri  character varying(128) NOT NULL," \
 							"  srid integer DEFAULT 4326," \
 							"  version integer DEFAULT 1," \
