@@ -192,7 +192,7 @@ namespace auge
 			return NULL;
 		}
 
-		const char* sql = "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail from g_map";
+		const char* sql = "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy from g_map";
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -203,7 +203,7 @@ namespace auge
 
 		EnumMapImpl* pEnumMap = new EnumMapImpl();
 		int count = pResult->GetCount();
-		for(int i=0; i<count; i++)
+		for(int i=0; i<count; i++) 
 		{
 			//int mid = pResult->GetInt(i,0);
 			//const char* name = pResult->GetString(i,1);
