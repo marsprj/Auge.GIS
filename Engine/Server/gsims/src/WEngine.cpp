@@ -15,6 +15,7 @@
 #include "UnRegisterLayerHandler.h"
 
 #include "CreateMapHandler.h"
+#include "SaveMapHandler.h"
 #include "DescribeMapHandler.h"
 #include "RemoveMapHandler.h"
 #include "SetStyleHandler.h"
@@ -43,7 +44,7 @@ namespace auge
 	}
 
 	WEngine::WEngine()
-	{
+	{ 
 		m_handler = NULL;
 
 		m_handlers.push_back(new CapabilitiesHandler());
@@ -61,6 +62,7 @@ namespace auge
 		m_handlers.push_back(new UnRegisterLayerHandler());
 
 		m_handlers.push_back(new CreateMapHandler());
+		m_handlers.push_back(new SaveMapHandler());
 		m_handlers.push_back(new DescribeMapHandler());
 		m_handlers.push_back(new RemoveMapHandler());
 		m_handlers.push_back(new SetStyleHandler());
@@ -283,9 +285,22 @@ namespace auge
 
 	WebRequest*	WEngine::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
-		GError* pError = augeGetErrorInstance();
-		pError->SetError("WMS do not support xml request");
-		return NULL;
+		XElement	*pxRoot = pxDoc->GetRootNode();
+		const char* request = pxRoot->GetName();
+
+		WebHandler* handler = GetHandler(request);
+		if(handler == NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "%s doesn't support request [%s]", GetType(), request);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
+			return NULL;
+		}
+		return handler->ParseRequest(pxDoc, mapName);
 	}
 
 	WebResponse* WEngine::Execute(WebRequest* pWebRequest)

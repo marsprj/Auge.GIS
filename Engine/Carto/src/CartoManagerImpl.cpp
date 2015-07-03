@@ -806,6 +806,28 @@ namespace auge
 		return rc;
 	}
 
+	RESULTCODE CartoManagerImpl::SaveMap(g_uint user, const char* name, g_uint srid, GEnvelope& extent, GEnvelope& viewer, const char* layer_ids)
+	{
+		if(name==NULL||layer_ids==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+
+		g_snprintf(sql, AUGE_SQL_MAX, "update g_map set   minx=%f,  miny=%f,  maxx=%f,  maxy=%f," \
+													   "v_minx=%f,v_miny=%f,v_maxx=%f,v_maxy=%f," \
+													   "m_layers='%s', srid=%d " \
+													   "where m_name='%s'",\
+													   extent.m_xmin, extent.m_ymin, extent.m_xmax, extent.m_ymax,
+													   viewer.m_xmin, viewer.m_ymin, viewer.m_xmax, viewer.m_ymax,
+													   layer_ids,
+													   srid,
+													   name);
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
 	g_int CartoManagerImpl::GetMapID(g_uint user, const char* name)
 	{
 		if(name==NULL)

@@ -19,6 +19,8 @@ libgsims_la_SOURCES=\
 		    CapabilitiesResponse.cpp \
 		    CreateMapHandler.cpp \
 		    CreateMapRequest.cpp \
+		    SaveMapHandler.cpp \
+		    SaveMapRequest.cpp \
 		    CreateServiceHandler.cpp \
 		    CreateServiceRequest.cpp \
 		    CreateServiceResponse.cpp \

@@ -39,6 +39,7 @@ namespace auge
 		virtual Map*			CreateMap(g_uint user, const char* name);
 		virtual Map*			CreateMap(g_uint user, const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax);
 		virtual RESULTCODE		RemoveMap(g_uint user, const char* name);
+		virtual RESULTCODE		SaveMap(g_uint user, const char* name, g_uint srid, GEnvelope& extent, GEnvelope& viewer, const char* layer_ids);
 		
 		virtual RESULTCODE		UpdateMapLayers(Map* pMap);
 		virtual RESULTCODE		UpdateMapLayers(g_uint mapID, const char* layers);

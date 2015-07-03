@@ -94,6 +94,9 @@ namespace auge
 		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
 		pxRoot->SetAttribute("version", "1.0.0", NULL);
 
+		g_sprintf(str,"%d",pMap->GetID());
+		XElement* pxID = pxRoot->AddChild("ID", NULL);
+		pxID->SetChildText(str);
 		XElement* pxName = pxRoot->AddChild("Name", NULL);
 		pxName->SetChildText(pMap->GetName());
 		// SRID
@@ -132,13 +135,15 @@ namespace auge
 		Layer* pLayer = NULL;
 		g_uint lc = pMap->GetLayerCount();
 		for(g_uint i=0; i<lc; i++)
-		{
+		{ 
 			pLayer = pMap->GetLayer(i);
 			if(pLayer!=NULL)
 			{
 				const char* lname = pLayer->GetName();
-				XElement* pxLayer_2 = pxLayer->AddChild("Layer", NULL);
+				XElement* pxLayer_2 = pxLayer->AddChild("Layer", NULL);				
 				pxLayer_2->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
+				g_sprintf(str,"%d",pLayer->GetID());
+				pxLayer_2->SetAttribute("id", str,NULL);
 				pxNode = pxLayer_2->AddChild("Name",NULL);
 				pxNode->SetChildText(lname);
 				pxNode = pxLayer_2->AddChild("Title",NULL);
@@ -146,8 +151,15 @@ namespace auge
 				pxNode = pxLayer_2->AddChild("Abstract",NULL);
 				g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
 				pxNode = pxLayer_2->AddChild("CRS",NULL);
-
-
+				
+				extent = pLayer->GetExtent();
+				if(!extent.IsValid())
+				{
+					extent.Set(-180.f,-90.0f,180.0f,90.0f);
+				}
+				AddLayerGeographicBoundingNode(pxLayer_2, extent);
+				AddLayerBoundingNode(pxLayer_2, extent, pMap->GetSRID());
+				 
 				switch(pLayer->GetType())
 				{
 				case augeLayerFeature:
@@ -170,14 +182,6 @@ namespace auge
 					}
 					break;
 				}
-
-				extent = pLayer->GetExtent();
-				if(!extent.IsValid())
-				{
-					extent.Set(-180.f,-90.0f,180.0f,90.0f);
-				}
-				AddLayerGeographicBoundingNode(pxLayer_2, extent);
-				AddLayerBoundingNode(pxLayer_2, extent, pMap->GetSRID());
 			}
 		}
 	}
@@ -189,10 +193,14 @@ namespace auge
 	//{
 	//	return NULL;
 	//}
-
+	 
 	void DescribeMapResponse::AddStyleNode(XElement* pxParent, Style* pStyle)
 	{
+		char str[AUGE_NAME_MAX];
 		XElement* pxStyle = pxParent->AddChild("Style", NULL);
+		g_sprintf(str, "%d", pStyle->GetID());
+		pxStyle->SetAttribute("id",str,NULL);
+
 		XElement* pxNode = pxStyle->AddChild("Name",NULL);
 		pxNode->AddChildText(pStyle->GetName());
 		pxNode = pxStyle->AddChild("Title",NULL);

@@ -119,6 +119,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RemoveServiceResponse.cpp" />
     <ClCompile Include="..\src\RemoveStyleHandler.cpp" />
     <ClCompile Include="..\src\RemoveStyleRequest.cpp" />
+    <ClCompile Include="..\src\SaveMapHandler.cpp" />
+    <ClCompile Include="..\src\SaveMapRequest.cpp" />
     <ClCompile Include="..\src\SetStyleHandler.cpp" />
     <ClCompile Include="..\src\SetStyleRequest.cpp" />
     <ClCompile Include="..\src\UnRegisterLayerHandler.cpp" />
@@ -166,6 +168,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RemoveServiceResponse.h" />
     <ClInclude Include="..\include\RemoveStyleHandler.h" />
     <ClInclude Include="..\include\RemoveStyleRequest.h" />
+    <ClInclude Include="..\include\SaveMapHandler.h" />
+    <ClInclude Include="..\include\SaveMapRequest.h" />
     <ClInclude Include="..\include\SetStyleHandler.h" />
     <ClInclude Include="..\include\SetStyleRequest.h" />
     <ClInclude Include="..\include\UnRegisterLayerHandler.h" />
