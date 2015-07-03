@@ -406,7 +406,7 @@ namespace auge
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
-			return NULL;
+			return AG_FAILURE;
 		}
 
 		Layer* pLayer = NULL;

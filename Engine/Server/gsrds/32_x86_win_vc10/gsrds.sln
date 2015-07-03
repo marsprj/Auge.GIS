@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GRaster", "..\..\..\Raster\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GPostgres", "..\..\..\Data\GPostgres\32_x86_win_vc10\GPostgres.vcxproj", "{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GRasterDB", "..\..\..\Data\GRasterDB\32_x86_win_vc10\GRasterDB.vcxproj", "{F48BFECB-342B-47B0-A85C-250FA6FF74C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -46,6 +48,10 @@ Global
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Debug|Win32.Build.0 = Debug|Win32
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Release|Win32.ActiveCfg = Release|Win32
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Release|Win32.Build.0 = Release|Win32
+		{F48BFECB-342B-47B0-A85C-250FA6FF74C9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F48BFECB-342B-47B0-A85C-250FA6FF74C9}.Debug|Win32.Build.0 = Debug|Win32
+		{F48BFECB-342B-47B0-A85C-250FA6FF74C9}.Release|Win32.ActiveCfg = Release|Win32
+		{F48BFECB-342B-47B0-A85C-250FA6FF74C9}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

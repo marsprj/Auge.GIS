@@ -94,8 +94,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetRasterRequest.cpp" />
     <ClCompile Include="..\src\GetRasterResponse.cpp" />
     <ClCompile Include="..\src\GetValueHandler.cpp" />
+    <ClCompile Include="..\src\GetValueRequest.cpp" />
     <ClCompile Include="..\src\GetValueResponse.cpp" />
-    <ClCompile Include="..\src\GetVauerRequest.cpp" />
     <ClCompile Include="..\src\ListHandler.cpp" />
     <ClCompile Include="..\src\ListRequest.cpp" />
     <ClCompile Include="..\src\ListResponse.cpp" />

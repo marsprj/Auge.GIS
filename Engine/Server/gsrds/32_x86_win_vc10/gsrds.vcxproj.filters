@@ -87,7 +87,7 @@
     <ClCompile Include="..\src\GetValueResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GetVauerRequest.cpp">
+    <ClCompile Include="..\src\GetValueRequest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
