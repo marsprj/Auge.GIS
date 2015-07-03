@@ -4,10 +4,10 @@
 namespace auge
 {
 	GEnvelope::GEnvelope():
-m_xmin(DOUBLE_MAX), 
-	m_ymin(DOUBLE_MAX), 
-	m_xmax(DOUBLE_MIN), 
-	m_ymax(DOUBLE_MIN)
+	m_xmin(AUGE_DOUBLE_MAX), 
+	m_ymin(AUGE_DOUBLE_MAX), 
+	m_xmax(AUGE_DOUBLE_MIN), 
+	m_ymax(AUGE_DOUBLE_MIN)
 {
 
 }
