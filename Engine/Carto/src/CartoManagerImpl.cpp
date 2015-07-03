@@ -111,6 +111,10 @@ namespace auge
 		double ymax = pResult->GetDouble(row,7);
 		g_int  srid = pResult->GetInt(row,8);
 		const char* thumbnail = pResult->GetString(row,9);
+		double v_xmin = pResult->GetDouble(row,10);
+		double v_ymin = pResult->GetDouble(row,11);
+		double v_xmax = pResult->GetDouble(row,12);
+		double v_ymax = pResult->GetDouble(row,13);
 
 		MapImpl* pMap = new MapImpl();
 		pMap->SetID(mid);
@@ -118,6 +122,7 @@ namespace auge
 		pMap->SetName(name);
 		pMap->SetVersion(version);
 		pMap->SetExtent(xmin, ymin,xmax,ymax);
+		pMap->SetViewer(v_xmin, v_ymin,v_xmax,v_ymax);
 		pMap->SetSRID(srid);
 		pMap->SetThumbnail(thumbnail);
 		return pMap;
@@ -131,7 +136,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail from g_map where gid=%d", mid);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy from g_map where gid=%d", mid);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -160,7 +165,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail from g_map where m_name='%s'", name);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy from g_map where m_name='%s'", name);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -508,7 +513,7 @@ namespace auge
 		auge_generate_uuid(uuid, AUGE_PATH_MAX);
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_map (m_name, minx, miny, maxx, maxy,srid,m_uuid) values('%s',%f,%f,%f,%f,%d,'%s') returning gid", name, xmin, ymin, xmax, ymax,srid,uuid);
+		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_map (m_name, minx, miny, maxx, maxy,v_minx,v_miny,v_maxx,v_maxy,srid,m_uuid) values('%s',%f,%f,%f,%f,%f,%f,%f,%f,%d,'%s') returning gid", name, xmin, ymin, xmax, ymax,xmin, ymin, xmax, ymax,srid,uuid);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);

@@ -39,6 +39,7 @@ namespace auge
 		void	AddLayerGeomTypeNode(XElement* pxLayer, FeatureLayer* pFeatureLayer);
 		void	AddLayerGeographicBoundingNode(XElement* pxLayer, GEnvelope& extent);
 		void	AddLayerBoundingNode(XElement* pxParent, GEnvelope& extent, int srid);
+		void	AddViewerNode(XElement* pxParent, GEnvelope& extent, int srid);
 		void	AddStyleNode(XElement* pxParent, Style* pStyle);
 
 		void	AddWebURLNode(XElement* pxLayer, const char* url);

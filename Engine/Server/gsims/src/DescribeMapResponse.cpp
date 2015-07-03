@@ -104,6 +104,7 @@ namespace auge
 		// Extent
 		//AddBoundingBoxNode(pxMap, pMap->GetExtent());		
 		AddLayerBoundingNode(pxRoot, pMap->GetExtent(), pMap->GetSRID());
+		AddViewerNode(pxRoot, pMap->GetExtent(), pMap->GetSRID());
 
 		// WMS_Capabilities-->Capability
 		XElement* pxCapability = pxRoot->AddChild("Capability", NULL);
@@ -211,6 +212,25 @@ namespace auge
 		char str[AUGE_NAME_MAX];
 
 		pxBounding = pxParent->AddChild("BoundingBox", NULL);
+		g_sprintf(str, "CRS:%d", srid);
+		pxBounding->SetAttribute("CRS", str,NULL);
+		g_sprintf(str, "%.6f", extent.m_xmin);
+		pxBounding->SetAttribute("minx", str,NULL);
+		g_sprintf(str, "%.6f", extent.m_xmax);
+		pxBounding->SetAttribute("maxx", str,NULL);
+		g_sprintf(str, "%.6f", extent.m_ymin);
+		pxBounding->SetAttribute("miny", str,NULL);		
+		g_sprintf(str, "%.6f", extent.m_ymax);
+		pxBounding->SetAttribute("maxy", str,NULL);
+	}
+
+	void DescribeMapResponse::AddViewerNode(XElement* pxParent, GEnvelope& extent, int srid)
+	{
+		XElement* pxNode = NULL;
+		XElement* pxBounding = NULL;
+		char str[AUGE_NAME_MAX];
+
+		pxBounding = pxParent->AddChild("Viewer", NULL);
 		g_sprintf(str, "CRS:%d", srid);
 		pxBounding->SetAttribute("CRS", str,NULL);
 		g_sprintf(str, "%.6f", extent.m_xmin);

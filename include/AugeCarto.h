@@ -59,6 +59,8 @@ namespace auge
 
 		virtual GEnvelope&		GetExtent() = 0;
 		virtual void			SetExtent(double xmin, double ymin, double xmax, double ymax) = 0;
+		virtual GEnvelope&		GetViewer() = 0;
+		virtual void			SetViewer(double xmin, double ymin, double xmax, double ymax) = 0;
 		virtual g_int			GetSRID() = 0;
 		virtual void			SetSRID(g_int srid) = 0;
 

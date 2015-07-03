@@ -25,6 +25,9 @@ namespace auge
 		
 		virtual GEnvelope&	GetExtent();
 		virtual void		SetExtent(double xmin, double ymin, double xmax, double ymax);
+		virtual GEnvelope&	GetViewer();
+		virtual void		SetViewer(double xmin, double ymin, double xmax, double ymax);
+
 		virtual g_int		GetSRID();
 		virtual void		SetSRID(g_int srid);
 
@@ -47,6 +50,7 @@ namespace auge
 		std::string m_uuid;
 		std::string m_thumbnail;
 		GEnvelope	m_exent;
+		GEnvelope	m_viewer;
 		g_int		m_srid;
 		//std::map<std::string, Layer*> m_layers;
 		std::vector<Layer*> m_layers;

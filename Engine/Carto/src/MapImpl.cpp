@@ -184,6 +184,20 @@ namespace auge
 	{
 		m_exent.Set(xmin,ymin,xmax,ymax);
 	}
+
+	GEnvelope& MapImpl::GetViewer()
+	{
+		if(!m_viewer.IsValid())
+		{
+			m_viewer = GetExtent();
+		}
+		return m_viewer;
+	}
+
+	void MapImpl::SetViewer(double xmin, double ymin, double xmax, double ymax)
+	{
+		m_viewer.Set(xmin,ymin,xmax,ymax);
+	}
 	
 	void MapImpl::SetSRID(g_int srid)
 	{
