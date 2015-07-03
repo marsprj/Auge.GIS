@@ -123,6 +123,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\SetStyleRequest.cpp" />
     <ClCompile Include="..\src\UnRegisterLayerHandler.cpp" />
     <ClCompile Include="..\src\UnRegisterLayerRequest.cpp" />
+    <ClCompile Include="..\src\UpdateMapLayerOrderHandler.cpp" />
+    <ClCompile Include="..\src\UpdateMapLayerOrderRequest.cpp" />
     <ClCompile Include="..\src\UpdateStyleHandler.cpp" />
     <ClCompile Include="..\src\UpdateStyleRequest.cpp" />
     <ClCompile Include="..\src\WEngine.cpp" />
@@ -168,6 +170,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\SetStyleRequest.h" />
     <ClInclude Include="..\include\UnRegisterLayerHandler.h" />
     <ClInclude Include="..\include\UnRegisterLayerRequest.h" />
+    <ClInclude Include="..\include\UpdateMapLayerOrderHandler.h" />
+    <ClInclude Include="..\include\UpdateMapLayerOrderRequest.h" />
     <ClInclude Include="..\include\UpdateStyleHandler.h" />
     <ClInclude Include="..\include\UpdateStyleRequest.h" />
     <ClInclude Include="..\include\WEngine.h" />
