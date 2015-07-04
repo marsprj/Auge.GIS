@@ -6,6 +6,7 @@
 #include "Kmean.h"
 
 #include "proj_api.h"
+#include "SrsBase.h"
 
 namespace auge
 {
@@ -48,6 +49,7 @@ namespace auge
 		std::string m_out_class_name;
 
 		g_uint		m_srid;
+		SrsBase		m_srsbase;
 	};
 }
 

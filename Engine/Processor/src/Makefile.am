@@ -22,4 +22,6 @@ libgprocessor_la_SOURCES=\
 		CsvImportProcessorImpl.cpp \
 		FeatureProjectProcessorImpl.cpp \
 		KmeanProcessorImpl.cpp \
-		Kmean.cpp
+		Kmean.cpp \
+		SrsBase.cpp \
+		sqlite3.c

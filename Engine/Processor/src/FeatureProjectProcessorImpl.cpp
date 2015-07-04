@@ -199,8 +199,20 @@ namespace auge
 		g_uint i_srid = pinFeatureClass->GetSRID();
 		g_uint o_srid = poutFeatureClass->GetSRID();
 
-		const char* i_pj_str = "+proj=longlat +datum=WGS84 +no_defs";
-		const char* o_pj_str = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
+		m_srsbase.Open();
+
+		char i_pj_str[AUGE_MSG_MAX];
+		memset(i_pj_str, 0, AUGE_MSG_MAX);
+		m_srsbase.GetProj4Text(i_srid, i_pj_str, AUGE_MSG_MAX);
+
+		char o_pj_str[AUGE_MSG_MAX];
+		memset(o_pj_str, 0, AUGE_MSG_MAX);
+		m_srsbase.GetProj4Text(o_srid, o_pj_str, AUGE_MSG_MAX);
+
+		//const char* i_pj_str = "+proj=longlat +datum=WGS84 +no_defs";
+		//const char* o_pj_str = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
+
+		m_srsbase.Close();
 
 		projPJ i_pj = pj_init_plus(i_pj_str);
 		projPJ o_pj = pj_init_plus(o_pj_str);
