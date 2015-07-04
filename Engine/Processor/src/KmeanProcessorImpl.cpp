@@ -122,32 +122,32 @@ namespace auge
 			return AG_FAILURE;
 		}
 		
-		FeatureClass		*pFeatureClassIn = NULL;
-		FeatureClass		*pFeatureClassOut= NULL;
-		FeatureWorksapce	*pWorspaceIn = NULL;
-		FeatureWorksapce	*pWorspaceOut= NULL;
+		FeatureClass		*pinFeatureClass = NULL;
+		FeatureClass		*poutFeatureClass= NULL;
+		FeatureWorksapce	*pinWorkspace = NULL;
+		FeatureWorksapce	*poutWorkspace= NULL;
 		ConnectionManager	*pConnManager = augeGetConnectionManagerInstance();
 		
-		pWorspaceIn = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(sourceName_in));
-		if(pWorspaceIn==NULL)
+		pinWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(sourceName_in));
+		if(pinWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 
-		pWorspaceOut = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(sourceName_out));
-		if(pWorspaceOut==NULL)
+		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(sourceName_out));
+		if(poutWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 
-		pFeatureClassIn = pWorspaceIn->OpenFeatureClass(className_in);
-		if(pFeatureClassIn==NULL)
+		pinFeatureClass = pinWorkspace->OpenFeatureClass(className_in);
+		if(pinFeatureClass==NULL)
 		{
 			return AG_FAILURE;
 		}
-		g_uint srid = pFeatureClassIn->GetSRID();
+		g_uint srid = pinFeatureClass->GetSRID();
 		
-		GField* pField = pFeatureClassIn->GetFields()->GetGeometryField();
+		GField* pField = pinFeatureClass->GetFields()->GetGeometryField();
 		if(pField==NULL)
 		{
 			return AG_FAILURE;
@@ -160,21 +160,22 @@ namespace auge
 		
 
 		// input points
-		pFeatureClassOut = pWorspaceOut->OpenFeatureClass(className_out);
-		if(pFeatureClassOut!=NULL)
+		poutFeatureClass = poutWorkspace->OpenFeatureClass(className_out);
+		if(poutFeatureClass!=NULL)
 		{
-			pFeatureClassOut->Release();
+			pinFeatureClass->Release();
 			return AG_FAILURE;
 		}
 		
 		Geometry *pGeometry = NULL;
 		Feature	 *pFeature = NULL;
 		FeatureCursor* pCursor = NULL;		
-		g_uint feature_count = pFeatureClassIn->GetCount();
+		g_uint feature_count = pinFeatureClass->GetCount();
 
-		pCursor = pFeatureClassIn->Query();
+		pCursor = pinFeatureClass->Query();
 		if(pCursor==NULL)
 		{
+			pinFeatureClass->Release();
 			return AG_FAILURE;
 		}
 
@@ -196,7 +197,7 @@ namespace auge
 		}
 
 		pCursor->Release();
-		pFeatureClassIn->Release();
+		pinFeatureClass->Release();
 		
 		// processing cluster 
 		if(!m_kmean.Execute())
@@ -204,7 +205,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 		
-		RESULTCODE rc = SaveCentroidResult(&m_kmean, className_out, pWorspaceOut, srid);
+		RESULTCODE rc = SaveCentroidResult(&m_kmean, className_out, poutWorkspace, srid);
 		if(rc!=AG_SUCCESS)
 		{
 			return rc;
@@ -213,7 +214,7 @@ namespace auge
 		char cluster_name[AUGE_NAME_MAX];
 		memset(cluster_name, 0, AUGE_NAME_MAX);
 		g_sprintf(cluster_name, "%s_cluster", className_out);
-		rc = SaveClusterResult(&m_kmean, cluster_name, pWorspaceOut, srid);
+		rc = SaveClusterResult(&m_kmean, cluster_name, poutWorkspace, srid);
 		if(rc!=AG_SUCCESS)
 		{
 			return rc;

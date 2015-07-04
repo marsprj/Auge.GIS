@@ -81,6 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClusterTest.cpp" />
+    <ClCompile Include="FeatureTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RasterTileTest.cpp" />
     <ClCompile Include="TileTest.cpp" />

@@ -5,7 +5,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(ClusterTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(ClusterTest);
 
 void ClusterTest::setUp() 
 {
