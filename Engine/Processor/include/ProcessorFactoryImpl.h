@@ -17,6 +17,8 @@ namespace auge
 		virtual FeatureImportProcessor*		CreateFeatureImportProcessor();
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor();
+
+		virtual KMeanProcessor*				CreateKMeanProcessor();
 	};
 }
 

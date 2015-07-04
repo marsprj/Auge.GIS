@@ -113,6 +113,32 @@ namespace auge
 		virtual void		SetTypeName(const char* typeName) = 0;
 	};
 
+	//////////////////////////////////////////////////////////////////////////
+	// Cluster Processor
+	//////////////////////////////////////////////////////////////////////////
+	class KMeanProcessor : public GProcessor
+	{
+	protected:
+		KMeanProcessor(){}
+		virtual ~KMeanProcessor(){}
+	public:
+
+		virtual void		SetK(g_uint k) = 0;
+
+		virtual	void		SetInputDataSource(const char* sourceName) = 0;
+		virtual	void		SetInputFeatureClass(const char* className) = 0;
+
+		virtual	void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual	void		SetOutputFeatureClass(const char* className) = 0;
+
+		virtual RESULTCODE	Execute() = 0;
+		virtual void		Release() = 0;
+	};
+
+	//////////////////////////////////////////////////////////////////////////
+	// Cluster Processor
+	//////////////////////////////////////////////////////////////////////////
+
 	class GProcessorFactory
 	{
 	protected:
@@ -125,7 +151,12 @@ namespace auge
 		virtual FeatureImportProcessor*		CreateFeatureImportProcessor() = 0;
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor() = 0;
+
+		// Cluster 
+		virtual KMeanProcessor*				CreateKMeanProcessor() = 0;
 	};
+
+	
 
 	extern "C"
 	{

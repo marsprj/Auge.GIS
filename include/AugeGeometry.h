@@ -67,10 +67,10 @@ namespace auge
 	//	virtual double Z() const;// : Double
 	//	virtual double M() const;// : Double
 
-	//public:
-	//	//--------------------------------------------------------------------------
-	//	virtual void   SetX(double x);// : Double
-	//	virtual void   SetY(double y);// : Double
+	public:
+		//--------------------------------------------------------------------------
+		virtual void   SetX(double x) = 0;// : Double
+		virtual void   SetY(double y) = 0;// : Double
 	//	virtual void   SetZ(double z);// : Double
 	//	virtual void   SetM(double m);// : Double
 	};
@@ -250,6 +250,7 @@ namespace auge
 		GeometryFactory(){}
 		virtual ~GeometryFactory(){}
 	public:
+		virtual	GPoint*				CeatePoint(double x, double y) = 0;
 		virtual	Geometry*			CreateGeometryFromWKB(g_uchar* wkb, bool attach=false) = 0;
 		virtual Geometry*			CreateGeometryFromWKT(const char* wkt) = 0;
 		virtual Geometry*			CreateGeometryFromGML(const char* gml) = 0;

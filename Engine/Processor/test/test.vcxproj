@@ -80,12 +80,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FeatureTest.cpp" />
+    <ClCompile Include="ClusterTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RasterTileTest.cpp" />
     <ClCompile Include="TileTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClusterTest.h" />
     <ClInclude Include="FeatureTest.h" />
     <ClInclude Include="RasterTileTest.h" />
     <ClInclude Include="TileTest.h" />

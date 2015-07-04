@@ -405,6 +405,9 @@ namespace auge
 		WKBGeometryZM geometries[1];
 	};
 
+	// typedef 
+	typedef struct Point	auge_point_t;
+
 	// struct WKBRaster{
 	// 	unsigned char byteOrder;
 	// 	int       wkbType;// = 21;

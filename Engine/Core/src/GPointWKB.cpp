@@ -21,7 +21,6 @@ namespace auge
 				m_pWKBPoint = NULL;
 			}
 		}
-		
 	}
 
 	augeGeometryType GPointWKB::GeometryType()
@@ -59,8 +58,17 @@ namespace auge
 
 	bool GPointWKB::Create(g_uchar *wkb, bool attach)
 	{
-		m_pWKBPoint = (WKBPoint*)wkb;
+		if(attach)
+		{
+			m_pWKBPoint = (WKBPoint*)wkb;
+		}
+		else
+		{
+			m_pWKBPoint = (WKBPoint*)auge_malloc(sizeof(WKBPoint), 1);
+			memcpy(m_pWKBPoint, wkb, sizeof(WKBPoint));
+		}
 		m_attach = attach;
+		
 		return true;
 	}
 
@@ -73,5 +81,17 @@ namespace auge
 	{
 		x = m_pWKBPoint->point.x;
 		y = m_pWKBPoint->point.y; 
+	}
+
+	void GPointWKB::SetX(double x)
+	{
+		m_pWKBPoint->point.x = x;
+		m_wkt.clear();
+	}
+
+	void GPointWKB::SetY(double y)
+	{
+		m_pWKBPoint->point.y = y;
+		m_wkt.clear();
 	}
 }

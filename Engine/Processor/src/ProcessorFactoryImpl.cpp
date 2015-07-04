@@ -4,6 +4,8 @@
 #include "FeatureImportProcessorImpl.h"
 #include "CsvImportProcessorImpl.h"
 
+#include "KmeanProcessorImpl.h"
+
 #ifndef WIN32
 #include "ArchiveProcessorImpl.h"
 #endif
@@ -54,5 +56,10 @@ namespace auge
 	CsvImportProcessor*	GProcessorFactoryImpl::CreateCsvImportProcessor()
 	{
 		return (new CsvImportProcessorImpl());
+	}
+
+	KMeanProcessor*	GProcessorFactoryImpl::CreateKMeanProcessor()
+	{
+		return (new KMeanProcessorImpl());
 	}
 }

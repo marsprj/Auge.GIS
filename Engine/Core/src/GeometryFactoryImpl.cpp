@@ -13,6 +13,8 @@
 #include "GMLWriterImpl.h"
 #include "GMLReaderImpl.h"
 
+#include "GPointWKB.h"
+
 #include "AugeCore.h"
 
 namespace auge
@@ -31,6 +33,19 @@ namespace auge
 	GeometryFactoryImpl::~GeometryFactoryImpl()
 	{
 
+	}
+
+	GPoint* GeometryFactoryImpl::CeatePoint(double x, double y)
+	{
+		WKBPoint pt;
+		pt.point.x = x;
+		pt.point.y = y;
+		pt.wkbType = wkbPoint;
+		pt.byteOrder= wkbNDR;
+
+		GPointWKB* pPoint = new GPointWKB();
+		pPoint->Create((g_uchar*)(&(pt)), false);
+		return pPoint;
 	}
 
 	Geometry* GeometryFactoryImpl::CreateGeometryFromWKB(g_uchar* wkb, bool attach/*=false*/)
