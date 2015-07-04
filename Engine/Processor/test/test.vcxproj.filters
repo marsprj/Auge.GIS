@@ -21,10 +21,13 @@
     <ClCompile Include="TileTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FeatureTest.cpp">
+    <ClCompile Include="RasterTileTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RasterTileTest.cpp">
+    <ClCompile Include="ClusterTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RasterTileTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClusterTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDEngine", "..\..\Data\GDEn
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCsvFile", "..\..\Data\GCsvFile\32_x86_win_vc10\GCsvFile.vcxproj", "{972649C7-4098-4683-8335-93AABEB2C453}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCore", "..\..\Core\32_x86_win_vc10\GCore.vcxproj", "{175ED294-86C6-45A1-9E7A-770AE765EB23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -46,6 +48,10 @@ Global
 		{972649C7-4098-4683-8335-93AABEB2C453}.Debug|Win32.Build.0 = Debug|Win32
 		{972649C7-4098-4683-8335-93AABEB2C453}.Release|Win32.ActiveCfg = Release|Win32
 		{972649C7-4098-4683-8335-93AABEB2C453}.Release|Win32.Build.0 = Release|Win32
+		{175ED294-86C6-45A1-9E7A-770AE765EB23}.Debug|Win32.ActiveCfg = Debug|Win32
+		{175ED294-86C6-45A1-9E7A-770AE765EB23}.Debug|Win32.Build.0 = Debug|Win32
+		{175ED294-86C6-45A1-9E7A-770AE765EB23}.Release|Win32.ActiveCfg = Release|Win32
+		{175ED294-86C6-45A1-9E7A-770AE765EB23}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

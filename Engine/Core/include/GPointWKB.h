@@ -20,6 +20,9 @@ namespace auge
 		virtual void				Centroid(double &x, double &y);
 		virtual void				Release();
 
+		virtual void				SetX(double x);
+		virtual void				SetY(double y);
+
 	public:
 		bool	Create(g_uchar *wkb, bool attach);
 

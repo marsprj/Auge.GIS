@@ -19,4 +19,7 @@ libgprocessor_la_SOURCES=\
 		ArchiveProcessorImpl.cpp \
 		FeatureImportProcessorImpl.cpp \
 		ProcessorFactoryImpl.cpp \
-		CsvImportProcessorImpl.cpp
+		CsvImportProcessorImpl.cpp \
+		FeatureProjectProcessorImpl.cpp \
+		KmeanProcessorImpl.cpp \
+		Kmean.cpp
