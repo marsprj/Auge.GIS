@@ -22,7 +22,7 @@ void FeatureTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=UTF-8");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;

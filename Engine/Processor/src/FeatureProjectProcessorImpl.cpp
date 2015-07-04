@@ -156,7 +156,7 @@ namespace auge
 		}
 
 		RESULTCODE rc = AG_FAILURE;
-		rc = Project(poutFeatureClass, poutFeatureClass);
+		rc = Project(pinFeatureClass, poutFeatureClass);
 		
 		
 
@@ -198,21 +198,42 @@ namespace auge
 	{
 		g_uint i_srid = pinFeatureClass->GetSRID();
 		g_uint o_srid = poutFeatureClass->GetSRID();
+
+		const char* i_pj_str = "+proj=longlat +datum=WGS84 +no_defs";
+		const char* o_pj_str = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
+
+		projPJ i_pj = pj_init_plus(i_pj_str);
+		projPJ o_pj = pj_init_plus(o_pj_str);
+
+		if(i_pj==NULL)
+		{
+			return AG_FAILURE;
+		}
+		if(o_pj==NULL)
+		{
+			return AG_FAILURE;
+		}
 		
+		g_uchar	 *wkb = NULL;
 		Geometry *pGeometry = NULL;
 		Feature	 *pFeature = NULL;
 		FeatureCursor* pCursor = pinFeatureClass->Query();
+
+		FeatureInsertCommand* cmd = poutFeatureClass->CreateInsertCommand();
 		
 		while((pFeature=pCursor->NextFeature())!=NULL)
 		{
 			pGeometry = pFeature->GetGeometry();
 			if( pGeometry != NULL )
 			{
+				wkb = pGeometry->AsBinary();
+
 				switch(pGeometry->GeometryType())
 				{
-				case augeGTPoint:					
+				case augeGTPoint:
+					Project((WKBPoint*)wkb, i_pj, o_pj);
 					break;
-				case augeGTMultiPoint:					
+				case augeGTMultiPoint:
 					break;
 				case augeGTLineString:
 					break;
@@ -225,11 +246,29 @@ namespace auge
 				}
 			}
 
+			cmd->Insert(pFeature);
+
 			pFeature->Release();
 		}
 
 		pCursor->Release();
 
 		return AG_SUCCESS;
+	}
+
+	RESULTCODE FeatureProjectProcessorImpl::Project(WKBPoint* pWKBPoint, projPJ i_pj, projPJ o_pj)
+	{
+		double x = pWKBPoint->point.x;
+		double y = pWKBPoint->point.y;
+
+		x *= DEG_TO_RAD;
+		y *= DEG_TO_RAD;
+		
+		int ret = pj_transform(i_pj, o_pj, 1, 1, &x, &y, NULL );
+		
+		pWKBPoint->point.x = x;
+		pWKBPoint->point.y = y;
+
+		return ret;
 	}
 }

@@ -40,8 +40,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)D</TargetName>
-    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;E:\DevEnv\OSGeo4W\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include</IncludePath>
-    <LibraryPath>%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;E:\DevEnv\OSGeo4W\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;E:\DevEnv\proj4-.7.0\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include</IncludePath>
+    <LibraryPath>%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;E:\DevEnv\proj4-.7.0\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

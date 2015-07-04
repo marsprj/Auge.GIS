@@ -5,6 +5,8 @@
 #include "AugeProcessor.h"
 #include "Kmean.h"
 
+#include "proj_api.h"
+
 namespace auge
 {
 	class FeatureClass;
@@ -35,6 +37,8 @@ namespace auge
 
 		FeatureClass*		CreateOutputFeatureClass(const char* className, g_uint srid, FeatureWorksapce* pWorkspace, FeatureClass* pinFeatureClass);
 		RESULTCODE			Project(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass);
+
+		RESULTCODE			Project(WKBPoint* pWKBPoint, projPJ i_pj, projPJ o_pj);
 
 	private:
 		std::string	m_in_source_name;
