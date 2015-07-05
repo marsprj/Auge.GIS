@@ -6,6 +6,5 @@
 	<Engine description="Raster Database Engine" path="" id="RasterDB"/>
 	<Engine description="Tile Storage Engine" path="" id="TileFS"/>
 	<Engine description="Mongo Tile Storage Engine" path="" id="TileMgo"/>
-	<Engine description="Riak Tile Storage Engine" path="" id="TileRiak"/>
 	<Engine description="CSV File Engine" path="" id="CsvFile"/>
 </Engines>
