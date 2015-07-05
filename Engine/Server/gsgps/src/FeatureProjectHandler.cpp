@@ -1,6 +1,5 @@
 #include "FeatureProjectHandler.h"
 #include "FeatureProjectRequest.h"
-#include "FeatureProjectResponse.h"
 #include "GProcessEngine.h"
 #include "AugeXML.h"
 #include "AugeWebCore.h"
