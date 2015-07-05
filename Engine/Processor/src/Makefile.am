@@ -4,11 +4,13 @@ AM_CXXFLAGS=-D_LINUX
 
 AM_CPPFLAGS=-I../include \
 		-I$(top_srcdir)/include \
-		-I$(ARCHIVE_HOME)/include
+		-I$(ARCHIVE_HOME)/include \
+		-I$(PROJ4_HOME)/include
 
 libgprocessor_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
-		-L$(ARCHIVE_HOME)/lib
+		-L$(ARCHIVE_HOME)/lib \
+		-L$(PROJ4_HOME)/lib
 
 libgprocessor_la_LIBADD=-lgcore -larchive
 
