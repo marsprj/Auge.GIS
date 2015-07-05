@@ -584,7 +584,7 @@ namespace auge
 		}
 	}
 
-	void build_path(cairo_t* cairo, WKBMultiPolygon* pMultiWKBPolygon, Transformation* pTransformation)
+	void build_path(cairo_t* cairo, WKBMultiPolygon* pWKBMultiPolygon, Transformation* pTransformation)
 	{
 		int i=0,j=0,k=0,end=0;
 		int sx=0, sy=0;
@@ -595,8 +595,8 @@ namespace auge
 		auge::LinearRing *pLinearRing = NULL;
 		auge::WKBPolygon *pWKBPolygon = NULL;
 
-		numPolygons = pMultiWKBPolygon->numPolygons;
-		pWKBPolygon = (auge::WKBPolygon*)(&(pMultiWKBPolygon->polygons[0]));
+		numPolygons = pWKBMultiPolygon->numPolygons;
+		pWKBPolygon = (auge::WKBPolygon*)(&(pWKBMultiPolygon->polygons[0]));
 
 		for(i=0; i<numPolygons; i++)
 		{

@@ -26,7 +26,7 @@ namespace auge
 
 	augeGeometryType GMultiPointWKB::GeometryType()
 	{
-		return augeGTPoint;
+		return augeGTMultiPoint;
 	}
 
 	const GEnvelope* GMultiPointWKB::Envelope() const

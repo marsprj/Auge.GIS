@@ -11,6 +11,7 @@
 
 #include "BuildPyramidHandler.h"
 #include "FeatureImportHandler.h"
+#include "FeatureProjectHandler.h"
 
 namespace auge
 {
@@ -32,6 +33,7 @@ namespace auge
 		m_tile_handlers.push_back(new BuildPyramidHandler());
 
 		m_feature_handlers.push_back(new FeatureImportHandler());
+		m_feature_handlers.push_back(new FeatureProjectHandler());
 	}
 
 	GeoProcessingEngine::~GeoProcessingEngine()

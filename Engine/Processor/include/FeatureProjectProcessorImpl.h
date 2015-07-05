@@ -39,7 +39,13 @@ namespace auge
 		FeatureClass*		CreateOutputFeatureClass(const char* className, g_uint srid, FeatureWorksapce* pWorkspace, FeatureClass* pinFeatureClass);
 		RESULTCODE			Project(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass);
 
+	private:
 		RESULTCODE			Project(WKBPoint* pWKBPoint, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project(WKBMultiPoint* pWKBMultiPoint, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project(WKBLineString* pWKBLineString, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project(WKBMultiLineString* pWKBMultiLineString, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project(WKBPolygon* pWKBPolygon, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project(WKBMultiPolygon* pWKBMultiPolygon, projPJ i_pj, projPJ o_pj);
 
 	private:
 		std::string	m_in_source_name;

@@ -32,5 +32,7 @@ libgsgps_la_SOURCES=\
 		TileUpdateRequest.cpp \
 		FeatureImportRequest.cpp \
 		FeatureImportHandler.cpp \
+		FeatureProjectHandler.cpp \
+		FeatureProjectRequest.cpp
 		GProcessEngine.cpp
 

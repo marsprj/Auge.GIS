@@ -26,7 +26,7 @@ namespace auge
 
 	augeGeometryType GLineStringWKB::GeometryType()
 	{
-		return augeGTPoint;
+		return augeGTLineString;
 	}
 
 	const GEnvelope* GLineStringWKB::Envelope() const

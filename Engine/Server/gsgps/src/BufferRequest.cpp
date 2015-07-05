@@ -9,7 +9,7 @@ namespace auge
 	BufferRequest::BufferRequest():
 	m_version("1.0.0"),
 		m_mime_type("text/xml"),
-		m_encoding("GBK"),
+		m_encoding(AUGE_DEFAULT_ENCODING),
 		m_pFilter(NULL),
 		m_output_format("GML2"),
 		m_host(DEFAULT_HOST),
@@ -62,8 +62,8 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
 
-		SetTypeName(cgi["typeName"]);
-		SetSourceName(cgi["sourceName"]);
+		SetInTypeName(cgi["typeName"]);
+		SetInSourceName(cgi["sourceName"]);
 
 		SetDistance(cgi["distance"]);
 		SetDistanceField(cgi["distancefield"]);
@@ -178,7 +178,7 @@ namespace auge
 		return m_in_type_name.c_str();
 	}
 
-	void BufferRequest::SetTypeName(const char* typeName)
+	void BufferRequest::SetInTypeName(const char* typeName)
 	{
 		if(typeName==NULL)
 		{
@@ -195,7 +195,7 @@ namespace auge
 		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
 	}
 
-	void BufferRequest::SetSourceName(const char* sourceName)
+	void BufferRequest::SetInSourceName(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{

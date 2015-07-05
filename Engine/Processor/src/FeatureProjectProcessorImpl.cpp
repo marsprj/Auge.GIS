@@ -157,11 +157,15 @@ namespace auge
 
 		RESULTCODE rc = AG_FAILURE;
 		rc = Project(pinFeatureClass, poutFeatureClass);
-		
-		
+		poutFeatureClass->Release();
+
+		if(rc!=AG_SUCCESS)
+		{
+			poutWorkspace->RemoveFeatureClass(className_out);
+		}
 
 		pinFeatureClass->Release();
-		poutFeatureClass->Release();
+		
 		
 		return AG_SUCCESS;
 	}
@@ -246,14 +250,19 @@ namespace auge
 					Project((WKBPoint*)wkb, i_pj, o_pj);
 					break;
 				case augeGTMultiPoint:
+					Project((WKBMultiPoint*)wkb, i_pj, o_pj);
 					break;
 				case augeGTLineString:
+					Project((WKBLineString*)wkb, i_pj, o_pj);
 					break;
 				case augeGTMultiLineString:
+					Project((WKBMultiLineString*)wkb, i_pj, o_pj);
 					break;
 				case augeGTPolygon:
+					Project((WKBPolygon*)wkb, i_pj, o_pj);
 					break;
 				case augeGTMultiPolygon:
+					Project((WKBMultiPolygon*)wkb, i_pj, o_pj);
 					break;
 				}
 			}
@@ -280,6 +289,196 @@ namespace auge
 		
 		pWKBPoint->point.x = x;
 		pWKBPoint->point.y = y;
+
+		return ret;
+	}
+
+	RESULTCODE FeatureProjectProcessorImpl::Project(WKBMultiPoint* pWKBMultiPoint, projPJ i_pj, projPJ o_pj)
+	{	
+		int ret = 0;
+		g_uint numPoints = 0;
+		WKBPoint* pWKBPoint = NULL;
+
+		numPoints = pWKBMultiPoint->numPoints;
+		pWKBPoint = (WKBPoint*)(&(pWKBMultiPoint->points[0]));
+		for(g_uint i=0; i<numPoints; i++, pWKBPoint++)
+		{
+			double *x = &(pWKBPoint->point.x);
+			double *y = &(pWKBPoint->point.y);
+
+			*x *= DEG_TO_RAD;
+			*y *= DEG_TO_RAD;
+
+			ret = pj_transform(i_pj, o_pj, 1, 1, x, y, NULL );
+			if(ret!=0)
+			{
+				break;
+			}
+		}
+
+		return ret;
+	}
+
+	RESULTCODE FeatureProjectProcessorImpl::Project(WKBLineString* pWKBLineString, projPJ i_pj, projPJ o_pj)
+	{
+		int ret = 0;
+
+		int numPoints = pWKBLineString->numPoints;
+		auge::Point *pt = (auge::Point*)(&(pWKBLineString->points[0]));
+
+		for(int i=0; i<numPoints; i++, pt++)
+		{
+			double *x = &(pt->x);
+			double *y = &(pt->y);
+
+			*x *= DEG_TO_RAD;
+			*y *= DEG_TO_RAD;
+
+			ret = pj_transform(i_pj, o_pj, 1, 1, x, y, NULL );
+			if(ret!=0)
+			{
+				break;
+			}
+		}
+		return ret;
+	}
+
+	RESULTCODE FeatureProjectProcessorImpl::Project(WKBMultiLineString* pWKBMultiLineString, projPJ i_pj, projPJ o_pj)
+	{
+		int ret = 0;
+		int numPoints = 0;
+		int numLineStings = 0;
+		auge::Point *pt = NULL;
+		WKBLineString* pWKBLineString = NULL;
+
+		numLineStings = pWKBMultiLineString->numLineStrings;
+		pWKBLineString = (WKBLineString*)(&(pWKBMultiLineString->lineStrings[0]));
+
+		for(int i=0; i<numLineStings; i++)
+		{
+			numPoints = pWKBLineString->numPoints;
+			pt = (auge::Point*)(&(pWKBLineString->points[0]));
+
+			for(int j=0; j<numPoints; j++, pt++)
+			{
+				double *x = &(pt->x);
+				double *y = &(pt->y);
+
+				*x *= DEG_TO_RAD;
+				*y *= DEG_TO_RAD;
+
+				ret = pj_transform(i_pj, o_pj, 1, 1, x, y, NULL );
+				if(ret!=0)
+				{
+					break;
+				}
+			}
+			pWKBLineString = (WKBLineString*)(pt);
+			if(ret!=0)
+			{
+				break;
+			}
+		}
+
+		return ret;
+	}
+
+	RESULTCODE FeatureProjectProcessorImpl::Project(WKBPolygon* pWKBPolygon, projPJ i_pj, projPJ o_pj)
+	{
+		int ret = 0;
+
+		int i=0, j=0, end=0;
+		int numPoints = 0;
+		int numRings  = pWKBPolygon->numRings;
+		auge::LinearRing* pLinearRing = NULL;
+		auge::Point *pt = NULL;
+
+		pLinearRing = (auge::LinearRing*)(&(pWKBPolygon->rings[0]));
+
+		for(i=0; i<numRings; i++)
+		{
+			numPoints = pLinearRing->numPoints;
+			pt = (auge::Point*)(&(pLinearRing->points[0]));
+
+			for(int j=0; j<numPoints; j++, pt++)
+			{
+				double *x = &(pt->x);
+				double *y = &(pt->y);
+
+				*x *= DEG_TO_RAD;
+				*y *= DEG_TO_RAD;
+
+				ret = pj_transform(i_pj, o_pj, 1, 1, x, y, NULL );
+				if(ret!=0)
+				{
+					break;
+				}
+			}
+			pLinearRing = (auge::LinearRing*)(pt);
+			if(ret!=0)
+			{
+				break;
+			}
+		}
+
+		return ret;
+	}
+
+	RESULTCODE FeatureProjectProcessorImpl::Project(WKBMultiPolygon* pWKBMultiPolygon, projPJ i_pj, projPJ o_pj)
+	{
+		int ret = 0;
+
+		int i=0,j=0,k=0,end=0;
+		int numPolygons = 0;
+		int numRings = 0;
+		int numPoints = 0;
+		auge::Point *pt = NULL;
+		auge::LinearRing *pLinearRing = NULL;
+		auge::WKBPolygon *pWKBPolygon = NULL;
+
+		numPolygons = pWKBMultiPolygon->numPolygons;
+		pWKBPolygon = (auge::WKBPolygon*)(&(pWKBMultiPolygon->polygons[0]));
+
+		for(i=0; i<numPolygons; i++)
+		{
+			numRings = pWKBPolygon->numRings;
+			pLinearRing = (auge::LinearRing*)(&(pWKBPolygon->rings[0]));
+			for(j=0; j<numRings; j++)
+			{
+				numPoints = pLinearRing->numPoints;
+				if(numPoints>0)
+				{
+					numPoints = pLinearRing->numPoints;
+					end = numPoints-1;
+					pt = (auge::Point*)(&(pLinearRing->points[0]));
+
+					for(k=0; k<numPoints; k++,pt++)
+					{
+						double *x = &(pt->x);
+						double *y = &(pt->y);
+
+						*x *= DEG_TO_RAD;
+						*y *= DEG_TO_RAD;
+
+						ret = pj_transform(i_pj, o_pj, 1, 1, x, y, NULL );
+						if(ret!=0)
+						{
+							break;
+						}
+					}					
+					pLinearRing = (auge::LinearRing*)(pt);
+					if(ret!=0)
+					{
+						break;
+					}
+				}
+			}
+			pWKBPolygon = (WKBPolygon*)(pLinearRing);
+			if(ret!=0)
+			{
+				break;
+			}
+		}
 
 		return ret;
 	}

@@ -38,7 +38,7 @@ namespace auge
 
 		const char* GetOutputFormat();
 		const char* GetOutSourceName();
-		const char* GetOutTypeName();
+		const char* SetOutTypeName();
 				
 	public:
 		bool		Create(rude::CGI& cgi);
@@ -47,16 +47,16 @@ namespace auge
 		
 		void		SetHost(const char* host);
 		void		SetRequestMethod(const char* method);
-
-		void		SetTypeName(const char* typeName);
-		void		SetSourceName(const char* sourceName);
 		void		SetOutputFormat(const char* format);
+
+		void		SetInTypeName(const char* typeName);
+		void		SetInSourceName(const char* sourceName);		
+
+		void		SetOutSourceName(const char* sourceName);
+		void		SetOutTypeName(const char* typeName);
 
 		void		SetDistance(const char* distance);
 		void		SetDistanceField(const char* distance_field);
-
-		void		SetOutSourceName(const char* sourceName);
-		void		GetOutTypeName(const char* typeName);
 
 		void		SetFilter(XElement* pxFilter);
 		

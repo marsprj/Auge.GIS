@@ -96,6 +96,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\CentroidResponse.cpp" />
     <ClCompile Include="..\src\FeatureImportHandler.cpp" />
     <ClCompile Include="..\src\FeatureImportRequest.cpp" />
+    <ClCompile Include="..\src\FeatureProjectHandler.cpp" />
+    <ClCompile Include="..\src\FeatureProjectRequest.cpp" />
     <ClCompile Include="..\src\GProcessEngine.cpp" />
     <ClCompile Include="..\src\ThreadManager.cpp" />
     <ClCompile Include="..\src\threadpool.c" />
@@ -116,6 +118,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\CentroidResponse.h" />
     <ClInclude Include="..\include\FeatureImportHandler.h" />
     <ClInclude Include="..\include\FeatureImportRequest.h" />
+    <ClInclude Include="..\include\FeatureProjectHandler.h" />
+    <ClInclude Include="..\include\FeatureProjectRequest.h" />
     <ClInclude Include="..\include\GProcessEngine.h" />
     <ClInclude Include="..\include\spthread.h" />
     <ClInclude Include="..\include\ThreadManager.h" />

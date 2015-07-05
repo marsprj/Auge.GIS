@@ -65,6 +65,8 @@ namespace auge
 		pWriter->WriteTail();
 
 		pxDoc->Release();
+
+		return AG_SUCCESS;
 	}
 
 	XDocument* BufferResponse::WriteDocument()
