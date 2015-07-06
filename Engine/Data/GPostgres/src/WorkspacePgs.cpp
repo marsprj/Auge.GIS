@@ -588,10 +588,18 @@ namespace auge
 		GEnvelope& extent = pRaster->GetExtent();
 
 		char raster_path[AUGE_PATH_MAX];
-		auge_make_path(raster_path, NULL, path, NULL,NULL);
+		memset(raster_path, 0, AUGE_PATH_MAX);
+		auge_make_path(raster_path, NULL, path, name,NULL);
 		if(alias==NULL)
 		{
 			alias = name;
+		}
+		char local_path[AUGE_PATH_MAX];
+		memset(local_path, 0, AUGE_PATH_MAX);
+		auge_make_path(local_path, NULL, GetRepository(), raster_path+1,NULL);
+		if(g_access(local_path, 4))
+		{
+			pRaster->Save(local_path);
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};

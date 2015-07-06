@@ -348,7 +348,7 @@ namespace auge
 
 	RESULTCODE RasterImpl::Save(const char* path)
 	{
-		if(m_path.empty())
+		//if(m_path.empty())
 		{
 			char ext[AUGE_EXT_MAX];
 			memset(ext, 0, AUGE_EXT_MAX);

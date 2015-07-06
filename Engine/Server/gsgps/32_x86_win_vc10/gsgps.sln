@@ -2,14 +2,28 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsgps", "gsgps.vcxproj", "{961093B5-A829-41C7-87A1-6CE75B065B5C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B27E9A32-8154-484F-B312-9532EA0469A0} = {B27E9A32-8154-484F-B312-9532EA0469A0}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GProcessor", "..\..\..\Processor\32_x86_win_vc10\GProcessor.vcxproj", "{B27E9A32-8154-484F-B312-9532EA0469A0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547} = {57E6CDAA-E9D2-4CA1-9542-70CA0081C547}
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698} = {5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mgr", "..\..\mgr\32_x86_win_vc10\mgr.vcxproj", "{C315E5BD-713B-4812-9B05-8A0F6475DAB0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{961093B5-A829-41C7-87A1-6CE75B065B5C} = {961093B5-A829-41C7-87A1-6CE75B065B5C}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswfs", "..\..\gswfs\32_x86_win_vc10\gswfs.vcxproj", "{685A4C3A-5188-487A-AC43-376EBCEC73C6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCore", "..\..\..\Core\32_x86_win_vc10\GCore.vcxproj", "{175ED294-86C6-45A1-9E7A-770AE765EB23}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GPostgres", "..\..\..\Data\GPostgres\32_x86_win_vc10\GPostgres.vcxproj", "{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GRaster", "..\..\..\Raster\32_x86_win_vc10\GRaster.vcxproj", "{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +51,14 @@ Global
 		{175ED294-86C6-45A1-9E7A-770AE765EB23}.Debug|Win32.Build.0 = Debug|Win32
 		{175ED294-86C6-45A1-9E7A-770AE765EB23}.Release|Win32.ActiveCfg = Release|Win32
 		{175ED294-86C6-45A1-9E7A-770AE765EB23}.Release|Win32.Build.0 = Release|Win32
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Debug|Win32.Build.0 = Debug|Win32
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Release|Win32.ActiveCfg = Release|Win32
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Release|Win32.Build.0 = Release|Win32
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}.Debug|Win32.ActiveCfg = Debug|Win32
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}.Debug|Win32.Build.0 = Debug|Win32
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}.Release|Win32.ActiveCfg = Release|Win32
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

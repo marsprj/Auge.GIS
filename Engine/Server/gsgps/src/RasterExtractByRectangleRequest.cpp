@@ -204,7 +204,7 @@ namespace auge
 
 	void RasterExtractByRectangleRequest::SetRectangle(const char* rect)
 	{
-		sscanf(rect, "%f,%f,%f,%f",&(m_rect.m_xmin),&(m_rect.m_ymin),&(m_rect.m_xmin),&(m_rect.m_ymin),&(m_rect.m_xmax),&(m_rect.m_ymax));
+		sscanf(rect, "%lf,%lf,%lf,%lf",&(m_rect.m_xmin),&(m_rect.m_ymin),&(m_rect.m_xmax),&(m_rect.m_ymax));
 	}
 
 	void RasterExtractByRectangleRequest::SetInputDataSource(const char* sourceName)
