@@ -113,6 +113,27 @@ namespace auge
 		virtual void		SetTypeName(const char* typeName) = 0;
 	};
 
+	//------------------------------------------------------------------------
+	// Raster Processor Begin
+	//------------------------------------------------------------------------
+	class RasterExtractByRectangleProcessor : public GProcessor
+	{
+	protected:
+		RasterExtractByRectangleProcessor(){}
+		virtual ~RasterExtractByRectangleProcessor(){}
+	public:
+		virtual void		SetInputRactangle(GEnvelope& rect) = 0;
+
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+	};
+	//------------------------------------------------------------------------
+	// Raster Processor Begin
+	//------------------------------------------------------------------------
+
 	//////////////////////////////////////////////////////////////////////////
 	// Projection Processor
 	//////////////////////////////////////////////////////////////////////////
@@ -181,6 +202,9 @@ namespace auge
 
 		// projection
 		virtual FeatureProjectProcessor*	CreateFeatureProjectProcessor() = 0;
+
+		// Raster
+		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor() = 0;
 	};
 	
 	extern "C"

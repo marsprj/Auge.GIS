@@ -31,6 +31,7 @@ namespace auge
 		virtual RasterBand*		GetBand(g_uint i);
 
 		virtual g_int			GetSRID();
+		virtual const char*		GetSpatialReference();
 
 		virtual augePixelType	GetPixelType();
 		virtual g_uint			GetPixelSize();
@@ -38,12 +39,14 @@ namespace auge
 		virtual GEnvelope&		GetExtent();
 		virtual bool			GetMapPosition(g_uint rx, g_uint ry, double& mx, double& my);
 		virtual bool			GetRasterPosition(double mx, double my, g_int& rx, g_int& ry);
+		virtual bool			GetRasterRect(GRect& rect, GEnvelope& extent);
 
 		virtual const char*		GetPath();
 		virtual void			SetPath(const char* path);
 
 	public:
 		bool	Create(const char* name, const char* path);
+		bool	Create(const char* name, GDALDataset* poDataset);
 		//void	Create(const char* name, GDALDataset* poDataset, WorkspaceRaster* pWorkspace, const char* path);
 		g_uint	GetPixelSize(GDALDataType type);
 

@@ -84,12 +84,14 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\RasterBandImpl.cpp" />
+    <ClCompile Include="..\src\RasterFactoryImpl.cpp" />
     <ClCompile Include="..\src\RasterImpl.cpp" />
     <ClCompile Include="..\src\RasterIOImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\AugeRaster.h" />
     <ClInclude Include="..\include\RasterBandImpl.h" />
+    <ClInclude Include="..\include\RasterFactoryImpl.h" />
     <ClInclude Include="..\include\RasterImpl.h" />
     <ClInclude Include="..\include\RasterIOImpl.h" />
   </ItemGroup>

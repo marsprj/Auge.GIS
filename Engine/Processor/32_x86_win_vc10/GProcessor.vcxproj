@@ -91,6 +91,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\KmeanProcessorImpl.cpp" />
     <ClCompile Include="..\src\MongoTileStoreGenerator.cpp" />
     <ClCompile Include="..\src\ProcessorFactoryImpl.cpp" />
+    <ClCompile Include="..\src\RasterExtractByRectangleProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterTileStoreGeneratorFS.cpp" />
     <ClCompile Include="..\src\sqlite3.c" />
     <ClCompile Include="..\src\SrsBase.cpp" />
@@ -105,6 +106,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\KmeanProcessorImpl.h" />
     <ClInclude Include="..\include\MongoTileStoreGenerator.h" />
     <ClInclude Include="..\include\ProcessorFactoryImpl.h" />
+    <ClInclude Include="..\include\RasterExtractByRectangleProcessorImpl.h" />
     <ClInclude Include="..\include\RasterTileStoreGeneratorFS.h" />
     <ClInclude Include="..\include\SrsBase.h" />
   </ItemGroup>

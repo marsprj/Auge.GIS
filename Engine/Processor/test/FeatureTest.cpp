@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(FeatureTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(FeatureTest);
 
 void FeatureTest::setUp() 
 {

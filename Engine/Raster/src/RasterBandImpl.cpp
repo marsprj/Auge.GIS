@@ -148,4 +148,22 @@ namespace auge
 		}
 		return pixel_size;
 	}
+
+	RESULTCODE RasterBandImpl::Read(void* buffer, g_uint x, g_uint y, g_int width, g_uint height)
+	{
+		GDALDataType type = m_poRasterBand->GetRasterDataType();
+		CPLErr err = m_poRasterBand->RasterIO(	GF_Read, 
+												x, y,
+												width, height, 
+												buffer,
+												width, height,
+												type, 
+												0, 0 );
+		if(err!=CE_None)
+		{
+			return AG_FAILURE;
+		}
+
+		return AG_SUCCESS;
+	}
 }

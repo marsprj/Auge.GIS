@@ -7,6 +7,8 @@
 #include "KmeanProcessorImpl.h"
 #include "FeatureProjectProcessorImpl.h"
 
+#include "RasterExtractByRectangleProcessorImpl.h"
+
 #ifndef WIN32
 #include "ArchiveProcessorImpl.h"
 #endif
@@ -67,5 +69,10 @@ namespace auge
 	FeatureProjectProcessor* GProcessorFactoryImpl::CreateFeatureProjectProcessor()
 	{
 		return (new FeatureProjectProcessorImpl());
+	}
+
+	RasterExtractByRectangleProcessor* GProcessorFactoryImpl::CreateRasterExtractByRectangleProcessor()
+	{
+		return (new RasterExtractByRectangleProcessorImpl());
 	}
 }

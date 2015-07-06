@@ -48,14 +48,17 @@ namespace auge
 		virtual g_uint			GetBandCount() = 0;
 		virtual RasterBand*		GetBand(g_uint i) = 0;
 		virtual GEnvelope&		GetExtent() = 0;
-		virtual g_int			GetSRID() = 0;
 		virtual const char*		GetFormat() = 0;
+
+		virtual g_int			GetSRID() = 0;
+		virtual const char*		GetSpatialReference() = 0;		
 
 		virtual augePixelType	GetPixelType() = 0;
 		virtual g_uint			GetPixelSize() = 0;
 
 		virtual bool			GetMapPosition(g_uint rx, g_uint ry, double& mx, double& my) = 0;
 		virtual bool			GetRasterPosition(double mx, double my, g_int& rx, g_int& ry) = 0;
+		virtual bool			GetRasterRect(GRect& rect, GEnvelope& extent) = 0;
 
 		virtual const char*		GetPath() = 0;
 		virtual void			SetPath(const char* path) = 0;
@@ -79,6 +82,8 @@ namespace auge
 
 		virtual void*			GetData(int x, int y) = 0;
 		virtual void*			GetData(double x, double y) = 0;
+
+		virtual RESULTCODE		Read(void* buffer, g_uint x, g_uint y, g_int width, g_uint height) = 0;
 	};
 
 	class RasterIO
@@ -91,9 +96,20 @@ namespace auge
 		virtual Raster*			Read(const char* path, const char* name)= 0;
 	};
 
+	class RasterFactory
+	{
+	protected:
+		RasterFactory(){}
+		virtual ~RasterFactory(){}
+	public:
+		virtual Raster*			CreateRaster(const char* name, GEnvelope& extent, Raster* pinRaster) = 0;
+		//virtual Raster*			CreateRaster(const char* name, augePixelType pixelType, g_uint width, g_uint height, g_int bands, g_uint srid, GEnvelope& extent) = 0;
+	};
+
 	extern "C"
 	{
-		AUGE_RASTER_API RasterIO*	augeGetRasterIOInstance();
+		AUGE_RASTER_API RasterIO*		augeGetRasterIOInstance();
+		AUGE_RASTER_API	RasterFactory*	augeGetRasterFactoryInstance();
 	}
 }
 

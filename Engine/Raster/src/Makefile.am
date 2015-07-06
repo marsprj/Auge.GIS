@@ -13,4 +13,5 @@ libgraster_la_LIBADD=-lgdal
 libgraster_la_SOURCES=\
 		RasterImpl.cpp \
 		RasterBandImpl.cpp \
-		RasterIOImpl.cpp
+		RasterIOImpl.cpp \
+		RasterFactoryImpl.cpp

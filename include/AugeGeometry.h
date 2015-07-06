@@ -222,6 +222,32 @@ namespace auge
 		double	m_xmin, m_ymin,m_xmax, m_ymax;
 	};
 
+	class AUGE_GEOMETRY_API GRect
+	{
+	public:
+		GRect();
+		GRect(g_int xmin, g_int ymin, g_int xmax, g_int ymax);
+		virtual ~GRect();
+
+	public:
+		void		Set(g_int xmin, g_int ymin, g_int xmax, g_int ymax);
+
+		void		Union(GRect& o);
+		void		Offset(g_int x, g_int y);
+		void		MoveTo(g_int x, g_int y);
+		bool		Contain(g_int x, g_int y);
+		bool		Intersects(GRect& other);
+		void		Inflate(int o);
+		GRect		Intersect(GRect& other);
+
+		g_int		GetWidth();
+		g_int		GetHeight();
+
+		bool		IsValid();
+	public:
+		g_int	m_xmin, m_ymin,m_xmax, m_ymax;
+	};
+
 	class GMLWriter
 	{
 	protected:

@@ -83,12 +83,14 @@
     <ClCompile Include="ClusterTest.cpp" />
     <ClCompile Include="FeatureTest.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RasterTest.cpp" />
     <ClCompile Include="RasterTileTest.cpp" />
     <ClCompile Include="TileTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClusterTest.h" />
     <ClInclude Include="FeatureTest.h" />
+    <ClInclude Include="RasterTest.h" />
     <ClInclude Include="RasterTileTest.h" />
     <ClInclude Include="TileTest.h" />
   </ItemGroup>

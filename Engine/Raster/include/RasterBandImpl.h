@@ -27,6 +27,8 @@ namespace auge
 		virtual void*			GetData(int x, int y);
 		virtual void*			GetData(double x, double y);
 		
+		virtual RESULTCODE		Read(void* buffer, g_uint x, g_uint y, g_int width, g_uint height);
+
 		virtual void			Release();
 
 	public:

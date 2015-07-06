@@ -23,12 +23,12 @@ namespace auge
 
 	const char* RasterImpl::GetName()
 	{
-		return m_name.c_str();
+		return m_name.empty() ? NULL : m_name.c_str();
 	}
 
 	const char*	RasterImpl::GetAlias()
 	{
-		return m_alias.c_str();
+		return m_alias.empty() ? NULL : m_alias.c_str();
 	}
 
 	void RasterImpl::SetAlias(const char* alias)
@@ -66,6 +66,11 @@ namespace auge
 	g_int RasterImpl::GetSRID()
 	{
 		return m_srid;
+	}
+
+	const char* RasterImpl::GetSpatialReference()
+	{
+		return m_poDataset->GetProjectionRef();
 	}
 
 	g_uint RasterImpl::GetBandCount()
@@ -157,6 +162,20 @@ namespace auge
 		return true;
 	}
 
+	bool RasterImpl::GetRasterRect(GRect& rect, GEnvelope& extent)
+	{
+		g_int r_xmin=0, r_ymin=0;
+		g_int r_xmax=0, r_ymax=0;
+		this->GetRasterPosition(extent.m_xmin, extent.m_ymin, r_xmin, r_ymax);
+		this->GetRasterPosition(extent.m_xmax, extent.m_ymax, r_xmax, r_ymin);
+
+		rect.m_xmin = r_xmin < r_xmax ? r_xmin : r_xmax;
+		rect.m_xmax = r_xmin > r_xmax ? r_xmin : r_xmax;
+		rect.m_ymin = r_ymin < r_ymax ? r_ymin : r_ymax;
+		rect.m_ymax = r_ymin > r_ymax ? r_ymin : r_ymax;
+		return true;
+	}
+
 	bool RasterImpl::Create(const char* name, const char* path)
 	{
 		m_name = name;
@@ -173,6 +192,43 @@ namespace auge
 		char ext[AUGE_EXT_MAX] = {0};
 		auge_split_path(path, NULL, NULL, NULL, ext);
 		m_format = ext+1;
+
+		// extent
+		poDataset->GetGeoTransform(m_geo_transform);
+		double x0 = m_geo_transform[0];
+		double y0 = m_geo_transform[3];
+		double x1 = x0 + m_geo_transform[1] * poDataset->GetRasterXSize();
+		double y1 = y0 + m_geo_transform[5] * poDataset->GetRasterYSize();
+		m_extent.Set(x0,y0,x1,y1);
+
+		// pixel size
+		m_pixel_size = GetPixelSize((GDALDataType)GetPixelType());
+
+		// spatial reference
+		const char* proj = poDataset->GetProjectionRef();
+		const char* gproj= poDataset->GetGCPProjection();
+
+		// set bands
+		int bands = poDataset->GetRasterCount();
+		Cleanup();
+		m_bands.resize(bands);
+		for(int i=0; i<bands; i++)
+		{
+			m_bands[i] = NULL;
+		}
+		m_poDataset = poDataset;
+		return true;
+	}
+
+	bool RasterImpl::Create(const char* name, GDALDataset* poDataset)
+	{
+		m_name = name;
+		m_alias.clear();
+		m_path = "/";
+		char ext[AUGE_EXT_MAX];
+		memset(ext, 0, AUGE_EXT_MAX);
+		auge_split_path(name, NULL, NULL,NULL,ext);
+		m_format = ext + 1;
 
 		// extent
 		poDataset->GetGeoTransform(m_geo_transform);
@@ -229,14 +285,14 @@ namespace auge
 
 	const char*	RasterImpl::GetPath()
 	{
-		return m_path.c_str();
+		return m_path.empty() ? NULL : m_path.c_str();
 	}
 
 	void RasterImpl::SetPath(const char* path)
 	{
 		if(path==NULL)
 		{
-			m_path.clear();
+			m_path = "/";
 		}
 		else
 		{

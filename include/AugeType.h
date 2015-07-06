@@ -45,7 +45,11 @@ typedef unsigned long long  g_uint64;
 #ifndef FLOAT_MIN
 #define FLOAT_MIN			(-3.402823E+38f)
 #define FLOAT_MAX           (+3.402823E+38f)
-#define FLOAT_ZERO          (+1.401298E-45f)
+#endif
+
+#ifndef AUGE_INT_MIN
+#define AUGE_INT_MIN		(-32768)
+#define AUGE_INT_MAX        (+32768)
 #endif
 
 #ifndef AUGE_DOUBLE_MIN

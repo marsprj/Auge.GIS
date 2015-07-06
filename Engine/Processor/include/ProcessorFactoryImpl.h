@@ -21,6 +21,8 @@ namespace auge
 		virtual KMeanProcessor*				CreateKMeanProcessor();
 
 		virtual FeatureProjectProcessor*	CreateFeatureProjectProcessor();
+
+		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor();
 	};
 }
 

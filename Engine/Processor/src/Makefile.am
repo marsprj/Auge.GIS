@@ -26,4 +26,5 @@ libgprocessor_la_SOURCES=\
 		KmeanProcessorImpl.cpp \
 		Kmean.cpp \
 		SrsBase.cpp \
-		sqlite3.c
+		sqlite3.c \
+		RasterExtractByRectangleProcessorImpl.cpp

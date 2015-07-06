@@ -538,6 +538,12 @@ namespace auge
 			return NULL;
 		}
 
+		if(pResult->GetCount()==0)
+		{
+			pResult->Release();
+			return NULL;
+		}
+
 		g_uint		gid	 = pResult->GetInt(0,0);
 		//const char* name = pResult->GetString(0,1);
 		const char* alias= pResult->GetString(0,2);
@@ -581,12 +587,19 @@ namespace auge
 		g_uint		nband= pRaster->GetBandCount(); 
 		GEnvelope& extent = pRaster->GetExtent();
 
+		char raster_path[AUGE_PATH_MAX];
+		auge_make_path(raster_path, NULL, path, NULL,NULL);
+		if(alias==NULL)
+		{
+			alias = name;
+		}
+
 		char sql[AUGE_SQL_MAX] = {0};
 		const char* format = "insert into g_raster_catalog (name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid) values('%s','%s','%s','%s',%d,%d,%d,%d,%f,%f,%f,%f,'%s')";
 		g_snprintf(sql, AUGE_SQL_MAX, format,	name,
 												alias,
 												fmt,
-												path,
+												raster_path,
 												nband,
 												srid,
 												width,
