@@ -13,7 +13,7 @@ namespace auge
 		RasterExtractByRectangleProcessorImpl();
 		virtual ~RasterExtractByRectangleProcessorImpl();
 	public:
-		virtual void		SetInputRactangle(GEnvelope& rect);
+		virtual void		SetInputRectangle(GEnvelope& rect);
 
 		virtual void		SetInputDataSource(const char* sourceName);
 		virtual void		SetInputRaster(const char* rasterName);

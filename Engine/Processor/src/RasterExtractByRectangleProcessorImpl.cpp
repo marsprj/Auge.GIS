@@ -14,7 +14,7 @@ namespace auge
 
 	}
 
-	void RasterExtractByRectangleProcessorImpl::SetInputRactangle(GEnvelope& rect)
+	void RasterExtractByRectangleProcessorImpl::SetInputRectangle(GEnvelope& rect)
 	{
 		m_rect = rect;
 	}

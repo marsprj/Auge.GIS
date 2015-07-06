@@ -224,9 +224,9 @@ namespace auge
 		XElement* pxOperationsMetadata = pxParent->AddChild("OperationsMetadata", "ows");
 
 		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_feature_handlers, "Feature", "ÒªËØ", gps_xlink);
+		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_raster_handlers, "Raster", "Õ¤¸ñ", gps_xlink);
 		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_geometry_handlers, "Geometry", "¿Õ¼ä·ÖÎö", gps_xlink);
-		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_tile_handlers, "Feature", "ÍßÆ¬½ð×ÖËþ", gps_xlink);
-
+		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_tile_handlers, "Tile", "ÍßÆ¬½ð×ÖËþ", gps_xlink);
 	}
 
 	void GeoProcessingCapabilitiesHandler::AddOperationsNodes_1_1_0(XElement* pxParent, std::vector<WebHandler*>& handlers, const char* type, const char* description, const char* gps_xlink)

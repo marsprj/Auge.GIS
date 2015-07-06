@@ -33,6 +33,8 @@ libgsgps_la_SOURCES=\
 		FeatureImportRequest.cpp \
 		FeatureImportHandler.cpp \
 		FeatureProjectHandler.cpp \
-		FeatureProjectRequest.cpp
+		FeatureProjectRequest.cpp \
+		RasterExtractByRectangeHandler.cpp \
+		RasterExtractByRectangeRequest.cpp \
 		GProcessEngine.cpp
 

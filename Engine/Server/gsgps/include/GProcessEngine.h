@@ -72,6 +72,7 @@ namespace auge
 		void*	m_handler;
 		GeoProcessingCapabilitiesHandler* m_pcapHandler;
 		std::vector<WebHandler*>	m_feature_handlers;
+		std::vector<WebHandler*>	m_raster_handlers;
 		std::vector<WebHandler*>	m_geometry_handlers;
 		std::vector<WebHandler*>	m_tile_handlers;
 	};

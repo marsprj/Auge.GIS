@@ -8,7 +8,7 @@ class RasterTest : public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(RasterTest);
 	//CPPUNIT_TEST(Read_png);
-	//CPPUNIT_TEST(Read_tif);
+	CPPUNIT_TEST(Read_tif);
 	CPPUNIT_TEST(Create_Raster);
 	//CPPUNIT_TEST(ExtractByRectangle);
 	CPPUNIT_TEST_SUITE_END();

@@ -99,6 +99,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\FeatureProjectHandler.cpp" />
     <ClCompile Include="..\src\FeatureProjectRequest.cpp" />
     <ClCompile Include="..\src\GProcessEngine.cpp" />
+    <ClCompile Include="..\src\RasterExtractByRectangleHandler.cpp" />
+    <ClCompile Include="..\src\RasterExtractByRectangleRequest.cpp" />
     <ClCompile Include="..\src\ThreadManager.cpp" />
     <ClCompile Include="..\src\threadpool.c" />
     <ClCompile Include="..\src\TileUpdateHandler.cpp" />
@@ -121,6 +123,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\FeatureProjectHandler.h" />
     <ClInclude Include="..\include\FeatureProjectRequest.h" />
     <ClInclude Include="..\include\GProcessEngine.h" />
+    <ClInclude Include="..\include\RasterExtractByRectangleHandler.h" />
+    <ClInclude Include="..\include\RasterExtractByRectangleRequest.h" />
     <ClInclude Include="..\include\spthread.h" />
     <ClInclude Include="..\include\ThreadManager.h" />
     <ClInclude Include="..\include\threadpool.h" />

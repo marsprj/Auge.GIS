@@ -13,6 +13,8 @@
 #include "FeatureImportHandler.h"
 #include "FeatureProjectHandler.h"
 
+#include "RasterExtractByRectangleHandler.h"
+
 namespace auge
 {
 	WebEngine* augeGetWebEngineInstance()
@@ -34,6 +36,8 @@ namespace auge
 
 		m_feature_handlers.push_back(new FeatureImportHandler());
 		m_feature_handlers.push_back(new FeatureProjectHandler());
+
+		m_raster_handlers.push_back(new RasterExtractByRectangleHandler());
 	}
 
 	GeoProcessingEngine::~GeoProcessingEngine()
@@ -56,6 +60,7 @@ namespace auge
 	void GeoProcessingEngine::CleanupHandlers()
 	{
 		CleanupHandlers(m_feature_handlers);
+		CleanupHandlers(m_raster_handlers);
 		CleanupHandlers(m_geometry_handlers);
 		CleanupHandlers(m_tile_handlers);
 	}
@@ -81,6 +86,11 @@ namespace auge
 
 		WebHandler* handler = NULL;
 		handler = GetHandler(name, m_feature_handlers);
+		if(handler!=NULL)
+		{
+			return handler;
+		}
+		handler = GetHandler(name, m_raster_handlers);
 		if(handler!=NULL)
 		{
 			return handler;
