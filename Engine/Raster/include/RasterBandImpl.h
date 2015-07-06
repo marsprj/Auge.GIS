@@ -45,6 +45,7 @@ namespace auge
 		g_uint			m_data_size;
 	};
 
+	const char* auge_raster_get_driver(const char* ext);
 }
 
 

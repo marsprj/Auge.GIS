@@ -97,14 +97,14 @@ void RasterTest::Create_Raster()
 {
 	const char* o_name = "world_new.tif";
 
-	const char* i_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\world.tif";
-	const char* o_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\world_new.tif";
+	//const char* i_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\world.tif";
+	//const char* o_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\world_new.tif";
 
 	//const char* i_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\Koala.png";
 	//const char* o_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\Koala_new.png";
 
-	//const char* i_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\Koala.jpeg";
-	//const char* o_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\Koala_new.jpeg";
+	const char* i_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\Koala.jpeg";
+	const char* o_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\Koala_new.jpeg";
 
 	auge::Raster* pinRaster = NULL;
 	auge::Raster* poutRaster = NULL;
@@ -112,8 +112,10 @@ void RasterTest::Create_Raster()
 	pinRaster = io->Read(i_path);
 
 	auge::GEnvelope extent(0,0,90,90);
+	//auge::GEnvelope extent(-180,-90,180,90);
 	auge::RasterFactory* pRasterFactory = auge::augeGetRasterFactoryInstance();
 	poutRaster = pRasterFactory->CreateRaster(o_name, extent, pinRaster);
+	poutRaster->Save(o_path);
 
 	pinRaster->Release();
 }

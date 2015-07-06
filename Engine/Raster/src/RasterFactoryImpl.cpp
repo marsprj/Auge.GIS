@@ -21,6 +21,7 @@ namespace auge
 
 	}
 
+	//创建带spatialreference的图像时有bug
 	Raster*	RasterFactoryImpl::CreateRaster(const char* name, GEnvelope& extent, Raster* pinRaster)
 	{
 		if(pinRaster==NULL)
@@ -54,7 +55,6 @@ namespace auge
 
 			return NULL;
 		}
-
 		// GeoTransform
 		double adfGeoTransform[6];
 		adfGeoTransform[0] = extent.m_xmin;							/* top left x */
@@ -62,13 +62,13 @@ namespace auge
 		adfGeoTransform[2] = 0;										/* 0 */
 		adfGeoTransform[3] = extent.m_ymax;							/* top left y */
 		adfGeoTransform[4] = 0;										/* 0 */
-		adfGeoTransform[5] = extent.GetHeight() / rect.GetHeight();	/* n-s pixel resolution (negative value) */
+		adfGeoTransform[5] =-extent.GetHeight() / rect.GetHeight();	/* n-s pixel resolution (negative value) */
 		pmemDataset->SetGeoTransform(adfGeoTransform);
 		// spatial reference
 		pmemDataset->SetProjection(spatialref);
-		
+
 		// read and write new raster
-		g_uint buffer_size = rect.GetHeight() * rect.GetHeight() * pinRaster->GetPixelSize();
+		g_uint64 buffer_size = (g_uint64)r_width * (g_uint64)r_height * pinRaster->GetPixelSize();
 		unsigned char* buffer = (unsigned char*)malloc(buffer_size);
 
 		CPLErr err = CE_None;
@@ -103,30 +103,6 @@ namespace auge
 			GDALClose(pmemDataset);
 			return NULL;
 		}
-
-		//char ext[AUGE_EXT_MAX];
-		//memset(ext, 0, AUGE_EXT_MAX);
-		//auge_split_path(path, NULL, NULL, NULL, ext);
-		//const char* format = ext + 1;
-		//GDALDriver* poDriver = GetGDALDriverManager()->GetDriverByName("GTiff");
-		//if(poDriver==NULL)
-		//{
-		//	const char* msg = CPLGetLastErrorMsg();			
-		//	pError->SetError(msg);
-		//	pLogger->Error(msg,__FILE__,__LINE__);
-
-		//	return NULL;
-		//}
-
-		//// Save Image
-		//GDALDataset* poDataset = NULL;
-		//poDataset = poDriver->CreateCopy(path, pmemDataset, FALSE, NULL, NULL, NULL);
-
-		//GDALClose(pmemDataset);
-		//if(poDataset==NULL)
-		//{
-		//	return NULL;
-		//}
 
 		RasterImpl* poutRaster = new RasterImpl();
 		poutRaster->Create(name, pmemDataset);

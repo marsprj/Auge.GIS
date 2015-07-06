@@ -44,6 +44,8 @@ namespace auge
 		virtual const char*		GetPath();
 		virtual void			SetPath(const char* path);
 
+		virtual	RESULTCODE		Save(const char* path);
+
 	public:
 		bool	Create(const char* name, const char* path);
 		bool	Create(const char* name, GDALDataset* poDataset);

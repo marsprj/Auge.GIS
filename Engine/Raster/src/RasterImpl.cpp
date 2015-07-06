@@ -345,4 +345,57 @@ namespace auge
 		}
 		m_bands.clear();
 	}
+
+	RESULTCODE RasterImpl::Save(const char* path)
+	{
+		if(m_path.empty())
+		{
+			char ext[AUGE_EXT_MAX];
+			memset(ext, 0, AUGE_EXT_MAX);
+			auge_split_path(path, NULL, NULL, NULL, ext);
+			const char* format = auge_raster_get_driver(ext + 1);
+			GDALDriver* poDriver = GetGDALDriverManager()->GetDriverByName(format);
+			if(poDriver==NULL)
+			{
+				const char* msg = CPLGetLastErrorMsg();			
+				augeGetErrorInstance()->SetError(msg);
+				augeGetLoggerInstance()->Error(msg,__FILE__,__LINE__);
+
+				return AG_FAILURE;
+			}
+
+			// Save Image
+			GDALDataset* poDataset = NULL;
+			poDataset = poDriver->CreateCopy(path, m_poDataset, FALSE, NULL, NULL, NULL);
+			if(poDataset==NULL)
+			{
+				return AG_FAILURE;
+			}
+			poDataset->FlushCache();
+			GDALClose(m_poDataset);
+
+			m_poDataset = poDataset;
+			m_path = path;
+		}
+		return AG_SUCCESS;
+	}
+
+
+	//////////////////////////////////////////////////////////////////////////
+	const char* auge_raster_get_driver(const char* ext)
+	{
+		if(g_stricmp(ext,"png")==0)
+		{
+			return "png";
+		}
+		else if((g_stricmp(ext,"jpg")==0)||(g_stricmp(ext,"jpeg")==0))
+		{
+			return "jpeg";
+		}
+		else if((g_stricmp(ext,"tif")==0)||(g_stricmp(ext,"tiff")==0))
+		{
+			return "GTiff";
+		}
+		return "";
+	}
 }
