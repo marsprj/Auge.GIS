@@ -36,6 +36,10 @@ namespace auge
 		virtual augePixelType	GetPixelType();
 		virtual g_uint			GetPixelSize();
 
+		virtual bool			GetMinMaxValue(short& minv, short& maxv);
+		virtual bool			GetMinMaxValue(int& minv, int& maxv);
+		virtual bool			GetMinMaxValue(double& minv, double& maxv);
+
 		virtual GEnvelope&		GetExtent();
 		virtual bool			GetMapPosition(g_uint rx, g_uint ry, double& mx, double& my);
 		virtual bool			GetRasterPosition(double mx, double my, g_int& rx, g_int& ry);

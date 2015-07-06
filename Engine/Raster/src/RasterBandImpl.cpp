@@ -53,13 +53,20 @@ namespace auge
 			int width = m_poRasterBand->GetXSize();
 			int height = m_poRasterBand->GetYSize();
 
+			//CPLErr err = m_poRasterBand->RasterIO(GF_Read,
+			//										0,0,
+			//										width,height,
+			//										m_data,
+			//										width,height,
+			//										(GDALDataType)(m_pRaster->GetPixelType()),
+			//										1,width);
 			CPLErr err = m_poRasterBand->RasterIO(GF_Read,
-													0,0,
-													width,height,
-													m_data,
-													width,height,
-													GDT_Byte,
-													1,width);
+				0,0,
+				width,height,
+				m_data,
+				width,height,
+				(GDALDataType)(m_pRaster->GetPixelType()),
+				0,0);
 			if(err!=CE_None)
 			{
 				const char* msg = CPLGetLastErrorMsg();
@@ -97,6 +104,83 @@ namespace auge
 	void* RasterBandImpl::GetData(double x, double y)
 	{
 		return NULL;
+	}
+
+	bool RasterBandImpl::SetData(void* data)
+	{
+		if(data==NULL)
+		{
+			return false;
+		}
+
+		int width = GetWidth();
+		int height= GetHeight();
+		GDALDataType type = m_poRasterBand->GetRasterDataType();
+		CPLErr err = m_poRasterBand->RasterIO(	GF_Write, 
+			0, 0,
+			width, height, 
+			data,
+			width, height,
+			type, 
+			0, 0);
+		if(err!=CE_None)
+		{
+			return false;
+		}
+		return true;
+	}
+
+
+	bool RasterBandImpl::GetMinMaxValue(short& minv, short& maxv)
+	{
+		short *idata = (short*)GetData();
+
+		int count = m_pRaster->GetWidth() * m_pRaster->GetHeight();
+		short v_min = AUGE_INT_MAX;
+		short v_max = AUGE_INT_MIN;
+		for(int i=0; i<count; i++)
+		{
+			short value = idata[i];			
+			v_min = v_min < value ? v_min : value;
+			v_max = v_max > value ? v_max : value;
+		}
+		minv = v_min;
+		maxv = v_max;
+		return true;
+	}
+
+	bool RasterBandImpl::GetMinMaxValue(int& minv, int& maxv)
+	{
+		int *idata = (int*)GetData();
+
+		int count = m_pRaster->GetWidth() * m_pRaster->GetHeight();
+		int v_min = AUGE_INT_MAX;
+		int v_max = AUGE_INT_MIN;
+		for(int i=0; i<count; i++)
+		{
+			v_min = v_min < idata[i] ? v_min : idata[i];
+			v_max = v_max > idata[i] ? v_min : idata[i];
+		}
+		minv = v_min;
+		maxv = v_max;
+		return true;
+	}
+
+	bool RasterBandImpl::GetMinMaxValue(double& minv, double& maxv)
+	{
+		double *idata = (double*)GetData();
+
+		int count = m_pRaster->GetWidth() * m_pRaster->GetHeight();
+		double v_min = AUGE_DOUBLE_MAX;
+		double v_max = AUGE_DOUBLE_MIN;
+		for(int i=0; i<count; i++)
+		{
+			v_min = v_min < idata[i] ? v_min : idata[i];
+			v_max = v_max > idata[i] ? v_min : idata[i];
+		}
+		minv = v_min;
+		maxv = v_max;
+		return true;
 	}
 
 	void RasterBandImpl::Create(GDALRasterBand*	poRasterBand, RasterImpl* pRaster)

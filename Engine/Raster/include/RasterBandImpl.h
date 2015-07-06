@@ -26,6 +26,12 @@ namespace auge
 
 		virtual void*			GetData(int x, int y);
 		virtual void*			GetData(double x, double y);
+
+		virtual bool			SetData(void* data);
+
+		virtual bool			GetMinMaxValue(short& minv, short& maxv);
+		virtual bool			GetMinMaxValue(int& minv, int& maxv);
+		virtual bool			GetMinMaxValue(double& minv, double& maxv);
 		
 		virtual RESULTCODE		Read(void* buffer, g_uint x, g_uint y, g_int width, g_uint height);
 

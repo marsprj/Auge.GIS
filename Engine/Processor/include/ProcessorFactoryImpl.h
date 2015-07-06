@@ -23,6 +23,7 @@ namespace auge
 		virtual FeatureProjectProcessor*	CreateFeatureProjectProcessor();
 
 		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor();
+		virtual RasterStretchProcessor*				CreateRasterStretchProcessor();
 	};
 }
 

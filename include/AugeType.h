@@ -48,8 +48,8 @@ typedef unsigned long long  g_uint64;
 #endif
 
 #ifndef AUGE_INT_MIN
-#define AUGE_INT_MIN		(-32768)
-#define AUGE_INT_MAX        (+32768)
+#define AUGE_INT_MIN		(-16384)
+#define AUGE_INT_MAX        (+16384)
 #endif
 
 #ifndef AUGE_DOUBLE_MIN

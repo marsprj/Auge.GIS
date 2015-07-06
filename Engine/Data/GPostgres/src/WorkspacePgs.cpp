@@ -577,10 +577,11 @@ namespace auge
 		char uuid[AUGE_PATH_MAX] = {0};
 		auge_generate_uuid(uuid, AUGE_PATH_MAX);
 
+		const char* path = pRaster->GetPath();
 		const char* name = pRaster->GetName();
 		const char* alias= pRaster->GetAlias();
 		const char* fmt  = pRaster->GetFormat();
-		const char* path = pRaster->GetPath();
+		
 		g_int		srid = pRaster->GetSRID();
 		g_uint		width= pRaster->GetWidth();
 		g_uint		height=pRaster->GetHeight();

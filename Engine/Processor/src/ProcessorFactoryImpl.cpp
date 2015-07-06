@@ -8,6 +8,7 @@
 #include "FeatureProjectProcessorImpl.h"
 
 #include "RasterExtractByRectangleProcessorImpl.h"
+#include "RasterStretchProcessorImpl.h"
 
 #ifndef WIN32
 #include "ArchiveProcessorImpl.h"
@@ -74,5 +75,10 @@ namespace auge
 	RasterExtractByRectangleProcessor* GProcessorFactoryImpl::CreateRasterExtractByRectangleProcessor()
 	{
 		return (new RasterExtractByRectangleProcessorImpl());
+	}
+
+	RasterStretchProcessor*	GProcessorFactoryImpl::CreateRasterStretchProcessor()
+	{
+		return (new RasterStretchProcessorImpl());
 	}
 }

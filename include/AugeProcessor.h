@@ -1,7 +1,7 @@
 #ifndef __AUGE_GEO_PROCESSOR_H__
 #define __AUGE_GEO_PROCESSOR_H__
 
-#include "AugeType.h"
+#include "AugeCore.h"
 #include "AugeObject.h"
 
 #ifdef WIN32
@@ -130,6 +130,22 @@ namespace auge
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 	};
+
+	class RasterStretchProcessor : public GProcessor
+	{
+	protected:
+		RasterStretchProcessor(){}
+		virtual ~RasterStretchProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+
+		virtual	void		SetStartColor(GColor color) = 0;
+		virtual	void		SetEndColor(GColor color) = 0;
+	};
 	//------------------------------------------------------------------------
 	// Raster Processor Begin
 	//------------------------------------------------------------------------
@@ -205,6 +221,7 @@ namespace auge
 
 		// Raster
 		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor() = 0;
+		virtual RasterStretchProcessor*				CreateRasterStretchProcessor() = 0;
 	};
 	
 	extern "C"

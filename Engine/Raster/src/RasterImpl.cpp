@@ -176,6 +176,59 @@ namespace auge
 		return true;
 	}
 
+	bool RasterImpl::GetMinMaxValue(short& minv, short& maxv)
+	{
+		short r_minv = AUGE_INT_MAX;
+		short r_maxv = AUGE_INT_MIN;
+		short b_minv = AUGE_INT_MAX;
+		short b_maxv = AUGE_INT_MIN;
+
+		RasterBandImpl* pBand = NULL;
+		std::vector<RasterBandImpl*>::iterator iter;
+		for(iter=m_bands.begin(); iter!=m_bands.end(); iter++)
+		{
+			pBand = (*iter);
+			if(pBand->GetMinMaxValue(b_minv, b_maxv))
+			{
+				r_minv = r_minv < b_minv ? r_minv : b_minv;
+				r_maxv = r_maxv > b_maxv ? r_maxv : b_maxv;
+			}
+		}
+		minv = r_minv;
+		maxv = r_maxv;
+
+		return true;
+	}
+
+	bool RasterImpl::GetMinMaxValue(int& minv, int& maxv)
+	{
+		int r_minv = AUGE_INT_MAX;
+		int r_maxv = AUGE_INT_MIN;
+		int b_minv = AUGE_INT_MAX;
+		int b_maxv = AUGE_INT_MIN;
+
+		RasterBandImpl* pBand = NULL;
+		std::vector<RasterBandImpl*>::iterator iter;
+		for(iter=m_bands.begin(); iter!=m_bands.end(); iter++)
+		{
+			pBand = (*iter);
+			if(pBand->GetMinMaxValue(b_minv, b_maxv))
+			{
+				r_minv = r_minv < b_minv ? r_minv : b_minv;
+				r_maxv = r_maxv > b_maxv ? r_maxv : b_maxv;
+			}
+		}
+		minv = r_minv;
+		maxv = r_maxv;
+
+		return true;
+	}
+
+	bool RasterImpl::GetMinMaxValue(double& minv, double& maxv)
+	{
+		return true;
+	}
+
 	bool RasterImpl::Create(const char* name, const char* path)
 	{
 		m_name = name;
@@ -187,6 +240,7 @@ namespace auge
 		{
 			return false;
 		}
+		m_poDataset = poDataset;
 
 		// raster format 
 		char ext[AUGE_EXT_MAX] = {0};
@@ -216,7 +270,7 @@ namespace auge
 		{
 			m_bands[i] = NULL;
 		}
-		m_poDataset = poDataset;
+		
 		return true;
 	}
 

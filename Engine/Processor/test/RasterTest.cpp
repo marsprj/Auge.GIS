@@ -70,3 +70,25 @@ void RasterTest::ExtractByRectangle()
 	DWORD te = GetTickCount();
 	printf("[时间]:%d毫秒\n", te-ts);
 }
+
+void RasterTest::Stretch()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterStretchProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterStretchProcessor();
+
+	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputRaster("srtm_58_05.tif");
+
+	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputRaster("srtm_58_05.png");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
