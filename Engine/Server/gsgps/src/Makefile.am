@@ -36,5 +36,7 @@ libgsgps_la_SOURCES=\
 		FeatureProjectRequest.cpp \
 		RasterExtractByRectangeHandler.cpp \
 		RasterExtractByRectangeRequest.cpp \
+		ClusterKmeanHandler.cpp \
+		ClusterKmeanRequest.cpp
 		GProcessEngine.cpp
 

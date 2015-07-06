@@ -1,5 +1,5 @@
-#ifndef __AUGE_GPS_RASTER_EXTRACT_BY_RECTANGLE_PROJECT_REQUEST_H__
-#define __AUGE_GPS_RASTER_EXTRACT_BY_RECTANGLE_PROJECT_REQUEST_H__
+#ifndef __AUGE_GPS_RASTER_EXTRACT_BY_RECTANGLE_REQUEST_H__
+#define __AUGE_GPS_RASTER_EXTRACT_BY_RECTANGLE_REQUEST_H__
 
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
@@ -10,8 +10,6 @@
 
 namespace auge
 {
-	class GFilter;
-
 	class RasterExtractByRectangleRequest : public WebRequest
 	{
 	public:
@@ -86,7 +84,7 @@ namespace auge
 
 }
 
-#endif //__AUGE_GPS_RASTER_EXTRACT_BY_RECTANGLE_PROJECT_REQUEST_H__
+#endif //__AUGE_GPS_RASTER_EXTRACT_BY_RECTANGLE_REQUEST_H__
 
 /************************************************************************
 

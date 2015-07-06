@@ -1,5 +1,5 @@
-#ifndef __AUGE_GPS_RASTER_EXTRACT_BY_RECTANGLE_HANDLER_H__
-#define __AUGE_GPS_RASTER_EXTRACT_BY_RECTANGLE_HANDLER_H__
+#ifndef __AUGE_GPS_CLUSTER_KMEAN_HANDLER_H__
+#define __AUGE_GPS_CLUSTER_KMEAN_HANDLER_H__
 
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
@@ -11,13 +11,13 @@
 namespace auge
 {
 	class WebContext;
-	class RasterExtractByRectangleRequest;
+	class KMeanRequest;
 
-	class RasterExtractByRectangleHandler : public WebHandler
+	class KMeanHandler : public WebHandler
 	{
 	public:
-		RasterExtractByRectangleHandler();
-		virtual ~RasterExtractByRectangleHandler();
+		KMeanHandler();
+		virtual ~KMeanHandler();
 	public:
 		virtual const char*		GetName();
 
@@ -30,4 +30,4 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_GPS_RASTER_EXTRACT_BY_RECTANGLE_HANDLER_H__
+#endif //__AUGE_GPS_CLUSTER_KMEAN_HANDLER_H__

@@ -75,6 +75,7 @@ namespace auge
 		std::vector<WebHandler*>	m_raster_handlers;
 		std::vector<WebHandler*>	m_geometry_handlers;
 		std::vector<WebHandler*>	m_tile_handlers;
+		std::vector<WebHandler*>	m_cluster_handlers;
 	};
 }
 

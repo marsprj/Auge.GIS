@@ -191,7 +191,7 @@ namespace auge
 			c->x = xmin + ((double)(rand()) / RAND_MAX) * w;
 			c->y = ymin + ((double)(rand()) / RAND_MAX) * h;
 
-			printf("%f\t%f\n", c->x, c->y);
+			//printf("%f\t%f\n", c->x, c->y);
 		}
 
 		// init point cluster code
@@ -225,14 +225,14 @@ namespace auge
 			m_clusters[pt->cluster].count++;
 		}
 
-		printf("//////////////////////////////////////////////////////////////////////////\n");
+		//printf("//////////////////////////////////////////////////////////////////////////\n");
 		kmean_cluster_t* c  = m_clusters;
 		for(g_uint i=0; i<m_cluster_count; i++, c++)
 		{
 			m_clusters[i].x /= m_clusters[i].count;
 			m_clusters[i].y /= m_clusters[i].count;
 
-			printf("[%d]:\t%f\t%f\t%d\n", i, c->x, c->y, c->count);
+			//printf("[%d]:\t%f\t%f\t%d\n", i, c->x, c->y, c->count);
 		}		
 	}
 

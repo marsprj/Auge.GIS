@@ -15,6 +15,8 @@
 
 #include "RasterExtractByRectangleHandler.h"
 
+#include "ClusterKmeanHandler.h"
+
 namespace auge
 {
 	WebEngine* augeGetWebEngineInstance()
@@ -38,11 +40,13 @@ namespace auge
 		m_feature_handlers.push_back(new FeatureProjectHandler());
 
 		m_raster_handlers.push_back(new RasterExtractByRectangleHandler());
+
+		m_cluster_handlers.push_back(new KMeanHandler());
 	}
 
 	GeoProcessingEngine::~GeoProcessingEngine()
 	{
-		m_handler = NULL;
+		m_handler = NULL; 
 		m_pcapHandler->Release();
 		CleanupHandlers();
 	}
@@ -63,6 +67,7 @@ namespace auge
 		CleanupHandlers(m_raster_handlers);
 		CleanupHandlers(m_geometry_handlers);
 		CleanupHandlers(m_tile_handlers);
+		CleanupHandlers(m_cluster_handlers);
 	}
 
 	void GeoProcessingEngine::CleanupHandlers(std::vector<WebHandler*>& handlers)
@@ -101,6 +106,11 @@ namespace auge
 			return handler;
 		}
 		handler = GetHandler(name, m_tile_handlers);
+		if(handler!=NULL)
+		{
+			return handler;
+		}
+		handler = GetHandler(name, m_cluster_handlers);
 		if(handler!=NULL)
 		{
 			return handler;

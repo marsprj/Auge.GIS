@@ -81,6 +81,12 @@
     <ClCompile Include="..\src\RasterExtractByRectangleRequest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ClusterKmeanHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ClusterKmeanRequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\GProcessEngine.h">
@@ -150,6 +156,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\RasterExtractByRectangleRequest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ClusterKmeanHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ClusterKmeanRequest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
