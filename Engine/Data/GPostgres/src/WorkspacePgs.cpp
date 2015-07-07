@@ -598,7 +598,7 @@ namespace auge
 		char local_path[AUGE_PATH_MAX];
 		memset(local_path, 0, AUGE_PATH_MAX);
 		auge_make_path(local_path, NULL, GetRepository(), raster_path+1,NULL);
-		if(g_access(local_path, 4))
+		//if(g_access(local_path, 4))
 		{
 			pRaster->Save(local_path);
 		}
@@ -608,7 +608,7 @@ namespace auge
 		g_snprintf(sql, AUGE_SQL_MAX, format,	name,
 												alias,
 												fmt,
-												raster_path,
+												path,//raster_path,
 												nband,
 												srid,
 												width,

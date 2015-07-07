@@ -37,6 +37,10 @@ namespace auge
 			RasterIO* pRasterIO = augeGetRasterIOInstance();
 			
 			m_pRaster = pRasterIO->Read(local_path);
+			if(m_pRaster!=NULL)
+			{
+				m_pRaster->SetPath(m_path.c_str());
+			}
 		}
 		return m_pRaster;
 	}

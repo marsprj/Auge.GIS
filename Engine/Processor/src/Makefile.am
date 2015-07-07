@@ -28,4 +28,7 @@ libgprocessor_la_SOURCES=\
 		SrsBase.cpp \
 		sqlite3.c \
 		RasterExtractByRectangleProcessorImpl.cpp \
-		RasterStretchProcessorImpl.cpp
+		RasterEdgeDectectProcessorImpl.cpp \
+		RasterStretchProcessorImpl.cpp \
+		RasterGraylizeProcessorImpl.cpp
+

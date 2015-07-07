@@ -40,6 +40,7 @@ namespace auge
 	public:
 		virtual const char*		GetName() = 0;
 		virtual const char*		GetAlias() = 0;
+		virtual void			SetName(const char* name) = 0;
 		virtual void			SetAlias(const char* alias) = 0;
 
 		//virtual augeDataSetType	GetType() = 0;

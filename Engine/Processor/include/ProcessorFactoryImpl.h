@@ -24,6 +24,8 @@ namespace auge
 
 		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor();
 		virtual RasterStretchProcessor*				CreateRasterStretchProcessor();
+		virtual RasterEdgeDetectProcessor*			CreateRasterEdgeDetectProcessor();
+		virtual RasterGreylizeProcessor*			CreateRasterGreylizeProcessor();
 	};
 }
 

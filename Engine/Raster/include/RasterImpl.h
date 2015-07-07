@@ -20,6 +20,7 @@ namespace auge
 	public:
 		virtual const char*		GetName();
 		virtual const char*		GetAlias();
+		virtual void			SetName(const char* name);
 		virtual void			SetAlias(const char* alias);
 
 		//virtual augeDataSetType	GetType();
@@ -63,6 +64,7 @@ namespace auge
 		std::string  m_name;
 		std::string	 m_alias;
 		std::string  m_path;
+		std::string	 m_full_path;
 		std::string  m_format;
 
 		GDALDataset* m_poDataset;

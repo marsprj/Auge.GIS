@@ -146,6 +146,43 @@ namespace auge
 		virtual	void		SetStartColor(GColor color) = 0;
 		virtual	void		SetEndColor(GColor color) = 0;
 	};
+
+	typedef enum
+	{
+		augeEdgeSobel	=  0,
+		augeEdgeRoberts		,
+		augeEdgePrewitt		,
+		augeEdgeLaplacian
+	}augeEdgeDetector;
+
+	class RasterGreylizeProcessor : public GProcessor
+	{
+	protected:
+		RasterGreylizeProcessor(){}
+		virtual ~RasterGreylizeProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+	};
+
+	class RasterEdgeDetectProcessor : public GProcessor
+	{
+	protected:
+		RasterEdgeDetectProcessor(){}
+		virtual ~RasterEdgeDetectProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+
+		virtual void		SetEdgeDetector(augeEdgeDetector detector) = 0;
+
+	};
 	//------------------------------------------------------------------------
 	// Raster Processor Begin
 	//------------------------------------------------------------------------
@@ -222,6 +259,8 @@ namespace auge
 		// Raster
 		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor() = 0;
 		virtual RasterStretchProcessor*				CreateRasterStretchProcessor() = 0;
+		virtual RasterEdgeDetectProcessor*			CreateRasterEdgeDetectProcessor() = 0;
+		virtual RasterGreylizeProcessor*			CreateRasterGreylizeProcessor() = 0;
 	};
 	
 	extern "C"

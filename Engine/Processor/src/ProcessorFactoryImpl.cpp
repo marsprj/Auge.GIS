@@ -9,6 +9,8 @@
 
 #include "RasterExtractByRectangleProcessorImpl.h"
 #include "RasterStretchProcessorImpl.h"
+#include "RasterEdgeDetectProcessorImpl.h"
+#include "RasterGreylizeProcessorImpl.h"
 
 #ifndef WIN32
 #include "ArchiveProcessorImpl.h"
@@ -80,5 +82,15 @@ namespace auge
 	RasterStretchProcessor*	GProcessorFactoryImpl::CreateRasterStretchProcessor()
 	{
 		return (new RasterStretchProcessorImpl());
+	}
+
+	RasterEdgeDetectProcessor* GProcessorFactoryImpl::CreateRasterEdgeDetectProcessor()
+	{
+		return (new RasterEdgeDetectProcessorImpl());
+	}
+
+	RasterGreylizeProcessor* GProcessorFactoryImpl::CreateRasterGreylizeProcessor()
+	{
+		return (new RasterGreylizeProcessorImpl());
 	}
 }

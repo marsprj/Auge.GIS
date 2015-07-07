@@ -26,6 +26,18 @@ namespace auge
 		return m_name.empty() ? NULL : m_name.c_str();
 	}
 
+	void RasterImpl::SetName(const char* name)
+	{
+		if(name==NULL)
+		{
+			m_name.clear();
+		}
+		else
+		{
+			m_name = name;
+		}
+	}
+
 	const char*	RasterImpl::GetAlias()
 	{
 		return m_alias.empty() ? NULL : m_alias.c_str();
@@ -233,7 +245,7 @@ namespace auge
 	{
 		m_name = name;
 		m_alias= name;
-		m_path = path;
+		m_full_path = path;
 
 		GDALDataset* poDataset = (GDALDataset*)GDALOpen(path, GA_ReadOnly);	
 		if(poDataset==NULL)
@@ -429,7 +441,7 @@ namespace auge
 			GDALClose(m_poDataset);
 
 			m_poDataset = poDataset;
-			m_path = path;
+			m_full_path = path;
 		}
 		return AG_SUCCESS;
 	}

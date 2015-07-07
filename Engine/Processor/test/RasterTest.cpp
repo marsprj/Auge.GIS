@@ -92,3 +92,55 @@ void RasterTest::Stretch()
 	DWORD te = GetTickCount();
 	printf("[时间]:%d毫秒\n", te-ts);
 }
+
+void RasterTest::EdgeDetorSobol()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterEdgeDetectProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterEdgeDetectProcessor();
+
+	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputRaster("srtm_58_05.tif");
+
+	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputRaster("srtm_58_05_edge.tif");
+
+	//pProcessor->SetInputDataSource("rsdb");
+	//pProcessor->SetInputRaster("Koala.jpeg");
+
+	//pProcessor->SetOutputDataSource("rsdb");
+	//pProcessor->SetOutputRaster("Koala_edge.jpeg");
+
+	pProcessor->SetEdgeDetector(auge::augeEdgeSobel);
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
+
+void RasterTest::Graylize()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterGreylizeProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterGreylizeProcessor();
+
+	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputRaster("Koala.jpeg");
+
+	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputRaster("Koala_gray.jpeg");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
