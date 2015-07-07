@@ -155,11 +155,11 @@ namespace auge
 		augeEdgeLaplacian
 	}augeEdgeDetector;
 
-	class RasterGreylizeProcessor : public GProcessor
+	class RasterGraylizeProcessor : public GProcessor
 	{
 	protected:
-		RasterGreylizeProcessor(){}
-		virtual ~RasterGreylizeProcessor(){}
+		RasterGraylizeProcessor(){}
+		virtual ~RasterGraylizeProcessor(){}
 	public:
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
@@ -197,6 +197,10 @@ namespace auge
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 		virtual void		SetOutputPath(const char* path) = 0;
+
+		virtual void		SetRed(g_uint i) = 0;
+		virtual void		SetGreen(g_uint i) = 0;
+		virtual void		SetBlue(g_uint i) = 0;
 	};
 
 	//------------------------------------------------------------------------
@@ -276,7 +280,8 @@ namespace auge
 		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor() = 0;
 		virtual RasterStretchProcessor*				CreateRasterStretchProcessor() = 0;
 		virtual RasterEdgeDetectProcessor*			CreateRasterEdgeDetectProcessor() = 0;
-		virtual RasterGreylizeProcessor*			CreateRasterGreylizeProcessor() = 0;
+		virtual RasterGraylizeProcessor*			CreateRasterGraylizeProcessor() = 0;
+		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor() = 0;
 	};
 	
 	extern "C"

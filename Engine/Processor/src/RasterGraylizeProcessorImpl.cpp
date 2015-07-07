@@ -4,16 +4,16 @@
 
 namespace auge
 {
-	RasterGreylizeProcessorImpl::RasterGreylizeProcessorImpl()
+	RasterGraylizeProcessorImpl::RasterGraylizeProcessorImpl()
 	{
 	}
 
-	RasterGreylizeProcessorImpl::~RasterGreylizeProcessorImpl()
+	RasterGraylizeProcessorImpl::~RasterGraylizeProcessorImpl()
 	{
 
 	}
 	
-	void RasterGreylizeProcessorImpl::SetInputDataSource(const char* sourceName)
+	void RasterGraylizeProcessorImpl::SetInputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -25,7 +25,7 @@ namespace auge
 		}
 	}
 
-	void RasterGreylizeProcessorImpl::SetInputRaster(const char* rasterName)
+	void RasterGraylizeProcessorImpl::SetInputRaster(const char* rasterName)
 	{
 		if(rasterName==NULL)
 		{
@@ -37,7 +37,7 @@ namespace auge
 		}
 	}
 
-	void RasterGreylizeProcessorImpl::SetOutputDataSource(const char* sourceName)
+	void RasterGraylizeProcessorImpl::SetOutputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -49,7 +49,7 @@ namespace auge
 		}
 	}
 
-	void RasterGreylizeProcessorImpl::SetOutputRaster(const char* rasterName)
+	void RasterGraylizeProcessorImpl::SetOutputRaster(const char* rasterName)
 	{
 		if(rasterName==NULL)
 		{
@@ -61,27 +61,27 @@ namespace auge
 		}
 	}
 	
-	const char*	RasterGreylizeProcessorImpl::GetInputDataSource()
+	const char*	RasterGraylizeProcessorImpl::GetInputDataSource()
 	{
 		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
 	}
 
-	const char*	RasterGreylizeProcessorImpl::GetInputRaster()
+	const char*	RasterGraylizeProcessorImpl::GetInputRaster()
 	{
 		return m_in_raster_name.empty() ? NULL : m_in_raster_name.c_str();
 	}
 
-	const char*	RasterGreylizeProcessorImpl::GetOutputDataSource()
+	const char*	RasterGraylizeProcessorImpl::GetOutputDataSource()
 	{
 		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
 	}
 
-	const char*	RasterGreylizeProcessorImpl::GetOutputRaster()
+	const char*	RasterGraylizeProcessorImpl::GetOutputRaster()
 	{
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
 	}
 
-	RESULTCODE RasterGreylizeProcessorImpl::Execute()
+	RESULTCODE RasterGraylizeProcessorImpl::Execute()
 	{
 		const char* inSourceName = GetInputDataSource();
 		const char* inRasterName = GetInputRaster();
@@ -142,12 +142,12 @@ namespace auge
 		return rc;
 	}
 
-	void RasterGreylizeProcessorImpl::Release()
+	void RasterGraylizeProcessorImpl::Release()
 	{
 		delete this;
 	}
 
-	bool RasterGreylizeProcessorImpl::Greylize(Raster* pRaster)
+	bool RasterGraylizeProcessorImpl::Greylize(Raster* pRaster)
 	{
 		g_uint64 w = pRaster->GetWidth();
 		g_uint64 h = pRaster->GetHeight();

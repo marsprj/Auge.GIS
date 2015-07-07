@@ -90,8 +90,13 @@ namespace auge
 		return (new RasterEdgeDetectProcessorImpl());
 	}
 
-	RasterGreylizeProcessor* GProcessorFactoryImpl::CreateRasterGreylizeProcessor()
+	RasterGraylizeProcessor* GProcessorFactoryImpl::CreateRasterGraylizeProcessor()
 	{
-		return (new RasterGreylizeProcessorImpl());
+		return (new RasterGraylizeProcessorImpl());
+	}
+
+	RasterFormatConvertToJPEGProcessor*	GProcessorFactoryImpl::CreateRasterFormatConvertToJPEGProcessor()
+	{
+		return (new RasterFormatConvertToJPEGProcessorImpl());
 	}
 }

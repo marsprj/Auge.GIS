@@ -1,5 +1,5 @@
-#ifndef __AUGE_RASTER_GREY_IMPL_H__
-#define __AUGE_RASTER_GREY_IMPL_H__
+#ifndef __AUGE_RASTER_GRAY_IMPL_H__
+#define __AUGE_RASTER_GRAY_IMPL_H__
 
 #include "AugeCore.h"
 #include "AugeProcessor.h"
@@ -8,11 +8,11 @@
 
 namespace auge
 {
-	class RasterGreylizeProcessorImpl : public RasterGreylizeProcessor
+	class RasterGraylizeProcessorImpl : public RasterGraylizeProcessor
 	{
 	public:
-		RasterGreylizeProcessorImpl();
-		virtual ~RasterGreylizeProcessorImpl();
+		RasterGraylizeProcessorImpl();
+		virtual ~RasterGraylizeProcessorImpl();
 	public:
 		virtual void		SetInputDataSource(const char* sourceName);
 		virtual void		SetInputRaster(const char* rasterName);
@@ -43,4 +43,4 @@ namespace auge
 }
 
 
-#endif //__AUGE_RASTER_GREY_IMPL_H__
+#endif //__AUGE_RASTER_GRAY_IMPL_H__

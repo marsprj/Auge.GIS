@@ -9,8 +9,9 @@ class RasterTest : public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE(RasterTest);
 	//CPPUNIT_TEST(ExtractByRectangle);
 	//CPPUNIT_TEST(Stretch);
-	CPPUNIT_TEST(EdgeDetorSobol);
+	//CPPUNIT_TEST(EdgeDetorSobol);
 	//CPPUNIT_TEST(Graylize);
+	CPPUNIT_TEST(ToJPG);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -21,6 +22,7 @@ private:
 	void	Stretch();
 	void	EdgeDetorSobol();
 	void	Graylize();
+	void	ToJPG();
 
 private:
 	auge::GConnection	*m_pConnection;

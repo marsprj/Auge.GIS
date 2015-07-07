@@ -132,15 +132,51 @@ void RasterTest::Graylize()
 {
 	DWORD ts = GetTickCount();
 
-	auge::RasterGreylizeProcessor* pProcessor = NULL;
+	auge::RasterGraylizeProcessor* pProcessor = NULL;
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
-	pProcessor = pFactory->CreateRasterGreylizeProcessor();
+	pProcessor = pFactory->CreateRasterGraylizeProcessor();
 
 	pProcessor->SetInputDataSource("rsdb");
 	pProcessor->SetInputRaster("Koala.jpeg");
 
 	pProcessor->SetOutputDataSource("rsdb");
 	pProcessor->SetOutputRaster("Koala_gray.jpeg");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[Ê±¼ä]:%dºÁÃë\n", te-ts);
+}
+
+void RasterTest::ToJPG()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterFormatConvertToJPEGProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterFormatConvertToJPEGProcessor();
+
+	//pProcessor->SetInputDataSource("rsdb");
+	//pProcessor->SetInputRaster("srtm_58_05.tif");
+
+	//pProcessor->SetOutputDataSource("rsdb");
+	//pProcessor->SetOutputRaster("srtm_58_05.jpeg");
+
+	auge::GEnvelope extent;
+	extent.Set(100,100,800,800);
+
+	pProcessor->SetInputRectangle(extent);
+	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputRaster("Koala.png");
+
+	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputRaster("Koala_xxx.png");
+
+	pProcessor->SetRed(1);
+	pProcessor->SetGreen(0);
+	pProcessor->SetBlue(0);
 
 	RESULTCODE rc = pProcessor->Execute();
 

@@ -106,6 +106,32 @@ namespace auge
 		return NULL;
 	}
 
+	RESULTCODE RasterBandImpl::GetData(void* data, GRect rect)
+	{
+		if(data==NULL)
+		{
+			return AG_FAILURE;
+		}
+		int x = rect.m_xmin;
+		int y = rect.m_ymin;
+		int width = rect.GetWidth();
+		int height= rect.GetHeight();
+		GDALDataType type = m_poRasterBand->GetRasterDataType();
+		CPLErr err = m_poRasterBand->RasterIO(	GF_Read, 
+			x, y,
+			width, height, 
+			data,
+			width, height,
+			type, 
+			0, 0);
+		if(err!=CE_None)
+		{
+			return AG_FAILURE;
+		}
+
+		return AG_SUCCESS;
+	}
+
 	bool RasterBandImpl::SetData(void* data)
 	{
 		if(data==NULL)

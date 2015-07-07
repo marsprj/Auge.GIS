@@ -3,6 +3,7 @@
 
 #include "AugeGeometry.h"
 #include "AugeProcessor.h"
+#include "AugeRaster.h"
 #include <string>
 
 namespace auge
@@ -22,6 +23,10 @@ namespace auge
 		virtual void		SetOutputRaster(const char* rasterName);
 		virtual void		SetOutputPath(const char* path);
 
+		virtual void		SetRed(g_uint i);
+		virtual void		SetGreen(g_uint i);
+		virtual void		SetBlue(g_uint i);
+
 		virtual RESULTCODE	Execute();
 		virtual void		Release();
 
@@ -31,6 +36,14 @@ namespace auge
 		RESULTCODE			Fill_2(Raster* poutRaster, Raster* pinRaster, GRect rastertRect);
 		RESULTCODE			Fill_3(Raster* poutRaster, Raster* pinRaster, GRect rastertRect);
 		RESULTCODE			Fill_4(Raster* poutRaster, Raster* pinRaster, GRect rastertRect);
+
+		RESULTCODE			Fill_Int16(Raster* poutRaster, RasterBand* pinBand, GRect rastertRect);
+
+		RESULTCODE			Fill(RasterBand* poutBand, RasterBand* pinBand, GRect rastertRect);
+		RESULTCODE			Fill_Byte(RasterBand* poutBand, RasterBand* pinBand, GRect rastertRect);
+		RESULTCODE			Fill_Int16(RasterBand* poutBand, RasterBand* pinBand, GRect rastertRect);
+
+		void				GetMinMax(short& i_min, short& i_max, short* i_data, int w, int h);
 
 	private:
 		const char*			GetInputDataSource();
@@ -50,6 +63,10 @@ namespace auge
 		std::string	m_out_source_name;
 		std::string	m_out_raster_name;
 		std::string m_out_path;
+
+		g_uint		m_red;
+		g_uint		m_green;
+		g_uint		m_blue;
 	};
 
 }

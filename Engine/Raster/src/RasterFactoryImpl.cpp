@@ -205,7 +205,7 @@ namespace auge
 		pmemDriver = GetGDALDriverManager()->GetDriverByName("MEM");
 
 		GDALDataset* pmemDataset = NULL;
-		pmemDataset = pmemDriver->Create(name, width, height, 4, pixelType, NULL);
+		pmemDataset = pmemDriver->Create(name, width, height, 3, pixelType, NULL);
 		if(pmemDataset==NULL)
 		{
 			const char* msg = CPLGetLastErrorMsg();			
@@ -227,42 +227,42 @@ namespace auge
 		//// spatial reference
 		//pmemDataset->SetProjection("");
 
-		// read and write new raster
-		g_uint64 buffer_size = (g_uint64)width * (g_uint64)height * sizeof(char);
-		unsigned char* buffer = (unsigned char*)malloc(buffer_size);
-		memset(buffer, 0, buffer_size);
+		//// read and write new raster
+		//g_uint64 buffer_size = (g_uint64)width * (g_uint64)height * sizeof(char);
+		//unsigned char* buffer = (unsigned char*)malloc(buffer_size);
+		//memset(buffer, 0, buffer_size);
 
-		CPLErr err = CE_None;
-		RasterBand* pBand = NULL;
-		GDALRasterBand* pmemBand = NULL;
-		for(g_uint i=0; i<band_count; i++)
-		{
-			memset(buffer, 0, buffer_size);
-			pmemBand = pmemDataset->GetRasterBand(i+1);
-			if(pmemBand==NULL)
-			{
-				break;
-			}
-			CPLErr err = pmemBand->RasterIO(GF_Write, 
-				0, 0,
-				width, height, 
-				buffer,
-				width, height,
-				pixelType, 
-				0, 0 );
-			if(err>CE_Warning)
-			{
-				break;
-			}
-		}
+		//CPLErr err = CE_None;
+		//RasterBand* pBand = NULL;
+		//GDALRasterBand* pmemBand = NULL;
+		//for(g_uint i=0; i<band_count; i++)
+		//{
+		//	memset(buffer, 0, buffer_size);
+		//	pmemBand = pmemDataset->GetRasterBand(i+1);
+		//	if(pmemBand==NULL)
+		//	{
+		//		break;
+		//	}
+		//	CPLErr err = pmemBand->RasterIO(GF_Write, 
+		//		0, 0,
+		//		width, height, 
+		//		buffer,
+		//		width, height,
+		//		pixelType, 
+		//		0, 0 );
+		//	if(err>CE_Warning)
+		//	{
+		//		break;
+		//	}
+		//}
 
-		free(buffer);
+		//free(buffer);
 
-		if(err>CE_Warning)
-		{
-			GDALClose(pmemDataset);
-			return NULL;
-		}
+		//if(err>CE_Warning)
+		//{
+		//	GDALClose(pmemDataset);
+		//	return NULL;
+		//}
 
 		RasterImpl* poutRaster = new RasterImpl();
 		poutRaster->Create(name, pmemDataset);
