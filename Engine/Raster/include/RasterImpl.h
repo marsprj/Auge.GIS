@@ -49,7 +49,7 @@ namespace auge
 		virtual const char*		GetPath();
 		virtual void			SetPath(const char* path);
 
-		virtual	RESULTCODE		Save(const char* path);
+		virtual	RESULTCODE		Save(const char* path, const char* format=NULL);
 
 	public:
 		bool	Create(const char* name, const char* path);

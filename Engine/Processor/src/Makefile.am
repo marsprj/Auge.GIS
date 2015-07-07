@@ -30,5 +30,6 @@ libgprocessor_la_SOURCES=\
 		RasterExtractByRectangleProcessorImpl.cpp \
 		RasterEdgeDectectProcessorImpl.cpp \
 		RasterStretchProcessorImpl.cpp \
-		RasterGraylizeProcessorImpl.cpp
+		RasterGraylizeProcessorImpl.cpp \
+		RasterFormatConvertToJPEGProcessorImpl.cpp
 

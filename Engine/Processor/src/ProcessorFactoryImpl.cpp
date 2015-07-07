@@ -10,7 +10,8 @@
 #include "RasterExtractByRectangleProcessorImpl.h"
 #include "RasterStretchProcessorImpl.h"
 #include "RasterEdgeDetectProcessorImpl.h"
-#include "RasterGreylizeProcessorImpl.h"
+#include "RasterGraylizeProcessorImpl.h"
+#include "RasterFormatConvertToJPEGProcessorImpl.h"
 
 #ifndef WIN32
 #include "ArchiveProcessorImpl.h"

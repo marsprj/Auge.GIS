@@ -189,6 +189,86 @@ namespace auge
 		return poutRaster;
 	}
 
+	Raster*	RasterFactoryImpl::CreateRasterJPG(const char* name, g_uint width, g_uint height)
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		g_uint band_count = 3;
+		GDALDataType pixelType = GDT_Byte;
+		GDALDriver* pmemDriver  = NULL;
+		pmemDriver = GetGDALDriverManager()->GetDriverByName("MEM");
+
+		GDALDataset* pmemDataset = NULL;
+		pmemDataset = pmemDriver->Create(name, width, height, 4, pixelType, NULL);
+		if(pmemDataset==NULL)
+		{
+			const char* msg = CPLGetLastErrorMsg();			
+			pError->SetError(msg);
+			pLogger->Error(msg,__FILE__,__LINE__);
+
+			return NULL;
+		}
+
+		//// GeoTransform
+		//double adfGeoTransform[6];
+		//adfGeoTransform[0] = 0;							/* top left x */
+		//adfGeoTransform[1] = 1;							/* w-e pixel resolution */
+		//adfGeoTransform[2] = 0;							/* 0 */
+		//adfGeoTransform[3] = height;					/* top left y */
+		//adfGeoTransform[4] = 0;							/* 0 */
+		//adfGeoTransform[5] =-1;							/* n-s pixel resolution (negative value) */
+		//pmemDataset->SetGeoTransform(adfGeoTransform);
+		//// spatial reference
+		//pmemDataset->SetProjection("");
+
+		// read and write new raster
+		g_uint64 buffer_size = (g_uint64)width * (g_uint64)height * sizeof(char);
+		unsigned char* buffer = (unsigned char*)malloc(buffer_size);
+		memset(buffer, 0, buffer_size);
+
+		CPLErr err = CE_None;
+		RasterBand* pBand = NULL;
+		GDALRasterBand* pmemBand = NULL;
+		for(g_uint i=0; i<band_count; i++)
+		{
+			memset(buffer, 0, buffer_size);
+			pmemBand = pmemDataset->GetRasterBand(i+1);
+			if(pmemBand==NULL)
+			{
+				break;
+			}
+			CPLErr err = pmemBand->RasterIO(GF_Write, 
+				0, 0,
+				width, height, 
+				buffer,
+				width, height,
+				pixelType, 
+				0, 0 );
+			if(err>CE_Warning)
+			{
+				break;
+			}
+		}
+
+		free(buffer);
+
+		if(err>CE_Warning)
+		{
+			GDALClose(pmemDataset);
+			return NULL;
+		}
+
+		RasterImpl* poutRaster = new RasterImpl();
+		poutRaster->Create(name, pmemDataset);
+		return poutRaster;
+	}
+
 	Raster* RasterFactoryImpl::CreateRaster(const char* name, augePixelType pixelType, g_uint width, g_uint height, g_int bands, g_uint srid, GEnvelope& extent)
 	{
 		return NULL;

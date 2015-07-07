@@ -57,7 +57,10 @@
     <ClCompile Include="..\src\RasterEdgeDetectProcessorImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\RasterGreylizeProcessorImpl.cpp">
+    <ClCompile Include="..\src\RasterGraylizeProcessorImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RasterFormatConvertToJPEGProcessorImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,7 +107,7 @@
     <ClInclude Include="..\include\RasterEdgeDetectProcessorImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\RasterGreylizeProcessorImpl.h">
+    <ClInclude Include="..\include\RasterFormatConvertToJPEGProcessorImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

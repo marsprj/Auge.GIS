@@ -134,7 +134,7 @@ namespace auge
 
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
 
-		poutRaster = pRasterFactory->CreateRaster(outRasterName, exent,pinRaster);
+		poutRaster = pRasterFactory->CreateRaster(outRasterName, exent, pinRaster);
 		if(poutRaster==NULL)
 		{
 			pinRasterDataset->Release();

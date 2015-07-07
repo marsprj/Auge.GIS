@@ -412,14 +412,17 @@ namespace auge
 		m_bands.clear();
 	}
 
-	RESULTCODE RasterImpl::Save(const char* path)
+	RESULTCODE RasterImpl::Save(const char* path, const char* format/*=NULL*/)
 	{
 		//if(m_path.empty())
 		{
-			char ext[AUGE_EXT_MAX];
-			memset(ext, 0, AUGE_EXT_MAX);
-			auge_split_path(path, NULL, NULL, NULL, ext);
-			const char* format = auge_raster_get_driver(ext + 1);
+			if(format==NULL)
+			{
+				char ext[AUGE_EXT_MAX];
+				memset(ext, 0, AUGE_EXT_MAX);
+				auge_split_path(path, NULL, NULL, NULL, ext);
+				format = auge_raster_get_driver(ext + 1);
+			}
 			GDALDriver* poDriver = GetGDALDriverManager()->GetDriverByName(format);
 			if(poDriver==NULL)
 			{

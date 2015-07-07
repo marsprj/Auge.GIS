@@ -1,4 +1,4 @@
-#include "RasterGreylizeProcessorImpl.h"
+#include "RasterGraylizeProcessorImpl.h"
 #include "AugeData.h"
 #include "AugeRaster.h"
 

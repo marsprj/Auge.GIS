@@ -181,8 +181,24 @@ namespace auge
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 
 		virtual void		SetEdgeDetector(augeEdgeDetector detector) = 0;
-
 	};
+
+	class RasterFormatConvertToJPEGProcessor : public GProcessor
+	{
+	protected:
+		RasterFormatConvertToJPEGProcessor(){}
+		virtual ~RasterFormatConvertToJPEGProcessor(){}
+	public:
+		virtual void		SetInputRectangle(GEnvelope& rect) = 0;
+
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* path) = 0;
+	};
+
 	//------------------------------------------------------------------------
 	// Raster Processor Begin
 	//------------------------------------------------------------------------
