@@ -243,7 +243,7 @@ namespace auge
 		poutBand_G->SetData(g_b);
 		poutBand_B->SetData(b_b);
 
-		memset(r_b, 128, buffer_size);
+		memset(r_b, 255, buffer_size);
 		poutBand_A->SetData(r_b);
 
 		free(r_b);
