@@ -85,6 +85,11 @@ void RasterTest::Stretch()
 	pProcessor->SetOutputDataSource("rsdb");
 	pProcessor->SetOutputRaster("srtm_58_05.png");
 
+	auge::GColor start_color(0,255,0,255);
+	pProcessor->SetStartColor(start_color);
+	auge::GColor end_color(255,0,0,255);
+	pProcessor->SetEndColor(end_color);
+
 	RESULTCODE rc = pProcessor->Execute();
 
 	pProcessor->Release();
