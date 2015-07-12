@@ -8,6 +8,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "..\test\test.vcxpro
 		{B6F892A7-59B5-48D6-A97C-8BC432B49E92} = {B6F892A7-59B5-48D6-A97C-8BC432B49E92}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GShape", "..\..\Data\GShape\32_x86_win_vc10\GShape.vcxproj", "{C17AA319-6571-48F3-BFD6-111B3B0445C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -22,6 +24,10 @@ Global
 		{634F6CF5-056B-4A46-9E52-335F7C33E9AF}.Debug|Win32.Build.0 = Debug|Win32
 		{634F6CF5-056B-4A46-9E52-335F7C33E9AF}.Release|Win32.ActiveCfg = Release|Win32
 		{634F6CF5-056B-4A46-9E52-335F7C33E9AF}.Release|Win32.Build.0 = Release|Win32
+		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Debug|Win32.Build.0 = Debug|Win32
+		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Release|Win32.ActiveCfg = Release|Win32
+		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

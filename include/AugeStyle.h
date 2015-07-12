@@ -48,12 +48,14 @@ namespace auge
 	//========================================================================
 	typedef enum augeMarkType
 	{
-		augeSquare			= 0,
-		augeCircle			= 1,
-		augeTriangle		= 2,
-		augeStar			= 3,
-		augeCross			= 4,
-		augeX				= 5
+		augeMarkerSquare		= 0,
+		augeMarkerCircle		= 1,
+		augeMarkerTriangle		= 2,
+		augeMarkerStar			= 3,
+		augeMarkerCross			= 4,
+		augeMarkerX				= 5,
+		augeMarkerPentagon		= 6,
+		augeMarkerCapital		= 7
 	}augeMarkType;
 	//========================================================================
 	// augeSymbolType Enum
@@ -239,6 +241,9 @@ namespace auge
 
 		virtual void			SetGraphic(Graphic* pGraphic) = 0;
 		virtual Graphic*		GetGraphic() = 0;
+
+		virtual void			SetMarkType(augeMarkType type) = 0;
+		virtual augeMarkType	GetMarkType() = 0;
 
 		virtual void			SetStroke(Stroke* pStroke) = 0;
 		virtual Stroke*			GetStroke() = 0;

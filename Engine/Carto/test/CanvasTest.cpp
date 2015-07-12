@@ -7,7 +7,7 @@
 
 //#pragma comment(lib, "GPostgresD.lib")
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(CanvasTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(CanvasTest);
 
 void CanvasTest::setUp() 
 {
@@ -57,6 +57,12 @@ void CanvasTest::DrawPoint()
 	auge::PointSymbolizer* pSymbolizer = NULL;
 	pSymbolizer = pStyleFactory->CreatePointSymbolizer();
 	pSymbolizer->SetSize(20);
+	//pSymbolizer->SetRotation(30.0f);
+	//pSymbolizer->SetMarkType(auge::augeSquare);
+	//pSymbolizer->SetMarkType(auge::augeStar);
+	//pSymbolizer->SetMarkType(auge::augeTriangle);
+	//pSymbolizer->SetMarkType(auge::augePentagon);
+	pSymbolizer->SetMarkType(auge::augeCapital);
 
 	auge::GColor bgColor(255,255,255,255);
 	pCanvas->DrawBackground(bgColor);
@@ -436,7 +442,7 @@ void CanvasTest::ReadColor()
 
 	g_ulong val = atoi(str+1);
 	color.Set(val);
-
+	
 	int r,g,b,a;
 	sscanf(str,"#%2x%2x%2x%2x", &r,&g,&b,&a);
 
@@ -453,3 +459,4 @@ void DrawRasterLayer()
 {
 
 }
+

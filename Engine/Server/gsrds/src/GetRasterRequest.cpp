@@ -17,7 +17,11 @@ namespace auge
 	{
 		SetVersion(cgi["version"]);
 		SetPath(cgi["path"]);
-		SetName(cgi["name"]);
+		SetRasterName(cgi["rasterName"]);
+		SetSourceName(cgi["sourceName"]);
+		SetFormat(cgi["format"]);
+		SetExtent(cgi["extent"]);
+		SetBands(cgi["bands"]);
 		return true;
 	}
 
@@ -72,20 +76,93 @@ namespace auge
 		return m_encoding.c_str();
 	}
 
-	void GetRasterRequest::SetName(const char* name)
+	void GetRasterRequest::SetRasterName(const char* rasterName)
 	{
-		if(name==NULL)
+		if(rasterName==NULL)
 		{
-			m_name.clear();
+			m_raster_name.clear();
 		}
 		else
 		{
-			m_name = name;
+			m_raster_name = rasterName;
 		}
 	}
 
 	const char* GetRasterRequest::GetName()
 	{
-		return m_name.empty() ? NULL : m_name.c_str();
+		return m_raster_name.empty() ? NULL : m_raster_name.c_str();
+	}
+
+	void GetRasterRequest::SetSourceName(const char* sourceName)
+	{
+		if(sourceName==NULL)
+		{
+			m_sourc_name.clear();
+		}
+		else
+		{
+			m_sourc_name = sourceName;
+		}
+	}
+
+	const char* GetRasterRequest::GetSourceName()
+	{
+		return m_sourc_name.c_str();
+	}
+
+	void GetRasterRequest::SetFormat(const char* format)
+	{
+		if(format==NULL)
+		{
+			m_format.clear();
+		}
+		else
+		{
+			m_format = format;
+		}
+	}
+
+	const char* GetRasterRequest::GetFormat()
+	{
+		return m_format.empty() ? NULL : m_format.c_str();
+	}
+
+	GEnvelope& GetRasterRequest::GetExtent()
+	{
+		return m_extent;
+	}
+
+	void GetRasterRequest::SetExtent(const char* extent)
+	{
+		if(extent==NULL)
+		{
+			return;
+		}
+		double xmin,ymin,xmax,ymax;
+		int ret = sscanf(extent,"%lf,%lf,%lf,%lf",&xmin,&ymin,&xmax,&ymax);
+		if(ret==4)
+		{
+			m_extent.Set(xmin,ymin,xmax,ymax);
+		}
+	}
+
+	void GetRasterRequest::SetBands(const char* bands)
+	{	
+		if(strlen(bands)==0)
+		{
+			m_bands.resize(0);
+			return;
+		}
+
+		char* str = strdup(bands);
+		char* ptr = strtok(str, ",");
+		while(ptr!=NULL)
+		{
+			m_bands.push_back(atoi(ptr));
+
+			ptr = strtok(NULL, ",");
+		}
+		free(str);
+
 	}
 }

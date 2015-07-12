@@ -101,31 +101,6 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void RendererCairo::DrawCircle(int cx, int cy, float radius, Stroke* pStroke)
-	{
-		if(pStroke==NULL)
-		{
-			return;
-		}
-
-		set_stroke_style(m_cairo, pStroke);
-
-		cairo_arc(m_cairo, cx, cy, radius, 0, 2*PI);
-		cairo_stroke(m_cairo);
-	}
-
-	void RendererCairo::FillCircle(int cx, int cy, float radius, Fill* pFill)
-	{
-		if(pFill==NULL)
-		{
-			return;
-		}
-		GColor& color = pFill->GetColor();
-		cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
-		cairo_arc(m_cairo, cx, cy, radius, 0, 2*PI);
-		cairo_fill(m_cairo);
-	}
-
 	void RendererCairo::Draw(g_uchar* wkb, Symbolizer* pSymbolizer, Transformation* pTransformation)
 	{
 		switch(WKBTYPE(wkb))
@@ -228,31 +203,38 @@ namespace auge
 
 	void RendererCairo::DrawGeometryPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation)
 	{
-		float radius = pSymbolizer->GetSize();
-		Fill   *pFill = pSymbolizer->GetFill();
-		Stroke *pStroke = pSymbolizer->GetStroke();
+		float size = pSymbolizer->GetSize();
+		float rotation = pSymbolizer->GetRotation();
+		Fill   *pFill  = pSymbolizer->GetFill();
+		Stroke *pStroke= pSymbolizer->GetStroke();
 
 		int sx=0, sy=0;
 		pTransformation->ToScreenPoint(pWKBPoint->point.x, pWKBPoint->point.y, sx, sy);
 
-		cairo_arc(m_cairo, sx, sy, radius, 0, 2*PI);
-		if(pFill!=NULL)
+		augeMarkType type = pSymbolizer->GetMarkType();
+		switch(type)
 		{
-			GColor& color = pFill->GetColor();
-			cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
-			if(pStroke==NULL)
-			{
-				cairo_fill(m_cairo);
-			}
-			else
-			{
-				cairo_fill_preserve(m_cairo);
-			}
-		}
-		if(pStroke!=NULL)
-		{
-			set_stroke_style(m_cairo, pStroke);
-			cairo_stroke(m_cairo);
+		case augeMarkerSquare:
+			DrawSquare(sx, sy, size, rotation, pFill, pStroke);
+			break;
+		case augeMarkerCircle:
+			DrawCircle(sx, sy, size/2, pFill, pStroke);
+			break;
+		case augeMarkerTriangle:
+			DrawsTriangle(sx,sy,size, rotation, pFill, pStroke);
+			break;
+		case augeMarkerStar:
+			DrawStar(sx, sy, size, rotation, pFill, pStroke);
+			break;
+		case augeMarkerCross:
+			break;
+		case augeMarkerX:
+			break;
+		case augeMarkerPentagon:
+			DrawPentagon(sx, sy, size, rotation, pFill, pStroke);
+			break;
+		case augeMarkerCapital:
+			DrawCapital(sx, sy, size, pFill, pStroke);
 		}
 	}
 
@@ -495,6 +477,295 @@ namespace auge
 	//		FillRectangle(span*i, 0, span, m_height, *color);
 	//	}
 	//}
+
+	//////////////////////////////////////////////////////////////////////////
+	// Draw Marker Begin
+	//////////////////////////////////////////////////////////////////////////
+	void RendererCairo::DrawCircle(int cx, int cy, float radius, Fill* pFill, Stroke* pStroke)
+	{
+		cairo_save(m_cairo);
+		cairo_arc(m_cairo, cx, cy, radius, 0, 2*PI);
+		if(pFill!=NULL)
+		{
+			GColor& color = pFill->GetColor();
+			cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
+			if(pStroke==NULL)
+			{
+				cairo_fill(m_cairo);
+			}
+			else
+			{
+				cairo_fill_preserve(m_cairo);
+			}
+		}
+		if(pStroke!=NULL)
+		{
+			set_stroke_style(m_cairo, pStroke);
+			cairo_stroke(m_cairo);
+		}
+		cairo_restore(m_cairo);
+	}
+
+	void RendererCairo::DrawSquare(int cx, int cy, float size, float rotation, Fill* pFill, Stroke* pStroke)
+	{
+		float size_2 = size / 2;
+
+		cairo_save(m_cairo);
+		cairo_translate (m_cairo, cx, cy);
+		cairo_rotate (m_cairo, rotation*PI/180.0f);
+		cairo_rectangle(m_cairo, -size_2, -size_2, size, size);
+		if(pFill!=NULL)
+		{
+			GColor& color = pFill->GetColor();
+			cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
+			if(pStroke==NULL)
+			{
+				cairo_fill(m_cairo);
+			}
+			else
+			{
+				cairo_fill_preserve(m_cairo);
+			}
+		}
+		if(pStroke!=NULL)
+		{
+			set_stroke_style(m_cairo, pStroke);
+			cairo_stroke(m_cairo);
+		}
+		cairo_restore(m_cairo);
+	}
+
+	void RendererCairo::DrawStar(int cx, int cy, float size, float rotation, Fill* pFill, Stroke* pStroke)
+	{
+		static double g_auge_marker_stat_points[][2] = { 
+			{ 0.000000, -1.000000},
+			{ 0.224514, -0.309017},	//inner
+			{ 0.951057, -0.309017},
+			{ 0.363271,  0.118034},	//inner
+			{ 0.587785,  0.809017},
+			{ 0.000000,  0.381966},	//inner
+			{-0.587785,  0.809017},
+			{-0.363271,  0.118034},	//inner
+			{-0.951057, -0.309017},
+			{-0.224514, -0.309017},	//inner
+			{ 0.000000, -1.000000}
+		};
+
+		size_t count = sizeof(g_auge_marker_stat_points) / sizeof(double) / 2;
+		cairo_save(m_cairo);
+		cairo_new_path(m_cairo);
+
+		cairo_translate (m_cairo, cx, cy);
+		//cairo_scale(m_cairo,10,10);
+		cairo_rotate (m_cairo, rotation*PI/180.0f);
+		
+		double offset_x=0, offset_y=0;
+		double x, y;
+		x = g_auge_marker_stat_points[0][0];
+		y = g_auge_marker_stat_points[0][1];
+		cairo_move_to(m_cairo, x*size, y*size);
+		for(size_t i=1; i<count; i++)
+		{
+			x = g_auge_marker_stat_points[i][0];
+			y = g_auge_marker_stat_points[i][1];
+			cairo_line_to(m_cairo, x*size, y*size);
+		}
+		cairo_close_path(m_cairo);
+
+		if(pFill!=NULL)
+		{
+			GColor& color = pFill->GetColor();
+			cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
+			if(pStroke==NULL)
+			{
+				cairo_fill(m_cairo);
+			}
+			else
+			{
+				cairo_fill_preserve(m_cairo);
+			}
+		}
+		if(pStroke!=NULL)
+		{
+			set_stroke_style(m_cairo, pStroke);
+			cairo_stroke(m_cairo);
+		}
+		cairo_restore(m_cairo);
+	}
+
+	void RendererCairo::DrawPentagon(int cx, int cy, float size, float rotation, Fill* pFill, Stroke* pStroke)
+	{
+		static double g_auge_marker_stat_points[][2] = { 
+			{ 0.000000, -1.000000},
+			{ 0.951057, -0.309017},
+			{ 0.587785,  0.809017},
+			{-0.587785,  0.809017},
+			{-0.951057, -0.309017},
+			{ 0.000000, -1.000000}
+		};
+
+		size_t count = sizeof(g_auge_marker_stat_points) / sizeof(double) / 2;
+		cairo_save(m_cairo);
+		cairo_new_path(m_cairo);
+
+		cairo_translate (m_cairo, cx, cy);
+		//cairo_scale(m_cairo,10,10);
+		cairo_rotate (m_cairo, rotation*PI/180.0f);
+
+		double offset_x=0, offset_y=0;
+		double x, y;
+		x = g_auge_marker_stat_points[0][0];
+		y = g_auge_marker_stat_points[0][1];
+		cairo_move_to(m_cairo, x*size, y*size);
+		for(size_t i=1; i<count; i++)
+		{
+			x = g_auge_marker_stat_points[i][0];
+			y = g_auge_marker_stat_points[i][1];
+			cairo_line_to(m_cairo, x*size, y*size);
+		}
+		cairo_close_path(m_cairo);
+
+		if(pFill!=NULL)
+		{
+			GColor& color = pFill->GetColor();
+			cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
+			if(pStroke==NULL)
+			{
+				cairo_fill(m_cairo);
+			}
+			else
+			{
+				cairo_fill_preserve(m_cairo);
+			}
+		}
+		if(pStroke!=NULL)
+		{
+			set_stroke_style(m_cairo, pStroke);
+			cairo_stroke(m_cairo);
+		}
+		cairo_restore(m_cairo);
+	}
+
+	void RendererCairo::DrawCapital(int cx, int cy, float size, Fill* pFill, Stroke* pStroke)
+	{
+		float radius = size / 2;
+		cairo_save(m_cairo);
+		cairo_arc(m_cairo, cx, cy, radius, 0, 2*PI);
+		cairo_set_source_rgba(m_cairo, 0.0f, 0.0f, 0.0f, 1.0f);
+		cairo_set_line_width(m_cairo, 1.0f);
+		cairo_stroke(m_cairo);
+
+		cairo_arc(m_cairo, cx, cy, radius*0.2, 0, 2*PI);
+		cairo_set_source_rgba(m_cairo, 1.0f, 0.0f, 0.0f, 1.0f);
+		cairo_fill_preserve(m_cairo);
+		cairo_set_line_width(m_cairo, 1.0f);
+		cairo_stroke(m_cairo);
+		cairo_restore(m_cairo);
+	}
+
+	void RendererCairo::DrawsTriangle(int cx, int cy, float size, float rotation, Fill* pFill, Stroke* pStroke)
+	{
+		static double g_auge_marker_stat_points[][2] = { 
+			{ 0.000000, -1.000000},
+			{-0.866025,  0.500000},
+			{ 0.866025,  0.500000},
+			{ 0.000000, -1.000000}
+		};
+
+		size_t count = sizeof(g_auge_marker_stat_points) / sizeof(double) / 2;
+		cairo_save(m_cairo);
+		cairo_new_path(m_cairo);
+
+		cairo_translate (m_cairo, cx, cy);
+		//cairo_scale(m_cairo,10,10);
+		cairo_rotate (m_cairo, rotation*PI/180.0f);
+
+		double offset_x=0, offset_y=0;
+		double x, y;
+		x = g_auge_marker_stat_points[0][0];
+		y = g_auge_marker_stat_points[0][1];
+		cairo_move_to(m_cairo, x*size, y*size);
+		for(size_t i=1; i<count; i++)
+		{
+			x = g_auge_marker_stat_points[i][0];
+			y = g_auge_marker_stat_points[i][1];
+			cairo_line_to(m_cairo, x*size, y*size);
+		}
+		cairo_close_path(m_cairo);
+
+		if(pFill!=NULL)
+		{
+			GColor& color = pFill->GetColor();
+			cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
+			if(pStroke==NULL)
+			{
+				cairo_fill(m_cairo);
+			}
+			else
+			{
+				cairo_fill_preserve(m_cairo);
+			}
+		}
+		if(pStroke!=NULL)
+		{
+			set_stroke_style(m_cairo, pStroke);
+			cairo_stroke(m_cairo);
+		}
+		cairo_restore(m_cairo);
+	}
+
+	void RendererCairo::DrawCircle(int cx, int cy, float radius, Stroke* pStroke)
+	{
+		if(pStroke==NULL)
+		{
+			return;
+		}
+
+		set_stroke_style(m_cairo, pStroke);
+
+		cairo_arc(m_cairo, cx, cy, radius, 0, 2*PI);
+		cairo_stroke(m_cairo);
+	}
+
+	void RendererCairo::FillCircle(int cx, int cy, float size, Fill* pFill)
+	{
+		if(pFill==NULL)
+		{
+			return;
+		}
+		float size_2 = size / 2;
+		GColor& color = pFill->GetColor();
+		cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
+		cairo_rectangle(m_cairo, cx-size_2, cy-size_2, size, size);
+		cairo_fill(m_cairo);
+	}
+
+	void RendererCairo::DrawSquare(int cx, int cy, float size, Stroke* pStroke)
+	{
+		if(pStroke==NULL)
+		{
+			return;
+		}
+		float size_2 = size / 2;
+		set_stroke_style(m_cairo, pStroke);
+		cairo_rectangle(m_cairo, cx-size_2, cy-size_2, size, size);
+		cairo_stroke(m_cairo);
+	}
+
+	void RendererCairo::FillSquare(int cx, int cy, float radius, Fill* pFill)
+	{
+		if(pFill==NULL)
+		{
+			return;
+		}
+		GColor& color = pFill->GetColor();
+		cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
+		cairo_arc(m_cairo, cx, cy, radius, 0, 2*PI);
+		cairo_fill(m_cairo);
+	}
+	//////////////////////////////////////////////////////////////////////////
+	// Draw Marker End
+	//////////////////////////////////////////////////////////////////////////
 }
 
 namespace auge

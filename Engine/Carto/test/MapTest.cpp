@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
 
 auge::Map*	CreateMapObj();
 auge::Map*	CreateMapObj_SLD();
@@ -816,4 +816,51 @@ void MapTest::AddQuadServerLayer()
 
 	pCartoManager->CreateWebLayer(name, auge::augeLayerQuadServer, url, pMap->GetID());
 
+}
+
+void MapTest::DrawLayerStar()
+{
+	const char* className = "cities";
+	auge::DataEngine	*pEngine = NULL;
+	auge::DataEngineManager* pEngineManager = NULL;
+	pEngineManager = auge::augeGetDataEngineManagerInstance();
+	auge::ConnectionManager* pConnManager = NULL;
+	pConnManager = auge::augeGetConnectionManagerInstance();
+	auge::CartoManager* pCartoManager = NULL;
+	pCartoManager = auge::augeGetCartoManagerInstance();
+	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
+
+	auge::Canvas* pCanvas = NULL;
+	auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
+	pCanvas = pCartoFactory->CreateCanvas2D(800, 600);
+	pCanvas->SetViewer(viewer);
+
+	auge::GColor bgColor(255,0,0,0);
+	pCanvas->DrawBackground(bgColor);
+
+	auge::FeatureWorksapce* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
+
+	auge::Style* pStyle = NULL;
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_star.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_theme_label.xml");
+
+	auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
+	pLayer->SetName(className);
+	pLayer->SetFeatureClass(pFeatureClass);
+	pLayer->SetStyle(pStyle);
+
+	auge::Map* pMap = NULL;
+	pMap = pCartoFactory->CreateMap();
+	pMap->AddLayer(pLayer);
+
+	pCanvas->Draw(pMap);
+	pCanvas->Save("g:\\temp\\map\\point_star.png");
+	//pCanvas->Save("/home/renyc/map/map.png");
+
+	//m_pConnection->Close();
+	//AUGE_SAFE_RELEASE(m_pConnection);
+	AUGE_SAFE_RELEASE(pMap);
+	AUGE_SAFE_RELEASE(pCanvas);
 }

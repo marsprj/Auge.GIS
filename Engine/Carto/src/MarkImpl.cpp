@@ -5,7 +5,7 @@ namespace auge
 { 
 
 	MarkImpl::MarkImpl():
-m_type(augeSquare),
+m_type(augeMarkerSquare),
 	m_pFill(NULL),
 	m_pStroke(NULL)
 {

@@ -12,7 +12,8 @@ namespace auge
 	m_pGraphic(NULL),
 	m_opacity(0.0f),
 	m_size(1.0f),
-	m_rotation(0.0f)
+	m_rotation(0.0f),
+	m_mark_type(augeMarkerCircle)
 {
 
 }
@@ -48,6 +49,16 @@ void PointSymbolizerImpl::SetGeometry(const char* prop_name)
 		m_geometry_prop_name.clear();
 	}
 	m_geometry_prop_name = prop_name;
+}
+
+void PointSymbolizerImpl::SetMarkType(augeMarkType type)
+{
+	m_mark_type = type;
+}
+
+augeMarkType PointSymbolizerImpl::GetMarkType()
+{
+	return m_mark_type;
 }
 
 void PointSymbolizerImpl::SetGraphic(Graphic* pGraphic)

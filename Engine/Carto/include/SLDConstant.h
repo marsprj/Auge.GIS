@@ -25,6 +25,7 @@ namespace auge
 #define AUGE_SLD_GRAPHIC								"Graphic"
 #define AUGE_SLD_STROKE									"Stroke"
 #define AUGE_SLD_FILL									"Fill"
+#define AUGE_SLD_WELLKNOWN_NAME							"WellKnownName"
 #define AUGE_SLD_EXTERNAL_GRAPHIC						"ExternalGraphic"
 #define AUGE_SLD_ONLINE_RESOURCE						"OnlineResource"
 #define AUGE_SLD_FORMAT									"Format"

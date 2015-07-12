@@ -191,10 +191,10 @@ namespace auge
 
 	Raster*	RasterFactoryImpl::CreateRasterJPG(const char* name, g_uint width, g_uint height)
 	{
-		if(name==NULL)
-		{
-			return NULL;
-		}
+		//if(name==NULL)
+		//{
+		//	return NULL;
+		//}
 
 		GError* pError = augeGetErrorInstance();
 		GLogger* pLogger = augeGetLoggerInstance();
@@ -205,7 +205,7 @@ namespace auge
 		pmemDriver = GetGDALDriverManager()->GetDriverByName("MEM");
 
 		GDALDataset* pmemDataset = NULL;
-		pmemDataset = pmemDriver->Create(name, width, height, 3, pixelType, NULL);
+		pmemDataset = pmemDriver->Create(name==NULL?"":name, width, height, 3, pixelType, NULL);
 		if(pmemDataset==NULL)
 		{
 			const char* msg = CPLGetLastErrorMsg();			
@@ -265,7 +265,7 @@ namespace auge
 		//}
 
 		RasterImpl* poutRaster = new RasterImpl();
-		poutRaster->Create(name, pmemDataset);
+		poutRaster->Create(name==NULL?"":name, pmemDataset);
 		return poutRaster;
 	}
 

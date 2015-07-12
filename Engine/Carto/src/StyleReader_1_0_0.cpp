@@ -548,6 +548,25 @@ namespace auge
 						pSymbolizer->SetOpacity(pFill->GetColor().GetAlphaF());
 					}
 				}
+				else if(g_stricmp(nodeName, AUGE_SLD_WELLKNOWN_NAME)==0)
+				{
+					const char* wellName = pxNode->GetContent();
+					if(wellName!=NULL)
+					{
+						if(g_stricmp(wellName,"square")==0)
+							pSymbolizer->SetMarkType(augeMarkerSquare);
+						else if(g_stricmp(wellName,"circle")==0)
+							pSymbolizer->SetMarkType(augeMarkerCircle);
+						else if(g_stricmp(wellName,"triangle")==0)
+							pSymbolizer->SetMarkType(augeMarkerTriangle);
+						else if(g_stricmp(wellName,"star")==0)
+							pSymbolizer->SetMarkType(augeMarkerStar);
+						else if(g_stricmp(wellName,"cross")==0)
+							pSymbolizer->SetMarkType(augeMarkerX);
+						else
+							pSymbolizer->SetMarkType(augeMarkerCircle);
+					}
+				}
 			}
 		}
 

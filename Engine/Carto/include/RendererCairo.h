@@ -56,8 +56,18 @@ namespace auge
 		virtual void		Relaese();
 
 	private:
+		void	DrawCircle(int cx, int cy, float radius, Fill* pFill, Stroke* pStroke);
+		void	DrawSquare(int cx, int cy, float size, float rotation, Fill* pFill, Stroke* pStroke);
+		void	DrawStar(int cx, int cy, float size, float rotation, Fill* pFill, Stroke* pStroke);
+		void	DrawsTriangle(int cx, int cy, float size, float rotation, Fill* pFill, Stroke* pStroke);
+		void	DrawPentagon(int cx, int cy, float size, float rotation, Fill* pFill, Stroke* pStroke);
+		void	DrawCapital(int cx, int cy, float size, Fill* pFill, Stroke* pStroke);
+
 		void	DrawCircle(int cx, int cy, float radius, Stroke* pStroke);
 		void	FillCircle(int cx, int cy, float radius, Fill* pFill);
+
+		void	DrawSquare(int cx, int cy, float size, Stroke* pStroke);
+		void	FillSquare(int cx, int cy, float size, Fill* pFill);
 
 		void	DrawGeometryPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation);
 		void	DrawGraphicPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation);
