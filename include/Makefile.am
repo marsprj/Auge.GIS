@@ -5,6 +5,10 @@ include_HEADERS=AugeCarto.h \
 		AugeGeometry.h \
 		AugeRenderer.h \
 		AugeStyle.h  \
+		AugeSymbol.h \
+		AugeMarkerSymbol.h \
+		AugeLineSymbol.h \
+		AugeRegionSymbol.h \
 		AugeWebCore.h \
 		AugeXML.h  \
 		wkb.h \
