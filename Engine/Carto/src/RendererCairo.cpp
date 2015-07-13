@@ -211,7 +211,7 @@ namespace auge
 		int sx=0, sy=0;
 		pTransformation->ToScreenPoint(pWKBPoint->point.x, pWKBPoint->point.y, sx, sy);
 
-		augeMarkType type = pSymbolizer->GetMarkType();
+		augeMarkerType type = pSymbolizer->GetMarkType();
 		switch(type)
 		{
 		case augeMarkerSquare:
@@ -263,12 +263,32 @@ namespace auge
 		cairo_stroke(m_cairo);
 	}
 
+	//void RendererCairo::DrawLine(WKBLineString *pWKBLineString,	LineSymbolizer* pSymbolizer, Transformation* pTransformation)
+	//{
+	//	Stroke* pStroke = pSymbolizer->GetStroke();
+	//	build_path(m_cairo, pWKBLineString, pTransformation);
+	//	set_stroke_style(m_cairo, pStroke);
+	//	cairo_stroke(m_cairo);
+	//}
+
 	void RendererCairo::DrawLine(WKBLineString *pWKBLineString,	LineSymbolizer* pSymbolizer, Transformation* pTransformation)
 	{
-		Stroke* pStroke = pSymbolizer->GetStroke();
-		build_path(m_cairo, pWKBLineString, pTransformation);
-		set_stroke_style(m_cairo, pStroke);
-		cairo_stroke(m_cairo);
+		augeLineType line_type = pSymbolizer->GetLineType();
+		switch(line_type)
+		{
+		case augeLineRailway:
+			{
+				DrawRailway(pWKBLineString, pTransformation);
+			}
+			break;
+		default:
+			{
+				Stroke* pStroke = pSymbolizer->GetStroke();
+				build_path(m_cairo, pWKBLineString, pTransformation);
+				set_stroke_style(m_cairo, pStroke);
+				cairo_stroke(m_cairo);
+			}
+		}
 	}
 
 	void RendererCairo::DrawLine(WKBMultiLineString	*pWKBMultiLineString, LineSymbolizer* pSymbolizer, Transformation* pTransformation)
@@ -766,6 +786,42 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	// Draw Marker End
 	//////////////////////////////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////////////////////////////
+	// Draw Line End
+	//////////////////////////////////////////////////////////////////////////
+	void RendererCairo::DrawRailway(WKBLineString *pWKBLineString, Transformation* pTransformation)
+	{
+		int block_width = 5;
+		int block_length= 10;
+
+		double dashes[] = { block_length,  /* ink */
+			block_length,  /* skip */
+		};
+		int ndash = sizeof(dashes) / sizeof(double);
+		double dash_offset = block_length;
+
+		cairo_save(m_cairo);
+		
+		// draw black
+		build_path(m_cairo, pWKBLineString, pTransformation);
+		cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_BUTT);
+		cairo_set_source_rgba(m_cairo,	0.0f, 0.0f, 0.0f, 1.0f);
+		cairo_set_line_width(m_cairo, block_width);
+		cairo_stroke(m_cairo);
+
+		// draw white block
+		build_path(m_cairo, pWKBLineString, pTransformation);
+		cairo_set_source_rgba(m_cairo,	1.0f, 1.0f, 1.0f, 1.0f);
+		cairo_set_line_width(m_cairo, block_width-1);
+		cairo_set_dash (m_cairo, dashes, ndash, dash_offset);
+		cairo_stroke(m_cairo);
+
+		cairo_restore(m_cairo);
+	}
+	//////////////////////////////////////////////////////////////////////////
+	// Draw Line End
+	//////////////////////////////////////////////////////////////////////////
 }
 
 namespace auge
@@ -778,6 +834,8 @@ namespace auge
 		int numPoints = pWKBLineString->numPoints;
 		if(numPoints>0)
 		{
+			cairo_new_path(cairo);
+
 			int i = 0;
 			int sx=0, sy=0;
 			auge::Point *pt = (auge::Point*)(&(pWKBLineString->points[0]));
@@ -807,6 +865,7 @@ namespace auge
 
 		int sx=0, sy=0;
 
+		cairo_new_path(cairo);
 		pWKBLineString = (WKBLineString*)(&(pWKBMultiLineString->lineStrings[0]));
 		for(i=0; i<numLineStings; i++)
 		{

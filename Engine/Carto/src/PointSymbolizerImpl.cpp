@@ -51,12 +51,12 @@ void PointSymbolizerImpl::SetGeometry(const char* prop_name)
 	m_geometry_prop_name = prop_name;
 }
 
-void PointSymbolizerImpl::SetMarkType(augeMarkType type)
+void PointSymbolizerImpl::SetMarkType(augeMarkerType type)
 {
 	m_mark_type = type;
 }
 
-augeMarkType PointSymbolizerImpl::GetMarkType()
+augeMarkerType PointSymbolizerImpl::GetMarkType()
 {
 	return m_mark_type;
 }

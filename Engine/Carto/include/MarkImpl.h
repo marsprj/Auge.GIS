@@ -11,8 +11,8 @@ namespace auge
 		MarkImpl();
 		virtual ~MarkImpl();
 	public:
-		virtual augeMarkType	GetType();
-		virtual void			SetType(augeMarkType type);
+		virtual augeMarkerType	GetType();
+		virtual void			SetType(augeMarkerType type);
 
 		virtual Fill*			GetFill();
 		virtual bool			SetFill(Fill *pFill);
@@ -22,7 +22,7 @@ namespace auge
 
 		virtual void			Release();
 	private:
-		augeMarkType	m_type;
+		augeMarkerType	m_type;
 		Fill			*m_pFill;
 		Stroke			*m_pStroke;
 	};

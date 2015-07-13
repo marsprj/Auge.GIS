@@ -79,6 +79,9 @@ namespace auge
 		void	CopyMatrix(unsigned char* src, int src_width, int src_height, unsigned char* obj, int obj_width, int obj_height, int obj_step);
 		void	SetMatrix(unsigned char* obj, int width, int height, int stride, unsigned char value);
 
+		// DrawLine
+		void	DrawRailway(WKBLineString *pWKBLineString, Transformation* pTransformation);
+
 	private:
 		cairo_surface_t	*m_cairo_surface;
 		cairo_t			*m_cairo;

@@ -1,10 +1,15 @@
 #include "CairoTest.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(CairoTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(CairoTest);
 
 #ifndef PI
 #define PI					3.14159265358979323846
 #endif
+
+void draw_line(cairo_t *m_cairo, int* points_x, int* points_y, int count);
+void draw_railway(cairo_t *m_cairo, int* points_x, int* points_y, int count);
+void draw_railway_black_block(cairo_t *m_cairo, int* pts_x, int* pts_y, int pts_count);
+void draw_dash_line(cairo_t *m_cairo, int* points_x, int* points_y, int count);
 
 void CairoTest::setUp() 
 {
@@ -174,5 +179,201 @@ void CairoTest::DrawData_RGB24()
 	cairo_paint(m_cairo);
 	cairo_surface_flush(m_cairo_surface);
 	cairo_surface_destroy(surface);
+	cairo_restore(m_cairo);
+}
+
+void CairoTest::DrawRailway()
+{
+	int points_x[] = {100,400,700};
+	int points_y[] = {100,400,100};
+
+	cairo_surface_t	*m_cairo_surface;
+	cairo_t			*m_cairo;
+	m_cairo_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 800, 800);
+	m_cairo = cairo_create(m_cairo_surface);
+
+	int count = sizeof(points_x) / sizeof(int);
+	//draw_railway(m_cairo, points_x, points_y, count);
+	draw_line(m_cairo, points_x, points_y, count);
+	draw_dash_line(m_cairo, points_x, points_y, count);
+
+	cairo_surface_write_to_png(m_cairo_surface, "g:\\temp\\map\\example.png");
+
+	if(m_cairo!=NULL)
+	{
+		cairo_destroy(m_cairo);
+		cairo_surface_destroy(m_cairo_surface);
+		m_cairo = NULL;
+		m_cairo_surface = NULL;
+	}
+}
+
+void CairoTest::DrawRailway_2()
+{
+	int block_width = 5;
+	int block_length= 10;
+
+	double dashes[] = { 10,  /* ink */
+		10,  /* skip */
+	};
+	int ndash = sizeof(dashes) / sizeof(double);
+	double dash_offset = block_length;
+
+	int points_x[] = {100,400,700};
+	int points_y[] = {100,400,100};
+
+	cairo_surface_t	*m_cairo_surface;
+	cairo_t			*m_cairo;
+	m_cairo_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 800, 800);
+	m_cairo = cairo_create(m_cairo_surface);
+
+	cairo_save(m_cairo);
+	cairo_new_path(m_cairo);
+
+	int count = sizeof(points_x) / sizeof(int);
+	cairo_move_to(m_cairo, points_x[0], points_y[0]);
+	for(int i=1; i<count; i++)
+	{
+		cairo_line_to(m_cairo, points_x[i], points_y[i]);
+	}
+
+	// draw black
+	cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_BUTT);
+	cairo_set_source_rgba(m_cairo,	0.0f, 0.0f, 0.0f, 1.0f);
+	cairo_set_line_width(m_cairo, block_width);
+	cairo_stroke(m_cairo);
+
+	// draw white block
+	cairo_move_to(m_cairo, points_x[0], points_y[0]);
+	for(int i=1; i<count; i++)
+	{
+		cairo_line_to(m_cairo, points_x[i], points_y[i]);
+	}
+	cairo_set_source_rgba(m_cairo,	1.0f, 1.0f, 1.0f, 1.0f);
+	cairo_set_line_width(m_cairo, block_width-1);
+	cairo_set_dash (m_cairo, dashes, ndash, dash_offset);
+	cairo_stroke(m_cairo);
+	
+	// write image file
+	cairo_surface_write_to_png(m_cairo_surface, "g:\\temp\\map\\example.png");
+
+	if(m_cairo!=NULL)
+	{
+		cairo_destroy(m_cairo);
+		cairo_surface_destroy(m_cairo_surface);
+		m_cairo = NULL;
+		m_cairo_surface = NULL;
+	}
+}
+
+//void CairoTest::DrawRailway()
+//{
+//	int points_x[] = {100,400,700};
+//	int points_y[] = {100,400,100};
+//
+//	cairo_surface_t	*m_cairo_surface;
+//	cairo_t			*m_cairo;
+//	m_cairo_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 800, 800);
+//	m_cairo = cairo_create(m_cairo_surface);
+//
+//	int count = sizeof(points_x) / sizeof(int);
+//
+//	draw_railway(m_cairo, points_x, points_y, count);
+//	draw_line(m_cairo, points_x, points_y, count);
+//	
+//	cairo_surface_write_to_png(m_cairo_surface, "g:\\temp\\map\\example.png");
+//
+//	if(m_cairo!=NULL)
+//	{
+//		cairo_destroy(m_cairo);
+//		cairo_surface_destroy(m_cairo_surface);
+//		m_cairo = NULL;
+//		m_cairo_surface = NULL;
+//	}
+//}
+
+void draw_railway(cairo_t *m_cairo, int* points_x, int* points_y, int count)
+{
+	int block_width = 10;
+	int block_length= 50;
+	cairo_save(m_cairo);
+	cairo_new_path(m_cairo);
+
+	//cairo_move_to(m_cairo, points_x[0], points_y[0]);
+	//for(int i=1; i<count; i++)
+	//{
+	//	cairo_line_to(m_cairo, points_x[i], points_y[i]);
+	//}
+
+	cairo_set_source_rgba(m_cairo,	0.0f, 0.0f, 0.0f, 1.0f);
+	cairo_set_line_width(m_cairo, 30);
+	//ÉèÖÃcap
+	cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_BUTT);
+
+	cairo_stroke(m_cairo);
+
+	cairo_restore(m_cairo);
+}
+
+void draw_railway_black_block(cairo_t *m_cairo, int* pts_x, int* pts_y, int pts_count)
+{
+
+}
+
+void draw_line(cairo_t *m_cairo, int* points_x, int* points_y, int count)
+{
+	cairo_save(m_cairo);
+	cairo_new_path(m_cairo);
+
+	cairo_move_to(m_cairo, points_x[0], points_y[0]);
+	for(int i=1; i<count; i++)
+	{
+		cairo_line_to(m_cairo, points_x[i], points_y[i]);
+	}
+	//cairo_move_to(m_cairo, 100, 100);
+	//cairo_line_to(m_cairo, 400, 400);
+	//cairo_line_to(m_cairo, 700, 100);
+
+	cairo_set_source_rgba(m_cairo,	0.0f, 0.0f, 0.0f, 1.0f);
+	cairo_set_line_width(m_cairo, 20);
+	//ÉèÖÃcap
+	cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_BUTT);
+
+	cairo_stroke(m_cairo);
+
+	cairo_restore(m_cairo);
+}
+
+void draw_dash_line(cairo_t *m_cairo, int* points_x, int* points_y, int count)
+{
+	int block_width = 20-2;
+	int block_length= 50;
+
+	double dashes[] = { 50.0,  /* ink */
+						50.0,  /* skip */
+	};
+	int ndash = sizeof(dashes) / sizeof(double);
+	double offset = 50.0f;
+
+	cairo_save(m_cairo);
+	cairo_new_path(m_cairo);
+
+	cairo_move_to(m_cairo, points_x[0], points_y[0]);
+	for(int i=1; i<count; i++)
+	{
+		cairo_line_to(m_cairo, points_x[i], points_y[i]);
+	}
+	//cairo_move_to(m_cairo, 100, 100);
+	//cairo_line_to(m_cairo, 400, 400);
+	//cairo_line_to(m_cairo, 700, 100);
+
+	cairo_set_source_rgba(m_cairo,	1.0f, 1.0f, 1.0f, 1.0f);
+	cairo_set_line_width(m_cairo, block_width);
+	cairo_set_dash (m_cairo, dashes, ndash, offset);
+	//ÉèÖÃcap
+	cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_BUTT);
+
+	cairo_stroke(m_cairo);
+
 	cairo_restore(m_cairo);
 }

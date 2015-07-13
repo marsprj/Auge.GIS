@@ -19,8 +19,8 @@ public:
 	virtual void			SetGraphic(Graphic* pGraphic);
 	virtual Graphic*		GetGraphic();
 
-	virtual void			SetMarkType(augeMarkType type);
-	virtual augeMarkType	GetMarkType();
+	virtual void			SetMarkType(augeMarkerType type);
+	virtual augeMarkerType	GetMarkType();
 
 	virtual void			SetStroke(Stroke* pStroke);
 	virtual Stroke*			GetStroke();
@@ -49,7 +49,7 @@ private:
 	float		m_opacity;
 	float		m_size;
 	float		m_rotation;
-	augeMarkType m_mark_type;
+	augeMarkerType m_mark_type;
 };
 
 }

@@ -8,7 +8,7 @@ namespace auge
 	LineSymbolizerImpl::LineSymbolizerImpl():
 m_perpendicular_offset(0.0f)
 {
-
+	m_line_type = augeLineSimple;
 }
 
 LineSymbolizerImpl::~LineSymbolizerImpl()
@@ -62,6 +62,16 @@ void LineSymbolizerImpl::Release()
 augeSymbolizerType LineSymbolizerImpl::GetType()
 {
 	return augeSymbolLine;
+}
+
+void LineSymbolizerImpl::SetLineType(augeLineType type)
+{
+	m_line_type = type;
+}
+
+augeLineType LineSymbolizerImpl::GetLineType()
+{
+	return m_line_type;
 }
 
 }

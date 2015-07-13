@@ -46,7 +46,7 @@ namespace auge
 	//========================================================================
 	// augeMarkType Enum
 	//========================================================================
-	typedef enum augeMarkType
+	typedef enum
 	{
 		augeMarkerSquare		= 0,
 		augeMarkerCircle		= 1,
@@ -56,7 +56,15 @@ namespace auge
 		augeMarkerX				= 5,
 		augeMarkerPentagon		= 6,
 		augeMarkerCapital		= 7
-	}augeMarkType;
+	}augeMarkerType;
+	//========================================================================
+	// augeLineType Enum
+	//========================================================================
+	typedef enum
+	{
+		augeLineSimple			= 0,
+		augeLineRailway			= 1
+	}augeLineType;
 	//========================================================================
 	// augeSymbolType Enum
 	//========================================================================
@@ -242,8 +250,8 @@ namespace auge
 		virtual void			SetGraphic(Graphic* pGraphic) = 0;
 		virtual Graphic*		GetGraphic() = 0;
 
-		virtual void			SetMarkType(augeMarkType type) = 0;
-		virtual augeMarkType	GetMarkType() = 0;
+		virtual void			SetMarkType(augeMarkerType type) = 0;
+		virtual augeMarkerType	GetMarkType() = 0;
 
 		virtual void			SetStroke(Stroke* pStroke) = 0;
 		virtual Stroke*			GetStroke() = 0;
@@ -288,6 +296,9 @@ namespace auge
 
 		virtual bool		SetGeometry(const char* prop_name) = 0;
 		virtual bool		SetStroke(Stroke* pStroke) = 0;
+
+		virtual void		SetLineType(augeLineType type) = 0;
+		virtual augeLineType GetLineType() = 0;
 	};
 
 	//========================================================================
@@ -479,9 +490,7 @@ namespace auge
 		virtual ~LineLabelPlacement(){}
 	public:
 	};
-
-
-
+	
 	//========================================================================
 	// Auge GraphicStroke
 	//------------------------------------------------------------------------
@@ -624,8 +633,8 @@ namespace auge
 		Mark(){}
 		virtual ~Mark(){}
 	public:
-		virtual augeMarkType	GetType() = 0;
-		virtual void			SetType(augeMarkType type) = 0;
+		virtual augeMarkerType	GetType() = 0;
+		virtual void			SetType(augeMarkerType type) = 0;
 
 		virtual Fill*			GetFill() = 0;
 		virtual bool			SetFill(Fill *pFill) = 0;

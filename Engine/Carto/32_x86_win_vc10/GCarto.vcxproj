@@ -128,7 +128,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\TransformImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\AugeMarkerSymbol.h" />
     <ClInclude Include="..\..\..\include\AugeStyle.h" />
+    <ClInclude Include="..\..\..\include\AugeSymbol.h" />
     <ClInclude Include="..\include\CanvasImpl.h" />
     <ClInclude Include="..\include\CartoFactoryImpl.h" />
     <ClInclude Include="..\include\CartoManagerImpl.h" />

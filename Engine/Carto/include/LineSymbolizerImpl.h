@@ -20,6 +20,9 @@ public:
 	virtual bool		SetGeometry(const char* prop_name);
 	virtual bool		SetStroke(Stroke* pStroke);
 
+	virtual void		SetLineType(augeLineType type);
+	virtual augeLineType GetLineType();
+
 	virtual void		Release();
 
 	virtual augeSymbolizerType	GetType();	
@@ -33,6 +36,8 @@ private:
 	drawn lines that are actually smaller or longer than the original geometry. 
 	*/
 	float		m_perpendicular_offset;
+
+	augeLineType		m_line_type;
 };
 
 }

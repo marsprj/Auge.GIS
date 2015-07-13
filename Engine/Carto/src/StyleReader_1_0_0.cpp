@@ -351,6 +351,17 @@ namespace auge
 				else if(g_stricmp(nodeName, AUGE_SLD_GEOMETRY)==0)
 				{
 					ReadGeometry(pSymbolizer, pxNode);
+				}
+				else if(g_stricmp(nodeName, AUGE_SLD_WELLKNOWN_NAME)==0)
+				{
+					const char* wellName = pxNode->GetContent();
+					if(wellName!=NULL)
+					{
+						if(g_stricmp(wellName,"railway")==0)
+							pSymbolizer->SetLineType(augeLineRailway);
+						else
+							pSymbolizer->SetLineType(augeLineSimple);
+					}
 				}	
 			}
 		}

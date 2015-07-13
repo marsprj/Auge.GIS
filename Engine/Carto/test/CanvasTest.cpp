@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-//#pragma comment(lib, "GPostgresD.lib")
+#pragma comment(lib, "GPostgresD.lib")
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CanvasTest);
 
@@ -58,11 +58,11 @@ void CanvasTest::DrawPoint()
 	pSymbolizer = pStyleFactory->CreatePointSymbolizer();
 	pSymbolizer->SetSize(20);
 	//pSymbolizer->SetRotation(30.0f);
-	//pSymbolizer->SetMarkType(auge::augeSquare);
-	//pSymbolizer->SetMarkType(auge::augeStar);
-	//pSymbolizer->SetMarkType(auge::augeTriangle);
-	//pSymbolizer->SetMarkType(auge::augePentagon);
-	pSymbolizer->SetMarkType(auge::augeCapital);
+	//pSymbolizer->SetMarkType(auge::augeMarkerSquare);
+	//pSymbolizer->SetMarkType(auge::augeMarkerStar);
+	//pSymbolizer->SetMarkType(auge::augeMarkerTriangle);
+	//pSymbolizer->SetMarkType(auge::augeMarkerPentagon);
+	pSymbolizer->SetMarkType(auge::augeMarkerCapital);
 
 	auge::GColor bgColor(255,255,255,255);
 	pCanvas->DrawBackground(bgColor);
@@ -97,6 +97,8 @@ void CanvasTest::DrawLine()
 	auge::StyleFactory* pStyleFactory = auge::augeGetStyleFactoryInstance();
 	auge::LineSymbolizer* pSymbolizer = NULL;
 	pSymbolizer = pStyleFactory->CreateLineSymbolizer();
+	//pSymbolizer->SetLineType(auge::augeLineSimple);
+	pSymbolizer->SetLineType(auge::augeLineRailway);
 
 	auge::GColor bgColor(255,255,255,255);
 	pCanvas->DrawBackground(bgColor);

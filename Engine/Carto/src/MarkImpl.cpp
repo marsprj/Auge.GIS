@@ -26,12 +26,12 @@ MarkImpl::~MarkImpl()
 	}
 }
 
-augeMarkType MarkImpl::GetType()
+augeMarkerType MarkImpl::GetType()
 {
 	return m_type;
 }
 
-void MarkImpl::SetType(augeMarkType type)
+void MarkImpl::SetType(augeMarkerType type)
 {
 	m_type = type;
 }
