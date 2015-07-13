@@ -2,6 +2,7 @@
 #define __AUGE_POINT_SYMBOLIZERE_IMPL_H__
 
 #include "AugeStyle.h"
+#include "AugeMarkerSymbol.h"
 #include <string>
 
 namespace auge
