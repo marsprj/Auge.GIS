@@ -906,7 +906,7 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	// Build Path Begin
 	//////////////////////////////////////////////////////////////////////////
-	void RendererCairo::build_path(cairo_t* cairo, WKBLineString* pWKBLineString, Transformation* pTransformation)
+	void build_path(cairo_t* cairo, WKBLineString* pWKBLineString, Transformation* pTransformation)
 	{
 		int numPoints = pWKBLineString->numPoints;
 		if(numPoints>0)
@@ -931,7 +931,7 @@ namespace auge
 		}
 	}
 
-	void RendererCairo::build_path(cairo_t* cairo, WKBMultiLineString* pWKBMultiLineString, Transformation* pTransformation)
+	void build_path(cairo_t* cairo, WKBMultiLineString* pWKBMultiLineString, Transformation* pTransformation)
 	{
 		int i=0,j=0;
 		int numPoints = 0;
@@ -962,7 +962,7 @@ namespace auge
 		}
 	}
 
-	void RendererCairo::build_path(cairo_t* cairo, WKBPolygon* pWKBPolygon, Transformation* pTransformation)
+	void build_path(cairo_t* cairo, WKBPolygon* pWKBPolygon, Transformation* pTransformation)
 	{
 		int i=0, j=0, end=0;
 		int sx=0, sy=0;
@@ -991,7 +991,7 @@ namespace auge
 		}
 	}
 
-	void RendererCairo::build_path(cairo_t* cairo, WKBMultiPolygon* pWKBMultiPolygon, Transformation* pTransformation)
+	void build_path(cairo_t* cairo, WKBMultiPolygon* pWKBMultiPolygon, Transformation* pTransformation)
 	{
 		int i=0,j=0,k=0,end=0;
 		int sx=0, sy=0;

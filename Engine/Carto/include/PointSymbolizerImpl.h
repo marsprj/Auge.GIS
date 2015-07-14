@@ -38,6 +38,9 @@ public:
 	virtual void			SetRotation(float rotation);
 	virtual float			GetRotation();	
 
+	//virtual void			SetMarker(MarkerSymbol* pMarker);
+	//virtual MarkerSymbol*	GetMarker();
+
 	virtual augeSymbolizerType	GetType();	
 
 	virtual void			Release();
@@ -51,6 +54,8 @@ private:
 	float		m_size;
 	float		m_rotation;
 	augeMarkerType m_mark_type;
+
+	//MarkerSymbol*	m_pMarker;
 };
 
 }

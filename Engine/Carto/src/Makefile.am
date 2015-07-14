@@ -60,4 +60,5 @@ libgcarto_la_SOURCES=\
 		PentagonMarkerImpl.cpp \
 		StarMarkerImpl.cpp \
 		SquareMarkerImpl.cpp \
-		TriangleMarkerImpl.cpp
+		TriangleMarkerImpl.cpp \
+		RailwaySymbolImpl.cpp

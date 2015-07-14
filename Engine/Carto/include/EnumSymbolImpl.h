@@ -14,15 +14,18 @@ namespace auge
 
 	public:
 		virtual void		Reset();
-		virtual Symbolizer*	Next();
+		virtual Symbol*		Next();
 		virtual void		Release();
+
+	public:
+		void				Add(Symbol* pSymbol);
 
 	private:
 		void	Cleanup();
 		
 	private:
-		std::vector<Symbolizer*>			m_symbols;
-		std::vector<Symbolizer*>::iterator	m_iter;
+		std::vector<Symbol*>			m_symbols;
+		std::vector<Symbol*>::iterator	m_iter;
 	};
 }
 

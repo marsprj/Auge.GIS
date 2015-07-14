@@ -17,7 +17,7 @@ namespace auge
 		m_iter = m_symbols.begin();
 	}
 
-	Symbolizer*	EnumSymbolImpl::Next()
+	Symbol*	EnumSymbolImpl::Next()
 	{
 		if(m_iter==m_symbols.end())
 		{
@@ -33,13 +33,21 @@ namespace auge
 
 	void EnumSymbolImpl::Cleanup()
 	{
-		Symbolizer* pSymbol = NULL;
-		std::vector<Symbolizer*>::iterator iter;
+		Symbol* pSymbol = NULL;
+		std::vector<Symbol*>::iterator iter;
 		for(iter=m_symbols.begin(); iter!=m_symbols.end(); iter++)
 		{
 			pSymbol = (*iter);
 			pSymbol->Release();
 		}
 		m_symbols.clear();
+	}
+
+	void EnumSymbolImpl::Add(Symbol* pSymbol)
+	{
+		if(pSymbol!=NULL)
+		{
+			m_symbols.push_back(pSymbol);
+		}
 	}
 }

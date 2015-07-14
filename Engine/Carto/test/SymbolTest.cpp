@@ -162,7 +162,86 @@ void SymbolTest::DrawStars()
 	//pCanvas->Save("/home/renyc/map/map.png");
 
 	AUGE_SAFE_RELEASE(pMarker);
-	//AUGE_SAFE_RELEASE(pCursor);
+	AUGE_SAFE_RELEASE(pCursor);
+	AUGE_SAFE_RELEASE(pFeatureClass);
+	AUGE_SAFE_RELEASE(pCanvas);
+}
+
+void SymbolTest::DrawRailways()
+{
+	DWORD ts, te;
+
+	auge::Canvas* pCanvas = NULL;
+	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
+
+	//auge::Geometry* pGeometry = NULL;
+	//auge::GeometryFactory* pGeometryFactory = auge::augeGetGeometryFactoryInstance();
+	//pGeometry = pGeometryFactory->CreateGeometryFromWKT("POINT(116 39)");
+
+	auge::LineSymbol* pLineSymbol = NULL;
+	auge::SymbolManager* pSymbolManager = auge::augeGetSymbolManagerInstance();
+	pLineSymbol = pSymbolManager->CreateLineSymbol(auge::augeLineRailway);
+
+	auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
+	pCanvas = pCartoFactory->CreateCanvas2D(8000, 6000);
+	pCanvas->SetViewer(viewer);
+
+	auge::GColor bgColor(255,0,0,0);
+	pCanvas->DrawBackground(bgColor);
+
+	RESULTCODE rc = AG_FAILURE;
+	auge::FeatureWorksapce*	 pWorkspace = NULL;
+	auge::ConnectionManager* pConnectionManager = auge::augeGetConnectionManagerInstance();
+
+	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnectionManager->GetWorkspace("db1"));
+
+	auge::FeatureClass* pFeatureClass = NULL;
+	pFeatureClass = pWorkspace->OpenFeatureClass("rivers");
+	CPPUNIT_ASSERT(pFeatureClass!=NULL);
+
+	//auge::Style* pStyle = NULL;
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point.xml");
+
+	//auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
+	//pLayer->SetName("cities");
+	//pLayer->SetFeatureClass(pFeatureClass);
+	//pLayer->SetStyle(pStyle);
+	//pFeatureClass->AddRef();
+
+	//auge::Map* pMap = NULL;
+	//pMap = pCartoFactory->CreateMap();
+	//pMap->AddLayer(pLayer);
+
+	//ts = GetTickCount();
+	//pCanvas->Draw(pMap);
+	//te = GetTickCount();
+	//printf("[时间]:%8.3f\n", (te-ts)/1000.0f);
+
+	ts = GetTickCount();
+
+	auge::FeatureCursor* pCursor = NULL;
+	pCursor = pFeatureClass->Query();
+	CPPUNIT_ASSERT(pCursor!=NULL);
+
+	auge::Geometry	*pGeometry = NULL;
+	auge::Feature	*pFeature = NULL;
+	while((pFeature=pCursor->NextFeature())!=NULL)
+	{	
+		pGeometry = pFeature->GetGeometry();
+
+		pCanvas->DrawSymbol(pGeometry, pLineSymbol);
+
+		pFeature->Release();
+	}
+
+	te = GetTickCount();
+	printf("[时间]:%8.3f\n", (te-ts)/1000.0f);
+
+	pCanvas->Save("g:\\temp\\map\\railway.png");
+	//pCanvas->Save("/home/renyc/map/map.png");
+
+	AUGE_SAFE_RELEASE(pLineSymbol);
+	AUGE_SAFE_RELEASE(pCursor);
 	AUGE_SAFE_RELEASE(pFeatureClass);
 	AUGE_SAFE_RELEASE(pCanvas);
 }

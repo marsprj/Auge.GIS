@@ -15,7 +15,7 @@ namespace auge
 	m_rotation(0.0f),
 	m_mark_type(augeMarkerCircle)
 {
-
+	//m_pMarker = NULL;
 }
 
 PointSymbolizerImpl::~PointSymbolizerImpl()
@@ -34,6 +34,11 @@ PointSymbolizerImpl::~PointSymbolizerImpl()
 	{
 		m_pGraphic->Release();
 	}
+
+	//if(m_pMarker!=NULL)
+	//{
+	//	AUGE_SAFE_RELEASE(m_pMarker);
+	//}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -148,6 +153,17 @@ augeSymbolizerType PointSymbolizerImpl::GetType()
 {
 	return augeSymbolPoint;
 }
+
+//void PointSymbolizerImpl::SetMarker(MarkerSymbol* pMarker)
+//{
+//	AUGE_SAFE_RELEASE(m_pMarker);
+//	m_pMarker = pMarker;
+//}
+//
+//MarkerSymbol* PointSymbolizerImpl::GetMarker()
+//{
+//	return m_pMarker;
+//}
 
 }
 

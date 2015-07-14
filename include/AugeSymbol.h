@@ -37,6 +37,8 @@ namespace auge
 	class Transformation;
 	class Renderer;
 
+	class MarkerSymbol;
+
 	//========================================================================
 	// augeSymbolType Enum
 	//========================================================================
@@ -340,6 +342,9 @@ namespace auge
 
 		virtual void			SetRotation(float rotation) = 0;
 		virtual float			GetRotation() = 0;
+
+		//virtual void			SetMarker(MarkerSymbol* pMarker) = 0;
+		//virtual MarkerSymbol*	GetMarker() = 0;
 	};
 
 	//========================================================================
@@ -414,11 +419,10 @@ namespace auge
 		virtual const char*	GetGemetry() = 0;
 		virtual void		SetGeometry(const char* prop_name) = 0;
 	};
-
-
 	//////////////////////////////////////////////////////////////////////////
 	// Marker Symbol
 	//////////////////////////////////////////////////////////////////////////
+
 	class Symbol : public GObject
 	{
 	protected:
@@ -452,6 +456,18 @@ namespace auge
 		virtual float			GetRotation() = 0;
 	};
 
+	class LineSymbol : public Symbol
+	{
+	public:
+		LineSymbol(){}
+		virtual ~LineSymbol(){}
+
+	public:
+		virtual Stroke*			GetStroke() = 0;
+		virtual void			SetStroke(Stroke* pStroke) = 0;
+		virtual augeLineType	GetLineType() = 0;
+	};
+
 	class EnumSymbol : public GObject
 	{
 	protected:
@@ -459,7 +475,7 @@ namespace auge
 		virtual ~EnumSymbol(){}
 	public:
 		virtual void			Reset() = 0;
-		virtual Symbolizer*		Next() = 0;
+		virtual Symbol*			Next() = 0;
 		virtual void			Release() = 0;
 	};
 
@@ -474,6 +490,10 @@ namespace auge
 		virtual EnumSymbol*		GetRegionSymbols() = 0;
 
 		virtual MarkerSymbol*	CreateMarkerSymbol(augeMarkerType type) = 0;
+		virtual MarkerSymbol*	CreateMarkerSymbol(const char* name) = 0;
+
+		virtual LineSymbol*		CreateLineSymbol(augeLineType type) = 0;
+		virtual LineSymbol*		CreateLineSymbol(const char* name) = 0;
 	};
 
 	extern "C"

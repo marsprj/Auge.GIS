@@ -45,12 +45,6 @@ namespace auge
 		virtual	void		DrawRectangle(g_uint x, g_uint y, g_uint width, g_uint height, GColor& color, double border);
 
 	public:
-		void				build_path(cairo_t* cairo, WKBLineString		*pWKBLineString,		Transformation* pTransformation);
-		void				build_path(cairo_t* cairo, WKBMultiLineString	*pWKBMultiLineString,	Transformation* pTransformation);
-		void				build_path(cairo_t* cairo, WKBPolygon			*pWKBPolygon,			Transformation* pTransformation);
-		void				build_path(cairo_t* cairo, WKBMultiPolygon		*pWKBPolygon,			Transformation* pTransformation);
-
-	public:
 		virtual void		SetFont(const char* family, 
 									float size, 
 									augeFontSlant slant=augeFontStyleNormal, 
@@ -103,6 +97,10 @@ namespace auge
 	};
 
 	void	set_stroke_style(cairo_t* cairo, Stroke* pStroke);
+	void	build_path(cairo_t* cairo, WKBLineString		*pWKBLineString,		Transformation* pTransformation);
+	void	build_path(cairo_t* cairo, WKBMultiLineString	*pWKBMultiLineString,	Transformation* pTransformation);
+	void	build_path(cairo_t* cairo, WKBPolygon			*pWKBPolygon,			Transformation* pTransformation);
+	void	build_path(cairo_t* cairo, WKBMultiPolygon		*pWKBPolygon,			Transformation* pTransformation);
 }
 
 #endif //__AUGE_RENDERER_CAIRO_H__

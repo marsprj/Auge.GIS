@@ -447,8 +447,6 @@ namespace auge
 		virtual ~LineLabelPlacement(){}
 	public:
 	};
-	
-
 
 	//========================================================================
 	// Auge Mark
