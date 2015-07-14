@@ -20,6 +20,7 @@ private:
 	void		DrawStar();
 	void		DrawStars();
 
+	auge::Style* LoadSLD(const char* path);
 private:
 	auge::GConnection	*m_pConnection;
 

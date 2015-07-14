@@ -7,8 +7,15 @@ namespace auge
 {
 	static double g_auge_marker_star_points[][2] = { 
 		{ 0.000000, -1.000000},
-		{-0.866025,  0.500000},
-		{ 0.866025,  0.500000},
+		{ 0.224514, -0.309017},	//inner
+		{ 0.951057, -0.309017},
+		{ 0.363271,  0.118034},	//inner
+		{ 0.587785,  0.809017},
+		{ 0.000000,  0.381966},	//inner
+		{-0.587785,  0.809017},
+		{-0.363271,  0.118034},	//inner
+		{-0.951057, -0.309017},
+		{-0.224514, -0.309017},	//inner
 		{ 0.000000, -1.000000}
 	};
 
@@ -16,7 +23,7 @@ namespace auge
 	m_cairo(NULL),
 	m_icon(NULL),	
 	m_opacity(0.0f),
-	m_size(50.0f),
+	m_size(20.0f),
 	m_rotation(0.0f)
 	{
 		m_pStroke = new StrokeImpl();
@@ -157,12 +164,13 @@ namespace auge
 		
 		if(m_cairo!=NULL)
 		{
-			double width_2 = m_size / 2.0;
-			double height_2= m_size / 2.0;
-			cairo_translate(canvas_cairo, sx-width_2, sy-height_2);
+			double size_2 = m_size / 2.0;
+			cairo_save(canvas_cairo);
+			cairo_translate(canvas_cairo, sx-size_2, sy-size_2);
 			cairo_set_source_surface(canvas_cairo, m_icon, 0,0);
 			cairo_paint(canvas_cairo);
 			cairo_surface_flush(canvas_surface);
+			cairo_restore(canvas_cairo);
 		}
 
 		return AG_SUCCESS;
@@ -170,7 +178,7 @@ namespace auge
 
 	void StarMarkerImpl::DrawIcon()
 	{
-		m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, m_size*2, m_size*2);
+		m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, m_size, m_size);
 		m_cairo = cairo_create(m_icon);
 
 		size_t count = sizeof(g_auge_marker_star_points) / sizeof(double) / 2;
@@ -182,12 +190,12 @@ namespace auge
 		double x, y;
 		x = g_auge_marker_star_points[0][0];
 		y = g_auge_marker_star_points[0][1];
-		cairo_move_to(m_cairo, x*m_size+m_size, y*m_size+m_size);
+		cairo_move_to(m_cairo, x*size_2+size_2, y*size_2+size_2);
 		for(size_t i=1; i<count; i++)
 		{
 			x = g_auge_marker_star_points[i][0];
 			y = g_auge_marker_star_points[i][1];
-			cairo_line_to(m_cairo, x*m_size+m_size, y*m_size+m_size);
+			cairo_line_to(m_cairo, x*size_2+size_2, y*size_2+size_2);
 		}
 		cairo_close_path(m_cairo);
 
@@ -211,6 +219,6 @@ namespace auge
 			cairo_stroke(m_cairo);
 		}
 
-		cairo_surface_write_to_png(m_icon, "g:\\temp\\map\\icon.png");
+		//cairo_surface_write_to_png(m_icon, "g:\\temp\\map\\icon.png");
 	}
 }

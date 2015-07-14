@@ -112,6 +112,21 @@ void SymbolTest::DrawStars()
 	pFeatureClass = pWorkspace->OpenFeatureClass("cities");
 	CPPUNIT_ASSERT(pFeatureClass!=NULL);
 
+	auge::Style* pStyle = NULL;
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point.xml");
+
+	auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
+	pLayer->SetName("cities");
+	pLayer->SetFeatureClass(pFeatureClass);
+	pLayer->SetStyle(pStyle);
+	pFeatureClass->AddRef();
+
+	auge::Map* pMap = NULL;
+	pMap = pCartoFactory->CreateMap();
+	pMap->AddLayer(pLayer);
+
+	pCanvas->Draw(pMap);
+
 	auge::FeatureCursor* pCursor = NULL;
 	pCursor = pFeatureClass->Query();
 	CPPUNIT_ASSERT(pCursor!=NULL);
@@ -132,8 +147,26 @@ void SymbolTest::DrawStars()
 	//pCanvas->Save("/home/renyc/map/map.png");
 
 	AUGE_SAFE_RELEASE(pMarker);
-	AUGE_SAFE_RELEASE(pCursor);
+	//AUGE_SAFE_RELEASE(pCursor);
 	AUGE_SAFE_RELEASE(pFeatureClass);
 	AUGE_SAFE_RELEASE(pCanvas);
 }
 
+auge::Style* SymbolTest::LoadSLD(const char* path)
+{
+	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_4.xml";
+
+	auge::CartoFactory* pCartoFactory = NULL;
+	pCartoFactory = auge::augeGetCartoFactoryInstance();
+
+	auge::StyleFactory* pStyleFactory = NULL;
+	pStyleFactory = auge::augeGetStyleFactoryInstance();
+
+	auge::StyleReader* reader = NULL;
+	reader = pStyleFactory->CreateStyleReader();
+
+	auge::Style* pStyle = NULL;
+	pStyle = reader->Read(path, NULL);
+
+	return pStyle;
+}
