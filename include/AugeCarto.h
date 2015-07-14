@@ -41,6 +41,7 @@ namespace auge
 	class Transformation;
 	class Canvas;
 	class Raster;
+	class Symbol;
 
 	class Map : public GObject
 	{
@@ -184,6 +185,8 @@ namespace auge
 		virtual void			DrawLayer(RasterLayer* pLayer) = 0;
 		virtual void			DrawLayer(Layer* pLayer, Style* pStyle) = 0;
 		virtual void			Label() = 0;
+
+		virtual void			DrawSymbol(Geometry* pGeometry, Symbol* pSymbol) = 0;
 
 		virtual Transformation*	GetTransform() = 0;
 		virtual Renderer*		GetRenderer() = 0;
@@ -368,33 +371,33 @@ namespace auge
 	};
 
 
-	class GSymbol : public GObject
-	{
-	protected:
-		GSymbol(){}
-		virtual ~GSymbol(){}
-	public:
-		virtual g_uint			GetWidth() = 0;
-		virtual g_uint			GetHeight() = 0;
+	//class GSymbol : public GObject
+	//{
+	//protected:
+	//	GSymbol(){}
+	//	virtual ~GSymbol(){}
+	//public:
+	//	virtual g_uint			GetWidth() = 0;
+	//	virtual g_uint			GetHeight() = 0;
 
-		virtual void			Release() = 0;
-	};
+	//	virtual void			Release() = 0;
+	//};
 
-	class SymbolManager
-	{
-	protected:
-		SymbolManager(){}
-		virtual ~SymbolManager(){}
+	//class SymbolManager
+	//{
+	//protected:
+	//	SymbolManager(){}
+	//	virtual ~SymbolManager(){}
 
-	public:
-		virtual GSymbol*		GetSymbol(g_uint id) = 0;
-	};
+	//public:
+	//	virtual GSymbol*		GetSymbol(g_uint id) = 0;
+	//};
 
 	extern "C"
 	{
 		AUGE_CARTO_API CartoFactory*	augeGetCartoFactoryInstance();
 		AUGE_CARTO_API CartoManager*	augeGetCartoManagerInstance();
-		AUGE_CARTO_API SymbolManager*	augeGetSymbolManagerInstance();
+		//AUGE_CARTO_API SymbolManager*	augeGetSymbolManagerInstance();
 	}
 }
 

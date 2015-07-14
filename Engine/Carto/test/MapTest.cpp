@@ -468,6 +468,62 @@ void MapTest::Draw_Line()
 	AUGE_SAFE_RELEASE(pCanvas);
 }
 
+void MapTest::DrawLayerRailway()
+{
+	//const char* className = "rivers";
+	const char* className = "china_railway";
+
+	auge::DataEngine	*pEngine = NULL;
+	auge::DataEngineManager* pEngineManager = NULL;
+	pEngineManager = auge::augeGetDataEngineManagerInstance();
+	auge::ConnectionManager* pConnManager = NULL;
+	pConnManager = auge::augeGetConnectionManagerInstance();
+	auge::CartoManager* pCartoManager = NULL;
+	pCartoManager = auge::augeGetCartoManagerInstance();
+	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
+
+	auge::Canvas* pCanvas = NULL;
+	//auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
+	auge::GEnvelope viewer(73.8806610107422,18.1135940551758,134.921035766602,53.527271270752);	//china
+	//auge::GEnvelope viewer(114,37,118,41);	
+	//auge::GEnvelope viewer(115,38,117,40);	
+	//pCanvas = pCartoFactory->CreateCanvas2D(1600, 1200);
+	pCanvas = pCartoFactory->CreateCanvas2D(16000, 12000);
+	pCanvas->SetViewer(viewer);
+
+	auge::GColor bgColor(255,0,0,0);
+	pCanvas->DrawBackground(bgColor);
+
+	auge::FeatureWorksapce* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
+
+	auge::Style* pStyle = NULL;
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_label_top_left.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_2.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line_null_value_small.xml");
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line-railway.xml");
+
+	auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
+	pLayer->SetName(className);
+	pLayer->SetFeatureClass(pFeatureClass);
+	pLayer->SetStyle(pStyle);
+
+	auge::Map* pMap = NULL;
+	pMap = pCartoFactory->CreateMap();
+	pMap->AddLayer(pLayer);
+
+	pCanvas->Draw(pMap);
+	pCanvas->Save("g:\\temp\\map\\railway.png");
+	//pCanvas->Save("/home/renyc/map/map.png");
+
+	//m_pConnection->Close();
+	//AUGE_SAFE_RELEASE(m_pConnection);
+	AUGE_SAFE_RELEASE(pMap);
+	AUGE_SAFE_RELEASE(pCanvas);
+}
+
 void MapTest::CreateLayer()
 {
 	//auge::GConnection	*m_pConnection = NULL;

@@ -88,6 +88,7 @@
     <ClCompile Include="MapTest.cpp" />
     <ClCompile Include="RasterTest.cpp" />
     <ClCompile Include="StyleTest.cpp" />
+    <ClCompile Include="SymbolTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CairoTest.h" />
@@ -96,6 +97,7 @@
     <ClInclude Include="MapTest.h" />
     <ClInclude Include="RasterTest.h" />
     <ClInclude Include="StyleTest.h" />
+    <ClInclude Include="SymbolTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

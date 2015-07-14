@@ -91,6 +91,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\EnumColorMapImpl.cpp" />
     <ClCompile Include="..\src\EnumMapImpl.cpp" />
     <ClCompile Include="..\src\EnumStyleImpl.cpp" />
+    <ClCompile Include="..\src\EnumSymbolImpl.cpp" />
     <ClCompile Include="..\src\ExternalGraphicImpl.cpp" />
     <ClCompile Include="..\src\FeatureLayerImpl.cpp" />
     <ClCompile Include="..\src\FeatureStyleImpl.cpp" />
@@ -116,18 +117,19 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterSymbolizerImpl.cpp" />
     <ClCompile Include="..\src\RendererCairo.cpp" />
     <ClCompile Include="..\src\RuleImpl.cpp" />
+    <ClCompile Include="..\src\StarMarkerImpl.cpp" />
     <ClCompile Include="..\src\StrokeImpl.cpp" />
     <ClCompile Include="..\src\StyleFactoryImpl.cpp" />
     <ClCompile Include="..\src\StyleReaderImpl.cpp" />
     <ClCompile Include="..\src\StyleReader_1_0_0.cpp" />
     <ClCompile Include="..\src\StyleWriterImpl.cpp" />
     <ClCompile Include="..\src\StyleWriter_1_0_0.cpp" />
-    <ClCompile Include="..\src\SymbolGeometry.cpp" />
     <ClCompile Include="..\src\SymbolManagerImpl.cpp" />
     <ClCompile Include="..\src\TextSymbolizerImpl.cpp" />
     <ClCompile Include="..\src\TransformImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\AugeCarto.h" />
     <ClInclude Include="..\..\..\include\AugeLineSymbol.h" />
     <ClInclude Include="..\..\..\include\AugeMarkerSymbol.h" />
     <ClInclude Include="..\..\..\include\AugeRegionSymbol.h" />
@@ -141,10 +143,10 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\EnumColorMapImpl.h" />
     <ClInclude Include="..\include\EnumMapImpl.h" />
     <ClInclude Include="..\include\EnumStyleImpl.h" />
+    <ClInclude Include="..\include\EnumSymbolImpl.h" />
     <ClInclude Include="..\include\ExternalGraphicImpl.h" />
     <ClInclude Include="..\include\FeatureLayerImpl.h" />
     <ClInclude Include="..\include\FeatureStyleImpl.h" />
-    <ClInclude Include="..\include\FillImpl.h" />
     <ClInclude Include="..\include\FontImpl.h" />
     <ClInclude Include="..\include\GraphicImpl.h" />
     <ClInclude Include="..\include\GraphicLayerImpl.h" />
@@ -166,13 +168,13 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RendererCairo.h" />
     <ClInclude Include="..\include\RuleImpl.h" />
     <ClInclude Include="..\include\SLDConstant.h" />
+    <ClInclude Include="..\include\StarMarkerImpl.h" />
     <ClInclude Include="..\include\StrokeImpl.h" />
     <ClInclude Include="..\include\StyleFactoryImpl.h" />
     <ClInclude Include="..\include\StyleReaderImpl.h" />
     <ClInclude Include="..\include\StyleReader_1_0_0.h" />
     <ClInclude Include="..\include\StyleWriterImpl.h" />
     <ClInclude Include="..\include\StyleWriter_1_0_0.h" />
-    <ClInclude Include="..\include\SymbolGeometry.h" />
     <ClInclude Include="..\include\SymbolManagerImpl.h" />
     <ClInclude Include="..\include\TextSymbolizerImpl.h" />
     <ClInclude Include="..\include\TransformImpl.h" />

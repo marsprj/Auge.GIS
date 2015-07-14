@@ -27,6 +27,8 @@ namespace auge
 		virtual void			DrawLayer(FeatureLayer* pLayer, FeatureStyle* pStyle);
 		virtual void			Label();
 
+		virtual void			DrawSymbol(Geometry* pGeometry, Symbol* pSymbol);
+
 		virtual Transformation*	GetTransform();
 		virtual Renderer*		GetRenderer();
 

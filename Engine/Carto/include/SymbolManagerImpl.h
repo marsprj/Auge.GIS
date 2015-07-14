@@ -10,8 +10,13 @@ namespace auge
 	public:
 		SymbolManagerImpl();
 		virtual ~SymbolManagerImpl();
+
 	public:
-		virtual GSymbol*		GetSymbol(g_uint id);
+		virtual EnumSymbol*		GetMarkerSymbols();
+		virtual EnumSymbol*		GetLineSymbols();
+		virtual EnumSymbol*		GetRegionSymbols();
+
+		virtual MarkerSymbol*	CreateMarkerSymbol(augeMarkerType type);
 	};
 }
 

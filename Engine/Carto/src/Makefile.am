@@ -42,8 +42,6 @@ libgcarto_la_SOURCES=\
 		TextSymbolizerImpl.cpp \
 		TransformImpl.cpp \
 		EnumStyleImpl.cpp \
-		SymbolGeometry.cpp \
-		SymbolManagerImpl.cpp \
 		PointLabel.cpp \
 		LineLabel.cpp \
 		PolygonLabel.cpp \
@@ -54,4 +52,7 @@ libgcarto_la_SOURCES=\
 		ExternalGraphicImpl.cpp \
 		EnumColorMapImpl.cpp \
 		QuadServerLayerImpl.cpp \
-		GraphicImpl.cpp
+		GraphicImpl.cpp \
+		EnumSymbolImpl.cpp \
+		SymbolManagerImpl.cpp \
+		StarMarkerImpl.cpp

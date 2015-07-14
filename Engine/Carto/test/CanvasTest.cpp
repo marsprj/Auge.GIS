@@ -7,7 +7,7 @@
 
 #pragma comment(lib, "GPostgresD.lib")
 
-CPPUNIT_TEST_SUITE_REGISTRATION(CanvasTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(CanvasTest);
 
 void CanvasTest::setUp() 
 {

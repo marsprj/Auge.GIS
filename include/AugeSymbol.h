@@ -8,6 +8,16 @@
 #include "AugeFilter.h"
 #include "AugeFeature.h"
 
+#ifdef WIN32
+#	ifdef AUGE_CARTO_EXPORTS
+#		define AUGE_CARTO_API __declspec(dllexport)
+#	else
+#		define AUGE_CARTO_API __declspec(dllimport)
+#	endif
+#else
+#	define AUGE_CARTO_API
+#endif
+
 namespace auge
 {
 	class Symbolizer;
@@ -23,13 +33,14 @@ namespace auge
 	class GraphicStroke;
 	class Font;
 	class Mark;
-	class Filter;
 	class StyleFactory;
+	class Transformation;
+	class Renderer;
 
 	//========================================================================
 	// augeSymbolType Enum
 	//========================================================================
-	typedef enum
+	typedef enum augeSymbolizerType
 	{
 		augeSymbolPoint		= 0,
 		augeSymbolLine		= 1,
@@ -75,6 +86,16 @@ namespace auge
 		augeMarkerPentagon		= 6,
 		augeMarkerCapital		= 7
 	}augeMarkerType;
+
+	//========================================================================
+	// augeLineType Enum
+	//========================================================================
+	typedef enum
+	{
+		augeLineSimple			= 0,
+		augeLineRailway			= 1
+	}augeLineType;
+
 
 	//========================================================================
 	// Auge Symbolizer
@@ -273,8 +294,192 @@ namespace auge
 
 		virtual const char*	GetFormat() = 0;
 		virtual void		SetFormat(const char* format) = 0;
-
 	};
+
+	//========================================================================
+	// Auge PointSymbolizer
+	//------------------------------------------------------------------------
+	//<xsd:element name="PointSymbolizer" type="se:PointSymbolizerType" substitutionGroup="se:Symbolizer"/> 
+	//	<xsd:complexType name="PointSymbolizerType"> 
+	//		<xsd:complexContent> 
+	//			<xsd:extension base="se:SymbolizerType"> 
+	//			<xsd:sequence> 
+	//				<xsd:element ref="se:Geometry" minOccurs="0"/> 
+	//				<xsd:element ref="se:Graphic" minOccurs="0"/> 
+	//			</xsd:sequence> 
+	//		</xsd:extension> 
+	//	</xsd:complexContent> 
+	//</xsd:complexType> 
+	//========================================================================
+	class PointSymbolizer : public Symbolizer
+	{
+	protected:
+		PointSymbolizer(){}
+		virtual ~PointSymbolizer(){}
+	public:
+		virtual const char*		GetGeometry() = 0;
+		virtual void			SetGeometry(const char* prop_name) = 0;
+
+		virtual void			SetGraphic(Graphic* pGraphic) = 0;
+		virtual Graphic*		GetGraphic() = 0;
+
+		virtual void			SetMarkType(augeMarkerType type) = 0;
+		virtual augeMarkerType	GetMarkType() = 0;
+
+		virtual void			SetStroke(Stroke* pStroke) = 0;
+		virtual Stroke*			GetStroke() = 0;
+
+		virtual void			SetFill(Fill* pFill) = 0;
+		virtual Fill*			GetFill() = 0;
+
+		virtual void			SetOpacity(float opacity) = 0;
+		virtual float			GetOpacity() = 0;
+
+		virtual void			SetSize(float size) = 0;
+		virtual float			GetSize() = 0;
+
+		virtual void			SetRotation(float rotation) = 0;
+		virtual float			GetRotation() = 0;
+	};
+
+	//========================================================================
+	// Auge LineSymbolizer
+	//------------------------------------------------------------------------
+	//<xsd:element name="LineSymbolizer" type="se:LineSymbolizerType" substitutionGroup="se:Symbolizer"/> 
+	//<xsd:complexType name="LineSymbolizerType"> 
+	//	<xsd:complexContent> 
+	//		<xsd:extension base="se:SymbolizerType"> 
+	//			<xsd:sequence> 
+	//				<xsd:element ref="se:Geometry" minOccurs="0"/> 
+	//				<xsd:element ref="se:Stroke" minOccurs="0"/> 
+	//				<xsd:element ref="se:PerpendicularOffset" minOccurs="0"/> 
+	//			</xsd:sequence> 
+	//		</xsd:extension> 
+	//	</xsd:complexContent> 
+	//</xsd:complexType> 
+	//========================================================================
+	class LineSymbolizer : public Symbolizer
+	{
+	public:
+		LineSymbolizer(){}
+		virtual ~LineSymbolizer(){}
+	public:
+		virtual const char* GetGeometry() = 0;
+		virtual Stroke*		GetStroke() = 0;
+
+		virtual bool		SetGeometry(const char* prop_name) = 0;
+		virtual bool		SetStroke(Stroke* pStroke) = 0;
+
+		virtual void		SetLineType(augeLineType type) = 0;
+		virtual augeLineType GetLineType() = 0;
+	};
+
+	//========================================================================
+	// Auge PolygonSymbolizer
+	//------------------------------------------------------------------------
+	//<xsd:element name="PolygonSymbolizer" type="se:PolygonSymbolizerType" substitutionGroup="se:Symbolizer"/> 
+	//<xsd:complexType name="PolygonSymbolizerType"> 
+	//	<xsd:complexContent> 
+	//		<xsd:extension base="se:SymbolizerType"> 
+	//			<xsd:sequence> 
+	//				<xsd:element ref="se:Geometry" minOccurs="0"/> 
+	//				<xsd:element ref="se:Fill" minOccurs="0"/> 
+	//				<xsd:element ref="se:Stroke" minOccurs="0"/> 
+	//				<xsd:element ref="se:Displacement" minOccurs="0"/> 
+	//				<xsd:element ref="se:PerpendicularOffset" minOccurs="0"/> 
+	//			</xsd:sequence> 
+	//		</xsd:extension> 
+	//	</xsd:complexContent> 
+	//</xsd:complexType>  
+	//========================================================================
+	class PolygonSymbolizer : public Symbolizer
+	{
+	public:
+		PolygonSymbolizer(){}
+		virtual ~PolygonSymbolizer(){}
+	public:
+		virtual Fill*		GetFill() = 0;
+		virtual void		SetFill(Fill* pFill) = 0;
+
+		virtual Stroke*		GetStroke() = 0;
+		virtual void		SetStroke(Stroke* pStroke) = 0;
+
+		virtual void		SetOpacity(float opacity) = 0;
+		virtual float		GetOpacity() = 0;
+
+		virtual float		GetDisplacement_X() = 0;
+		virtual float		GetDisplacement_Y() = 0;
+		virtual void		SetDisplacement(float x, float y) = 0;
+
+		virtual const char*	GetGemetry() = 0;
+		virtual void		SetGeometry(const char* prop_name) = 0;
+	};
+
+
+	//////////////////////////////////////////////////////////////////////////
+	// Marker Symbol
+	//////////////////////////////////////////////////////////////////////////
+	class Symbol : public GObject
+	{
+	protected:
+		Symbol(){}
+		virtual ~Symbol(){}
+	public:
+		virtual augeSymbolizerType	GetType() = 0;
+		virtual RESULTCODE			Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform) = 0;
+	};
+
+	class MarkerSymbol : public Symbol
+	{
+	protected:
+		MarkerSymbol(){}
+		virtual ~MarkerSymbol(){}
+	public:
+		virtual void			SetStroke(Stroke* pStroke) = 0;
+		virtual Stroke*			GetStroke() = 0;
+
+		virtual void			SetFill(Fill* pFill) = 0;
+		virtual Fill*			GetFill() = 0;
+
+		virtual void			SetOpacity(float opacity) = 0;
+		virtual float			GetOpacity() = 0;
+
+		virtual void			SetSize(float size) = 0;
+		virtual float			GetSize() = 0;
+
+		virtual void			SetRotation(float rotation) = 0;
+		virtual float			GetRotation() = 0;
+	};
+
+	class EnumSymbol : public GObject
+	{
+	protected:
+		EnumSymbol(){}
+		virtual ~EnumSymbol(){}
+	public:
+		virtual void			Reset() = 0;
+		virtual Symbolizer*		Next() = 0;
+		virtual void			Release() = 0;
+	};
+
+	class SymbolManager
+	{
+	protected:
+		SymbolManager(){}
+		virtual ~SymbolManager(){}
+	public:
+		virtual EnumSymbol*		GetMarkerSymbols() = 0;
+		virtual EnumSymbol*		GetLineSymbols() = 0;
+		virtual EnumSymbol*		GetRegionSymbols() = 0;
+
+		virtual MarkerSymbol*	CreateMarkerSymbol(augeMarkerType type) = 0;
+	};
+
+	extern "C"
+	{
+		AUGE_CARTO_API SymbolManager*	augeGetSymbolManagerInstance();
+	}
+
 }
 
 #endif //__AUGE_SYMBOL_H__

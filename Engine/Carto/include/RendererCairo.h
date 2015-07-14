@@ -2,7 +2,8 @@
 #define __AUGE_RENDERER_CAIRO_H__
 
 #include "AugeCarto.h"
-#ifdef _WIN32
+
+#ifdef WIN32
 #	include "cairo/cairo-win32.h"
 #else
 #	include "cairo/cairo.h"
@@ -44,6 +45,12 @@ namespace auge
 		virtual	void		DrawRectangle(g_uint x, g_uint y, g_uint width, g_uint height, GColor& color, double border);
 
 	public:
+		void				build_path(cairo_t* cairo, WKBLineString		*pWKBLineString,		Transformation* pTransformation);
+		void				build_path(cairo_t* cairo, WKBMultiLineString	*pWKBMultiLineString,	Transformation* pTransformation);
+		void				build_path(cairo_t* cairo, WKBPolygon			*pWKBPolygon,			Transformation* pTransformation);
+		void				build_path(cairo_t* cairo, WKBMultiPolygon		*pWKBPolygon,			Transformation* pTransformation);
+
+	public:
 		virtual void		SetFont(const char* family, 
 									float size, 
 									augeFontSlant slant=augeFontStyleNormal, 
@@ -54,6 +61,10 @@ namespace auge
 		virtual RESULTCODE	SaveAsImage(const char* szPath);
 		virtual RESULTCODE	SaveAsImage(g_uint x, g_uint y, g_uint width, g_uint height, const char* path);
 		virtual void		Relaese();
+
+	public:
+		cairo_t*			GetCairo();
+		cairo_surface_t*	GetCairoSurface();
 
 	private:
 		void	DrawCircle(int cx, int cy, float radius, Fill* pFill, Stroke* pStroke);
@@ -81,6 +92,7 @@ namespace auge
 
 		// DrawLine
 		void	DrawRailway(WKBLineString *pWKBLineString, Transformation* pTransformation);
+		void	DrawRailway(WKBMultiLineString *pWKBMultiLineString, Transformation* pTransformation);
 
 	private:
 		cairo_surface_t	*m_cairo_surface;
@@ -89,6 +101,8 @@ namespace auge
 		g_uint			m_width;
 		g_uint			m_height;
 	};
+
+	void	set_stroke_style(cairo_t* cairo, Stroke* pStroke);
 }
 
 #endif //__AUGE_RENDERER_CAIRO_H__

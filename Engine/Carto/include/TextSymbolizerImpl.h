@@ -6,7 +6,6 @@
 
 namespace auge
 {
-
 	class TextSymbolizerImpl : public TextSymbolizer
 	{
 	public:

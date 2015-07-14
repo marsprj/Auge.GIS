@@ -5,11 +5,11 @@ namespace auge
 {
 	const g_uint g_cairo_bands = 4;
 	
-	void	build_path(cairo_t* cairo, WKBLineString		*pWKBLineString,		Transformation* pTransformation);
-	void	build_path(cairo_t* cairo, WKBMultiLineString	*pWKBMultiLineString,	Transformation* pTransformation);
-	void	build_path(cairo_t* cairo, WKBPolygon			*pWKBPolygon,			Transformation* pTransformation);
-	void	build_path(cairo_t* cairo, WKBMultiPolygon		*pWKBPolygon,			Transformation* pTransformation);
-	void	set_stroke_style(cairo_t* cairo, Stroke* pStroke);
+	//void	build_path(cairo_t* cairo, WKBLineString		*pWKBLineString,		Transformation* pTransformation);
+	//void	build_path(cairo_t* cairo, WKBMultiLineString	*pWKBMultiLineString,	Transformation* pTransformation);
+	//void	build_path(cairo_t* cairo, WKBPolygon			*pWKBPolygon,			Transformation* pTransformation);
+	//void	build_path(cairo_t* cairo, WKBMultiPolygon		*pWKBPolygon,			Transformation* pTransformation);
+	//void	set_stroke_style(cairo_t* cairo, Stroke* pStroke);
 
 	RendererCairo::RendererCairo(g_uint width, g_uint height)
 	{
@@ -38,6 +38,16 @@ namespace auge
 	void RendererCairo::Relaese()
 	{
 		delete this;
+	}
+
+	cairo_t* RendererCairo::GetCairo()
+	{
+		return m_cairo;
+	}
+
+	cairo_surface_t* RendererCairo::GetCairoSurface()
+	{
+		return m_cairo_surface;
 	}
 
 	void RendererCairo::Save()
@@ -291,12 +301,32 @@ namespace auge
 		}
 	}
 
+	//void RendererCairo::DrawLine(WKBMultiLineString	*pWKBMultiLineString, LineSymbolizer* pSymbolizer, Transformation* pTransformation)
+	//{
+	//	Stroke* pStroke = pSymbolizer->GetStroke();
+	//	build_path(m_cairo, pWKBMultiLineString, pTransformation);
+	//	set_stroke_style(m_cairo, pStroke);
+	//	cairo_stroke(m_cairo);
+	//}
+
 	void RendererCairo::DrawLine(WKBMultiLineString	*pWKBMultiLineString, LineSymbolizer* pSymbolizer, Transformation* pTransformation)
 	{
-		Stroke* pStroke = pSymbolizer->GetStroke();
-		build_path(m_cairo, pWKBMultiLineString, pTransformation);
-		set_stroke_style(m_cairo, pStroke);
-		cairo_stroke(m_cairo);
+		augeLineType line_type = pSymbolizer->GetLineType();
+		switch(line_type)
+		{
+		case augeLineRailway:
+			{
+				DrawRailway(pWKBMultiLineString, pTransformation);
+			}
+			break;
+		default:
+			{
+				Stroke* pStroke = pSymbolizer->GetStroke();
+				build_path(m_cairo, pWKBMultiLineString, pTransformation);
+				set_stroke_style(m_cairo, pStroke);
+				cairo_stroke(m_cairo);
+			}
+		}
 	}
 
 	void RendererCairo::DrawPolygon(WKBPolygon *pWKBPolygon, PolygonSymbolizer* pPolygonSymbolizer, Transformation* pTransformation)
@@ -799,7 +829,7 @@ namespace auge
 			block_length,  /* skip */
 		};
 		int ndash = sizeof(dashes) / sizeof(double);
-		double dash_offset = block_length;
+		double dash_offset = 1;//block_length;
 
 		cairo_save(m_cairo);
 		
@@ -819,6 +849,51 @@ namespace auge
 
 		cairo_restore(m_cairo);
 	}
+
+	void RendererCairo::DrawRailway(WKBMultiLineString *pWKBMultiLineString, Transformation* pTransformation)
+	{
+		int block_width = 5;
+		int block_length= 10;
+
+		double dashes[] = { block_length,  /* ink */
+			block_length,  /* skip */
+		};
+		int ndash = sizeof(dashes) / sizeof(double);
+		double dash_offset = 1;//block_length;
+
+		cairo_save(m_cairo);
+
+		// draw black
+		build_path(m_cairo, pWKBMultiLineString, pTransformation);
+		cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_BUTT);
+		cairo_set_source_rgba(m_cairo,	0.0f, 0.0f, 0.0f, 1.0f);
+		cairo_set_line_width(m_cairo, block_width);
+		cairo_stroke(m_cairo);
+
+		// draw white block
+		build_path(m_cairo, pWKBMultiLineString, pTransformation);
+		cairo_set_source_rgba(m_cairo,	1.0f, 1.0f, 1.0f, 1.0f);
+		cairo_set_line_width(m_cairo, block_width-1);
+		cairo_set_dash (m_cairo, dashes, ndash, dash_offset);
+		cairo_stroke(m_cairo);
+
+		cairo_restore(m_cairo);
+	}
+
+	//void RendererCairo::DrawRailway(WKBMultiLineString *pWKBMultiLineString, Transformation* pTransformation)
+	//{
+	//	g_uchar* ptr = NULL;
+	//	WKBLineString* pWKBLineString = NULL;
+	//		
+	//	pWKBMultiLineString = (WKBLineString*)(&(pWKBMultiLineString->lineStrings[0]));
+	//	ptr = pWKBMultiLineString;
+
+	//	int numLineStrings = pWKBMultiLineString->numLineStrings;		
+	//	for(int i=0; i<numLineStrings; i++)
+	//	{
+
+	//	}
+	//}
 	//////////////////////////////////////////////////////////////////////////
 	// Draw Line End
 	//////////////////////////////////////////////////////////////////////////
@@ -829,7 +904,7 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	// Build Path Begin
 	//////////////////////////////////////////////////////////////////////////
-	void build_path(cairo_t* cairo, WKBLineString* pWKBLineString, Transformation* pTransformation)
+	void RendererCairo::build_path(cairo_t* cairo, WKBLineString* pWKBLineString, Transformation* pTransformation)
 	{
 		int numPoints = pWKBLineString->numPoints;
 		if(numPoints>0)
@@ -854,7 +929,7 @@ namespace auge
 		}
 	}
 
-	void build_path(cairo_t* cairo, WKBMultiLineString* pWKBMultiLineString, Transformation* pTransformation)
+	void RendererCairo::build_path(cairo_t* cairo, WKBMultiLineString* pWKBMultiLineString, Transformation* pTransformation)
 	{
 		int i=0,j=0;
 		int numPoints = 0;
@@ -885,7 +960,7 @@ namespace auge
 		}
 	}
 
-	void build_path(cairo_t* cairo, WKBPolygon* pWKBPolygon, Transformation* pTransformation)
+	void RendererCairo::build_path(cairo_t* cairo, WKBPolygon* pWKBPolygon, Transformation* pTransformation)
 	{
 		int i=0, j=0, end=0;
 		int sx=0, sy=0;
@@ -914,7 +989,7 @@ namespace auge
 		}
 	}
 
-	void build_path(cairo_t* cairo, WKBMultiPolygon* pWKBMultiPolygon, Transformation* pTransformation)
+	void RendererCairo::build_path(cairo_t* cairo, WKBMultiPolygon* pWKBMultiPolygon, Transformation* pTransformation)
 	{
 		int i=0,j=0,k=0,end=0;
 		int sx=0, sy=0;

@@ -1,6 +1,6 @@
 #include "CairoTest.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(CairoTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(CairoTest);
 
 #ifndef PI
 #define PI					3.14159265358979323846

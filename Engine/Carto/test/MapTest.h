@@ -32,7 +32,8 @@ class MapTest : public CppUnit::TestFixture
 	
 	//CPPUNIT_TEST(AddQuadServerLayer);
 
-	CPPUNIT_TEST(DrawLayerStar);
+	//CPPUNIT_TEST(DrawLayerStar);
+	CPPUNIT_TEST(DrawLayerRailway);
 
 	
 	CPPUNIT_TEST_SUITE_END();
@@ -51,6 +52,8 @@ private:
 	void		Draw_Map_Point_Graphic();
 
 	void		Draw_Line();
+	void		DrawLayerRailway();
+
 	void		Draw_Map_Polygon_Label();
 	void		Create_Map_Point_Label();
 

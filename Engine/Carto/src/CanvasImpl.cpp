@@ -515,4 +515,14 @@ namespace auge
 	{
 		m_maplex.Draw();
 	}
+
+	void CanvasImpl::DrawSymbol(Geometry* pGeometry, Symbol* pSymbol)
+	{
+		if(pGeometry==NULL || pSymbol==NULL)
+		{
+			return;
+		}
+
+		pSymbol->Draw(pGeometry, m_pRenderer, &m_transform);
+	}
 }
