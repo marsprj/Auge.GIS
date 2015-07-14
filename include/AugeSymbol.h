@@ -425,6 +425,7 @@ namespace auge
 		Symbol(){}
 		virtual ~Symbol(){}
 	public:
+		virtual const char*			GetName() = 0;
 		virtual augeSymbolizerType	GetType() = 0;
 		virtual RESULTCODE			Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform) = 0;
 	};

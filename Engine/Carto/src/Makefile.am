@@ -55,4 +55,9 @@ libgcarto_la_SOURCES=\
 		GraphicImpl.cpp \
 		EnumSymbolImpl.cpp \
 		SymbolManagerImpl.cpp \
-		StarMarkerImpl.cpp
+		CapitalMarkerImpl.cpp \
+		CircleMarkerImpl.cpp \
+		PentagonMarkerImpl.cpp \
+		StarMarkerImpl.cpp \
+		SquareMarkerImpl.cpp \
+		TriangleMarkerImpl.cpp

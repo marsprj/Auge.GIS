@@ -701,6 +701,8 @@ namespace auge
 		float radius = size / 2;
 		cairo_save(m_cairo);
 		cairo_arc(m_cairo, cx, cy, radius, 0, 2*PI);
+		cairo_set_source_rgba(m_cairo, 1.0f, 1.0f, 1.0f, 1.0f);
+		cairo_fill_preserve(m_cairo);
 		cairo_set_source_rgba(m_cairo, 0.0f, 0.0f, 0.0f, 1.0f);
 		cairo_set_line_width(m_cairo, 1.0f);
 		cairo_stroke(m_cairo);

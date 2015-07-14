@@ -1,25 +1,20 @@
-#include "StarMarkerImpl.h"
+#include "PentagonMarkerImpl.h"
 #include "RendererCairo.h"
 #include "FillImpl.h"
 #include "StrokeImpl.h"
 
 namespace auge
 {
-	static double g_auge_marker_star_points[][2] = { 
+	static double g_auge_marker_penta_points[][2] = { 
 		{ 0.000000, -1.000000},
-		{ 0.224514, -0.309017},	//inner
 		{ 0.951057, -0.309017},
-		{ 0.363271,  0.118034},	//inner
 		{ 0.587785,  0.809017},
-		{ 0.000000,  0.381966},	//inner
 		{-0.587785,  0.809017},
-		{-0.363271,  0.118034},	//inner
 		{-0.951057, -0.309017},
-		{-0.224514, -0.309017},	//inner
 		{ 0.000000, -1.000000}
 	};
 
-	StarMarkerImpl::StarMarkerImpl():
+	PentagonMarkerImpl::PentagonMarkerImpl():
 	m_cairo(NULL),
 	m_icon(NULL),	
 	m_opacity(0.0f),
@@ -30,7 +25,7 @@ namespace auge
 		m_pFill = new FillImpl();
 	}
 
-	StarMarkerImpl::~StarMarkerImpl()
+	PentagonMarkerImpl::~PentagonMarkerImpl()
 	{
 		if(m_pStroke!=NULL)
 		{
@@ -55,17 +50,17 @@ namespace auge
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	const char*	StarMarkerImpl::GetName()
+	const char*	PentagonMarkerImpl::GetName()
 	{
-		return "Star";
+		return "Pentagon";
 	}
 
-	augeMarkerType StarMarkerImpl::GetMarkType()
+	augeMarkerType PentagonMarkerImpl::GetMarkType()
 	{
-		return augeMarkerStar;
+		return augeMarkerPentagon;
 	}
 	
-	void StarMarkerImpl::SetStroke(Stroke* pStroke)
+	void PentagonMarkerImpl::SetStroke(Stroke* pStroke)
 	{
 		if(m_pStroke!=NULL)
 		{
@@ -75,12 +70,12 @@ namespace auge
 		m_pStroke = pStroke;
 	}
 
-	Stroke* StarMarkerImpl::GetStroke()
+	Stroke* PentagonMarkerImpl::GetStroke()
 	{
 		return m_pStroke;
 	}
 
-	void StarMarkerImpl::SetFill(Fill* pFill)
+	void PentagonMarkerImpl::SetFill(Fill* pFill)
 	{
 		if(m_pFill!=NULL)
 		{
@@ -90,42 +85,42 @@ namespace auge
 		m_pFill = pFill;
 	}
 
-	Fill*	StarMarkerImpl::GetFill()
+	Fill*	PentagonMarkerImpl::GetFill()
 	{
 		return m_pFill;
 	}
 
-	void StarMarkerImpl::SetOpacity(float opacity)
+	void PentagonMarkerImpl::SetOpacity(float opacity)
 	{
 		m_opacity = opacity;
 	}
 
-	float StarMarkerImpl::GetOpacity()
+	float PentagonMarkerImpl::GetOpacity()
 	{
 		return m_opacity;
 	}
 
-	void StarMarkerImpl::SetSize(float size)
+	void PentagonMarkerImpl::SetSize(float size)
 	{
 		m_size = size;
 	}
 
-	float StarMarkerImpl::GetSize()
+	float PentagonMarkerImpl::GetSize()
 	{
 		return m_size;
 	}
 
-	void StarMarkerImpl::SetRotation(float rotation)
+	void PentagonMarkerImpl::SetRotation(float rotation)
 	{
 		m_rotation = rotation;
 	}
 
-	float StarMarkerImpl::GetRotation()
+	float PentagonMarkerImpl::GetRotation()
 	{
 		return m_rotation;
 	}
 
-	void StarMarkerImpl::Release()
+	void PentagonMarkerImpl::Release()
 	{
 		if(!ReleaseRef())
 		{
@@ -133,12 +128,12 @@ namespace auge
 		}
 	}
 
-	augeSymbolizerType StarMarkerImpl::GetType()
+	augeSymbolizerType PentagonMarkerImpl::GetType()
 	{
 		return augeSymbolPoint;
 	}
 
-	RESULTCODE StarMarkerImpl::Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform)
+	RESULTCODE PentagonMarkerImpl::Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform)
 	{
 		if(pGeometry==NULL)
 		{
@@ -181,12 +176,12 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void StarMarkerImpl::DrawIcon()
+	void PentagonMarkerImpl::DrawIcon()
 	{
 		m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, m_size, m_size);
 		m_cairo = cairo_create(m_icon);
 
-		size_t count = sizeof(g_auge_marker_star_points) / sizeof(double) / 2;
+		size_t count = sizeof(g_auge_marker_penta_points) / sizeof(double) / 2;
 		double offset_x=0, offset_y=0;	
 		double size_2 = m_size / 2.0f;
 		double cx = size_2;
@@ -198,13 +193,13 @@ namespace auge
 		//cairo_scale(m_cairo,10,10);
 		cairo_rotate (m_cairo, m_rotation*PI/180.0f);
 
-		x = g_auge_marker_star_points[0][0];
-		y = g_auge_marker_star_points[0][1];
+		x = g_auge_marker_penta_points[0][0];
+		y = g_auge_marker_penta_points[0][1];
 		cairo_move_to(m_cairo, x*size_2, y*size_2);
 		for(size_t i=1; i<count; i++)
 		{
-			x = g_auge_marker_star_points[i][0];
-			y = g_auge_marker_star_points[i][1];
+			x = g_auge_marker_penta_points[i][0];
+			y = g_auge_marker_penta_points[i][1];
 			cairo_line_to(m_cairo, x*size_2, y*size_2);
 		}
 		cairo_close_path(m_cairo);

@@ -84,6 +84,8 @@ void SymbolTest::DrawStar()
 
 void SymbolTest::DrawStars()
 {
+	DWORD ts, te;
+
 	auge::Canvas* pCanvas = NULL;
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
@@ -93,10 +95,16 @@ void SymbolTest::DrawStars()
 
 	auge::MarkerSymbol* pMarker = NULL;
 	auge::SymbolManager* pSymbolManager = auge::augeGetSymbolManagerInstance();
-	pMarker = pSymbolManager->CreateMarkerSymbol(auge::augeMarkerStar);
+	//pMarker = pSymbolManager->CreateMarkerSymbol(auge::augeMarkerStar);
+	//pMarker = pSymbolManager->CreateMarkerSymbol(auge::augeMarkerCircle);
+	pMarker = pSymbolManager->CreateMarkerSymbol(auge::augeMarkerTriangle);
+	//pMarker = pSymbolManager->CreateMarkerSymbol(auge::augeMarkerSquare);
+	//pMarker = pSymbolManager->CreateMarkerSymbol(auge::augeMarkerPentagon);
+	//pMarker = pSymbolManager->CreateMarkerSymbol(auge::augeMarkerCapital);
+	pMarker->SetRotation(10.0f);
 
 	auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
-	pCanvas = pCartoFactory->CreateCanvas2D(800, 600);
+	pCanvas = pCartoFactory->CreateCanvas2D(1600, 1200);
 	pCanvas->SetViewer(viewer);
 
 	auge::GColor bgColor(255,0,0,0);
@@ -125,7 +133,12 @@ void SymbolTest::DrawStars()
 	pMap = pCartoFactory->CreateMap();
 	pMap->AddLayer(pLayer);
 
+	ts = GetTickCount();
 	pCanvas->Draw(pMap);
+	te = GetTickCount();
+	printf("[时间]:%8.3f\n", (te-ts)/1000.0f);
+
+	ts = GetTickCount();
 
 	auge::FeatureCursor* pCursor = NULL;
 	pCursor = pFeatureClass->Query();
@@ -142,6 +155,8 @@ void SymbolTest::DrawStars()
 		pFeature->Release();
 	}
 	
+	te = GetTickCount();
+	printf("[时间]:%8.3f\n", (te-ts)/1000.0f);
 
 	pCanvas->Save("g:\\temp\\map\\star.png");
 	//pCanvas->Save("/home/renyc/map/map.png");

@@ -1,25 +1,18 @@
-#include "StarMarkerImpl.h"
+#include "TriangleMarkerImpl.h"
 #include "RendererCairo.h"
 #include "FillImpl.h"
 #include "StrokeImpl.h"
 
 namespace auge
 {
-	static double g_auge_marker_star_points[][2] = { 
+	static double g_auge_marker_triangle_points[][2] = { 
 		{ 0.000000, -1.000000},
-		{ 0.224514, -0.309017},	//inner
-		{ 0.951057, -0.309017},
-		{ 0.363271,  0.118034},	//inner
-		{ 0.587785,  0.809017},
-		{ 0.000000,  0.381966},	//inner
-		{-0.587785,  0.809017},
-		{-0.363271,  0.118034},	//inner
-		{-0.951057, -0.309017},
-		{-0.224514, -0.309017},	//inner
+		{-0.866025,  0.500000},
+		{ 0.866025,  0.500000},
 		{ 0.000000, -1.000000}
 	};
 
-	StarMarkerImpl::StarMarkerImpl():
+	TriangleMarkerImpl::TriangleMarkerImpl():
 	m_cairo(NULL),
 	m_icon(NULL),	
 	m_opacity(0.0f),
@@ -30,7 +23,7 @@ namespace auge
 		m_pFill = new FillImpl();
 	}
 
-	StarMarkerImpl::~StarMarkerImpl()
+	TriangleMarkerImpl::~TriangleMarkerImpl()
 	{
 		if(m_pStroke!=NULL)
 		{
@@ -55,17 +48,17 @@ namespace auge
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	const char*	StarMarkerImpl::GetName()
+	const char*	TriangleMarkerImpl::GetName()
 	{
-		return "Star";
+		return "Triangle";
 	}
 
-	augeMarkerType StarMarkerImpl::GetMarkType()
+	augeMarkerType TriangleMarkerImpl::GetMarkType()
 	{
-		return augeMarkerStar;
+		return augeMarkerTriangle;
 	}
 	
-	void StarMarkerImpl::SetStroke(Stroke* pStroke)
+	void TriangleMarkerImpl::SetStroke(Stroke* pStroke)
 	{
 		if(m_pStroke!=NULL)
 		{
@@ -75,12 +68,12 @@ namespace auge
 		m_pStroke = pStroke;
 	}
 
-	Stroke* StarMarkerImpl::GetStroke()
+	Stroke* TriangleMarkerImpl::GetStroke()
 	{
 		return m_pStroke;
 	}
 
-	void StarMarkerImpl::SetFill(Fill* pFill)
+	void TriangleMarkerImpl::SetFill(Fill* pFill)
 	{
 		if(m_pFill!=NULL)
 		{
@@ -90,42 +83,42 @@ namespace auge
 		m_pFill = pFill;
 	}
 
-	Fill*	StarMarkerImpl::GetFill()
+	Fill*	TriangleMarkerImpl::GetFill()
 	{
 		return m_pFill;
 	}
 
-	void StarMarkerImpl::SetOpacity(float opacity)
+	void TriangleMarkerImpl::SetOpacity(float opacity)
 	{
 		m_opacity = opacity;
 	}
 
-	float StarMarkerImpl::GetOpacity()
+	float TriangleMarkerImpl::GetOpacity()
 	{
 		return m_opacity;
 	}
 
-	void StarMarkerImpl::SetSize(float size)
+	void TriangleMarkerImpl::SetSize(float size)
 	{
 		m_size = size;
 	}
 
-	float StarMarkerImpl::GetSize()
+	float TriangleMarkerImpl::GetSize()
 	{
 		return m_size;
 	}
 
-	void StarMarkerImpl::SetRotation(float rotation)
+	void TriangleMarkerImpl::SetRotation(float rotation)
 	{
 		m_rotation = rotation;
 	}
 
-	float StarMarkerImpl::GetRotation()
+	float TriangleMarkerImpl::GetRotation()
 	{
 		return m_rotation;
 	}
 
-	void StarMarkerImpl::Release()
+	void TriangleMarkerImpl::Release()
 	{
 		if(!ReleaseRef())
 		{
@@ -133,12 +126,12 @@ namespace auge
 		}
 	}
 
-	augeSymbolizerType StarMarkerImpl::GetType()
+	augeSymbolizerType TriangleMarkerImpl::GetType()
 	{
 		return augeSymbolPoint;
 	}
 
-	RESULTCODE StarMarkerImpl::Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform)
+	RESULTCODE TriangleMarkerImpl::Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform)
 	{
 		if(pGeometry==NULL)
 		{
@@ -171,7 +164,7 @@ namespace auge
 		{
 			double size_2 = m_size / 2.0;
 			cairo_save(canvas_cairo);
-			cairo_translate(canvas_cairo, sx-size_2, sy-size_2);
+			cairo_translate(canvas_cairo, sx-m_size, sy-m_size);
 			cairo_set_source_surface(canvas_cairo, m_icon, 0,0);
 			cairo_paint(canvas_cairo);
 			cairo_surface_flush(canvas_surface);
@@ -181,30 +174,31 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void StarMarkerImpl::DrawIcon()
+	void TriangleMarkerImpl::DrawIcon()
 	{
-		m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, m_size, m_size);
+		m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, m_size*2, m_size*2);
 		m_cairo = cairo_create(m_icon);
 
-		size_t count = sizeof(g_auge_marker_star_points) / sizeof(double) / 2;
-		double offset_x=0, offset_y=0;	
-		double size_2 = m_size / 2.0f;
-		double cx = size_2;
-		double cy = size_2;
+		size_t count = sizeof(g_auge_marker_triangle_points) / sizeof(double) / 2;
+		double offset_x=0, offset_y=0;		
+		double cx=m_size;
+		double cy=m_size;
 		double x, y;
-		
-		cairo_new_path(m_cairo);	
+		double size_2 = m_size / 2.0f;
+
+		cairo_new_path(m_cairo);
+
 		cairo_translate (m_cairo, cx, cy);
 		//cairo_scale(m_cairo,10,10);
 		cairo_rotate (m_cairo, m_rotation*PI/180.0f);
-
-		x = g_auge_marker_star_points[0][0];
-		y = g_auge_marker_star_points[0][1];
+		
+		x = g_auge_marker_triangle_points[0][0];
+		y = g_auge_marker_triangle_points[0][1];
 		cairo_move_to(m_cairo, x*size_2, y*size_2);
 		for(size_t i=1; i<count; i++)
 		{
-			x = g_auge_marker_star_points[i][0];
-			y = g_auge_marker_star_points[i][1];
+			x = g_auge_marker_triangle_points[i][0];
+			y = g_auge_marker_triangle_points[i][1];
 			cairo_line_to(m_cairo, x*size_2, y*size_2);
 		}
 		cairo_close_path(m_cairo);
@@ -228,5 +222,6 @@ namespace auge
 			set_stroke_style(m_cairo, m_pStroke);
 			cairo_stroke(m_cairo);
 		}
+		//cairo_surface_write_to_png(m_icon, "G:\\temp\\map\\icon.png");
 	}
 }

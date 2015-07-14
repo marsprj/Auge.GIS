@@ -24,9 +24,6 @@
     <ClCompile Include="..\src\CartoManagerImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ColorMapImp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\ColorMapImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -147,6 +144,21 @@
     <ClCompile Include="..\src\StarMarkerImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\CircleMarkerImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TriangleMarkerImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SquareMarkerImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PentagonMarkerImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CapitalMarkerImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\CanvasImpl.h">
@@ -156,9 +168,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CartoManagerImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ColorMapImp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ColorMapImpl.h">
@@ -294,6 +303,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\StarMarkerImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CircleMarkerImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TriangleMarkerImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SquareMarkerImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\PentagonMarkerImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CapitalMarkerImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

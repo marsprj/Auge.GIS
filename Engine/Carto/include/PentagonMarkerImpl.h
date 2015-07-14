@@ -1,5 +1,5 @@
-#ifndef __AUGE_STAR_MARKER_IMPL_H__
-#define __AUGE_STAR_MARKER_IMPL_H__
+#ifndef __AUGE_PENTAGON_MARKER_IMPL_H__
+#define __AUGE_PENTAGON_MARKER_IMPL_H__
 
 #include "AugeMarkerSymbol.h"
 
@@ -11,11 +11,11 @@
 
 namespace auge
 {
-	class StarMarkerImpl : public StarMarker
+	class PentagonMarkerImpl : public PentagonMarker
 	{
 	public:
-		StarMarkerImpl();
-		virtual ~StarMarkerImpl();
+		PentagonMarkerImpl();
+		virtual ~PentagonMarkerImpl();
 
 	public:
 		virtual const char*		GetName();
@@ -58,4 +58,4 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_STAR_MARKER_IMPL_H__
+#endif //__AUGE_PENTAGON_MARKER_IMPL_H__

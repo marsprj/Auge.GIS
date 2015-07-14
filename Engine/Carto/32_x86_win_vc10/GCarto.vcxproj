@@ -84,9 +84,10 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\CanvasImpl.cpp" />
+    <ClCompile Include="..\src\CapitalMarkerImpl.cpp" />
     <ClCompile Include="..\src\CartoFactoryImpl.cpp" />
     <ClCompile Include="..\src\CartoManagerImpl.cpp" />
-    <ClCompile Include="..\src\ColorMapImp.cpp" />
+    <ClCompile Include="..\src\CircleMarkerImpl.cpp" />
     <ClCompile Include="..\src\ColorMapImpl.cpp" />
     <ClCompile Include="..\src\EnumColorMapImpl.cpp" />
     <ClCompile Include="..\src\EnumMapImpl.cpp" />
@@ -107,6 +108,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\Maplex.cpp" />
     <ClCompile Include="..\src\MapManager.cpp" />
     <ClCompile Include="..\src\MarkImpl.cpp" />
+    <ClCompile Include="..\src\PentagonMarkerImpl.cpp" />
     <ClCompile Include="..\src\PointLabel.cpp" />
     <ClCompile Include="..\src\PointSymbolizerImpl.cpp" />
     <ClCompile Include="..\src\PolygonLabel.cpp" />
@@ -117,6 +119,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterSymbolizerImpl.cpp" />
     <ClCompile Include="..\src\RendererCairo.cpp" />
     <ClCompile Include="..\src\RuleImpl.cpp" />
+    <ClCompile Include="..\src\SquareMarkerImpl.cpp" />
     <ClCompile Include="..\src\StarMarkerImpl.cpp" />
     <ClCompile Include="..\src\StrokeImpl.cpp" />
     <ClCompile Include="..\src\StyleFactoryImpl.cpp" />
@@ -127,6 +130,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\SymbolManagerImpl.cpp" />
     <ClCompile Include="..\src\TextSymbolizerImpl.cpp" />
     <ClCompile Include="..\src\TransformImpl.cpp" />
+    <ClCompile Include="..\src\TriangleMarkerImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\AugeCarto.h" />
@@ -136,9 +140,10 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\..\..\include\AugeStyle.h" />
     <ClInclude Include="..\..\..\include\AugeSymbol.h" />
     <ClInclude Include="..\include\CanvasImpl.h" />
+    <ClInclude Include="..\include\CapitalMarkerImpl.h" />
     <ClInclude Include="..\include\CartoFactoryImpl.h" />
     <ClInclude Include="..\include\CartoManagerImpl.h" />
-    <ClInclude Include="..\include\ColorMapImp.h" />
+    <ClInclude Include="..\include\CircleMarkerImpl.h" />
     <ClInclude Include="..\include\ColorMapImpl.h" />
     <ClInclude Include="..\include\EnumColorMapImpl.h" />
     <ClInclude Include="..\include\EnumMapImpl.h" />
@@ -157,6 +162,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\MapImpl.h" />
     <ClInclude Include="..\include\Maplex.h" />
     <ClInclude Include="..\include\MarkImpl.h" />
+    <ClInclude Include="..\include\PentagonMarkerImpl.h" />
     <ClInclude Include="..\include\PointLabel.h" />
     <ClInclude Include="..\include\PointSymbolizerImpl.h" />
     <ClInclude Include="..\include\PolygonLabel.h" />
@@ -168,6 +174,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RendererCairo.h" />
     <ClInclude Include="..\include\RuleImpl.h" />
     <ClInclude Include="..\include\SLDConstant.h" />
+    <ClInclude Include="..\include\SquareMarkerImpl.h" />
     <ClInclude Include="..\include\StarMarkerImpl.h" />
     <ClInclude Include="..\include\StrokeImpl.h" />
     <ClInclude Include="..\include\StyleFactoryImpl.h" />
@@ -178,6 +185,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\SymbolManagerImpl.h" />
     <ClInclude Include="..\include\TextSymbolizerImpl.h" />
     <ClInclude Include="..\include\TransformImpl.h" />
+    <ClInclude Include="..\include\TriangleMarkerImpl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

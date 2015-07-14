@@ -1,25 +1,11 @@
-#include "StarMarkerImpl.h"
+#include "CircleMarkerImpl.h"
 #include "RendererCairo.h"
 #include "FillImpl.h"
 #include "StrokeImpl.h"
 
 namespace auge
 {
-	static double g_auge_marker_star_points[][2] = { 
-		{ 0.000000, -1.000000},
-		{ 0.224514, -0.309017},	//inner
-		{ 0.951057, -0.309017},
-		{ 0.363271,  0.118034},	//inner
-		{ 0.587785,  0.809017},
-		{ 0.000000,  0.381966},	//inner
-		{-0.587785,  0.809017},
-		{-0.363271,  0.118034},	//inner
-		{-0.951057, -0.309017},
-		{-0.224514, -0.309017},	//inner
-		{ 0.000000, -1.000000}
-	};
-
-	StarMarkerImpl::StarMarkerImpl():
+	CircleMarkerImpl::CircleMarkerImpl():
 	m_cairo(NULL),
 	m_icon(NULL),	
 	m_opacity(0.0f),
@@ -30,7 +16,7 @@ namespace auge
 		m_pFill = new FillImpl();
 	}
 
-	StarMarkerImpl::~StarMarkerImpl()
+	CircleMarkerImpl::~CircleMarkerImpl()
 	{
 		if(m_pStroke!=NULL)
 		{
@@ -55,17 +41,17 @@ namespace auge
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	const char*	StarMarkerImpl::GetName()
+	const char*	CircleMarkerImpl::GetName()
 	{
-		return "Star";
+		return "Circle";
 	}
 
-	augeMarkerType StarMarkerImpl::GetMarkType()
+	augeMarkerType CircleMarkerImpl::GetMarkType()
 	{
-		return augeMarkerStar;
+		return augeMarkerCircle;
 	}
 	
-	void StarMarkerImpl::SetStroke(Stroke* pStroke)
+	void CircleMarkerImpl::SetStroke(Stroke* pStroke)
 	{
 		if(m_pStroke!=NULL)
 		{
@@ -75,12 +61,12 @@ namespace auge
 		m_pStroke = pStroke;
 	}
 
-	Stroke* StarMarkerImpl::GetStroke()
+	Stroke* CircleMarkerImpl::GetStroke()
 	{
 		return m_pStroke;
 	}
 
-	void StarMarkerImpl::SetFill(Fill* pFill)
+	void CircleMarkerImpl::SetFill(Fill* pFill)
 	{
 		if(m_pFill!=NULL)
 		{
@@ -90,42 +76,42 @@ namespace auge
 		m_pFill = pFill;
 	}
 
-	Fill*	StarMarkerImpl::GetFill()
+	Fill*	CircleMarkerImpl::GetFill()
 	{
 		return m_pFill;
 	}
 
-	void StarMarkerImpl::SetOpacity(float opacity)
+	void CircleMarkerImpl::SetOpacity(float opacity)
 	{
 		m_opacity = opacity;
 	}
 
-	float StarMarkerImpl::GetOpacity()
+	float CircleMarkerImpl::GetOpacity()
 	{
 		return m_opacity;
 	}
 
-	void StarMarkerImpl::SetSize(float size)
+	void CircleMarkerImpl::SetSize(float size)
 	{
 		m_size = size;
 	}
 
-	float StarMarkerImpl::GetSize()
+	float CircleMarkerImpl::GetSize()
 	{
 		return m_size;
 	}
 
-	void StarMarkerImpl::SetRotation(float rotation)
+	void CircleMarkerImpl::SetRotation(float rotation)
 	{
 		m_rotation = rotation;
 	}
 
-	float StarMarkerImpl::GetRotation()
+	float CircleMarkerImpl::GetRotation()
 	{
 		return m_rotation;
 	}
 
-	void StarMarkerImpl::Release()
+	void CircleMarkerImpl::Release()
 	{
 		if(!ReleaseRef())
 		{
@@ -133,12 +119,12 @@ namespace auge
 		}
 	}
 
-	augeSymbolizerType StarMarkerImpl::GetType()
+	augeSymbolizerType CircleMarkerImpl::GetType()
 	{
 		return augeSymbolPoint;
 	}
 
-	RESULTCODE StarMarkerImpl::Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform)
+	RESULTCODE CircleMarkerImpl::Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform)
 	{
 		if(pGeometry==NULL)
 		{
@@ -169,9 +155,8 @@ namespace auge
 		
 		if(m_cairo!=NULL)
 		{
-			double size_2 = m_size / 2.0;
 			cairo_save(canvas_cairo);
-			cairo_translate(canvas_cairo, sx-size_2, sy-size_2);
+			cairo_translate(canvas_cairo, sx-m_size, sy-m_size);
 			cairo_set_source_surface(canvas_cairo, m_icon, 0,0);
 			cairo_paint(canvas_cairo);
 			cairo_surface_flush(canvas_surface);
@@ -181,35 +166,16 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void StarMarkerImpl::DrawIcon()
+	void CircleMarkerImpl::DrawIcon()
 	{
-		m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, m_size, m_size);
+		m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, m_size*2, m_size*2);
 		m_cairo = cairo_create(m_icon);
 
-		size_t count = sizeof(g_auge_marker_star_points) / sizeof(double) / 2;
-		double offset_x=0, offset_y=0;	
-		double size_2 = m_size / 2.0f;
-		double cx = size_2;
-		double cy = size_2;
-		double x, y;
-		
-		cairo_new_path(m_cairo);	
-		cairo_translate (m_cairo, cx, cy);
-		//cairo_scale(m_cairo,10,10);
-		cairo_rotate (m_cairo, m_rotation*PI/180.0f);
-
-		x = g_auge_marker_star_points[0][0];
-		y = g_auge_marker_star_points[0][1];
-		cairo_move_to(m_cairo, x*size_2, y*size_2);
-		for(size_t i=1; i<count; i++)
-		{
-			x = g_auge_marker_star_points[i][0];
-			y = g_auge_marker_star_points[i][1];
-			cairo_line_to(m_cairo, x*size_2, y*size_2);
-		}
-		cairo_close_path(m_cairo);
-
-		cairo_rotate (m_cairo, m_rotation*PI/180.0f);
+		double cx = m_size;
+		double cy = m_size;
+		double radius = m_size / 2.0f;
+		cairo_save(m_cairo);
+		cairo_arc(m_cairo, cx, cy, radius, 0, 2*PI);
 		if(m_pFill!=NULL)
 		{
 			GColor& color = m_pFill->GetColor();
@@ -228,5 +194,8 @@ namespace auge
 			set_stroke_style(m_cairo, m_pStroke);
 			cairo_stroke(m_cairo);
 		}
+		cairo_restore(m_cairo);
+
+		//cairo_surface_write_to_png(m_icon, "G:\\temp\\map\\icon.png");
 	}
 }

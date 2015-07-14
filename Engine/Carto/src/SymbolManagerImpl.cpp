@@ -1,7 +1,12 @@
 #include "SymbolManagerImpl.h"
 #include "EnumSymbolImpl.h"
 
+#include "CapitalMarkerImpl.h"
+#include "CircleMarkerImpl.h"
+#include "PentagonMarkerImpl.h"
 #include "StarMarkerImpl.h"
+#include "SquareMarkerImpl.h"
+#include "TriangleMarkerImpl.h"
 
 namespace auge
 {
@@ -42,10 +47,13 @@ namespace auge
 		switch(type)
 		{
 		case augeMarkerSquare:
+			pSymbol = new SquareMarkerImpl();
 			break;
 		case augeMarkerCircle:
+			pSymbol = new CircleMarkerImpl();
 			break;
 		case augeMarkerTriangle:
+			pSymbol = new TriangleMarkerImpl();
 			break;
 		case augeMarkerStar:
 			pSymbol = new StarMarkerImpl();
@@ -55,8 +63,10 @@ namespace auge
 		case augeMarkerX:
 			break;
 		case augeMarkerPentagon:
+			pSymbol = new PentagonMarkerImpl();
 			break;
 		case augeMarkerCapital:
+			pSymbol = new CapitalMarkerImpl();
 			break;
 		default:
 			break;
