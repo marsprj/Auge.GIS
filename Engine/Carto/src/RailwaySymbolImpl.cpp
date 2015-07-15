@@ -11,6 +11,9 @@ namespace auge
 		m_block_length= 10;
 		m_pStroke = new StrokeImpl();
 
+		m_cairo = NULL;
+		m_icon = NULL;
+
 		m_icon_name = "Railway.png";
 	}
 
@@ -20,6 +23,17 @@ namespace auge
 		{
 			m_pStroke->Release();
 			m_pStroke = NULL; 
+		}
+
+		if(m_cairo!=NULL)
+		{
+			cairo_destroy(m_cairo);
+			m_cairo = NULL;
+		}
+		if(m_icon!=NULL)
+		{
+			cairo_surface_destroy(m_icon);
+			m_cairo = NULL;
 		}
 	}
 
@@ -31,6 +45,15 @@ namespace auge
 
 	const char*	RailwaySymbolImpl::GetIcon()
 	{
+		char icon_path[AUGE_PATH_MAX];
+		memset(icon_path, 0, AUGE_PATH_MAX);
+		auge_make_symbol_icon_path(m_icon_name.c_str(), icon_path, AUGE_PATH_MAX);
+
+		if(g_access(icon_path,4))
+		{
+			DrawIcon();
+			SaveIcon(icon_path);
+		}
 		return m_icon_name.c_str();
 	}
 
@@ -123,9 +146,61 @@ namespace auge
 		cairo_set_dash (canvas_cairo, dashes, ndash, dash_offset);
 		cairo_set_line_cap(canvas_cairo, CAIRO_LINE_CAP_ROUND);
 		cairo_stroke(canvas_cairo);
-
+		 
 		cairo_restore(canvas_cairo);
 
 		return AG_SUCCESS;
+	} 
+	 
+	void RailwaySymbolImpl::DrawIcon()
+	{
+		int icon_size = AUGE_ICON_SIZE;
+		int block_length = 11;
+		int block_width  = 8;
+		double dashes[] = { block_length,  /* ink */
+			block_length,  /* skip */
+		};
+		int ndash = sizeof(dashes) / sizeof(double); 
+		double dash_offset = block_length;
+
+		if(m_icon==NULL)
+		{
+			m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, icon_size, icon_size);
+			m_cairo = cairo_create(m_icon);
+		} 
+
+		double cy = icon_size>>1; 
+
+		cairo_save(m_cairo);
+		 
+		// build path
+		cairo_new_path(m_cairo);
+		cairo_move_to(m_cairo, 0,			cy);
+		cairo_line_to(m_cairo, icon_size,	cy);
+
+		cairo_set_source_rgba(m_cairo,	0.0f, 0.0f, 0.0f, 1.0f);
+		//cairo_set_source_rgba(m_cairo,	1.0f, 1.0f, 1.0f, 1.0f);
+		cairo_set_line_width(m_cairo, block_width);
+		cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_BUTT);
+		cairo_stroke(m_cairo);
+
+		// draw white block
+		cairo_new_path(m_cairo);
+		cairo_move_to(m_cairo, 0,			cy);
+		cairo_line_to(m_cairo, icon_size,	cy);
+
+		cairo_set_source_rgba(m_cairo,	1.0f, 1.0f, 1.0f, 1.0f);
+		//cairo_set_source_rgba(m_cairo,	0.0f, 0.0f, 0.0f, 1.0f);
+		cairo_set_line_width(m_cairo, block_width-1);
+		cairo_set_dash (m_cairo, dashes, ndash, dash_offset);
+		cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_BUTT);
+		cairo_stroke(m_cairo);
+
+		cairo_restore(m_cairo);
+	}
+
+	void RailwaySymbolImpl::SaveIcon(const char* icon_path)
+	{
+		cairo_surface_write_to_png(m_icon, icon_path);
 	}
 }

@@ -30,11 +30,18 @@ namespace auge
 		virtual void			Release();
 
 	private:
+		void		DrawIcon();
+		void		SaveIcon(const char* icon_path);
+
+	private:
 		Stroke		*m_pStroke;
 		g_uint		m_block_width;
 		g_uint		m_block_length;
 
 		std::string m_icon_name;
+
+		cairo_surface_t *m_icon;
+		cairo_t			*m_cairo;
 	};
 }
 

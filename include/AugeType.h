@@ -71,7 +71,7 @@ typedef unsigned long long  g_uint64;
 #define AUGE_BUFFER_MAX		4096
 #define AUGE_SQL_MAX		1024
 #define AUGE_SQL_LONG_MAX	8192
-#define AUGE_ICON_SIZE		16
+#define AUGE_ICON_SIZE		32
 #define AUGE_ICON_SCALE		0.7
 
 #ifndef PATH_MAX

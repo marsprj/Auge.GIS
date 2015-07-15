@@ -184,8 +184,11 @@ namespace auge
 
 	void CircleMarkerImpl::DrawSymbol()
 	{
-		m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, m_size*2, m_size*2);
-		m_cairo = cairo_create(m_icon);
+		if(m_icon==NULL)
+		{
+			m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, m_size*2, m_size*2);
+			m_cairo = cairo_create(m_icon);
+		}
 
 		double cx = m_size;
 		double cy = m_size;

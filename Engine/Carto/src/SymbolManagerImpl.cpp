@@ -94,6 +94,7 @@ namespace auge
 		if(m_line_symbols == NULL)
 		{
 			m_line_symbols = new EnumSymbolImpl();
+			m_line_symbols->Add(new RailwaySymbolImpl());
 		}
 		return m_line_symbols;
 	}
