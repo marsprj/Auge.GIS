@@ -12,6 +12,8 @@ namespace auge
 	m_size(20.0f),
 	m_rotation(0.0f)
 	{
+		m_icon_name = "Capital.png";
+
 		m_pStroke = new StrokeImpl();
 		m_pFill = new FillImpl();
 	}
@@ -44,6 +46,20 @@ namespace auge
 	const char*	CapitalMarkerImpl::GetName()
 	{
 		return "Capital";
+	}
+
+	const char*	CapitalMarkerImpl::GetIcon()
+	{
+		char icon_path[AUGE_PATH_MAX];
+		memset(icon_path, 0, AUGE_PATH_MAX);
+		auge_make_symbol_icon_path(m_icon_name.c_str(), icon_path, AUGE_PATH_MAX);
+
+		if(g_access(icon_path,4))
+		{
+			DrawIcon();
+			SaveIcon(icon_path);
+		}
+		return m_icon_name.c_str();
 	}
 
 	augeMarkerType CapitalMarkerImpl::GetMarkType()
@@ -150,7 +166,7 @@ namespace auge
 		//cairo_surface_t *image = cairo_image_surface_create_from_png(resource);
 		if(m_cairo==NULL)
 		{
-			DrawIcon();
+			DrawSymbol();
 		}
 		
 		if(m_cairo!=NULL)
@@ -166,7 +182,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void CapitalMarkerImpl::DrawIcon()
+	void CapitalMarkerImpl::DrawSymbol()
 	{
 		m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, m_size*2, m_size*2);
 		m_cairo = cairo_create(m_icon);
@@ -193,5 +209,39 @@ namespace auge
 		cairo_restore(m_cairo);
 
 		//cairo_surface_write_to_png(m_icon, "G:\\temp\\map\\icon.png");
+	}
+
+	void CapitalMarkerImpl::DrawIcon()
+	{
+		m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, AUGE_ICON_SIZE, AUGE_ICON_SIZE);
+		m_cairo = cairo_create(m_icon);
+
+		double cx,cy;
+		cx=cy=AUGE_ICON_SIZE / 2.0;
+		double radius = AUGE_ICON_SIZE * AUGE_ICON_SCALE / 2.0f;
+		cairo_save(m_cairo);
+		cairo_arc(m_cairo, cx, cy, radius, 0, 2*PI);
+
+		cairo_save(m_cairo);
+		cairo_arc(m_cairo, cx, cy, radius, 0, 2*PI);
+		cairo_set_source_rgba(m_cairo, 1.0f, 1.0f, 1.0f, 1.0f);
+		cairo_fill_preserve(m_cairo);
+		cairo_set_source_rgba(m_cairo, 0.0f, 0.0f, 0.0f, 1.0f);
+		cairo_set_line_width(m_cairo, 1.0f);
+		cairo_stroke(m_cairo);
+
+		cairo_arc(m_cairo, cx, cy, radius*0.2, 0, 2*PI);
+		cairo_set_source_rgba(m_cairo, 1.0f, 0.0f, 0.0f, 1.0f);
+		cairo_fill_preserve(m_cairo);
+		cairo_set_line_width(m_cairo, 1.0f);
+		cairo_stroke(m_cairo);
+		cairo_restore(m_cairo);
+
+		//cairo_surface_write_to_png(m_icon, "G:\\temp\\map\\icon.png");
+	}
+
+	void CapitalMarkerImpl::SaveIcon(const char* icon_path)
+	{
+		cairo_surface_write_to_png(m_icon, icon_path);
 	}
 }

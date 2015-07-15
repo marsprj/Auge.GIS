@@ -19,6 +19,7 @@ namespace auge
 
 	public:
 		virtual const char*		GetName();
+		virtual const char*		GetIcon();
 		virtual RESULTCODE		Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform);
 
 		virtual Stroke*			GetStroke();
@@ -32,6 +33,8 @@ namespace auge
 		Stroke		*m_pStroke;
 		g_uint		m_block_width;
 		g_uint		m_block_length;
+
+		std::string m_icon_name;
 	};
 }
 

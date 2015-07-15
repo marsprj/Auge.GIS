@@ -17,6 +17,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCore", "Engine\Core\32_x86_win_vc10\GCore.vcxproj", "{175ED294-86C6-45A1-9E7A-770AE765EB23}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GPostgres", "Engine\Data\GPostgres\32_x86_win_vc10\GPostgres.vcxproj", "{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}"
+	ProjectSection(ProjectDependencies) = postProject
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547} = {57E6CDAA-E9D2-4CA1-9542-70CA0081C547}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GShape", "Engine\Data\GShape\32_x86_win_vc10\GShape.vcxproj", "{C17AA319-6571-48F3-BFD6-111B3B0445C5}"
 EndProject
@@ -42,6 +45,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswfs", "Engine\Server\gswfs\32_x86_win_vc10\gswfs.vcxproj", "{685A4C3A-5188-487A-AC43-376EBCEC73C6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsims", "Engine\Server\gsims\32_x86_win_vc10\gsims.vcxproj", "{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B6F892A7-59B5-48D6-A97C-8BC432B49E92} = {B6F892A7-59B5-48D6-A97C-8BC432B49E92}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsdbs", "Engine\Server\gsdbs\32_x86_win_vc10\gsdbs.vcxproj", "{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -88,6 +94,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GAuth", "Engine\Auth\32_x86_win_vc10\GAuth.vcxproj", "{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCarto", "Engine\Carto\32_x86_win_vc10\GCarto.vcxproj", "{B6F892A7-59B5-48D6-A97C-8BC432B49E92}"
+	ProjectSection(ProjectDependencies) = postProject
+		{175ED294-86C6-45A1-9E7A-770AE765EB23} = {175ED294-86C6-45A1-9E7A-770AE765EB23}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsrds", "Engine\Server\gsrds\32_x86_win_vc10\gsrds.vcxproj", "{320AD0BC-A414-45E1-821E-419EFD49E16C}"
 EndProject

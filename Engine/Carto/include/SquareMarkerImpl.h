@@ -19,6 +19,7 @@ namespace auge
 
 	public:
 		virtual const char*		GetName();
+		virtual const char*		GetIcon();
 		virtual RESULTCODE		Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform);
 				
 		virtual augeMarkerType	GetMarkType();
@@ -43,7 +44,10 @@ namespace auge
 		virtual void			Release();
 
 	private:
+		void		DrawSymbol();
+
 		void		DrawIcon();
+		void		SaveIcon(const char* icon_path);
 
 	private:
 		Stroke		*m_pStroke;
@@ -54,6 +58,8 @@ namespace auge
 
 		cairo_surface_t *m_icon;
 		cairo_t			*m_cairo;
+
+		std::string m_icon_name;
 
 	};
 }

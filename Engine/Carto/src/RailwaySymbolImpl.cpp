@@ -10,6 +10,8 @@ namespace auge
 		m_block_width = 5;
 		m_block_length= 10;
 		m_pStroke = new StrokeImpl();
+
+		m_icon_name = "Railway.png";
 	}
 
 	RailwaySymbolImpl::~RailwaySymbolImpl()
@@ -17,7 +19,7 @@ namespace auge
 		if(m_pStroke!=NULL)
 		{
 			m_pStroke->Release();
-			m_pStroke = NULL;
+			m_pStroke = NULL; 
 		}
 	}
 
@@ -25,6 +27,11 @@ namespace auge
 	const char*	RailwaySymbolImpl::GetName()
 	{
 		return "Railway";
+	}
+
+	const char*	RailwaySymbolImpl::GetIcon()
+	{
+		return m_icon_name.c_str();
 	}
 
 	augeLineType RailwaySymbolImpl::GetLineType()

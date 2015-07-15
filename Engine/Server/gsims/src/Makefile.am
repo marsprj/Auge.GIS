@@ -55,6 +55,9 @@ libgsims_la_SOURCES=\
 		    GetFontHandler.cpp \
 		    GetFontRequest.cpp \
 		    GetFontResponse.cpp \
+		    GetSymbolHandler.cpp \
+		    GetSymbolRequest.cpp \
+		    GetSymbolResponse.cpp \
 		    GetColorMapHandler.cpp \
 		    GetColorMapResponse.cpp \
 		    GetColorMapRequest.cpp \

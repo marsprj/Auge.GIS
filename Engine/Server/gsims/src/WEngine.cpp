@@ -30,6 +30,8 @@
 #include "GetFontHandler.h"
 #include "GetColorMapHandler.h"
 
+#include "GetSymbolHandler.h"
+
 #include "AugeCore.h"
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
@@ -76,7 +78,8 @@ namespace auge
 
 		m_handlers.push_back(new GetFontHandler());
 		m_handlers.push_back(new GetColorMapHandler());
-		
+
+		m_handlers.push_back(new GetSymbolHandler());		
 	}
 
 	WEngine::~WEngine()

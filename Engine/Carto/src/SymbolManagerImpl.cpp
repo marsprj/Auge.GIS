@@ -52,6 +52,28 @@ namespace auge
 		}
 	}
 
+	void SymbolManagerImpl::Initialize()
+	{
+		if(m_path.empty())
+		{
+			char c_dir[AUGE_PATH_MAX];
+			char s_dir[AUGE_PATH_MAX];
+			memset(c_dir, 0, AUGE_PATH_MAX);
+			memset(s_dir, 0, AUGE_PATH_MAX);
+			auge_get_cwd(c_dir, AUGE_PATH_MAX);
+#ifdef WIN32
+			auge_make_path(s_dir, NULL, c_dir, "symbol", NULL);
+#else
+			char p_dir[AUGE_PATH_MAX];
+			memset(p_dir, 0, AUGE_PATH_MAX);
+			auge_get_parent_dir(c_dir, p_dir, AUGE_PATH_MAX);
+			auge_make_path(s_dir, NULL, p_dir, "symbol", NULL);
+#endif
+			auge_mkdir(s_dir);
+			m_path = s_dir;
+		}
+	}
+
 	EnumSymbol*	SymbolManagerImpl::GetMarkerSymbols()
 	{
 		if(m_marker_symbols == NULL)
@@ -204,5 +226,25 @@ namespace auge
 		}
 
 		return pSymbol;
+	}
+
+	void auge_make_symbol_icon_path(const char* icon_name, char* icon_path, size_t size)
+	{
+		char c_dir[AUGE_PATH_MAX];
+		char s_dir[AUGE_PATH_MAX];
+		memset(c_dir, 0, AUGE_PATH_MAX);
+		memset(s_dir, 0, AUGE_PATH_MAX);
+		auge_get_cwd(c_dir, AUGE_PATH_MAX);
+#ifdef WIN32
+		auge_make_path(s_dir, NULL, c_dir, "symbol", NULL);
+#else
+		char p_dir[AUGE_PATH_MAX];
+		memset(p_dir, 0, AUGE_PATH_MAX);
+		auge_get_parent_dir(c_dir, p_dir, AUGE_PATH_MAX);
+		auge_make_path(s_dir, NULL, p_dir, "symbol", NULL);
+#endif
+
+		memset(icon_path, 0, size);
+		auge_make_path(icon_path, NULL, s_dir, icon_name, NULL);
 	}
 }

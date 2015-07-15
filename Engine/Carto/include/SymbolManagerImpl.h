@@ -2,6 +2,7 @@
 #define __AUGE_SYMBOL_MANAGER_IMPL_H__
 
 #include "AugeCarto.h"
+#include <string>
 
 namespace auge
 {
@@ -24,10 +25,15 @@ namespace auge
 		virtual LineSymbol*		CreateLineSymbol(augeLineType type);		
 		virtual LineSymbol*		CreateLineSymbol(const char* name);
 
+	public:
+		void			Initialize();
+
 	private:
 		EnumSymbolImpl*	m_marker_symbols;
 		EnumSymbolImpl*	m_line_symbols;
 		EnumSymbolImpl* m_region_symbols;
+
+		std::string		m_path;
 	};
 }
 

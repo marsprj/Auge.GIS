@@ -430,6 +430,7 @@ namespace auge
 		virtual ~Symbol(){}
 	public:
 		virtual const char*			GetName() = 0;
+		virtual const char*			GetIcon() = 0;
 		virtual augeSymbolizerType	GetType() = 0;
 		virtual RESULTCODE			Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform) = 0;
 	};
@@ -484,6 +485,7 @@ namespace auge
 	protected:
 		SymbolManager(){}
 		virtual ~SymbolManager(){}
+
 	public:
 		virtual EnumSymbol*		GetMarkerSymbols() = 0;
 		virtual EnumSymbol*		GetLineSymbols() = 0;
@@ -499,6 +501,8 @@ namespace auge
 	extern "C"
 	{
 		AUGE_CARTO_API SymbolManager*	augeGetSymbolManagerInstance();
+
+		void auge_make_symbol_icon_path(const char* icon_name, char* icon_path, size_t size);
 	}
 
 }

@@ -21,6 +21,8 @@ namespace auge
 	{
 		m_pStroke = new StrokeImpl();
 		m_pFill = new FillImpl();
+
+		m_icon_name = "Triangle.png";
 	}
 
 	TriangleMarkerImpl::~TriangleMarkerImpl()
@@ -51,6 +53,21 @@ namespace auge
 	const char*	TriangleMarkerImpl::GetName()
 	{
 		return "Triangle";
+	}
+
+	const char*	TriangleMarkerImpl::GetIcon()
+	{
+		char icon_path[AUGE_PATH_MAX];
+		memset(icon_path, 0, AUGE_PATH_MAX);
+		auge_make_symbol_icon_path(m_icon_name.c_str(), icon_path, AUGE_PATH_MAX);
+
+		if(g_access(icon_path,4))
+		{
+			DrawIcon();
+			SaveIcon(icon_path);
+		}
+
+		return m_icon_name.c_str();
 	}
 
 	augeMarkerType TriangleMarkerImpl::GetMarkType()
@@ -157,7 +174,7 @@ namespace auge
 		//cairo_surface_t *image = cairo_image_surface_create_from_png(resource);
 		if(m_cairo==NULL)
 		{
-			DrawIcon();
+			DrawSymbol();
 		}
 		
 		if(m_cairo!=NULL)
@@ -174,7 +191,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void TriangleMarkerImpl::DrawIcon()
+	void TriangleMarkerImpl::DrawSymbol()
 	{
 		m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, m_size*2, m_size*2);
 		m_cairo = cairo_create(m_icon);
@@ -223,5 +240,61 @@ namespace auge
 			cairo_stroke(m_cairo);
 		}
 		//cairo_surface_write_to_png(m_icon, "G:\\temp\\map\\icon.png");
+	}
+
+	void TriangleMarkerImpl::DrawIcon()
+	{
+		m_icon = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, AUGE_ICON_SIZE, AUGE_ICON_SIZE);
+		m_cairo = cairo_create(m_icon);
+
+		size_t count = sizeof(g_auge_marker_triangle_points) / sizeof(double) / 2;
+		double offset_x=0, offset_y=0;		
+		double size_2 = AUGE_ICON_SIZE / 2.0f;
+		double cx=size_2;
+		double cy=size_2;
+		double x, y;
+
+		cairo_new_path(m_cairo);
+
+		cairo_translate (m_cairo, cx, cy);
+		cairo_scale(m_cairo,AUGE_ICON_SCALE,AUGE_ICON_SCALE);
+		//cairo_rotate (m_cairo, m_rotation*PI/180.0f);
+		
+		x = g_auge_marker_triangle_points[0][0];
+		y = g_auge_marker_triangle_points[0][1];
+		cairo_move_to(m_cairo, x*size_2, y*size_2);
+		for(size_t i=1; i<count; i++)
+		{
+			x = g_auge_marker_triangle_points[i][0];
+			y = g_auge_marker_triangle_points[i][1];
+			cairo_line_to(m_cairo, x*size_2, y*size_2);
+		}
+		cairo_close_path(m_cairo);
+
+		cairo_rotate (m_cairo, m_rotation*PI/180.0f);
+		if(m_pFill!=NULL)
+		{
+			GColor& color = m_pFill->GetColor();
+			cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
+			if(m_pStroke==NULL)
+			{
+				cairo_fill(m_cairo);
+			}
+			else
+			{
+				cairo_fill_preserve(m_cairo);
+			}
+		}
+		if(m_pStroke!=NULL)
+		{
+			set_stroke_style(m_cairo, m_pStroke);
+			cairo_stroke(m_cairo);
+		}
+		//cairo_surface_write_to_png(m_icon, "G:\\temp\\map\\icon.png");
+	}
+
+	void TriangleMarkerImpl::SaveIcon(const char* icon_path)
+	{
+		cairo_surface_write_to_png(m_icon, icon_path);
 	}
 }
