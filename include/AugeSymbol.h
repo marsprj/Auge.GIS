@@ -343,8 +343,8 @@ namespace auge
 		virtual void			SetRotation(float rotation) = 0;
 		virtual float			GetRotation() = 0;
 
-		//virtual void			SetMarker(MarkerSymbol* pMarker) = 0;
-		//virtual MarkerSymbol*	GetMarker() = 0;
+		virtual void			SetMarker(MarkerSymbol* pMarker) = 0;
+		virtual MarkerSymbol*	GetMarker() = 0;
 	};
 
 	//========================================================================

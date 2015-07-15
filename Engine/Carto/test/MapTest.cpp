@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
 
 auge::Map*	CreateMapObj();
 auge::Map*	CreateMapObj_SLD();
@@ -262,7 +262,7 @@ void MapTest::Draw_Map_Polygon_Label()
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_label.xml");
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_label.xml", pFeatureClass);
 
 	auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
 	pLayer->SetName(className);
@@ -308,7 +308,7 @@ void MapTest::Draw_Map_Point_Graphic()
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_graphic.xml");
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_graphic.xml", pFeatureClass);
 
 	auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
 	pLayer->SetName(className);
@@ -395,7 +395,7 @@ void MapTest::Draw_Map_Point_Label_Anchor()
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass("cities");
 
 	auge::Style* pStyle = NULL;
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_label_top_left.xml");
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_label_top_left.xml", pFeatureClass);
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point.xml");
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_2.xml");
 
@@ -447,7 +447,7 @@ void MapTest::Draw_Line()
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_label_top_left.xml");
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point.xml");
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_2.xml");
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line_null_value_small.xml");
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line_null_value_small.xml", pFeatureClass);
 
 	auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
 	pLayer->SetName("cities");
@@ -503,7 +503,7 @@ void MapTest::DrawLayerRailway()
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point.xml");
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_2.xml");
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line_null_value_small.xml");
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line-railway.xml");
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line-railway.xml", pFeatureClass);
 
 	auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
 	pLayer->SetName(className);
@@ -683,7 +683,7 @@ auge::Map* CreateMapObj_SLD()
 	return pMap;
 }
 
-auge::Style* MapTest::LoadSLD(const char* path)
+auge::Style* MapTest::LoadSLD(const char* path, auge::FeatureClass* pFeatureClass)
 {
 	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_4.xml";
 
@@ -697,7 +697,7 @@ auge::Style* MapTest::LoadSLD(const char* path)
 	reader = pStyleFactory->CreateStyleReader();
 
 	auge::Style* pStyle = NULL;
-	pStyle = reader->Read(path, NULL);
+	pStyle = reader->Read(path, pFeatureClass);
 
 	return pStyle;
 }
@@ -727,7 +727,7 @@ void MapTest::DrawCountry()
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_red.xml");
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_red.xml", pFeatureClass);
 
 	auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
 	pLayer->SetName(className);
@@ -774,7 +774,7 @@ void MapTest::DrawCities()
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point.xml");
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point.xml",pFeatureClass);
 	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_theme_label.xml");
 
 	auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
@@ -812,7 +812,7 @@ void MapTest::DrawRasterMap()
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
 	auge::Style* pStyle = NULL;
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_5.xml");
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon_5.xml", NULL);
 
 	const char* className = "country";
 	auge::FeatureClass* pFeatureClass = NULL;
@@ -899,8 +899,11 @@ void MapTest::DrawLayerStar()
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
-	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_star.xml");
-	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_theme_label.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_4.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_star.xml");
+	//pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_theme_2.xml");
+	pStyle = LoadSLD("E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_theme_label.xml", pFeatureClass);
 
 	auge::FeatureLayer* pLayer = pCartoFactory->CreateFeatureLayer();
 	pLayer->SetName(className);

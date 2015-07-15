@@ -32,8 +32,8 @@ class MapTest : public CppUnit::TestFixture
 	
 	//CPPUNIT_TEST(AddQuadServerLayer);
 
-	//CPPUNIT_TEST(DrawLayerStar);
-	CPPUNIT_TEST(DrawLayerRailway);
+	CPPUNIT_TEST(DrawLayerStar);
+	//CPPUNIT_TEST(DrawLayerRailway);
 
 	
 	CPPUNIT_TEST_SUITE_END();
@@ -71,7 +71,7 @@ private:
 	void DrawLayerStar();
 
 private:
-	auge::Style* LoadSLD(const char* path);
+	auge::Style* LoadSLD(const char* path,  auge::FeatureClass* pFeatureClass);
 private:
 	auge::GConnection	*m_pConnection;
 

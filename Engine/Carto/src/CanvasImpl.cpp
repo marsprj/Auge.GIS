@@ -217,28 +217,12 @@ namespace auge
 	{	
 		FeatureCursor	*pCursor = NULL;
 		FeatureClass	*pFeatureClass = pLayer->GetFeatureClass();
-		
-		pCursor = pFeatureClass->Query(pFilter);
 
-		//GField* pField = pFeatureClass->GetFields()->GetGeometryField();
-		//switch(pField->GetType())
-		//{
-		//case augeGTPoint:
-		//case augeGTMultiPoint:
-		//	DrawFeatures(static_cast<PointSymbolizer*>(pSymbolizer), pCursor);
-		//	break;
-		//case augeGTLineString:
-		//case augeGTMultiLineString:
-		//	DrawFeatures(static_cast<LineSymbolizer*>(pSymbolizer), pCursor);
-		//	break;
-		//case augeGTPolygon:
-		//case augeGTMultiPolygon:
-		//	DrawFeatures(static_cast<PolygonSymbolizer*>(pSymbolizer), pCursor);
-		//	break;
-		//}
+		pCursor = pFeatureClass->Query(pFilter);
 
 		int fid = 0;
 		g_uchar* wkb = NULL;
+		augeGeometryType geom_type = augeGTPoint;
 		auge::Geometry	*pGeometry = NULL;
 		auge::Feature	*pFeature = NULL;
 		while((pFeature=pCursor->NextFeature())!=NULL)
@@ -248,12 +232,50 @@ namespace auge
 			if(pGeometry!=NULL)
 			{
 				wkb = pGeometry->AsBinary();
-				m_pRenderer->Draw(wkb, pSymbolizer, &m_transform);
+				switch(geom_type)
+				{
+				case augeGTPoint:
+				case augeGTMultiPoint:
+					this->DrawSymbol(pGeometry, ((PointSymbolizer*)pSymbolizer)->GetMarker());
+					break;
+				case augeGTLineString:
+				case augeGTMultiLineString:
+					break;
+				case augeGTPolygon:
+				case augeGTMultiPolygon:
+					break;
+				}
+				//m_pRenderer->Draw(wkb, pSymbolizer, &m_transform);
 			}
 			pFeature->Release();
 		}
 		pCursor->Release();
 	}
+
+	//void CanvasImpl::DrawLayer(FeatureLayer* pLayer, Symbolizer* pSymbolizer, GFilter* pFilter)
+	//{	
+	//	FeatureCursor	*pCursor = NULL;
+	//	FeatureClass	*pFeatureClass = pLayer->GetFeatureClass();
+	//	
+	//	pCursor = pFeatureClass->Query(pFilter);
+
+	//	int fid = 0;
+	//	g_uchar* wkb = NULL;
+	//	auge::Geometry	*pGeometry = NULL;
+	//	auge::Feature	*pFeature = NULL;
+	//	while((pFeature=pCursor->NextFeature())!=NULL)
+	//	{	
+	//		fid = pFeature->GetFID();
+	//		pGeometry = pFeature->GetGeometry();
+	//		if(pGeometry!=NULL)
+	//		{
+	//			wkb = pGeometry->AsBinary();
+	//			m_pRenderer->Draw(wkb, pSymbolizer, &m_transform);
+	//		}
+	//		pFeature->Release();
+	//	}
+	//	pCursor->Release();
+	//}
 
 	void CanvasImpl::DrawFeatures(PointSymbolizer* pSymbolizer, FeatureCursor* pCursor)
 	{

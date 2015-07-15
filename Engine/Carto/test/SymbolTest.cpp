@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(SymbolTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(SymbolTest);
 
 void SymbolTest::setUp() 
 {
