@@ -120,6 +120,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterSymbolizerImpl.cpp" />
     <ClCompile Include="..\src\RendererCairo.cpp" />
     <ClCompile Include="..\src\RuleImpl.cpp" />
+    <ClCompile Include="..\src\SimpleLineSymbolImpl.cpp" />
     <ClCompile Include="..\src\SquareMarkerImpl.cpp" />
     <ClCompile Include="..\src\StarMarkerImpl.cpp" />
     <ClCompile Include="..\src\StrokeImpl.cpp" />
@@ -175,6 +176,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RasterSymbolizerImpl.h" />
     <ClInclude Include="..\include\RendererCairo.h" />
     <ClInclude Include="..\include\RuleImpl.h" />
+    <ClInclude Include="..\include\SimpleLineSymbolImpl.h" />
     <ClInclude Include="..\include\SLDConstant.h" />
     <ClInclude Include="..\include\SquareMarkerImpl.h" />
     <ClInclude Include="..\include\StarMarkerImpl.h" />

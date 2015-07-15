@@ -331,6 +331,9 @@ namespace auge
 		const char	*nodeName = NULL;
 		LineSymbolizer *pSymbolizer = new LineSymbolizerImpl();
 
+		LineSymbol* pSymbol = NULL;
+		SymbolManager* pSymbolManager = augeGetSymbolManagerInstance();
+
 		pxNodeSet = pxSymbolizerNode->GetChildren();
 		if(pxNodeSet==NULL)
 		{
@@ -369,6 +372,53 @@ namespace auge
 		pxNodeSet->Release();
 		return pSymbolizer;
 	}
+
+	//LineSymbolizer* StyleReader_1_0_0::ReadLineSymbolizer(XNode* pxSymbolizerNode)
+	//{
+	//	XNode		*pxNode    = NULL;
+	//	XNodeSet	*pxNodeSet = NULL;
+	//	Style		*pStyle = NULL;
+	//	const char	*nodeName = NULL;
+	//	LineSymbolizer *pSymbolizer = new LineSymbolizerImpl();
+
+	//	pxNodeSet = pxSymbolizerNode->GetChildren();
+	//	if(pxNodeSet==NULL)
+	//	{
+	//		return NULL;
+	//	}
+
+	//	pxNodeSet->Reset();
+	//	while(!pxNodeSet->IsEOF())
+	//	{
+	//		pxNode = pxNodeSet->Next();
+	//		if(pxNode!=NULL)
+	//		{
+	//			nodeName = pxNode->GetName();
+	//			if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
+	//			{
+	//				ReadStroke(pSymbolizer, pxNode);
+	//			}
+	//			else if(g_stricmp(nodeName, AUGE_SLD_GEOMETRY)==0)
+	//			{
+	//				ReadGeometry(pSymbolizer, pxNode);
+	//			}
+	//			else if(g_stricmp(nodeName, AUGE_SLD_WELLKNOWN_NAME)==0)
+	//			{
+	//				const char* wellName = pxNode->GetContent();
+	//				if(wellName!=NULL)
+	//				{
+	//					if(g_stricmp(wellName,"railway")==0)
+	//						pSymbolizer->SetLineType(augeLineRailway);
+	//					else
+	//						pSymbolizer->SetLineType(augeLineSimple);
+	//				}
+	//			}	
+	//		}
+	//	}
+
+	//	pxNodeSet->Release();
+	//	return pSymbolizer;
+	//}
 
 	PolygonSymbolizer* StyleReader_1_0_0::ReadPolygonSymbolizer(XNode* pxSymbolizerNode)
 	{

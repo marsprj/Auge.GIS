@@ -470,8 +470,8 @@ void MapTest::Draw_Line()
 
 void MapTest::DrawLayerRailway()
 {
-	//const char* className = "rivers";
-	const char* className = "china_railway";
+	const char* className = "rivers";
+	//const char* className = "china_railway";
 
 	auge::DataEngine	*pEngine = NULL;
 	auge::DataEngineManager* pEngineManager = NULL;

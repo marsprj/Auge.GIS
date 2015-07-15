@@ -162,6 +162,9 @@
     <ClCompile Include="..\src\RailwaySymbolImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\SimpleLineSymbolImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\CanvasImpl.h">
@@ -324,6 +327,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\RailwaySymbolImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SimpleLineSymbolImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

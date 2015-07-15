@@ -8,6 +8,7 @@
 #include "SquareMarkerImpl.h"
 #include "TriangleMarkerImpl.h"
 
+#include "SimpleLineSymbolImpl.h"
 #include "RailwaySymbolImpl.h"
 
 namespace auge
@@ -94,6 +95,7 @@ namespace auge
 		if(m_line_symbols == NULL)
 		{
 			m_line_symbols = new EnumSymbolImpl();
+			m_line_symbols->Add(new SimpleLineSymbolImpl());
 			m_line_symbols->Add(new RailwaySymbolImpl());
 		}
 		return m_line_symbols;
@@ -193,7 +195,7 @@ namespace auge
 		switch(type)
 		{
 		case augeLineSimple:
-			//pSymbol = new SimpleLineSymbolImpl();
+			pSymbol = new SimpleLineSymbolImpl();
 			break;
 		case augeLineRailway:
 			pSymbol = new RailwaySymbolImpl();
@@ -215,7 +217,7 @@ namespace auge
 		LineSymbol* pSymbol = NULL;
 		if(g_stricmp(name, AUGE_LINE_SYMBOL_SIMPLE)==0)
 		{
-			pSymbol = NULL;
+			pSymbol = new SimpleLineSymbolImpl();
 		}
 		else if(g_stricmp(name, AUGE_LINE_SYMBOL_RAILWAY)==0)
 		{

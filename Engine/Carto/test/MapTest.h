@@ -32,8 +32,8 @@ class MapTest : public CppUnit::TestFixture
 	
 	//CPPUNIT_TEST(AddQuadServerLayer);
 
-	CPPUNIT_TEST(DrawLayerStar);
-	//CPPUNIT_TEST(DrawLayerRailway);
+	//CPPUNIT_TEST(DrawLayerStar);
+	CPPUNIT_TEST(DrawLayerRailway);
 
 	
 	CPPUNIT_TEST_SUITE_END();
