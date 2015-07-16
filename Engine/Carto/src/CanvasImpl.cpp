@@ -231,7 +231,8 @@ namespace auge
 			pGeometry = pFeature->GetGeometry();
 			if(pGeometry!=NULL)
 			{
-				wkb = pGeometry->AsBinary();
+				//wkb = pGeometry->AsBinary();
+				geom_type = pGeometry->GeometryType();
 				switch(geom_type)
 				{
 				case augeGTPoint:
@@ -240,9 +241,11 @@ namespace auge
 					break;
 				case augeGTLineString:
 				case augeGTMultiLineString:
+					this->DrawSymbol(pGeometry, ((LineSymbolizer*)pSymbolizer)->GetSymbol());
 					break;
 				case augeGTPolygon:
 				case augeGTMultiPolygon:
+					this->DrawSymbol(pGeometry, ((PolygonSymbolizer*)pSymbolizer)->GetSymbol());
 					break;
 				}
 				//m_pRenderer->Draw(wkb, pSymbolizer, &m_transform);

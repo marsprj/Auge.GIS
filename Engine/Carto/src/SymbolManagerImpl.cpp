@@ -11,6 +11,9 @@
 #include "SimpleLineSymbolImpl.h"
 #include "RailwaySymbolImpl.h"
 
+#include "SimpleRegionSymbolImpl.h"
+#include "GrassLandSymbolImpl.h"
+
 namespace auge
 {
 	#define AUGE_MARKER_SYMBOL_SIMPLE	"Simple"
@@ -21,8 +24,11 @@ namespace auge
 	#define AUGE_MARKER_SYMBOL_SQUARE	"Square"
 	#define AUGE_MARKER_SYMBOL_TRIANGLE	"Triangle"
 
-	#define AUGE_LINE_SYMBOL_SIMPLE		"Simple"
+	#define AUGE_LINE_SYMBOL_SIMPLE		"SimpleLine"
 	#define AUGE_LINE_SYMBOL_RAILWAY	"Railway"
+
+	#define AUGE_REGION_SYMBOL_SIMPLE	"SimpleRegion"
+	#define AUGE_REGION_SYMBOL_GRASS	"GrassLand"
 
 	SymbolManager* augeGetSymbolManagerInstance()
 	{
@@ -106,6 +112,7 @@ namespace auge
 		if(m_region_symbols == NULL)
 		{
 			m_region_symbols = new EnumSymbolImpl();
+			m_region_symbols->Add(new SimpleRegionSymbolImpl());
 
 		}
 		return m_region_symbols;
@@ -225,7 +232,49 @@ namespace auge
 		}
 		else
 		{
-			pSymbol = NULL;
+			pSymbol = new SimpleLineSymbolImpl();
+		}
+
+		return pSymbol;
+	}
+
+	RegionSymbol* SymbolManagerImpl::CreateRegionSymbol(augeRegionType type)
+	{
+		RegionSymbol* pSymbol = NULL;
+		switch(type)
+		{
+		case augeRegionSimple:
+			pSymbol = new SimpleRegionSymbolImpl();
+			break;
+		case augeRegionGrass:
+			pSymbol = new GrassLandSymbolImpl();
+			break;
+		default:
+			pSymbol = new SimpleRegionSymbolImpl();
+			break;
+		}
+		return pSymbol;
+	}
+
+	RegionSymbol* SymbolManagerImpl::CreateRegionSymbol(const char* name)
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+
+		RegionSymbol* pSymbol = NULL;
+		if(g_stricmp(name, AUGE_REGION_SYMBOL_SIMPLE)==0)
+		{
+			pSymbol = new SimpleRegionSymbolImpl();
+		}
+		else if(g_stricmp(name, AUGE_REGION_SYMBOL_GRASS)==0)
+		{
+			pSymbol = new GrassLandSymbolImpl();
+		}
+		else
+		{
+			pSymbol = new SimpleRegionSymbolImpl();
 		}
 
 		return pSymbol;

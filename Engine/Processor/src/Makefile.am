@@ -9,10 +9,11 @@ AM_CPPFLAGS=-I../include \
 
 libgprocessor_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
+		-L$(top_srcdir)/Engine/Raster/src \
 		-L$(ARCHIVE_HOME)/lib \
 		-L$(PROJ4_HOME)/lib
 
-libgprocessor_la_LIBADD=-lgcore -larchive
+libgprocessor_la_LIBADD=-lgcore -larchive -lgraster
 
 libgprocessor_la_SOURCES=\
 		BufferProcessorImpl.cpp \
