@@ -909,7 +909,6 @@ namespace auge
 		}
 		int gid = pResult->GetInt(0,0);
 		pResult->Release();
-
 		pLayer->SetID(gid);
 		
 		return pLayer;
@@ -1255,6 +1254,26 @@ namespace auge
 		char sql[AUGE_SQL_MAX];
 		sprintf(sql, "update g_map set m_layers='%s' where m_name=%d", layers,mapName);
 		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	RESULTCODE CartoManagerImpl::GetMapLayers(g_uint mapID, char* layers)
+	{
+		if(layers==NULL)
+		{
+			return AG_FAILURE;
+		}
+		char sql[AUGE_SQL_MAX];
+		sprintf(sql, "select m_layers='%s' from g_map where gid=%d", mapID);
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		strcpy(layers, pResult->GetString(0,0));
+		pResult->Release();
+		//return m_pConnection->ExecuteSQL(sql);
+		return AG_SUCCESS;
 	}
 
 	RESULTCODE CartoManagerImpl::RemoveLayers(g_uint map_id)
