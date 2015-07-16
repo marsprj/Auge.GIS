@@ -13,7 +13,7 @@ libgprocessor_la_LDFLAGS=\
 		-L$(ARCHIVE_HOME)/lib \
 		-L$(PROJ4_HOME)/lib
 
-libgprocessor_la_LIBADD=-lgcore -larchive -lgraster
+libgprocessor_la_LIBADD=-lgcore -larchive -lgraster -lproj
 
 libgprocessor_la_SOURCES=\
 		BufferProcessorImpl.cpp \
