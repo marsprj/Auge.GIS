@@ -2,6 +2,8 @@
 #include "AugeData.h"
 #include "AugeRaster.h"
 
+#include <math.h>
+
 #include <fstream>
 
 namespace auge

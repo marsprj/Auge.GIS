@@ -13,9 +13,11 @@ namespace auge
 	m_rotation(0.0f)
 	{
 		m_pStroke = new StrokeImpl();
-		m_pStroke->SetColor(GColor(0,0,0,255));
+		GColor color(0,0,0,255);
+		m_pStroke->SetColor(color);
 		m_pFill = new FillImpl();
-		m_pFill->SetColor(GColor(0,255,64,255));
+		color.Set(0,255,64,255);
+		m_pFill->SetColor(color);
 
 		m_icon_name = "GrassLand.png";
 	}
