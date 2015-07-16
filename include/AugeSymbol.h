@@ -38,6 +38,8 @@ namespace auge
 	class Renderer;
 
 	class MarkerSymbol;
+	class LineSymbol;
+	class RegionSymbol;
 
 	//========================================================================
 	// augeSymbolType Enum
@@ -98,6 +100,14 @@ namespace auge
 		augeLineRailway			= 1
 	}augeLineType;
 
+	//========================================================================
+	// augeLineType Enum
+	//========================================================================
+	typedef enum
+	{
+		augeRegionSimple		= 0,
+		augeRegionGrass			= 1
+	}augeRegionType;
 
 	//========================================================================
 	// Auge Symbolizer
@@ -369,14 +379,17 @@ namespace auge
 		LineSymbolizer(){}
 		virtual ~LineSymbolizer(){}
 	public:
-		virtual const char* GetGeometry() = 0;
-		virtual Stroke*		GetStroke() = 0;
+		virtual const char*		GetGeometry() = 0;
+		virtual Stroke*			GetStroke() = 0;
 
-		virtual bool		SetGeometry(const char* prop_name) = 0;
-		virtual bool		SetStroke(Stroke* pStroke) = 0;
+		virtual bool			SetGeometry(const char* prop_name) = 0;
+		virtual bool			SetStroke(Stroke* pStroke) = 0;
 
-		virtual void		SetLineType(augeLineType type) = 0;
-		virtual augeLineType GetLineType() = 0;
+		virtual void			SetLineType(augeLineType type) = 0;
+		virtual augeLineType	GetLineType() = 0;
+
+		virtual void			SetSymbol(LineSymbol* pSymbol) = 0;
+		virtual LineSymbol*		GetSymbol() = 0;
 	};
 
 	//========================================================================
@@ -403,21 +416,24 @@ namespace auge
 		PolygonSymbolizer(){}
 		virtual ~PolygonSymbolizer(){}
 	public:
-		virtual Fill*		GetFill() = 0;
-		virtual void		SetFill(Fill* pFill) = 0;
+		virtual Fill*			GetFill() = 0;
+		virtual void			SetFill(Fill* pFill) = 0;
 
-		virtual Stroke*		GetStroke() = 0;
-		virtual void		SetStroke(Stroke* pStroke) = 0;
+		virtual Stroke*			GetStroke() = 0;
+		virtual void			SetStroke(Stroke* pStroke) = 0;
 
-		virtual void		SetOpacity(float opacity) = 0;
-		virtual float		GetOpacity() = 0;
+		virtual void			SetOpacity(float opacity) = 0;
+		virtual float			GetOpacity() = 0;
 
-		virtual float		GetDisplacement_X() = 0;
-		virtual float		GetDisplacement_Y() = 0;
-		virtual void		SetDisplacement(float x, float y) = 0;
+		virtual float			GetDisplacement_X() = 0;
+		virtual float			GetDisplacement_Y() = 0;
+		virtual void			SetDisplacement(float x, float y) = 0;
 
-		virtual const char*	GetGemetry() = 0;
-		virtual void		SetGeometry(const char* prop_name) = 0;
+		virtual const char*		GetGemetry() = 0;
+		virtual void			SetGeometry(const char* prop_name) = 0;
+
+		virtual void			SetSymbol(RegionSymbol* pSymbol) = 0;
+		virtual RegionSymbol*	GetSymbol() = 0;
 	};
 	//////////////////////////////////////////////////////////////////////////
 	// Marker Symbol
@@ -469,6 +485,27 @@ namespace auge
 		virtual augeLineType	GetLineType() = 0;
 	};
 
+	class RegionSymbol : public Symbol
+	{
+	public:
+		RegionSymbol(){}
+		virtual ~RegionSymbol(){}
+
+	public:
+		virtual Fill*			GetFill() = 0;
+		virtual void			SetFill(Fill* pFill) = 0;
+
+		virtual Stroke*			GetStroke() = 0;
+		virtual void			SetStroke(Stroke* pStroke) = 0;
+
+		virtual void			SetOpacity(float opacity) = 0;
+		virtual float			GetOpacity() = 0;
+
+		//virtual float			GetDisplacement_X() = 0;
+		//virtual float			GetDisplacement_Y() = 0;
+		//virtual void			SetDisplacement(float x, float y) = 0;
+	};
+
 	class EnumSymbol : public GObject
 	{
 	protected:
@@ -496,6 +533,9 @@ namespace auge
 
 		virtual LineSymbol*		CreateLineSymbol(augeLineType type) = 0;
 		virtual LineSymbol*		CreateLineSymbol(const char* name) = 0;
+
+		virtual RegionSymbol*	CreateRegionSymbol(augeRegionType type) = 0;	
+		virtual RegionSymbol*	CreateRegionSymbol(const char* name) = 0;
 	};
 
 	extern "C"
