@@ -106,8 +106,7 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
-		g_uchar* wkb = pGeometry->AsBinary();
-
+		
 		RendererCairo* pRendererCairo = static_cast<RendererCairo*>(pRenderer);
 		cairo_t			*canvas_cairo = pRendererCairo->GetCairo();
 		cairo_surface_t	*canvas_surface=pRendererCairo->GetCairoSurface();
@@ -118,6 +117,7 @@ namespace auge
 		cairo_save(canvas_cairo);
 
 		// draw black
+		g_uchar* wkb = pGeometry->AsBinary();
 		switch(geom_type)
 		{
 		case augeGTLineString:

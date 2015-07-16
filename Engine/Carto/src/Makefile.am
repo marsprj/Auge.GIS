@@ -62,4 +62,6 @@ libgcarto_la_SOURCES=\
 		SquareMarkerImpl.cpp \
 		TriangleMarkerImpl.cpp \
 		SimpleLineSymbolImpl.cpp \
-		RailwaySymbolImpl.cpp
+		RailwaySymbolImpl.cpp \
+		GrassLandSymbolImpl.cpp \
+		SimpleRegionSymbolImpl.cpp
