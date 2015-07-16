@@ -85,10 +85,12 @@ namespace auge
 		}
 		//std::string strName = szName;
 		//return m_layers[strName];
+		const char* lname = NULL;
 		std::vector<Layer*>::iterator iter;
 		for(iter = m_layers.begin(); iter!=m_layers.end(); iter++)
 		{
-			if(!strcmp(szName, (*iter)->GetName()))
+			lname = (*iter)->GetName();
+			if(!strcmp(szName, lname))
 			{
 				return *iter;
 			}

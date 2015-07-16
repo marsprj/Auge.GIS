@@ -169,7 +169,7 @@ namespace auge
 		GLogger *pLogger = augeGetLoggerInstance();
 		DescribeFeatureTypeRequest* pRequest = static_cast<DescribeFeatureTypeRequest*>(pWebRequest);
 		typeName = pRequest->GetTypeName();
-
+		
 		const char* mapName = pRequest->GetMapName();
 		if(mapName==NULL)
 		{
@@ -193,7 +193,7 @@ namespace auge
 		if(pLayer==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "Service %s has not FeatureType %s,",pWebContext->GetService(), typeName);
+			g_sprintf(msg, "Cannot Find %s has not FeatureType [%s]",pWebContext->GetService(), typeName);
 			pLogger->Error(msg, __FILE__, __LINE__);
 			GError* pError = augeGetErrorInstance();
 			pError->SetError(msg);

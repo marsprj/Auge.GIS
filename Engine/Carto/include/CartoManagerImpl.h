@@ -44,6 +44,7 @@ namespace auge
 		virtual RESULTCODE		UpdateMapLayers(Map* pMap);
 		virtual RESULTCODE		UpdateMapLayers(g_uint mapID, const char* layers);
 		virtual RESULTCODE		UpdateMapLayers(const char* mapName, const char* layers);
+		virtual RESULTCODE		GetMapLayers(g_uint mapID, char* layers);
 
 		virtual g_int			GetMapID(g_uint user, const char* name);
 		virtual RESULTCODE		SetMapThumbnail(g_uint user, g_uint map_id, const char* thumbnail);
