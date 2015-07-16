@@ -643,7 +643,7 @@ auge::Map* CreateMapObj()
 
 	pFeatureClass = pFWorkspace->OpenFeatureClass("cities");
 	pSymbolizer = pStyleFactory->CreatePointSymbolizer();
-	((auge::PointSymbolizer*)pSymbolizer)->SetSize(2);
+	//((auge::PointSymbolizer*)pSymbolizer)->SetSize(2);
 	pRule = pStyleFactory->CreateRule();
 	pRule->SetSymbolizer(pSymbolizer);
 	pStyle = pStyleFactory->CreateFeatureStyle();

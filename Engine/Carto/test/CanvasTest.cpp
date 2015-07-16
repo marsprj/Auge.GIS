@@ -56,13 +56,13 @@ void CanvasTest::DrawPoint()
 	auge::StyleFactory* pStyleFactory = auge::augeGetStyleFactoryInstance();
 	auge::PointSymbolizer* pSymbolizer = NULL;
 	pSymbolizer = pStyleFactory->CreatePointSymbolizer();
-	pSymbolizer->SetSize(20);
+	//pSymbolizer->SetSize(20);
 	//pSymbolizer->SetRotation(30.0f);
 	//pSymbolizer->SetMarkType(auge::augeMarkerSquare);
 	//pSymbolizer->SetMarkType(auge::augeMarkerStar);
 	//pSymbolizer->SetMarkType(auge::augeMarkerTriangle);
 	//pSymbolizer->SetMarkType(auge::augeMarkerPentagon);
-	pSymbolizer->SetMarkType(auge::augeMarkerCapital);
+	//pSymbolizer->SetMarkType(auge::augeMarkerCapital);
 
 	auge::GColor bgColor(255,255,255,255);
 	pCanvas->DrawBackground(bgColor);
