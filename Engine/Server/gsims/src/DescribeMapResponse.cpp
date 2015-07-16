@@ -107,7 +107,7 @@ namespace auge
 		// Extent
 		//AddBoundingBoxNode(pxMap, pMap->GetExtent());		
 		AddLayerBoundingNode(pxRoot, pMap->GetExtent(), pMap->GetSRID());
-		AddViewerNode(pxRoot, pMap->GetExtent(), pMap->GetSRID());
+		AddViewerNode(pxRoot, pMap->GetViewer(), pMap->GetSRID());
 
 		// WMS_Capabilities-->Capability
 		XElement* pxCapability = pxRoot->AddChild("Capability", NULL);
