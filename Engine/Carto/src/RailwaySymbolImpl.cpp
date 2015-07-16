@@ -105,10 +105,10 @@ namespace auge
 		g_uchar* wkb = pGeometry->AsBinary();
 
 		double dashes[] = { m_block_length,  /* ink */
-			m_block_length,  /* skip */
+							m_block_length,  /* skip */
 		};
 		int ndash = sizeof(dashes) / sizeof(double);
-		double dash_offset = 1;//block_length;
+		double dash_offset = 1;//m_block_length;
 
 		RendererCairo* pRendererCairo = static_cast<RendererCairo*>(pRenderer);
 		cairo_t			*canvas_cairo = pRendererCairo->GetCairo();
@@ -128,7 +128,7 @@ namespace auge
 		}
 		cairo_set_source_rgba(canvas_cairo,	0.0f, 0.0f, 0.0f, 1.0f);
 		cairo_set_line_width(canvas_cairo, m_block_width);
-		cairo_set_line_cap(canvas_cairo, CAIRO_LINE_CAP_ROUND);
+		cairo_set_line_cap(canvas_cairo, CAIRO_LINE_CAP_BUTT);
 		cairo_stroke(canvas_cairo);
 
 		// draw white block
@@ -144,7 +144,7 @@ namespace auge
 		cairo_set_source_rgba(canvas_cairo,	1.0f, 1.0f, 1.0f, 1.0f);
 		cairo_set_line_width(canvas_cairo, m_block_width-1);
 		cairo_set_dash (canvas_cairo, dashes, ndash, dash_offset);
-		cairo_set_line_cap(canvas_cairo, CAIRO_LINE_CAP_ROUND);
+		cairo_set_line_cap(canvas_cairo, CAIRO_LINE_CAP_BUTT);
 		cairo_stroke(canvas_cairo);
 		 
 		cairo_restore(canvas_cairo);

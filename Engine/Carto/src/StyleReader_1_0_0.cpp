@@ -833,58 +833,61 @@ namespace auge
 	//	return true;
 	//}
 
+	// @deprecated
 	bool StyleReader_1_0_0::ReadFill(PolygonSymbolizer* pSymbolizer, XNode* pxFillNode)
 	{
-		Fill* pFill = ReadFill(pxFillNode);
-		pSymbolizer->SetFill(pFill);
+		//Fill* pFill = ReadFill(pxFillNode);
+		//pSymbolizer->SetFill(pFill);
 		return true;
 	}
 
+	// @deprecated
 	bool  StyleReader_1_0_0::ReadStroke(PolygonSymbolizer* pSymbolizer, XNode* pxStrokeNode)
 	{
-		Stroke* pStroke = ReadStroke(pxStrokeNode);
-		pSymbolizer->SetStroke(pStroke);
+		//Stroke* pStroke = ReadStroke(pxStrokeNode);
+		//pSymbolizer->SetStroke(pStroke);
 		return true;
 	}
 
+	// @deprecated
 	bool StyleReader_1_0_0::ReadMark(PolygonSymbolizer* pSymbolizer, XNode* pxMarkNode)
 	{
-		XNode		*pxNode    = NULL;
-		XNodeSet	*pxNodeSet = NULL;
-		Style		*pStyle = NULL;
-		const char	*nodeName = NULL;
+		//XNode		*pxNode    = NULL;
+		//XNodeSet	*pxNodeSet = NULL;
+		//Style		*pStyle = NULL;
+		//const char	*nodeName = NULL;
 
-		pxNodeSet = pxMarkNode->GetChildren();
-		if(pxNodeSet==NULL)
-		{
-			return false;
-		}
+		//pxNodeSet = pxMarkNode->GetChildren();
+		//if(pxNodeSet==NULL)
+		//{
+		//	return false;
+		//}
 
-		pxNodeSet->Reset();
-		while(!pxNodeSet->IsEOF())
-		{
-			pxNode = pxNodeSet->Next();
-			if(pxNode!=NULL)
-			{
-				nodeName = pxNode->GetName();
-				if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
-				{
-					Stroke* pStroke = ReadStroke(pxNode);
-					pSymbolizer->SetStroke(pStroke);
-				}
-				else if(g_stricmp(nodeName, AUGE_SLD_FILL)==0)
-				{
-					Fill* pFill = ReadFill(pxNode);
-					pSymbolizer->SetFill(pFill);
-					if(pFill!=NULL)
-					{
-						pSymbolizer->SetOpacity(pFill->GetColor().GetAlphaF());
-					}
-				}
-			}
-		}
+		//pxNodeSet->Reset();
+		//while(!pxNodeSet->IsEOF())
+		//{
+		//	pxNode = pxNodeSet->Next();
+		//	if(pxNode!=NULL)
+		//	{
+		//		nodeName = pxNode->GetName();
+		//		if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
+		//		{
+		//			Stroke* pStroke = ReadStroke(pxNode);
+		//			pSymbolizer->SetStroke(pStroke);
+		//		}
+		//		else if(g_stricmp(nodeName, AUGE_SLD_FILL)==0)
+		//		{
+		//			Fill* pFill = ReadFill(pxNode);
+		//			pSymbolizer->SetFill(pFill);
+		//			if(pFill!=NULL)
+		//			{
+		//				pSymbolizer->SetOpacity(pFill->GetColor().GetAlphaF());
+		//			}
+		//		}
+		//	}
+		//}
 
-		pxNodeSet->Release();
+		//pxNodeSet->Release();
 		return true;
 	}
 

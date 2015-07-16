@@ -98,7 +98,7 @@ void CanvasTest::DrawLine()
 	auge::LineSymbolizer* pSymbolizer = NULL;
 	pSymbolizer = pStyleFactory->CreateLineSymbolizer();
 	//pSymbolizer->SetLineType(auge::augeLineSimple);
-	pSymbolizer->SetLineType(auge::augeLineRailway);
+	//pSymbolizer->SetLineType(auge::augeLineRailway);
 
 	auge::GColor bgColor(255,255,255,255);
 	pCanvas->DrawBackground(bgColor);

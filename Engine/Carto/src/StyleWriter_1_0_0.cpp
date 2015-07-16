@@ -228,13 +228,24 @@ namespace auge
 
 	//	return AG_SUCCESS;
 	//}
-
+	
 	RESULTCODE StyleWriter_1_0_0::WriteSymbolizer(XElement* pxRule, LineSymbolizer* pSymbolizer)
 	{
 		XElement *pxSymbolizer = NULL;
 		pxSymbolizer = pxRule->AddChild("LineSymbolizer", "sld");
 
-		Stroke* pStroke = pSymbolizer->GetStroke();
+		LineSymbol* pLineSymbol = pSymbolizer->GetSymbol();
+		if(pLineSymbol==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		// WellKnownName
+		const char* wellKnownName = pLineSymbol->GetName();
+		XElement* pxWellKnownName = pxSymbolizer->AddChild("WellKnownName", "sld");
+		pxWellKnownName->SetChildText(wellKnownName);
+
+		Stroke* pStroke = pLineSymbol->GetStroke();
 		if(pStroke!=NULL)
 		{
 			XElement *pxStroke = pxSymbolizer->AddChild("Stroke", "sld");
@@ -244,21 +255,47 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	//RESULTCODE StyleWriter_1_0_0::WriteSymbolizer(XElement* pxRule, LineSymbolizer* pSymbolizer)
+	//{
+	//	XElement *pxSymbolizer = NULL;
+	//	pxSymbolizer = pxRule->AddChild("LineSymbolizer", "sld");
+
+	//	Stroke* pStroke = pSymbolizer->GetStroke();
+	//	if(pStroke!=NULL)
+	//	{
+	//		XElement *pxStroke = pxSymbolizer->AddChild("Stroke", "sld");
+	//		WriteStroke(pxStroke, pStroke);
+	//	}
+
+	//	return AG_SUCCESS;
+	//}
+
 	RESULTCODE StyleWriter_1_0_0::WriteSymbolizer(XElement* pxRule, PolygonSymbolizer* pSymbolizer)
 	{
 		XElement *pxSymbolizer = NULL;
 		pxSymbolizer = pxRule->AddChild("PolygonSymbolizer", "sld");
 
+		RegionSymbol* pRegionSymbol = pSymbolizer->GetSymbol();
+		if(pRegionSymbol==NULL)
+		{
+			return AG_FAILURE;
+		}
+		// WellKnownName
+		const char* wellKnownName = pRegionSymbol->GetName();
+		XElement* pxWellKnownName = pxSymbolizer->AddChild("WellKnownName", "sld");
+		pxWellKnownName->SetChildText(wellKnownName);
+
+
 		XElement *pxGeometry = NULL;
 		pxGeometry = pxSymbolizer->AddChild("Geometry", "sld");
 
-		Fill* pFill = pSymbolizer->GetFill();
+		Fill* pFill = pRegionSymbol->GetFill();
 		if(pFill!=NULL)
 		{
 			XElement *pxFill = pxSymbolizer->AddChild("Fill", "sld");
 			WriteFill(pxFill, pFill);
 		}
-		Stroke* pStroke = pSymbolizer->GetStroke();
+		Stroke* pStroke = pRegionSymbol->GetStroke();
 		if(pStroke!=NULL)
 		{
 			XElement *pxStroke = pxSymbolizer->AddChild("Stroke", "sld");

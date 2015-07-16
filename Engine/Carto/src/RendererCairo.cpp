@@ -282,24 +282,25 @@ namespace auge
 	//	cairo_stroke(m_cairo);
 	//}
 
+	// @ deprecated
 	void RendererCairo::DrawLine(WKBLineString *pWKBLineString,	LineSymbolizer* pSymbolizer, Transformation* pTransformation)
 	{
-		augeLineType line_type = pSymbolizer->GetLineType();
-		switch(line_type)
-		{
-		case augeLineRailway:
-			{
-				DrawRailway(pWKBLineString, pTransformation);
-			}
-			break;
-		default:
-			{
-				Stroke* pStroke = pSymbolizer->GetStroke();
-				build_path(m_cairo, pWKBLineString, pTransformation);
-				set_stroke_style(m_cairo, pStroke);
-				cairo_stroke(m_cairo);
-			}
-		}
+		//augeLineType line_type = pSymbolizer->GetLineType();
+		//switch(line_type)
+		//{
+		//case augeLineRailway:
+		//	{
+		//		DrawRailway(pWKBLineString, pTransformation);
+		//	}
+		//	break;
+		//default:
+		//	{
+		//		Stroke* pStroke = pSymbolizer->GetStroke();
+		//		build_path(m_cairo, pWKBLineString, pTransformation);
+		//		set_stroke_style(m_cairo, pStroke);
+		//		cairo_stroke(m_cairo);
+		//	}
+		//}
 	}
 
 	//void RendererCairo::DrawLine(WKBMultiLineString	*pWKBMultiLineString, LineSymbolizer* pSymbolizer, Transformation* pTransformation)
@@ -310,72 +311,75 @@ namespace auge
 	//	cairo_stroke(m_cairo);
 	//}
 
+	// @ deprecated
 	void RendererCairo::DrawLine(WKBMultiLineString	*pWKBMultiLineString, LineSymbolizer* pSymbolizer, Transformation* pTransformation)
 	{
-		augeLineType line_type = pSymbolizer->GetLineType();
-		switch(line_type)
-		{
-		case augeLineRailway:
-			{
-				DrawRailway(pWKBMultiLineString, pTransformation);
-			}
-			break;
-		default:
-			{
-				Stroke* pStroke = pSymbolizer->GetStroke();
-				build_path(m_cairo, pWKBMultiLineString, pTransformation);
-				set_stroke_style(m_cairo, pStroke);
-				cairo_stroke(m_cairo);
-			}
-		}
+		//augeLineType line_type = pSymbolizer->GetLineType();
+		//switch(line_type)
+		//{
+		//case augeLineRailway:
+		//	{
+		//		DrawRailway(pWKBMultiLineString, pTransformation);
+		//	}
+		//	break;
+		//default:
+		//	{
+		//		Stroke* pStroke = pSymbolizer->GetStroke();
+		//		build_path(m_cairo, pWKBMultiLineString, pTransformation);
+		//		set_stroke_style(m_cairo, pStroke);
+		//		cairo_stroke(m_cairo);
+		//	}
+		//}
 	}
 
+	// @deprecated
 	void RendererCairo::DrawPolygon(WKBPolygon *pWKBPolygon, PolygonSymbolizer* pPolygonSymbolizer, Transformation* pTransformation)
 	{
-		Fill	*pFill = pPolygonSymbolizer->GetFill();
-		Stroke	*pStroke = pPolygonSymbolizer->GetStroke();
+		//Fill	*pFill = pPolygonSymbolizer->GetFill();
+		//Stroke	*pStroke = pPolygonSymbolizer->GetStroke();
 
-		cairo_new_path(m_cairo);
-		build_path(m_cairo, pWKBPolygon,pTransformation);
+		//cairo_new_path(m_cairo);
+		//build_path(m_cairo, pWKBPolygon,pTransformation);
 
-		if(pFill!=NULL)
-		{
-			GColor& color = pFill->GetColor();
-			cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
-			if(pStroke==NULL)
-				cairo_fill(m_cairo);
-			else
-				cairo_fill_preserve(m_cairo);
-		}
-		if(pStroke!=NULL)
-		{
-			set_stroke_style(m_cairo, pStroke);
-			cairo_stroke(m_cairo);
-		}
+		//if(pFill!=NULL)
+		//{
+		//	GColor& color = pFill->GetColor();
+		//	cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
+		//	if(pStroke==NULL)
+		//		cairo_fill(m_cairo);
+		//	else
+		//		cairo_fill_preserve(m_cairo);
+		//}
+		//if(pStroke!=NULL)
+		//{
+		//	set_stroke_style(m_cairo, pStroke);
+		//	cairo_stroke(m_cairo);
+		//}
 	}
 
+	// @deprecated
 	void RendererCairo::DrawPolygon(WKBMultiPolygon	*pWKBMultiPolygon, PolygonSymbolizer* pPolygonSymbolizer, Transformation* pTransformation)
 	{
-		Fill	*pFill = pPolygonSymbolizer->GetFill();
-		Stroke	*pStroke = pPolygonSymbolizer->GetStroke();
+		//Fill	*pFill = pPolygonSymbolizer->GetFill();
+		//Stroke	*pStroke = pPolygonSymbolizer->GetStroke();
 
-		cairo_new_path(m_cairo);
-		build_path(m_cairo, pWKBMultiPolygon,pTransformation);
+		//cairo_new_path(m_cairo);
+		//build_path(m_cairo, pWKBMultiPolygon,pTransformation);
 
-		if(pFill!=NULL)
-		{
-			GColor& color = pFill->GetColor();
-			cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
-			if(pStroke==NULL)
-				cairo_fill(m_cairo);
-			else
-				cairo_fill_preserve(m_cairo);
-		}
-		if(pStroke!=NULL)
-		{
-			set_stroke_style(m_cairo, pStroke);
-			cairo_stroke(m_cairo);
-		}
+		//if(pFill!=NULL)
+		//{
+		//	GColor& color = pFill->GetColor();
+		//	cairo_set_source_rgba(m_cairo, color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
+		//	if(pStroke==NULL)
+		//		cairo_fill(m_cairo);
+		//	else
+		//		cairo_fill_preserve(m_cairo);
+		//}
+		//if(pStroke!=NULL)
+		//{
+		//	set_stroke_style(m_cairo, pStroke);
+		//	cairo_stroke(m_cairo);
+		//}
 	}
 
 	void RendererCairo::Label(const g_char* text, WKBPoint *pWKBPoint, TextSymbolizer* pSymbolizer, Transformation* pTransformation)

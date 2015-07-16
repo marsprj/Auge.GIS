@@ -266,6 +266,9 @@ namespace auge
 		case 23:
 			ftype = augeFieldTypeInt;
 			break;
+		case 700:
+			ftype = augeFieldTypeFloat;
+			break;
 		case 701:
 			ftype = augeFieldTypeDouble;
 			break;

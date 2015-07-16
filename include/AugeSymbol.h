@@ -380,13 +380,13 @@ namespace auge
 		virtual ~LineSymbolizer(){}
 	public:
 		virtual const char*		GetGeometry() = 0;
-		virtual Stroke*			GetStroke() = 0;
-
 		virtual bool			SetGeometry(const char* prop_name) = 0;
-		virtual bool			SetStroke(Stroke* pStroke) = 0;
 
-		virtual void			SetLineType(augeLineType type) = 0;
-		virtual augeLineType	GetLineType() = 0;
+		//virtual Stroke*		GetStroke() = 0;
+		//virtual bool			SetStroke(Stroke* pStroke) = 0;
+
+		//virtual void			SetLineType(augeLineType type) = 0;
+		//virtual augeLineType	GetLineType() = 0;
 
 		virtual void			SetSymbol(LineSymbol* pSymbol) = 0;
 		virtual LineSymbol*		GetSymbol() = 0;
@@ -416,14 +416,14 @@ namespace auge
 		PolygonSymbolizer(){}
 		virtual ~PolygonSymbolizer(){}
 	public:
-		virtual Fill*			GetFill() = 0;
-		virtual void			SetFill(Fill* pFill) = 0;
+		//virtual Fill*			GetFill() = 0;
+		//virtual void			SetFill(Fill* pFill) = 0;
 
-		virtual Stroke*			GetStroke() = 0;
-		virtual void			SetStroke(Stroke* pStroke) = 0;
+		//virtual Stroke*		GetStroke() = 0;
+		//virtual void			SetStroke(Stroke* pStroke) = 0;
 
-		virtual void			SetOpacity(float opacity) = 0;
-		virtual float			GetOpacity() = 0;
+		//virtual void			SetOpacity(float opacity) = 0;
+		//virtual float			GetOpacity() = 0;
 
 		virtual float			GetDisplacement_X() = 0;
 		virtual float			GetDisplacement_Y() = 0;

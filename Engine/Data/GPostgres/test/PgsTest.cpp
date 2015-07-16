@@ -37,7 +37,8 @@ void PgsTest::tearDown()
 void PgsTest::ReadTest()
 {
 	auge::FeatureClass* pFeatureClass = NULL;
-	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	//pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi_2");
 	CPPUNIT_ASSERT(pFeatureClass!=NULL);
 
 	auge::FeatureCursor* pCursor = NULL;
@@ -49,6 +50,7 @@ void PgsTest::ReadTest()
 	auge::Feature	*pFeature = NULL;
 	while((pFeature=pCursor->NextFeature())!=NULL)
 	{	
+		float val = pFeature->GetFloat("co");
 		pGeometry = pFeature->GetGeometry();
 		//wkb = pGeometry->AsBinary();
 

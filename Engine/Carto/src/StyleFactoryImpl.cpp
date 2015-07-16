@@ -76,7 +76,7 @@ namespace auge
 		auge::Stroke *pStroke = new StrokeImpl();
 		pStroke->SetWidth(0.2f);
 
-		pLineSymbolizer->SetStroke(pStroke);
+		//pLineSymbolizer->SetStroke(pStroke);
 		return pLineSymbolizer;
 	}
 
@@ -95,16 +95,16 @@ namespace auge
 		Stroke	*pStroke = NULL;
 		PolygonSymbolizer *pPolygonSymbolizer = NULL;
 		pPolygonSymbolizer = new PolygonSymbolizerImpl();
-		pFill = new FillImpl();
-		GColor fcolor;
-		fcolor.SetAlpha(100);
-		pFill->SetColor(fcolor);
+		//pFill = new FillImpl();
+		//GColor fcolor;
+		//fcolor.SetAlpha(100);
+		//pFill->SetColor(fcolor);
 		//pFill->GetColor().Set(234,0,32,100);
 		//pFill->GetColor().Set(234,0,32,255);
-		pPolygonSymbolizer->SetFill(pFill);
-		pStroke = new StrokeImpl();;
-		pStroke->GetColor().SetAlpha(255);
-		pPolygonSymbolizer->SetStroke(pStroke);	
+		//pPolygonSymbolizer->SetFill(pFill);
+		//pStroke = new StrokeImpl();;
+		//pStroke->GetColor().SetAlpha(255);
+		//pPolygonSymbolizer->SetStroke(pStroke);	
 		return pPolygonSymbolizer;
 	}
 
@@ -334,7 +334,7 @@ namespace auge
 		//	pStroke->GetColor().Set(255,0,0,200);
 		pStroke->SetWidth(0.5f);
 		//	pStroke->SetWidth(5.0f);
-		pLineSymbolizer->SetStroke(pStroke);
+		//pLineSymbolizer->SetStroke(pStroke);
 
 		return pLineSymbolizer;
 	}
@@ -351,10 +351,10 @@ namespace auge
 		pFill->SetColor(fcolor);
 		//pFill->GetColor().Set(234,0,32,100);
 		//pFill->GetColor().Set(234,0,32,255);
-		pPolygonSymbolizer->SetFill(pFill);
-		pStroke = new StrokeImpl();;
-		pStroke->GetColor().SetAlpha(255);
-		pPolygonSymbolizer->SetStroke(pStroke);	
+		//pPolygonSymbolizer->SetFill(pFill);
+		//pStroke = new StrokeImpl();;
+		//pStroke->GetColor().SetAlpha(255);
+		//pPolygonSymbolizer->SetStroke(pStroke);	
 		return pPolygonSymbolizer;
 	}
 
