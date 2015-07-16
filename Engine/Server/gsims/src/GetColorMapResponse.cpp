@@ -168,25 +168,55 @@ namespace auge
 	RESULTCODE GetColorMapResponse::WriteColorMap(WebWriter* pWriter)
 	{
 		g_uint count = m_pRequest->GetCount();
-		m_pColorMap->SetCount(count);
 
 		char str[AUGE_NAME_MAX];
 
 		XDocument	*pxDoc = new XDocument();
-		XElement	*pxRoot = pxDoc->CreateRootNode("ColorMap", NULL, NULL);
-		pxRoot->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
+		XElement	*pxColorMap = pxDoc->CreateRootNode("ColorMap", NULL, NULL);
+		pxColorMap->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
 
-		sprintf(str,"%d", count);
-		pxRoot->SetAttribute("count",str, NULL);
-		
-		for(g_uint i=0; i<count; i++)
+		if(count==0)
 		{
-			GColor* c = m_pColorMap->GetColor(i);
-			//sprintf(str, "#%02x%02x%02x%02x",c->GetRed(),c->GetGreen(),c->GetBlue(), c->GetAlpha());
-			sprintf(str, "#%02x%02x%02x",c->GetRed(),c->GetGreen(),c->GetBlue());
+			sprintf(str,"%d",m_pColorMap->GetID());
+			pxColorMap->SetAttribute("id",str,NULL); 
 
-			XElement* pxNode = pxRoot->AddChild("Color");
-			pxNode->AddChildText(str);
+			XElement* pxColorWrapper = pxColorMap->AddChild("Color");
+			XElement* pxColor = pxColorWrapper->AddChild("Start");
+			GColor color = m_pColorMap->GetStartColor(); 
+			//const char* format = "#%02x%02x%02x%02x";
+			//g_sprintf(str,format, color.GetRed(),color.GetGreen(),color.GetBlue(),color.GetAlpha());
+			const char* format = "#%02x%02x%02x%";
+			g_sprintf(str,format, color.GetRed(),color.GetGreen(),color.GetBlue());
+			pxColor->AddChildText(str);
+
+			color = m_pColorMap->GetEndColor();
+			g_sprintf(str,format, color.GetRed(),color.GetGreen(),color.GetBlue(),color.GetAlpha());
+			pxColor = pxColorWrapper->AddChild("End");
+			pxColor->AddChildText(str);
+
+			g_sprintf(str,"http://%s:%s/colormap/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), m_pColorMap->GetImagePath());
+			XElement *pxOnlineResource = pxColorMap->AddChild("OnlineResource", NULL);
+			//pxOnlineResource->SetAttribute("xlink:href",pColorMap->GetImagePath(), NULL);
+			pxOnlineResource->SetAttribute("xlink:href",str, NULL);
+		}
+		else
+		{
+			m_pColorMap->SetCount(count);
+
+			sprintf(str,"%d",m_pColorMap->GetID());
+			pxColorMap->SetAttribute("id",str,NULL); 
+			sprintf(str,"%d", count);
+			pxColorMap->SetAttribute("count",str, NULL);
+
+			for(g_uint i=0; i<count; i++)
+			{
+				GColor* c = m_pColorMap->GetColor(i);
+				//sprintf(str, "#%02x%02x%02x%02x",c->GetRed(),c->GetGreen(),c->GetBlue(), c->GetAlpha());
+				sprintf(str, "#%02x%02x%02x",c->GetRed(),c->GetGreen(),c->GetBlue());
+
+				XElement* pxNode = pxColorMap->AddChild("Color");
+				pxNode->AddChildText(str);
+			}
 		}
 
 		int len = 0;
