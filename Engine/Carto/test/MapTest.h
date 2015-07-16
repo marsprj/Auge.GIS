@@ -59,6 +59,7 @@ private:
 
 	void		DrawCities();
 	void		DrawCountry();
+	void		DrawLayerRegion();
 
 	void		GetNullValue();
 	void		CreateLayer();

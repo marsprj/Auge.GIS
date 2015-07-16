@@ -80,7 +80,7 @@ namespace auge
 		CartoManager* pCartoManager = NULL;
 		pCartoManager = augeGetCartoManagerInstance();
 		
-		pMap = pCartoManager->GetMap(mapName);
+		pMap = pCartoManager->LoadMap(mapName);
 		if(pMap==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -177,6 +177,7 @@ namespace auge
 			return pExpResponse;
 		}
 		pMap->AddLayer(pLayer);
+		pCartoManager->UpdateMapLayers(pMap);
 
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
