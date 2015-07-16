@@ -60,7 +60,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* KMeanHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* KMeanHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		KMeanRequest* pRequest = static_cast<KMeanRequest*>(pWebRequest);
@@ -86,7 +86,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* KMeanHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* KMeanHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		KMeanRequest* pRequest = static_cast<KMeanRequest*>(pWebRequest);
 

@@ -55,7 +55,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* GetRoleHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetRoleHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{	
 		GetRoleRequest* pRequest = static_cast<GetRoleRequest*>(pWebRequest);
 		const char* name = pRequest->GetName();
@@ -93,8 +93,8 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* GetRoleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetRoleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);	
+		return Execute(pWebRequest, pUser);	
 	}
 }

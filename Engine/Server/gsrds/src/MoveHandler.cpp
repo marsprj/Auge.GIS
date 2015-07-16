@@ -45,14 +45,14 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* MoveHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* MoveHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		MoveRequest* pRequest = static_cast<MoveRequest*>(pWebRequest);
 		WebResponse* pWebResponse = NULL;
 		return pWebResponse;
 	}
 
-	WebResponse* MoveHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* MoveHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 		MoveRequest* pRequest = static_cast<MoveRequest*>(pWebRequest);

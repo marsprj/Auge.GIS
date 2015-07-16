@@ -45,7 +45,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* RemoveDataSetHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* RemoveDataSetHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		RemoveDataSetRequest* pRequest = static_cast<RemoveDataSetRequest*>(pWebRequest);
 
@@ -116,8 +116,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* RemoveDataSetHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* RemoveDataSetHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

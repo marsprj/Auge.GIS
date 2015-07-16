@@ -44,7 +44,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* UpdateMapLayerOrderHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* UpdateMapLayerOrderHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{	
 		GLogger* pLogger = augeGetLoggerInstance();
 		UpdateMapLayerOrderRequest* pRequest = static_cast<UpdateMapLayerOrderRequest*>(pWebRequest);
@@ -77,8 +77,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* UpdateMapLayerOrderHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* UpdateMapLayerOrderHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

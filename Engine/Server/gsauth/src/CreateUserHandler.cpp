@@ -54,7 +54,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* CreateUserHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* CreateUserHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		CreateUserRequest* pRequest = static_cast<CreateUserRequest*>(pWebRequest);
 		const char* name = pRequest->GetName();
@@ -64,10 +64,10 @@ namespace auge
 		const char* role = pRequest->GetRole();
 
 		UserManager* pUserManager = augeGetUserManagerInstance();
-		User* pUser = pUserManager->CreateUser(name, alias, passwd, email, role);
+		User* pnewUser = pUserManager->CreateUser(name, alias, passwd, email, role);
 
 		WebResponse* pWebResponse = NULL;
-		if(!pUser)
+		if(!pnewUser)
 		{
 			GError* pError = augeGetErrorInstance();
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse(); 
@@ -79,14 +79,14 @@ namespace auge
 			WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 			pSusResponse->SetRequest(pRequest->GetRequest());
 			pWebResponse = pSusResponse;
-			pUser->Release();
+			pnewUser->Release();
 		}
 
 		return pWebResponse;
 	}
 
-	WebResponse* CreateUserHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* CreateUserHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);	
+		return Execute(pWebRequest, pUser);	
 	}
 }

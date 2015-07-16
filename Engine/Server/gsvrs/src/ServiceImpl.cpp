@@ -82,7 +82,7 @@ namespace auge
 		pWebContext->SetService(GetName());
 		pWebContext->SetURI(GetURI());
 		//return pWebEngine->Execute(pRequest, pWebContext, GetMap());
-		return pWebEngine->Execute(pRequest, pWebContext);
+		return pWebEngine->Execute(pRequest, pWebContext, NULL);
 	}
 
 	void ServiceImpl::Release()

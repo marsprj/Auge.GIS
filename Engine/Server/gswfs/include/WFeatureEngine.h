@@ -19,8 +19,8 @@ namespace auge
 		virtual ~WFeatureEngine();
 
 	public:
-		virtual WebResponse*	Execute(WebRequest* pWebRequest);
-		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 
 		virtual WebRequest*		ParseRequest(const char* url);

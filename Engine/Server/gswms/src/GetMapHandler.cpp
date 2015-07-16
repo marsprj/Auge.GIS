@@ -5,6 +5,7 @@
 #include "AugeService.h"
 #include "AugeXML.h"
 #include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -54,7 +55,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		GetMapRequest* pRequest = static_cast<GetMapRequest*>(pWebRequest);
@@ -80,7 +81,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GetMapRequest* pRequest = static_cast<GetMapRequest*>(pWebRequest);
 
@@ -95,7 +96,7 @@ namespace auge
 		}
 
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		Map *pMap = pCartoManager->LoadMap(mapName);
+		Map *pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 		if(pMap==NULL)
 		{
 			char msg[AUGE_MSG_MAX];

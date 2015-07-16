@@ -5,6 +5,7 @@
 #include "AugeService.h"
 #include "AugeXML.h"
 #include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -79,7 +80,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* WFSCapabilitiesHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* WFSCapabilitiesHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		WFSCapabilitiesRequest* pRequest = static_cast<WFSCapabilitiesRequest*>(pWebRequest);
@@ -105,18 +106,18 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* WFSCapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WFSCapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		WFSCapabilitiesRequest* pRequest = static_cast<WFSCapabilitiesRequest*>(pWebRequest);
 
 		if(pRequest->IsValidSource())
 		{
-			pWebResponse = ExecuteBySource(pRequest, pWebContext);
+			pWebResponse = ExecuteBySource(pRequest, pWebContext, pUser);
 		}
 		else
 		{
-			pWebResponse = ExecuteByMap(pRequest, pWebContext);
+			pWebResponse = ExecuteByMap(pRequest, pWebContext, pUser);
 		}
 
 		return pWebResponse;
@@ -153,7 +154,7 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	// ExecuteByMap
 	//////////////////////////////////////////////////////////////////////////
-	WebResponse* WFSCapabilitiesHandler::ExecuteByMap(WFSCapabilitiesRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WFSCapabilitiesHandler::ExecuteByMap(WFSCapabilitiesRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		const char* mapName = pWebRequest->GetMapName();
@@ -167,7 +168,7 @@ namespace auge
 		}
 
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		Map *pMap = pCartoManager->LoadMap(mapName);
+		Map *pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 		if(pMap==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -611,7 +612,7 @@ namespace auge
 		pxNode->SetChildText(pattrDataset->GetName());		
 	}
 	
-	WebResponse* WFSCapabilitiesHandler::ExecuteBySource(WFSCapabilitiesRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WFSCapabilitiesHandler::ExecuteBySource(WFSCapabilitiesRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		const char* sourceName = pWebRequest->GetSourceName();

@@ -3,6 +3,7 @@
 #include "DescribeMapResponse.h"
 #include "AugeCarto.h"
 #include "AugeService.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -45,7 +46,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* DescribeMapHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* DescribeMapHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		return NULL;
 
@@ -67,7 +68,7 @@ namespace auge
 		//return pWebResponse;
 	}
 
-	WebResponse* DescribeMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* DescribeMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		DescribeMapRequest* pRequest = static_cast<DescribeMapRequest*>(pWebRequest);		
@@ -76,7 +77,7 @@ namespace auge
 		const char* name = pRequest->GetName();
 		if(name==NULL)
 		{
-			EnumMap* pMaps = pCartoManager->GetMaps();
+			EnumMap* pMaps = pCartoManager->GetMaps(pUser->GetID());
 			DescribeMapResponse* pResponse = new DescribeMapResponse(pRequest);
 			pResponse->SetMaps(pMaps);
 			pResponse->SetWebContext(pWebContext);
@@ -84,7 +85,7 @@ namespace auge
 		}
 		else
 		{
-			Map* pMap = pCartoManager->LoadMap(name);
+			Map* pMap = pCartoManager->LoadMap(pUser->GetID(), name);
 			if(pMap==NULL)
 			{
 				GError* pError = augeGetErrorInstance();

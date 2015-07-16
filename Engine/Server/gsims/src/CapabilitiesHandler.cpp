@@ -51,12 +51,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		return new CapabilitiesResponse(static_cast<CapabilitiesRequest*>(pWebRequest));
 	}
 
-	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		return NULL;
 	}

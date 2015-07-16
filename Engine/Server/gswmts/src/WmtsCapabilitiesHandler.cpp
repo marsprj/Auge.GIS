@@ -71,7 +71,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* WmtsCapabilitiesHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* WmtsCapabilitiesHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		WmtsCapabilitiesRequest* pRequest = static_cast<WmtsCapabilitiesRequest*>(pWebRequest);
@@ -97,7 +97,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* WmtsCapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WmtsCapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		WmtsCapabilitiesRequest* pRequest = static_cast<WmtsCapabilitiesRequest*>(pWebRequest);

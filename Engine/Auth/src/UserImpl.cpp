@@ -40,6 +40,11 @@ namespace auge
 		return m_pRole;
 	}
 
+	bool UserImpl::IsAuthenticated()
+	{
+		return true;
+	}
+
 	void UserImpl::Release()
 	{
 		if(!ReleaseRef())

@@ -8,6 +8,7 @@
 #include "AugeCarto.h"
 #include "AugeCore.h"
 #include "AugeProcessor.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -50,12 +51,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* BuildPyramidHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* BuildPyramidHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		return NULL;
 	}
 
-	WebResponse* BuildPyramidHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* BuildPyramidHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		BuildPyramidRequest* pRequest = static_cast<BuildPyramidRequest*>(pWebRequest);
@@ -123,7 +124,7 @@ namespace auge
 
 		Map* pMap = NULL;
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		pMap = pCartoManager->LoadMap(mapName);
+		pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 		if(pMap==NULL)
 		{
 			char msg[AUGE_SQL_MAX];

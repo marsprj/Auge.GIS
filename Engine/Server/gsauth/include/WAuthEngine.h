@@ -16,8 +16,8 @@ namespace auge
 		virtual ~WAuthEngine();
 
 	public:
-		virtual WebResponse*	Execute(WebRequest* pWebRequest);
-		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 
 		virtual WebRequest*		ParseRequest(const char* url);
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi);

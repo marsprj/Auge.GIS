@@ -23,15 +23,15 @@ namespace auge
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi, const char* mapName);
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc, const char* mapName);
 
-		virtual WebResponse*	Execute(WebRequest* pWebRequest);
-		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 
 	private:
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 
 		//virtual WebRequest*		ParseRequest(rude::CGI& cgi, WebContext* pWebContext=NULL, Map* pMap=NULL);
 		//virtual WebRequest*		ParseRequest(XDocument* pxDoc, WebContext* pWebContext=NULL, Map* pMap=NULL);
-		//virtual WebResponse*	Execute(WebRequest* pWebRequest);
+		//virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 	};
 }

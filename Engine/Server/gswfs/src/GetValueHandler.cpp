@@ -4,6 +4,7 @@
 #include "GetMinMaxValueResponse.h"
 #include "AugeService.h"
 #include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -67,12 +68,12 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* GetValueHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetValueHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		return NULL;
 	}
 
-	WebResponse* GetValueHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetValueHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 		GetValueRequest* pRequest = static_cast<GetValueRequest*>(pWebRequest);
@@ -101,7 +102,7 @@ namespace auge
 			return pExpResponse;
 		}
 
-		FeatureClass* pFeatureClass = GetFeatureClass(pWebRequest, pWebContext);
+		FeatureClass* pFeatureClass = GetFeatureClass(pWebRequest, pWebContext, pUser);
 		if(pFeatureClass==NULL)
 		{
 			GError* pError = augeGetErrorInstance();
@@ -141,7 +142,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	//WebResponse* GetValueHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	//WebResponse* GetValueHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	//{
 	//	GetValueResponse* pWebResponse = NULL;
 	//	GetValueRequest*  pRequest = static_cast<GetValueRequest*>(pWebRequest);
@@ -158,7 +159,7 @@ namespace auge
 	//	}
 
 	//	CartoManager* pCartoManager = augeGetCartoManagerInstance();
-	//	Map *pMap = pCartoManager->LoadMap(mapName);
+	//	Map *pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 	//	if(pMap==NULL)
 	//	{
 	//		char msg[AUGE_MSG_MAX];
@@ -292,22 +293,22 @@ namespace auge
 	//	return pWebResponse;
 	//}
 
-	FeatureClass* GetValueHandler::GetFeatureClass(WebRequest* pWebRequest, WebContext* pWebContext)
+	FeatureClass* GetValueHandler::GetFeatureClass(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		FeatureClass* pFeatureClass = NULL;
 		WFeatureRequest* pRequest = static_cast<WFeatureRequest*>(pWebRequest);
 		if(pRequest->IsValidSource())
 		{
-			pFeatureClass = GetFeatureClassBySource(pWebRequest, pWebContext);
+			pFeatureClass = GetFeatureClassBySource(pWebRequest, pWebContext, pUser);
 		}
 		else
 		{
-			pFeatureClass = GetFeatureClassByMap(pWebRequest, pWebContext);
+			pFeatureClass = GetFeatureClassByMap(pWebRequest, pWebContext, pUser);
 		}
 		return pFeatureClass;
 	}
 
-	FeatureClass* GetValueHandler::GetFeatureClassByMap(WebRequest* pWebRequest, WebContext* pWebContext)
+	FeatureClass* GetValueHandler::GetFeatureClassByMap(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* typeName = NULL;
 		Layer* pLayer = NULL;
@@ -324,7 +325,7 @@ namespace auge
 		}
 
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		Map *pMap = pCartoManager->LoadMap(mapName);
+		Map *pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 		if(pMap==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -371,7 +372,7 @@ namespace auge
 		return pFeatureClass;
 	}
 
-	FeatureClass* GetValueHandler::GetFeatureClassBySource(WebRequest* pWebRequest, WebContext* pWebContext)
+	FeatureClass* GetValueHandler::GetFeatureClassBySource(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* typeName = NULL;
 		Layer* pLayer = NULL;

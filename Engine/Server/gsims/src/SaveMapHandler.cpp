@@ -49,7 +49,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* SaveMapHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* SaveMapHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{	
 		GLogger* pLogger = augeGetLoggerInstance();
 		SaveMapRequest* pRequest = static_cast<SaveMapRequest*>(pWebRequest);
@@ -95,8 +95,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* SaveMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* SaveMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

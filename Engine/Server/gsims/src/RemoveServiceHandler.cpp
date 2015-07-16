@@ -44,7 +44,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* RemoveServiceHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* RemoveServiceHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		Service* pService = NULL;
 		ServiceManager* pServiceManager = NULL;		
@@ -76,8 +76,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* RemoveServiceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* RemoveServiceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

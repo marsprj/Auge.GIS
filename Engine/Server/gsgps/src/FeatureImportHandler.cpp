@@ -46,7 +46,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* FeatureImportHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* FeatureImportHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		//FeaureImportRequest* pRequest = static_cast<FeaureImportRequest*>(pWebRequest);
@@ -72,7 +72,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* FeatureImportHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* FeatureImportHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GError* pError = augeGetErrorInstance();
 		GLogger* pLogger = augeGetLoggerInstance();

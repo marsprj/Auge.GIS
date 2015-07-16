@@ -45,7 +45,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* RegisterMapHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* RegisterMapHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		RegisterMapRequest* pRequest = static_cast<RegisterMapRequest*>(pWebRequest);
 
@@ -117,8 +117,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* RegisterMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* RegisterMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

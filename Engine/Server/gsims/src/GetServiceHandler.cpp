@@ -44,12 +44,12 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* GetServiceHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetServiceHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		return new GetServiceResponse(static_cast<GetServiceRequest*>(pWebRequest));
 	}
 
-	WebResponse* GetServiceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetServiceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		return NULL;
 	}

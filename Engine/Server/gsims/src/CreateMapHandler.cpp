@@ -2,6 +2,7 @@
 #include "CreateMapRequest.h"
 #include "AugeCarto.h"
 #include "AugeService.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -44,7 +45,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* CreateMapHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* CreateMapHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{	
 		CreateMapRequest* pRequest = static_cast<CreateMapRequest*>(pWebRequest);
 
@@ -59,7 +60,7 @@ namespace auge
 		Map* pMap = NULL;
 		CartoManager* pCartoManager = NULL;
 		pCartoManager = augeGetCartoManagerInstance();
-		pMap = pCartoManager->GetMap(name);
+		pMap = pCartoManager->LoadMap(pUser->GetID(), name);
 		if(pMap)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -93,8 +94,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* CreateMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* CreateMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

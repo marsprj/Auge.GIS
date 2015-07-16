@@ -45,7 +45,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* UnRegisterLayerHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* UnRegisterLayerHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		UnRegisterLayerRequest* pRequest = static_cast<UnRegisterLayerRequest*>(pWebRequest);
 
@@ -81,8 +81,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* UnRegisterLayerHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* UnRegisterLayerHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

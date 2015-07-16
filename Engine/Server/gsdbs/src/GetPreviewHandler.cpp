@@ -50,7 +50,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* GetPreviewHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetPreviewHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		GetPreviewRequest* pRequest = static_cast<GetPreviewRequest*>(pWebRequest);
 
@@ -106,9 +106,9 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* GetPreviewHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetPreviewHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 
 	WebResponse* GetPreviewHandler::DrawFeature(FeatureClass* pFeatureClass, GetPreviewRequest* pRequest)

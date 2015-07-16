@@ -60,7 +60,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* RasterExtractByRectangleHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* RasterExtractByRectangleHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		RasterExtractByRectangleRequest* pRequest = static_cast<RasterExtractByRectangleRequest*>(pWebRequest);
@@ -86,7 +86,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* RasterExtractByRectangleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* RasterExtractByRectangleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		RasterExtractByRectangleRequest* pRequest = static_cast<RasterExtractByRectangleRequest*>(pWebRequest);
 

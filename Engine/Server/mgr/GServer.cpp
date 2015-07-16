@@ -66,15 +66,43 @@ namespace auge
 
 			g_ulong ts = auge_get_time();
 
-			switch(GetMethod())
-			//switch(augeHttpPost)
+			const char* user_name = cgi["user"];
+			User* pUser = m_pUserManager->GetUser(user_name);
+			if(pUser==NULL)
 			{
-			case augeHttpGet:
-				pWebResponse = DoGet(cgi);
-				break;
-			case augeHttpPost:
-				pWebResponse = DoPost(cgi);
-				break;
+				char msg[AUGE_MSG_MAX];
+				g_sprintf(msg, "User [%s] is not registered", user_name);
+				pLogger->Error(msg, __FILE__, __LINE__);
+				auge::WebExceptionResponse *pExpResponse = NULL;
+				pExpResponse = auge::augeCreateWebExceptionResponse();
+				pExpResponse->SetMessage(msg);
+				pWebResponse = pExpResponse;
+			}
+			else
+			{
+				if(!pUser->IsAuthenticated())
+				{
+					char msg[AUGE_MSG_MAX];
+					g_sprintf(msg, "User [%s] is not authenticated", user_name);
+					pLogger->Error(msg, __FILE__, __LINE__);
+					auge::WebExceptionResponse *pExpResponse = NULL;
+					pExpResponse = auge::augeCreateWebExceptionResponse();
+					pExpResponse->SetMessage(msg);
+					pWebResponse = pExpResponse;
+				}
+				else
+				{	
+					switch(GetMethod())
+					//switch(augeHttpPost)
+					{
+					case augeHttpGet:
+						pWebResponse = DoGet(cgi, pUser);
+						break;
+					case augeHttpPost:
+						pWebResponse = DoPost(cgi, pUser);
+						break;
+					}
+				}
 			}
 
 			pWebResponse->Write(pWebWriter);
@@ -87,7 +115,7 @@ namespace auge
 		}
 	}
 
-	WebResponse* GServer::DoGet(rude::CGI& cgi)
+	WebResponse* GServer::DoGet(rude::CGI& cgi, User* pUser)
 	{
 		const char	*szService = NULL;
 		WebEngine	*pWebEngine = NULL;
@@ -127,14 +155,14 @@ namespace auge
 		}
 
 		auge::WebContext* pWebContext = auge::augeGetWebContextInstance();
-		pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext);
-		//pWebResponse = pWebEngine->Execute(pWebRequest,pWebContext);
+		pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, pUser);
+		//pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, pUser);
 		pWebRequest->Release();
 		
 		return pWebResponse;
 	}
 
-	WebResponse* GServer::DoPost(rude::CGI& cgi)
+	WebResponse* GServer::DoPost(rude::CGI& cgi, User* pUser)
 	{
 		const char	*service = NULL;
 		WebRequest	*pWebRequest = NULL;
@@ -296,7 +324,7 @@ namespace auge
 			}
 		}
 
-		pWebResponse = pWebEngine->Execute(pWebRequest,pWebContext);
+		pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, pUser);
 		pWebRequest->Release();
 
 		//pxDoc->Close();
@@ -391,7 +419,7 @@ namespace auge
 	//		return pWebResponse;
 	//	}
 
-	//	pWebResponse = pWebEngine->Execute(pWebRequest,pWebContext);
+	//	pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, pUser);
 	//	pWebRequest->Release();
 
 	//	//pxDoc->Close();
@@ -450,18 +478,18 @@ namespace auge
 	//		return pWebResponse;
 	//	}
 
-	//	pWebResponse = pWebEngine->Execute(pWebRequest);
+	//	pWebResponse = pWebEngine->Execute(pWebRequest, pUser);
 	//	pWebRequest->Release();
 
 	//	return pWebResponse;
 	//}
 
-	//WebResponse* GServer::Execute(WebRequest* pWebRequest)
+	//WebResponse* GServer::Execute(WebRequest* pWebRequest, User* pUser)
 	//{
 	//	WebEngine	*pWebEngine = NULL;
 
 	//	pWebEngine = augeGetWebEngineInstance();
-	//	return pWebEngine->Execute(pWebRequest);
+	//	return pWebEngine->Execute(pWebRequest, pUser);
 	//}
 
 	augeHttpMethodType GServer::GetMethod()

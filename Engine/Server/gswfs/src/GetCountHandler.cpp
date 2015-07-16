@@ -6,6 +6,7 @@
 #include "AugeXML.h"
 #include "AugeCarto.h"
 #include "AugeFeature.h" 
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -96,16 +97,16 @@ namespace auge
 	//	return pRequest;
 	//}
 
-	WebResponse* GetCountHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetCountHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		return NULL;
 	}
 
-	WebResponse* GetCountHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetCountHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GetCountRequest* pRequest = static_cast<GetCountRequest*>(pWebRequest);
 
-		FeatureClass* pFeatureClass = GetFeatureClass(pWebRequest, pWebContext);
+		FeatureClass* pFeatureClass = GetFeatureClass(pWebRequest, pWebContext, pUser);
 		if(pFeatureClass==NULL)
 		{
 			GError* pError = augeGetErrorInstance();
@@ -144,22 +145,22 @@ namespace auge
 		return pResponse;
 	}
 
-	FeatureClass* GetCountHandler::GetFeatureClass(WebRequest* pWebRequest, WebContext* pWebContext)
+	FeatureClass* GetCountHandler::GetFeatureClass(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		FeatureClass* pFeatureClass = NULL;
 		WFeatureRequest* pRequest = static_cast<WFeatureRequest*>(pWebRequest);
 		if(pRequest->IsValidSource())
 		{
-			pFeatureClass = GetFeatureClassBySource(pWebRequest, pWebContext);
+			pFeatureClass = GetFeatureClassBySource(pWebRequest, pWebContext, pUser);
 		}
 		else
 		{
-			pFeatureClass = GetFeatureClassByMap(pWebRequest, pWebContext);
+			pFeatureClass = GetFeatureClassByMap(pWebRequest, pWebContext, pUser);
 		}
 		return pFeatureClass;
 	}
 
-	FeatureClass* GetCountHandler::GetFeatureClassByMap(WebRequest* pWebRequest, WebContext* pWebContext)
+	FeatureClass* GetCountHandler::GetFeatureClassByMap(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* typeName = NULL;
 		Layer* pLayer = NULL;
@@ -176,7 +177,7 @@ namespace auge
 		}
 
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		Map *pMap = pCartoManager->LoadMap(mapName);
+		Map *pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 		if(pMap==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -223,7 +224,7 @@ namespace auge
 		return pFeatureClass;
 	}
 
-	FeatureClass* GetCountHandler::GetFeatureClassBySource(WebRequest* pWebRequest, WebContext* pWebContext)
+	FeatureClass* GetCountHandler::GetFeatureClassBySource(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* typeName = NULL;
 		Layer* pLayer = NULL;

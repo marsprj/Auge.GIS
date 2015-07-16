@@ -54,7 +54,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* CreateDataSetHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* CreateDataSetHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		CreateDataSetRequest* pRequest = static_cast<CreateDataSetRequest*>(pWebRequest);
 		const char* sourceName = pRequest->GetSourceName();
@@ -130,9 +130,9 @@ namespace auge
 		return pSussResponse;
 	}
 
-	WebResponse* CreateDataSetHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* CreateDataSetHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		//return Execute(pWebRequest);
+		//return Execute(pWebRequest, pUser);
 		return NULL;
 	}
 }

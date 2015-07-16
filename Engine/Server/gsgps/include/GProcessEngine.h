@@ -24,15 +24,15 @@ namespace auge
 		virtual ~GeoProcessingEngine();
 
 	public:
-		virtual WebResponse*	Execute(WebRequest* pWebRequest);
-		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 
 		virtual WebRequest*		ParseRequest(const char* url);
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi);
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi, const char* mapName);
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc, const char* mapName);
 
-		//virtual WebResponse*	Execute(WebRequest* pWebRequest);
+		//virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 
 		//virtual WebRequest*		ParseRequest(const char* url);

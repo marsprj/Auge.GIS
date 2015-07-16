@@ -264,7 +264,7 @@ namespace auge
 	//	return handler->ParseRequest(pxDoc, pWebContext, pMap);
 	//}
 
-	WebResponse* WFeatureEngine::Execute(WebRequest* pWebRequest)
+	WebResponse* WFeatureEngine::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse	*pWebResponse = NULL;
 
@@ -280,10 +280,10 @@ namespace auge
 			pExpResopnse->SetMessage(msg);
 			return pExpResopnse;
 		}
-		return handler->Execute(pWebRequest);
+		return handler->Execute(pWebRequest, pUser);
 	}
 
-	WebResponse* WFeatureEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WFeatureEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
@@ -298,6 +298,6 @@ namespace auge
 			return pExpResopnse;
 		}
 		
-		return handler->Execute(pWebRequest, pWebContext);
+		return handler->Execute(pWebRequest, pWebContext, pUser);
 	}
 }

@@ -60,7 +60,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* FeatureProjectHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* FeatureProjectHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		FeatureProjectRequest* pRequest = static_cast<FeatureProjectRequest*>(pWebRequest);
@@ -86,7 +86,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* FeatureProjectHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* FeatureProjectHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		FeatureProjectRequest* pRequest = static_cast<FeatureProjectRequest*>(pWebRequest);
 

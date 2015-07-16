@@ -77,12 +77,12 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* GetGmlObjectHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetGmlObjectHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		return NULL;
 	}
 
-	WebResponse* GetGmlObjectHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetGmlObjectHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GetGmlObjectRequest* pRequest = static_cast<GetGmlObjectRequest*>(pWebRequest);
 

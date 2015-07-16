@@ -61,14 +61,14 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* GetTileHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetTileHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 
 		return pWebResponse;
 	}
 
-	WebResponse* GetTileHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetTileHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		GetTileRequest* pRequest = static_cast<GetTileRequest*>(pWebRequest);

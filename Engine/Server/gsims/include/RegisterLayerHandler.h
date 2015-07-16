@@ -24,8 +24,8 @@ namespace auge
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi, const char* mapName);
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc, const char* mapName);
 
-		virtual WebResponse*	Execute(WebRequest* pWebRequest);
-		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 
 	private:
 		WebResponse*	RegisterFeatureLayer(RegisterLayerRequest* pRequest, Map* pMap);

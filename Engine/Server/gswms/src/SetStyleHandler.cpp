@@ -3,6 +3,7 @@
 #include "AugeService.h"
 #include "AugeData.h"
 #include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -51,12 +52,12 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* SetStyleHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* SetStyleHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		return NULL;
 	}
 
-	WebResponse* SetStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* SetStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		SetStyleRequest* pRequest = static_cast<SetStyleRequest*>(pWebRequest);
 
@@ -71,7 +72,7 @@ namespace auge
 		}
 
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		Map *pMap = pCartoManager->LoadMap(mapName);
+		Map *pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 		if(pMap==NULL)
 		{
 			char msg[AUGE_MSG_MAX];

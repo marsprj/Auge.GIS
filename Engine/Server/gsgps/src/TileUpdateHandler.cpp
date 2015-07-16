@@ -7,6 +7,7 @@
 #include "AugeTile.h"
 #include "AugeCarto.h"
 #include "AugeCore.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -49,7 +50,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* UpdateTileHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* UpdateTileHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		return NULL;
 		//WebResponse* pWebResponse = NULL;
@@ -76,7 +77,7 @@ namespace auge
 		//return pWebResponse;
 	}
 
-	WebResponse* UpdateTileHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* UpdateTileHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		UpdateTileRequest* pRequest = static_cast<UpdateTileRequest*>(pWebRequest);
@@ -127,7 +128,7 @@ namespace auge
 
 		Map* pMap = NULL;
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		pMap = pCartoManager->LoadMap(mapName);
+		pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 		if(pMap==NULL)
 		{
 			char msg[AUGE_SQL_MAX];

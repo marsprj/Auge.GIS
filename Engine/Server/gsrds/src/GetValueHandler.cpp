@@ -49,14 +49,14 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* GetValueHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetValueHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		GetValueRequest* pRequest = static_cast<GetValueRequest*>(pWebRequest);
 		WebResponse* pWebResponse = NULL;
 		return pWebResponse;
 	}
 
-	WebResponse* GetValueHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetValueHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 		GetValueRequest* pRequest = static_cast<GetValueRequest*>(pWebRequest);

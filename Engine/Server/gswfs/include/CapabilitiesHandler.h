@@ -31,11 +31,11 @@ namespace auge
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc, const char* mapName);
 		//virtual WebRequest*		ParseRequest(XDocument* pxDoc, WebContext* pWebContext=NULL, Map* pMap=NULL);
 
-		virtual WebResponse*	Execute(WebRequest* pWebRequest);
-		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 	private:
-		WebResponse*			ExecuteByMap(WFSCapabilitiesRequest* pWebRequest, WebContext* pWebContext);
+		WebResponse*				ExecuteByMap(WFSCapabilitiesRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 		WFSCapabilitiesResponse*	WriteCapabilities_1_0_0(WFSCapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
 		WFSCapabilitiesResponse*	WriteCapabilities_1_1_0(WFSCapabilitiesRequest* pRequest, WebContext* pWebContext, Map* pMap);
 
@@ -52,7 +52,7 @@ namespace auge
 		void					AddAttributeDatasetsNode_1_1_0(XElement* pxParent, const char* name, AttributeDataSet* pattrDataset);
 		
 
-		WebResponse*			ExecuteBySource(WFSCapabilitiesRequest* pWebRequest, WebContext* pWebContext);
+		WebResponse*			ExecuteBySource(WFSCapabilitiesRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 	};
 }
 

@@ -44,7 +44,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* UnRegisterDataSourceHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* UnRegisterDataSourceHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		const char* name = NULL;
 		WebResponse* pWebResponse = NULL;
@@ -73,8 +73,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* UnRegisterDataSourceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* UnRegisterDataSourceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

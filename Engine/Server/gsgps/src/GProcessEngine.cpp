@@ -313,7 +313,7 @@ namespace auge
 		return handler->ParseRequest(pxDoc, mapName);
 	}
 
-	WebResponse* GeoProcessingEngine::Execute(WebRequest* pWebRequest)
+	WebResponse* GeoProcessingEngine::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
@@ -323,10 +323,10 @@ namespace auge
 			g_sprintf(msg, "Request %s is not supported", request);
 		}
 				
-		return handler->Execute(pWebRequest);
+		return handler->Execute(pWebRequest, pUser);
 	}
 
-	/*WebResponse* GeoProcessingEngine::Execute(WebRequest* pWebRequest)
+	/*WebResponse* GeoProcessingEngine::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse		*pWebResponse = NULL;
 
@@ -373,7 +373,7 @@ namespace auge
 		return pWebResponse;
 	}*/
 
-	WebResponse* GeoProcessingEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GeoProcessingEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
@@ -383,7 +383,7 @@ namespace auge
 			g_sprintf(msg, "Request %s is not supported", request);
 		}
 
-		return handler->Execute(pWebRequest,pWebContext);
+		return handler->Execute(pWebRequest, pWebContext, pUser);
 	}
 
 	//WebResponse* GeoProcessingEngine::GetCapabilities(CapabilitiesRequest* pRequest)

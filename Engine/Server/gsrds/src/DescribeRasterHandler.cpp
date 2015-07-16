@@ -47,14 +47,14 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* DescribeRasterHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* DescribeRasterHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		DescribeRasterRequest* pRequest = static_cast<DescribeRasterRequest*>(pWebRequest);
 		WebResponse* pWebResponse = NULL;
 		return pWebResponse;
 	}
 
-	WebResponse* DescribeRasterHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* DescribeRasterHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 		DescribeRasterRequest* pRequest = static_cast<DescribeRasterRequest*>(pWebRequest);

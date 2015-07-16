@@ -53,7 +53,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* GetColorMapHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetColorMapHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		GetColorMapRequest* pRequest = static_cast<GetColorMapRequest*>(pWebRequest);
@@ -88,7 +88,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* GetColorMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetColorMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		GetColorMapRequest* pRequest = static_cast<GetColorMapRequest*>(pWebRequest);

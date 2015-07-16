@@ -228,7 +228,7 @@ namespace auge
 	//	return handler->ParseRequest(pxDoc, pWebContext, pMap);
 	//}
 
-	WebResponse* WRasterEngine::Execute(WebRequest* pWebRequest)
+	WebResponse* WRasterEngine::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse	*pWebResponse = NULL;
 
@@ -244,10 +244,10 @@ namespace auge
 			pExpResopnse->SetMessage(msg);
 			return pExpResopnse;
 		}
-		return handler->Execute(pWebRequest);
+		return handler->Execute(pWebRequest, pUser);
 	}
 
-	WebResponse* WRasterEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WRasterEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
@@ -262,6 +262,6 @@ namespace auge
 			return pExpResopnse;
 		}
 
-		return handler->Execute(pWebRequest, pWebContext);
+		return handler->Execute(pWebRequest, pWebContext, pUser);
 	}
 }

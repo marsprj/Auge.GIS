@@ -18,6 +18,7 @@
 namespace auge
 {
 	class Map;
+	class User;
 	class WebRequest;
 	class WebResponse;
 	class WebWriter;
@@ -62,8 +63,8 @@ namespace auge
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc, const char* mapName) = 0;
 		//virtual WebRequest*		ParseRequest(XDocument* pxDoc, WebContext* pWebContext=NULL, Map* pMap=NULL) = 0;
 
-		virtual WebResponse*	Execute(WebRequest* pWebRequest) = 0;
-		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext) = 0;
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser) = 0;
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser) = 0;
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap) = 0;
 	};
 
@@ -74,15 +75,13 @@ namespace auge
 		virtual ~WebEngine(){}
 
 	public:
-		virtual WebResponse*	Execute(WebRequest* pWebRequest) = 0;
-		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext) = 0;
-		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap) = 0;
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser) = 0;
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser) = 0;
 
 		virtual WebRequest*		ParseRequest(const char* url) = 0;
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi) = 0;
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi, const char* mapName) = 0;
 
-		//virtual WebRequest*		ParseRequest(rude::CGI& cgi, WebContext* pWebContext=NULL, Map* pMap=NULL) = 0;
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc, const char* mapName) = 0;
 
 	public:

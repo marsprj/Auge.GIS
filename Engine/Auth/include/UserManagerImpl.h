@@ -2,6 +2,7 @@
 #define __AUGE_USER_MANAGER_IMPL_H__
 
 #include "AugeUser.h"
+#include "UserImpl.h"
 
 namespace auge
 {
@@ -28,7 +29,8 @@ namespace auge
 		RESULTCODE InitUserTable();
 
 	private:
-		GConnection*	m_pConnection;
+		GConnection	*m_pConnection;
+		UserImpl	*m_pUser;	
 	};
 }
 

@@ -59,7 +59,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* GeoProcessingCapabilitiesHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GeoProcessingCapabilitiesHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		GeoProcessingCapabilitiesRequest* pRequest = static_cast<GeoProcessingCapabilitiesRequest*>(pWebRequest);
@@ -85,7 +85,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* GeoProcessingCapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GeoProcessingCapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		GeoProcessingCapabilitiesRequest* pRequest = static_cast<GeoProcessingCapabilitiesRequest*>(pWebRequest);

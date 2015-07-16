@@ -54,7 +54,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* GetFeatureInfoHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetFeatureInfoHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		GetFeatureInfoRequest* pRequest = static_cast<GetFeatureInfoRequest*>(pWebRequest);
@@ -80,7 +80,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* GetFeatureInfoHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetFeatureInfoHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		//GetFeatureInfoRequest* pRequest = static_cast<GetFeatureInfoRequest*>(pWebRequest);
 

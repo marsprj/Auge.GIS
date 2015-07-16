@@ -31,8 +31,8 @@ namespace auge
 		//virtual WebRequest*		ParseRequest(rude::CGI& cgi, WebContext* pWebContext=NULL, Map* pMap=NULL);
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc, const char* mapName);
 		//virtual WebRequest*		ParseRequest(XDocument* pxDoc, WebContext* pWebContext=NULL, Map* pMap=NULL);
-		virtual WebResponse*	Execute(WebRequest* pWebRequest);
-		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
+		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 
 	private:
@@ -53,8 +53,8 @@ namespace auge
 		GValue*			CreateValue(XNode* pxNode, GField* pField);
 
 	private:
-		WebResponse*	ExecuteByMap(WebRequest* pWebRequest, WebContext* pWebContext);
-		WebResponse*	ExecuteBySource(WebRequest* pWebRequest, WebContext* pWebContext);
+		WebResponse*	ExecuteByMap(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
+		WebResponse*	ExecuteBySource(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 	};
 }
 

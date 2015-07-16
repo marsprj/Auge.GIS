@@ -45,7 +45,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* RemoveStyleHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* RemoveStyleHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		RemoveStyleRequest* pRequest = static_cast<RemoveStyleRequest*>(pWebRequest);
 		WebResponse* pWebResponse = NULL;
@@ -71,8 +71,8 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* RemoveStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* RemoveStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

@@ -47,7 +47,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* GetDataSetHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetDataSetHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		GetDataSetRequest* pRequest = static_cast<GetDataSetRequest*>(pWebRequest);
 
@@ -122,8 +122,8 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* GetDataSetHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetDataSetHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

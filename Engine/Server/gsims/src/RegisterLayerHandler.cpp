@@ -3,6 +3,7 @@
 #include "AugeService.h"
 #include "AugeData.h"
 #include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -45,7 +46,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* RegisterLayerHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* RegisterLayerHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		RegisterLayerRequest* pRequest = static_cast<RegisterLayerRequest*>(pWebRequest);
 
@@ -80,7 +81,7 @@ namespace auge
 		CartoManager* pCartoManager = NULL;
 		pCartoManager = augeGetCartoManagerInstance();
 		
-		pMap = pCartoManager->LoadMap(mapName);
+		pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 		if(pMap==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -138,9 +139,9 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* RegisterLayerHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* RegisterLayerHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 
 	WebResponse* RegisterLayerHandler::RegisterFeatureLayer(RegisterLayerRequest* pRequest, Map* pMap)

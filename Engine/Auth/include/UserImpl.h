@@ -20,6 +20,9 @@ namespace auge
 		virtual const char*		GetPassword();
 		virtual const char*		GetEmail();
 		virtual Role*			GetRole();
+
+		virtual bool			IsAuthenticated();
+
 		virtual void			Release();
 
 	public:

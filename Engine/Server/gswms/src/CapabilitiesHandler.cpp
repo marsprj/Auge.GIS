@@ -7,6 +7,7 @@
 #include "AugeCarto.h"
 #include "AugeFeature.h"
 #include "AugeField.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -64,7 +65,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
@@ -90,7 +91,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		CapabilitiesRequest* pRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
@@ -106,7 +107,7 @@ namespace auge
 		}
 
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		Map *pMap = pCartoManager->LoadMap(mapName);
+		Map *pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 		if(pMap==NULL)
 		{
 			char msg[AUGE_MSG_MAX];

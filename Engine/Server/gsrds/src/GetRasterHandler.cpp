@@ -52,14 +52,14 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* GetRasterHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetRasterHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		GetRasterRequest* pRequest = static_cast<GetRasterRequest*>(pWebRequest);
 		WebResponse* pWebResponse = NULL;
 		return pWebResponse;
 	}
 
-	WebResponse* GetRasterHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetRasterHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 		GetRasterRequest* pRequest = static_cast<GetRasterRequest*>(pWebRequest);
@@ -174,7 +174,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	//WebResponse* GetRasterHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	//WebResponse* GetRasterHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	//{
 	//	GLogger* pLogger = augeGetLoggerInstance();
 	//	GetRasterRequest* pRequest = static_cast<GetRasterRequest*>(pWebRequest);

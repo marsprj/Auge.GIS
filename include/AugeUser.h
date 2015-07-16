@@ -61,6 +61,9 @@ namespace auge
 		virtual const char*		GetPassword() = 0;
 		virtual const char*		GetEmail() = 0;
 		virtual Role*			GetRole() = 0;
+
+		virtual bool			IsAuthenticated() = 0;
+
 		virtual void			Release() = 0;
 	};
 

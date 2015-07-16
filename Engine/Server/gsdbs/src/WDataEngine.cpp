@@ -261,7 +261,7 @@ namespace auge
 		return handler->ParseRequest(pxDoc, mapName);
 	}
 
-	WebResponse* WDataEngine::Execute(WebRequest* pWebRequest)
+	WebResponse* WDataEngine::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
@@ -271,10 +271,10 @@ namespace auge
 			g_sprintf(msg, "Request %s is not supported", request);
 		}
 				
-		return handler->Execute(pWebRequest);
+		return handler->Execute(pWebRequest, pUser);
 	}
 
-	/*WebResponse* WDataEngine::Execute(WebRequest* pWebRequest)
+	/*WebResponse* WDataEngine::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse		*pWebResponse = NULL;
 
@@ -321,9 +321,9 @@ namespace auge
 		return pWebResponse;
 	}*/
 
-	WebResponse* WDataEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WDataEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 
 	//WebResponse* WDataEngine::GetCapabilities(CapabilitiesRequest* pRequest)

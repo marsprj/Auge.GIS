@@ -50,14 +50,14 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* RemoveRasterHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* RemoveRasterHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		RemoveRasterRequest* pRequest = static_cast<RemoveRasterRequest*>(pWebRequest);
 		WebResponse* pWebResponse = NULL;
 		return pWebResponse;
 	}
 
-	WebResponse* RemoveRasterHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* RemoveRasterHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 		RemoveRasterRequest* pRequest = static_cast<RemoveRasterRequest*>(pWebRequest);

@@ -44,7 +44,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* GetFontHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetFontHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		char path[AUGE_PATH_MAX] = {0};
 		char cdir[AUGE_PATH_MAX] = {0};
@@ -67,8 +67,8 @@ namespace auge
 		return pResponse;
 	}
 
-	WebResponse* GetFontHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetFontHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

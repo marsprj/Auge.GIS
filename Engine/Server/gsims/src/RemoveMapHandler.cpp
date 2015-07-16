@@ -2,6 +2,7 @@
 #include "RemoveMapRequest.h"
 #include "AugeService.h"
 #include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -44,13 +45,13 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* RemoveMapHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* RemoveMapHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{				
 		RemoveMapRequest* pRequest = static_cast<RemoveMapRequest*>(pWebRequest);
 
 		const char* name = pRequest->GetName();
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		Map* pMap = pCartoManager->GetMap(name);
+		Map* pMap = pCartoManager->GetMap(pUser->GetID(), name);
 		if(pMap==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -76,8 +77,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* RemoveMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* RemoveMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

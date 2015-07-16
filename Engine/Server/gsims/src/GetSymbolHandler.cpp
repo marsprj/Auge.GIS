@@ -46,12 +46,12 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* GetSymbolHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetSymbolHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		return NULL;
 	}
 
-	WebResponse* GetSymbolHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetSymbolHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GError	*pError  = augeGetErrorInstance();
 		GLogger	*pLogger = augeGetLoggerInstance();

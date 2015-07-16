@@ -49,7 +49,7 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* CentroidHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* CentroidHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		CentroidRequest* pRequest = static_cast<CentroidRequest*>(pWebRequest);
@@ -75,7 +75,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* CentroidHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* CentroidHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 		CentroidRequest* pRequest = static_cast<CentroidRequest*>(pWebRequest);
@@ -142,7 +142,7 @@ namespace auge
 		//}
 
 		//CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		//Map *pMap = pCartoManager->LoadMap(mapName);
+		//Map *pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 		//if(pMap==NULL)
 		//{
 		//	char msg[AUGE_MSG_MAX];

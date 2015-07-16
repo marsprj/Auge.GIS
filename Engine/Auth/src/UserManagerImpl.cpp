@@ -19,11 +19,12 @@ namespace auge
 	UserManagerImpl::UserManagerImpl()
 	{
 		m_pConnection = NULL;
+		m_pUser = new UserImpl();
 	}
 
 	UserManagerImpl::~UserManagerImpl()
 	{
-
+		m_pUser->Release();
 	}
 
 	User* UserManagerImpl::CreateUser(const char* name, const char* alias, const char* password, const char* email, const char* role)
@@ -91,6 +92,16 @@ namespace auge
 		g_sprintf(sql, "delete from g_user where name='%s'",name);
 		return m_pConnection->ExecuteSQL(sql);
 	}
+
+	//User* UserManagerImpl::GetUser(const char* name)
+	//{
+	//	if(name==NULL)
+	//	{
+	//		return NULL;
+	//	}
+	//	m_pUser->SetName(name);
+	//	return m_pUser;
+	//}
 
 	User* UserManagerImpl::GetUser(const char* name)
 	{

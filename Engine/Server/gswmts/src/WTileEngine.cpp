@@ -179,7 +179,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* WTileEngine::Execute(WebRequest* pWebRequest)
+	WebResponse* WTileEngine::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse	*pWebResponse = NULL;
 
@@ -196,10 +196,10 @@ namespace auge
 			return pExpResopnse;
 
 		}
-		return handler->Execute(pWebRequest);
+		return handler->Execute(pWebRequest, pUser);
 	}
 
-	WebResponse* WTileEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WTileEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
@@ -213,7 +213,7 @@ namespace auge
 			pExpResopnse->SetMessage(msg);
 			return pExpResopnse;
 		}
-		return handler->Execute(pWebRequest, pWebContext);
+		return handler->Execute(pWebRequest, pWebContext, pUser);
 	}
 
 	//WebResponse* WTileEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
@@ -235,7 +235,7 @@ namespace auge
 	//		if(mapName!=NULL)
 	//		{
 	//			CartoManager* pCartoManager = augeGetCartoManagerInstance();
-	//			pMap = pCartoManager->LoadMap(mapName);
+	//			pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 	//		}
 	//	}
 	//	else

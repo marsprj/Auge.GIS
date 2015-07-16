@@ -44,7 +44,7 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* TryConnectionHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* TryConnectionHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		const char* name = NULL;
 		const char* engine = NULL;
@@ -85,8 +85,8 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* TryConnectionHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* TryConnectionHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

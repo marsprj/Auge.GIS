@@ -44,13 +44,13 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* GetDataSourceHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* GetDataSourceHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		return new GetDataSourceResponse(static_cast<GetDataSourceRequest*>(pWebRequest));
 	}
 
-	WebResponse* GetDataSourceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* GetDataSourceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest);
+		return Execute(pWebRequest, pUser);
 	}
 }

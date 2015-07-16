@@ -7,6 +7,7 @@
 #include "AugeCarto.h"
 #include "AugeFeature.h" 
 #include "AugeField.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -62,27 +63,27 @@ namespace auge
 	//	return pRequest;
 	//}
 
-	WebResponse* TransactionHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* TransactionHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		return NULL;
 	}
 
-	WebResponse* TransactionHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* TransactionHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		WebResponse *pWebResponse = NULL;
 		WFeatureRequest* pRequest = static_cast<WFeatureRequest*>(pWebRequest);
 		if(pRequest->IsValidSource())
 		{
-			pWebResponse = ExecuteBySource(pWebRequest, pWebContext);
+			pWebResponse = ExecuteBySource(pWebRequest, pWebContext, pUser);
 		}
 		else
 		{
-			pWebResponse = ExecuteByMap(pWebRequest, pWebContext);
+			pWebResponse = ExecuteByMap(pWebRequest, pWebContext, pUser);
 		}
 		return pWebResponse;
 	}
 
-	WebResponse* TransactionHandler::ExecuteByMap(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* TransactionHandler::ExecuteByMap(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GLogger *pLogger = augeGetLoggerInstance();
 
@@ -99,7 +100,7 @@ namespace auge
 		}
 
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		Map *pMap = pCartoManager->LoadMap(mapName);
+		Map *pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
 		if(pMap==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -145,7 +146,7 @@ namespace auge
 		return pResponse;
 	}
 
-	WebResponse* TransactionHandler::ExecuteBySource(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* TransactionHandler::ExecuteBySource(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GLogger *pLogger = augeGetLoggerInstance();
 
