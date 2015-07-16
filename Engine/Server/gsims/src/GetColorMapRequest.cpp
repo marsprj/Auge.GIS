@@ -9,7 +9,7 @@ namespace auge
 	m_version("1.0.0"),
 		m_mime_type("text/xml"),
 		m_encoding(AUGE_DEFAULT_ENCODING),
-		m_count(2),
+		m_count(0),
 		m_id(-1),
 		m_host(DEFAULT_HOST),
 		m_request_method(DEFAULT_METHOD)
@@ -138,7 +138,7 @@ namespace auge
 	{
 		if(count==NULL)
 		{
-			m_count = 2;
+			m_count = 0;
 		}
 		else
 		{
@@ -148,7 +148,7 @@ namespace auge
 			}
 			else
 			{
-				m_count = 2;
+				m_count = 0;
 			}
 		}
 	}
