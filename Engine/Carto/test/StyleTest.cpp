@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(StyleTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(StyleTest);
 
 auge::Map*	CreateMapObj();
 auge::Style* LoadSLD(const char* path);
@@ -104,7 +104,8 @@ void StyleTest::ReadSLD()
 	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\polygon.xml";
 	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\line.xml";
 	//const char* path = "/home/renyc/code/auge.gis/Engine/Carto/sld/line.xml";
-	const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_theme_2.xml";
+	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_theme_2.xml";
+	const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_star.xml";
 
 	auge::CartoFactory* pCartoFactory = NULL;
 	pCartoFactory = auge::augeGetCartoFactoryInstance();
@@ -126,14 +127,13 @@ void StyleTest::ReadSLD()
 	pxDoc = writer->Write(pStyle);
 	writer->Release();
 
-	//pxDoc->Save("g:\\temp\\map\\sld.xml", "GBK", 1);
-	pxDoc->Save("/home/renyc/map/sld.xml", "GBK", 1);
+	pxDoc->Save("g:\\temp\\map\\sld.xml", "GBK", 1);
+	//pxDoc->Save("/home/renyc/map/sld.xml", "GBK", 1);
 	pxDoc->Release();
 
 	AUGE_SAFE_RELEASE(pStyle);
 	AUGE_SAFE_RELEASE(reader);
 }
-
 
 auge::Style* LoadSLD(const char* path)
 {

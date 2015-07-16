@@ -1,5 +1,7 @@
 #include "AugeStyle.h"
 #include "PointSymbolizerImpl.h"
+#include "StrokeImpl.h"
+#include "FillImpl.h"
 
 #include "stdlib.h"
 #include "string.h"
@@ -7,8 +9,6 @@
 namespace auge
 {
 	PointSymbolizerImpl::PointSymbolizerImpl():
-	m_pStroke(NULL),
-		m_pFill(NULL),
 		m_pGraphic(NULL),
 		m_opacity(0.0f),
 		m_size(1.0f),
@@ -16,6 +16,8 @@ namespace auge
 		m_mark_type(augeMarkerCircle)
 	{
 		m_pMarker = NULL;
+		m_pStroke = new StrokeImpl();
+		m_pFill = new FillImpl();
 	}
 
 	PointSymbolizerImpl::~PointSymbolizerImpl()

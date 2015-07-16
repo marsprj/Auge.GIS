@@ -57,11 +57,11 @@ namespace auge
 		auge::PointSymbolizer* pPointSymbolizer = NULL;
 		pPointSymbolizer = new PointSymbolizerImpl();
 
-		auge::Fill *pFill = new FillImpl();
-		pPointSymbolizer->SetFill(pFill);
+		//auge::Fill *pFill = new FillImpl();
+		//pPointSymbolizer->SetFill(pFill);
 
-		auge::Stroke *pStroke = new StrokeImpl();
-		pPointSymbolizer->SetStroke(pStroke);
+		//auge::Stroke *pStroke = new StrokeImpl();
+		//pPointSymbolizer->SetStroke(pStroke);
 
 		return pPointSymbolizer;
 	}
@@ -315,9 +315,9 @@ namespace auge
 
 		PointSymbolizer *pPointSymbolizer = NULL;
 		pPointSymbolizer = new PointSymbolizerImpl();
-		pPointSymbolizer->SetFill(pFill);
-		pPointSymbolizer->SetStroke(pStroke);
-		pPointSymbolizer->SetSize(3.0f);
+		//pPointSymbolizer->SetFill(pFill);
+		//pPointSymbolizer->SetStroke(pStroke);
+		//pPointSymbolizer->SetSize(3.0f);
 		pPointSymbolizer->SetGeometry("SHAPE");
 
 		return pPointSymbolizer;

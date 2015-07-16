@@ -161,30 +161,73 @@ namespace auge
 		XElement *pxNode = NULL;
 		XElement *pxSymbolizer = NULL;
 		pxSymbolizer = pxRule->AddChild("PointSymbolizer", "sld");
-		
+
 		XElement *pxGraphic = NULL;
 		pxGraphic = pxSymbolizer->AddChild("Graphic", "sld");
 		XElement *pxMark = NULL;
 		pxMark = pxGraphic->AddChild("Mark", "sld");
-		Fill* pFill = pSymbolizer->GetFill();
+
+		MarkerSymbol* pMarker = pSymbolizer->GetMarker();
+		if(pMarker==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		// WellKnownName
+		const char* wellKnownName = pMarker->GetName();
+		XElement* pxWellKnownName = pxMark->AddChild("WellKnownName", "sld");
+		pxWellKnownName->SetChildText(wellKnownName);
+
+		Fill* pFill = pMarker->GetFill();
 		if(pFill!=NULL)
 		{
 			XElement *pxFill = pxMark->AddChild("Fill", "sld");
 			WriteFill(pxFill, pFill);
 		}
-		Stroke* pStroke = pSymbolizer->GetStroke();
+		Stroke* pStroke = pMarker->GetStroke();
 		if(pStroke!=NULL)
 		{
 			XElement *pxStroke = pxMark->AddChild("Stroke", "sld");
 			WriteStroke(pxStroke, pStroke);
 		}
 		char buffer[AUGE_NAME_MAX] = {0};
-		g_sprintf(buffer, "%f", pSymbolizer->GetSize());
+		g_sprintf(buffer, "%f", pMarker->GetSize());
 		pxNode = pxGraphic->AddChild("Size", NULL);
 		pxNode->AddChildText(buffer);
 
 		return AG_SUCCESS;
 	}
+
+	// @ deprecated
+	//RESULTCODE StyleWriter_1_0_0::WriteSymbolizer(XElement* pxRule, PointSymbolizer* pSymbolizer)
+	//{
+	//	XElement *pxNode = NULL;
+	//	XElement *pxSymbolizer = NULL;
+	//	pxSymbolizer = pxRule->AddChild("PointSymbolizer", "sld");
+	//	
+	//	XElement *pxGraphic = NULL;
+	//	pxGraphic = pxSymbolizer->AddChild("Graphic", "sld");
+	//	XElement *pxMark = NULL;
+	//	pxMark = pxGraphic->AddChild("Mark", "sld");
+	//	Fill* pFill = pSymbolizer->GetFill();
+	//	if(pFill!=NULL)
+	//	{
+	//		XElement *pxFill = pxMark->AddChild("Fill", "sld");
+	//		WriteFill(pxFill, pFill);
+	//	}
+	//	Stroke* pStroke = pSymbolizer->GetStroke();
+	//	if(pStroke!=NULL)
+	//	{
+	//		XElement *pxStroke = pxMark->AddChild("Stroke", "sld");
+	//		WriteStroke(pxStroke, pStroke);
+	//	}
+	//	char buffer[AUGE_NAME_MAX] = {0};
+	//	g_sprintf(buffer, "%f", pSymbolizer->GetSize());
+	//	pxNode = pxGraphic->AddChild("Size", NULL);
+	//	pxNode->AddChildText(buffer);
+
+	//	return AG_SUCCESS;
+	//}
 
 	RESULTCODE StyleWriter_1_0_0::WriteSymbolizer(XElement* pxRule, LineSymbolizer* pSymbolizer)
 	{

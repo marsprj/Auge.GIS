@@ -181,71 +181,72 @@ namespace auge
 
 	void RendererCairo::DrawGraphicPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation)
 	{
-		Graphic* pGraphic = pSymbolizer->GetGraphic(); 
-		ExternalGraphic* pExternalGraphic = pGraphic->GetExternalGraphic();
-		if(pExternalGraphic!=NULL)
-		{
-			const char* resource = pExternalGraphic->GetResource();
-			if(resource)
-			{
-				cairo_surface_t *image = cairo_image_surface_create_from_png(resource);
-				if(image!=NULL)
-				{
-					int sx=0, sy=0;
-					float size = pSymbolizer->GetSize();					
-					pTransformation->ToScreenPoint(pWKBPoint->point.x, pWKBPoint->point.y, sx, sy);
+		//Graphic* pGraphic = pSymbolizer->GetGraphic(); 
+		//ExternalGraphic* pExternalGraphic = pGraphic->GetExternalGraphic();
+		//if(pExternalGraphic!=NULL)
+		//{
+		//	const char* resource = pExternalGraphic->GetResource();
+		//	if(resource)
+		//	{
+		//		cairo_surface_t *image = cairo_image_surface_create_from_png(resource);
+		//		if(image!=NULL)
+		//		{
+		//			int sx=0, sy=0;
+		//			float size = pSymbolizer->GetSize();					
+		//			pTransformation->ToScreenPoint(pWKBPoint->point.x, pWKBPoint->point.y, sx, sy);
 
-					int w = cairo_image_surface_get_width(image);
-					int h = cairo_image_surface_get_height(image);
+		//			int w = cairo_image_surface_get_width(image);
+		//			int h = cairo_image_surface_get_height(image);
 
-					cairo_save(m_cairo);
-					cairo_translate(m_cairo, sx, sy);
-					cairo_scale  (m_cairo, size/w, size/h);
-					cairo_set_source_surface(m_cairo, image, 0,0);
-					cairo_paint(m_cairo);
-					cairo_surface_flush(m_cairo_surface);
-					cairo_surface_destroy(image);
-					cairo_restore(m_cairo);
-				}
-			}
-		}
+		//			cairo_save(m_cairo);
+		//			cairo_translate(m_cairo, sx, sy);
+		//			cairo_scale  (m_cairo, size/w, size/h);
+		//			cairo_set_source_surface(m_cairo, image, 0,0);
+		//			cairo_paint(m_cairo);
+		//			cairo_surface_flush(m_cairo_surface);
+		//			cairo_surface_destroy(image);
+		//			cairo_restore(m_cairo);
+		//		}
+		//	}
+		//}
 	}
 
+	// @ deprecated
 	void RendererCairo::DrawGeometryPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation)
 	{
-		float size = pSymbolizer->GetSize();
-		float rotation = pSymbolizer->GetRotation();
-		Fill   *pFill  = pSymbolizer->GetFill();
-		Stroke *pStroke= pSymbolizer->GetStroke();
+		//float size = pSymbolizer->GetSize();
+		//float rotation = pSymbolizer->GetRotation();
+		//Fill   *pFill  = pSymbolizer->GetFill();
+		//Stroke *pStroke= pSymbolizer->GetStroke();
 
-		int sx=0, sy=0;
-		pTransformation->ToScreenPoint(pWKBPoint->point.x, pWKBPoint->point.y, sx, sy);
+		//int sx=0, sy=0;
+		//pTransformation->ToScreenPoint(pWKBPoint->point.x, pWKBPoint->point.y, sx, sy);
 
-		augeMarkerType type = pSymbolizer->GetMarkType();
-		switch(type)
-		{
-		case augeMarkerSquare:
-			DrawSquare(sx, sy, size, rotation, pFill, pStroke);
-			break;
-		case augeMarkerCircle:
-			DrawCircle(sx, sy, size/2, pFill, pStroke);
-			break;
-		case augeMarkerTriangle:
-			DrawsTriangle(sx,sy,size, rotation, pFill, pStroke);
-			break;
-		case augeMarkerStar:
-			DrawStar(sx, sy, size, rotation, pFill, pStroke);
-			break;
-		case augeMarkerCross:
-			break;
-		case augeMarkerX:
-			break;
-		case augeMarkerPentagon:
-			DrawPentagon(sx, sy, size, rotation, pFill, pStroke);
-			break;
-		case augeMarkerCapital:
-			DrawCapital(sx, sy, size, pFill, pStroke);
-		}
+		//augeMarkerType type = pSymbolizer->GetMarkType();
+		//switch(type)
+		//{
+		//case augeMarkerSquare:
+		//	DrawSquare(sx, sy, size, rotation, pFill, pStroke);
+		//	break;
+		//case augeMarkerCircle:
+		//	DrawCircle(sx, sy, size/2, pFill, pStroke);
+		//	break;
+		//case augeMarkerTriangle:
+		//	DrawsTriangle(sx,sy,size, rotation, pFill, pStroke);
+		//	break;
+		//case augeMarkerStar:
+		//	DrawStar(sx, sy, size, rotation, pFill, pStroke);
+		//	break;
+		//case augeMarkerCross:
+		//	break;
+		//case augeMarkerX:
+		//	break;
+		//case augeMarkerPentagon:
+		//	DrawPentagon(sx, sy, size, rotation, pFill, pStroke);
+		//	break;
+		//case augeMarkerCapital:
+		//	DrawCapital(sx, sy, size, pFill, pStroke);
+		//}
 	}
 
 	void RendererCairo::DrawPoint(WKBMultiPoint *pWKBMultiPoint, PointSymbolizer* pPointSymbolizer, Transformation* pTransformation)
