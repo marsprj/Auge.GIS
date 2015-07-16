@@ -25,6 +25,9 @@ namespace auge
 		virtual LineSymbol*		CreateLineSymbol(augeLineType type);		
 		virtual LineSymbol*		CreateLineSymbol(const char* name);
 
+		virtual RegionSymbol*	CreateRegionSymbol(augeRegionType type);		
+		virtual RegionSymbol*	CreateRegionSymbol(const char* name);
+
 	public:
 		void			Initialize();
 

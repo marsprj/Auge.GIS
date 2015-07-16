@@ -14,7 +14,7 @@ namespace auge
 	m_perpendicular_offset(0),
 	m_geometry_prop_name(NULL)
 	{
-
+		m_pSymbol = NULL;
 	}
 
 	PolygonSymbolizerImpl::~PolygonSymbolizerImpl()
@@ -33,6 +33,11 @@ namespace auge
 		{
 			free((void*)m_geometry_prop_name);
 			m_geometry_prop_name = NULL;
+		}
+
+		if(m_pSymbol!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pSymbol);
 		}
 	}
 
@@ -121,4 +126,17 @@ namespace auge
 		return augeSymbolPolygon;
 	}
 
+	void PolygonSymbolizerImpl::SetSymbol(RegionSymbol* pSymbol)
+	{
+		if(m_pSymbol!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pSymbol);
+		}
+		m_pSymbol = pSymbol;
+	}
+
+	RegionSymbol* PolygonSymbolizerImpl::GetSymbol()
+	{
+		return m_pSymbol;
+	}
 }

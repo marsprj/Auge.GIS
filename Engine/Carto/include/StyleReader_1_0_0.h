@@ -34,7 +34,7 @@ namespace auge
 		bool				ReadMark(PointSymbolizer* pSymbolizer, XNode* pxMarkNode);
 		bool				ReadExternalGraphic(PointSymbolizer* pSymbolizer, XNode* pxGraphicNode);
 
-		bool				ReadStroke(LineSymbolizer* pSymbolizer, XNode* pxStrokeNode);
+		//bool				ReadStroke(LineSymbolizer* pSymbolizer, XNode* pxStrokeNode);
 
 		bool				ReadMark(PolygonSymbolizer* pSymbolizer, XNode* pxMarkNode);
 		bool				ReadFill(PolygonSymbolizer* pSymbolizer, XNode* pxFillNode);

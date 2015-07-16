@@ -100,6 +100,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\FontImpl.cpp" />
     <ClCompile Include="..\src\GraphicImpl.cpp" />
     <ClCompile Include="..\src\GraphicLayerImpl.cpp" />
+    <ClCompile Include="..\src\GrassLandSymbolImpl.cpp" />
     <ClCompile Include="..\src\Label.cpp" />
     <ClCompile Include="..\src\LabelSet.cpp" />
     <ClCompile Include="..\src\LineLabel.cpp" />
@@ -121,6 +122,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RendererCairo.cpp" />
     <ClCompile Include="..\src\RuleImpl.cpp" />
     <ClCompile Include="..\src\SimpleLineSymbolImpl.cpp" />
+    <ClCompile Include="..\src\SimpleRegionSymbolImpl.cpp" />
     <ClCompile Include="..\src\SquareMarkerImpl.cpp" />
     <ClCompile Include="..\src\StarMarkerImpl.cpp" />
     <ClCompile Include="..\src\StrokeImpl.cpp" />
@@ -157,6 +159,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\FontImpl.h" />
     <ClInclude Include="..\include\GraphicImpl.h" />
     <ClInclude Include="..\include\GraphicLayerImpl.h" />
+    <ClInclude Include="..\include\GrassLandSymbolImpl.h" />
     <ClInclude Include="..\include\Label.h" />
     <ClInclude Include="..\include\LabelSet.h" />
     <ClInclude Include="..\include\LineLabel.h" />
@@ -177,6 +180,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RendererCairo.h" />
     <ClInclude Include="..\include\RuleImpl.h" />
     <ClInclude Include="..\include\SimpleLineSymbolImpl.h" />
+    <ClInclude Include="..\include\SimpleRegionSymbolImpl.h" />
     <ClInclude Include="..\include\SLDConstant.h" />
     <ClInclude Include="..\include\SquareMarkerImpl.h" />
     <ClInclude Include="..\include\StarMarkerImpl.h" />
