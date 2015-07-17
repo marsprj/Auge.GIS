@@ -2300,7 +2300,7 @@ namespace auge
 
 		GResultSet* pResult = NULL;
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX,"select gid,s_text from g_style where s_name='%s' and user_id=%d", name, user_id);
+		g_snprintf(sql, AUGE_SQL_MAX,"select gid,s_text from g_style where s_name='%s' and user_id=%d order by s_name", name, user_id);
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
