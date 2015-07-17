@@ -359,6 +359,43 @@ namespace auge
 		return m_pConnection->ExecuteSQL(sql);
 	}
 
+	Workspace* ConnectionManagerImpl::LoadWorkspace(const char* name)
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+		char sql[AUGE_SQL_MAX];
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,name,engine,uri,version,state,d_uri from g_data_source where name='%s'", name);
+
+		Workspace* pWorkspace = NULL;
+		GResultSet* pResultSet = NULL;
+		pResultSet = m_pConnection->ExecuteQuery(sql);
+		if(pResultSet==NULL)
+		{
+			return NULL;
+		}
+
+		g_uint count = pResultSet->GetCount();
+		if(count==0)
+		{
+			pResultSet->Release();
+			return NULL;
+		}
+		int	gid = pResultSet->GetInt(0,0);
+		//const char* name= pResultSet->GetString(0,1);
+		const char* engn= pResultSet->GetString(0,2);
+		const char* uri = pResultSet->GetString(0,3);
+		int version = pResultSet->GetInt(0,4);
+		const char* stat= pResultSet->GetString(0,5);
+		const char* d_uri = pResultSet->GetString(0,6);
+
+		pWorkspace = NewWorkspace(gid, name, engn, uri,version);
+		pResultSet->Release();
+
+		return pWorkspace;
+	}
+
 	Workspace* ConnectionManagerImpl::NewWorkspace(const char* name)
 	{
 		return NULL;
@@ -388,7 +425,7 @@ namespace auge
 			{
 				if(IsUpdated(pWorkspace))
 				{
-					Workspace* pnewWorkspace = LoadWorkspace(name);
+					Workspace* pnewWorkspace = LoadWorkspace(user_id, name);
 					pWorkspace->Close();
 					pWorkspace->Release();
 					pWorkspace = pnewWorkspace;
@@ -417,7 +454,9 @@ namespace auge
 			return pWorkspaces;
 		}
 
-		const char* sql = "select gid,name,engine,uri,version,state,d_uri from g_data_source";
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		sprintf(sql, "select gid,name,engine,uri,version,state,d_uri from g_data_source where user_id=%d", user_id);		
 		GResultSet* pResultSet = NULL;
 		pResultSet = m_pConnection->ExecuteQuery(sql);
 		if(pResultSet!=NULL)
@@ -466,7 +505,7 @@ namespace auge
 		}
 
 		RESULTCODE rc = AG_FAILURE;
-		rc = SaveWorkspace(name, engine, constr);
+		rc = SaveWorkspace(user_id, name, engine, constr);
 		if(rc!=AG_SUCCESS)
 		{
 			pWorkspace->Release();
@@ -483,7 +522,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 		char sql[AUGE_NAME_MAX];
-		g_snprintf(sql, AUGE_NAME_MAX, "delete from g_data_source where name='%s'", name);
+		g_snprintf(sql, AUGE_NAME_MAX, "delete from g_data_source where name='%s' and user_id=%d", name, user_id);
 		return m_pConnection->ExecuteSQL(sql);
 	}
 
@@ -533,7 +572,7 @@ namespace auge
 		}
 
 		char sql[AUGE_NAME_MAX];
-		g_snprintf(sql, AUGE_NAME_MAX, "select count(*) from g_data_source where name='%s'", name);
+		g_snprintf(sql, AUGE_NAME_MAX, "select count(*) from g_data_source where name='%s' and use_id=%d", name, user_id);
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if( !pResult )
 		{
@@ -553,7 +592,7 @@ namespace auge
 		}
 
 		char sql[AUGE_NAME_MAX];
-		g_snprintf(sql, AUGE_NAME_MAX, "select gid from g_data_source where name='%s'", name);
+		g_snprintf(sql, AUGE_NAME_MAX, "select gid from g_data_source where name='%s' and user_id=%d", name, user_id);
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if( !pResult )
 		{
@@ -592,6 +631,51 @@ namespace auge
 	{
 		return NULL;
 	}
+
+	RESULTCODE ConnectionManagerImpl::SaveWorkspace(g_uint user_id, const char* name, const char* engine, const char* uri)
+	{
+		char sql[AUGE_NAME_MAX];
+		g_snprintf(sql, AUGE_NAME_MAX, "insert into g_data_source (name, engine, uri, user_id) values('%s','%s','%s', %d)", name, engine, uri, user_id);
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	Workspace* ConnectionManagerImpl::LoadWorkspace(g_uint user_id, const char* name)
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+		char sql[AUGE_SQL_MAX];
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,name,engine,uri,version,state,d_uri from g_data_source where name='%s' and user_id=%d", name, user_id);
+
+		Workspace* pWorkspace = NULL;
+		GResultSet* pResultSet = NULL;
+		pResultSet = m_pConnection->ExecuteQuery(sql);
+		if(pResultSet==NULL)
+		{
+			return NULL;
+		}
+
+		g_uint count = pResultSet->GetCount();
+		if(count==0)
+		{
+			pResultSet->Release();
+			return NULL;
+		}
+		int	gid = pResultSet->GetInt(0,0);
+		//const char* name= pResultSet->GetString(0,1);
+		const char* engn= pResultSet->GetString(0,2);
+		const char* uri = pResultSet->GetString(0,3);
+		int version = pResultSet->GetInt(0,4);
+		const char* stat= pResultSet->GetString(0,5);
+		const char* d_uri = pResultSet->GetString(0,6);
+
+		pWorkspace = NewWorkspace(gid, name, engn, uri,version);
+		pResultSet->Release();
+
+		return pWorkspace;
+	}
+
 	//------------------------------------------------------------------------
 	// DataSource User Methods End
 	//------------------------------------------------------------------------
@@ -648,40 +732,5 @@ namespace auge
 		return version;
 	}
 
-	Workspace* ConnectionManagerImpl::LoadWorkspace(const char* name)
-	{
-		if(name==NULL)
-		{
-			return NULL;
-		}
-		char sql[AUGE_SQL_MAX];
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,name,engine,uri,version,state,d_uri from g_data_source where name='%s'", name);
-
-		Workspace* pWorkspace = NULL;
-		GResultSet* pResultSet = NULL;
-		pResultSet = m_pConnection->ExecuteQuery(sql);
-		if(pResultSet==NULL)
-		{
-			return NULL;
-		}
-		
-		g_uint count = pResultSet->GetCount();
-		if(count==0)
-		{
-			pResultSet->Release();
-			return NULL;
-		}
-		int	gid = pResultSet->GetInt(0,0);
-		//const char* name= pResultSet->GetString(0,1);
-		const char* engn= pResultSet->GetString(0,2);
-		const char* uri = pResultSet->GetString(0,3);
-		int version = pResultSet->GetInt(0,4);
-		const char* stat= pResultSet->GetString(0,5);
-		const char* d_uri = pResultSet->GetString(0,6);
-
-		pWorkspace = NewWorkspace(gid, name, engn, uri,version);
-		pResultSet->Release();
-
-		return pWorkspace;
-	}
+	
 }
