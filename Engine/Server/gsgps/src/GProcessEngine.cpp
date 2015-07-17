@@ -21,8 +21,8 @@ namespace auge
 {
 	WebEngine* augeGetWebEngineInstance()
 	{
-		static GeoProcessingEngine g_webMapEngine;
-		return &g_webMapEngine;
+		static GeoProcessingEngine g_webProcessEngine;
+		return &g_webProcessEngine;
 	} 
 
 	GeoProcessingEngine::GeoProcessingEngine()
