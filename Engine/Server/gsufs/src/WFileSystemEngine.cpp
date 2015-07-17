@@ -14,8 +14,8 @@ namespace auge
 {
 	WebEngine* augeGetWebEngineInstance()
 	{
-		static WFileSystemEngine g_webMapEngine;
-		return &g_webMapEngine;
+		static WFileSystemEngine g_webFileEngine;
+		return &g_webFileEngine;
 	}
 
 	WFileSystemEngine::WFileSystemEngine()
@@ -259,7 +259,7 @@ namespace auge
 	//	return handler->ParseRequest(pxDoc, pWebContext, pMap);
 	//}
 
-	WebResponse* WFileSystemEngine::Execute(WebRequest* pWebRequest)
+	WebResponse* WFileSystemEngine::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse	*pWebResponse = NULL;
 
@@ -275,10 +275,10 @@ namespace auge
 			pExpResopnse->SetMessage(msg);
 			return pExpResopnse;
 		}
-		return handler->Execute(pWebRequest);
+		return handler->Execute(pWebRequest, pUser);
 	}
 
-	WebResponse* WFileSystemEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* WFileSystemEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* request = pWebRequest->GetRequest();
 		WebHandler* handler = GetHandler(request);
@@ -293,6 +293,6 @@ namespace auge
 			return pExpResopnse;
 		}
 
-		return handler->Execute(pWebRequest, pWebContext);
+		return handler->Execute(pWebRequest, pWebContext, pUser);
 	}
 }

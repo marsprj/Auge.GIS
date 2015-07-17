@@ -49,14 +49,14 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* CreateFolderHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* CreateFolderHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		CreateFolderRequest* pRequest = static_cast<CreateFolderRequest*>(pWebRequest);
 		WebResponse* pWebResponse = NULL;
 		return pWebResponse;
 	}
 
-	WebResponse* CreateFolderHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* CreateFolderHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 		CreateFolderRequest* pRequest = static_cast<CreateFolderRequest*>(pWebRequest);

@@ -1,5 +1,6 @@
 #include "RemoveFolderHandler.h"
 #include "RemoveFolderRequest.h"
+#include "AugeUser.h"
 
 #include "AugeWebCore.h"
 
@@ -49,14 +50,14 @@ namespace auge
 		return NULL;
 	}
 
-	WebResponse* RemoveFolderHandler::Execute(WebRequest* pWebRequest)
+	WebResponse* RemoveFolderHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		RemoveFolderRequest* pRequest = static_cast<RemoveFolderRequest*>(pWebRequest);
 		WebResponse* pWebResponse = NULL;
 		return pWebResponse;
 	}
 
-	WebResponse* RemoveFolderHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext)
+	WebResponse* RemoveFolderHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 		RemoveFolderRequest* pRequest = static_cast<RemoveFolderRequest*>(pWebRequest);
