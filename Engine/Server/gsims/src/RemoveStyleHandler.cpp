@@ -2,7 +2,7 @@
 #include "RemoveStyleRequest.h"
 #include "AugeCarto.h"
 #include "AugeService.h"
-
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -53,7 +53,7 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
 
-		RESULTCODE rc = pCartoManager->RemoveStyle(pRequest->GetName());
+		RESULTCODE rc = pCartoManager->RemoveStyle(pUser->GetID(), pRequest->GetName());
 		if(rc==AG_SUCCESS)
 		{
 			WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();

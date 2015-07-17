@@ -3,7 +3,7 @@
 #include "GetStyleResponse.h"
 #include "AugeCarto.h"
 #include "AugeService.h"
-
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -59,14 +59,14 @@ namespace auge
 		const char* name = pRequest->GetName();
 		if(name==NULL)
 		{
-			EnumStyle* pStyles = pCartoManager->GetStyles();
+			EnumStyle* pStyles = pCartoManager->GetStyles(pUser->GetID());
 			GetStyleResponse* pResponse = new GetStyleResponse(pRequest);
 			pResponse->SetStyles(pStyles);
 			pWebResponse = pResponse;
 		}
 		else
 		{
-			char* text = pCartoManager->GetStyleText(name);
+			char* text = pCartoManager->GetStyleText(pUser->GetID(), name);
 			if(text!=NULL)
 			{
 				GetStyleResponse* pResponse = new GetStyleResponse(pRequest);

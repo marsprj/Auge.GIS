@@ -311,6 +311,7 @@ namespace auge
 		virtual RESULTCODE		RemoveLayer(const char* mapName, const char* layerName) = 0;
 		virtual g_int			GetLayerID(const char* layerName, const char* mapName) = 0;
 
+
 		virtual g_uint			GetStyleCount() = 0;
 		virtual Style*			GetStyle(g_uint id, FeatureClass* pFeatureClass) = 0;
 		virtual Style*			GetStyle(const char* name, FeatureClass* pFeatureClass) = 0;
@@ -339,7 +340,7 @@ namespace auge
 		//------------------------------------------------------------------------
 		// Map User Methods Begin
 		//------------------------------------------------------------------------
-		virtual g_uint			GetCount(g_uint user) = 0;
+		virtual g_uint			GetCount(g_uint user_id) = 0;
 		virtual	Map*			GetMap(g_uint user_id, const char* mapName) = 0;
 		virtual EnumMap*		GetMaps(g_uint user) = 0;
 		virtual Map*			LoadMap(g_uint user_id, const char* mapName) = 0;
@@ -350,6 +351,26 @@ namespace auge
 
 		//virtual Layer*			CreateLayer(g_uint user_id, const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_i, g_uint style_id) = 0;
 		//virtual Layer*			CreateWebLayer(g_uint user_id, const char* name, augeLayerType type, const char* url, g_uint map_id) = 0;
+
+		//------------------------------------------------------------------------
+		virtual g_uint			GetStyleCount(g_uint user_id) = 0;
+		//virtual Style*			GetStyle(g_uint id, FeatureClass* pFeatureClass) = 0;
+		virtual Style*			GetStyle(g_uint user_id, const char* name, FeatureClass* pFeatureClass) = 0;
+
+		//virtual char*			GetStyleText(g_uint id) = 0;
+		virtual char*			GetStyleText(g_uint user_id, const char* name) = 0;
+
+		virtual EnumStyle*		GetStyles(g_uint user_id) = 0;
+
+		//virtual bool			HasStyle(g_uint id) = 0;
+		virtual bool			HasStyle(g_uint user_id, const char* name) = 0;
+		virtual g_int			CreateStyle(g_uint user_id, const char* name, Style* pStyle,augeGeometryType type) = 0;
+		virtual RESULTCODE		CreateStyle(g_uint user_id, const char* name, const char* text,augeGeometryType type) = 0;		
+		virtual RESULTCODE		UpdateStyle(g_uint user_id, const char* name, Style* pStyle) = 0;
+		virtual RESULTCODE		UpdateStyle(g_uint user_id, const char* name, const char* text) = 0;
+		virtual RESULTCODE		RemoveStyle(g_uint user_id, const char* name) = 0;
+		virtual g_int			GetStyleID(g_uint user_id, const char* name) = 0;
+		virtual bool			IsStyleUpdated(g_uint user_id, Style* pStyle) = 0;
 		//------------------------------------------------------------------------
 		// Map User Methods End
 		//------------------------------------------------------------------------

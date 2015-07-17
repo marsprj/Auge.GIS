@@ -2,7 +2,8 @@
 	v_gid integer,
 	v_name varchar,
 	v_type varchar,
-	v_text varchar)
+	v_text varchar,
+	v_user integer)
 RETURNS boolean AS $$
 << outerblock >>
 DECLARE
@@ -16,7 +17,7 @@ BEGIN
 					s_type = v_type,
 					version=v_version+1
     where
-		name = v_name;
+		name = v_name and user_id = v_user;
 
     RETURN v_ret;
 END;
@@ -28,7 +29,8 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION gf_style_update(
 	v_gid integer,
 	v_name varchar,
-	v_text varchar)
+	v_text varchar,
+	v_user integer)
 RETURNS boolean AS $$
 << outerblock >>
 DECLARE
@@ -41,7 +43,7 @@ BEGIN
 					s_text = v_text,
 					version=v_version+1
     where
-		s_name = v_name;
+		s_name = v_name and user_id = v_user;
 
     RETURN v_ret;
 END;

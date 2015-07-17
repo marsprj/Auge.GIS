@@ -82,6 +82,26 @@ namespace auge
 
 		virtual Layer*			CreateLayer(g_uint user_id, const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_id, g_uint style_id);
 		virtual Layer*			CreateWebLayer(g_uint user_id, const char* name, augeLayerType type, const char* url, g_uint map_id);
+
+		//------------------------------------------------------------------------
+		virtual g_uint			GetStyleCount(g_uint user_id);
+		//virtual Style*			GetStyle(g_uint id, FeatureClass* pFeatureClass);
+		virtual Style*			GetStyle(g_uint user_id, const char* name, FeatureClass* pFeatureClass);
+
+		//virtual char*			GetStyleText(g_uint id);
+		virtual char*			GetStyleText(g_uint user_id, const char* name);
+
+		virtual EnumStyle*		GetStyles(g_uint user_id);
+
+		//virtual bool			HasStyle(g_uint id);
+		virtual bool			HasStyle(g_uint user_id, const char* name);
+		virtual g_int			CreateStyle(g_uint user_id, const char* name, Style* pStyle,augeGeometryType type);
+		virtual RESULTCODE		CreateStyle(g_uint user_id, const char* name, const char* text,augeGeometryType type);		
+		virtual RESULTCODE		UpdateStyle(g_uint user_id, const char* name, Style* pStyle);
+		virtual RESULTCODE		UpdateStyle(g_uint user_id, const char* name, const char* text);
+		virtual RESULTCODE		RemoveStyle(g_uint user_id, const char* name);
+		virtual g_int			GetStyleID(g_uint user_id, const char* name);
+		virtual bool			IsStyleUpdated(g_uint user_id, Style* pStyle);
 		//------------------------------------------------------------------------
 		// Map User Methods End
 		//------------------------------------------------------------------------

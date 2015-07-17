@@ -2157,7 +2157,434 @@ namespace auge
 		return pLayer;
 	}
 
+	//////////////////////////////////////////////////////////////////////////
+	bool CartoManagerImpl::HasStyle(g_uint user_id, const char* name)
+	{
+		if(name==NULL)
+		{
+			return false;
+		}
 
+		char sql[AUGE_SQL_MAX] = {0};
+		g_snprintf(sql, AUGE_SQL_MAX,"select count(*) from g_style where s_name='%s' and user_id=%d", name, user_id);
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql);
+		g_uint count = pResult->GetInt(0,0);
+		pResult->Release();
+		return (count>0);
+	}
+
+	g_uint CartoManagerImpl::GetStyleCount(g_uint user_id)
+	{
+		char sql[AUGE_SQL_MAX] = {0};
+		g_snprintf(sql, AUGE_SQL_MAX,"select count(*) g_style g_map where user_id=%d", user_id);
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql);
+		g_uint count = pResult->GetInt(0,0);
+		pResult->Release();
+		return count; 
+	}
+
+	EnumStyle* CartoManagerImpl::GetStyles(g_uint user_id)
+	{
+		GResultSet* pResult = NULL;
+		char sql[AUGE_SQL_MAX] = {0};
+		g_snprintf(sql, AUGE_SQL_MAX,"select gid, s_name,s_type from g_style where user_id=%d", user_id);
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+
+		FeatureStyleImpl* pStyle = NULL;
+		StyleReaderImpl reader;
+		EnumStyleImpl* pEnums = new EnumStyleImpl();
+		g_int count = pResult->GetCount();
+		for(g_int i=0; i<count; i++)
+		{
+			g_int id = pResult->GetInt(i,0);
+			const char* name = pResult->GetString(i,1);
+			const char* type = pResult->GetString(i,2);
+
+			//pStyle = reader.Read(text, strlen(text), NULL);	
+			pStyle = new FeatureStyleImpl();
+			if(pStyle==NULL)
+			{
+				GLogger* pLogger = augeGetLoggerInstance();
+				pLogger->Error("Bad Style XML Document", __FILE__,__LINE__);
+				//pLogger->Debug(text);
+				continue;
+			}
+			pStyle->SetID(id);
+			pStyle->SetName(name);
+			pEnums->Add(pStyle);
+
+			switch(pStyle->GetType())
+			{
+			case augeStyleFeature:
+				{
+					GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+					augeGeometryType gtype = pGeometryFactory->DecodeGeometryType(type);
+
+					FeatureStyle* pFStyle = static_cast<FeatureStyle*>(pStyle);
+					pFStyle->SetGeometryType(gtype);
+				}
+				break;
+			case augeStyleRaster:
+				break;
+			}
+		}
+		pResult->Release();
+
+		return pEnums;
+	}
+
+	Style* CartoManagerImpl::GetStyle(g_uint user_id, const char* name, FeatureClass* pFeatureClass)
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+
+		GResultSet* pResult = NULL;
+		char sql[AUGE_SQL_MAX] = {0};
+		g_snprintf(sql, AUGE_SQL_MAX,"select gid,s_text,s_type from g_style where s_name='%s' and user_id=%d", name, user_id);
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+		if(!pResult->GetCount())
+		{
+			return NULL;
+		}
+		g_uint id = pResult->GetInt(0,0);
+		const char* text = pResult->GetString(0,1);
+		const char* type = pResult->GetString(0,2);
+
+		Style* pStyle = NULL;
+		StyleReaderImpl reader;
+		pStyle = reader.Read(text, strlen(text), pFeatureClass);
+		pResult->Release();
+
+		if(pStyle!=NULL)
+		{
+			pStyle->SetID(id);
+			pStyle->SetName(name);
+
+			switch(pStyle->GetType())
+			{
+			case augeStyleFeature:
+				{
+					GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+					augeGeometryType gtype = pGeometryFactory->DecodeGeometryType(type);
+
+					FeatureStyle* pFStyle = static_cast<FeatureStyle*>(pStyle);
+					pFStyle->SetGeometryType(gtype);
+				}
+				break;
+			case augeStyleRaster:
+				break;
+			}
+		}
+
+		return pStyle;
+	}
+	
+	char* CartoManagerImpl::GetStyleText(g_uint user_id, const char* name)
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+
+		GResultSet* pResult = NULL;
+		char sql[AUGE_SQL_MAX] = {0};
+		g_snprintf(sql, AUGE_SQL_MAX,"select gid,s_text from g_style where s_name='%s' and user_id=%d", name, user_id);
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+		if(!pResult->GetCount())
+		{
+			return NULL;
+		}
+		const char* text = pResult->GetString(0,1);
+		char* result = strdup(text);
+
+		pResult->Release();
+		return result;
+	}
+
+	g_int CartoManagerImpl::CreateStyle(g_uint user_id, const char* name, Style* pStyle, augeGeometryType type)
+	{
+		if(name==NULL||pStyle==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		if(HasStyle(name))
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "[%s] already existed.", name);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return AG_FAILURE;
+		}
+
+		StyleWriterImpl writer;
+		XDocument* pxDoc = NULL;		
+		pxDoc = writer.Write(pStyle);
+		if(pxDoc==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Serialize [Style] error.");
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+		}
+
+		RESULTCODE rc = AG_FAILURE;
+		int nSize = 0;
+		g_uchar* buffer = NULL;
+		rc = pxDoc->WriteToString(&buffer, nSize, "GBK",1);
+		if(rc!=AG_SUCCESS)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Serialize XML Document Error.");
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
+			pxDoc->Release();
+			return rc;
+		}
+
+		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+		const char* gtype = pGeometryFactory->Encode(type);
+
+		char str[AUGE_NAME_MAX];
+		g_sprintf(str, "%d", user_id);
+
+		std::string sql;
+		sql.append("insert into g_style (s_name, s_text,s_type, user_id) values('");
+		sql.append(name);
+		sql.append("','");
+		sql.append((char*)buffer);
+		sql.append("','");
+		sql.append(gtype);
+		sql.append("','");
+		sql.append(str);
+		sql.append("') returning gid");
+
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql.c_str());
+		if(pResult==NULL)
+		{
+			pxDoc->Release();
+			return rc;
+		}
+
+		g_uint gid = pResult->GetInt(0,0);
+
+		pResult->Release();
+		pxDoc->Release();
+
+		return gid;
+	}
+
+	RESULTCODE CartoManagerImpl::CreateStyle(g_uint user_id, const char* name, const char* text, augeGeometryType type)
+	{
+		if(name==NULL||text==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		if(!IsValiad(text))
+		{
+			GError* pError = augeGetErrorInstance();
+			pError->SetError("Invalid style xml document");
+			return AG_FAILURE;
+		}
+
+		if(HasStyle(name))
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "[%s] already existed.", name);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return AG_FAILURE;
+		}
+
+		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+		const char* gtype = pGeometryFactory->Encode(type);
+
+		char str[AUGE_NAME_MAX];
+		g_sprintf(str, "%d", user_id);
+
+		std::string sql;
+		sql.append("insert into g_style (s_name, s_text, s_type, user_id) values('");
+		sql.append(name);
+		sql.append("','");
+		sql.append((char*)text);
+		sql.append("','");
+		sql.append(gtype);
+		sql.append("','");
+		sql.append(str);
+		sql.append("') returning gid");
+
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql.c_str());
+		if(pResult==NULL)
+		{
+			return -1;
+		}
+
+		g_uint gid = pResult->GetInt(0,0);
+
+		pResult->Release();
+
+		return gid;
+	}
+
+	RESULTCODE CartoManagerImpl::UpdateStyle(g_uint user_id, const char* name, Style* pStyle)
+	{
+		if(name==NULL||pStyle==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		StyleWriterImpl writer;
+		XDocument* pxDoc = NULL;		
+		pxDoc = writer.Write(pStyle);
+		if(pxDoc==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Serialize [Style] error.");
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+		}
+
+		RESULTCODE rc = AG_FAILURE;
+		int nSize = 0;
+		g_uchar* buffer = NULL;
+		rc = pxDoc->WriteToString(&buffer, nSize, "GBK");
+		if(rc!=AG_SUCCESS)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Serialize XML Document Error.");
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
+			pxDoc->Release();
+			return rc;
+		}
+
+		//std::string sql;
+		//sql.append("update g_style set s_text='");
+		//sql.append((char*)buffer);
+		//sql.append("' where s_name='");
+		//sql.append(name);
+		//sql.append("'");
+
+		//rc = m_pConnection->ExecuteSQL(sql.c_str());
+		//pxDoc->Release();
+
+		//return (rc==AG_SUCCESS);
+
+		rc = UpdateStyle(user_id, name, (char*)buffer);
+		pxDoc->Release();
+
+		return rc;
+	}
+
+	RESULTCODE CartoManagerImpl::UpdateStyle(g_uint user_id, const char* name, const char* text)
+	{	
+		if(name==NULL||text==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		char str[AUGE_NAME_MAX];
+		g_sprintf(str, "%d", user_id);
+
+		std::string sql;
+		sql.append("select gf_style_update(1,'");
+		sql.append(name);
+		sql.append("','");
+		sql.append(text);
+		sql.append("','");
+		sql.append(str);
+		sql.append("')");
+
+		return m_pConnection->ExecuteSQL(sql.c_str());
+	}
+
+	//RESULTCODE CartoManagerImpl::UpdateStyle(const char* name, const char* text)
+	//{
+	//	if(name==NULL||text==NULL)
+	//	{
+	//		return AG_FAILURE;
+	//	}
+
+	//	std::string sql;
+	//	sql.append("update g_style set s_text='");
+	//	sql.append(text);
+	//	sql.append("' where s_name='");
+	//	sql.append(name);
+	//	sql.append("'");
+
+	//	return m_pConnection->ExecuteSQL(sql.c_str());
+	//}
+
+	RESULTCODE CartoManagerImpl::RemoveStyle(g_uint user_id, const char* name)
+	{
+		if(name==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		char sql[AUGE_SQL_MAX] = {0};
+		g_snprintf(sql, AUGE_SQL_MAX, "delete from g_style where s_name='%s'", name);
+
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	g_int CartoManagerImpl::GetStyleID(g_uint user_id, const char* name)
+	{
+		if(name==NULL)
+		{
+			return -1;
+		}
+		g_int styleID = -1;
+		char sql[AUGE_SQL_MAX] = {0};
+		g_sprintf(sql, "select gid from g_style where s_name='%s'", name);
+
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return -1;
+		}
+		if(!pResult->GetCount())
+		{
+			return -1;
+		}
+
+		styleID = pResult->GetInt(0,0);
+		pResult->Release();
+
+		return styleID;
+	}
+
+	bool CartoManagerImpl::IsStyleUpdated(g_uint user_id, Style* pStyle)
+	{
+		if(pStyle==NULL)
+		{
+			return false;
+		}
+
+		return false;
+	}
 	//////////////////////////////////////////////////////////////////////////
 	// Map Operation With User End
 	//////////////////////////////////////////////////////////////////////////

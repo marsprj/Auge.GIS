@@ -3,6 +3,7 @@
 #include "AugeService.h"
 #include "AugeData.h"
 #include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -97,7 +98,7 @@ namespace auge
 			return pExpResponse;
 		}
 
-		g_int s_id = pCartoManager->GetStyleID(styleName);
+		g_int s_id = pCartoManager->GetStyleID(pUser->GetID(), styleName);
 		if(s_id<0)
 		{
 			char msg[AUGE_MSG_MAX];

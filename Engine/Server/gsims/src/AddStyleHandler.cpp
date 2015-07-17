@@ -2,7 +2,7 @@
 #include "AddStyleRequest.h"
 #include "AugeCarto.h"
 #include "AugeService.h"
-
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -73,7 +73,7 @@ namespace auge
 			return pExpResponse;
 		}
 
-		RESULTCODE rc = pCartoManager->CreateStyle(name, text, gtype);
+		RESULTCODE rc = pCartoManager->CreateStyle(pUser->GetID(), name, text, gtype);
 		if(rc>0)
 		{
 			WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();

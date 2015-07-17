@@ -2,7 +2,7 @@
 #include "UpdateStyleRequest.h"
 #include "AugeCarto.h"
 #include "AugeService.h"
-
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -56,7 +56,7 @@ namespace auge
 		const char* name = pRequest->GetName();
 		const char* text = pRequest->GetStyle();
 
-		RESULTCODE rc = pCartoManager->UpdateStyle(name, text);
+		RESULTCODE rc = pCartoManager->UpdateStyle(pUser->GetID(), name, text);
 		if(rc!=AG_SUCCESS) 
 		{
 			GError* pError = augeGetErrorInstance();
