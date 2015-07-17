@@ -2,6 +2,7 @@
 #include "UnRegisterDataSourceRequest.h"
 #include "AugeService.h"
 #include "AugeData.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -59,7 +60,7 @@ namespace auge
 		}
 
 		ConnectionManager*	pConnManager = augeGetConnectionManagerInstance();
-		RESULTCODE rc = pConnManager->Unregister(name);
+		RESULTCODE rc = pConnManager->Unregister(pUser->GetID(), name);
 		if(rc!=AG_SUCCESS)
 		{
 			GError* pError = augeGetErrorInstance();

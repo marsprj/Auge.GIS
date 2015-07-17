@@ -5,12 +5,13 @@
 #include "AugeCore.h"
 #include "AugeFeature.h"
 #include "AugeField.h"
+#include "AugeUser.h"
 
 namespace auge
 {
 	FeatureProjectProcessorImpl::FeatureProjectProcessorImpl()
 	{
-
+		m_pUser = NULL;
 	}
 
 	FeatureProjectProcessorImpl::~FeatureProjectProcessorImpl()
@@ -128,13 +129,13 @@ namespace auge
 		FeatureWorksapce	*poutWorkspace= NULL;
 		ConnectionManager	*pConnManager = augeGetConnectionManagerInstance();
 		
-		pinWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(sourceName_in));
+		pinWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_pUser->GetID(), sourceName_in));
 		if(pinWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 
-		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(sourceName_out));
+		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_pUser->GetID(), sourceName_out));
 		if(poutWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -481,5 +482,10 @@ namespace auge
 		}
 
 		return ret;
+	}
+
+	void FeatureProjectProcessorImpl::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
 	}
 }

@@ -1,11 +1,13 @@
 #include "RasterGraylizeProcessorImpl.h"
 #include "AugeData.h"
 #include "AugeRaster.h"
+#include "AugeUser.h"
 
 namespace auge
 {
 	RasterGraylizeProcessorImpl::RasterGraylizeProcessorImpl()
 	{
+		m_pUser = NULL;
 	}
 
 	RasterGraylizeProcessorImpl::~RasterGraylizeProcessorImpl()
@@ -94,14 +96,14 @@ namespace auge
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = pConnManager->GetWorkspace(inSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), inSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
-		pWorkspace = pConnManager->GetWorkspace(outSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), outSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -176,5 +178,10 @@ namespace auge
 
 
 		return true;
+	}
+
+	void RasterGraylizeProcessorImpl::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
 	}
 }

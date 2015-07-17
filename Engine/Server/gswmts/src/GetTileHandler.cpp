@@ -4,6 +4,7 @@
 #include "WTileEngine.h"
 #include "AugeService.h"
 #include "AugeTile.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -102,7 +103,7 @@ namespace auge
 		TileStore* pTileStore = NULL;
 		TileWorkspace* pTileWorkspace = NULL;
 		ConnectionManager *pConnManager = augeGetConnectionManagerInstance();
-		pTileWorkspace = dynamic_cast<TileWorkspace*>(pConnManager->GetWorkspace(sourceName));
+		pTileWorkspace = dynamic_cast<TileWorkspace*>(pConnManager->GetWorkspace(pUser->GetID(), sourceName));
 		if(pTileWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX];

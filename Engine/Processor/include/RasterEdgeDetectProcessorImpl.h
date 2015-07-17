@@ -14,6 +14,8 @@ namespace auge
 		RasterEdgeDetectProcessorImpl();
 		virtual ~RasterEdgeDetectProcessorImpl();
 	public:
+		virtual void		SetUser(User* pUser);
+
 		virtual void		SetInputDataSource(const char* sourceName);
 		virtual void		SetInputRaster(const char* rasterName);
 
@@ -53,6 +55,8 @@ namespace auge
 		std::string	m_out_raster_name;
 
 		augeEdgeDetector m_detector;
+
+		User*		m_pUser;
 	};
 
 }

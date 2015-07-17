@@ -3,6 +3,7 @@
 #include "AugeFeature.h"
 #include "AugeGeometry.h"
 #include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -12,6 +13,8 @@ namespace auge
 		m_pTileStore = NULL;
 		m_start_level = 1;
 		m_end_level = 1;
+
+		m_pUser = NULL;
 	}
 
 	MongoTileStoreGenerator::~MongoTileStoreGenerator()
@@ -105,5 +108,10 @@ namespace auge
 		}
 
 		return counter;
+	}
+
+	void MongoTileStoreGenerator::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
 	}
 }

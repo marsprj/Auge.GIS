@@ -13,6 +13,7 @@ namespace auge
 		RasterStretchProcessorImpl();
 		virtual ~RasterStretchProcessorImpl();
 	public:
+		virtual void		SetUser(User* pUser);
 		virtual void		SetInputDataSource(const char* sourceName);
 		virtual void		SetInputRaster(const char* rasterName);
 
@@ -47,6 +48,8 @@ namespace auge
 
 		GColor		m_color_start;
 		GColor		m_color_end;
+
+		User*		m_pUser;
 	};
 
 }

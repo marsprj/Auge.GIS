@@ -28,26 +28,13 @@ namespace auge
 		virtual RESULTCODE		RemoveMap(const char* name);
 		virtual g_int			GetMapID(const char* name);
 		
-		//------------------------------------------------------------------------
-		// Map User Methods
-		//------------------------------------------------------------------------
-		virtual g_uint			GetCount(g_uint user);
-		virtual	Map*			GetMap(g_uint user, const char* mapName);
-		virtual EnumMap*		GetMaps(g_uint user);
-		virtual Map*			LoadMap(g_uint user, const char* mapName);
-
-		virtual Map*			CreateMap(g_uint user, const char* name);
-		virtual Map*			CreateMap(g_uint user, const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax);
-		virtual RESULTCODE		RemoveMap(g_uint user, const char* name);
-		virtual RESULTCODE		SaveMap(g_uint user, const char* name, g_uint srid, GEnvelope& extent, GEnvelope& viewer, const char* layer_ids);
-		
 		virtual RESULTCODE		UpdateMapLayers(Map* pMap);
 		virtual RESULTCODE		UpdateMapLayers(g_uint mapID, const char* layers);
 		virtual RESULTCODE		UpdateMapLayers(const char* mapName, const char* layers);
 		virtual RESULTCODE		GetMapLayers(g_uint mapID, char* layers);
 
-		virtual g_int			GetMapID(g_uint user, const char* name);
-		virtual RESULTCODE		SetMapThumbnail(g_uint user, g_uint map_id, const char* thumbnail);
+		virtual g_int			GetMapID(g_uint user_id, const char* name);
+		virtual RESULTCODE		SetMapThumbnail(g_uint user_id, g_uint map_id, const char* thumbnail);
 		
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_id, g_uint style_id);
 		virtual Layer*			CreateWebLayer(const char* name, augeLayerType type, const char* url, g_uint map_id);
@@ -79,6 +66,25 @@ namespace auge
 
 		virtual	EnumColorMap*	GetColorMaps();
 		virtual ColorMap*		GetColorMap(g_int id) ;
+
+		//------------------------------------------------------------------------
+		// Map User Methods Begin
+		//------------------------------------------------------------------------
+		virtual g_uint			GetCount(g_uint user);
+		virtual	Map*			GetMap(g_uint user_id, const char* mapName);
+		virtual EnumMap*		GetMaps(g_uint user);
+		virtual Map*			LoadMap(g_uint user_id, const char* mapName);
+
+		virtual Map*			CreateMap(g_uint user_id, const char* name);
+		virtual Map*			CreateMap(g_uint user_id, const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax);
+		virtual RESULTCODE		RemoveMap(g_uint user_id, const char* name);
+		virtual RESULTCODE		SaveMap(g_uint user_id, const char* name, g_uint srid, GEnvelope& extent, GEnvelope& viewer, const char* layer_ids);
+
+		virtual Layer*			CreateLayer(g_uint user_id, const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_id, g_uint style_id);
+		virtual Layer*			CreateWebLayer(g_uint user_id, const char* name, augeLayerType type, const char* url, g_uint map_id);
+		//------------------------------------------------------------------------
+		// Map User Methods End
+		//------------------------------------------------------------------------
 					
 	public:
 		virtual	RESULTCODE		Initialize(GConnection* pConnection);
@@ -100,6 +106,19 @@ namespace auge
 
 		bool					IsValiad(const char* text);
 		Map*					CreateMap(GResultSet* pResult, int row);
+
+		//------------------------------------------------------------------------
+		// Map User Methods Begin
+		//------------------------------------------------------------------------
+		Layer*					CreateLayer(g_uint user_id, int id, const char* name, augeLayerType type, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url);
+		FeatureLayer*			CreateFeatureLayer(g_uint user_id, int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible);
+		GraphicLayer*			CreateGraphicLayer(g_uint user_id, int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible);
+
+		GraphicLayer*			CreateGraphicLayer(g_uint user_id, const char* name, const char* f_name, g_uint source_id);
+		QuadServerLayer*		CreateQuadServerLayer(g_uint user_id, int id, const char* name, const char* url, int version, bool visible);
+		//------------------------------------------------------------------------
+		// Map User Methods End
+		//------------------------------------------------------------------------
 
 	private:
 		RESULTCODE				CreateMapTable();

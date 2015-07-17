@@ -115,7 +115,7 @@ namespace auge
 
 		TileWorkspace* pTileWorkspace = NULL;
 		ConnectionManager *pConnManager = augeGetConnectionManagerInstance();
-		pTileWorkspace = dynamic_cast<TileWorkspace*>(pConnManager->GetWorkspace(sourceName));
+		pTileWorkspace = dynamic_cast<TileWorkspace*>(pConnManager->GetWorkspace(pUser->GetID(), sourceName));
 		if(pTileWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX] = {0};

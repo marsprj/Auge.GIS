@@ -10,6 +10,7 @@ namespace auge
 	public:
 		GProcessorFactoryImpl();
 		virtual ~GProcessorFactoryImpl();
+
 	public:
 		virtual MapTileStoreGenerator*		CreateTileStoreGenerator();
 		virtual MapTileStoreGenerator*		CreateMongoTileStoreGenerator();

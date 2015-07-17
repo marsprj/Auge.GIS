@@ -3,6 +3,7 @@
 #include "AugeService.h"
 #include "AugeData.h"
 #include "AugeFeature.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -74,7 +75,7 @@ namespace auge
 
 		Workspace* pWorkspace = NULL;
 		ConnectionManager* pConnectionManager = augeGetConnectionManagerInstance();
-		pWorkspace = pConnectionManager->GetWorkspace(sourceName);
+		pWorkspace = pConnectionManager->GetWorkspace(pUser->GetID(), sourceName);
 		if( pWorkspace==NULL )
 		{
 			const char* msg = "Parameter [sourceName] is NULL";

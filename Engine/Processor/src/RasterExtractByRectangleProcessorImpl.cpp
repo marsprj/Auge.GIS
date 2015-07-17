@@ -1,12 +1,13 @@
 #include "RasterExtractByRectangleProcessorImpl.h"
 #include "AugeData.h"
 #include "AugeRaster.h"
+#include "AugeUser.h"
 
 namespace auge
 {
 	RasterExtractByRectangleProcessorImpl::RasterExtractByRectangleProcessorImpl()
 	{
-
+		m_pUser = NULL;
 	}
 
 	RasterExtractByRectangleProcessorImpl::~RasterExtractByRectangleProcessorImpl()
@@ -101,14 +102,14 @@ namespace auge
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = pConnManager->GetWorkspace(inSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), inSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
-		pWorkspace = pConnManager->GetWorkspace(outSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), outSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -151,5 +152,10 @@ namespace auge
 	void RasterExtractByRectangleProcessorImpl::Release()
 	{
 		delete this;
+	}
+
+	void RasterExtractByRectangleProcessorImpl::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
 	}
 }

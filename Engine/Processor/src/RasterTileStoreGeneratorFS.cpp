@@ -4,6 +4,7 @@
 #include "AugeGeometry.h"
 #include "AugeCarto.h"
 #include "AugeRaster.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -14,6 +15,8 @@ namespace auge
 		m_start_level = 1;
 		m_end_level = 1;
 		m_format = "png";
+
+		m_pUser = NULL;
 	}
 
 	RasterTileStoreGeneratorFS::~RasterTileStoreGeneratorFS()
@@ -121,5 +124,10 @@ namespace auge
 		}
 
 		return counter;
+	}
+
+	void RasterTileStoreGeneratorFS::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
 	}
 }

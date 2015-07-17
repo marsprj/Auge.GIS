@@ -21,14 +21,17 @@ namespace auge
 	class TileStore;
 	class Raster;
 	class Geometry;
+	class User;
 
 	class GProcessor : public GObject
 	{
 	protected:
 		GProcessor(){}
 		virtual ~GProcessor(){}
-	public:
+
+	public:		
 		virtual RESULTCODE	Execute() = 0;
+		virtual void		SetUser(User* pUser) = 0;
 	};
 
 	class BufferProcessor : public GProcessor

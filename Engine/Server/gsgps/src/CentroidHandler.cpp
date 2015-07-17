@@ -6,6 +6,7 @@
 #include "AugeWebCore.h"
 #include "AugeFeature.h"
 #include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -81,7 +82,7 @@ namespace auge
 		CentroidRequest* pRequest = static_cast<CentroidRequest*>(pWebRequest);
 
 		FeatureClass* pFeatureClass = NULL;
-		pFeatureClass = GetFeatureClass(pRequest,pWebContext);
+		pFeatureClass = GetFeatureClass(pRequest,pWebContext, pUser);
 		if(pFeatureClass==NULL)
 		{
 			GError* pError = augeGetErrorInstance();
@@ -109,21 +110,21 @@ namespace auge
 		return pWebResponse;
 	}
 
-	FeatureClass* CentroidHandler::GetFeatureClass(CentroidRequest* pWebRequest, WebContext* pWebContext)
+	FeatureClass* CentroidHandler::GetFeatureClass(CentroidRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		FeatureClass* pFeatureClass = NULL;
 		if(pWebRequest->GetSourceName())
 		{
-			pFeatureClass = GetFeatureClassBySource(pWebRequest, pWebContext);
+			pFeatureClass = GetFeatureClassBySource(pWebRequest, pWebContext, pUser);
 		}
 		else
 		{
-			pFeatureClass = GetFeatureClassByMap(pWebRequest, pWebContext);
+			pFeatureClass = GetFeatureClassByMap(pWebRequest, pWebContext, pUser);
 		}
 		return pFeatureClass;
 	}
 
-	FeatureClass* CentroidHandler::GetFeatureClassByMap(CentroidRequest* pWebRequest, WebContext* pWebContext)
+	FeatureClass* CentroidHandler::GetFeatureClassByMap(CentroidRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* typeName = NULL;
 		Layer* pLayer = NULL;
@@ -189,7 +190,7 @@ namespace auge
 		return pFeatureClass;
 	}
 
-	FeatureClass* CentroidHandler::GetFeatureClassBySource(CentroidRequest* pWebRequest, WebContext* pWebContext)
+	FeatureClass* CentroidHandler::GetFeatureClassBySource(CentroidRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* typeName = NULL;
 		Layer* pLayer = NULL;
@@ -206,7 +207,7 @@ namespace auge
 		}
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
-		Workspace* pWorkspace = pConnManager->GetWorkspace(sourceName);
+		Workspace* pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), sourceName);
 		if(pWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX];

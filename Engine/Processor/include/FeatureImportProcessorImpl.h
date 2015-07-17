@@ -12,6 +12,9 @@ namespace auge
 		FeatureImportProcessorImpl();
 		virtual ~FeatureImportProcessorImpl();
 	public:
+
+		virtual void		SetUser(User* pUser);
+
 		virtual void		SetShapePath(const char* path);
 		virtual void		SetShapeName(const char* className);
 		virtual void		SetDataSourceName(const char* sourceName);
@@ -29,6 +32,8 @@ namespace auge
 		std::string m_shp_name;
 		std::string m_db_source_name;
 		std::string m_db_type_name;
+
+		User*		m_pUser;
 	};
 }
 

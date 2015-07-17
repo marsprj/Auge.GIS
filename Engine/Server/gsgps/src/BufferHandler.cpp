@@ -6,6 +6,7 @@
 #include "AugeWebCore.h"
 #include "AugeFeature.h"
 #include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -81,7 +82,7 @@ namespace auge
 		BufferRequest* pRequest = static_cast<BufferRequest*>(pWebRequest);
 
 		FeatureClass* pFeatureClass = NULL;
-		pFeatureClass = GetFeatureClass(pRequest,pWebContext);
+		pFeatureClass = GetFeatureClass(pRequest,pWebContext,pUser);
 		if(pFeatureClass==NULL)
 		{
 			GError* pError = augeGetErrorInstance();
@@ -109,21 +110,21 @@ namespace auge
 		return pWebResponse;
 	}
 
-	FeatureClass* BufferHandler::GetFeatureClass(BufferRequest* pWebRequest, WebContext* pWebContext)
+	FeatureClass* BufferHandler::GetFeatureClass(BufferRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		FeatureClass* pFeatureClass = NULL;
 		if(pWebRequest->GetSourceName())
 		{
-			pFeatureClass = GetFeatureClassBySource(pWebRequest, pWebContext);
+			pFeatureClass = GetFeatureClassBySource(pWebRequest, pWebContext, pUser);
 		}
 		else
 		{
-			pFeatureClass = GetFeatureClassByMap(pWebRequest, pWebContext);
+			pFeatureClass = GetFeatureClassByMap(pWebRequest, pWebContext, pUser);
 		}
 		return pFeatureClass;
 	}
 
-	FeatureClass* BufferHandler::GetFeatureClassByMap(BufferRequest* pWebRequest, WebContext* pWebContext)
+	FeatureClass* BufferHandler::GetFeatureClassByMap(BufferRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* typeName = NULL;
 		Layer* pLayer = NULL;
@@ -189,7 +190,7 @@ namespace auge
 		return pFeatureClass;
 	}
 
-	FeatureClass* BufferHandler::GetFeatureClassBySource(BufferRequest* pWebRequest, WebContext* pWebContext)
+	FeatureClass* BufferHandler::GetFeatureClassBySource(BufferRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		const char* typeName = NULL;
 		Layer* pLayer = NULL;
@@ -206,7 +207,7 @@ namespace auge
 		}
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
-		Workspace* pWorkspace = pConnManager->GetWorkspace(sourceName);
+		Workspace* pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), sourceName);
 		if(pWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX];

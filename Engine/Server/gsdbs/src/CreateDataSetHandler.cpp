@@ -3,6 +3,7 @@
 #include "AugeWebCore.h"
 #include "AugeData.h"
 #include "AugeFeature.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -81,7 +82,7 @@ namespace auge
 		}
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
-		FeatureWorksapce* pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(sourceName));
+		FeatureWorksapce* pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(pUser->GetID(), sourceName));
 		if(pWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX] = {0};

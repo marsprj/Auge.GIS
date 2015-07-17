@@ -389,7 +389,7 @@ namespace auge
 		}
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
-		Workspace* pWorkspace = pConnManager->GetWorkspace(sourceName);
+		Workspace* pWorkspace = pConnManager->GetWorkspace(pUser->GetID(),sourceName);
 		if(pWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX];

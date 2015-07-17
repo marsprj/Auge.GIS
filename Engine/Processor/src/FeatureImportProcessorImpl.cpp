@@ -2,12 +2,13 @@
 #include "AugeData.h"
 #include "AugeFeature.h"
 #include "AugeField.h"
+#include "AugeUser.h"
 
 namespace auge
 {
 	FeatureImportProcessorImpl::FeatureImportProcessorImpl()
 	{
-
+		m_pUser = NULL;
 	}
 
 	FeatureImportProcessorImpl::~FeatureImportProcessorImpl()
@@ -164,7 +165,7 @@ namespace auge
 
 		FeatureWorksapce* pdbWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
-		pdbWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(source_name));
+		pdbWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_pUser->GetID(), source_name));
 		if(pdbWorkspace==NULL)
 		{
 			pshpFeatureClass->Release();
@@ -210,5 +211,10 @@ namespace auge
 		pshpWorkspace->Release();
 
 		return AG_SUCCESS;
+	}
+
+	void FeatureImportProcessorImpl::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
 	}
 }

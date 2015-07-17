@@ -1,6 +1,7 @@
 #include "RasterFormatConvertToJPEGProcessorImpl.h"
 #include "AugeData.h"
 #include "AugeRaster.h"
+#include "AugeUser.h"
 
 #include <fstream>
 
@@ -11,6 +12,8 @@ namespace auge
 		m_red = 0;
 		m_green = 0;
 		m_blue = 0;
+
+		m_pUser = NULL;
 	}
 
 	RasterFormatConvertToJPEGProcessorImpl::~RasterFormatConvertToJPEGProcessorImpl()
@@ -138,12 +141,12 @@ namespace auge
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = pConnManager->GetWorkspace(inSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), inSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
-		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
+		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(m_pUser->GetID(), pWorkspace);
 
 		Raster* pinRaster = NULL;
 		RasterDataset* pinRasterDataset = NULL;
@@ -193,7 +196,7 @@ namespace auge
 		}
 		else
 		{
-			pWorkspace = pConnManager->GetWorkspace(outSourceName);
+			pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), outSourceName);
 			if(pWorkspace==NULL)
 			{
 				return AG_FAILURE;
@@ -421,5 +424,10 @@ namespace auge
 	RESULTCODE RasterFormatConvertToJPEGProcessorImpl::Fill_Int16(RasterBand* poutBand, RasterBand* pinBand, GRect rastertRect)
 	{
 		return AG_SUCCESS;
+	}
+
+	void RasterFormatConvertToJPEGProcessorImpl::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
 	}
 }

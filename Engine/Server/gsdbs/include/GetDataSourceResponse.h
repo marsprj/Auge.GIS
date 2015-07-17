@@ -7,6 +7,7 @@
 
 namespace auge
 {
+	class User;
 	class Service;
 	class Workspace;
 	class GetDataSourceRequest;
@@ -18,12 +19,17 @@ namespace auge
 		virtual ~GetDataSourceResponse();
 	public:
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
+
+	public:
+		void	SetUser(User* pUser);
+
 	private:
 		void	AddDataSourceNode(XElement* pxRoot, Workspace* pWorkspace);
 		void	AddDataSourceNode(XDocument* pxDoc, Workspace* pWorkspace);
 
 	private:
-		GetDataSourceRequest *m_pRequest;	
+		GetDataSourceRequest *m_pRequest;
+		User*	m_pUser;
 	};
 }
 

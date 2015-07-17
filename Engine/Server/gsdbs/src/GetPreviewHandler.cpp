@@ -8,6 +8,7 @@
 #include "AugeFeature.h"
 #include "AugeField.h"
 #include "AugeCore.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -69,7 +70,7 @@ namespace auge
 
 		Workspace* pWorkspace = NULL;
 		ConnectionManager* pConnectionManager = augeGetConnectionManagerInstance();
-		pWorkspace = pConnectionManager->GetWorkspace(sourceName);
+		pWorkspace = pConnectionManager->GetWorkspace(pUser->GetID(), sourceName);
 		if( pWorkspace==NULL )
 		{
 			char msg[AUGE_PATH_MAX] = {0};

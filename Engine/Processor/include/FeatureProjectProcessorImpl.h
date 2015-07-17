@@ -19,6 +19,9 @@ namespace auge
 		FeatureProjectProcessorImpl();
 		virtual ~FeatureProjectProcessorImpl();
 	public:
+
+		virtual void		SetUser(User* pUser);
+
 		virtual	void		SetInputDataSource(const char* sourceName);
 		virtual	void		SetInputFeatureClass(const char* className);
 
@@ -56,6 +59,8 @@ namespace auge
 
 		g_uint		m_srid;
 		SrsBase		m_srsbase;
+
+		User*		m_pUser;
 	};
 }
 

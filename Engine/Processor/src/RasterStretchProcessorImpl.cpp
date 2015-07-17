@@ -1,6 +1,7 @@
 #include "RasterStretchProcessorImpl.h"
 #include "AugeData.h"
 #include "AugeRaster.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -8,6 +9,8 @@ namespace auge
 	{
 		m_color_start = GColor(255,0,0,255);
 		m_color_end = GColor(0,255,0,255);
+
+		m_pUser = NULL;
 	}
 
 	RasterStretchProcessorImpl::~RasterStretchProcessorImpl()
@@ -116,14 +119,14 @@ namespace auge
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = pConnManager->GetWorkspace(inSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), inSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
-		pWorkspace = pConnManager->GetWorkspace(outSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), outSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -251,5 +254,10 @@ namespace auge
 		free(b_b);
 
 		return true;
+	}
+
+	void RasterStretchProcessorImpl::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
 	}
 }

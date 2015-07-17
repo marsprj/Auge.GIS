@@ -15,6 +15,9 @@ namespace auge
 		KMeanProcessorImpl();
 		virtual ~KMeanProcessorImpl();
 	public:
+
+		virtual void		SetUser(User* pUser);
+
 		virtual void		SetK(g_uint k);
 
 		virtual	void		SetInputDataSource(const char* sourceName);
@@ -45,6 +48,8 @@ namespace auge
 		std::string m_out_class_name;
 
 		KMean		m_kmean;
+
+		User*		m_pUser;
 	};
 }
 

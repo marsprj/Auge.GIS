@@ -13,6 +13,9 @@ namespace auge
 		MongoTileStoreGenerator();
 		virtual ~MongoTileStoreGenerator();
 	public:
+
+		virtual void		SetUser(User* pUser);
+
 		virtual	void		SetMap(Map* pMap);
 		virtual void		SetTileStore(TileStore* pTileStore);
 		virtual void		SetStartLevel(g_uint l);
@@ -26,6 +29,8 @@ namespace auge
 		GEnvelope		m_viewer;
 		g_uint			m_start_level;
 		g_uint			m_end_level;
+
+		User*			m_pUser;
 	};
 }
 

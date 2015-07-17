@@ -1,6 +1,7 @@
 #include "RasterEdgeDetectProcessorImpl.h"
 #include "AugeData.h"
 #include "AugeRaster.h"
+#include "AugeUser.h"
 
 #include <math.h>
 
@@ -17,6 +18,7 @@ namespace auge
 
 	RasterEdgeDetectProcessorImpl::RasterEdgeDetectProcessorImpl()
 	{
+		m_pUser = NULL;
 	}
 
 	RasterEdgeDetectProcessorImpl::~RasterEdgeDetectProcessorImpl()
@@ -110,14 +112,14 @@ namespace auge
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = pConnManager->GetWorkspace(inSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), inSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
-		pWorkspace = pConnManager->GetWorkspace(outSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), outSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -420,5 +422,10 @@ namespace auge
 			double scale = (double)((*ptr) - v_min) / (double)span;
 			*ptr = scale * 255;
 		}
+	}
+
+	void RasterEdgeDetectProcessorImpl::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
 	}
 }

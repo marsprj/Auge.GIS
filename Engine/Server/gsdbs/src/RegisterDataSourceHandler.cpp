@@ -2,6 +2,7 @@
 #include "RegisterDataSourceRequest.h"
 #include "AugeService.h"
 #include "AugeData.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -57,7 +58,7 @@ namespace auge
 		uri = pRequest->GetURI();
 
 		ConnectionManager*	pConnManager = augeGetConnectionManagerInstance();
-		RESULTCODE rc = pConnManager->Register(name, engine, uri);
+		RESULTCODE rc = pConnManager->Register(pUser->GetID(), name, engine, uri);
 		if(rc!=AG_SUCCESS)
 		{
 			GError* pError = augeGetErrorInstance();

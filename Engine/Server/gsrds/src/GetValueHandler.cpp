@@ -2,6 +2,7 @@
 #include "GetValueRequest.h"
 #include "GetValueResponse.h"
 
+#include "AugeUser.h"
 #include "AugeRaster.h"
 #include "AugeData.h"
 #include "AugeCore.h"
@@ -114,7 +115,7 @@ namespace auge
 		RasterWorkspace* pRasterWorkspace = NULL;
 		ConnectionManager* pConnectionManager = NULL;
 		pConnectionManager = augeGetConnectionManagerInstance();
-		pWorkspace = pConnectionManager->GetWorkspace(sourceName);
+		pWorkspace = pConnectionManager->GetWorkspace(pUser->GetID(), sourceName);
 		if(pWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX];

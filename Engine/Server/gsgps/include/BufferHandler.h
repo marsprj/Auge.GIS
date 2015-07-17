@@ -31,9 +31,9 @@ namespace auge
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 
 	protected:
-		FeatureClass*			GetFeatureClass(BufferRequest* pWebRequest, WebContext* pWebContext);
-		FeatureClass*			GetFeatureClassByMap(BufferRequest* pWebRequest, WebContext* pWebContext);
-		FeatureClass*			GetFeatureClassBySource(BufferRequest* pWebRequest, WebContext* pWebContext);
+		FeatureClass*			GetFeatureClass(BufferRequest* pWebRequest, WebContext* pWebContext, User* pUser);
+		FeatureClass*			GetFeatureClassByMap(BufferRequest* pWebRequest, WebContext* pWebContext, User* pUser);
+		FeatureClass*			GetFeatureClassBySource(BufferRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 
 	};
 }

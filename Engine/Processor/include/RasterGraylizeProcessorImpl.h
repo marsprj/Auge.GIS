@@ -14,6 +14,8 @@ namespace auge
 		RasterGraylizeProcessorImpl();
 		virtual ~RasterGraylizeProcessorImpl();
 	public:
+		virtual void		SetUser(User* pUser);
+
 		virtual void		SetInputDataSource(const char* sourceName);
 		virtual void		SetInputRaster(const char* rasterName);
 
@@ -38,6 +40,8 @@ namespace auge
 
 		std::string	m_out_source_name;
 		std::string	m_out_raster_name;
+
+		User	*m_pUser;
 	};
 
 }

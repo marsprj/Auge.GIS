@@ -101,13 +101,13 @@
     <ClInclude Include="..\include\RasterExtractByRectangleProcessorImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\RasterSretchProcessorImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\RasterEdgeDetectProcessorImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\RasterFormatConvertToJPEGProcessorImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\RasterStretchProcessorImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

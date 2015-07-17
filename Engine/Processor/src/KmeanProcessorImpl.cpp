@@ -5,12 +5,14 @@
 #include "AugeCore.h"
 #include "AugeFeature.h"
 #include "AugeField.h"
+#include "AugeUser.h"
 
 namespace auge
 {
 	KMeanProcessorImpl::KMeanProcessorImpl()
 	{
 		m_k = 0;
+		m_pUser = NULL;
 	}
 
 	KMeanProcessorImpl::~KMeanProcessorImpl()
@@ -128,13 +130,13 @@ namespace auge
 		FeatureWorksapce	*poutWorkspace= NULL;
 		ConnectionManager	*pConnManager = augeGetConnectionManagerInstance();
 		
-		pinWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(sourceName_in));
+		pinWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_pUser->GetID(), sourceName_in));
 		if(pinWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 
-		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(sourceName_out));
+		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_pUser->GetID(), sourceName_out));
 		if(poutWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -356,4 +358,8 @@ namespace auge
 		delete this;
 	}
 
+	void KMeanProcessorImpl::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
+	}
 }

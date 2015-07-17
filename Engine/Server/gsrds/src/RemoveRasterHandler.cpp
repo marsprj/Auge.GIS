@@ -3,6 +3,7 @@
 #include "AugeWebCore.h"
 #include "AugeData.h"
 #include "AugeRaster.h"
+#include "AugeUser.h"
 
 #ifndef WIN32
 #include <sys/types.h>
@@ -99,7 +100,7 @@ namespace auge
 		RasterWorkspace* pRasterWorkspace = NULL;
 		ConnectionManager* pConnectionManager = NULL;
 		pConnectionManager = augeGetConnectionManagerInstance();
-		pWorkspace = pConnectionManager->GetWorkspace(sourceName);
+		pWorkspace = pConnectionManager->GetWorkspace(pUser->GetID(), sourceName);
 		if(pWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX];

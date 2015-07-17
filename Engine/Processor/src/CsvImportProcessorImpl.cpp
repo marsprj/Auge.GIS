@@ -3,12 +3,13 @@
 #include "AugeCore.h"
 #include "AugeFeature.h"
 #include "AugeField.h"
+#include "AugeUser.h"
 
 namespace auge
 {
 	CsvImportProcessorImpl::CsvImportProcessorImpl()
 	{
-
+		m_pUser = NULL;
 	}
 
 	CsvImportProcessorImpl::~CsvImportProcessorImpl()
@@ -95,7 +96,7 @@ namespace auge
 
 		FeatureWorksapce* pobjWorkspace = NULL;
 		ConnectionManager* pConnectionManager = augeGetConnectionManagerInstance();
-		pobjWorkspace = dynamic_cast<FeatureWorksapce*>(pConnectionManager->GetWorkspace(m_source_name.c_str()));
+		pobjWorkspace = dynamic_cast<FeatureWorksapce*>(pConnectionManager->GetWorkspace(m_pUser->GetID(), m_source_name.c_str()));
 		if(pobjWorkspace==NULL)
 		{
 			pLogger->Error(pError->GetLastError(),__FILE__,__LINE__);
@@ -229,5 +230,10 @@ namespace auge
 		pFeature->Release();
 
 		return (rc==AG_SUCCESS);
+	}
+
+	void CsvImportProcessorImpl::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
 	}
 }

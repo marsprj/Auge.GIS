@@ -2,6 +2,7 @@
 #include "GetDataSourceResponse.h"
 #include "AugeService.h"
 #include "AugeData.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -9,6 +10,7 @@ namespace auge
 	{
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
+		m_pUser = NULL;
 	}
 
 	GetDataSourceResponse::~GetDataSourceResponse()
@@ -33,7 +35,7 @@ namespace auge
 		if(name==NULL)
 		{
 			XElement *pxRoot = pxDoc->CreateRootNode("IMS_DataSources", NULL, NULL);
-			EnumWorkspace* pEnum = pConnManager->GetWorkspaces();
+			EnumWorkspace* pEnum = pConnManager->GetWorkspaces(m_pUser->GetID());
 			pEnum->Reset();
 			while((pWorkspace=pEnum->Next()))
 			{
@@ -49,7 +51,7 @@ namespace auge
 		}
 		else
 		{
-			pWorkspace = pConnManager->GetWorkspace(name);
+			pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), name);
 			if(pWorkspace!=NULL)
 			{
 				AddDataSourceNode(pxDoc, pWorkspace);
@@ -97,5 +99,10 @@ namespace auge
 		pxNode->AddChildText(pWorkspace->GetEngine()->GetID());
 		pxNode = pxDataSource->AddChild("ConnectionString");
 		pxNode->AddChildText(pWorkspace->GetConnectionString());
+	}
+
+	void GetDataSourceResponse::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
 	}
 }

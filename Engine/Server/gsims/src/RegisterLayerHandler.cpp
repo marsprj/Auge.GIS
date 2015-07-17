@@ -97,12 +97,12 @@ namespace auge
 		switch(layerType)
 		{
 		case augeLayerFeature:
-			pWebResponse = RegisterFeatureLayer(pRequest, pMap);
+			pWebResponse = RegisterFeatureLayer(pRequest, pMap, pUser);
 			break;
 		case augeLayerRaster:
 			break;
 		case augeLayerQuadServer:
-			pWebResponse = RegisterQuadServerLayer(pRequest, pMap);
+			pWebResponse = RegisterQuadServerLayer(pRequest, pMap, pUser);
 			break;
 		}
 		//Workspace *pWorkspace = NULL;
@@ -144,7 +144,7 @@ namespace auge
 		return Execute(pWebRequest, pUser);
 	}
 
-	WebResponse* RegisterLayerHandler::RegisterFeatureLayer(RegisterLayerRequest* pRequest, Map* pMap)
+	WebResponse* RegisterLayerHandler::RegisterFeatureLayer(RegisterLayerRequest* pRequest, Map* pMap, User* pUser)
 	{
 		const char* dataSource = pRequest->GetDataSource();
 		const char* layerName = pRequest->GetLayerName();
@@ -153,7 +153,7 @@ namespace auge
 		
 		Workspace *pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
-		pWorkspace = pConnManager->GetWorkspace(dataSource);
+		pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), dataSource);
 		if(pWorkspace == NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -185,7 +185,7 @@ namespace auge
 		return pSusResponse;
 	}
 
-	WebResponse* RegisterLayerHandler::RegisterQuadServerLayer(RegisterLayerRequest* pRequest, Map* pMap)
+	WebResponse* RegisterLayerHandler::RegisterQuadServerLayer(RegisterLayerRequest* pRequest, Map* pMap, User* pUser)
 	{
 		const char* layerName = pRequest->GetLayerName();
 		augeLayerType layerType = pRequest->GetType();

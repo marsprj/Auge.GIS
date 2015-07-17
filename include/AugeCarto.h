@@ -298,24 +298,11 @@ namespace auge
 		virtual RESULTCODE		RemoveMap(const char* name) = 0;
 		virtual g_int			GetMapID(const char* name) = 0;
 
-		//------------------------------------------------------------------------
-		// Map User Methods
-		//------------------------------------------------------------------------
-		virtual g_uint			GetCount(g_uint user) = 0;
-		virtual	Map*			GetMap(g_uint user, const char* mapName) = 0;
-		virtual EnumMap*		GetMaps(g_uint user) = 0;
-		virtual Map*			LoadMap(g_uint user, const char* mapName) = 0;
-		virtual Map*			CreateMap(g_uint user, const char* name) = 0;
-		virtual Map*			CreateMap(g_uint user, const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax) = 0;
-		virtual RESULTCODE		RemoveMap(g_uint user, const char* name) = 0;
-		virtual RESULTCODE		SaveMap(g_uint user, const char* name, g_uint srid, GEnvelope& extent, GEnvelope& viewer, const char* layer_ids) = 0;
-
-
 		virtual RESULTCODE		UpdateMapLayers(Map* pMap) = 0;
 		virtual RESULTCODE		UpdateMapLayers(g_uint mapID, const char* layers) = 0;
 		virtual RESULTCODE		UpdateMapLayers(const char* mapName, const char* layers) = 0;
-		virtual g_int			GetMapID(g_uint user, const char* name) = 0;
-		virtual RESULTCODE		SetMapThumbnail(g_uint user, g_uint map_id, const char* thumbnail) = 0;
+		virtual g_int			GetMapID(g_uint user_id, const char* name) = 0;
+		virtual RESULTCODE		SetMapThumbnail(g_uint user_id, g_uint map_id, const char* thumbnail) = 0;
 
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_i, g_uint style_id) = 0;
 		virtual Layer*			CreateWebLayer(const char* name, augeLayerType type, const char* url, g_uint map_id) = 0;
@@ -348,6 +335,24 @@ namespace auge
 
 		virtual	EnumColorMap*	GetColorMaps() = 0;
 		virtual ColorMap*		GetColorMap(g_int id) = 0;
+
+		//------------------------------------------------------------------------
+		// Map User Methods Begin
+		//------------------------------------------------------------------------
+		virtual g_uint			GetCount(g_uint user) = 0;
+		virtual	Map*			GetMap(g_uint user_id, const char* mapName) = 0;
+		virtual EnumMap*		GetMaps(g_uint user) = 0;
+		virtual Map*			LoadMap(g_uint user_id, const char* mapName) = 0;
+		virtual Map*			CreateMap(g_uint user_id, const char* name) = 0;
+		virtual Map*			CreateMap(g_uint user_id, const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax) = 0;
+		virtual RESULTCODE		RemoveMap(g_uint user_id, const char* name) = 0;
+		virtual RESULTCODE		SaveMap(g_uint user_id, const char* name, g_uint srid, GEnvelope& extent, GEnvelope& viewer, const char* layer_ids) = 0;
+
+		//virtual Layer*			CreateLayer(g_uint user_id, const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_i, g_uint style_id) = 0;
+		//virtual Layer*			CreateWebLayer(g_uint user_id, const char* name, augeLayerType type, const char* url, g_uint map_id) = 0;
+		//------------------------------------------------------------------------
+		// Map User Methods End
+		//------------------------------------------------------------------------
 		
 	public:
 		virtual	RESULTCODE		Initialize(GConnection* pConnection) = 0;

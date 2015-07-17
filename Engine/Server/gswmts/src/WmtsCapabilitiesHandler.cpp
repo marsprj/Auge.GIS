@@ -6,6 +6,7 @@
 #include "AugeXML.h"
 #include "AugeTile.h"
 #include "AugeData.h"
+#include "AugeUser.h"
 #include <math.h>
 
 namespace auge
@@ -115,7 +116,7 @@ namespace auge
 		const char* version = pRequest->GetVersion();
 		//if(strcmp(version,"1.0.0")==0)
 		{
-			pWebResponse = WriteCapabilities_1_0_0(pRequest, pWebContext, sourceName);
+			pWebResponse = WriteCapabilities_1_0_0(pRequest, pWebContext, sourceName, pUser);
 		}
 		//else if(strcmp(version,"1.3.0")==0)
 		//{
@@ -134,7 +135,7 @@ namespace auge
 		return pWebResponse;
 	}
 	
-	WmtsCapabilitiesResponse* WmtsCapabilitiesHandler::WriteCapabilities_1_0_0(WmtsCapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName) 
+	WmtsCapabilitiesResponse* WmtsCapabilitiesHandler::WriteCapabilities_1_0_0(WmtsCapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName, User* pUser) 
 	{
 		const char* cache_path = pWebContext->GetCacheProtocolPath(); 
 
@@ -167,7 +168,7 @@ namespace auge
 		XElement* pxContents = pxRoot->AddChild("Contents", NULL);
 
 		// Capabilities-->Contents-->Layer
-		AddTileLayersNode_1_0_0(pxContents, sourceName);
+		AddTileLayersNode_1_0_0(pxContents, sourceName, pUser);
 		//AddTileLayerNode_1_0_0(pxContents, sourceName);
 		
 		// Capabilities-->Contents-->TileMatrixSet
@@ -183,9 +184,9 @@ namespace auge
 		return pResponse;
 	}
 
-	WmtsCapabilitiesResponse* WmtsCapabilitiesHandler::WriteCapabilities_1_3_0(WmtsCapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName)
+	WmtsCapabilitiesResponse* WmtsCapabilitiesHandler::WriteCapabilities_1_3_0(WmtsCapabilitiesRequest* pRequest, WebContext* pWebContext, const char* sourceName, User* pUser)
 	{
-		return WriteCapabilities_1_0_0(pRequest, pWebContext, sourceName);
+		return WriteCapabilities_1_0_0(pRequest, pWebContext, sourceName, pUser);
 	}
 
 	void WmtsCapabilitiesHandler::SetRooteNode_1_0_0(XElement* pxRoot, const char* version)
@@ -254,13 +255,13 @@ namespace auge
 		}
 	}
 
-	void WmtsCapabilitiesHandler::AddTileLayersNode_1_0_0(XElement* pxParent, const char* sourceName)
+	void WmtsCapabilitiesHandler::AddTileLayersNode_1_0_0(XElement* pxParent, const char* sourceName, User* pUser)
 	{	
 		TileStore* pTileStore = NULL;
 		TileWorkspace* pTileWorkspace = NULL;
 		ConnectionManager* pConnectionManager = augeGetConnectionManagerInstance();
 
-		pTileWorkspace = dynamic_cast<TileWorkspace*>(pConnectionManager->GetWorkspace(sourceName));
+		pTileWorkspace = dynamic_cast<TileWorkspace*>(pConnectionManager->GetWorkspace(pUser->GetID(), sourceName));
 		if(pTileWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -340,7 +341,7 @@ namespace auge
 		pEnumStore->Release();
 	}
 
-	void WmtsCapabilitiesHandler::AddTileLayerNode_1_0_0(XElement* pxParent, const char* sourceName)
+	void WmtsCapabilitiesHandler::AddTileLayerNode_1_0_0(XElement* pxParent, const char* sourceName, User* pUser)
 	{	
 		const char* name = "store1";
 		char str[AUGE_PATH_MAX];
@@ -348,7 +349,7 @@ namespace auge
 		TileWorkspace* pTileWorkspace = NULL;
 		ConnectionManager* pConnectionManager = augeGetConnectionManagerInstance();
 
-		pTileWorkspace = dynamic_cast<TileWorkspace*>(pConnectionManager->GetWorkspace(sourceName));
+		pTileWorkspace = dynamic_cast<TileWorkspace*>(pConnectionManager->GetWorkspace(pUser->GetID(), sourceName));
 		if(pTileWorkspace!=NULL)
 		{
 			pTileStore = pTileWorkspace->OpenTileStore("store1");
