@@ -133,7 +133,15 @@ namespace auge
 		pCanvas->DrawBackground(bgColor);
 
 		GEnvelope& extent = pRequest->GetExtent();
-		pCanvas->SetViewer(extent);
+		if(extent.IsValid())
+		{
+			pCanvas->SetViewer(extent);
+		}
+		else
+		{
+			GEnvelope& extent = pMap->GetExtent();
+			pCanvas->SetViewer(extent);
+		}
 
 		const char* lname = NULL;
 		const char* sname = NULL;

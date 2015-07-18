@@ -101,13 +101,30 @@ namespace auge
 		return NULL;
 	}
 
-	void XElement::SetChildText(const char* content)
+	void XElement::SetChildText(const char* content, bool encoding/*=false*/)
 	{
 		XTextNode* node = GetChildText();
 		if(node!=NULL)
-			node->SetContent(content);
+		{
+			if(encoding)
+			{	
+				size_t content_len = strlen(content);
+				size_t size_utf8 = content_len << 1;
+				char* content_utf8 = new char[size_utf8];
+				memset(content_utf8, 0, size_utf8);
+				auge_encoding_convert_2("GBK", "UTF-8",content, content_len, (char*)content_utf8, &size_utf8);
+				node->SetContent(content_utf8);
+				delete[] content_utf8;
+			}
+			else
+			{
+				node->SetContent(content);
+			}
+		}
 		else
-			AddChildText(content);
+		{
+			AddChildText(content, encoding);
+		}
 	}
 
 	XCommentNode* XElement::AddChildComment(const char* content)

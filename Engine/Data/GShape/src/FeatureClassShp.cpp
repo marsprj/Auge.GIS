@@ -266,14 +266,16 @@ namespace auge
 	{
 		switch(shpType)
 		{
-		case 1:
+		case SHPT_POINT:
+		case SHPT_POINTZ:
 			return augeGTPoint;
-		case 3:
+		case SHPT_ARC:
+		case SHPT_ARCZ:
 			return augeGTMultiLineString;
-			break;		
-		case 5:
+		case SHPT_POLYGON:
+		case SHPT_POLYGONZ:
 			return augeGTMultiPolygon;
-		case 8:
+		case SHPT_MULTIPOINT:
 			return augeGTMultiPoint;
 		}
 

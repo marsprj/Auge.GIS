@@ -70,7 +70,7 @@ namespace auge
 			return pExpResponse;
 		}
 
-		const char* extent = pRequest->GetExtent();
+		const char* extent = pRequest->GetExtent(); 
 		if(extent==NULL)
 		{
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
@@ -81,7 +81,7 @@ namespace auge
 		double xmin=0.0f, ymin=0.0f, xmax=0.0f, ymax=0.0f;
 		sscanf(extent,"%lf,%lf,%lf,%lf",&xmin, &ymin, &xmax, &ymax);
 		int srid = atoi(pRequest->GetSRID());
-		pMap = pCartoManager->CreateMap(name, srid, xmin, ymin, xmax, ymax);
+		pMap = pCartoManager->CreateMap(pUser->GetID(), name, srid, xmin, ymin, xmax, ymax);
 		if(!pMap)
 		{
 			GError* pError = augeGetErrorInstance();

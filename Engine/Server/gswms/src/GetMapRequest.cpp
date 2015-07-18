@@ -209,8 +209,11 @@ namespace auge
 			return;
 		}
 		float xmin, ymin, xmax, ymax;
-		sscanf(value,"%f,%f,%f,%f", &xmin, &ymin, &xmax, &ymax);
-		m_extent.Set(xmin, ymin, xmax, ymax);
+		int count = sscanf(value,"%f,%f,%f,%f", &xmin, &ymin, &xmax, &ymax);
+		if(count==4)
+		{
+			m_extent.Set(xmin, ymin, xmax, ymax);
+		}
 	}
 
 	void GetMapRequest::SetWidth(const char* value)

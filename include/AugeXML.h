@@ -209,7 +209,7 @@ namespace auge
 		XAttribute*			SetAttribute(const char* name, const char* value, const char* ns_prefix);
 		XAttribute*			GetAttribute(const char* name, const char* ns_prefix=NULL);
 
-		void				SetChildText(const char* content);
+		void				SetChildText(const char* content, bool encoding=false);
 		XTextNode*			GetChildText();
 		XTextNode*			AddChildText(const char* content, bool encoding=false);
 

@@ -46,7 +46,9 @@ namespace auge
 
 	WebResponse* GetDataSourceHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
-		return new GetDataSourceResponse(static_cast<GetDataSourceRequest*>(pWebRequest));
+		GetDataSourceResponse* pResponse = new GetDataSourceResponse(static_cast<GetDataSourceRequest*>(pWebRequest));
+		pResponse->SetUser(pUser);
+		return pResponse;
 	}
 
 	WebResponse* GetDataSourceHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)

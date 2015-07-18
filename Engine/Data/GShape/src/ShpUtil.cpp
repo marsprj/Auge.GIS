@@ -156,6 +156,7 @@ int	ShpUtil::GetWKBLength(SHPObject* pSHPObject)
 		return GetWKBLenofPoint(pSHPObject);
 		break;
 	case SHPT_ARC:
+	case SHPT_ARCZ:
 		{
 			if(pSHPObject->nParts>1)
 			//if(pSHPObject->nParts>0)
@@ -169,6 +170,7 @@ int	ShpUtil::GetWKBLength(SHPObject* pSHPObject)
 		}
 		break;
 	case SHPT_POLYGON:
+	case SHPT_POLYGONZ:
 		{	
 			//return GetWKBLenofMultiPolygon(pSHPObject);
 			if(IsSimplePolygon(pSHPObject))
@@ -288,6 +290,7 @@ int ShpUtil::SHPObject_2_WKB(SHPObject *pSHPObject, g_uchar* pWKB, int len)
 		return WritePoint(pSHPObject, (WKBPoint*)pWKB);
 		break;
 	case SHPT_ARC:
+	case SHPT_ARCZ:
 		{
 			//if(true)
 			if(pSHPObject->nParts>1)	//只有Part大于1的线，才转为MultiLineString
@@ -305,6 +308,7 @@ int ShpUtil::SHPObject_2_WKB(SHPObject *pSHPObject, g_uchar* pWKB, int len)
 		}
 		break;
 	case SHPT_POLYGON:
+	case SHPT_POLYGONZ:
 		{
 			//return WritePolygon(pSHPObject,pWKB,len);
 			//return WritePolygon(pSHPObject,(WKBPolygon*)pWKB);
@@ -326,16 +330,6 @@ int ShpUtil::SHPObject_2_WKB(SHPObject *pSHPObject, g_uchar* pWKB, int len)
 		}
 		break;
 	case SHPT_POINTZ:
-		{
-			
-		}
-		break;
-	case SHPT_ARCZ:
-		{
-			
-		}
-		break;
-	case SHPT_POLYGONZ:
 		{
 			
 		}

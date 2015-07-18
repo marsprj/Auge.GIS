@@ -61,7 +61,7 @@ namespace auge
 			const char* datasetName = pDataSet->GetName();
 			pxDataSet = pxRoot->AddChild("DataSet");				
 			XElement* pxElement = pxDataSet->AddChild("Name");
-			pxElement->SetChildText(datasetName);
+			pxElement->SetChildText(datasetName, true);
 			pxElement = pxDataSet->AddChild("Type");
 			pxElement->SetChildText(augeGetDataSetType(pDataSet->GetType()));
 			
