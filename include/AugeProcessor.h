@@ -319,6 +319,42 @@ namespace auge
 		virtual void		SetBlue(g_uint i) = 0;
 	};
 
+	/**
+	 * DemSlopeProcessor
+	 *
+	 * DEMÆÂ¶È
+	 */
+	class DemSlopeProcessor : public GProcessor
+	{
+	protected:
+		DemSlopeProcessor(){}
+		virtual ~DemSlopeProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+	};
+
+	/**
+	 * DemAspectProcessor
+	 *
+	 * DEMÆÂ¶È
+	 */
+	class DemAspectProcessor : public GProcessor
+	{
+	protected:
+		DemAspectProcessor(){}
+		virtual ~DemAspectProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+	};
+
 	//------------------------------------------------------------------------
 	// Raster Processor Begin
 	//------------------------------------------------------------------------
@@ -401,6 +437,10 @@ namespace auge
 		virtual RasterSmoothProcessor*				CreateRasterSmoothProcessor() = 0;
 		virtual RasterSubtractProcessor*			CreateRasterSubtractProcessor() = 0;
 		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor() = 0;
+
+		// DEM
+		virtual DemSlopeProcessor*					CreateDemSlopeProcessor() = 0;
+		virtual DemAspectProcessor*					CreateDemAspectProcessor() = 0;
 	};
 	
 	extern "C"

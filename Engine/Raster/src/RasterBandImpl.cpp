@@ -33,6 +33,16 @@ namespace auge
 		return m_poRasterBand->GetYSize();
 	}
 
+	double RasterBandImpl::GetResolution_X()
+	{
+		return m_pRaster->GetResolution_X();
+	}
+
+	double RasterBandImpl::GetResolution_Y()
+	{
+		return m_pRaster->GetResolution_Y();
+	}
+
 	augePixelType RasterBandImpl::GetPixelType()
 	{
 		return (augePixelType)m_poRasterBand->GetRasterDataType();

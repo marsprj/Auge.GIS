@@ -46,6 +46,9 @@ namespace auge
 		//virtual augeDataSetType	GetType() = 0;
 		virtual g_uint			GetWidth() = 0;
 		virtual g_uint			GetHeight() = 0;
+		virtual double			GetResolution_X() = 0;
+		virtual double			GetResolution_Y() = 0;
+
 		virtual g_uint			GetBandCount() = 0;
 		virtual RasterBand*		GetBand(g_uint i) = 0;
 		virtual GEnvelope&		GetExtent() = 0;
@@ -80,6 +83,9 @@ namespace auge
 		virtual g_uint			GetWidth() = 0;
 		virtual g_uint			GetHeight() = 0;
 		virtual GEnvelope&		GetExtent() = 0;
+
+		virtual double			GetResolution_X() = 0;
+		virtual double			GetResolution_Y() = 0;
 
 		virtual augePixelType	GetPixelType() = 0;
 		virtual g_uint			GetPixelSize() = 0;

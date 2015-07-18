@@ -18,6 +18,9 @@ namespace auge
 		virtual g_uint			GetHeight();
 		virtual GEnvelope&		GetExtent();
 
+		virtual double			GetResolution_X();
+		virtual double			GetResolution_Y();
+
 		virtual augePixelType	GetPixelType();
 		virtual g_uint			GetPixelSize();
 

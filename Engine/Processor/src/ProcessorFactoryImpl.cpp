@@ -16,6 +16,9 @@
 #include "RasterSubtractProcessorImpl.h"
 #include "RasterFormatConvertToJPEGProcessorImpl.h"
 
+#include "DemSlopeProcessorImpl.h"
+#include "DemAspectProcessorImpl.h"
+
 #ifndef WIN32
 #include "ArchiveProcessorImpl.h"
 #endif
@@ -116,5 +119,15 @@ namespace auge
 	RasterFormatConvertToJPEGProcessor*	GProcessorFactoryImpl::CreateRasterFormatConvertToJPEGProcessor()
 	{
 		return (new RasterFormatConvertToJPEGProcessorImpl());
+	}
+
+	DemSlopeProcessor* GProcessorFactoryImpl::CreateDemSlopeProcessor()
+	{
+		return (new DemSlopeProcessorImpl());
+	}
+
+	DemAspectProcessor*	GProcessorFactoryImpl::CreateDemAspectProcessor()
+	{
+		return (new DemAspectProcessorImpl());
 	}
 }

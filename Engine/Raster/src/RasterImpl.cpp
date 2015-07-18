@@ -75,6 +75,16 @@ namespace auge
 		return m_poDataset->GetRasterYSize();
 	}
 
+	double	RasterImpl::GetResolution_X()
+	{
+		return  m_geo_transform[1];
+	}
+
+	double	RasterImpl::GetResolution_Y()
+	{
+		return m_geo_transform[5];
+	}
+
 	g_int RasterImpl::GetSRID()
 	{
 		return m_srid;

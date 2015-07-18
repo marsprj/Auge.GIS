@@ -31,6 +31,9 @@ namespace auge
 		virtual RasterSmoothProcessor*				CreateRasterSmoothProcessor();
 		virtual RasterSubtractProcessor*			CreateRasterSubtractProcessor();
 		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor();
+
+		virtual DemSlopeProcessor*					CreateDemSlopeProcessor();
+		virtual DemAspectProcessor*					CreateDemAspectProcessor();
 	};
 }
 

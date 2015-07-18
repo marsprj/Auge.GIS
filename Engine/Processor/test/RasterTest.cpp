@@ -262,3 +262,49 @@ void RasterTest::Subtract()
 	DWORD te = GetTickCount();
 	printf("[时间]:%d毫秒\n", te-ts);
 }
+
+void RasterTest::DEMSlope()
+{
+	DWORD ts = GetTickCount();
+
+	auge::DemSlopeProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateDemSlopeProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputRaster("srtm_58_05.tif");
+
+	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputRaster("srtm_58_05_slope.tif");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
+
+void RasterTest::DEMAspect()
+{
+	DWORD ts = GetTickCount();
+
+	auge::DemAspectProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateDemAspectProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputRaster("srtm_58_05.tif");
+
+	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputRaster("srtm_58_05_aspect.tif");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}

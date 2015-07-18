@@ -28,6 +28,9 @@ namespace auge
 
 		virtual g_uint			GetWidth();
 		virtual g_uint			GetHeight();
+		virtual double			GetResolution_X();
+		virtual double			GetResolution_Y();
+
 		virtual g_uint			GetBandCount();
 		virtual RasterBand*		GetBand(g_uint i);
 

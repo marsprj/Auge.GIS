@@ -14,7 +14,9 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(ToJPG);
 	//CPPUNIT_TEST(Reverse);
 	//CPPUNIT_TEST(Smooth);
-	CPPUNIT_TEST(Subtract);
+	//CPPUNIT_TEST(Subtract);
+	//CPPUNIT_TEST(DEMSlope);
+	CPPUNIT_TEST(DEMAspect);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -29,6 +31,9 @@ private:
 	void	Reverse();
 	void	Smooth();
 	void	Subtract();
+
+	void	DEMSlope();
+	void	DEMAspect();
 
 private:
 	auge::GConnection	*m_pConnection;
