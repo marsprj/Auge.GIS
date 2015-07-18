@@ -11,7 +11,7 @@ namespace auge
 {
 	FeatureProjectProcessorImpl::FeatureProjectProcessorImpl()
 	{
-		m_pUser = NULL;
+		m_user = 0;
 	}
 
 	FeatureProjectProcessorImpl::~FeatureProjectProcessorImpl()
@@ -129,13 +129,13 @@ namespace auge
 		FeatureWorksapce	*poutWorkspace= NULL;
 		ConnectionManager	*pConnManager = augeGetConnectionManagerInstance();
 		
-		pinWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_pUser->GetID(), sourceName_in));
+		pinWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_user, sourceName_in));
 		if(pinWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 
-		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_pUser->GetID(), sourceName_out));
+		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_user, sourceName_out));
 		if(poutWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -484,8 +484,8 @@ namespace auge
 		return ret;
 	}
 
-	void FeatureProjectProcessorImpl::SetUser(User* pUser)
+	void FeatureProjectProcessorImpl::SetUser(g_uint user)
 	{
-		m_pUser = pUser;
+		m_user = user;
 	}
 }

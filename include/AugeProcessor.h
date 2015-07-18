@@ -23,6 +23,22 @@ namespace auge
 	class Geometry;
 	class User;
 
+	typedef enum augeEdgeDetector
+	{
+		augeEdgeSobel	=  0,
+		augeEdgeRoberts		,
+		augeEdgePrewitt		,
+		augeEdgeLaplacian
+	}augeEdgeDetector;
+
+	typedef enum augeRasterSmoother
+	{
+		augeSmoothGauss	=	0,		//高斯滤波
+		augeSmoothMean,				//均值滤波
+		augeSmoothMedian,			//中值滤波
+		augeSmoothBilateral			//双边滤波
+	}augeRasterSmoother;
+
 	class GProcessor : public GObject
 	{
 	protected:
@@ -31,7 +47,7 @@ namespace auge
 
 	public:		
 		virtual RESULTCODE	Execute() = 0;
-		virtual void		SetUser(User* pUser) = 0;
+		virtual void		SetUser(g_uint user) = 0;
 	};
 
 	class BufferProcessor : public GProcessor
@@ -150,14 +166,11 @@ namespace auge
 		virtual	void		SetEndColor(GColor color) = 0;
 	};
 
-	typedef enum
-	{
-		augeEdgeSobel	=  0,
-		augeEdgeRoberts		,
-		augeEdgePrewitt		,
-		augeEdgeLaplacian
-	}augeEdgeDetector;
-
+	/**
+	 * RasterGraylizeProcessor
+	 *
+	 * RGB转灰度图
+	 */
 	class RasterGraylizeProcessor : public GProcessor
 	{
 	protected:
@@ -171,6 +184,31 @@ namespace auge
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 	};
 
+	/**
+	 * RasterSmoothProcessor
+	 *
+	 * 图像平滑
+	 */
+	class RasterSmoothProcessor : public GProcessor
+	{
+	protected:
+		RasterSmoothProcessor(){}
+		virtual ~RasterSmoothProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+
+		virtual void		SetSmoother(augeRasterSmoother smoother) = 0;
+	};
+
+	/**
+	 * RasterEdgeDetectProcessor
+	 *
+	 * 图像边缘提取
+	 */
 	class RasterEdgeDetectProcessor : public GProcessor
 	{
 	protected:
@@ -184,6 +222,60 @@ namespace auge
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 
 		virtual void		SetEdgeDetector(augeEdgeDetector detector) = 0;
+	};
+	
+	/**
+	 * RasterResampleProcessor
+	 *
+	 * 图像重采样
+	 */
+	class RasterResampleProcessor : public GProcessor
+	{
+	protected:
+		RasterResampleProcessor(){}
+		virtual ~RasterResampleProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+	};
+
+	/**
+	 * RasterBinarizationProcessor
+	 *
+	 * 图像二值化
+	 */
+	class RasterBinarizationProcessor : public GProcessor
+	{
+	protected:
+		RasterBinarizationProcessor(){}
+		virtual ~RasterBinarizationProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+	};
+
+	/**
+	 * RasterReverseProcessor
+	 *
+	 * 图像二值化
+	 */
+	class RasterReverseProcessor : public GProcessor
+	{
+	protected:
+		RasterReverseProcessor(){}
+		virtual ~RasterReverseProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
 	};
 
 	class RasterFormatConvertToJPEGProcessor : public GProcessor
@@ -237,11 +329,11 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	// Cluster Processor
 	//////////////////////////////////////////////////////////////////////////
-	class KMeanProcessor : public GProcessor
+	class KMeansProcessor : public GProcessor
 	{
 	protected:
-		KMeanProcessor(){}
-		virtual ~KMeanProcessor(){}
+		KMeansProcessor(){}
+		virtual ~KMeansProcessor(){}
 	public:
 
 		virtual void		SetK(g_uint k) = 0;
@@ -274,7 +366,7 @@ namespace auge
 		virtual CsvImportProcessor*			CreateCsvImportProcessor() = 0;
 
 		// Cluster 
-		virtual KMeanProcessor*				CreateKMeanProcessor() = 0;
+		virtual KMeansProcessor*			CreateKMeansProcessor() = 0;
 
 		// projection
 		virtual FeatureProjectProcessor*	CreateFeatureProjectProcessor() = 0;
@@ -284,6 +376,8 @@ namespace auge
 		virtual RasterStretchProcessor*				CreateRasterStretchProcessor() = 0;
 		virtual RasterEdgeDetectProcessor*			CreateRasterEdgeDetectProcessor() = 0;
 		virtual RasterGraylizeProcessor*			CreateRasterGraylizeProcessor() = 0;
+		virtual RasterReverseProcessor*				CreateRasterReverseProcessor() = 0;
+		virtual RasterSmoothProcessor*				CreateRasterSmoothProcessor() = 0;
 		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor() = 0;
 	};
 	

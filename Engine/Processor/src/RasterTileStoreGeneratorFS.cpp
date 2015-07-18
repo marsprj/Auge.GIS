@@ -16,7 +16,7 @@ namespace auge
 		m_end_level = 1;
 		m_format = "png";
 
-		m_pUser = NULL;
+		m_user = 0;
 	}
 
 	RasterTileStoreGeneratorFS::~RasterTileStoreGeneratorFS()
@@ -126,8 +126,8 @@ namespace auge
 		return counter;
 	}
 
-	void RasterTileStoreGeneratorFS::SetUser(User* pUser)
+	void RasterTileStoreGeneratorFS::SetUser(g_uint user)
 	{
-		m_pUser = pUser;
+		m_user = user;
 	}
 }

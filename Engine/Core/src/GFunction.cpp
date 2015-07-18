@@ -668,4 +668,42 @@ namespace auge
 			break;
 		}
 	}
+
+	g_byte auge_get_median(g_byte* values, g_uint size)
+	{
+		if(values==NULL||size==0)
+		{
+			return 0;
+		}
+
+		//for(int k=0; k<size; k++)
+		//{
+		//	printf("%d\t", values[k]);
+		//}
+
+		g_uint m = size>>1;
+
+		g_byte v, temp;
+		g_uint i,j,t;
+		for(i=0; i<=m; i++)
+		{
+			v = values[i], t=i;
+			for(j=i+1; j<size; j++)
+			{
+				if(values[j] < v)
+				{
+					v = values[j];
+					t = j;
+				}
+			}
+			if(t!=i)
+			{
+				temp	  = values[i];
+				values[i] = values[t];
+				values[t] = temp;
+			}
+		}
+
+		return v;
+	}
 }

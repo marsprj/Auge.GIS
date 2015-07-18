@@ -13,7 +13,7 @@ namespace auge
 		RasterExtractByRectangleProcessorImpl();
 		virtual ~RasterExtractByRectangleProcessorImpl();
 	public:
-		virtual void		SetUser(User* pUser);
+		virtual void		SetUser(g_uint user);
 
 		virtual void		SetInputRectangle(GEnvelope& rect);
 
@@ -42,7 +42,7 @@ namespace auge
 		std::string	m_out_source_name;
 		std::string	m_out_raster_name;
 
-		User*		m_pUser;
+		g_uint		m_user;
 	};
 
 }

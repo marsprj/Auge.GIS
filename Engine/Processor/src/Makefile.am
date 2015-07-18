@@ -32,5 +32,7 @@ libgprocessor_la_SOURCES=\
 		RasterEdgeDetectProcessorImpl.cpp \
 		RasterStretchProcessorImpl.cpp \
 		RasterGraylizeProcessorImpl.cpp \
+		RasterReverseProcessorImpl.cpp \
+		RasterSmoothProcessorImpl.cpp \
 		RasterFormatConvertToJPEGProcessorImpl.cpp
 

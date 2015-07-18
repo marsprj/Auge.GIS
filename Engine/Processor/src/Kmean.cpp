@@ -3,7 +3,7 @@
 
 namespace auge
 {
-	KMean::KMean()
+	KMeans::KMeans()
 	{
 		m_cluster_count = 0;
 		m_clusters = NULL;
@@ -15,7 +15,7 @@ namespace auge
 		m_max_iteration = 100;
 	}
 
-	KMean::~KMean()
+	KMeans::~KMeans()
 	{
 		if(m_clusters!=NULL)
 		{
@@ -34,7 +34,7 @@ namespace auge
 		}
 	}
 
-	bool KMean::SetPoints(g_uint count)
+	bool KMeans::SetPoints(g_uint count)
 	{
 		if(m_points!=NULL)
 		{
@@ -48,7 +48,7 @@ namespace auge
 		return true;
 	}
 
-	bool KMean::SetPoint(g_uint i, double x, double y)
+	bool KMeans::SetPoint(g_uint i, double x, double y)
 	{
 		if(i<m_point_count)
 		{
@@ -58,12 +58,12 @@ namespace auge
 		return true;
 	}
 
-	g_uint KMean::GetPointCount()
+	g_uint KMeans::GetPointCount()
 	{
 		return m_point_count;
 	}
 
-	bool KMean::GetPoint(g_uint i, double& x, double& y, g_uint& cluster)
+	bool KMeans::GetPoint(g_uint i, double& x, double& y, g_uint& cluster)
 	{
 		if(i>=m_point_count)
 		{
@@ -75,7 +75,7 @@ namespace auge
 		return true;
 	}
 
-	bool KMean::SetClusters(g_uint count)
+	bool KMeans::SetClusters(g_uint count)
 	{
 		if(m_clusters!=NULL)
 		{
@@ -92,12 +92,12 @@ namespace auge
 		return true;
 	}
 
-	g_uint KMean::GetClusterCount()
+	g_uint KMeans::GetClusterCount()
 	{
 		return m_cluster_count;
 	}
 
-	bool KMean::GetCluster(g_uint i, double& x, double& y)
+	bool KMeans::GetCluster(g_uint i, double& x, double& y)
 	{
 		if(i>=m_cluster_count)
 		{
@@ -108,7 +108,7 @@ namespace auge
 		return true;
 	}
 
-	bool KMean::Execute()
+	bool KMeans::Execute()
 	{
 		InitCluster();
 
@@ -144,7 +144,7 @@ namespace auge
 	return true;
 	}
 
-	g_uint KMean::FindPointCluster(double ptx, double pty)
+	g_uint KMeans::FindPointCluster(double ptx, double pty)
 	{
 		//printf("------------------------------------------\n");
 
@@ -166,12 +166,12 @@ namespace auge
 		return cluster_id;
 	}
 
-	double KMean::Distance(double x0, double y0, double x1, double y1)
+	double KMeans::Distance(double x0, double y0, double x1, double y1)
 	{
 		return fabs(x0-x1) + fabs(y0-y1);
 	}
 
-	void KMean::InitCluster()
+	void KMeans::InitCluster()
 	{
 		double xmin=AUGE_DOUBLE_MAX;
 		double ymin=AUGE_DOUBLE_MAX;
@@ -202,7 +202,7 @@ namespace auge
 		}
 	}
 
-	void KMean::CleanupCluster()
+	void KMeans::CleanupCluster()
 	{
 		kmean_cluster_t* c = m_clusters;
 		for(g_uint i=0; i<m_cluster_count; i++, c++)
@@ -213,7 +213,7 @@ namespace auge
 		}
 	}
 
-	void KMean::UpdateCluster()
+	void KMeans::UpdateCluster()
 	{
 		CleanupCluster();
 
@@ -236,7 +236,7 @@ namespace auge
 		}		
 	}
 
-	void KMean::GetPointBound(double& xmin, double& ymin, double& xmax, double& ymax)
+	void KMeans::GetPointBound(double& xmin, double& ymin, double& xmax, double& ymax)
 	{
 		for(g_uint i=0; i<m_point_count; i++)
 		{
@@ -252,7 +252,7 @@ namespace auge
 		}
 	}
 
-	void KMean::PrintCluster()
+	void KMeans::PrintCluster()
 	{
 		//kmean_cluster_t* c = m_clusters;
 		//for(g_uint i=0; i<m_cluster_count; i++, c++)

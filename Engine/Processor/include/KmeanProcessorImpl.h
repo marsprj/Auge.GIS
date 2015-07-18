@@ -9,14 +9,14 @@ namespace auge
 {
 	class FeatureWorksapce;
 
-	class KMeanProcessorImpl : public KMeanProcessor
+	class KMeansProcessorImpl : public KMeansProcessor
 	{
 	public:
-		KMeanProcessorImpl();
-		virtual ~KMeanProcessorImpl();
+		KMeansProcessorImpl();
+		virtual ~KMeansProcessorImpl();
 	public:
 
-		virtual void		SetUser(User* pUser);
+		virtual void		SetUser(g_uint user);
 
 		virtual void		SetK(g_uint k);
 
@@ -36,8 +36,8 @@ namespace auge
 		const char*			GetOutputSource();
 		const char*			GetOutputFatureClass();
 
-		RESULTCODE			SaveCentroidResult(KMean* kmean, const char* className, FeatureWorksapce* pWorkspace, g_uint srid);
-		RESULTCODE			SaveClusterResult(KMean* kmean, const char* className, FeatureWorksapce* pWorkspace, g_uint srid);
+		RESULTCODE			SaveCentroidResult(KMeans* kmean, const char* className, FeatureWorksapce* pWorkspace, g_uint srid);
+		RESULTCODE			SaveClusterResult(KMeans* kmean, const char* className, FeatureWorksapce* pWorkspace, g_uint srid);
 
 	private:
 		g_uint		m_k;
@@ -47,9 +47,9 @@ namespace auge
 		std::string m_out_source_name;
 		std::string m_out_class_name;
 
-		KMean		m_kmean;
+		KMeans		m_kmean;
 
-		User*		m_pUser;
+		g_uint		m_user;
 	};
 }
 

@@ -13,7 +13,7 @@ namespace auge
 		m_green = 0;
 		m_blue = 0;
 
-		m_pUser = NULL;
+		m_user = 0;
 	}
 
 	RasterFormatConvertToJPEGProcessorImpl::~RasterFormatConvertToJPEGProcessorImpl()
@@ -141,12 +141,12 @@ namespace auge
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), inSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_user, inSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
-		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(m_pUser->GetID(), pWorkspace);
+		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(m_user, pWorkspace);
 
 		Raster* pinRaster = NULL;
 		RasterDataset* pinRasterDataset = NULL;
@@ -196,7 +196,7 @@ namespace auge
 		}
 		else
 		{
-			pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), outSourceName);
+			pWorkspace = pConnManager->GetWorkspace(m_user, outSourceName);
 			if(pWorkspace==NULL)
 			{
 				return AG_FAILURE;
@@ -426,8 +426,8 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void RasterFormatConvertToJPEGProcessorImpl::SetUser(User* pUser)
+	void RasterFormatConvertToJPEGProcessorImpl::SetUser(g_uint user)
 	{
-		m_pUser = pUser;
+		m_user = user;
 	}
 }

@@ -8,7 +8,7 @@ namespace auge
 {
 	FeatureImportProcessorImpl::FeatureImportProcessorImpl()
 	{
-		m_pUser = NULL;
+		m_user = 0;
 	}
 
 	FeatureImportProcessorImpl::~FeatureImportProcessorImpl()
@@ -165,7 +165,7 @@ namespace auge
 
 		FeatureWorksapce* pdbWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
-		pdbWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_pUser->GetID(), source_name));
+		pdbWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_user, source_name));
 		if(pdbWorkspace==NULL)
 		{
 			pshpFeatureClass->Release();
@@ -213,8 +213,8 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void FeatureImportProcessorImpl::SetUser(User* pUser)
+	void FeatureImportProcessorImpl::SetUser(g_uint user)
 	{
-		m_pUser = pUser;
+		m_user = user;
 	}
 }

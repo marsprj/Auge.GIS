@@ -1,5 +1,5 @@
-#ifndef __AUGE_RASTER_GRAY_IMPL_H__
-#define __AUGE_RASTER_GRAY_IMPL_H__
+#ifndef __AUGE_RASTER_REVERSE_IMPL_H__
+#define __AUGE_RASTER_REVERSE_IMPL_H__
 
 #include "AugeCore.h"
 #include "AugeProcessor.h"
@@ -8,11 +8,11 @@
 
 namespace auge
 {
-	class RasterGraylizeProcessorImpl : public RasterGraylizeProcessor
+	class RasterReverseProcessorImpl : public RasterReverseProcessor
 	{
 	public:
-		RasterGraylizeProcessorImpl();
-		virtual ~RasterGraylizeProcessorImpl();
+		RasterReverseProcessorImpl();
+		virtual ~RasterReverseProcessorImpl();
 	public:
 		virtual void		SetUser(g_uint user);
 
@@ -21,7 +21,7 @@ namespace auge
 
 		virtual void		SetOutputDataSource(const char* sourceName);
 		virtual void		SetOutputRaster(const char* rasterName);
-		
+				
 		virtual RESULTCODE	Execute();
 		virtual void		Release();
 
@@ -32,7 +32,9 @@ namespace auge
 		const char*			GetOutputDataSource();
 		const char*			GetOutputRaster();
 
-		bool				Greylize(Raster* pRaster);
+	private:
+		Raster*				Reverse(Raster* pinRaster);
+		RESULTCODE			Reverse(RasterBand* pBand);
 
 	private:
 		std::string	m_in_source_name;
@@ -40,11 +42,11 @@ namespace auge
 
 		std::string	m_out_source_name;
 		std::string	m_out_raster_name;
-
-		g_uint	m_user;
+		
+		g_uint				m_user;
 	};
 
 }
 
 
-#endif //__AUGE_RASTER_GRAY_IMPL_H__
+#endif //__AUGE_RASTER_REVERSE_IMPL_H__

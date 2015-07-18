@@ -15,7 +15,7 @@ namespace auge
 		virtual ~RasterFormatConvertToJPEGProcessorImpl();
 
 	public:
-		virtual void		SetUser(User* pUser);
+		virtual void		SetUser(g_uint user);
 		virtual void		SetInputRectangle(GEnvelope& rect);
 
 		virtual void		SetInputDataSource(const char* sourceName);
@@ -70,7 +70,7 @@ namespace auge
 		g_uint		m_green;
 		g_uint		m_blue;
 
-		User*		m_pUser;
+		g_uint		m_user;
 	};
 
 }

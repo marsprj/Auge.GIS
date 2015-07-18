@@ -11,6 +11,8 @@
 #include "RasterStretchProcessorImpl.h"
 #include "RasterEdgeDetectProcessorImpl.h"
 #include "RasterGraylizeProcessorImpl.h"
+#include "RasterReverseProcessorImpl.h"
+#include "RasterSmoothProcessorImpl.h"
 #include "RasterFormatConvertToJPEGProcessorImpl.h"
 
 #ifndef WIN32
@@ -65,9 +67,9 @@ namespace auge
 		return (new CsvImportProcessorImpl());
 	}
 
-	KMeanProcessor*	GProcessorFactoryImpl::CreateKMeanProcessor()
+	KMeansProcessor*	GProcessorFactoryImpl::CreateKMeansProcessor()
 	{
-		return (new KMeanProcessorImpl());
+		return (new KMeansProcessorImpl());
 	}
 
 	FeatureProjectProcessor* GProcessorFactoryImpl::CreateFeatureProjectProcessor()
@@ -93,6 +95,16 @@ namespace auge
 	RasterGraylizeProcessor* GProcessorFactoryImpl::CreateRasterGraylizeProcessor()
 	{
 		return (new RasterGraylizeProcessorImpl());
+	}
+
+	RasterReverseProcessor*	GProcessorFactoryImpl::CreateRasterReverseProcessor()
+	{
+		return (new RasterReverseProcessorImpl());
+	}
+
+	RasterSmoothProcessor* GProcessorFactoryImpl::CreateRasterSmoothProcessor()
+	{
+		return (new RasterSmoothProcessorImpl());
 	}
 
 	RasterFormatConvertToJPEGProcessor*	GProcessorFactoryImpl::CreateRasterFormatConvertToJPEGProcessor()

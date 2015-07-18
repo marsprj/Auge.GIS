@@ -15,7 +15,7 @@ namespace auge
 		RasterTileStoreGeneratorFS();
 		virtual ~RasterTileStoreGeneratorFS();
 	public:
-		virtual void		SetUser(User* pUser);
+		virtual void		SetUser(g_uint user);
 		virtual	void		SetRaster(Raster* pRaster);
 		virtual void		SetFormat(const char* format);
 
@@ -35,7 +35,7 @@ namespace auge
 		g_uint			m_end_level;
 		std::string		m_format;
 
-		User*			m_pUser;
+		g_uint			m_user;
 	};
 }
 

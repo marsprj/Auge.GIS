@@ -1,26 +1,25 @@
-#include "RasterExtractByRectangleProcessorImpl.h"
+#include "RasterReverseProcessorImpl.h"
 #include "AugeData.h"
 #include "AugeRaster.h"
 #include "AugeUser.h"
 
+#include <math.h>
+
+#include <fstream>
+
 namespace auge
 {
-	RasterExtractByRectangleProcessorImpl::RasterExtractByRectangleProcessorImpl()
+	RasterReverseProcessorImpl::RasterReverseProcessorImpl()
 	{
 		m_user = 0;
 	}
 
-	RasterExtractByRectangleProcessorImpl::~RasterExtractByRectangleProcessorImpl()
+	RasterReverseProcessorImpl::~RasterReverseProcessorImpl()
 	{
 
 	}
-
-	void RasterExtractByRectangleProcessorImpl::SetInputRectangle(GEnvelope& rect)
-	{
-		m_rect = rect;
-	}
-
-	void RasterExtractByRectangleProcessorImpl::SetInputDataSource(const char* sourceName)
+	
+	void RasterReverseProcessorImpl::SetInputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -32,7 +31,7 @@ namespace auge
 		}
 	}
 
-	void RasterExtractByRectangleProcessorImpl::SetInputRaster(const char* rasterName)
+	void RasterReverseProcessorImpl::SetInputRaster(const char* rasterName)
 	{
 		if(rasterName==NULL)
 		{
@@ -44,7 +43,7 @@ namespace auge
 		}
 	}
 
-	void RasterExtractByRectangleProcessorImpl::SetOutputDataSource(const char* sourceName)
+	void RasterReverseProcessorImpl::SetOutputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -56,7 +55,7 @@ namespace auge
 		}
 	}
 
-	void RasterExtractByRectangleProcessorImpl::SetOutputRaster(const char* rasterName)
+	void RasterReverseProcessorImpl::SetOutputRaster(const char* rasterName)
 	{
 		if(rasterName==NULL)
 		{
@@ -68,29 +67,28 @@ namespace auge
 		}
 	}
 
-	const char*	RasterExtractByRectangleProcessorImpl::GetInputDataSource()
+	const char*	RasterReverseProcessorImpl::GetInputDataSource()
 	{
 		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
 	}
 
-	const char*	RasterExtractByRectangleProcessorImpl::GetInputRaster()
+	const char*	RasterReverseProcessorImpl::GetInputRaster()
 	{
 		return m_in_raster_name.empty() ? NULL : m_in_raster_name.c_str();
 	}
 
-	const char*	RasterExtractByRectangleProcessorImpl::GetOutputDataSource()
+	const char*	RasterReverseProcessorImpl::GetOutputDataSource()
 	{
 		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
 	}
 
-	const char*	RasterExtractByRectangleProcessorImpl::GetOutputRaster()
+	const char*	RasterReverseProcessorImpl::GetOutputRaster()
 	{
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
 	}
 
-	RESULTCODE RasterExtractByRectangleProcessorImpl::Execute()
+	RESULTCODE RasterReverseProcessorImpl::Execute()
 	{
-		GEnvelope&  inRect = m_rect;
 		const char* inSourceName = GetInputDataSource();
 		const char* inRasterName = GetInputRaster();
 		const char* outSourceName = GetOutputDataSource();
@@ -116,7 +114,6 @@ namespace auge
 		}
 		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
-
 		Raster* pinRaster = NULL;
 		RasterDataset* pinRasterDataset = NULL;
 
@@ -130,18 +127,19 @@ namespace auge
 		}
 		pinRaster = pinRasterDataset->GetRaster();
 		
-		GEnvelope& raster_extent = pinRaster->GetExtent();
-		GEnvelope exent = raster_extent.Intersect(inRect);
-
-		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
-
-		poutRaster = pRasterFactory->CreateRaster(outRasterName, exent, pinRaster);
-		if(poutRaster==NULL)
+		augePixelType pixelType =  pinRaster->GetPixelType();
+		if(pixelType != augePixelByte)
 		{
 			pinRasterDataset->Release();
 			return AG_FAILURE;
 		}
 
+		poutRaster = Reverse(pinRaster);
+
+		if(poutRaster!=NULL)
+		{
+			poutRaster->SetName(outRasterName);
+		}
 		RESULTCODE rc = poutRasterWorkspace->AddRaster(poutRaster);
 		poutRaster->Release();
 		pinRasterDataset->Release();
@@ -149,13 +147,50 @@ namespace auge
 		return rc;
 	}
 
-	void RasterExtractByRectangleProcessorImpl::Release()
+	void RasterReverseProcessorImpl::Release()
 	{
 		delete this;
 	}
 
-	void RasterExtractByRectangleProcessorImpl::SetUser(g_uint user)
+	void RasterReverseProcessorImpl::SetUser(g_uint user)
 	{
 		m_user = user;
+	}
+
+	Raster* RasterReverseProcessorImpl::Reverse(Raster* pinRaster)
+	{
+		RasterBand* pBand  = NULL;
+		Raster* poutRaster = NULL;
+
+		int band_count = pinRaster->GetBandCount();
+		for(int i=0; i<band_count; i++)
+		{
+			pBand = pinRaster->GetBand(i);
+			Reverse(pBand);			
+		}
+
+		poutRaster = pinRaster;
+		poutRaster->AddRef();
+		return poutRaster;
+	}
+
+	RESULTCODE RasterReverseProcessorImpl::Reverse(RasterBand* Band)
+	{
+		g_uint width = Band->GetWidth();
+		g_uint height= Band->GetHeight();
+
+		g_byte v_h=0, v_v=0;
+		g_byte* data = (g_byte*)Band->GetData();
+		g_byte* ptr = data;
+		
+		for(g_uint i=0; i<height; i++)
+		{	
+			for(g_uint j=0; j<width; j++, ptr++)
+			{
+				*ptr = 255 - *ptr;
+			}
+		}
+		Band->SetData(data);
+		return AG_SUCCESS;
 	}
 }

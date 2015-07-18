@@ -6,7 +6,7 @@
 
 namespace auge
 {
-	class KMean
+	class KMeans
 	{
 	private:
 		typedef struct
@@ -24,8 +24,8 @@ namespace auge
 			g_uint	count;
 		}kmean_cluster_t;
 	public:
-		KMean();
-		virtual ~KMean();
+		KMeans();
+		virtual ~KMeans();
 	public:
 		bool			SetPoints(g_uint count);
 		bool			SetPoint(g_uint i, double x, double y);

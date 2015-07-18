@@ -14,7 +14,7 @@ namespace auge
 		m_start_level = 1;
 		m_end_level = 1;
 
-		m_pUser = NULL;
+		m_user = 0;
 	}
 
 	FileSystemTileStoreGeneratorImpl::~FileSystemTileStoreGeneratorImpl()
@@ -211,8 +211,8 @@ namespace auge
 	//	return counter;
 	//}
 
-	void FileSystemTileStoreGeneratorImpl::SetUser(User* pUser)
+	void FileSystemTileStoreGeneratorImpl::SetUser(g_uint user)
 	{
-		m_pUser = pUser;
+		m_user = user;
 	}
 }

@@ -49,9 +49,9 @@ void ClusterTest::KMeanTest()
 {	
 	DWORD ts = GetTickCount();
 
-	auge::KMeanProcessor* pProcessor = NULL;
+	auge::KMeansProcessor* pProcessor = NULL;
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
-	pProcessor = pFactory->CreateKMeanProcessor();
+	pProcessor = pFactory->CreateKMeansProcessor();
 
 	pProcessor->SetInputDataSource("test");
 	pProcessor->SetInputFeatureClass("cities");

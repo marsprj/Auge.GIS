@@ -18,7 +18,7 @@ namespace auge
 
 	RasterEdgeDetectProcessorImpl::RasterEdgeDetectProcessorImpl()
 	{
-		m_pUser = NULL;
+		m_user = 0;
 	}
 
 	RasterEdgeDetectProcessorImpl::~RasterEdgeDetectProcessorImpl()
@@ -112,14 +112,14 @@ namespace auge
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), inSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_user, inSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
-		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), outSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_user, outSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -424,8 +424,8 @@ namespace auge
 		}
 	}
 
-	void RasterEdgeDetectProcessorImpl::SetUser(User* pUser)
+	void RasterEdgeDetectProcessorImpl::SetUser(g_uint user)
 	{
-		m_pUser = pUser;
+		m_user = user;
 	}
 }

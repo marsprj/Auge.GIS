@@ -9,7 +9,7 @@ namespace auge
 {
 	CsvImportProcessorImpl::CsvImportProcessorImpl()
 	{
-		m_pUser = NULL;
+		m_user = 0;
 	}
 
 	CsvImportProcessorImpl::~CsvImportProcessorImpl()
@@ -96,7 +96,7 @@ namespace auge
 
 		FeatureWorksapce* pobjWorkspace = NULL;
 		ConnectionManager* pConnectionManager = augeGetConnectionManagerInstance();
-		pobjWorkspace = dynamic_cast<FeatureWorksapce*>(pConnectionManager->GetWorkspace(m_pUser->GetID(), m_source_name.c_str()));
+		pobjWorkspace = dynamic_cast<FeatureWorksapce*>(pConnectionManager->GetWorkspace(m_user, m_source_name.c_str()));
 		if(pobjWorkspace==NULL)
 		{
 			pLogger->Error(pError->GetLastError(),__FILE__,__LINE__);
@@ -232,8 +232,8 @@ namespace auge
 		return (rc==AG_SUCCESS);
 	}
 
-	void CsvImportProcessorImpl::SetUser(User* pUser)
+	void CsvImportProcessorImpl::SetUser(g_uint user)
 	{
-		m_pUser = pUser;
+		m_user = user;
 	}
 }

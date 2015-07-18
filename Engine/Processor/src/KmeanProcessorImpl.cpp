@@ -9,23 +9,23 @@
 
 namespace auge
 {
-	KMeanProcessorImpl::KMeanProcessorImpl()
+	KMeansProcessorImpl::KMeansProcessorImpl()
 	{
 		m_k = 0;
-		m_pUser = NULL;
+		m_user = 0;
 	}
 
-	KMeanProcessorImpl::~KMeanProcessorImpl()
+	KMeansProcessorImpl::~KMeansProcessorImpl()
 	{
 
 	}
 
-	void KMeanProcessorImpl::SetK(g_uint k)
+	void KMeansProcessorImpl::SetK(g_uint k)
 	{
 		m_k = k;
 	}
 
-	void KMeanProcessorImpl::SetInputDataSource(const char* sourceName)
+	void KMeansProcessorImpl::SetInputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -37,7 +37,7 @@ namespace auge
 		}
 	}
 
-	void KMeanProcessorImpl::SetInputFeatureClass(const char* className)
+	void KMeansProcessorImpl::SetInputFeatureClass(const char* className)
 	{
 		if(className==NULL)
 		{
@@ -49,7 +49,7 @@ namespace auge
 		}
 	}
 
-	void KMeanProcessorImpl::SetOutputDataSource(const char* sourceName)
+	void KMeansProcessorImpl::SetOutputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -61,7 +61,7 @@ namespace auge
 		}
 	}
 
-	void KMeanProcessorImpl::SetOutputFeatureClass(const char* className)
+	void KMeansProcessorImpl::SetOutputFeatureClass(const char* className)
 	{
 		if(className==NULL)
 		{
@@ -73,27 +73,27 @@ namespace auge
 		}
 	}
 
-	const char* KMeanProcessorImpl::GetInputSource()
+	const char* KMeansProcessorImpl::GetInputSource()
 	{
 		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
 	}
 
-	const char* KMeanProcessorImpl::GetInputFatureClass()
+	const char* KMeansProcessorImpl::GetInputFatureClass()
 	{
 		return m_in_class_name.empty() ? NULL : m_in_class_name.c_str();
 	}
 
-	const char*	KMeanProcessorImpl::GetOutputSource()
+	const char*	KMeansProcessorImpl::GetOutputSource()
 	{
 		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
 	}
 
-	const char*	KMeanProcessorImpl::GetOutputFatureClass()
+	const char*	KMeansProcessorImpl::GetOutputFatureClass()
 	{
 		return m_out_source_name.empty() ? NULL : m_out_class_name.c_str();
 	}
 
-	RESULTCODE KMeanProcessorImpl::Execute()
+	RESULTCODE KMeansProcessorImpl::Execute()
 	{
 		GError	*pError  = augeGetErrorInstance();
 		GLogger	*pLogger = augeGetLoggerInstance();
@@ -130,13 +130,13 @@ namespace auge
 		FeatureWorksapce	*poutWorkspace= NULL;
 		ConnectionManager	*pConnManager = augeGetConnectionManagerInstance();
 		
-		pinWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_pUser->GetID(), sourceName_in));
+		pinWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_user, sourceName_in));
 		if(pinWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 
-		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_pUser->GetID(), sourceName_out));
+		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_user, sourceName_out));
 		if(poutWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -225,7 +225,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE KMeanProcessorImpl::SaveCentroidResult(KMean* kmean, const char* className, FeatureWorksapce* pWorkspace, g_uint srid)
+	RESULTCODE KMeansProcessorImpl::SaveCentroidResult(KMeans* kmean, const char* className, FeatureWorksapce* pWorkspace, g_uint srid)
 	{
 		const char* geom_field = "shape";
 		GeometryDef		*pGeometryDef  = NULL;
@@ -281,7 +281,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE KMeanProcessorImpl::SaveClusterResult(KMean* kmean, const char* className, FeatureWorksapce* pWorkspace, g_uint srid)
+	RESULTCODE KMeansProcessorImpl::SaveClusterResult(KMeans* kmean, const char* className, FeatureWorksapce* pWorkspace, g_uint srid)
 	{
 		const char* cluster_field = "cluster";
 		const char* geom_field = "shape";
@@ -353,13 +353,13 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void KMeanProcessorImpl::Release()
+	void KMeansProcessorImpl::Release()
 	{
 		delete this;
 	}
 
-	void KMeanProcessorImpl::SetUser(User* pUser)
+	void KMeansProcessorImpl::SetUser(g_uint user)
 	{
-		m_pUser = pUser;
+		m_user = user;
 	}
 }

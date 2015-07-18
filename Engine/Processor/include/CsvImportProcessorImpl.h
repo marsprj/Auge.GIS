@@ -17,7 +17,7 @@ namespace auge
 		CsvImportProcessorImpl();
 		virtual ~CsvImportProcessorImpl();
 	public:
-		virtual void		SetUser(User* pUser);
+		virtual void		SetUser(g_uint user);
 
 		virtual	void		SetCvsPath(const char* path);
 		virtual void		SetDataSource(const char* sourceName);
@@ -34,7 +34,7 @@ namespace auge
 		std::string m_source_name;
 		std::string m_dataset_name;
 
-		User*		m_pUser;
+		g_uint			m_user;
 	};
 }
 

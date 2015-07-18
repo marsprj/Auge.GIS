@@ -95,6 +95,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterExtractByRectangleProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterFormatConvertToJPEGProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterGraylizeProcessorImpl.cpp" />
+    <ClCompile Include="..\src\RasterReverseProcessorImpl.cpp" />
+    <ClCompile Include="..\src\RasterSmoothProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterStretchProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterTileStoreGeneratorFS.cpp" />
     <ClCompile Include="..\src\sqlite3.c" />
@@ -113,6 +115,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RasterEdgeDetectProcessorImpl.h" />
     <ClInclude Include="..\include\RasterExtractByRectangleProcessorImpl.h" />
     <ClInclude Include="..\include\RasterFormatConvertToJPEGProcessorImpl.h" />
+    <ClInclude Include="..\include\RasterReverseProcessorImpl.h" />
+    <ClInclude Include="..\include\RasterSmoothProcessorImpl.h" />
     <ClInclude Include="..\include\RasterStretchProcessorImpl.h" />
     <ClInclude Include="..\include\RasterTileStoreGeneratorFS.h" />
     <ClInclude Include="..\include\SrsBase.h" />

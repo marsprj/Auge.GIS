@@ -16,7 +16,7 @@ namespace auge
 		virtual ~FileSystemTileStoreGeneratorImpl();
 	public:
 
-		virtual void		SetUser(User* pUser);
+		virtual void		SetUser(g_uint user);
 
 		virtual	void		SetMap(Map* pMap);
 		virtual void		SetTileStore(TileStore* pTileStore);
@@ -35,7 +35,7 @@ namespace auge
 		g_uint			m_start_level;
 		g_uint			m_end_level;
 
-		User*		m_pUser;
+		g_uint			m_user;
 	};
 }
 

@@ -19,7 +19,7 @@ namespace auge
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor();
 
-		virtual KMeanProcessor*				CreateKMeanProcessor();
+		virtual KMeansProcessor*			CreateKMeansProcessor();
 
 		virtual FeatureProjectProcessor*	CreateFeatureProjectProcessor();
 
@@ -27,6 +27,8 @@ namespace auge
 		virtual RasterStretchProcessor*				CreateRasterStretchProcessor();
 		virtual RasterEdgeDetectProcessor*			CreateRasterEdgeDetectProcessor();
 		virtual RasterGraylizeProcessor*			CreateRasterGraylizeProcessor();
+		virtual RasterReverseProcessor*				CreateRasterReverseProcessor();
+		virtual RasterSmoothProcessor*				CreateRasterSmoothProcessor();
 		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor();
 	};
 }

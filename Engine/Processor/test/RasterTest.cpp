@@ -185,3 +185,54 @@ void RasterTest::ToJPG()
 	DWORD te = GetTickCount();
 	printf("[时间]:%d毫秒\n", te-ts);
 }
+
+void RasterTest::Reverse()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterReverseProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterReverseProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputRaster("Desert.jpg");
+
+	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputRaster("Desert_reverse.jpg");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
+
+void RasterTest::Smooth()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterSmoothProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterSmoothProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputRaster("Desert.jpg");
+
+	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputRaster("Desert_mean.jpg");
+	//pProcessor->SetOutputRaster("Desert_gauss.jpg");
+
+	//pProcessor->SetSmoother(auge::augeSmoothMean);
+	//pProcessor->SetSmoother(auge::augeSmoothGauss);
+	pProcessor->SetSmoother(auge::augeSmoothMedian);
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}

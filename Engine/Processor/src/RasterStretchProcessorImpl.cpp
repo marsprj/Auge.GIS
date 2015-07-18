@@ -10,7 +10,7 @@ namespace auge
 		m_color_start = GColor(255,0,0,255);
 		m_color_end = GColor(0,255,0,255);
 
-		m_pUser = NULL;
+		m_user = 0;
 	}
 
 	RasterStretchProcessorImpl::~RasterStretchProcessorImpl()
@@ -119,14 +119,14 @@ namespace auge
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), inSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_user, inSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
-		pWorkspace = pConnManager->GetWorkspace(m_pUser->GetID(), outSourceName);
+		pWorkspace = pConnManager->GetWorkspace(m_user, outSourceName);
 		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -256,8 +256,8 @@ namespace auge
 		return true;
 	}
 
-	void RasterStretchProcessorImpl::SetUser(User* pUser)
+	void RasterStretchProcessorImpl::SetUser(g_uint user)
 	{
-		m_pUser = pUser;
+		m_user = user;
 	}
 }
