@@ -278,6 +278,27 @@ namespace auge
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 	};
 
+	/**
+	 * RasterSubstractProcessor
+	 *
+	 * Í¼Ïñ¶þÖµ»¯
+	 */
+	class RasterSubtractProcessor : public GProcessor
+	{
+	protected:
+		RasterSubtractProcessor(){}
+		virtual ~RasterSubtractProcessor(){}
+	public:
+		virtual void		SetInputDataSource_1(const char* sourceName) = 0;
+		virtual void		SetInputRaster_1(const char* rasterName) = 0;
+
+		virtual void		SetInputDataSource_2(const char* sourceName) = 0;
+		virtual void		SetInputRaster_2(const char* rasterName) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+	};
+
 	class RasterFormatConvertToJPEGProcessor : public GProcessor
 	{
 	protected:
@@ -378,6 +399,7 @@ namespace auge
 		virtual RasterGraylizeProcessor*			CreateRasterGraylizeProcessor() = 0;
 		virtual RasterReverseProcessor*				CreateRasterReverseProcessor() = 0;
 		virtual RasterSmoothProcessor*				CreateRasterSmoothProcessor() = 0;
+		virtual RasterSubtractProcessor*			CreateRasterSubtractProcessor() = 0;
 		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor() = 0;
 	};
 	

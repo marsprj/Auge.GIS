@@ -236,3 +236,29 @@ void RasterTest::Smooth()
 	DWORD te = GetTickCount();
 	printf("[时间]:%d毫秒\n", te-ts);
 }
+
+void RasterTest::Subtract()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterSubtractProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterSubtractProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource_1("rsdb");
+	pProcessor->SetInputRaster_1("Koala.png");
+
+	pProcessor->SetInputDataSource_2("rsdb");
+	pProcessor->SetInputRaster_2("Koala_reverse.png");
+
+	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputRaster("Subtract.jpg");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}

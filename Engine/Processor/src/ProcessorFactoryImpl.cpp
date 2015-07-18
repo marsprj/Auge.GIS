@@ -13,6 +13,7 @@
 #include "RasterGraylizeProcessorImpl.h"
 #include "RasterReverseProcessorImpl.h"
 #include "RasterSmoothProcessorImpl.h"
+#include "RasterSubtractProcessorImpl.h"
 #include "RasterFormatConvertToJPEGProcessorImpl.h"
 
 #ifndef WIN32
@@ -105,6 +106,11 @@ namespace auge
 	RasterSmoothProcessor* GProcessorFactoryImpl::CreateRasterSmoothProcessor()
 	{
 		return (new RasterSmoothProcessorImpl());
+	}
+
+	RasterSubtractProcessor* GProcessorFactoryImpl::CreateRasterSubtractProcessor()
+	{
+		return (new RasterSubtractProcessorImpl());
 	}
 
 	RasterFormatConvertToJPEGProcessor*	GProcessorFactoryImpl::CreateRasterFormatConvertToJPEGProcessor()

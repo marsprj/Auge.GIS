@@ -34,5 +34,6 @@ libgprocessor_la_SOURCES=\
 		RasterGraylizeProcessorImpl.cpp \
 		RasterReverseProcessorImpl.cpp \
 		RasterSmoothProcessorImpl.cpp \
+		RasterSubtractProcessorImpl.cpp \
 		RasterFormatConvertToJPEGProcessorImpl.cpp
 

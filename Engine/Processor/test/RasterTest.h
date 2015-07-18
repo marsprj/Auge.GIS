@@ -13,7 +13,8 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(Graylize);
 	//CPPUNIT_TEST(ToJPG);
 	//CPPUNIT_TEST(Reverse);
-	CPPUNIT_TEST(Smooth);
+	//CPPUNIT_TEST(Smooth);
+	CPPUNIT_TEST(Subtract);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -27,6 +28,7 @@ private:
 	void	ToJPG();
 	void	Reverse();
 	void	Smooth();
+	void	Subtract();
 
 private:
 	auge::GConnection	*m_pConnection;
