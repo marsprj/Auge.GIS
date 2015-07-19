@@ -96,6 +96,10 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\CentroidResponse.cpp" />
     <ClCompile Include="..\src\ClusterKmeanHandler.cpp" />
     <ClCompile Include="..\src\ClusterKmeanRequest.cpp" />
+    <ClCompile Include="..\src\DemAspectHandler.cpp" />
+    <ClCompile Include="..\src\DemAspectRequest.cpp" />
+    <ClCompile Include="..\src\DemSlopeHandler.cpp" />
+    <ClCompile Include="..\src\DemSlopeRequest.cpp" />
     <ClCompile Include="..\src\FeatureImportHandler.cpp" />
     <ClCompile Include="..\src\FeatureImportRequest.cpp" />
     <ClCompile Include="..\src\FeatureProjectHandler.cpp" />
@@ -132,6 +136,10 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\CentroidResponse.h" />
     <ClInclude Include="..\include\ClusterKmeanHandler.h" />
     <ClInclude Include="..\include\ClusterKmeanRequest.h" />
+    <ClInclude Include="..\include\DemAspectHandler.h" />
+    <ClInclude Include="..\include\DemAspectRequest.h" />
+    <ClInclude Include="..\include\DemSlopeHandler.h" />
+    <ClInclude Include="..\include\DemSlopeRequest.h" />
     <ClInclude Include="..\include\FeatureImportHandler.h" />
     <ClInclude Include="..\include\FeatureImportRequest.h" />
     <ClInclude Include="..\include\FeatureProjectHandler.h" />

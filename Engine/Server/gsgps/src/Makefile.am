@@ -48,5 +48,9 @@ libgsgps_la_SOURCES=\
 		RasterStretchRequest.cpp \
 		RasterSubtractHandler.cpp \
 		RasterSubtractRequest.cpp \
+		DemSlopeHandler.cpp \
+		DemSlopeRequest.cpp \
+		DemAspectHandler.cpp \
+		DemAspectRequest.cpp \
 		GProcessEngine.cpp
 
