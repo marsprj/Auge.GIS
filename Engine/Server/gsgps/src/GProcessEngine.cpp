@@ -14,6 +14,7 @@
 #include "FeatureProjectHandler.h"
 
 #include "RasterExtractByRectangleHandler.h"
+#include "RasterReverseHandler.h"
 
 #include "ClusterKmeanHandler.h"
 
@@ -40,6 +41,7 @@ namespace auge
 		m_feature_handlers.push_back(new FeatureProjectHandler());
 
 		m_raster_handlers.push_back(new RasterExtractByRectangleHandler());
+		m_raster_handlers.push_back(new RasterReverseHandler());
 
 		m_cluster_handlers.push_back(new KMeanHandler());
 	}
