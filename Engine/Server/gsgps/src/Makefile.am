@@ -40,5 +40,7 @@ libgsgps_la_SOURCES=\
 		ClusterKmeanRequest.cpp \
 		RasterReverseHandler.cpp \
 		RasterReverseRequest.cpp \
+		RasterGraylizeHandler.cpp \
+		RasterGraylizeRequest.cpp \
 		GProcessEngine.cpp
 

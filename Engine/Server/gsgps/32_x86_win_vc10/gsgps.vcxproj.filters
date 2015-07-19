@@ -93,6 +93,12 @@
     <ClCompile Include="..\src\RasterReverseRequest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\RasterGraylizeHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RasterGraylizeRequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\GProcessEngine.h">
@@ -174,6 +180,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\RasterReverseRequest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\RasterGraylizeHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\RasterGraylizeRequest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
