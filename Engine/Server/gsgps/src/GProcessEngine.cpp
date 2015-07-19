@@ -18,6 +18,7 @@
 #include "RasterGraylizeHandler.h"
 #include "RasterSmoothHandler.h"
 #include "RasterStretchHandler.h"
+#include "RasterSubtractHandler.h"
 
 #include "ClusterKmeanHandler.h"
 
@@ -48,6 +49,7 @@ namespace auge
 		m_raster_handlers.push_back(new RasterGraylizeHandler());
 		m_raster_handlers.push_back(new RasterSmoothHandler());
 		m_raster_handlers.push_back(new RasterStretchHandler());
+		m_raster_handlers.push_back(new RasterSubtractHandler());
 
 		m_cluster_handlers.push_back(new KMeanHandler());
 	}
