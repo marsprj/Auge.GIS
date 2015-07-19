@@ -82,4 +82,21 @@ namespace auge
 		x = x / numPoints;
 		y = y / numPoints;
 	}
+
+	double GLineStringWKB::Length() const
+	{
+		double length = 0.0;
+		auge::Point* pt0 = NULL;
+		auge::Point* pt1 = NULL;
+
+		int numPoints = m_pWKBLineString->numPoints;
+		pt0 = &(m_pWKBLineString->points[0]);
+		pt1 = pt0 + 1;
+		for(int i=1; i<numPoints; i++, pt0++, pt1++)
+		{
+			length += sqrt(pow((pt1->x - pt0->x), 2) + pow((pt1->y - pt0->y), 2));
+		}
+
+		return 0.0;
+	}
 }

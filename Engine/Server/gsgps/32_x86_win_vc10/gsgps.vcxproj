@@ -107,6 +107,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\FeatureImportRequest.cpp" />
     <ClCompile Include="..\src\FeatureProjectHandler.cpp" />
     <ClCompile Include="..\src\FeatureProjectRequest.cpp" />
+    <ClCompile Include="..\src\GetAreaHandler.cpp" />
+    <ClCompile Include="..\src\GetAreaRequest.cpp" />
+    <ClCompile Include="..\src\GetAreaResponse.cpp" />
+    <ClCompile Include="..\src\GetLengthHandler.cpp" />
+    <ClCompile Include="..\src\GetLengthRequest.cpp" />
+    <ClCompile Include="..\src\GetLengthResponse.cpp" />
     <ClCompile Include="..\src\GProcessEngine.cpp" />
     <ClCompile Include="..\src\RasterExtractByRectangleHandler.cpp" />
     <ClCompile Include="..\src\RasterExtractByRectangleRequest.cpp" />
@@ -150,6 +156,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\FeatureImportRequest.h" />
     <ClInclude Include="..\include\FeatureProjectHandler.h" />
     <ClInclude Include="..\include\FeatureProjectRequest.h" />
+    <ClInclude Include="..\include\GetAreaHandler.h" />
+    <ClInclude Include="..\include\GetAreaRequest.h" />
+    <ClInclude Include="..\include\GetAreaResponse.h" />
+    <ClInclude Include="..\include\GetLengthHandler.h" />
+    <ClInclude Include="..\include\GetLengthRequest.h" />
+    <ClInclude Include="..\include\GetLengthResponse.h" />
     <ClInclude Include="..\include\GProcessEngine.h" />
     <ClInclude Include="..\include\RasterExtractByRectangleHandler.h" />
     <ClInclude Include="..\include\RasterExtractByRectangleRequest.h" />

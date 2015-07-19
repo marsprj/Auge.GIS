@@ -97,4 +97,61 @@ namespace auge
 		x /= point_total;
 		y /= point_total;
 	}
+
+	double GMultiPolygonWKB::Area() const
+	{
+		double area=0.0;
+		auge::Point* pt0 = NULL;
+		auge::Point* pt1 = NULL; 
+
+		int numPolygons = m_pWKBMultiPolygon->numPolygons;
+		WKBPolygon* pWKBPolygon = &(m_pWKBMultiPolygon->polygons[0]);
+		for(int i=0; i<numPolygons; i++)
+		{
+			int numRings = pWKBPolygon->numRings;
+			LinearRing* pLinearRing = &(pWKBPolygon->rings[0]);
+			for(int j=0; j<numRings; j++)
+			{	
+				int numPoints = pLinearRing->numPoints;
+				pt0 = &(pLinearRing->points[0]);
+				pt1 = pt0 + 1;
+				for(int k=1; k<numPoints; k++, pt0++, pt1++)
+				{
+					double a = (pt1->y + pt0->y) * (pt1->x - pt0->y) / 2.0;
+					area += a;
+				}
+				pLinearRing = (LinearRing*)pt1;
+			}
+			pWKBPolygon = (WKBPolygon*)pt1;
+		}
+		return area;
+	}
+
+	double GMultiPolygonWKB::Perimeter() const
+	{
+		double length=0.0;
+		auge::Point* pt0 = NULL;
+		auge::Point* pt1 = NULL; 
+
+		int numPolygons = m_pWKBMultiPolygon->numPolygons;
+		WKBPolygon* pWKBPolygon = &(m_pWKBMultiPolygon->polygons[0]);
+		for(int i=0; i<numPolygons; i++)
+		{
+			int numRings = pWKBPolygon->numRings;
+			LinearRing* pLinearRing = &(pWKBPolygon->rings[0]);
+			for(int j=0; j<numRings; j++)
+			{	
+				int numPoints = pLinearRing->numPoints;
+				pt0 = &(pLinearRing->points[0]);
+				pt1 = pt0 + 1;
+				for(int k=1; k<numPoints; k++, pt0++, pt1++)
+				{
+					length += sqrt(pow((pt1->x - pt0->x), 2) + pow((pt1->y - pt0->y), 2));
+				}
+				pLinearRing = (LinearRing*)pt1;
+			}
+			pWKBPolygon = (WKBPolygon*)pt1;
+		}
+		return length;
+	}
 }

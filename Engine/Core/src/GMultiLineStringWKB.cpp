@@ -2,6 +2,8 @@
 #include "AugeCore.h"
 #include "WKTWriter.h"
 
+#include <math.h>
+
 namespace auge
 {
 	GMultiLineStringWKB::GMultiLineStringWKB():
@@ -89,5 +91,27 @@ namespace auge
 		}
 		x /= point_total;
 		y /= point_total;
+	}
+
+	double GMultiLineStringWKB::Length() const
+	{
+		double length = 0.0;
+		Point* pt0 = NULL;
+		Point* pt1 = NULL;
+		int numLineStrings = m_pWKBMultiLineString->numLineStrings;
+		WKBLineString* pWKBLineString = &(m_pWKBMultiLineString->lineStrings[0]);
+		for(int i=0; i<numLineStrings; i++)
+		{	
+			int numPoints = pWKBLineString->numPoints;
+			pt0 = &(pWKBLineString->points[0]);
+			pt1 = pt0 + 1;
+			for(int j=1; j<numPoints; j++, pt0++, pt1++)
+			{
+				length += sqrt(pow((pt1->x - pt0->x), 2) + pow((pt1->y - pt0->y), 2));
+			}
+			pWKBLineString = (WKBLineString*)pt1;
+		}
+
+		return 0.0;
 	}
 }

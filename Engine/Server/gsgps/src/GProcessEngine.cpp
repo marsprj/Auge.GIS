@@ -5,6 +5,10 @@
 
 #include "GProcessEngine.h"
 #include "CapabilitiesHandler.h"
+
+#include "GetAreaHandler.h"
+#include "GetLengthHandler.h"
+
 #include "CentroidHandler.h"
 #include "BufferHandler.h"
 #include "ConvexHullHandler.h"
@@ -40,6 +44,10 @@ namespace auge
 		m_handler = NULL;
 
 		m_pcapHandler = new GeoProcessingCapabilitiesHandler(this);
+
+		m_geometry_handlers.push_back(new GetAreaHandler());
+		m_geometry_handlers.push_back(new GetLengthHandler());
+
 		m_geometry_handlers.push_back(new BufferHandler());
 		m_geometry_handlers.push_back(new CentroidHandler());
 		m_geometry_handlers.push_back(new ConvexHullHandler());

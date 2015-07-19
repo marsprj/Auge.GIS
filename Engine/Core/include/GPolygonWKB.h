@@ -18,6 +18,8 @@ namespace auge
 		virtual g_uchar*			AsBinary() const;
 		virtual Geometry*			Clone() const;
 		virtual void				Centroid(double &x, double &y);
+		virtual double				Area() const;
+		virtual double				Perimeter() const;
 		virtual void				Release();
 
 	public:

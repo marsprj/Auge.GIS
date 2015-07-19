@@ -1,5 +1,5 @@
-#ifndef __AUGE_GPS_CONVEXHULL_REQUEST_H__
-#define __AUGE_GPS_CONVEXHULL_REQUEST_H__
+#ifndef __AUGE_GPS_GET_LENGTH_REQUEST_H__
+#define __AUGE_GPS_GET_LENGTH_REQUEST_H__
 
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
@@ -12,11 +12,11 @@ namespace auge
 {
 	class GFilter;
 
-	class ConvexHullRequest : public WebRequest
+	class GetLengthRequest : public WebRequest
 	{
 	public:
-		ConvexHullRequest();
-		virtual ~ConvexHullRequest();
+		GetLengthRequest();
+		virtual ~GetLengthRequest();
 
 	public:
 		virtual const char*		GetUser();
@@ -81,23 +81,23 @@ namespace auge
 
 }
 
-#endif //__AUGE_GPS_CONVEXHULL_REQUEST_H__
+#endif //__AUGE_GPS_GET_LENGTH_REQUEST_H__
 
 /************************************************************************
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
 1)
-service=gps&version=1.0.0&request=ConvexHull&sourceName=db1&typeName=cities
-http://127.0.0.1:8088/ows/user1/mgr?service=gps&version=1.0.0&request=ConvexHull&sourceName=db1&typeName=country
-http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=ConvexHull&sourceName=db1&typeName=cities
+user=user1&service=gps&version=1.0.0&request=GetLength&sourceName=db1&typeName=country
+http://127.0.0.1:8088/ows/user1/mgr?service=gps&version=1.0.0&request=GetLength&sourceName=db1&typeName=country
+http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=GetLength&sourceName=db1&typeName=country
 
-service=gps&version=1.0.0&request=ConvexHull&sourceName=db1&typeName=cities&distancefeild=id
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=ConvexHull&sourceName=db1&typeName=cities&distancefeild=id
-http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=ConvexHull&sourceName=db1&typeName=cities&distancefeild=id
+service=gps&version=1.0.0&request=GetLength&sourceName=db1&typeName=country&distancefeild=id
+http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=GetLength&sourceName=db1&typeName=country&distancefeild=id
+http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=GetLength&sourceName=db1&typeName=country&distancefeild=id
 
 2)
-service=gps&version=1.0.0&request=ConvexHull&featureset=
+service=gps&version=1.0.0&request=GetLength&featureset=
 	<FeatureCollection>
 		<FeatureMember>
 		</FeatureMember>
@@ -107,16 +107,16 @@ service=gps&version=1.0.0&request=ConvexHull&featureset=
 [ HTTP Post ]
 -------------------------------------------------------------------------
 1)
-<ConvexHull service="gps" version="1.0.0"
+<GetLength service="gps" version="1.0.0"
 		  typeName="country"
 		  outputFormat="GML2"
 		  distance="1.0"
 		  distancefield="id"
 		  xmlns:ogc="http://www.opengis.net/ogc">
-<ConvexHull>
+<GetLength>
 
 2)
-<ConvexHull service="gps" version="1.0.0"
+<GetLength service="gps" version="1.0.0"
 		  typeName="country"
 		  outputFormat="GML2"
 		  distance="1.0"
@@ -124,10 +124,10 @@ service=gps&version=1.0.0&request=ConvexHull&featureset=
 	<Filter>
 		<ogc:FeatureId fid="world.3"/>
 	</Filter>
-<ConvexHull>
+<GetLength>
 
 3)
-<ConvexHull service="gps" version="1.0.0"
+<GetLength service="gps" version="1.0.0"
 		  typeName="country"
 		  outputFormat="GML2"
 		  xmlns:ogc="http://www.opengis.net/ogc">
@@ -140,5 +140,5 @@ service=gps&version=1.0.0&request=ConvexHull&featureset=
 			</gml:Envelope>
 		</ogc:BBOX>
 	</Filter>
-<ConvexHull>
+<GetLength>
 ************************************************************************/

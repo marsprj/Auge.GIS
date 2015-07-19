@@ -55,5 +55,11 @@ libgsgps_la_SOURCES=\
 		ConvexHullHandler.cpp \
 		ConvexHullRequest.cpp \
 		ConvexHullResponse.cpp \
+		GetAreaHandler.cpp \
+		GetAreaResponse.cpp \
+		GetAreaRequest.cpp \
+		GetLengthHandler.cpp \
+		GetLengthResponse.cpp \
+		GetLengthRequest.cpp \
 		GProcessEngine.cpp
 

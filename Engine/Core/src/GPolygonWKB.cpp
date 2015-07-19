@@ -21,7 +21,6 @@ namespace auge
 				m_pWKBPolygon = NULL;
 			}
 		}
-
 	}
 
 	augeGeometryType GPolygonWKB::GeometryType()
@@ -90,5 +89,64 @@ namespace auge
 		}
 		x /= point_total;
 		y /= point_total;
+	}
+
+	double GPolygonWKB::Area() const
+	{
+		double area = 0.0;
+		int i=0, j=0;
+		int numPoints = 0;
+		int numRings  = m_pWKBPolygon->numRings;
+		auge::LinearRing* pLinearRing = NULL;
+		auge::Point *pt0 = NULL;
+		auge::Point *pt1 = NULL;
+
+		pLinearRing = (auge::LinearRing*)(&(m_pWKBPolygon->rings[0]));
+
+		for(i=0; i<numRings; i++)
+		{
+			numPoints = pLinearRing->numPoints;
+			pt0 = (auge::Point*)(&(pLinearRing->points[0]));
+			pt1 = pt0 + 1;
+
+			for(j=1; j<numPoints; j++, pt0++, pt1++)
+			{
+				double a = (pt1->y + pt0->y) * (pt1->x - pt0->y) / 2.0;
+				area += a;
+			}
+			
+			pLinearRing = (auge::LinearRing*)(pt1);
+		}
+
+		return area;
+	}
+
+	double GPolygonWKB::Perimeter() const
+	{
+		double length = 0.0;
+		int i=0, j=0;
+		int numPoints = 0;
+		int numRings  = m_pWKBPolygon->numRings;
+		auge::LinearRing* pLinearRing = NULL;
+		auge::Point *pt0 = NULL;
+		auge::Point *pt1 = NULL;
+
+		pLinearRing = (auge::LinearRing*)(&(m_pWKBPolygon->rings[0]));
+
+		for(i=0; i<numRings; i++)
+		{
+			numPoints = pLinearRing->numPoints;
+			pt0 = (auge::Point*)(&(pLinearRing->points[0]));
+			pt1 = pt0 + 1;
+
+			for(j=1; j<numPoints; j++, pt0++, pt1++)
+			{
+				length += sqrt(pow((pt1->x - pt0->x), 2) + pow((pt1->y - pt0->y), 2));
+			}
+
+			pLinearRing = (auge::LinearRing*)(pt1);
+		}
+
+		return length;
 	}
 }

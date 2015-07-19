@@ -82,7 +82,7 @@ namespace auge
 		virtual ~GCurve(){}
 	public:
 		////--------------------------------------------------------------------------
-		//virtual       double	Length()     const =0; // : Double
+		virtual       double	Length()     const =0; // : Double
 		//virtual const GPoint*	StartPoint() const =0; // : Point
 		//virtual       GPoint*	StartPoint()       =0; // : Point
 		//virtual const GPoint*	EndPoint()   const =0; // : Point
@@ -99,6 +99,7 @@ namespace auge
 
 	public:
 		//--------------------------------------------------------------------------
+		virtual       double	Length()     const =0; // : Double
 		//virtual       int		NumPoints()			const =0; // : Integer
 		//virtual const GPoint*	PointN(g_uint n)	const =0; // : Point
 		//virtual       GPoint*	PointN(g_uint n)          =0; // : Point
@@ -123,7 +124,8 @@ namespace auge
 		virtual ~GSurface(){}
 	public:
 		//--------------------------------------------------------------------------
-		//virtual double			Area()           const =0; // : Area
+		virtual double			Area()           const =0; // : Area
+		virtual double			Perimeter()      const =0; // : Perimeter
 		//virtual GPoint*			Centroid()       const =0; // : Point
 		//virtual GPoint*			PointOnSurface() const =0; // : Point
 		//virtual GMultiCurve*	Boundary()       const =0; // : MultiCurve
@@ -183,6 +185,7 @@ namespace auge
 		virtual ~GMultiLineString(){}
 	public:
 		//--------------------------------------------------------------------------
+		virtual       double	Length()     const =0; // : Double
 		//virtual       bool    AddLineString(GLineString *pLingString) = 0;
 	};
 
