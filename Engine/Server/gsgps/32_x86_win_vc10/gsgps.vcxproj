@@ -109,6 +109,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterReverseRequest.cpp" />
     <ClCompile Include="..\src\RasterSmoothHandler.cpp" />
     <ClCompile Include="..\src\RasterSmoothRequest.cpp" />
+    <ClCompile Include="..\src\RasterStretchHandler.cpp" />
+    <ClCompile Include="..\src\RasterStretchRequest.cpp" />
     <ClCompile Include="..\src\ThreadManager.cpp" />
     <ClCompile Include="..\src\threadpool.c" />
     <ClCompile Include="..\src\TileUpdateHandler.cpp" />
@@ -141,6 +143,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RasterReverseRequest.h" />
     <ClInclude Include="..\include\RasterSmoothHandler.h" />
     <ClInclude Include="..\include\RasterSmoothRequest.h" />
+    <ClInclude Include="..\include\RasterStretchHandler.h" />
+    <ClInclude Include="..\include\RasterStretchRequest.h" />
     <ClInclude Include="..\include\spthread.h" />
     <ClInclude Include="..\include\ThreadManager.h" />
     <ClInclude Include="..\include\threadpool.h" />

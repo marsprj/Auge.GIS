@@ -44,5 +44,7 @@ libgsgps_la_SOURCES=\
 		RasterGraylizeRequest.cpp \
 		RasterSmoothHandler.cpp \
 		RasterSmoothRequest.cpp \
+		RasterStretchHandler.cpp \
+		RasterStretchRequest.cpp \
 		GProcessEngine.cpp
 
