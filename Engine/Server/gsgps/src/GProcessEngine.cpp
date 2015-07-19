@@ -7,6 +7,8 @@
 #include "CapabilitiesHandler.h"
 #include "CentroidHandler.h"
 #include "BufferHandler.h"
+#include "ConvexHullHandler.h"
+
 #include "TileUpdateHandler.h"
 
 #include "BuildPyramidHandler.h"
@@ -38,11 +40,12 @@ namespace auge
 		m_handler = NULL;
 
 		m_pcapHandler = new GeoProcessingCapabilitiesHandler(this);
-		m_geometry_handlers.push_back(new CentroidHandler());
 		m_geometry_handlers.push_back(new BufferHandler());
+		m_geometry_handlers.push_back(new CentroidHandler());
+		m_geometry_handlers.push_back(new ConvexHullHandler());
 
-		m_tile_handlers.push_back(new UpdateTileHandler());
 		m_tile_handlers.push_back(new BuildPyramidHandler());
+		m_tile_handlers.push_back(new UpdateTileHandler());
 
 		m_feature_handlers.push_back(new FeatureImportHandler());
 		m_feature_handlers.push_back(new FeatureProjectHandler());

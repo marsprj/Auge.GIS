@@ -61,8 +61,8 @@ namespace auge
 [ HTTP Get ]
 -------------------------------------------------------------------------
 service=wps&version=1.0.0&request=GetCapabilities
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=GetCapabilities
-http://192.168.111.151:8088/ows/admin/mgr?service=wps&version=1.0.0&request=GetCapabilities
-http://123.57.207.198/ows/admin/mgr?service=wps&version=1.0.0&request=GetCapabilities
+http://127.0.0.1:8088/ows/user1/mgr?service=gps&version=1.0.0&request=GetCapabilities
+http://192.168.111.151:8088/ows/user1/mgr?service=wps&version=1.0.0&request=GetCapabilities
+http://123.57.207.198/ows/user1/mgr?service=wps&version=1.0.0&request=GetCapabilities
 
 ************************************************************************/
