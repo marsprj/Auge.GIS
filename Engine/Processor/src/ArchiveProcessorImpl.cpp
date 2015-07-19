@@ -13,7 +13,7 @@ namespace auge
 
 	ArchiveProcessorImpl::ArchiveProcessorImpl()
 	{
-		m_pUser = NULL;
+		m_user = 0;
 	}
 
 	ArchiveProcessorImpl::~ArchiveProcessorImpl()
@@ -244,8 +244,8 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void ArchiveProcessorImpl::SetUser(User* pUser)
+	void ArchiveProcessorImpl::SetUser(g_uint user)
 	{
-		m_pUser = pUser;
+		m_user = user;
 	}
 }

@@ -15,7 +15,7 @@ namespace auge
 		ArchiveProcessorImpl();
 		virtual ~ArchiveProcessorImpl();
 	public:
-		virtual void		SetUser(User* pUser);
+		virtual void		SetUser(g_uint user);
 		virtual void		AddFile(const char* fpath);
 		virtual void		SetArchivePath(const char* apath);
 		virtual void		Clear();
@@ -34,7 +34,7 @@ namespace auge
 		std::vector<std::string>	m_paths;
 		std::string m_archive_path;
 
-		User*		m_pUser;
+		g_uint		m_user;
 	};
 }
 

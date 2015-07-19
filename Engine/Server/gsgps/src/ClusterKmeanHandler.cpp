@@ -105,9 +105,9 @@ namespace auge
 			return pExpResponse;
 		}
 
-		auge::KMeanProcessor* pProcessor = NULL;
+		auge::KMeansProcessor* pProcessor = NULL;
 		auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
-		pProcessor = pFactory->CreateKMeanProcessor();
+		pProcessor = pFactory->CreateKMeansProcessor();
 
 		pProcessor->SetK(clusters);
 		pProcessor->SetInputDataSource(input_source_name);
