@@ -8,9 +8,10 @@ AM_CPPFLAGS=-I../include \
 libgsrds_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
 		-L$(top_srcdir)/Engine/Raster/src \
+		-L$(top_srcdir)/Engine/Processor/src \
 		-L$(top_srcdir)/Engine/Server/gscore/src
 
-libgsrds_la_LIBADD=-lgcore -lgscore -lgraster
+libgsrds_la_LIBADD=-lgcore -lgscore -lgraster -lgprocessor
 
 libgsrds_la_SOURCES=\
 		    CreateFolderHandler.cpp \
