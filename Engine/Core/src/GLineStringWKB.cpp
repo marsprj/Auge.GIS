@@ -2,6 +2,8 @@
 #include "AugeCore.h"
 #include "WKTWriter.h"
 
+#include <math.h>
+
 namespace auge
 {
 	GLineStringWKB::GLineStringWKB():
