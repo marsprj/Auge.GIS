@@ -29,6 +29,8 @@ namespace auge
 		void		SetTypeName(const char* typeName);
 		bool		Create(rude::CGI& cgi);
 
+		void		Info();
+
 	private:
 		//std::string m_version;
 		std::string m_type_name;

@@ -11,11 +11,13 @@ int main(int argc, char** argv)
 	//const char* shp_constr = "DATABASE=D:\\GeoBeans\\data\\world";
 	//const char* shp_constr = "DATABASE=H:\\Data\\data\\中国_WGS84\\全国_shap\\行政区划 - 副本";
 	//const char* shp_constr = "DATABASE=G:\\temp\\全国_shap";
-	const char* shp_constr = "DATABASE=G:\\Data\\shape\\tianjin\\建筑物";
+	//const char* shp_constr = "DATABASE=G:\\Data\\shape\\tianjin\\建筑物";
+	const char* shp_constr = "DATABASE=E:\\data\\";
 	//const char* pgs_constr = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* pgs_constr = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=ourgis;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* pgs_constr = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=osm;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* pgs_constr = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=tianjin;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	//const char* pgs_constr = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=tianjin;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* pgs_constr = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gaode;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 
 	RESULTCODE rc = AG_FAILURE;
 	//const char* className = "cities";
@@ -28,8 +30,8 @@ int main(int argc, char** argv)
 	//const char* shpName = "World_coastline_os";
 	//const char* className = "World_coastline_os";
 
-	const char* shpName = "BUIA";
-	const char* className = "building";
+	const char* shpName = "高等院校";
+	const char* className = "高等院校";
 	
 	auge::DataEngine* pshpEngine = NULL;
 	auge::DataEngine* ppgsEngine = NULL;

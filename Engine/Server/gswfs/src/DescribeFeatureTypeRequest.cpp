@@ -67,4 +67,33 @@ namespace auge
 		return true;
 	}
 
+	void DescribeFeatureTypeRequest::Info()
+	{
+		GLogger* pLogger = augeGetLoggerInstance();
+		char str[AUGE_MSG_MAX];
+		const char* value = GetRequest();
+		pLogger->Debug("[Requet Parameters]");
+		g_sprintf(str,"\t%s:%s", "Request", (value==NULL)?"":value);
+		pLogger->Debug(str);
+
+		value = GetVersion();
+		g_sprintf(str,"\t%s:%s", "Version", (value==NULL)?"":value);
+		pLogger->Debug(str);
+
+		g_sprintf(str,"\t%s:%s", "Service", "wfs");
+		pLogger->Debug(str);
+
+		value = GetSourceName();
+		g_sprintf(str,"\t%s:%s", "sourceName", (value==NULL)?"":value);
+		pLogger->Debug(str);
+
+		value = GetMapName();
+		g_sprintf(str,"\t%s:%s", "mapName", (value==NULL)?"":value);
+		pLogger->Debug(str);
+
+		value = GetTypeName();
+		g_sprintf(str,"\t%s:%s", "typeName", (value==NULL)?"":value);
+		pLogger->Debug(str);
+
+	}
 }

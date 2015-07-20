@@ -206,7 +206,7 @@ namespace auge
 		//void				SetNamespace(const char* ns_prefix);
 		const char*			GetNamespaceUriForPrefix(const char* ns_prefix);
 
-		XAttribute*			SetAttribute(const char* name, const char* value, const char* ns_prefix);
+		XAttribute*			SetAttribute(const char* name, const char* value, const char* ns_prefix, bool encoding=false);
 		XAttribute*			GetAttribute(const char* name, const char* ns_prefix=NULL);
 
 		void				SetChildText(const char* content, bool encoding=false);

@@ -36,6 +36,7 @@ namespace auge
 			pRequest->Release();
 			return NULL;
 		}
+		pRequest->Info();
 		return pRequest;
 	}
 

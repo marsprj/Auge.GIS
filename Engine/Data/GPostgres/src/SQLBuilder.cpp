@@ -83,7 +83,9 @@ namespace auge
 		}
 
 		sql.append(" from ");
+		//sql.append("\"");
 		sql.append(pFeatureClass->GetName());
+		//sql.append("\"");
 	}
 
 	void SQLBuilder::BuildQuery(std::string& sql, GEnvelope& extent, FeatureClassPgs* pFeatureClass)
@@ -168,7 +170,9 @@ namespace auge
 			}
 		}
 		sql.append(" from ");
+		//sql.append("\"");
 		sql.append(pFeatureClass->GetName());
+		//sql.append("\"");
 
 		if(pFilter!=NULL)
 		{
@@ -200,7 +204,9 @@ namespace auge
 		sql = "select ";
 		sql.append(fields);
 		sql.append(" from ");
+		//sql.append("\"");
 		sql.append(pFeatureClass->GetName());
+		//sql.append("\"");
 
 		if(pFilter!=NULL)
 		{

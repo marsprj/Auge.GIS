@@ -34,26 +34,55 @@ namespace auge
 		return uri;
 	}
 
-	XAttribute*	XElement::SetAttribute(const char* name, const char* value, const char* ns_prefix)
+	XAttribute*	XElement::SetAttribute(const char* name, const char* value, const char* ns_prefix, bool encoding/*=false*/)
 	{
 		xmlAttr* attr = NULL;
 
-		char* name_utf8	 = (char*)name;
-		char* value_utf8 = (char*)value;
-		char* ns_prefix_utf8 = (char*)ns_prefix;
+		//char* name_utf8	 = (char*)name;
+		//char* value_utf8 = (char*)value;
+		//char* ns_prefix_utf8 = (char*)ns_prefix;
 
 		//Ignore the namespace if none was specified:
 		if((ns_prefix==NULL)||strlen(ns_prefix)==0)
 		{
-			attr = xmlSetProp(m_pxNode, (const xmlChar*)name_utf8, (const xmlChar*)value_utf8);
+			if(encoding)
+			{	
+				size_t size_utf8 = 0;
+				char name_utf8[AUGE_PATH_MAX];
+				char value_utf8[AUGE_PATH_MAX];
+				memset(name_utf8, 0, AUGE_PATH_MAX);
+				memset(value_utf8, 0, AUGE_PATH_MAX);
+				auge_encoding_convert_2("GBK", "UTF-8",name, strlen(name), (char*)name_utf8, &size_utf8);
+				auge_encoding_convert_2("GBK", "UTF-8",value, strlen(value), (char*)value_utf8, &size_utf8);
+				attr = xmlSetProp(m_pxNode, (const xmlChar*)name_utf8, (const xmlChar*)value_utf8);
+			}
+			else
+			{
+				attr = xmlSetProp(m_pxNode, (const xmlChar*)name, (const xmlChar*)value);
+			}
 		}
 		else
 		{
 			//If the namespace exists, then use it:
-			xmlNs* ns = xmlSearchNs(m_pxNode->doc, m_pxNode, (const xmlChar*)ns_prefix_utf8);
+			xmlNs* ns = xmlSearchNs(m_pxNode->doc, m_pxNode, (const xmlChar*)ns_prefix);
 			if (ns)
 			{
-				attr = xmlSetNsProp(m_pxNode, ns, (const xmlChar*)name_utf8, (const xmlChar*)value_utf8);
+				if(encoding)
+				{	
+					size_t size_utf8 = 0;
+					char name_utf8[AUGE_PATH_MAX];
+					char value_utf8[AUGE_PATH_MAX];
+					memset(name_utf8, 0, AUGE_PATH_MAX);
+					memset(value_utf8, 0, AUGE_PATH_MAX);
+					auge_encoding_convert_2("GBK", "UTF-8",name, strlen(name), (char*)name_utf8, &size_utf8);
+					auge_encoding_convert_2("GBK", "UTF-8",value, strlen(value), (char*)value_utf8, &size_utf8);
+					attr = xmlSetProp(m_pxNode, (const xmlChar*)name_utf8, (const xmlChar*)value_utf8);
+				}
+				else
+				{
+					attr = xmlSetNsProp(m_pxNode, ns, (const xmlChar*)name, (const xmlChar*)value);
+				}
+				//attr = xmlSetNsProp(m_pxNode, ns, (const xmlChar*)name_utf8, (const xmlChar*)value_utf8);
 			}
 			else
 			{
