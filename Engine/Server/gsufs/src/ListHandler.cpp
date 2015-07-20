@@ -12,6 +12,8 @@
 
 namespace auge
 {
+	extern bool make_user_path(char* user_path, size_t size, const char* root_path, const char* user_name);
+
 	ListHandler::ListHandler()
 	{
 
@@ -75,9 +77,13 @@ namespace auge
 			return pExpResponse;
 		}
 
+		char user_path[AUGE_PATH_MAX];
+		memset(user_path,0,AUGE_PATH_MAX);
+		make_user_path(user_path, AUGE_PATH_MAX, root_path, pUser->GetName());
+
 		char local_path[AUGE_PATH_MAX];
 		memset(local_path,0,AUGE_PATH_MAX);
-		auge_make_path(local_path,NULL,root_path,rqut_path+1,NULL);
+		auge_make_path(local_path,NULL,user_path,rqut_path+1,NULL);
 
 		if(g_access(local_path,4))
 		{

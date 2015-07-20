@@ -295,4 +295,16 @@ namespace auge
 
 		return handler->Execute(pWebRequest, pWebContext, pUser);
 	}
+
+	bool make_user_path(char* user_path, size_t size, const char* root_path, const char* user_name)
+	{
+		strcpy(user_path, root_path);
+		return true;
+		//auge_make_path(user_path, NULL, root_path, user_name, NULL);
+		//if(g_access(user_name, 4))
+		//{
+		//	return auge_mkdir(user_path);
+		//}
+		//return true;
+	}
 }
