@@ -48,33 +48,33 @@ namespace auge
 	{
 		if(!m_extent.IsValid())
 		{
-			char sql[AUGE_SQL_MAX];
-			g_snprintf(sql, AUGE_SQL_MAX, "select st_extent(%s) from %s", m_geom_filed_name.c_str(), m_name.c_str());
+			//char sql[AUGE_SQL_MAX];
+			//g_snprintf(sql, AUGE_SQL_MAX, "select st_extent(%s) from %s", m_geom_filed_name.c_str(), m_name.c_str());
 
-			PGresult* pgResult = NULL;
-			pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql);
-			if(PQresultStatus(pgResult)==PGRES_TUPLES_OK)
-			{
-				const char* value = PQgetvalue(pgResult, 0, 0);
-				sscanf(value, "BOX(%lf %lf,%lf %lf)", &m_extent.m_xmin,&m_extent.m_ymin,&m_extent.m_xmax,&m_extent.m_ymax);
-			}
-			PQclear(pgResult);
+			//PGresult* pgResult = NULL;
+			//pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql);
+			//if(PQresultStatus(pgResult)==PGRES_TUPLES_OK)
+			//{
+			//	const char* value = PQgetvalue(pgResult, 0, 0);
+			//	sscanf(value, "BOX(%lf %lf,%lf %lf)", &m_extent.m_xmin,&m_extent.m_ymin,&m_extent.m_xmax,&m_extent.m_ymax);
+			//}
+			//PQclear(pgResult);
 		}
 		return m_extent;
 	}
 
 	g_uint FeatureClassPgs::GetCount()
 	{
-		/*return m_feature_count;*/
+		return m_feature_count;
 
-		std::string sql;
-		SQLBuilder::BuildCount(sql, this);
+		//std::string sql;
+		//SQLBuilder::BuildCount(sql, this);
 
-		PGresult* pgResult =  m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
-		g_uint count = atoi(PQgetvalue(pgResult,0,0));
-		PQclear(pgResult);
+		//PGresult* pgResult =  m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		//g_uint count = atoi(PQgetvalue(pgResult,0,0));
+		//PQclear(pgResult);
 
-		return count;
+		//return count;
 	}
 
 	g_uint FeatureClassPgs::GetCount(GEnvelope& extent)
