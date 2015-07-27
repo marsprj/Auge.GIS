@@ -185,7 +185,7 @@ namespace auge
 				ts = auge_get_time();
 				DrawNamedLayer(pCanvas, pLayer, sname);
 				te = auge_get_time();
-				g_sprintf(msg, "[MapLayer:%s]:%ld ms", sname, te-ts);
+				g_sprintf(msg, "[DrawLayer:%s]:%ld ms", sname, te-ts);
 				pLogger->Debug(msg, __FILE__, __LINE__);
 			}
 		}
