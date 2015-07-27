@@ -44,6 +44,11 @@ namespace auge
 		return m_srid;
 	}
 
+	const char* FeatureClassPgs::GetUUID()
+	{
+		return m_uuid.c_str();
+	}
+
 	GEnvelope& FeatureClassPgs::GetExtent()
 	{
 		if(!m_extent.IsValid())
@@ -621,7 +626,11 @@ namespace auge
 		ComputeExtent(extent);
 		g_uint count = ComputeCount();
 
-		const char* format = "insert into %s (name, alias, count, minx, miny, maxx, maxy) values('%s','%s',%d,%f,%f,%f,%f)";
+		char uuid[AUGE_PATH_MAX];
+		memset(uuid, 0, AUGE_PATH_MAX);
+		auge_generate_uuid(uuid, AUGE_PATH_MAX);
+
+		const char* format = "insert into %s (name, alias, count, minx, miny, maxx, maxy, uuid) values('%s','%s',%d,%f,%f,%f,%f,'%s')";
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), 
@@ -631,7 +640,8 @@ namespace auge
 			extent.m_xmin,
 			extent.m_ymin,
 			extent.m_xmax,
-			extent.m_ymax);
+			extent.m_ymax,
+			uuid);
 
 		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
 	}
@@ -658,7 +668,7 @@ namespace auge
 
 	RESULTCODE FeatureClassPgs::GetMetaInfo()
 	{
-		const char* format = "select name, alias, count, minx, miny, maxx, maxy from %s where name='%s'";
+		const char* format = "select name, alias, count, minx, miny, maxx, maxy, uuid from %s where name='%s'";
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), m_name.c_str());
@@ -681,6 +691,7 @@ namespace auge
 		m_extent.m_ymin = pResult->GetDouble(0,4);
 		m_extent.m_xmax = pResult->GetDouble(0,5);
 		m_extent.m_ymax = pResult->GetDouble(0,6);
+		m_uuid = pResult->GetString(0,7);
 
 		pResult->Release();
 		return AG_SUCCESS;

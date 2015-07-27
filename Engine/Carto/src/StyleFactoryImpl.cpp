@@ -307,48 +307,74 @@ namespace auge
 
 	PointSymbolizer* CreatePointSymbolizer()
 	{
-		Fill *pFill = NULL;
-		pFill = new FillImpl();
+		//Fill *pFill = NULL;
+		//pFill = new FillImpl();
 
-		Stroke *pStroke = NULL;
-		pStroke = new StrokeImpl();
+		//Stroke *pStroke = NULL;
+		//pStroke = new StrokeImpl();
+
+		//PointSymbolizer *pPointSymbolizer = NULL;
+		//pPointSymbolizer = new PointSymbolizerImpl();
+		////pPointSymbolizer->SetFill(pFill);
+		////pPointSymbolizer->SetStroke(pStroke);
+		////pPointSymbolizer->SetSize(3.0f);
+		//pPointSymbolizer->SetGeometry("SHAPE");
+
+		//return pPointSymbolizer;
+
+		SymbolManager	*pSymbolManager = augeGetSymbolManagerInstance();
+		MarkerSymbol	*pSymbol = pSymbolManager->CreateMarkerSymbol(augeMarkerCircle);
+		pSymbol->SetSize(6.0);
 
 		PointSymbolizer *pPointSymbolizer = NULL;
 		pPointSymbolizer = new PointSymbolizerImpl();
-		//pPointSymbolizer->SetFill(pFill);
-		//pPointSymbolizer->SetStroke(pStroke);
-		//pPointSymbolizer->SetSize(3.0f);
-		pPointSymbolizer->SetGeometry("SHAPE");
+		pPointSymbolizer->SetMarker(pSymbol);	
 
 		return pPointSymbolizer;
 	}
 
 	LineSymbolizer* CreateLineSymbolizer()
 	{
-		Fill	*pFill = NULL;
-		Stroke	*pStroke = NULL;
+		//Fill	*pFill = NULL;
+		//Stroke	*pStroke = NULL;
+		//LineSymbolizer *pLineSymbolizer = NULL;
+		//pLineSymbolizer = new LineSymbolizerImpl();
+		//pFill = new FillImpl();
+		//pStroke = new StrokeImpl();;
+		////	pStroke->GetColor().Set(255,0,0,200);
+		//pStroke->SetWidth(0.5f);
+		////	pStroke->SetWidth(5.0f);
+		////pLineSymbolizer->SetStroke(pStroke);
+
+		//return pLineSymbolizer;
+
+		SymbolManager	*pSymbolManager = augeGetSymbolManagerInstance();
+		LineSymbol		*pSymbol = pSymbolManager->CreateLineSymbol(augeLineSimple);
+
 		LineSymbolizer *pLineSymbolizer = NULL;
 		pLineSymbolizer = new LineSymbolizerImpl();
-		pFill = new FillImpl();
-		pStroke = new StrokeImpl();;
-		//	pStroke->GetColor().Set(255,0,0,200);
-		pStroke->SetWidth(0.5f);
-		//	pStroke->SetWidth(5.0f);
-		//pLineSymbolizer->SetStroke(pStroke);
+		pLineSymbolizer->SetSymbol(pSymbol);	
 
 		return pLineSymbolizer;
 	}
 
 	PolygonSymbolizer* CreatePolygonSymbolizer()
 	{
-		Fill	*pFill = NULL;
-		Stroke	*pStroke = NULL;
+		//Fill	*pFill = NULL;
+		//Stroke	*pStroke = NULL;
+		
+
+		SymbolManager	*pSymbolManager = augeGetSymbolManagerInstance();
+		RegionSymbol	*pSymbol = pSymbolManager->CreateRegionSymbol(augeRegionSimple);
+
 		PolygonSymbolizer *pPolygonSymbolizer = NULL;
 		pPolygonSymbolizer = new PolygonSymbolizerImpl();
-		pFill = new FillImpl();
-		GColor fcolor;
-		fcolor.SetAlpha(100);
-		pFill->SetColor(fcolor);
+		pPolygonSymbolizer->SetSymbol(pSymbol);
+
+		//pFill = new FillImpl();
+		//GColor fcolor;
+		//fcolor.SetAlpha(100);
+		//pFill->SetColor(fcolor);
 		//pFill->GetColor().Set(234,0,32,100);
 		//pFill->GetColor().Set(234,0,32,255);
 		//pPolygonSymbolizer->SetFill(pFill);
