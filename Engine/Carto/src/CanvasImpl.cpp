@@ -41,6 +41,10 @@ namespace auge
 		{
 			return;
 		}
+
+		GLogger* pLogger = augeGetLoggerInstance();
+		g_ulong ts = auge_get_time();
+
 		Layer* pLayer = NULL;
 		g_uint count = pMap->GetLayerCount();
 		for(g_int i=count-1; i>=0; i--)
@@ -54,11 +58,24 @@ namespace auge
 				}
 			}
 		}
+		g_ulong te = auge_get_time();
+		char msg[AUGE_MSG_MAX];
+		g_sprintf(msg, "[MapDraw]:%ld ms",te-ts);
+		pLogger->Debug(msg, __FILE__, __LINE__);
+
+		ts = auge_get_time();
+		
 		m_maplex.Draw();
+		te = auge_get_time();
+		g_sprintf(msg, "[MapLabel]:%ld ms",te-ts);
+		pLogger->Debug(msg, __FILE__, __LINE__);
 	}
 
 	void CanvasImpl::DrawLayer(Layer* pLayer)
 	{
+		GLogger* pLogger = augeGetLoggerInstance();
+		g_ulong ts = auge_get_time();
+
 		augeLayerType type = pLayer->GetType();
 		switch(type)
 		{
@@ -75,7 +92,11 @@ namespace auge
 			}
 			break;
 		}
-		//DrawLayer(pLayer, pLayer->GetStyle());
+
+		g_ulong te = auge_get_time();
+		char msg[AUGE_MSG_MAX];
+		g_sprintf(msg, "[DrawLayer:%s]:%ld ms", pLayer->GetName(), te-ts);
+		pLogger->Debug(msg, __FILE__, __LINE__);
 	}
 
 	void CanvasImpl::DrawLayer(FeatureLayer* pLayer)

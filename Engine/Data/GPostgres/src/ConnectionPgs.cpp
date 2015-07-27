@@ -117,7 +117,7 @@ namespace auge
 
 		g_ulong te = auge_get_time();
 		char msg[AUGE_MSG_MAX];
-		g_sprintf(msg, "[SQL Query]:%ld\tms",te-ts);
+		g_sprintf(msg, "[SQL Query]:%ld ms",te-ts);
 		pLogger->Debug(msg, __FILE__, __LINE__);
 
 		int status = PQresultStatus(pgResult);
@@ -152,7 +152,7 @@ namespace auge
 
 		g_ulong te = auge_get_time();
 		char msg[AUGE_MSG_MAX];
-		g_sprintf(msg, "[SQL Execute]:%ld\tms",te-ts);
+		g_sprintf(msg, "[SQL Execute]:%ld ms",te-ts);
 		augeGetLoggerInstance()->Debug(msg, __FILE__, __LINE__);
 
 		if(pgResult==NULL)
