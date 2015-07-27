@@ -98,7 +98,24 @@ namespace auge
 		switch(pDataSet->GetType())
 		{
 		case augeDataSetFeature:
-			pWebResponse = DrawFeature(static_cast<FeatureClass*>(pDataSet),pRequest);
+			{
+				FeatureClass* pFeatureClass = static_cast<FeatureClass*>(pDataSet);
+				char img_sfix[AUGE_EXT_MAX] = {0};
+				char img_path[AUGE_PATH_MAX] = {0};
+				auge_get_image_suffix(pRequest->GetMimeType(), img_sfix, AUGE_EXT_MAX);
+				WebContext* pWebContext = augeGetWebContextInstance();
+				auge_make_path(img_path, NULL, pWebContext->GetCacheMapPath(), pFeatureClass->GetUUID(), img_sfix);
+				if(!g_access(img_path, 4))
+				{
+					GetPreviewResponse* pMapResponse = new GetPreviewResponse(pRequest);
+					pMapResponse->SetPath(img_path);
+					pWebResponse = pMapResponse;
+				}
+				else
+				{
+					pWebResponse = DrawFeature(pFeatureClass,pRequest);
+				}
+			}			
 			break;
 		case augeDataSetRaster:
 			break;
@@ -151,21 +168,22 @@ namespace auge
 		
 		pCanvas->DrawLayer(pFeatureLayer, pStyle);
 
-		pStyle->Release();
-		pFeatureLayer->Release();
-		
 		char img_sfix[AUGE_EXT_MAX] = {0};
-		char img_name[AUGE_NAME_MAX] = {0};
+		//char img_name[AUGE_NAME_MAX] = {0};
 		char img_path[AUGE_PATH_MAX] = {0};
 		auge_get_image_suffix(pRequest->GetMimeType(), img_sfix, AUGE_EXT_MAX);
-		auge_generate_uuid(img_name, AUGE_NAME_MAX);
+		//auge_generate_uuid(img_name, AUGE_NAME_MAX);
 		WebContext* pWebContext = augeGetWebContextInstance();
 		//const char* cache_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\cache\\map";//pWebContext->GetCacheMapPath();
-		auge_make_path(img_path, NULL, pWebContext->GetCacheMapPath(), img_name, img_sfix);
+		const char* uuid = pFeatureClass->GetUUID();
+		auge_make_path(img_path, NULL, pWebContext->GetCacheMapPath(), pFeatureClass->GetUUID(), img_sfix);
 		pCanvas->Save(img_path);
 		pCanvas->Release();
 		GetPreviewResponse* pMapResponse = new GetPreviewResponse(pRequest);
 		pMapResponse->SetPath(img_path);
+
+		pStyle->Release();
+		pFeatureLayer->Release();
 
 		return pMapResponse;
 	}

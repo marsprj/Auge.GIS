@@ -58,6 +58,7 @@ namespace auge
 		virtual const char*			GetName() = 0;
 		virtual g_uint				GetSRID() = 0;
 		virtual GEnvelope&			GetExtent() = 0;
+		virtual const char*			GetUUID() = 0;
 	
 		virtual GFields*			GetFields() = 0;
 		virtual GField*				GetField(const char* name) = 0;
@@ -79,6 +80,7 @@ namespace auge
 		virtual FeatureInsertCommand* CreateInsertCommand() = 0;
 
 		virtual Feature*			NewFeature() = 0;
+		virtual RESULTCODE			Refresh() = 0;
 	};
 
 	class Feature : public GObject

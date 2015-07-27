@@ -217,8 +217,21 @@ namespace auge
 	{	
 		FeatureCursor	*pCursor = NULL;
 		FeatureClass	*pFeatureClass = pLayer->GetFeatureClass();
+		
+		GField *pGeomField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pGeomField==NULL)
+		{
+			return;
+		}
+		
+		GQuery *pQuery = NULL;
+		FilterFactory	*pFilterFactory = augeGetFilterFactoryInstance();
+		pQuery = pFilterFactory->CreateQuery();		
+		pQuery->AddSubField(pGeomField->GetName());
+		pQuery->SetFilter(pFilter);
+		pFilter->AddRef();
 
-		pCursor = pFeatureClass->Query(pFilter);
+		pCursor = pFeatureClass->Query(pQuery);
 
 		int fid = 0;
 		g_uchar* wkb = NULL;
@@ -253,6 +266,7 @@ namespace auge
 			pFeature->Release();
 		}
 		pCursor->Release();
+		pQuery->Release();
 	}
 
 	//void CanvasImpl::DrawLayer(FeatureLayer* pLayer, Symbolizer* pSymbolizer, GFilter* pFilter)

@@ -66,14 +66,16 @@ namespace auge
 		
 		// Raster
 
-		RESULTCODE				CreateCatalogTable();
+		RESULTCODE				CreateFeatureCatalogTable();
+		RESULTCODE				CreateRasterCatalogTable();
 	private:
 		ConnectionPgs	m_pgConnection;
 		std::string		m_name;
 		std::string		m_schema;
 
 		std::string		m_repository;
-		std::string		g_catalog_table;
+		std::string		g_raster_catalog_table;
+		std::string		g_feature_catalog_table;
 	};
 }
 

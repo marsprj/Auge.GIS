@@ -11,7 +11,9 @@ namespace auge
 	WorkspacePgs::WorkspacePgs():
 	m_schema("public")
 	{
-		g_catalog_table = "g_raster_catalog";
+		g_feature_catalog_table = "g_feature_catalog";
+		g_raster_catalog_table  = "g_raster_catalog";
+
 #ifdef WIN32
 		m_repository = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload";
 #else
@@ -77,9 +79,14 @@ namespace auge
 			return rc;
 		}
 
-		if(!m_pgConnection.HasTable(g_catalog_table.c_str()))
+		if(!m_pgConnection.HasTable(g_feature_catalog_table.c_str()))
 		{
-			CreateCatalogTable();
+			CreateFeatureCatalogTable();
+		}
+
+		if(!m_pgConnection.HasTable(g_raster_catalog_table.c_str()))
+		{
+			CreateRasterCatalogTable();
 		}
 	
 		return rc;
@@ -483,7 +490,7 @@ namespace auge
 	{
 		char sql[AUGE_SQL_MAX] = {0};
 		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid from %s";
-		g_snprintf(sql, AUGE_SQL_MAX, format,	g_catalog_table.c_str());
+		g_snprintf(sql, AUGE_SQL_MAX, format,	g_raster_catalog_table.c_str());
 
 		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -530,7 +537,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX] = {0};
 		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid from %s where name='%s'";
-		g_snprintf(sql, AUGE_SQL_MAX, format,	g_catalog_table.c_str(), name);
+		g_snprintf(sql, AUGE_SQL_MAX, format,	g_raster_catalog_table.c_str(), name);
 
 		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -621,7 +628,7 @@ namespace auge
 		return m_pgConnection.ExecuteSQL(sql);
 	}
 
-	RESULTCODE WorkspacePgs::CreateCatalogTable()
+	RESULTCODE WorkspacePgs::CreateRasterCatalogTable()
 	{
 		char sql[AUGE_SQL_MAX];
 		const char* format = "CREATE TABLE %s(" \
@@ -642,7 +649,28 @@ namespace auge
 			"	CONSTRAINT g_raster_catalog_pk PRIMARY KEY (gid)," \
 			"	CONSTRAINT g_raster_catalog_name_uk UNIQUE (name, format)" \
 			")";
-		g_sprintf(sql, format, g_catalog_table.c_str());
+		g_sprintf(sql, format, g_raster_catalog_table.c_str());
+		return m_pgConnection.ExecuteSQL(sql);
+	}
+
+	RESULTCODE WorkspacePgs::CreateFeatureCatalogTable()
+	{
+		char sql[AUGE_SQL_MAX];
+		const char* format = "	CREATE TABLE %s" \
+			"	(" \
+			"	  gid serial NOT NULL," \
+			"	  name character varying(32)," \
+			"	  alias character varying(32)," \
+			"	  count integer," \
+			"	  minx double precision," \
+			"	  miny double precision," \
+			"	  maxx double precision," \
+			"	  maxy double precision," \
+			"	  uuid character varying(128)," \
+			"	  CONSTRAINT g_feature_catalog_pk PRIMARY KEY (gid)," \
+			"	  CONSTRAINT g_feature_catalog_name_uk UNIQUE (name)" \
+			"	)";
+		g_sprintf(sql, format, g_feature_catalog_table.c_str());
 		return m_pgConnection.ExecuteSQL(sql);
 	}
 	//////////////////////////////////////////////////////////////////////////

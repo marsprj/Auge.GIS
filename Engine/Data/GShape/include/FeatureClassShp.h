@@ -24,6 +24,7 @@ namespace auge
 		virtual const char*			GetName();
 		virtual g_uint				GetSRID();
 		virtual GEnvelope&			GetExtent();
+		virtual const char*			GetUUID();
 
 		virtual g_uint				GetCount();
 		virtual g_uint				GetCount(GEnvelope& extent);
@@ -47,6 +48,7 @@ namespace auge
 		virtual FeatureInsertCommand* CreateInsertCommand();
 
 		virtual Feature*			NewFeature();
+		virtual RESULTCODE			Refresh();
 
 		virtual void				Release();
 

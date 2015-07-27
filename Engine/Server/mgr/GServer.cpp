@@ -516,7 +516,7 @@ namespace auge
 	{
 		char msg[AUGE_MSG_MAX] = {0};
 		//g_sprintf(msg, "[%d]:[%d]", te,ts);
-		g_sprintf(msg, "[Time]:%3f ms", ((float)(te-ts))/1000.0f);
+		g_sprintf(msg, "[Time]:%ld ms", te-ts);
 		m_pLogger->Debug(msg);
 	}
 
