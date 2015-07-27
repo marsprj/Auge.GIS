@@ -109,7 +109,7 @@ namespace auge
 	{
 		PGresult *pgResult = NULL;	
 		GLogger* pLogger = augeGetLoggerInstance();
-		pLogger->Debug(sql, __FILE__, __LINE__);
+		//pLogger->Debug(sql, __FILE__, __LINE__);
 
 		g_ulong ts = auge_get_time();
 

@@ -33,6 +33,10 @@ namespace auge
 
 		pWriter->WriteHead(m_pRequest->GetMimeType());
 
+		g_ulong ts, te;
+		char msg[AUGE_MSG_MAX];
+		ts = auge_get_time();
+
 		g_uint nBytes = 0;
 		g_uchar buffer[AUGE_BUFFER_MAX];		
 		memset(buffer, 0, AUGE_BUFFER_MAX);
@@ -40,6 +44,10 @@ namespace auge
 		{
 			pWriter->Write(buffer, nBytes);
 		}
+
+		te = auge_get_time();
+		g_sprintf(msg, "[WMS Image Write]:%ld ms", te-ts);
+		pLogger->Debug(msg, __FILE__, __LINE__);
 		
 		pWriter->WriteTail();
 
