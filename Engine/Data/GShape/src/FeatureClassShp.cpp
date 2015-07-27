@@ -34,6 +34,11 @@ namespace auge
 		return m_name.c_str();
 	}
 
+	const char* FeatureClassShp::GetUUID()
+	{
+		return "";
+	}
+
 	g_uint FeatureClassShp::GetSRID()
 	{
 		return m_srid;

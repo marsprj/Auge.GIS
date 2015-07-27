@@ -112,6 +112,6 @@ namespace auge
 			pWKBLineString = (WKBLineString*)pt1;
 		}
 
-		return 0.0;
+		return length;
 	}
 }

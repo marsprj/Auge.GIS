@@ -22,7 +22,7 @@ namespace auge
 		virtual const char*		GetEncoding();
 
 	public:
-		const char* GetName();
+		const char* GetRasterName();
 		const char*	GetPath();
 		const char* GetSourceName();
 
@@ -31,7 +31,7 @@ namespace auge
 
 		void		SetVersion(const char* version);
 		void		SetPath(const char* path);
-		void		SetName(const char* name);
+		void		SetRasterName(const char* name);
 		void		SetSourceName(const char* sourceName);
 
 	private:
@@ -52,6 +52,6 @@ namespace auge
 [ HTTP Post ]
 -------------------------------------------------------------------------
 service=rds&version=1.0.0&request=AddRaster&name=Koala.png&Path=/Koala.png
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=AddRaster&name=Koala.png&Path=/Koala.png
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=AddRaster&rasterName=Koala.png&Path=/Koala.png
 
 ************************************************************************/

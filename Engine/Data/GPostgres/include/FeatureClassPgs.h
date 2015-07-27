@@ -24,6 +24,7 @@ namespace auge
 		virtual const char*			GetName();
 		virtual g_uint				GetSRID();
 		virtual GEnvelope&			GetExtent();
+		virtual const char*			GetUUID();
 
 		virtual g_uint				GetCount();
 		virtual g_uint				GetCount(GEnvelope& extent);
@@ -78,6 +79,7 @@ namespace auge
 		std::string			m_alias;
 		std::string			m_schema;
 		std::string			m_geom_filed_name;
+		std::string			m_uuid;
 		augeGeometryType	m_geom_type;
 		WorkspacePgs*		m_pWorkspace;
 		GFields*			m_pFields;

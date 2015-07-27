@@ -21,7 +21,7 @@ namespace auge
 	{
 		SetVersion(cgi["version"]);
 		SetPath(cgi["path"]);
-		SetName(cgi["name"]);
+		SetRasterName(cgi["rasterName"]);
 		SetSourceName(cgi["sourceName"]);
 		SetIX(cgi["sx"]);
 		SetIY(cgi["sy"]);
@@ -81,7 +81,7 @@ namespace auge
 		return m_encoding.c_str();
 	}
 
-	void GetValueRequest::SetName(const char* name)
+	void GetValueRequest::SetRasterName(const char* name)
 	{
 		if(name==NULL)
 		{
@@ -93,7 +93,7 @@ namespace auge
 		}
 	}
 
-	const char* GetValueRequest::GetName()
+	const char* GetValueRequest::GetRasterName()
 	{
 		return m_name.empty() ? NULL : m_name.c_str();
 	}

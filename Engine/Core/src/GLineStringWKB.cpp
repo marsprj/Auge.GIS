@@ -99,6 +99,6 @@ namespace auge
 			length += sqrt(pow((pt1->x - pt0->x), 2) + pow((pt1->y - pt0->y), 2));
 		}
 
-		return 0.0;
+		return length;
 	}
 }

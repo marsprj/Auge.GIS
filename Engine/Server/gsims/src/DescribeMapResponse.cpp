@@ -70,7 +70,7 @@ namespace auge
 		g_uchar* buffer = NULL;
 		GLogger* pLogger = augeGetLoggerInstance();
 
-		pxDoc->WriteToString(&buffer, len, m_pRequest->GetEncoding(),0);
+		pxDoc->WriteToString(&buffer, len, m_pRequest->GetEncoding(),1);
 		
 		pWriter->WriteHead(m_pRequest->GetMimeType(),false);
 		pWriter->Write(buffer, len);

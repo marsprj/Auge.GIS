@@ -119,7 +119,7 @@ namespace auge
 				pt1 = pt0 + 1;
 				for(int k=1; k<numPoints; k++, pt0++, pt1++)
 				{
-					double a = (pt1->y + pt0->y) * (pt1->x - pt0->y) / 2.0;
+					double a = (pt1->y + pt0->y) * (pt1->x - pt0->x) / 2.0;
 					area += a;
 				}
 				pLinearRing = (LinearRing*)pt1;

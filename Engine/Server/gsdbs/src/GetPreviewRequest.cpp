@@ -8,6 +8,8 @@ namespace auge
 		m_mime_type = "image/png";
 		m_format = "image/png";
 		m_encoding = AUGE_DEFAULT_ENCODING;
+		m_width = 512;
+		m_height= 512;
 	}
 
 	GetPreviewRequest::~GetPreviewRequest()
@@ -144,17 +146,25 @@ namespace auge
 
 	void GetPreviewRequest::SetWidth(const char* width)
 	{
-		if(width)
+		if(width && (strlen(width)>0))
 		{
 			m_width = atoi(width);
+		}
+		else
+		{
+			m_width = 512;
 		}
 	}
 
 	void GetPreviewRequest::SetHeight(const char* height)
 	{
-		if(height)
+		if(height && (strlen(height)>0))
 		{
 			m_height = atoi(height);
+		}
+		else
+		{
+			m_height = 512;
 		}
 	}
 
