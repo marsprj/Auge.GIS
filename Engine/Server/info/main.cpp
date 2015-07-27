@@ -31,7 +31,7 @@ int main()
 		print_cgi_variable("SERVER_SOFTWARE");
 		print_cgi_variable("GATEWAY_INTERFACE");
 		print_cgi_variable("SERVER_PROTOCOL");
-		print_cgi_variable("SERVER_PORT ");
+		print_cgi_variable("SERVER_PORT");
 		print_cgi_variable("REQUEST_METHOD");
 		print_cgi_variable("HTTP_ACCEPT");
 		print_cgi_variable("HTTP_USER_AGENT");
