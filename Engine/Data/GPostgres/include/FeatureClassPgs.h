@@ -47,25 +47,35 @@ namespace auge
 		virtual FeatureInsertCommand* CreateInsertCommand();
 
 		virtual Feature*			NewFeature();
+		virtual RESULTCODE			Refresh();
 
 		virtual void				Release();
 
 	public:
-		bool	Create(const char* name, WorkspacePgs* pWorkspace);
-		bool	Create(const char* name, WorkspacePgs* pWorkspace, PGresult* pgResult);
-		GField*	CreateField(int col, PGresult* pgResult);
-		bool	CreateFields();
-		bool	CreateFields(PGresult* pgResult);
-		bool	GetMetaData();
+		bool		Create(const char* name, WorkspacePgs* pWorkspace);
+		bool		Create(const char* name, WorkspacePgs* pWorkspace, PGresult* pgResult);
+		GField*		CreateField(int col, PGresult* pgResult);
+		bool		CreateFields();
+		bool		CreateFields(PGresult* pgResult);
+		bool		GetGeometryInfo();
 
 	private:
+		g_uint		ComputeCount();
+		RESULTCODE	ComputeExtent(GEnvelope& extent);
+
+		bool		HasMetaInfo();
+		RESULTCODE	GetMetaInfo();
+		RESULTCODE	AddMetaInfo();
+		RESULTCODE	UpdateMetaInfo();
 
 	private:
 		Oid					m_oid;
 		g_uint				m_srid;
 		g_uint				m_dimension;
+		g_uint				m_feature_count;
 		GEnvelope			m_extent;
 		std::string			m_name;
+		std::string			m_alias;
 		std::string			m_schema;
 		std::string			m_geom_filed_name;
 		augeGeometryType	m_geom_type;

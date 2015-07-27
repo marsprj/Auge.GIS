@@ -47,6 +47,7 @@ namespace auge
 		virtual FeatureInsertCommand* CreateInsertCommand();
 
 		virtual Feature*			NewFeature();
+		virtual RESULTCODE			Refresh();
 
 		virtual void				Release();
 

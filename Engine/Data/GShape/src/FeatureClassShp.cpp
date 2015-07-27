@@ -329,4 +329,9 @@ namespace auge
 	{
 		return NULL;
 	}
+
+	RESULTCODE FeatureClassShp::Refresh()
+	{
+		return AG_SUCCESS;
+	}
 }

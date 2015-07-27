@@ -8,8 +8,8 @@ void PgsTest::setUp()
 {
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=GISDB;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gaode;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	//const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gaode;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=osm;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
 	pLogger->Initialize();
@@ -425,4 +425,17 @@ void PgsTest::GetAQIQuery()
 	pCursor->Release();
 	pFeatureClass->Release();
 	pFilter->Release();
+}
+
+void PgsTest::RefreshFeatureClass()
+{
+	auge::FeatureClass* pClass = NULL;
+	auge::EnumDataSet* pFeatureClasses = m_pWorkspace->GetFeatureClasses();
+
+	pFeatureClasses->Reset();
+	while((pClass=(auge::FeatureClass*)(pFeatureClasses->Next()))!=NULL)
+	{
+		pClass->Refresh();
+	}
+	pFeatureClasses->Release();
 }

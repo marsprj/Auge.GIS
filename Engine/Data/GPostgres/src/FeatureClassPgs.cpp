@@ -16,8 +16,9 @@ namespace auge
 	m_pFields(NULL),
 	m_schema("public"),
 	m_geom_type(augeGTNull),
-	m_srid(4326),
-	m_dimension(2)
+	m_srid(AUGE_DEFAULT_SRID),
+	m_dimension(2),
+	m_feature_count(0)
 	{
 		FieldFactory* pFactory = augeGetFieldFactoryInstance();
 		m_pFields = pFactory->CreateFields();
@@ -64,6 +65,8 @@ namespace auge
 
 	g_uint FeatureClassPgs::GetCount()
 	{
+		/*return m_feature_count;*/
+
 		std::string sql;
 		SQLBuilder::BuildCount(sql, this);
 
@@ -118,9 +121,14 @@ namespace auge
 		//	return false;
 		//}
 
-		if(!GetMetaData())
+		if(!GetGeometryInfo())
 		{
 			//return false;
+		}
+
+		if(!GetMetaInfo())
+		{
+
 		}
 
 		if(!CreateFields())
@@ -143,9 +151,14 @@ namespace auge
 		//	return false;
 		//}
 
-		if(!GetMetaData())
+		if(!GetGeometryInfo())
 		{
 			//return false;
+		}
+
+		if(!GetMetaInfo())
+		{
+
 		}
 
 		if(!CreateFields(pgResult))
@@ -378,7 +391,7 @@ namespace auge
 		return pField;
 	}
 
-	bool FeatureClassPgs::GetMetaData()
+	bool FeatureClassPgs::GetGeometryInfo()
 	{
 		char sql[AUGE_SQL_MAX] = {0};
 		g_snprintf(sql, AUGE_SQL_MAX, "select * from geometry_columns where f_table_name='%s' and f_table_schema='%s'",m_name.c_str(),m_schema.c_str());
@@ -544,5 +557,132 @@ namespace auge
 
 		pResult->Release();
 		return pEnumValue;
+	}
+
+	RESULTCODE FeatureClassPgs::Refresh()
+	{
+		RESULTCODE rc = AG_SUCCESS;
+		if(!HasMetaInfo())
+		{
+			rc = AddMetaInfo();
+		}
+		else
+		{
+			rc = UpdateMetaInfo();
+		}
+		return rc;
+	}
+
+	g_uint FeatureClassPgs::ComputeCount()
+	{
+		std::string sql;
+		SQLBuilder::BuildCount(sql, this);
+
+		PGresult* pgResult =  m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		g_uint count = atoi(PQgetvalue(pgResult,0,0));
+		PQclear(pgResult);
+
+		return count;
+	}
+
+	RESULTCODE FeatureClassPgs::ComputeExtent(GEnvelope& extent)
+	{
+		char sql[AUGE_SQL_MAX];
+		g_snprintf(sql, AUGE_SQL_MAX, "select st_extent(%s) from %s", m_geom_filed_name.c_str(), m_name.c_str());
+
+		PGresult* pgResult = NULL;
+		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql);
+		if(PQresultStatus(pgResult)==PGRES_TUPLES_OK)
+		{
+			const char* value = PQgetvalue(pgResult, 0, 0);
+			sscanf(value, "BOX(%lf %lf,%lf %lf)", &extent.m_xmin,&extent.m_ymin,&extent.m_xmax,&extent.m_ymax);
+		}
+		PQclear(pgResult);
+		return AG_SUCCESS;
+	}
+
+	bool FeatureClassPgs::HasMetaInfo()
+	{
+		char sql[AUGE_SQL_MAX];
+		g_snprintf(sql, AUGE_SQL_MAX, "select count(*) from %s where name = '%s'", m_pWorkspace->g_feature_catalog_table.c_str(), m_name.c_str());
+		GResultSet* pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return false;
+		}
+		int count = pResult->GetInt(0,0);
+		pResult->Release();
+		return count;
+	}
+
+	RESULTCODE FeatureClassPgs::AddMetaInfo()
+	{
+		GEnvelope extent;
+		ComputeExtent(extent);
+		g_uint count = ComputeCount();
+
+		const char* format = "insert into %s (name, alias, count, minx, miny, maxx, maxy) values('%s','%s',%d,%f,%f,%f,%f)";
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), 
+			GetName(),
+			GetName(),	
+			count,
+			extent.m_xmin,
+			extent.m_ymin,
+			extent.m_xmax,
+			extent.m_ymax);
+
+		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+	}
+
+	RESULTCODE FeatureClassPgs::UpdateMetaInfo()
+	{
+		GEnvelope extent;
+		ComputeExtent(extent);
+		ComputeCount();
+
+		const char* format = "update %s set name='%s', alias='%s', count=%d, minx=%f, miny=%f, maxx=%f, maxy=%f";
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), 
+			GetName(),
+			GetName(),
+			extent.m_xmin,
+			extent.m_ymin,
+			extent.m_xmax,
+			extent.m_ymax);
+
+		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+	}
+
+	RESULTCODE FeatureClassPgs::GetMetaInfo()
+	{
+		const char* format = "select name, alias, count, minx, miny, maxx, maxy from %s where name='%s'";
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), m_name.c_str());
+
+		GResultSet* pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		if(pResult->GetCount()==0)
+		{
+			pResult->Release();
+			return AG_FAILURE;
+		}
+
+		m_alias = pResult->GetString(0,1);
+		m_feature_count = pResult->GetInt(0,2);
+		m_extent.m_xmin = pResult->GetDouble(0,3);
+		m_extent.m_ymin = pResult->GetDouble(0,4);
+		m_extent.m_xmax = pResult->GetDouble(0,5);
+		m_extent.m_ymax = pResult->GetDouble(0,6);
+
+		pResult->Release();
+		return AG_SUCCESS;
 	}
 }

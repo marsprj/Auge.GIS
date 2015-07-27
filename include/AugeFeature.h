@@ -79,6 +79,7 @@ namespace auge
 		virtual FeatureInsertCommand* CreateInsertCommand() = 0;
 
 		virtual Feature*			NewFeature() = 0;
+		virtual RESULTCODE			Refresh() = 0;
 	};
 
 	class Feature : public GObject

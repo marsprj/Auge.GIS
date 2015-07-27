@@ -98,6 +98,7 @@ typedef unsigned long long  g_uint64;
 #define AUGE_DB_REPOSITORY	"REPOSITORY"
 
 #define AUGE_DEFAULT_ENCODING	"GBK"
+#define AUGE_DEFAULT_SRID		4326
 
 #ifndef g_stricmp
 #	ifdef WIN32
