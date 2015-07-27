@@ -121,7 +121,7 @@ namespace auge
 
 		Canvas* pCanvas = NULL;
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
-
+	
 		pCanvas = pCartoFactory->CreateCanvas2D(width, height);
 
 		GColor& bgColor = pRequest->GetBgColor(); 
@@ -149,6 +149,10 @@ namespace auge
 		Layer* pLayer = NULL;
 		Style* pStyle = NULL;
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+
+		g_ulong ts, te;
+		char msg[AUGE_MSG_MAX];
+		ts = auge_get_time();
 
 		g_uint lc = pRequest->GetLayerCount();
 		for(g_int i=lc-1; i>=0; i--)
@@ -178,10 +182,22 @@ namespace auge
 					
 				}
 
+				ts = auge_get_time();
 				DrawNamedLayer(pCanvas, pLayer, sname);
+				te = auge_get_time();
+				g_sprintf(msg, "[MapLayer:%s]:%ld ms", sname, te-ts);
+				pLogger->Debug(msg, __FILE__, __LINE__);
 			}
 		}
+		te = auge_get_time();
+		g_sprintf(msg, "[MapDraw]:%ld ms", te-ts);
+		pLogger->Debug(msg, __FILE__, __LINE__);
+
+		ts = auge_get_time();
 		pCanvas->Label();
+		te = auge_get_time();
+		g_sprintf(msg, "[MapLabel]:%ld ms", te-ts);
+		pLogger->Debug(msg, __FILE__, __LINE__);
 
 		char img_sfix[AUGE_EXT_MAX] = {0};
 		char img_name[AUGE_NAME_MAX] = {0};
@@ -190,7 +206,13 @@ namespace auge
 		auge_generate_uuid(img_name, AUGE_NAME_MAX);
 		const char* cache_path = pWebContext->GetCacheMapPath();
 		auge_make_path(img_path, NULL, cache_path, img_name, img_sfix);
+
+		ts = auge_get_time();
 		pCanvas->Save(img_path);
+		te = auge_get_time();
+		g_sprintf(msg, "[MapSave]:%ld ms", te-ts);
+		pLogger->Debug(msg, __FILE__, __LINE__);
+
 		pCanvas->Release();
 		GetMapResponse* pMapResponse = new GetMapResponse(pRequest);
 		pMapResponse->SetPath(img_path);
