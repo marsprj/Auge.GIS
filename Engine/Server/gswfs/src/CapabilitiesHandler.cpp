@@ -361,7 +361,7 @@ namespace auge
 	//						g_snprintf(str, AUGE_MSG_MAX, "%.7f %.7f", extent.m_xmin, extent.m_ymin);
 	//						pxNode->AddChildText(str);
 	//					}
-	//					pxNode = px84Bounding->AddChild("LowerCorner","ows");
+	//					pxNode = px84Bounding->AddChild("UpperCorner","ows");
 	//					if(extent.IsValid())
 	//					{
 	//						g_snprintf(str, AUGE_MSG_MAX, "%.7f %.7f", extent.m_xmax, extent.m_ymax);
@@ -564,15 +564,15 @@ namespace auge
 		char str[AUGE_NAME_MAX] = {0};
 		XElement* pxType = pxParent->AddChild("FeatureType", NULL);
 		XElement* pxNode = pxType->AddChild("Name",NULL);
-		pxNode->SetChildText(typeName);
+		pxNode->SetChildText(typeName, true);
 		pxNode = pxType->AddChild("Tile",NULL);
-		pxNode->SetChildText(pFeatureClass->GetName());
+		pxNode->SetChildText(pFeatureClass->GetName(), true);
 		pxNode = pxType->AddChild("Abstract",NULL);
 
 		//Keywords
 		XElement* pxKeywords = pxType->AddChild("KeywordList", "ows");
 		pxNode = pxKeywords->AddChild("Keyword", "ows");
-		pxNode->SetChildText(pFeatureClass->GetName());
+		pxNode->SetChildText(pFeatureClass->GetName(), true);
 
 		//DefaultSRS
 		g_snprintf(str, AUGE_MSG_MAX, "EPSG:%d", pFeatureClass->GetSRID());
@@ -588,7 +588,7 @@ namespace auge
 			g_snprintf(str, AUGE_MSG_MAX, "%.7f %.7f", extent.m_xmin, extent.m_ymin);
 			pxNode->AddChildText(str);
 		}
-		pxNode = px84Bounding->AddChild("LowerCorner","ows");
+		pxNode = px84Bounding->AddChild("UpperCorner","ows");
 		if(extent.IsValid())
 		{
 			g_snprintf(str, AUGE_MSG_MAX, "%.7f %.7f", extent.m_xmax, extent.m_ymax);

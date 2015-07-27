@@ -66,7 +66,7 @@ namespace auge
 
 		//const char* root_path = pWebContext->GetUploadPath();
 		const char* raster_path = pRequest->GetPath();
-		const char* raster_name = pRequest->GetName();
+		const char* raster_name = pRequest->GetRasterName();
 
 		if(raster_name==NULL)
 		{

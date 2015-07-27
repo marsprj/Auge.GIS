@@ -58,6 +58,6 @@ namespace auge
 
 	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return NULL;
+		return new CapabilitiesResponse(static_cast<CapabilitiesRequest*>(pWebRequest));
 	}
 }

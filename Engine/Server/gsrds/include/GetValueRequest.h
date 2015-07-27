@@ -22,7 +22,7 @@ namespace auge
 		virtual const char*		GetEncoding();
 
 	public:
-		const char* GetName();
+		const char* GetRasterName();
 		const char*	GetPath();
 		const char* GetSourceName();
 		g_int		GetIX();
@@ -35,7 +35,7 @@ namespace auge
 
 		void		SetVersion(const char* version);
 		void		SetPath(const char* path);
-		void		SetName(const char* name);
+		void		SetRasterName(const char* name);
 		void		SetSourceName(const char* sourceName);
 		void		SetIX(const char* ix);
 		void		SetIY(const char* iy);

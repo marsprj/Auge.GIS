@@ -101,7 +101,7 @@ namespace auge
 		{
 			char msg[AUGE_MSG_MAX];
 			memset(msg,0,AUGE_MSG_MAX);
-			g_sprintf(msg,"Failed to create folder [%s].", rqut_path);
+			g_sprintf(msg,"Failed to remove folder [%s].", rqut_path);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
 			pLogger->Error(msg,__FILE__,__LINE__);

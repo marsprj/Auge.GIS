@@ -70,7 +70,7 @@ http://127.0.0.1:8088/ows/user1/mgr?
 	service="dbs"
 	version="1.0.0"
 	sourceName="db1"
-	dataSetName="table1">
+	dataSetName="table_2">
 	<Fields>
 		<Field>
 			<Name>ID</Name>
