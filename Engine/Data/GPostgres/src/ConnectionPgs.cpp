@@ -111,7 +111,14 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		pLogger->Debug(sql, __FILE__, __LINE__);
 
+		g_ulong ts = auge_get_time();
+
 		pgResult = PQexec(m_pgConnection, sql);
+
+		g_ulong te = auge_get_time();
+		char msg[AUGE_MSG_MAX];
+		g_sprintf(msg, "[SQL Query]:%ld\tms",te-ts);
+		pLogger->Debug(msg, __FILE__, __LINE__);
 
 		int status = PQresultStatus(pgResult);
 		if((status!=PGRES_TUPLES_OK))
@@ -139,7 +146,15 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		g_ulong ts = auge_get_time();
+
 		PGresult* pgResult = PgExecute(sql);
+
+		g_ulong te = auge_get_time();
+		char msg[AUGE_MSG_MAX];
+		g_sprintf(msg, "[SQL Execute]:%ld\tms",te-ts);
+		augeGetLoggerInstance()->Debug(msg, __FILE__, __LINE__);
+
 		if(pgResult==NULL)
 		{
 			return AG_FAILURE;
