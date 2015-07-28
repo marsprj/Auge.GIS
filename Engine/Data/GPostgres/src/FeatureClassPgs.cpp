@@ -1,6 +1,7 @@
 #include "WorkspacePgs.h"
 #include "ConnectionPgs.h"
 #include "FeatureCursorPgs.h"
+#include "FeatureCursorStatic.h"
 #include "FeatureClassPgs.h"
 #include "FeatureInsertCommandPgs.h"
 #include "FeatureObj.h"
@@ -184,95 +185,230 @@ namespace auge
 
 	FeatureCursor* FeatureClassPgs::Query(augeCursorType type/*=augeStaticCursor*/)
 	{
-		std::string sql;
-		SQLBuilder::BuildQuery(sql,this);
-
-		PGresult* pgResult = NULL;
-		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
-		if(pgResult==NULL)
+		FeatureCursor* pCursor = NULL;
+		switch(type)
 		{
-			return NULL;
+		case augeStaticCursor:
+			{
+				FeatureCursorStatic* pCursorS = new FeatureCursorStatic();
+				if(!pCursorS->Create(this))
+				{
+					pCursorS->Release();
+				}
+				else
+				{
+					pCursor = pCursorS;
+				}
+			}
+			break;
+		case augeDynamicCursor:
+			{
+				std::string sql;
+				SQLBuilder::BuildQuery(sql,this);
+
+				PGresult* pgResult = NULL;
+				pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+				if(pgResult==NULL)
+				{
+					return NULL;
+				}
+
+				FeatureCursorPgs* pCursorD = new FeatureCursorPgs();
+				if(!pCursorD->Create(this, pgResult))
+				{
+					pCursorD->Release();
+				}
+				else
+				{
+					pCursor = pCursorD;
+				}
+			}
+			break;
 		}
 
-		FeatureCursorPgs* pCursor = new FeatureCursorPgs();
-		if(!pCursor->Create(this, pgResult))
-		{
-			pCursor->Release();
-			pCursor = NULL;
-		}
 		return pCursor;
 	}
 
+	//FeatureCursor* FeatureClassPgs::Query(augeCursorType type/*=augeStaticCursor*/)
+	//{
+	//	std::string sql;
+	//	SQLBuilder::BuildQuery(sql,this);
+
+	//	PGresult* pgResult = NULL;
+	//	pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+	//	if(pgResult==NULL)
+	//	{
+	//		return NULL;
+	//	}
+
+	//	FeatureCursorPgs* pCursor = new FeatureCursorPgs();
+	//	if(!pCursor->Create(this, pgResult))
+	//	{
+	//		pCursor->Release();
+	//		pCursor = NULL;
+	//	}
+	//	return pCursor;
+	//}
+
 	FeatureCursor* FeatureClassPgs::Query(GEnvelope& extent, augeCursorType type/*=augeStaticCursor*/)
 	{
-		std::string sql;
-		SQLBuilder::BuildQuery(sql,extent,this);
-
-		PGresult* pgResult = NULL;
-		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
-		if(pgResult==NULL)
+		FeatureCursor* pCursor = NULL;
+		switch(type)
 		{
-			return NULL;
+		case augeStaticCursor:
+			{
+				FeatureCursorStatic* pCursorS = new FeatureCursorStatic();
+				if(!pCursorS->Create(extent, this))
+				{
+					pCursorS->Release();
+				}
+				else
+				{
+					pCursor = pCursorS;
+				}
+			}
+			break;
+		case augeDynamicCursor:
+			{
+				std::string sql;
+				SQLBuilder::BuildQuery(sql,extent,this);
+
+				PGresult* pgResult = NULL;
+				pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+				if(pgResult==NULL)
+				{
+					return NULL;
+				}
+
+				FeatureCursorPgs* pCursorD = new FeatureCursorPgs();
+				if(!pCursorD->Create(this, pgResult))
+				{
+					pCursorD->Release();
+				}
+				else
+				{
+					pCursor = pCursorD;
+				}
+			}
+			break;
 		}
 
-		FeatureCursorPgs* pCursor = new FeatureCursorPgs();
-		if(!pCursor->Create(this, pgResult))
-		{
-			pCursor->Release();
-			pCursor = NULL;
-		}
 		return pCursor;
 	}
 
 	FeatureCursor* FeatureClassPgs::Query(GFilter* pFilter, augeCursorType type/*=augeStaticCursor*/)
 	{
-		std::string sql;
-		SQLBuilder::BuildQuery(sql,pFilter,this);
-
-		PGresult* pgResult = NULL;
-		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
-		if(pgResult==NULL)
+		FeatureCursor* pCursor = NULL;
+		switch(type)
 		{
-			return NULL;
-		}
+		case augeStaticCursor:
+			{
+				FeatureCursorStatic* pCursorS = new FeatureCursorStatic();
+				if(!pCursorS->Create(pFilter, this))
+				{
+					pCursorS->Release();
+				}
+				else
+				{
+					pCursor = pCursorS;
+				}
+			}
+			break;
+		case augeDynamicCursor:
+			{
+				std::string sql;
+				SQLBuilder::BuildQuery(sql,pFilter,this);
 
-		FeatureCursorPgs* pCursor = new FeatureCursorPgs();
-		if(!pCursor->Create(this, pgResult))
-		{
-			pCursor->Release();
-			pCursor = NULL;
+				PGresult* pgResult = NULL;
+				pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+				if(pgResult==NULL)
+				{
+					return NULL;
+				}
+
+				FeatureCursorPgs* pCursorD = new FeatureCursorPgs();
+				if(!pCursorD->Create(this, pgResult))
+				{
+					pCursorD->Release();
+				}
+				else
+				{
+					pCursor = pCursorD;
+				}
+			}
+			break;
 		}
-		return pCursor;
 	}
 
 	FeatureCursor* FeatureClassPgs::Query(GQuery* pQuery, augeCursorType type/*=augeStaticCursor*/)
 	{
+		FeatureCursor* pCursor = NULL;
+		switch(type)
+		{
+		case augeStaticCursor:
+			{
+				FeatureCursorStatic* pCursorS = new FeatureCursorStatic();
+				if(!pCursorS->Create(pQuery, this))
+				{
+					pCursorS->Release();
+				}
+				else
+				{
+					pCursor = pCursorS;
+				}
+			}
+			break;
+		case augeDynamicCursor:
+			{
+				std::string sql;
+				SQLBuilder::BuildQuery(sql,pQuery,this);
+
+				PGresult* pgResult = NULL;
+				pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+				if(pgResult==NULL)
+				{
+					return NULL;
+				}
+
+				FeatureCursorPgs* pCursorD = new FeatureCursorPgs();
+				if(!pCursorD->Create(this, pgResult))
+				{
+					pCursorD->Release();
+				}
+				else
+				{
+					pCursor = pCursorD;
+				}
+			}
+			break;
+		}
+
 		std::string sql;
-		SQLBuilder::BuildQuery(sql,pQuery,this);
+		//SQLBuilder::BuildQuery(sql,pQuery,this);
 
-		PGresult* pgResult = NULL;
-		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
-		if(pgResult==NULL)
-		{
-			return NULL;
-		}
+		//PGresult* pgResult = NULL;
+		//pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		//if(pgResult==NULL)
+		//{
+		//	return NULL;
+		//}
 
-		FeatureClassPgs* pNewClass = new FeatureClassPgs();
-		pNewClass->Create(GetName(), m_pWorkspace, pgResult);
-		if(pNewClass==NULL)
-		{
-			PQclear(pgResult);
-			return NULL;
-		}
+		//FeatureClassPgs* pNewClass = new FeatureClassPgs();
+		//pNewClass->Create(GetName(), m_pWorkspace, pgResult);
+		//if(pNewClass==NULL)
+		//{
+		//	PQclear(pgResult);
+		//	return NULL;
+		//}
 
-		FeatureCursorPgs* pCursor = new FeatureCursorPgs();
-		if(!pCursor->Create(pNewClass, pgResult))
-		{	
-			pCursor->Release();
-			pCursor = NULL;
-		}
-		pNewClass->Release();
-		return pCursor;
+		//FeatureCursorPgs* pCursor = new FeatureCursorPgs();
+		//if(!pCursor->Create(pNewClass, pgResult))
+		//{	
+		//	pCursor->Release();
+		//	pCursor = NULL;
+		//}
+		//pNewClass->Release();
+		//return pCursor;
 	}
 
 	Cursor* FeatureClassPgs::GetRows()

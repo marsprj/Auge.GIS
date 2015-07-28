@@ -8,7 +8,7 @@
 namespace auge
 {
 	FeatureCursorStatic::FeatureCursorStatic():
-	m_cursor(-1),
+	m_cursor(0),
 	m_pgResult(NULL),
 	m_geom_findex(-1),
 	m_has_more_data(true),
@@ -26,12 +26,13 @@ namespace auge
 			PQclear(m_pgResult);
 			m_pgResult = NULL;
 		}
-		AUGE_SAFE_RELEASE(m_pFeatureClass);
-
+		
 		WorkspacePgs* pWorkspace = m_pFeatureClass->m_pWorkspace;
 		ConnectionPgs& pgConnection = pWorkspace->m_pgConnection;
 
-		pgConnection.StartTransaction();
+		pgConnection.EndTransaction();
+
+		AUGE_SAFE_RELEASE(m_pFeatureClass);
 	}
 
 	FeatureClass* FeatureCursorStatic::GetFeatureClass()
@@ -41,26 +42,24 @@ namespace auge
 
 	Feature* FeatureCursorStatic::NextFeature()
 	{
-		//if(m_cursor<0||(unsigned)m_cursor>=m_count)
-		//{
-		//	return NULL;
-		//}
+		if(m_cursor>=m_fetched_count)
+		{
+			ClearResult();
+			if(!Fetch())
+			{
+				return NULL;
+			}
+			m_cursor=0;
+		}
 
-		//int index = -1;
-		//FeaturePgs* pFeature = new FeaturePgs();
-		//if(pFeature!=NULL)
-		//{
-		//	index = m_cursor;
-		//	if(!pFeature->Create(index, m_geom_findex, m_pgResult, m_pFeatureClass))
-		//	{
-		//		delete pFeature;
-		//		pFeature = NULL;
-		//	}
-		//}
+		FeaturePgs* pFeature = new FeaturePgs();
+		if(!pFeature->Create(m_cursor++, m_geom_findex, m_pgResult, m_pFeatureClass))
+		{
+			pFeature->Release();
+			return NULL;
+		}
 
-		//m_cursor++;
-		//return pFeature;
-		return NULL;
+		return pFeature;
 	}
 
 	void FeatureCursorStatic::Release()
@@ -97,8 +96,22 @@ namespace auge
 
 	bool FeatureCursorStatic::Create(FeatureClassPgs* pFeatureClass)
 	{
+		m_pFeatureClass = pFeatureClass;
+		m_pFeatureClass->AddRef();
 		m_pWorkspace = pFeatureClass->m_pWorkspace;
 		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection;
+		
+		GFields	*pFields = m_pFeatureClass->GetFields();
+		GField	*pField = pFields->GetGeometryField();
+		if(pField==NULL)
+		{
+			m_geom_findex = -1;
+		}
+		else
+		{
+			m_geom_findex = pFields->FindField(pField->GetName());
+		}
+
 
 		RESULTCODE rc = AG_SUCCESS;
 		rc = pgConnection.StartTransaction();
@@ -117,23 +130,219 @@ namespace auge
 		return true;
 	}
 
+	bool FeatureCursorStatic::Create(GEnvelope& extent, FeatureClassPgs* pFeatureClass)
+	{
+		m_pFeatureClass = pFeatureClass;
+		m_pFeatureClass->AddRef();
+
+		m_pWorkspace = pFeatureClass->m_pWorkspace;
+		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection;
+
+		GFields	*pFields = m_pFeatureClass->GetFields();
+		GField	*pField = pFields->GetGeometryField();
+		if(pField==NULL)
+		{
+			m_geom_findex = -1;
+		}
+		else
+		{
+			m_geom_findex = pFields->FindField(pField->GetName());
+		}
+
+
+		RESULTCODE rc = AG_SUCCESS;
+		rc = pgConnection.StartTransaction();
+		if(rc!=AG_SUCCESS)
+		{
+			return false;
+		}
+
+		rc = OpenCursor(extent);
+		if(rc!=AG_SUCCESS)
+		{
+			pgConnection.EndTransaction();
+			return false;
+		}
+
+		return true;
+	}
+
+	bool FeatureCursorStatic::Create(GFilter* pFilter, FeatureClassPgs* pFeatureClass)
+	{
+		m_pFeatureClass = pFeatureClass;
+		m_pFeatureClass->AddRef();
+		m_pWorkspace = pFeatureClass->m_pWorkspace;
+		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection;
+
+		GFields	*pFields = m_pFeatureClass->GetFields();
+		GField	*pField = pFields->GetGeometryField();
+		if(pField==NULL)
+		{
+			m_geom_findex = -1;
+		}
+		else
+		{
+			m_geom_findex = pFields->FindField(pField->GetName());
+		}
+
+
+		RESULTCODE rc = AG_SUCCESS;
+		rc = pgConnection.StartTransaction();
+		if(rc!=AG_SUCCESS)
+		{
+			return false;
+		}
+
+		rc = OpenCursor(pFilter);
+		if(rc!=AG_SUCCESS)
+		{
+			pgConnection.EndTransaction();
+			return false;
+		}
+
+		return true;
+	}
+
+	bool FeatureCursorStatic::Create(GQuery*  pQuery, FeatureClassPgs* pFeatureClass)
+	{
+		m_pFeatureClass = pFeatureClass;
+		m_pWorkspace = pFeatureClass->m_pWorkspace;
+		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection;
+
+		GFields	*pFields = m_pFeatureClass->GetFields();
+		GField	*pField = pFields->GetGeometryField();
+		if(pField==NULL)
+		{
+			m_geom_findex = -1;
+		}
+		else
+		{
+			m_geom_findex = pFields->FindField(pField->GetName());
+		}
+
+
+		RESULTCODE rc = AG_SUCCESS;
+		rc = pgConnection.StartTransaction();
+		if(rc!=AG_SUCCESS)
+		{
+			return false;
+		}
+
+		rc = OpenCursor(pQuery);
+		if(rc!=AG_SUCCESS)
+		{
+			pgConnection.EndTransaction();
+			return false;
+		}
+
+		return true;
+	}
+
+
 	RESULTCODE FeatureCursorStatic::OpenCursor()
 	{
+		char now[AUGE_PATH_MAX];
+		memset(now, 0, AUGE_NAME_MAX);
+		auge_get_sys_time_as_string(now, AUGE_PATH_MAX);
 		memset(m_cursor_name, 0, AUGE_NAME_MAX);
-		auge_generate_uuid(m_cursor_name, AUGE_NAME_MAX);
+		g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetName(), now);
+		//auge_generate_uuid(m_cursor_name, AUGE_NAME_MAX);
 
 		std::string sql;
 		SQLBuilder::BuildQueryCursor(sql, m_cursor_name, m_pFeatureClass);
 
-		PGresult* pgResult = NULL;
-		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
-		if(pgResult==NULL)
-		{
-			return AG_FAILURE;
-		}
-
-
-		return AG_SUCCESS;
+		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql.c_str());
 	}
 
+	RESULTCODE FeatureCursorStatic::OpenCursor(GEnvelope& extent)
+	{
+		char now[AUGE_PATH_MAX];
+		memset(now, 0, AUGE_NAME_MAX);
+		auge_get_sys_time_as_string(now, AUGE_PATH_MAX);
+		memset(m_cursor_name, 0, AUGE_NAME_MAX);
+		g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetName(), now);
+		//auge_generate_uuid(m_cursor_name, AUGE_NAME_MAX);
+
+		std::string sql;
+		SQLBuilder::BuildQueryCursor(sql, m_cursor_name, extent, m_pFeatureClass);
+
+		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql.c_str());
+	}
+
+	RESULTCODE FeatureCursorStatic::OpenCursor(GFilter* pFilter)
+	{
+		char now[AUGE_PATH_MAX];
+		memset(now, 0, AUGE_NAME_MAX);
+		auge_get_sys_time_as_string(now, AUGE_PATH_MAX);
+		memset(m_cursor_name, 0, AUGE_NAME_MAX);
+		g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetName(), now);
+		//auge_generate_uuid(m_cursor_name, AUGE_NAME_MAX);
+
+		std::string sql;
+		SQLBuilder::BuildQueryCursor(sql, m_cursor_name, pFilter, m_pFeatureClass);
+
+		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql.c_str());
+	}
+
+	RESULTCODE FeatureCursorStatic::OpenCursor(GQuery*  pQuery)
+	{
+		char now[AUGE_PATH_MAX];
+		memset(now, 0, AUGE_NAME_MAX);
+		auge_get_sys_time_as_string(now, AUGE_PATH_MAX);
+		memset(m_cursor_name, 0, AUGE_NAME_MAX);
+		g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetName(), now);
+		//auge_generate_uuid(m_cursor_name, AUGE_NAME_MAX);
+
+		std::string sql;
+		SQLBuilder::BuildQueryCursor(sql, m_cursor_name, pQuery, m_pFeatureClass);
+
+		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql.c_str());
+	}
+
+	void FeatureCursorStatic::CloseCursor()
+	{
+		PGresult* pgResult;
+		char sql[_MAX_PATH];
+		sprintf(sql, "CLOSE %s", m_cursor_name);
+		m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+	}
+
+	void FeatureCursorStatic::ClearResult()
+	{
+		if(m_pgResult!=NULL)
+		{
+			PQclear(m_pgResult);
+			m_pgResult = NULL;
+		}
+	}
+
+	bool FeatureCursorStatic::Fetch()
+	{
+		if(!m_has_more_data)
+		{
+			// 位于游标尾部，没有数据了
+			return false;
+		}
+		// 记录上次获取的最大数据
+		m_last_fetched_count = m_fetched_count;
+		//从数据库获取数据
+		char sql[_MAX_PATH];
+		sprintf(sql, "FETCH %d IN %s", m_fetch_count, m_cursor_name);
+		m_pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql);
+		int status = PQresultStatus(m_pgResult);
+		if ( status != PGRES_TUPLES_OK)
+		{
+			const char* errmsg = PQresultErrorMessage(m_pgResult);
+			augeGetLoggerInstance()->Error(errmsg, __FILE__, __LINE__);
+			augeGetErrorInstance()->SetError(errmsg);
+
+			fprintf(stderr, "FETCH ALL failed");
+			PQclear(m_pgResult);
+			return false;
+		}
+		m_fetched_count = PQntuples(m_pgResult);
+		m_has_more_data = (m_fetched_count==m_fetch_count);
+
+		return (m_fetch_count>0);
+	}
 }

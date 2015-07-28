@@ -21,12 +21,18 @@ namespace auge
 
 	public:
 		bool					Create(FeatureClassPgs* pFeatureClass);
-		//bool					Create(FeatureClassPgs* pFeatureClass, GFilter* pFilter);
-		//bool					Create(FeatureClassPgs* pFeatureClass, GQuery*  pQuery);
+		bool					Create(GEnvelope& extent, FeatureClassPgs* pFeatureClass);
+		bool					Create(GFilter* pFilter, FeatureClassPgs* pFeatureClass);
+		bool					Create(GQuery*  pQuery, FeatureClassPgs* pFeatureClass);
 
 	private:
 		RESULTCODE				OpenCursor();
-
+		RESULTCODE				OpenCursor(GEnvelope& extent);
+		RESULTCODE				OpenCursor(GFilter* pFilter);
+		RESULTCODE				OpenCursor(GQuery*  pQuery);
+		void					CloseCursor();
+		void					ClearResult();
+		bool					Fetch();
 	public:
 		WorkspacePgs	*m_pWorkspace;
 		FeatureClassPgs *m_pFeatureClass;

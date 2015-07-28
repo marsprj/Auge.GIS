@@ -19,6 +19,7 @@ libGPostgres_la_SOURCES=\
 		DataEngineImpl.cpp \
 		FeatureClassPgs.cpp \
 		FeatureCursorPgs.cpp \
+		FeatureCursorStatic.cpp \
 		FeatureInsertCommandPgs.cpp \
 		FeaturePgs.cpp \
 		FeatureObj.cpp \

@@ -7,10 +7,10 @@ CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
 void PgsTest::setUp() 
 {
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=GISDB;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gaode;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* path = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	//const char* path = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
 	pLogger->Initialize();
@@ -38,15 +38,16 @@ void PgsTest::tearDown()
 void PgsTest::ReadTest()
 {
 	auge::FeatureClass* pFeatureClass = NULL;
-	//pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
 	//pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi_2");
-	pFeatureClass = m_pWorkspace->OpenFeatureClass("高等院校");
+	//pFeatureClass = m_pWorkspace->OpenFeatureClass("高等院校");
 	CPPUNIT_ASSERT(pFeatureClass!=NULL);
 
 	auge::FeatureCursor* pCursor = NULL;
 	pCursor = pFeatureClass->Query();
 	CPPUNIT_ASSERT(pCursor!=NULL);
 
+	int counter = 1;
 	g_uchar* wkb = NULL;
 	auge::Geometry	*pGeometry = NULL;
 	auge::Feature	*pFeature = NULL;
@@ -56,7 +57,8 @@ void PgsTest::ReadTest()
 		//pGeometry = pFeature->GetGeometry();
 		//wkb = pGeometry->AsBinary();
 
-		printf("[Name]:%s\n", pFeature->GetString("name"));
+		//printf("[Name]:%s\n", pFeature->GetString("name"));
+		printf("[%d]:%s\n", counter++, pFeature->GetString("name"));
 		//auge::WKBPoint* pWKBPoint = (auge::WKBPoint*)wkb;
 		//printf("[%d]:%f,%f\n", pFeature->GetFID(),pWKBPoint->point.x, pWKBPoint->point.y);
 

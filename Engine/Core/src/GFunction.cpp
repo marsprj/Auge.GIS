@@ -533,6 +533,30 @@ namespace auge
 #endif
 	}
 
+	void auge_get_sys_time_as_string(char* time, size_t size)
+	{
+#ifdef WIN32
+		SYSTEMTIME now;
+		GetSystemTime(&now);
+		sprintf(time, "%d%d%d%d%d%d%d",now.wYear,
+			now.wMonth,
+			now.wDay,
+			now.wHour,
+			now.wMinute,
+			now.wSecond,
+			now.wMilliseconds);
+#else
+		time_t now;
+		time(&now);
+		sprintf(time, "%d%d%d%d%d%d",now.tm_year,
+			now.tm_mon,
+			now.tm_mday,
+			now.tm_hour,
+			now.tm_min,
+			now.tm_sec);
+#endif
+	}
+
 	bool auge_unzip(const char* zip_path, const char* dest_path)
 	{
 		return true;
