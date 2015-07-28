@@ -4,7 +4,7 @@ namespace auge
 {
 	ListRequest::ListRequest()
 	{
-		m_version = "1.0.0";
+		m_version = "1.0.0"; 
 		m_encoding = "GBK";
 	}
 
@@ -16,7 +16,7 @@ namespace auge
 	bool ListRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetPath(cgi["path"]);
+		SetPath(cgi["rasterPath"]);
 		return true;
 	}
 
@@ -53,17 +53,17 @@ namespace auge
 	{
 		if(path==NULL)
 		{
-			m_path.clear();
+			m_raster_path.clear();
 		}
 		else
 		{
-			m_path = path;
+			m_raster_path = path;
 		}
 	}
 
-	const char* ListRequest::GetPath()
+	const char* ListRequest::GetRasterPath()
 	{
-		return m_path.empty() ? NULL : m_path.c_str();
+		return m_raster_path.empty() ? NULL : m_raster_path.c_str();
 	}
 
 	const char*	ListRequest::GetEncoding()

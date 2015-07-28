@@ -23,7 +23,7 @@ namespace auge
 
 
 	public:
-		const char*	GetPath();
+		const char*	GetRasterPath();
 
 	public:
 		bool		Create(rude::CGI& cgi);
@@ -36,7 +36,7 @@ namespace auge
 		std::string m_mime_type;
 		std::string m_encoding;
 
-		std::string m_path;
+		std::string m_raster_path;
 	};
 }
 
@@ -47,6 +47,6 @@ namespace auge
 [ HTTP Post ]
 -------------------------------------------------------------------------
 service=rds&version=1.0.0&request=List&Path=/
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=List&Path=/aaaa
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=List&sourceName=rsdb&rasterPath=/aaaa
 
 ************************************************************************/

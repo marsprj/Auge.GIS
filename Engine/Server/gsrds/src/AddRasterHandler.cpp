@@ -184,6 +184,7 @@ namespace auge
 
 			return pExpResponse;
 		}
+		pRaster->SetName(raster_name);
 		pRaster->SetAlias(raster_name);
 		pRaster->SetPath(raster_path);
 		rc = pRasterWorkspace->AddRaster(pRaster);

@@ -3,7 +3,7 @@
 #include "GetRasterResponse.h"
 
 #include "AugeProcessor.h"
-
+#include "AugeUser.h"
 #include "AugeWebCore.h"
 
 #ifndef WIN32
@@ -13,6 +13,8 @@
 
 namespace auge
 {
+	extern void rds_get_raster_repository(char* raster_repository, size_t size, const char* user_name, WebContext* pWebContext);
+
 	GetRasterHandler::GetRasterHandler()
 	{
 
@@ -64,7 +66,12 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		GetRasterRequest* pRequest = static_cast<GetRasterRequest*>(pWebRequest);
 
-		const char* root_path = pWebContext->GetUploadPath();
+		//const char* root_path = pWebContext->GetUploadPath();
+		//计算raster的根目录
+		char raster_repository[AUGE_PATH_MAX];
+		memset(raster_repository, 0, AUGE_PATH_MAX);
+		rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
+
 		const char* rqut_path = pRequest->GetPath();
 		const char* raster_name=pRequest->GetName();
 		const char* source_name=pRequest->GetSourceName();
@@ -146,7 +153,7 @@ namespace auge
 		{
 			char local_path[AUGE_PATH_MAX];
 			memset(local_path,0,AUGE_PATH_MAX);
-			auge_make_path(local_path,NULL,root_path,rqut_path+1,NULL);
+			auge_make_path(local_path,NULL,raster_repository,rqut_path+1,NULL);
 
 			char raster_path[AUGE_PATH_MAX];
 			memset(raster_path,0,AUGE_PATH_MAX);

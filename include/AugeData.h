@@ -298,7 +298,7 @@ namespace auge
 
 		//virtual	Raster*			OpenRaster(const char* name) = 0;
 		virtual RESULTCODE		AddRaster(Raster* pRaster) = 0;
-		virtual RESULTCODE		RemoveRaster(const char* name) = 0;
+		virtual RESULTCODE		RemoveRaster(const char* name, const char* path) = 0;
 		//virtual RESULTCODE		RemoveRaster(g_uint id) = 0;
 	};
 

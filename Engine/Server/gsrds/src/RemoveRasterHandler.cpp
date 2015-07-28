@@ -12,6 +12,8 @@
 
 namespace auge
 {
+	extern void rds_get_raster_repository(char* raster_repository, size_t size, const char* user_name, WebContext* pWebContext);
+
 	RemoveRasterHandler::RemoveRasterHandler()
 	{
 
@@ -63,13 +65,33 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		RemoveRasterRequest* pRequest = static_cast<RemoveRasterRequest*>(pWebRequest);
 
-		const char* root_path = pWebContext->GetUploadPath();
-		const char* rqut_path = pRequest->GetPath();
-		const char* raster_name=pRequest->GetName();
+		//const char* root_path = pWebContext->GetUploadPath();		
+		const char* rqut_path = pRequest->GetRasterPath();
+		const char* raster_name=pRequest->GetRasterName();
+		const char* raster_path=pRequest->GetRasterPath();
+
+		//计算raster的根目录
+		char raster_repository[AUGE_PATH_MAX];
+		memset(raster_repository, 0, AUGE_PATH_MAX);
+		rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
+		char raster_local_folder[AUGE_PATH_MAX];
+		auge_make_path(raster_local_folder, NULL, raster_repository, raster_path, NULL);
+		char raster_local_path[AUGE_PATH_MAX];
+		auge_make_path(raster_local_path, NULL, raster_local_folder, raster_name, NULL);
+
 
 		if(raster_name==NULL)
 		{
-			const char* msg = "Parameter [Name] is NULL";
+			const char* msg = "Parameter [rasterName] is NULL";
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg,__FILE__,__LINE__);
+
+			return pExpResponse;
+		}
+		if(raster_path==NULL)
+		{
+			const char* msg = "Parameter [rasterPath] is NULL";
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
 			pLogger->Error(msg,__FILE__,__LINE__);
@@ -126,7 +148,7 @@ namespace auge
 		//	return pExpResponse;
 		//}
 
-		RESULTCODE rc = pRasterWorkspace->RemoveRaster(raster_name);
+		RESULTCODE rc = pRasterWorkspace->RemoveRaster(raster_name, raster_path);
 		if(rc!=AG_SUCCESS)
 		{
 			GError* pError = augeGetErrorInstance();
@@ -136,6 +158,8 @@ namespace auge
 
 			return pExpResponse; 
 		}
+
+		auge_remove_file(raster_local_path);
 		
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());

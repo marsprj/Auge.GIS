@@ -16,8 +16,8 @@ namespace auge
 	bool RemoveRasterRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetPath(cgi["path"]);
-		SetName(cgi["name"]);
+		SetRasterPath(cgi["rasterPath"]);
+		SetRasterName(cgi["rasterName"]);
 		SetSourceName(cgi["sourceName"]);
 		return true;
 	}
@@ -51,21 +51,21 @@ namespace auge
 		return m_mime_type.c_str();
 	}
 
-	void RemoveRasterRequest::SetPath(const char* path)
+	void RemoveRasterRequest::SetRasterPath(const char* path)
 	{
 		if(path==NULL)
 		{
-			m_path.clear();
+			m_raster_path.clear();
 		}
 		else
 		{
-			m_path = path;
+			m_raster_path = path;
 		}
 	}
 
-	const char* RemoveRasterRequest::GetPath()
+	const char* RemoveRasterRequest::GetRasterPath()
 	{
-		return m_path.empty() ? NULL : m_path.c_str();
+		return m_raster_path.empty() ? NULL : m_raster_path.c_str();
 	}
 
 	const char*	RemoveRasterRequest::GetEncoding()
@@ -73,21 +73,21 @@ namespace auge
 		return m_encoding.c_str();
 	}
 
-	void RemoveRasterRequest::SetName(const char* name)
+	void RemoveRasterRequest::SetRasterName(const char* name)
 	{
 		if(name==NULL)
 		{
-			m_name.clear();
+			m_raster_name.clear();
 		}
 		else
 		{
-			m_name = name;
+			m_raster_name = name;
 		}
 	}
 
-	const char* RemoveRasterRequest::GetName()
+	const char* RemoveRasterRequest::GetRasterName()
 	{
-		return m_name.empty() ? NULL : m_name.c_str();
+		return m_raster_name.empty() ? NULL : m_raster_name.c_str();
 	}
 
 	void RemoveRasterRequest::SetSourceName(const char* sourceName)

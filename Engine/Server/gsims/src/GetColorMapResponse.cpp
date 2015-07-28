@@ -146,7 +146,7 @@ namespace auge
 				pxColor->AddChildText(str);
 
 				g_sprintf(str,"http://%s:%s/colormap/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), pColorMap->GetImagePath());
-				XElement *pxOnlineResource = pxColorMap->AddChild("OnlineResource", NULL);
+				XElement *pxOnlineResource = pxColorMap->AddChild("OnlineResource", NULL); 
 				//pxOnlineResource->SetAttribute("xlink:href",pColorMap->GetImagePath(), NULL);
 				pxOnlineResource->SetAttribute("xlink:href",str, NULL);
 			}
@@ -194,7 +194,7 @@ namespace auge
 			pxColor = pxColorWrapper->AddChild("End");
 			pxColor->AddChildText(str);
 
-			g_sprintf(str,"http://%s:%s/colormap/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), m_pColorMap->GetImagePath());
+			g_sprintf(str,"http://%s:%s/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), m_pColorMap->GetImagePath());
 			XElement *pxOnlineResource = pxColorMap->AddChild("OnlineResource", NULL);
 			//pxOnlineResource->SetAttribute("xlink:href",pColorMap->GetImagePath(), NULL);
 			pxOnlineResource->SetAttribute("xlink:href",str, NULL);

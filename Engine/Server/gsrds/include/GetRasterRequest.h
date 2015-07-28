@@ -35,7 +35,7 @@ namespace auge
 		bool		Create(rude::CGI& cgi);
 
 		void		SetVersion(const char* version);
-		void		SetPath(const char* path);
+		void		SetRasterPath(const char* path);
 		void		SetRasterName(const char* rasterName);
 		void		SetSourceName(const char* sourceName);
 		void		SetFormat(const char* format);
@@ -49,7 +49,7 @@ namespace auge
 
 		std::string m_raster_name;
 		std::string m_sourc_name;
-		std::string m_path;
+		std::string m_raster_path;
 		std::string m_format;
 
 		std::vector<int>	m_bands;
@@ -63,10 +63,14 @@ namespace auge
 
 [ HTTP Post ]
 -------------------------------------------------------------------------
-service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&Path=/
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&Path=/
+service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&rasterPath=/
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&rasterPath=/
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&rasterPath=/ccc
 
-service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&Path=/&bands=3,2,1
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&Path=/&bands=3,2,1
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&rasterPath=/&bands=3,2,1
+
+
+service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&rasterPath=/&bands=3,2,1
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&rasterPath=/&bands=3,2,1
 
 ************************************************************************/

@@ -69,7 +69,7 @@ namespace auge
 		memset(raster_repository, 0, AUGE_PATH_MAX);
 		rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
 
-		const char* rqut_path = pRequest->GetPath();
+		const char* rqut_path = pRequest->GetRasterPath();
 		if(rqut_path==NULL)
 		{
 			const char* msg = "Parameter [Path] is NULL";

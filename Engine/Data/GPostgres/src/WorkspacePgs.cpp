@@ -287,15 +287,15 @@ namespace auge
 		return NULL;
 	}
 
-	RESULTCODE WorkspacePgs::RemoveRaster(const char* name)
+	RESULTCODE WorkspacePgs::RemoveRaster(const char* name, const char* path)
 	{
-		if(name==NULL)
+		if(name==NULL||path==NULL)
 		{
 			return AG_FAILURE;
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_sprintf(sql, "delete from g_raster_catalog where name='%s'",name);
+		g_sprintf(sql, "delete from g_raster_catalog where name='%s' and path='%s'",name, path);
 		return m_pgConnection.ExecuteSQL(sql);
 	}
 	//////////////////////////////////////////////////////////////////////////

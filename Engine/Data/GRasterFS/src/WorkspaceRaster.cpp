@@ -163,7 +163,7 @@ namespace auge
 		return pRasterIO->Read(raster_path);
 	}
 
-	RESULTCODE WorkspaceRaster::RemoveRaster(const char* name)
+	RESULTCODE WorkspaceRaster::RemoveRaster(const char* name, const char* path)
 	{
 		return AG_SUCCESS;
 	}

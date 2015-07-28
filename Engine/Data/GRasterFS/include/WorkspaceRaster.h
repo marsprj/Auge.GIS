@@ -40,7 +40,7 @@ namespace auge
 
 		virtual	Raster*			OpenRaster(const char* name);
 		virtual RESULTCODE		AddRaster(Raster* pRaster);
-		virtual RESULTCODE		RemoveRaster(const char* name);
+		virtual RESULTCODE		RemoveRaster(const char* name, const char* path);
 	private:
 		std::string	m_connection_string;
 		std::string	m_name;
