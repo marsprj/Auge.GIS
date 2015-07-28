@@ -646,6 +646,8 @@ namespace auge
 			"	maxx double precision," \
 			"	maxy double precision," \
 			"	uuid character varying(128)," \
+			"	isfile integer DEFAULT 0," \
+			"	folder integer DEFAULT 0," \
 			"	CONSTRAINT g_raster_catalog_pk PRIMARY KEY (gid)," \
 			"	CONSTRAINT g_raster_catalog_name_uk UNIQUE (name, format)" \
 			")";

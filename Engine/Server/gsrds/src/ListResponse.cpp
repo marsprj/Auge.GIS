@@ -2,11 +2,13 @@
 #include "ListResponse.h"
 #include "AugeService.h"
 
+#include <string.h>
 #include <math.h>
 #include <time.h>
 
 namespace auge
 {
+	char* raster_ext[]= {".jpg",".jpeg",".png",".tif",".tiff"}; 
 	ListResponse::ListResponse(ListRequest* pRequest)
 	{
 		m_pRequest = pRequest;
@@ -50,6 +52,12 @@ namespace auge
 		for(iter=m_files.begin(); iter!=m_files.end(); iter++)
 		{
 			f = *iter;
+
+			if((!f->isfolder) && (!IsRaster(f->fname)))
+			{
+				continue;
+			}
+			 
 			pxNode = pxRoot->AddChild(f->isfolder ? "Folder" : "File", NULL);
 #ifdef WIN32
 			fname = auge_encoding_convert("GBK","UTF-8",f->fname, strlen(f->fname));
@@ -103,7 +111,25 @@ namespace auge
 		stat(fpath, &(f->fstat));
 #endif
 		f->isfolder = S_ISDIR(f->fstat.st_mode) ? true : false;
-
+		 
 		m_files.push_back(f);
+	}
+
+	bool ListResponse::IsRaster(const char* fname)
+	{
+		char ext[AUGE_EXT_MAX];
+		memset(ext, 0, AUGE_EXT_MAX);
+		auge_split_path(fname, NULL, NULL,NULL,ext);
+
+		size_t count = sizeof(raster_ext) / sizeof(char*);
+		for(size_t i=0; i<count; i++)
+		{
+			if(g_stricmp(raster_ext[i], ext)==0)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

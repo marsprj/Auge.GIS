@@ -81,7 +81,6 @@ namespace auge
 		WebResponse* pWebResponse = NULL;
 		FeatureImportRequest* pRequest = static_cast<FeatureImportRequest*>(pWebRequest);
 
-		const char* shp_path = NULL;
 		const char* shp_name = pRequest->GetShapeName();
 		const char* source_name = pRequest->GetSourceName();
 		const char* type_name = pRequest->GetTypeName();
@@ -95,14 +94,16 @@ namespace auge
 			pWebResponse =  pExpResponse;
 		}
 
-
+		char shp_path[AUGE_PATH_MAX];
+		memset(shp_path, 0, AUGE_PATH_MAX);
 		if(pRequest->GetShapePath()!=NULL)
 		{
-			shp_path = pRequest->GetShapePath();
+			const char* req_path = pRequest->GetShapePath();
+			auge_make_path(shp_path, NULL, pWebContext->GetUploadPath(), req_path, NULL);
 		}
 		else
 		{
-			shp_path = pWebContext->GetUploadPath();
+			strcpy(shp_path, pWebContext->GetUploadPath());
 		}
 
 		char shp_ext[AUGE_EXT_MAX];

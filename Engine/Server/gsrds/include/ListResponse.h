@@ -38,6 +38,9 @@ namespace auge
 		void	SetPath(const char* path);
 
 	private:
+		bool	IsRaster(const char* fname);
+
+	private:
 		ListRequest				*m_pRequest;
 		std::vector<g_file_t*>	m_files;	
 		std::string				m_path;

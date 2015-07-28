@@ -16,8 +16,9 @@ namespace auge
 	bool AddRasterRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetPath(cgi["path"]);
+		SetFilePath(cgi["filePath"]);
 		SetRasterName(cgi["rasterName"]);
+		SetRasterPath(cgi["rasterPath"]);
 		SetSourceName(cgi["sourceName"]);
 		return true;
 	}
@@ -51,21 +52,21 @@ namespace auge
 		return m_mime_type.c_str();
 	}
 
-	void AddRasterRequest::SetPath(const char* path)
+	void AddRasterRequest::SetFilePath(const char* path)
 	{
 		if(path==NULL)
 		{
-			m_path.clear();
+			m_file_path.clear();
 		}
 		else
 		{
-			m_path = path;
+			m_file_path = path;
 		}
 	}
 
-	const char* AddRasterRequest::GetPath()
+	const char* AddRasterRequest::GetFilePath()
 	{
-		return m_path.empty() ? NULL : m_path.c_str();
+		return m_file_path.empty() ? NULL : m_file_path.c_str();
 	}
 
 	const char*	AddRasterRequest::GetEncoding()
@@ -73,21 +74,38 @@ namespace auge
 		return m_encoding.c_str();
 	}
 
-	void AddRasterRequest::SetRasterName(const char* name)
+	void AddRasterRequest::SetRasterName(const char* rasterName)
 	{
-		if(name==NULL)
+		if(rasterName==NULL)
 		{
-			m_name.clear();
+			m_raster_name.clear();
 		}
 		else
 		{
-			m_name = name;
+			m_raster_name = rasterName;
 		}
 	}
 
 	const char* AddRasterRequest::GetRasterName()
 	{
-		return m_name.empty() ? NULL : m_name.c_str();
+		return m_raster_name.empty() ? NULL : m_raster_name.c_str();
+	}
+
+	void AddRasterRequest::SetRasterPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_raster_path.clear();
+		}
+		else
+		{
+			m_raster_path = rasterPath;
+		}
+	}
+
+	const char* AddRasterRequest::GetRasterPath()
+	{
+		return m_raster_path.empty() ? NULL : m_raster_path.c_str();
 	}
 
 	void AddRasterRequest::SetSourceName(const char* sourceName)

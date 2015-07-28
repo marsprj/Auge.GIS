@@ -22,16 +22,18 @@ namespace auge
 		virtual const char*		GetEncoding();
 
 	public:
-		const char* GetRasterName();
-		const char*	GetPath();
+		const char* GetRasterName();		
+		const char* GetRasterPath();		
+		const char*	GetFilePath();
 		const char* GetSourceName();
 
 	public:
 		bool		Create(rude::CGI& cgi);
 
 		void		SetVersion(const char* version);
-		void		SetPath(const char* path);
-		void		SetRasterName(const char* name);
+		void		SetFilePath(const char* path);
+		void		SetRasterName(const char* rasterName);
+		void		SetRasterPath(const char* rasterPath);
 		void		SetSourceName(const char* sourceName);
 
 	private:
@@ -39,8 +41,9 @@ namespace auge
 		std::string m_mime_type;
 		std::string m_encoding;
 
-		std::string m_name;
-		std::string m_path;
+		std::string m_raster_name;
+		std::string m_raster_path;
+		std::string m_file_path;
 		std::string m_source_name;
 	};
 }
@@ -51,7 +54,7 @@ namespace auge
 
 [ HTTP Post ]
 -------------------------------------------------------------------------
-service=rds&version=1.0.0&request=AddRaster&name=Koala.png&Path=/Koala.png
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=AddRaster&rasterName=Koala.png&Path=/Koala.png
+service=rds&version=1.0.0&request=AddRaster&sourceName=rsdb&rasterName=Koala.png&Path=/Koala.png
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=AddRaster&sourceName=rsdb&rasterName=Koala.png&Path=/Koala.png
 
 ************************************************************************/
