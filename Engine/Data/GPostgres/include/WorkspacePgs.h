@@ -14,6 +14,7 @@ namespace auge
 	{
 		friend class FeaturePgs;
 		friend class FeatureClassPgs;
+		friend class FeatureCursorStatic;
 		friend class FeatureInsertCommandPgs;
 		friend class AttributeDataSetPgs;
 

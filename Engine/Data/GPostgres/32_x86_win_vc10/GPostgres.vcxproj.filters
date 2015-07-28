@@ -57,6 +57,9 @@
     <ClInclude Include="..\include\AttributeDataSetPgs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\FeatureCursorStatic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DataEngineImpl.cpp">
@@ -96,6 +99,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AttributeDataSetPgs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\FeatureCursorStatic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

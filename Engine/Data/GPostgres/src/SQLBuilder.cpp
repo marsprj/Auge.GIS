@@ -251,6 +251,50 @@ namespace auge
 		}
 	}
 
+	void SQLBuilder::BuildQueryCursor(std::string& sql, const char* cursor_name, FeatureClassPgs* pFeatureClass)
+	{
+		std::string select;
+		BuildQuery(select, pFeatureClass);
+
+		sql = "DECLARE ";
+		sql.append(cursor_name);
+		sql.append(" CURSOR FOR ");
+		sql.append(select);
+	}
+
+	void SQLBuilder::BuildQueryCursor(std::string& sql, const char* cursor_name, GEnvelope& extent, FeatureClassPgs* pFeatureClass)
+	{
+		std::string select;
+		BuildQuery(select, extent, pFeatureClass);
+
+		sql = "DECLARE ";
+		sql.append(cursor_name);
+		sql.append(" CURSOR FOR ");
+		sql.append(select);
+	}
+
+	void SQLBuilder::BuildQueryCursor(std::string& sql, const char* cursor_name, GFilter* pFilter, FeatureClassPgs* pFeatureClass)
+	{
+		std::string select;
+		BuildQuery(select, pFilter, pFeatureClass);
+
+		sql = "DECLARE ";
+		sql.append(cursor_name);
+		sql.append(" CURSOR FOR ");
+		sql.append(select);
+	}
+
+	void SQLBuilder::BuildQueryCursor(std::string& sql, const char* cursor_name, GQuery* pQuery, FeatureClassPgs* pFeatureClass)
+	{
+		std::string select;
+		BuildQuery(select, pQuery, pFeatureClass);
+
+		sql = "DECLARE ";
+		sql.append(cursor_name);
+		sql.append(" CURSOR FOR ");
+		sql.append(select);
+	}
+
 	//////////////////////////////////////////////////////////////////////////
 	void SQLBuilder::BuildCount(std::string& sql, FeatureClassPgs* pFeatureClass)
 	{

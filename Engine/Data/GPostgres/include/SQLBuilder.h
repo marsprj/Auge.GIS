@@ -22,6 +22,12 @@ namespace auge
 		static void	BuildQuery(std::string& sql, GEnvelope& extent, FeatureClassPgs* pFeatureClass);
 		static void	BuildQuery(std::string& sql, GFilter* pFilter, FeatureClassPgs* pFeatureClass);
 		static void	BuildQuery(std::string& sql, GQuery* pQuery, FeatureClassPgs* pFeatureClass);
+
+		static void	BuildQueryCursor(std::string& sql, const char* cursor_name, FeatureClassPgs* pFeatureClass);
+		static void	BuildQueryCursor(std::string& sql, const char* cursor_name, GEnvelope& extent, FeatureClassPgs* pFeatureClass);
+		static void	BuildQueryCursor(std::string& sql, const char* cursor_name, GFilter* pFilter, FeatureClassPgs* pFeatureClass);
+		static void	BuildQueryCursor(std::string& sql, const char* cursor_name, GQuery* pQuery, FeatureClassPgs* pFeatureClass);
+
 		static void BuildFields(std::string& fields, FeatureClassPgs* pFeatureClass);
 		static void BuildFields(std::string& fields, GQuery* pQuery, FeatureClassPgs* pFeatureClass);
 

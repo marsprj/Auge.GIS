@@ -26,8 +26,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shp2pgs", "..\shp2pgs\shp2p
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698} = {5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCarto", "..\..\..\Carto\32_x86_win_vc10\GCarto.vcxproj", "{B6F892A7-59B5-48D6-A97C-8BC432B49E92}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -62,10 +60,6 @@ Global
 		{5AADD3E1-0DC7-4263-AA04-D53422A5C2B8}.Debug|Win32.Build.0 = Debug|Win32
 		{5AADD3E1-0DC7-4263-AA04-D53422A5C2B8}.Release|Win32.ActiveCfg = Release|Win32
 		{5AADD3E1-0DC7-4263-AA04-D53422A5C2B8}.Release|Win32.Build.0 = Release|Win32
-		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Debug|Win32.ActiveCfg = Debug|Win32
-		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Debug|Win32.Build.0 = Debug|Win32
-		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Release|Win32.ActiveCfg = Release|Win32
-		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

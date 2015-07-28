@@ -197,6 +197,16 @@ namespace auge
 		return pgResult;
 	}
 
+	RESULTCODE ConnectionPgs::StartTransaction()
+	{
+		return ExecuteSQL("BEGIN");
+	}
+
+	RESULTCODE ConnectionPgs::EndTransaction()
+	{
+		return ExecuteSQL("END");
+	}
+
 	bool ConnectionPgs::HasTable(const char* name)
 	{
 		if(name==NULL)

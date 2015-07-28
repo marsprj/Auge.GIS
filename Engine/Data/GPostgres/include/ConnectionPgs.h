@@ -24,6 +24,9 @@ namespace auge
 		virtual GResultSet*		ExecuteQuery(const char* sql);
 		virtual RESULTCODE		ExecuteSQL(const char* sql);
 
+		virtual RESULTCODE		StartTransaction();
+		virtual RESULTCODE		EndTransaction();
+
 		virtual bool			HasTable(const char* name);
 
 		virtual void			Release();

@@ -13,6 +13,7 @@ namespace auge
 	class FeatureClassPgs : public FeatureClass
 	{
 		friend class FeaturePgs;
+		friend class FeatureCursorStatic;
 		friend class FeatureInsertCommandPgs;
 		friend class SQLBuilder;
 
