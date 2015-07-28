@@ -11,6 +11,8 @@
 
 namespace auge
 {
+	extern void rds_get_raster_repository(char* raster_repository, size_t size, const char* user_name, WebContext* pWebContext);
+
 	GetValueHandler::GetValueHandler()
 	{
 
@@ -62,9 +64,9 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		GetValueRequest* pRequest = static_cast<GetValueRequest*>(pWebRequest);
 
-		const char* root_path = pWebContext->GetUploadPath();
-		const char* rqut_path = pRequest->GetPath();
-		const char* raster_name=pRequest->GetRasterName();
+		//const char* root_path = pWebContext->GetUploadPath();
+		const char* raster_path = pRequest->GetRasterPath();
+		const char* raster_name =pRequest->GetRasterName();
 
 		if(raster_name==NULL)
 		{
@@ -85,7 +87,7 @@ namespace auge
 
 			return pExpResponse;
 		}
-		if(rqut_path==NULL)
+		if(raster_path==NULL)
 		{
 			const char* msg = "Parameter [Path] is NULL";
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
@@ -95,15 +97,26 @@ namespace auge
 			return pExpResponse;
 		}
 
-		char raster_path[AUGE_PATH_MAX];
-		memset(raster_path,0,AUGE_PATH_MAX);
-		auge_make_path(raster_path,NULL,root_path,rqut_path+1,NULL);
+		//char raster_path[AUGE_PATH_MAX];
+		//memset(raster_path,0,AUGE_PATH_MAX);
+		//auge_make_path(raster_path,NULL,raster_repository,rqut_path+1,NULL);
+
+		//计算raster的根目录
+		char raster_repository[AUGE_PATH_MAX];
+		memset(raster_repository, 0, AUGE_PATH_MAX);
+		rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
+		//计算导入后的raster的路径
+		char raster_local_folder[AUGE_PATH_MAX];
+		auge_make_path(raster_local_folder, NULL, raster_repository, raster_path+1, NULL);
+		char raster_local_path[AUGE_PATH_MAX];
+		auge_make_path(raster_local_path, NULL, raster_local_folder, raster_name, NULL);
+
 
 		if(g_access(raster_path,4))
 		{
 			char msg[AUGE_MSG_MAX];
 			memset(msg,0,AUGE_MSG_MAX);
-			g_sprintf(msg,"Folder [%s] does not have Raster [%s] in folder  does not exist.", rqut_path, raster_name);
+			g_sprintf(msg,"Folder [%s] does not have Raster [%s] in folder  does not exist.", raster_path, raster_name);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
 			pLogger->Error(msg,__FILE__,__LINE__);
@@ -140,10 +153,27 @@ namespace auge
 
 		//	return pExpResponse;
 		//}
+		
+		//////////////////////////////////////////////////////////////////////////
+		//RasterDataset* pRasterDataset = NULL;
+		//pRasterDataset = pRasterWorkspace->OpenRasterDataset(raster_name);
+		//if(pRasterDataset==NULL)
+		//{
+		//	char msg[AUGE_MSG_MAX];
+		//	memset(msg,0,AUGE_MSG_MAX);
+		//	g_sprintf(msg,"Fail to get Raster [%s]", raster_name);
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	pExpResponse->SetMessage(msg);
+		//	pLogger->Error(msg,__FILE__,__LINE__);
 
-		RasterDataset* pRasterDataset = NULL;
-		pRasterDataset = pRasterWorkspace->OpenRasterDataset(raster_name);
-		if(pRasterDataset==NULL)
+		//	return pExpResponse;
+		//}
+
+		//Raster* pRaster = pRasterDataset->GetRaster();
+		//////////////////////////////////////////////////////////////////////////
+		RasterIO* io = augeGetRasterIOInstance();
+		Raster *pRaster = io->Read(raster_local_path);
+		if(pRaster==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
 			memset(msg,0,AUGE_MSG_MAX);
@@ -154,8 +184,6 @@ namespace auge
 
 			return pExpResponse;
 		}
-
-		Raster* pRaster = pRasterDataset->GetRaster();
 
 		g_int rx=0, ry=0;
 		if((pRequest->GetIX()>=0)&&(pRequest->GetIX()>=0))
@@ -172,7 +200,8 @@ namespace auge
 		g_uint height = pRaster->GetHeight();
 		if((rx<0||rx>width)||((ry<0||ry>height)))
 		{
-			pRasterDataset->Release();
+			pRaster->Release();
+			//pRasterDataset->Release();
 
 			char msg[AUGE_MSG_MAX];
 			memset(msg,0,AUGE_MSG_MAX);
@@ -224,7 +253,8 @@ namespace auge
 			pWebResponse->SetValue(i,i,str);
 		}
 
-		pRasterDataset->Release();
+		//pRasterDataset->Release();
+		pRaster->Release();
 		
 		return pWebResponse;
 	}

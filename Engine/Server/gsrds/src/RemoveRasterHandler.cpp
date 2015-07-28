@@ -75,7 +75,7 @@ namespace auge
 		memset(raster_repository, 0, AUGE_PATH_MAX);
 		rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
 		char raster_local_folder[AUGE_PATH_MAX];
-		auge_make_path(raster_local_folder, NULL, raster_repository, raster_path, NULL);
+		auge_make_path(raster_local_folder, NULL, raster_repository, raster_path+1, NULL);
 		char raster_local_path[AUGE_PATH_MAX];
 		auge_make_path(raster_local_path, NULL, raster_local_folder, raster_name, NULL);
 

@@ -23,7 +23,7 @@ namespace auge
 
 	public:
 		const char* GetRasterName();
-		const char*	GetPath();
+		const char*	GetRasterPath();
 		const char* GetSourceName();
 		g_int		GetIX();
 		g_int		GetIY();
@@ -47,8 +47,8 @@ namespace auge
 		std::string m_mime_type;
 		std::string m_encoding;
 
-		std::string m_name;
-		std::string m_path;
+		std::string m_raster_name;
+		std::string m_raster_path;
 		std::string m_source_name;
 
 		double	m_x;
@@ -64,13 +64,14 @@ namespace auge
 
 [ HTTP Post ]
 -------------------------------------------------------------------------
-service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&name=1.png&Path=/
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&name=1.png&Path=/
+service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&rasterName=1.png&rasterPath=/
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&rasterName=1.png&rasterPath=/
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&rasterName=Koala.png&rasterPath=/&x=116&y=39
 
-service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&name=16km.tif&sx=1&sy=1&Path=/
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&name=16km.tif&sourceName=rsdb&sx=1&sy=1&Path=/
+service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&rasterName=16km.tif&sx=1&sy=1&rasterPath=/
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&rasterName=16km.tif&sourceName=rsdb&sx=1&sy=1&rasterPath=/
 
-service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&name=16km.tif&x=116&y=39&Path=/
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&name=16km.tif&x=116&y=39&Path=/
+service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&rasterName=16km.tif&x=116&y=39&rasterPath=/
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetValue&sourceName=rsdb&rasterName=16km.tif&x=116&y=39&rasterPath=/
 
 ************************************************************************/

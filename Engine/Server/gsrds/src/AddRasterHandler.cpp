@@ -135,7 +135,7 @@ namespace auge
 		rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
 		//计算导入后的raster的路径
 		char raster_local_folder[AUGE_PATH_MAX];
-		auge_make_path(raster_local_folder, NULL, raster_repository, raster_path, NULL);
+		auge_make_path(raster_local_folder, NULL, raster_repository, raster_path+1, NULL);
 		char raster_local_path[AUGE_PATH_MAX];
 		auge_make_path(raster_local_path, NULL, raster_local_folder, raster_name, NULL);
 		

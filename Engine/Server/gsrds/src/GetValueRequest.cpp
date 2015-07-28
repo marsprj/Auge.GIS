@@ -1,7 +1,7 @@
 #include "GetValueRequest.h"
 
 namespace auge
-{
+{	
 	GetValueRequest::GetValueRequest()
 	{
 		m_version = "1.0.0";
@@ -20,7 +20,7 @@ namespace auge
 	bool GetValueRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetPath(cgi["path"]);
+		SetPath(cgi["rasterPath"]);
 		SetRasterName(cgi["rasterName"]);
 		SetSourceName(cgi["sourceName"]);
 		SetIX(cgi["sx"]);
@@ -63,17 +63,17 @@ namespace auge
 	{
 		if(path==NULL)
 		{
-			m_path.clear();
+			m_raster_path.clear();
 		}
 		else
 		{
-			m_path = path;
+			m_raster_path = path;
 		}
 	}
 
-	const char* GetValueRequest::GetPath()
+	const char* GetValueRequest::GetRasterPath()
 	{
-		return m_path.empty() ? NULL : m_path.c_str();
+		return m_raster_path.empty() ? NULL : m_raster_path.c_str();
 	}
 
 	const char*	GetValueRequest::GetEncoding()
@@ -85,17 +85,17 @@ namespace auge
 	{
 		if(name==NULL)
 		{
-			m_name.clear();
+			m_raster_name.clear();
 		}
 		else
 		{
-			m_name = name;
+			m_raster_name = name;
 		}
 	}
 
 	const char* GetValueRequest::GetRasterName()
 	{
-		return m_name.empty() ? NULL : m_name.c_str();
+		return m_raster_name.empty() ? NULL : m_raster_name.c_str();
 	}
 
 	void GetValueRequest::SetIX(const char* ix)
