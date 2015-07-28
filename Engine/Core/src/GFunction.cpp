@@ -548,12 +548,14 @@ namespace auge
 #else
 		time_t now;
 		time(&now);
-		sprintf(time, "%d%d%d%d%d%d",now.tm_year,
-			now.tm_mon,
-			now.tm_mday,
-			now.tm_hour,
-			now.tm_min,
-			now.tm_sec);
+		struct tm* t_tm;   
+		t_tm = localtime(&timer);
+		sprintf(time, "%d%d%d%d%d%d",t_tm.tm_year,
+			t_tm.tm_mon,
+			t_tm.tm_mday,
+			t_tm.tm_hour,
+			t_tm.tm_min,
+			t_tm.tm_sec);
 #endif
 	}
 
