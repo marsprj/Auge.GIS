@@ -54,7 +54,9 @@ namespace auge
 
 [ HTTP Post ]
 -------------------------------------------------------------------------
-service=rds&version=1.0.0&request=AddRaster&sourceName=rsdb&rasterName=Koala.png&Path=/Koala.png
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=AddRaster&sourceName=rsdb&rasterName=Koala.png&Path=/Koala.png
+user=user1&service=rds&version=1.0.0&request=AddRaster&sourceName=rsdb&rasterName=Penguins.jpg&rasterPath=/aaa&filePath=/Penguins.jpg
+
+user=user1&service=rds&version=1.0.0&request=AddRaster&sourceName=rsdb&rasterName=Koala.png&rasterPath=/aaa&filePath=/Koala.png
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=AddRaster&sourceName=rsdb&rasterName=Koala.png&filePath=/Koala.png
 
 ************************************************************************/

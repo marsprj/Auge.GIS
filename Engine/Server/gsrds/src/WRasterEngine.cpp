@@ -264,4 +264,15 @@ namespace auge
 
 		return handler->Execute(pWebRequest, pWebContext, pUser);
 	}
+
+	void rds_get_raster_repository(char* raster_repository, size_t size, const char* user_name, WebContext* pWebContext)
+	{
+		char user_root[AUGE_PATH_MAX];
+		memset(user_root, 0, AUGE_PATH_MAX);
+		pWebContext->GetUserPath(user_name, user_root, AUGE_PATH_MAX);
+		memset(raster_repository, 0, size);
+		auge_make_path(raster_repository, NULL, user_root, "rds", NULL);
+		auge_mkdir(raster_repository);
+	}
+	
 }

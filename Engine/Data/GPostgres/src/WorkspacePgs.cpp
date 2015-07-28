@@ -607,7 +607,7 @@ namespace auge
 		auge_make_path(local_path, NULL, GetRepository(), raster_path+1,NULL);
 		//if(g_access(local_path, 4))
 		{
-			pRaster->Save(local_path);
+			//pRaster->Save(local_path);
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};

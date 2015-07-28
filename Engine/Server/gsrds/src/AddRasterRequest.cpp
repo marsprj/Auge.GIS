@@ -56,11 +56,11 @@ namespace auge
 	{
 		if(path==NULL)
 		{
-			m_file_path.clear();
+			m_file_path = "/";
 		}
 		else
 		{
-			m_file_path = path;
+			m_file_path = strlen(path) ? path : "/";
 		}
 	}
 
@@ -95,11 +95,11 @@ namespace auge
 	{
 		if(rasterPath==NULL)
 		{
-			m_raster_path.clear();
+			m_raster_path = "/";
 		}
 		else
 		{
-			m_raster_path = rasterPath;
+			m_raster_path = strlen(rasterPath) ? rasterPath : "/";
 		}
 	}
 

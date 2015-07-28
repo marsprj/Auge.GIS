@@ -1,6 +1,7 @@
 #include "RemoveFolderHandler.h"
 #include "RemoveFolderRequest.h"
 
+#include "AugeUser.h"
 #include "AugeWebCore.h"
 
 #ifndef WIN32
@@ -10,6 +11,8 @@
 
 namespace auge
 {
+	extern void rds_get_raster_repository(char* raster_repository, size_t size, const char* user_name, WebContext* pWebContext);
+
 	RemoveFolderHandler::RemoveFolderHandler()
 	{
 
@@ -61,7 +64,11 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		RemoveFolderRequest* pRequest = static_cast<RemoveFolderRequest*>(pWebRequest);
 
-		const char* root_path = pWebContext->GetUploadPath();
+		//const char* root_path = pWebContext->GetUploadPath();
+		char raster_repository[AUGE_PATH_MAX];
+		memset(raster_repository, 0, AUGE_PATH_MAX);
+		rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
+
 		const char* rqut_path = pRequest->GetPath();
 		if(rqut_path==NULL)
 		{
@@ -75,7 +82,7 @@ namespace auge
 
 		char local_path[AUGE_PATH_MAX];
 		memset(local_path,0,AUGE_PATH_MAX);
-		auge_make_path(local_path,NULL,root_path,rqut_path+1,NULL);
+		auge_make_path(local_path,NULL,raster_repository,rqut_path+1,NULL);
 
 		if(g_access(local_path,4))
 		{

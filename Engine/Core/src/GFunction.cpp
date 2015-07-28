@@ -158,6 +158,11 @@ namespace auge
 		return rename(src,des);
 	}
 
+	g_int auge_move(const char* src, const char* des)
+	{
+		return auge_rename(src, des);
+	}
+
 	g_int auge_find_last_char(const char *str, char ch)
 	{
 		if(str==NULL)

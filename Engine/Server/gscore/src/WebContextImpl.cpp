@@ -179,6 +179,25 @@ namespace auge
 		return m_upload_path.c_str();
 	}
 
+	const char* WebContextImpl::GetUserRoot()
+	{
+		return m_user_root.c_str();
+	}
+
+	RESULTCODE WebContextImpl::GetUserPath(const char* user, char* user_path, g_uint size)
+	{
+		if(user_path==NULL)
+		{
+			return AG_FAILURE;
+		}
+		auge_make_path(user_path, NULL, m_user_root.c_str(), user, NULL);
+		if(g_access(user_path, 4))
+		{
+			auge_mkdir(user_path); 
+		}
+		return true;
+	}
+
 	GConnection* WebContextImpl::GetConnection()
 	{
 		GError	*pError  = augeGetErrorInstance();
@@ -294,6 +313,7 @@ namespace auge
 		}
 		m_cache_map_path = cache_map;
 
+		// Upload Path
 		char upload_path[AUGE_PATH_MAX];
 #ifdef WIN32
 		auge_make_path(upload_path, NULL, cdir, "upload", NULL);
@@ -305,5 +325,18 @@ namespace auge
 			auge_mkdir(upload_path); 
 		}
 		m_upload_path = upload_path;		
+
+		// User Path
+		char user_path[AUGE_PATH_MAX];
+#ifdef WIN32
+		auge_make_path(user_path, NULL, cdir, "user", NULL);
+#else
+		auge_make_path(user_path, NULL, pdir, "user", NULL);
+#endif 
+		if(g_access(user_path, 4))
+		{
+			auge_mkdir(user_path); 
+		}
+		m_user_root = user_path;		
 	}
 }
