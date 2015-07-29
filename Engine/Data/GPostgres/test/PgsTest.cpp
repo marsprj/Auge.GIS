@@ -7,9 +7,9 @@ CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
 void PgsTest::setUp() 
 {
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=GISDB;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gaode;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	//const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
@@ -38,8 +38,8 @@ void PgsTest::tearDown()
 void PgsTest::ReadTest()
 {
 	auge::FeatureClass* pFeatureClass = NULL;
-	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
-	//pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi_2");
+	//pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi");
 	//pFeatureClass = m_pWorkspace->OpenFeatureClass("高等院校");
 	CPPUNIT_ASSERT(pFeatureClass!=NULL);
 
@@ -53,12 +53,13 @@ void PgsTest::ReadTest()
 	auge::Feature	*pFeature = NULL;
 	while((pFeature=pCursor->NextFeature())!=NULL)
 	{	
+		printf("\r%d", counter++);
 		//float val = pFeature->GetFloat("co");
-		//pGeometry = pFeature->GetGeometry();
+		pGeometry = pFeature->GetGeometry();
 		//wkb = pGeometry->AsBinary();
 
 		//printf("[Name]:%s\n", pFeature->GetString("name"));
-		printf("[%d]:%s\n", counter++, pFeature->GetString("name"));
+		//printf("[%d]:%s\n", counter++, pFeature->GetString("name"));
 		//auge::WKBPoint* pWKBPoint = (auge::WKBPoint*)wkb;
 		//printf("[%d]:%f,%f\n", pFeature->GetFID(),pWKBPoint->point.x, pWKBPoint->point.y);
 

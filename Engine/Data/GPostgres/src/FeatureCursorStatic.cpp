@@ -16,7 +16,9 @@ namespace auge
 	m_fetched_count(0),
 	m_last_fetched_count(0)
 	{
-		m_pWorkspace;
+		m_pWorkspace = NULL;
+		m_pFeatureClass = NULL;
+
 	}
 
 	FeatureCursorStatic::~FeatureCursorStatic()

@@ -56,31 +56,31 @@ namespace auge
 		}
 
 		Geometry* pGeometry = NULL;
-		g_uchar* wkbd = NULL;
+		g_uchar* wkbd = wkb;
 		
-		if(attach)
-		{
-			wkbd = wkb;
-		}
-		else
-		{
-			GeometryUtilImpl gutil;
-			g_uint wkbSize = gutil.GetWKBSize(wkb);
-			if(wkbSize>0)
-			{
-				wkbd = (g_uchar*)auge_malloc(1, wkbSize);
-				if(wkbd!=NULL)
-				{
-					memcpy(wkbd, wkb, wkbSize);
-				}
-			}
-		}
-		if(wkbd==NULL)
-		{
-			return NULL;
-		}
+		//if(attach)
+		//{
+		//	wkbd = wkb;
+		//}
+		//else
+		//{
+		//	GeometryUtilImpl gutil;
+		//	g_uint wkbSize = gutil.GetWKBSize(wkb);
+		//	if(wkbSize>0)
+		//	{
+		//		wkbd = (g_uchar*)auge_malloc(1, wkbSize);
+		//		if(wkbd!=NULL)
+		//		{
+		//			memcpy(wkbd, wkb, wkbSize);
+		//		}
+		//	}
+		//}
+		//if(wkbd==NULL)
+		//{
+		//	return NULL;
+		//}
 
-		switch(WKBTYPE(wkbd))
+		switch(WKBTYPE(wkb))
 		{
 		case wkbPoint:
 			{

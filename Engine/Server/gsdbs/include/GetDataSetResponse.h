@@ -31,6 +31,8 @@ namespace auge
 
 	private:
 		void		AddFeatureClassNode(XElement*pxClass, FeatureClass* pFeatureClass);
+		void		AddThumbnailNode(XElement* pxClass, FeatureClass* pFeatureClass);
+		void		DrawThumbnail(FeatureClass* pFeatureClass, const char* img_local_path);
 
 	private:
 		DataSet* m_pDataSet;

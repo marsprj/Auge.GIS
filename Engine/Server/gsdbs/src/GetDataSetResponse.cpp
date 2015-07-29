@@ -4,6 +4,7 @@
 #include "AugeData.h"
 #include "AugeFeature.h"
 #include "AugeField.h"
+#include "AugeCarto.h"
 
 namespace auge
 {
@@ -206,6 +207,19 @@ namespace auge
 			}
 		}
 
+		AddThumbnailNode(pxClass, pFeatureClass);
+	}
+
+	void GetDataSetResponse::AddThumbnailNode(XElement* pxClass, FeatureClass* pFeatureClass)
+	{
+		char img_local_path[AUGE_PATH_MAX] = {0};
+		memset(img_local_path, 0, AUGE_PATH_MAX);		
+		auge_make_path(img_local_path, NULL, m_pWebContext->GetCacheMapPath(), pFeatureClass->GetUUID(), "png");
+		if(g_access(img_local_path, 4))
+		{
+			DrawThumbnail(pFeatureClass, img_local_path);
+		}
+
 		char thumbnail[AUGE_PATH_MAX];
 		memset(thumbnail,0,AUGE_PATH_MAX);
 		auge_make_path(thumbnail, NULL, NULL, pFeatureClass->GetUUID(), "png");
@@ -214,6 +228,37 @@ namespace auge
 		g_snprintf(xlink, AUGE_PATH_MAX, "http://%s:%s/ows/thumbnail/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), thumbnail);
 		XElement* pxThumbnail = pxClass->AddChild("Thumbnail", NULL);
 		pxThumbnail->SetAttribute("xlink",xlink,NULL);
+	}
+
+	void GetDataSetResponse::DrawThumbnail(FeatureClass* pFeatureClass, const char* img_local_path)
+	{
+		g_uint width  = 512;
+		g_uint height = 512;
+
+		Canvas* pCanvas = NULL;
+		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		Style* pStyle = NULL;
+		FeatureLayer* pFeatureLayer = NULL;
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		StyleFactory* pStyleFactory = augeGetStyleFactoryInstance();
+
+		pFeatureLayer = pCartoFactory->CreateFeatureLayer();
+		pFeatureLayer->SetFeatureClass(pFeatureClass);
+
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		augeGeometryType type = pField->GetGeometryDef()->GeometryType();
+		pStyle = pStyleFactory->CreateFeatureStyle(type);
+
+		GColor bgColor(255,255,255,255);
+		pCanvas = pCartoFactory->CreateCanvas2D(width, height);
+		pCanvas->DrawBackground(bgColor);
+
+		GEnvelope extent = pFeatureClass->GetExtent();
+		pCanvas->DrawLayer(pFeatureLayer, pStyle);
+		pCanvas->Save(img_local_path);
+		pCanvas->Release();;
 	}
 
 
