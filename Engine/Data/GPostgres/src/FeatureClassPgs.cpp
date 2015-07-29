@@ -338,6 +338,8 @@ namespace auge
 			}
 			break;
 		}
+
+		return pCursor;
 	}
 
 	FeatureCursor* FeatureClassPgs::Query(GQuery* pQuery, augeCursorType type/*=augeStaticCursor*/)
@@ -383,7 +385,8 @@ namespace auge
 			break;
 		}
 
-		std::string sql;
+		return pCursor;
+		//std::string sql;
 		//SQLBuilder::BuildQuery(sql,pQuery,this);
 
 		//PGresult* pgResult = NULL;
