@@ -13,6 +13,8 @@ namespace auge
 		m_pDataSets = NULL;
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
+
+		m_pWebContext = NULL;
 	}
 
 	GetDataSetResponse::~GetDataSetResponse()
@@ -51,6 +53,7 @@ namespace auge
 		XElement	*pxNode = NULL;
 		XDocument	*pxDoc = new XDocument();
 		XElement	*pxRoot = pxDoc->CreateRootNode("DataSets", NULL, NULL);
+		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
 
 		XElement	*pxDataSet = NULL;
 		XElement	*pxService  = NULL;
@@ -69,27 +72,29 @@ namespace auge
 			{
 			case augeDataSetFeature:
 				{
-					FeatureClass* pFeatureClass = static_cast<FeatureClass*>(pDataSet);
-					GField* pField = pFeatureClass->GetFields()->GetGeometryField();
-					XElement* pxGeometry = pxDataSet->AddChild("Geometry");
-					if(pField!=NULL)
-					{
-						GeometryDef* pGeometryDef = pField->GetGeometryDef();
-						if(pGeometryDef!=NULL)
-						{
-							augeGeometryType type = pGeometryDef->GeometryType();
-							GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
-							const char* geomType = pGeometryFactory->Encode(type);
+					AddFeatureClassNode(pxDataSet, static_cast<FeatureClass*>(pDataSet));
 
-							XElement* pxElem = pxGeometry->AddChild("Type");
-							pxElem->AddChildText(geomType);
+					//	FeatureClass* pFeatureClass = static_cast<FeatureClass*>(pDataSet);
+					//GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+					//XElement* pxGeometry = pxDataSet->AddChild("Geometry");
+					//if(pField!=NULL)
+					//{
+					//	GeometryDef* pGeometryDef = pField->GetGeometryDef();
+					//	if(pGeometryDef!=NULL)
+					//	{
+					//		augeGeometryType type = pGeometryDef->GeometryType();
+					//		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+					//		const char* geomType = pGeometryFactory->Encode(type);
 
-							char str[AUGE_NAME_MAX] = {0};
-							g_sprintf(str, "%d", pGeometryDef->GetSRID());
-							pxElem = pxGeometry->AddChild("SRID");
-							pxElem->AddChildText(str);
-						}
-					}
+					//		XElement* pxElem = pxGeometry->AddChild("Type");
+					//		pxElem->AddChildText(geomType);
+
+					//		char str[AUGE_NAME_MAX] = {0};
+					//		g_sprintf(str, "%d", pGeometryDef->GetSRID());
+					//		pxElem = pxGeometry->AddChild("SRID");
+					//		pxElem->AddChildText(str);
+					//	}
+					//}
 				}
 				break;
 			case augeDataSetRaster:
@@ -114,6 +119,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	
 	RESULTCODE GetDataSetResponse::Write(WebWriter* pWriter, DataSet* pDataSet)
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
@@ -132,27 +138,28 @@ namespace auge
 		{
 		case augeDataSetFeature:
 			{
-				FeatureClass* pFeatureClass = static_cast<FeatureClass*>(pDataSet);
-				GField* pField = pFeatureClass->GetFields()->GetGeometryField();
-				XElement* pxGeometry = pxDataSet->AddChild("Geometry");
-				if(pField!=NULL)
-				{
-					GeometryDef* pGeometryDef = pField->GetGeometryDef();
-					if(pGeometryDef!=NULL)
-					{
-						augeGeometryType type = pGeometryDef->GeometryType();
-						GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
-						const char* geomType = pGeometryFactory->Encode(type);
+				AddFeatureClassNode(pxDataSet, static_cast<FeatureClass*>(pDataSet));
+				//FeatureClass* pFeatureClass = static_cast<FeatureClass*>(pDataSet);
+				//GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+				//XElement* pxGeometry = pxDataSet->AddChild("Geometry");
+				//if(pField!=NULL)
+				//{
+				//	GeometryDef* pGeometryDef = pField->GetGeometryDef();
+				//	if(pGeometryDef!=NULL)
+				//	{
+				//		augeGeometryType type = pGeometryDef->GeometryType();
+				//		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+				//		const char* geomType = pGeometryFactory->Encode(type);
 
-						XElement* pxElem = pxGeometry->AddChild("Type");
-						pxElem->AddChildText(geomType);
+				//		XElement* pxElem = pxGeometry->AddChild("Type");
+				//		pxElem->AddChildText(geomType);
 
-						char str[AUGE_NAME_MAX] = {0};
-						g_sprintf(str, "%d", pGeometryDef->GetSRID());
-						pxElem = pxGeometry->AddChild("SRID");
-						pxElem->AddChildText(str);
-					}
-				}
+				//		char str[AUGE_NAME_MAX] = {0};
+				//		g_sprintf(str, "%d", pGeometryDef->GetSRID());
+				//		pxElem = pxGeometry->AddChild("SRID");
+				//		pxElem->AddChildText(str);
+				//	}
+				//}
 			}
 			break;
 		case augeDataSetRaster:
@@ -175,6 +182,40 @@ namespace auge
 
 		return AG_SUCCESS;
 	}
+
+	void GetDataSetResponse::AddFeatureClassNode(XElement* pxClass, FeatureClass* pFeatureClass)
+	{
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		XElement* pxGeometry = pxClass->AddChild("Geometry");
+		if(pField!=NULL)
+		{
+			GeometryDef* pGeometryDef = pField->GetGeometryDef();
+			if(pGeometryDef!=NULL)
+			{
+				augeGeometryType type = pGeometryDef->GeometryType();
+				GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+				const char* geomType = pGeometryFactory->Encode(type);
+
+				XElement* pxElem = pxGeometry->AddChild("Type");
+				pxElem->AddChildText(geomType);
+				 
+				char str[AUGE_NAME_MAX] = {0};
+				g_sprintf(str, "%d", pGeometryDef->GetSRID());
+				pxElem = pxGeometry->AddChild("SRID");
+				pxElem->AddChildText(str);
+			}
+		}
+
+		char thumbnail[AUGE_PATH_MAX];
+		memset(thumbnail,0,AUGE_PATH_MAX);
+		auge_make_path(thumbnail, NULL, NULL, pFeatureClass->GetUUID(), "png");
+		char xlink[AUGE_PATH_MAX];
+		memset(xlink,0,AUGE_PATH_MAX);
+		g_snprintf(xlink, AUGE_PATH_MAX, "http://%s:%s/ows/thumbnail/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), thumbnail);
+		XElement* pxThumbnail = pxClass->AddChild("Thumbnail", NULL);
+		pxThumbnail->SetAttribute("xlink",xlink,NULL);
+	}
+
 
 	void GetDataSetResponse::SetDataSets(EnumDataSet* pDataSets)
 	{
@@ -200,5 +241,10 @@ namespace auge
 			AUGE_SAFE_RELEASE(m_pDataSets);
 		}
 		m_pDataSet = pDataSet;
+	}
+
+	void GetDataSetResponse::SetWebContext(WebContext* pWebContext)
+	{
+		m_pWebContext = pWebContext;
 	}
 }

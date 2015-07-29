@@ -8,6 +8,7 @@
 namespace auge
 {
 	class Service;
+	class FeatureClass;
 	class Workspace;
 	class DataSet;
 	class GetDataSetRequest;
@@ -23,14 +24,19 @@ namespace auge
 	public:
 		void		SetDataSets(EnumDataSet* pDataSets);
 		void		SetDataSet(DataSet* pDataSet);
+		void		SetWebContext(WebContext* pWebContext);
 
 		RESULTCODE	Write(WebWriter* pWriter, DataSet* pDataSet);
 		RESULTCODE	Write(WebWriter* pWriter, EnumDataSet* pDataSets);
 
 	private:
+		void		AddFeatureClassNode(XElement*pxClass, FeatureClass* pFeatureClass);
+
+	private:
 		DataSet* m_pDataSet;
 		EnumDataSet* m_pDataSets;
-		GetDataSetRequest *m_pRequest;	
+		GetDataSetRequest *m_pRequest;
+		WebContext* m_pWebContext;
 	};
 }
 

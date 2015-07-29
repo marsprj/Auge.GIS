@@ -270,7 +270,7 @@ namespace auge
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Request %s is not supported", request);
 		}
-				
+
 		return handler->Execute(pWebRequest, pUser);
 	}
 
@@ -323,7 +323,15 @@ namespace auge
 
 	WebResponse* WDataEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return Execute(pWebRequest, pUser);
+		const char* request = pWebRequest->GetRequest();
+		WebHandler* handler = GetHandler(request);
+		if(handler == NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Request %s is not supported", request);
+		}
+
+		return handler->Execute(pWebRequest, pWebContext, pUser);
 	}
 
 	//WebResponse* WDataEngine::GetCapabilities(CapabilitiesRequest* pRequest)

@@ -50,6 +50,11 @@ namespace auge
 
 	WebResponse* GetDataSetHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
+		return NULL;
+	}
+
+	WebResponse* GetDataSetHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
+	{
 		GetDataSetRequest* pRequest = static_cast<GetDataSetRequest*>(pWebRequest);
 
 		const char* sourceName = pRequest->GetSourceName();
@@ -78,7 +83,7 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
-		
+
 		if(!pWorkspace->IsOpen())
 		{
 			char msg[AUGE_MSG_MAX];
@@ -108,6 +113,7 @@ namespace auge
 			{
 				GetDataSetResponse* pResponse = new GetDataSetResponse(pRequest);
 				pResponse->SetDataSet(pDataSet);
+				pResponse->SetWebContext(pWebContext);
 				pWebResponse = pResponse;
 			}
 		}
@@ -117,14 +123,10 @@ namespace auge
 			EnumDataSet* pDataSets = pFeatureWorkspace->GetDataSets();
 			GetDataSetResponse* pResponse = new GetDataSetResponse(pRequest);
 			pResponse->SetDataSets(pDataSets);
+			pResponse->SetWebContext(pWebContext);
 			pWebResponse = pResponse;
 		}
-
+		
 		return pWebResponse;
-	}
-
-	WebResponse* GetDataSetHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
-	{
-		return Execute(pWebRequest, pUser);
 	}
 }

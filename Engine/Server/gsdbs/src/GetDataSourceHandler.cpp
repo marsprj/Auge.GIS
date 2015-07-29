@@ -48,6 +48,7 @@ namespace auge
 	{
 		GetDataSourceResponse* pResponse = new GetDataSourceResponse(static_cast<GetDataSourceRequest*>(pWebRequest));
 		pResponse->SetUser(pUser);
+
 		return pResponse;
 	}
 
