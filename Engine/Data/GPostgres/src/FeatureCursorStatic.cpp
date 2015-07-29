@@ -47,7 +47,8 @@ namespace auge
 		if(m_cursor>=m_fetched_count)
 		{
 			ClearResult();
-			if(!Fetch())
+			bool ret = Fetch();
+			if(!ret)
 			{
 				return NULL;
 			}
