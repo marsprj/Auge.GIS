@@ -233,7 +233,7 @@ namespace auge
 	void GetDataSetResponse::DrawThumbnail(FeatureClass* pFeatureClass, const char* img_local_path)
 	{
 		g_uint width  = 512;
-		g_uint height = 512;
+		g_uint height = 384;
 
 		Canvas* pCanvas = NULL;
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();

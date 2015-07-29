@@ -76,6 +76,9 @@ typedef unsigned long int  g_uint64;
 #define AUGE_ICON_SIZE		32
 #define AUGE_ICON_SCALE		0.7
 
+#define AUGE_THUMBNAIL_WIDTH	512
+#define AUGE_THUMBNAIL_HEIGHT	384
+
 #ifndef PATH_MAX
 #	define PATH_MAX 1024
 #endif
