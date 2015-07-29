@@ -302,7 +302,7 @@ namespace auge
 	void FeatureCursorStatic::CloseCursor()
 	{
 		PGresult* pgResult;
-		char sql[_MAX_PATH];
+		char sql[AUGE_PATH_MAX];
 		sprintf(sql, "CLOSE %s", m_cursor_name);
 		m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
 	}
@@ -326,7 +326,7 @@ namespace auge
 		// 记录上次获取的最大数据
 		m_last_fetched_count = m_fetched_count;
 		//从数据库获取数据
-		char sql[_MAX_PATH];
+		char sql[AUGE_PATH_MAX];
 		sprintf(sql, "FETCH %d IN %s", m_fetch_count, m_cursor_name);
 		m_pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql);
 		int status = PQresultStatus(m_pgResult);

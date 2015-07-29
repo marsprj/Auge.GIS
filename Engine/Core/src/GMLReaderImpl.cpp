@@ -385,7 +385,7 @@ namespace auge
 		pxNodeSet = pxGeometry->GetChildren();
 		if(pxNodeSet==NULL)
 		{
-			return NULL;
+			return 0;
 		}
 
 		pxNodeSet->Reset();

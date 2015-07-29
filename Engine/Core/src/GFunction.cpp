@@ -526,14 +526,14 @@ namespace auge
 #ifdef WIN32
 		return (g_ulong)GetTickCount();
 #else
-		//return (g_ulong)time(NULL);
+		return (g_ulong)time(NULL);
 		struct timespec ts;
 		clock_gettime(CLOCK_MONOTONIC, &ts);
 		return (ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
 #endif
 	}
 
-	void auge_get_sys_time_as_string(char* time, size_t size)
+	void auge_get_sys_time_as_string(char* sztime, size_t size)
 	{
 #ifdef WIN32
 		SYSTEMTIME now;
@@ -545,17 +545,20 @@ namespace auge
 			now.wMinute,
 			now.wSecond,
 			now.wMilliseconds);
+
 #else
 		time_t now;
 		time(&now);
 		struct tm* t_tm;   
-		t_tm = localtime(&timer);
-		sprintf(time, "%d%d%d%d%d%d",t_tm.tm_year,
-			t_tm.tm_mon,
-			t_tm.tm_mday,
-			t_tm.tm_hour,
-			t_tm.tm_min,
-			t_tm.tm_sec);
+		t_tm = localtime(&now);
+		t_tm->tm_sec;
+		sprintf(sztime, "%d%d%d%d%d%d",t_tm->tm_year,
+			t_tm->tm_mon,
+			t_tm->tm_mday,
+			t_tm->tm_hour,
+			t_tm->tm_min,
+			t_tm->tm_sec);
+
 #endif
 	}
 
