@@ -218,7 +218,7 @@ namespace auge
 		int r;
 		const void *buff;
 		size_t size;
-		g_int64 offset;
+		int64_t offset;
 
 		while(true)
 		{
