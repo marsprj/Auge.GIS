@@ -351,6 +351,6 @@ namespace auge
 			}
 		}
 
-		return (m_fetch_count>0);
+		return (m_fetched_count>0);
 	}
 }
