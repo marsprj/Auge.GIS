@@ -29,8 +29,7 @@ namespace auge
 			m_pgResult = NULL;
 		}
 		
-		WorkspacePgs* pWorkspace = m_pFeatureClass->m_pWorkspace;
-		ConnectionPgs& pgConnection = pWorkspace->m_pgConnection;
+		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection;
 
 		pgConnection.EndTransaction();
 
