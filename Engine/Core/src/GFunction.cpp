@@ -538,7 +538,7 @@ namespace auge
 #ifdef WIN32
 		SYSTEMTIME now;
 		GetSystemTime(&now);
-		sprintf(time, "%d%d%d%d%d%d%d",now.wYear,
+		sprintf(sztime, "%d%d%d%d%d%d%d",now.wYear,
 			now.wMonth,
 			now.wDay,
 			now.wHour,

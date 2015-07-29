@@ -205,22 +205,11 @@ namespace auge
 
 	bool FeatureCursorStatic::Create(GQuery*  pQuery, FeatureClassPgs* pFeatureClass)
 	{
-		m_pFeatureClass = pFeatureClass;
+		m_class_name = pFeatureClass->GetName();
+		//m_pFeatureClass = pFeatureClass;
 		m_pWorkspace = pFeatureClass->m_pWorkspace;
 		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection;
-
-		GFields	*pFields = m_pFeatureClass->GetFields();
-		GField	*pField = pFields->GetGeometryField();
-		if(pField==NULL)
-		{
-			m_geom_findex = -1;
-		}
-		else
-		{
-			m_geom_findex = pFields->FindField(pField->GetName());
-		}
-
-
+		
 		RESULTCODE rc = AG_SUCCESS;
 		rc = pgConnection.StartTransaction();
 		if(rc!=AG_SUCCESS)
@@ -228,7 +217,7 @@ namespace auge
 			return false;
 		}
 
-		rc = OpenCursor(pQuery);
+		rc = OpenCursor(pQuery, pFeatureClass);
 		if(rc!=AG_SUCCESS)
 		{
 			pgConnection.EndTransaction();
@@ -284,7 +273,7 @@ namespace auge
 		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql.c_str());
 	}
 
-	RESULTCODE FeatureCursorStatic::OpenCursor(GQuery*  pQuery)
+	RESULTCODE FeatureCursorStatic::OpenCursor(GQuery*  pQuery, FeatureClassPgs* pFeatureClass)
 	{
 		char now[AUGE_PATH_MAX];
 		memset(now, 0, AUGE_NAME_MAX);
@@ -294,7 +283,7 @@ namespace auge
 		//auge_generate_uuid(m_cursor_name, AUGE_NAME_MAX);
 
 		std::string sql;
-		SQLBuilder::BuildQueryCursor(sql, m_cursor_name, pQuery, m_pFeatureClass);
+		SQLBuilder::BuildQueryCursor(sql, m_cursor_name, pQuery, pFeatureClass);
 
 		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql.c_str());
 	}
@@ -342,6 +331,23 @@ namespace auge
 		}
 		m_fetched_count = PQntuples(m_pgResult);
 		m_has_more_data = (m_fetched_count==m_fetch_count);
+
+		if(m_pFeatureClass==NULL)
+		{
+			m_pFeatureClass = new FeatureClassPgs();
+			m_pFeatureClass->Create(m_class_name.c_str(), m_pWorkspace, m_pgResult);
+
+			GFields	*pFields = m_pFeatureClass->GetFields();
+			GField	*pField = pFields->GetGeometryField();
+			if(pField==NULL)
+			{
+				m_geom_findex = -1;
+			}
+			else
+			{
+				m_geom_findex = pFields->FindField(pField->GetName());
+			}
+		}
 
 		return (m_fetch_count>0);
 	}

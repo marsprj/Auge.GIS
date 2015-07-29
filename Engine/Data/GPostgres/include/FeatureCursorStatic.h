@@ -29,7 +29,7 @@ namespace auge
 		RESULTCODE				OpenCursor();
 		RESULTCODE				OpenCursor(GEnvelope& extent);
 		RESULTCODE				OpenCursor(GFilter* pFilter);
-		RESULTCODE				OpenCursor(GQuery*  pQuery);
+		RESULTCODE				OpenCursor(GQuery*  pQuery, FeatureClassPgs* pFeatureClass);
 		void					CloseCursor();
 		void					ClearResult();
 		bool					Fetch();
@@ -37,6 +37,7 @@ namespace auge
 		WorkspacePgs	*m_pWorkspace;
 		FeatureClassPgs *m_pFeatureClass;
 		PGresult		*m_pgResult;
+		std::string		m_class_name;
 
 		g_int			m_cursor;
 		g_int			m_geom_findex;
