@@ -202,6 +202,7 @@ namespace auge
 			pFeature->Release();
 		}
 
+		pdbFeatureClass->Refresh();
 		cmd->Release();
 		pdbFeatureClass->Release();
 
