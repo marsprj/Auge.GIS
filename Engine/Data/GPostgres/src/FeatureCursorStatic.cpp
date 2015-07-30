@@ -29,8 +29,7 @@ namespace auge
 			m_pgResult = NULL;
 		}
 		
-		WorkspacePgs* pWorkspace = m_pFeatureClass->m_pWorkspace;
-		ConnectionPgs& pgConnection = pWorkspace->m_pgConnection;
+		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection;
 
 		pgConnection.EndTransaction();
 
@@ -47,7 +46,8 @@ namespace auge
 		if(m_cursor>=m_fetched_count)
 		{
 			ClearResult();
-			if(!Fetch())
+			bool ret = Fetch();
+			if(!ret)
 			{
 				return NULL;
 			}

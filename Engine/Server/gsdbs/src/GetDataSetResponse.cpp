@@ -235,6 +235,7 @@ namespace auge
 		g_uint width  = AUGE_THUMBNAIL_WIDTH;
 		g_uint height = AUGE_THUMBNAIL_HEIGHT;
 
+
 		Canvas* pCanvas = NULL;
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
 		GLogger* pLogger = augeGetLoggerInstance();
@@ -256,6 +257,7 @@ namespace auge
 		pCanvas->DrawBackground(bgColor);
 
 		GEnvelope extent = pFeatureClass->GetExtent();
+		pCanvas->SetViewer(extent);
 		pCanvas->DrawLayer(pFeatureLayer, pStyle);
 		pCanvas->Save(img_local_path);
 		pCanvas->Release();;
