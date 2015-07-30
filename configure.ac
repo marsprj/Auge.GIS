@@ -127,6 +127,7 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Server/info/Makefile
                  Engine/Server/testcgi/Makefile
 		 Script/Makefile
+		 Conf/Makefile
                  Makefile
                  include/Makefile])
 AC_OUTPUT

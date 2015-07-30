@@ -1,2 +1,2 @@
 AUTOMAKE_OPTION=foreign
-SUBDIRS=Engine include Dist Script
+SUBDIRS=Engine include Dist Script Conf
