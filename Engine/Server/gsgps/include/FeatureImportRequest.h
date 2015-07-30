@@ -65,6 +65,7 @@ namespace auge
 -------------------------------------------------------------------------
 1)
 service=gps&version=1.0.0&request=FeatureImport&sourceName=db1&typeName=aaaa&shppath=D:/GeoBeans/data/world&shpname=cities&srid=4326
+user=user1&service=gps&version=1.0.0&request=FeatureImport&sourceName=db1&typeName=cities_xx&shppath=/ddd&shpname=cities&srid=4326
 http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=FeatureImport&sourceName=db1&typeName=bbb&shppath=D:/GeoBeans/data/world&shpname=cities&srid=4326
 
 

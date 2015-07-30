@@ -142,9 +142,10 @@ namespace auge
 			return false;
 		}
 		m_pdbfHandle = DBFOpen(dbf_path, "rb");
-		if(m_pshpHandle==NULL)
+		if(m_pdbfHandle==NULL)
 		{
 			SHPClose(m_pshpHandle);
+			m_pshpHandle = NULL;
 
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Cannot Open DBF file [%s].", dbf_path);

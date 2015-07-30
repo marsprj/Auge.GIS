@@ -99,7 +99,7 @@ namespace auge
 		if(pRequest->GetShapePath()!=NULL)
 		{
 			const char* req_path = pRequest->GetShapePath();
-			auge_make_path(shp_path, NULL, pWebContext->GetUploadPath(), req_path, NULL);
+			auge_make_path(shp_path, NULL, pWebContext->GetUploadPath(), req_path+1, NULL);
 		}
 		else
 		{
