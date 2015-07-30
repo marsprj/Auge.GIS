@@ -772,15 +772,31 @@ namespace auge
 		const char* format = "insert into %s (name, alias, count, minx, miny, maxx, maxy, uuid) values('%s','%s',%d,%f,%f,%f,%f,'%s')";
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), 
-			GetName(),
-			GetName(),	
-			count,
-			extent.m_xmin,
-			extent.m_ymin,
-			extent.m_xmax,
-			extent.m_ymax,
-			uuid);
+		if(extent.IsValid())
+		{
+			g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), 
+				GetName(),
+				GetName(),	
+				count,
+				extent.m_xmin,
+				extent.m_ymin,
+				extent.m_xmax,
+				extent.m_ymax,
+				uuid);
+		}
+		else
+		{
+			g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), 
+				GetName(),
+				GetName(),	
+				count,
+				-180.0f,
+				-90.0f,
+				180.0f,
+				90.0f,
+				uuid);
+		}
+		
 
 		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
 	}
