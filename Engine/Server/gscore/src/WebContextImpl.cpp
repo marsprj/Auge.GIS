@@ -345,7 +345,7 @@ namespace auge
 		 const char* http_user_agent = getenv("HTTP_USER_AGENT"); 
 		 if(http_user_agent==NULL)
 		 {
-			 return false;
+			 return true;
 		 }
 		 const char* ptr = strstr(http_user_agent, "MSIE");
 		 return (ptr!=NULL);

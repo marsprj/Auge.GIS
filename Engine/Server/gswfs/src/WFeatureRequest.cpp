@@ -88,9 +88,9 @@ namespace auge
 		return m_source_name.c_str();
 	}
 
-	void WFeatureRequest::SetSourceName(const char* sourcName)
+	void WFeatureRequest::SetSourceName(const char* sourceName)
 	{
-		if((sourcName==NULL)||(strlen(sourcName)==0))
+		if((sourceName==NULL)||(strlen(sourceName)==0))
 		{
 			m_source_name.clear();
 		}
@@ -99,11 +99,11 @@ namespace auge
 			WebContext* pWebContext = augeGetWebContextInstance();
 			if(pWebContext->IsIE())
 			{
-				m_source_name = sourcName;
+				m_source_name = sourceName;
 			}
 			else
 			{
-				m_map_name = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, sourcName, strlen(sourcName));
+				m_source_name = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, sourceName, strlen(sourceName));
 			}
 		}
 	}
