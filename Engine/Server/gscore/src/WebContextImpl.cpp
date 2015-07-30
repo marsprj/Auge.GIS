@@ -339,4 +339,15 @@ namespace auge
 		}
 		m_user_root = user_path;		
 	}
+
+	 bool WebContextImpl::IsIE()
+	 {
+		 const char* http_user_agent = getenv("HTTP_USER_AGENT"); 
+		 if(http_user_agent==NULL)
+		 {
+			 return false;
+		 }
+		 const char* ptr = strstr(http_user_agent, "MSIE");
+		 return (ptr!=NULL);
+	 }
 }

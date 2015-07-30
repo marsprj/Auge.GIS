@@ -42,12 +42,12 @@ namespace auge
 		//char* value_utf8 = (char*)value;
 		//char* ns_prefix_utf8 = (char*)ns_prefix;
 
-		//Ignore the namespace if none was specified:
+		//Ignore the namespace if none was specified: 
 		if((ns_prefix==NULL)||strlen(ns_prefix)==0)
 		{
 			if(encoding)
 			{	
-				size_t size_utf8 = 0;
+				size_t size_utf8 = AUGE_PATH_MAX;
 				char name_utf8[AUGE_PATH_MAX];
 				char value_utf8[AUGE_PATH_MAX];
 				memset(name_utf8, 0, AUGE_PATH_MAX);

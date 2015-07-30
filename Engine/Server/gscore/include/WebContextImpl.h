@@ -36,6 +36,8 @@ namespace auge
 
 		virtual const char*		GetResponseEncoding();
 
+		virtual bool			IsIE();
+
 	public:
 		virtual	RESULTCODE		Initialize(const char* config_path=NULL);		
 		virtual RESULTCODE		Unload();

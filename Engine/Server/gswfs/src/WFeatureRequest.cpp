@@ -1,4 +1,5 @@
 #include "WFeatureRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -70,7 +71,15 @@ namespace auge
 		}
 		else
 		{
-			m_map_name = mapName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			if(pWebContext->IsIE())
+			{
+				m_map_name = mapName;
+			}
+			else
+			{
+				m_map_name = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, mapName, strlen(mapName));
+			}
 		}
 	}
 
@@ -87,7 +96,15 @@ namespace auge
 		}
 		else
 		{
-			m_source_name = sourcName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			if(pWebContext->IsIE())
+			{
+				m_source_name = sourcName;
+			}
+			else
+			{
+				m_map_name = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, sourcName, strlen(sourcName));
+			}
 		}
 	}
 

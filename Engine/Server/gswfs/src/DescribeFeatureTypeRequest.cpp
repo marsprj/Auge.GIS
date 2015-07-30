@@ -1,4 +1,5 @@
 #include "DescribeFeatureTypeRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -46,11 +47,25 @@ namespace auge
 	{
 		if(value==NULL)
 		{
-			return;
+			m_type_name.clear();
 		}
-		const char* sep = strstr(value,":");
-		m_full_name = value;
-		m_type_name = sep==NULL ? value : sep+1;
+		else
+		{
+			const char* sep = strstr(value,":");			
+			const char* typeName = (sep==NULL ? value : sep+1);
+
+			WebContext* pWebContext = augeGetWebContextInstance();
+			if(pWebContext->IsIE())
+			{
+				m_full_name = value;
+				m_type_name = typeName;
+			}
+			else
+			{
+				m_full_name = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, value, strlen(value));
+				m_type_name = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, typeName, strlen(typeName));
+			}
+		}
 	}
 	
 	//const char*	DescribeFeatureTypeRequest::GetMimeType()
