@@ -1,5 +1,5 @@
-#include "RefreshDatasetHandler.h"
-#include "RefreshDatasetRequest.h"
+#include "RefreshDataSetHandler.h"
+#include "RefreshDataSetRequest.h"
 #include "AugeService.h"
 #include "AugeData.h"
 #include "AugeFeature.h"
