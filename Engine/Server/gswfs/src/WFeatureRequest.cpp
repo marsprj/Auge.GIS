@@ -72,14 +72,7 @@ namespace auge
 		else
 		{
 			WebContext* pWebContext = augeGetWebContextInstance();
-			if(pWebContext->IsIE())
-			{
-				m_map_name = mapName;
-			}
-			else
-			{
-				m_map_name = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, mapName, strlen(mapName));
-			}
+			m_map_name = pWebContext->ParameterEncoding(mapName);
 		}
 	}
 
@@ -97,14 +90,7 @@ namespace auge
 		else
 		{
 			WebContext* pWebContext = augeGetWebContextInstance();
-			if(pWebContext->IsIE())
-			{
-				m_source_name = sourceName;
-			}
-			else
-			{
-				m_source_name = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, sourceName, strlen(sourceName));
-			}
+			m_source_name = pWebContext->ParameterEncoding(sourceName);
 		}
 	}
 

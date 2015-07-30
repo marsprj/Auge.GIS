@@ -123,7 +123,7 @@ namespace auge
 	
 	RESULTCODE GetDataSetResponse::Write(WebWriter* pWriter, DataSet* pDataSet)
 	{
-		GLogger* pLogger = augeGetLoggerInstance();
+		GLogger* pLogger = augeGetLoggerInstance(); 
 
 		XElement	*pxNode = NULL;
 		XDocument	*pxDoc = new XDocument();
@@ -131,7 +131,7 @@ namespace auge
 		XElement	*pxService  = NULL;
 				
 		XElement* pxElement = pxDataSet->AddChild("Name");
-		pxElement->SetChildText(pDataSet->GetName());
+		pxElement->SetChildText(pDataSet->GetName(),true);
 		pxElement = pxDataSet->AddChild("Type");
 		pxElement->SetChildText(augeGetDataSetType(pDataSet->GetType()));
 

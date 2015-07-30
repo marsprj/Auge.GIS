@@ -55,16 +55,9 @@ namespace auge
 			const char* typeName = (sep==NULL ? value : sep+1);
 
 			WebContext* pWebContext = augeGetWebContextInstance();
-			if(pWebContext->IsIE())
-			{
-				m_full_name = value;
-				m_type_name = typeName;
-			}
-			else
-			{
-				m_full_name = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, value, strlen(value));
-				m_type_name = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, typeName, strlen(typeName));
-			}
+			m_full_name = pWebContext->ParameterEncoding(value);
+			m_type_name = pWebContext->ParameterEncoding(typeName);
+			
 		}
 	}
 	

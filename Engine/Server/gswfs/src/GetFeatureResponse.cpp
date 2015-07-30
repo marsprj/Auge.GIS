@@ -109,11 +109,11 @@ namespace auge
 			while((pFeature=m_pCursor->NextFeature())!=NULL)
 			{
 				// FeatureCollection-->featureMember
-				pxMember = pxRoot->AddChild("featureMember","gml");
+				pxMember = pxRoot->AddChild("featureMember","gml"); 
 				// FeatureCollection-->feature
 				pxFeature = pxMember->AddChild(type_name,service_name);
 				g_sprintf(str,"%s.%d", type_name, pFeature->GetFID());
-				pxFeature->SetAttribute("fid",str, NULL);
+				pxFeature->SetAttribute("fid",str, NULL, true);
 
 				for(g_uint i=0; i<fcount; i++)
 				{
