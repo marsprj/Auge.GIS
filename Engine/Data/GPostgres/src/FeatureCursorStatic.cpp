@@ -38,6 +38,10 @@ namespace auge
 
 	FeatureClass* FeatureCursorStatic::GetFeatureClass()
 	{
+		if(m_pFeatureClass==NULL)
+		{
+			Fetch();
+		}
 		return m_pFeatureClass;
 	}
 
