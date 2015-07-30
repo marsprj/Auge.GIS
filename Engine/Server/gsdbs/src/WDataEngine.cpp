@@ -8,6 +8,7 @@
 
 #include "CreateDataSetHandler.h"
 #include "RemoveDataSetHandler.h"
+#include "RefreshDataSetHandler.h"
 
 #include "TestConnectionHandler.h"
 
@@ -25,7 +26,7 @@ namespace auge
 	} 
 
 	WDataEngine::WDataEngine()
-	{
+	{ 
 		m_handler = NULL;
 
 		m_handlers.push_back(new RegisterDataSourceHandler());
@@ -36,6 +37,7 @@ namespace auge
 		m_handlers.push_back(new CreateDataSetHandler());
 		m_handlers.push_back(new RemoveDataSetHandler());
 		m_handlers.push_back(new TryConnectionHandler());
+		m_handlers.push_back(new RefreshDatasetHandler());
 	}
 
 	WDataEngine::~WDataEngine()

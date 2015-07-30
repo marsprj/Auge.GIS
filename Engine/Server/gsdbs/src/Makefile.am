@@ -24,6 +24,8 @@ libgsdbs_la_SOURCES=\
 		    GetDataSetHandler.cpp \
 		    GetDataSetRequest.cpp \
 		    GetDataSetResponse.cpp \
+		    RefreshDataSetHandler.cpp \
+		    RefreshDataSetRequest.cpp \
 		    GetPreviewRequest.cpp \
 		    GetPreviewResponse.cpp \
 		    GetPreviewHandler.cpp \

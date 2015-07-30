@@ -94,6 +94,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetPreviewHandler.cpp" />
     <ClCompile Include="..\src\GetPreviewRequest.cpp" />
     <ClCompile Include="..\src\GetPreviewResponse.cpp" />
+    <ClCompile Include="..\src\RefreshDataSetHandler.cpp" />
+    <ClCompile Include="..\src\RefreshDataSetRequest.cpp" />
     <ClCompile Include="..\src\RegisterDataSourceHandler.cpp" />
     <ClCompile Include="..\src\RegisterDataSourceRequest.cpp" />
     <ClCompile Include="..\src\RemoveDataSetHandler.cpp" />
@@ -116,6 +118,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetPreviewHandler.h" />
     <ClInclude Include="..\include\GetPreviewRequest.h" />
     <ClInclude Include="..\include\GetPreviewResponse.h" />
+    <ClInclude Include="..\include\RefreshDataSetHandler.h" />
+    <ClInclude Include="..\include\RefreshDataSetRequest.h" />
     <ClInclude Include="..\include\RegisterDataSourceHandler.h" />
     <ClInclude Include="..\include\RegisterDataSourceRequest.h" />
     <ClInclude Include="..\include\RemoveDataSetHandler.h" />
