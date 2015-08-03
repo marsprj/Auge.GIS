@@ -66,6 +66,9 @@
     <ClInclude Include="..\..\..\..\include\AugeData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\RasterFolderImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DataEngineImpl.cpp">
@@ -108,6 +111,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\FeatureCursorStatic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RasterFolderImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

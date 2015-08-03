@@ -6,6 +6,7 @@
 #include <map>
 
 #include "ConnectionPgs.h"
+#include "RasterFolderImpl.h"
 
 namespace auge
 {
@@ -17,6 +18,7 @@ namespace auge
 		friend class FeatureCursorStatic;
 		friend class FeatureInsertCommandPgs;
 		friend class AttributeDataSetPgs;
+		friend class RasterFolderImpl;
 
 	public:
 		WorkspacePgs();
@@ -49,6 +51,9 @@ namespace auge
 		// Raster Begin
 		/*************************************************************************/
 		//virtual void			SetConnection(GConnection* pConnection);
+		virtual RasterFolder*	GetRootFolder();
+		virtual RasterFolder*	GetFolder(const char* path);
+
 		virtual EnumDataSet*	GetRasterDatasets();
 		virtual RasterDataset*	CreateRasterDataset(const char* name);
 		virtual RasterDataset*	OpenRasterDataset(const char* name);
@@ -81,7 +86,7 @@ namespace auge
 
 		RESULTCODE				CreateFeatureCatalogTable();
 		RESULTCODE				CreateRasterTable();
-		RESULTCODE				CreateRasterDatasetTable();
+		RESULTCODE				CreateRasterFolderTable();
 	private:
 		ConnectionPgs	m_pgConnection;
 		std::string		m_name;
@@ -89,8 +94,10 @@ namespace auge
 
 		std::string		m_raster_repository;
 		std::string		g_raster_table;
-		std::string		g_raster_dataset_table;
+		std::string		g_raster_folder_table;
 		std::string		g_feature_catalog_table;
+
+		RasterFolderImpl	m_raster_root_folder;
 	};
 }
 

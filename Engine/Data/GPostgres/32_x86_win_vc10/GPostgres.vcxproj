@@ -106,6 +106,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\FeatureObj.h" />
     <ClInclude Include="..\include\FeaturePgs.h" />
     <ClInclude Include="..\include\RasterDatasetImpl.h" />
+    <ClInclude Include="..\include\RasterFolderImpl.h" />
     <ClInclude Include="..\include\ResultSetPgs.h" />
     <ClInclude Include="..\include\SQLBuilder.h" />
     <ClInclude Include="..\include\WorkspacePgs.h" />
@@ -122,6 +123,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\FeatureObj.cpp" />
     <ClCompile Include="..\src\FeaturePgs.cpp" />
     <ClCompile Include="..\src\RasterDatasetImpl.cpp" />
+    <ClCompile Include="..\src\RasterFolderImpl.cpp" />
     <ClCompile Include="..\src\ResultSetPgs.cpp" />
     <ClCompile Include="..\src\SQLBuilder.cpp" />
     <ClCompile Include="..\src\WorkspacePgs.cpp" />

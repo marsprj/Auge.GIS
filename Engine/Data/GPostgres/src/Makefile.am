@@ -28,4 +28,6 @@ libGPostgres_la_SOURCES=\
 		WorkspacePgs.cpp \
 		RasterDatasetImpl.cpp \
 		AttributeDataSetPgs.cpp \
+		RasterFolderImpl.cpp \
+		EnumRasterFolderImpl.cpp \
 		EnumDataSetImpl.cpp

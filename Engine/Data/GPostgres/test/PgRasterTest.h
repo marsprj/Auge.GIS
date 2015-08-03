@@ -7,8 +7,8 @@
 class PgRasterTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(PgRasterTest);
-	CPPUNIT_TEST(CreateRasterDataset);
-	CPPUNIT_TEST(ReadRaster);
+	CPPUNIT_TEST(CreateRasterFolder);
+	//CPPUNIT_TEST(ReadRaster);
 
 	CPPUNIT_TEST_SUITE_END();
 public:
@@ -17,10 +17,10 @@ public:
 
 private:
 
-	void CreateRasterDataset();
-	void RemoveRasterDataset();
-	void RenameRasterDataset();
-	void EnumRasterDataset();
+	void CreateRasterFolder();
+	void RemoveRasterFolder();
+	void RenameRasterFolder();
+	void EnumRasterFolder();
 
 	void ReadRaster();
 

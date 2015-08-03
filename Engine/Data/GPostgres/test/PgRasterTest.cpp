@@ -10,7 +10,8 @@ void PgRasterTest::setUp()
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=GISDB;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gaode;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK;repository=E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\user\\user1\\rds";
+	//const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK;repository=E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\user\\user1\\rds";
+	const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=rsdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK;repository=E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\user\\user1\\rds";
 	//const char* path = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
@@ -36,32 +37,35 @@ void PgRasterTest::tearDown()
 	printf("tearDown\n");
 }
 
-void PgRasterTest::CreateRasterDataset()
+void PgRasterTest::CreateRasterFolder()
+{
+	auge::RasterFolder* pRoot = m_pWorkspace->GetRootFolder();
+	CPPUNIT_ASSERT(pRoot!=NULL);
+
+	const char* name = "ds1";
+	auge::RasterFolder* pFolder = pRoot->CreateFolder(name);
+	CPPUNIT_ASSERT(pFolder!=NULL);
+	pFolder->Release();
+	pRoot->Release();
+}
+
+void PgRasterTest::RemoveRasterFolder()
 {
 	const char* name = "ds1";
 	auge::RasterDataset* pDataset = NULL;
-	pDataset = m_pWorkspace->CreateRasterDataset(name);
-	CPPUNIT_ASSERT(pDataset!=NULL);
-	pDataset->Release();
+	//RESULTCODE rc = m_pWorkspace->RemoverRasterDataset(name);
+	//CPPUNIT_ASSERT(rc!=AG_SUCCESS);
 }
 
-void PgRasterTest::RemoveRasterDataset()
-{
-	const char* name = "ds1";
-	auge::RasterDataset* pDataset = NULL;
-	RESULTCODE rc = m_pWorkspace->RemoverRasterDataset(name);
-	CPPUNIT_ASSERT(rc!=AG_SUCCESS);
-}
-
-void PgRasterTest::RenameRasterDataset()
+void PgRasterTest::RenameRasterFolder()
 {
 
 }
 
-void PgRasterTest::EnumRasterDataset()
+void PgRasterTest::EnumRasterFolder()
 {
-	auge::EnumDataSet* pDatasets = m_pWorkspace->GetRasterDatasets();
-	CPPUNIT_ASSERT(pDatasets!=NULL);
+	//auge::EnumDataSet* pDatasets = m_pWorkspace->GetRasterDatasets();
+	//CPPUNIT_ASSERT(pDatasets!=NULL);
 }
 
 void PgRasterTest::ReadRaster()

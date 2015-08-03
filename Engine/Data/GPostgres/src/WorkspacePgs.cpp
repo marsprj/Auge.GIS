@@ -6,6 +6,8 @@
 #include "RasterDatasetImpl.h"
 #include "AttributeDataSetPgs.h"
 
+#include "RasterFolderImpl.h"
+
 namespace auge
 {	
 	WorkspacePgs::WorkspacePgs():
@@ -13,13 +15,15 @@ namespace auge
 	{
 		g_feature_catalog_table = "g_feature_catalog";
 		g_raster_table  = "g_raster";
-		g_raster_dataset_table = "g_raster_dataset";
+		g_raster_folder_table = "g_raster_folder";
 
-#ifdef WIN32
-		m_raster_repository = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload";
-#else
-		m_raster_repository = "/opt/auge/upload";
-#endif
+		m_raster_root_folder.Create(0, "/", "/", this);
+
+//#ifdef WIN32
+//		m_raster_repository = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload";
+//#else
+//		m_raster_repository = "/opt/auge/upload";
+//#endif
 	}
 
 	WorkspacePgs::~WorkspacePgs()
@@ -85,9 +89,9 @@ namespace auge
 			CreateFeatureCatalogTable();
 		}
 		
-		if(!m_pgConnection.HasTable(g_raster_dataset_table.c_str()))
+		if(!m_pgConnection.HasTable(g_raster_folder_table.c_str()))
 		{
-			CreateRasterDatasetTable();
+			CreateRasterFolderTable();
 		}
 
 		if(!m_pgConnection.HasTable(g_raster_table.c_str()))
@@ -491,6 +495,24 @@ namespace auge
 		return m_raster_repository.c_str();
 	}
 
+	RasterFolder* WorkspacePgs::GetRootFolder()
+	{
+		m_raster_root_folder.AddRef();
+		return &m_raster_root_folder;
+	}
+
+	RasterFolder* WorkspacePgs::GetFolder(const char* path)
+	{
+		if(path==NULL)
+		{
+			return NULL;
+		}
+
+		
+
+		return NULL;
+	}
+
 	//EnumDataSet* WorkspacePgs::GetRasterDatasets()
 	//{
 	//	char sql[AUGE_SQL_MAX] = {0};
@@ -696,18 +718,18 @@ namespace auge
 		return m_pgConnection.ExecuteSQL(sql);
 	}
 
-	RESULTCODE WorkspacePgs::CreateRasterDatasetTable()
+	RESULTCODE WorkspacePgs::CreateRasterFolderTable()
 	{
 		char sql[AUGE_SQL_MAX];
 		const char* format = "CREATE TABLE %s(" \
 			"	gid serial NOT NULL," \
 			"	name character varying(32)," \
 			"	alias character varying(32)," \
-			"	format character varying(8),"
-			"	CONSTRAINT g_raster_catalog_pk PRIMARY KEY (gid)," \
-			"	CONSTRAINT g_raster_catalog_name_uk UNIQUE (name)" \
+			"	path character varying(8)," \
+			"	parent integer," \
+			"	CONSTRAINT g_raster_folder_pk PRIMARY KEY (gid)" \
 			")";
-		g_sprintf(sql, format, g_raster_dataset_table.c_str());
+		g_sprintf(sql, format, g_raster_folder_table.c_str());
 		return m_pgConnection.ExecuteSQL(sql);
 	}
 

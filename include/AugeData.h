@@ -20,8 +20,7 @@
 namespace auge
 {
 	class GField;
-	class GFields;
-	class Raster;
+	class GFields;	
 	class DataEngine;
 	class Workspace;
 	class DataSet;
@@ -30,6 +29,11 @@ namespace auge
 	class GConnection;
 	class GResultSet;
 	class ConnectionManager;
+
+	class Raster;
+	class RasterFolder;
+	class RasterDataset;
+	class EnumRasterFolder;
 
 	typedef enum
 	{
@@ -270,6 +274,27 @@ namespace auge
 		virtual void				Unload() = 0;
 	};
 
+	//////////////////////////////////////////////////////////////////////////
+	// RasterWorkspace Begin
+	//////////////////////////////////////////////////////////////////////////
+	class RasterFolder : public GObject
+	{
+	protected:
+		RasterFolder(){}
+		virtual ~RasterFolder(){}
+	public:
+		virtual const char*			GetName() = 0;
+		virtual EnumRasterFolder*	GetFolders() = 0;
+		virtual RasterFolder*		CreateFolder(const char* name) = 0;
+		virtual RESULTCODE			RemoveFolder(const char* name) = 0;
+		virtual RESULTCODE			RenameFolder(const char* name) = 0;
+		virtual bool				HasFolder(const char* name) = 0;
+
+		virtual RasterDataset*		GetRasterDataset() = 0;
+
+		virtual void				Release() = 0;
+	};
+
 	class RasterDataset : public DataSet
 	{
 	public:
@@ -286,10 +311,11 @@ namespace auge
 		//virtual const char*		GetFormat() = 0;
 		//virtual const char*		GetPath() = 0;
 
-		//virtual EnumRaster*		GetRasters() = 0;
-		//virtual Raster*			GetRaster(const char* name) = 0;
+		virtual const char*			GetName() = 0;
+		virtual EnumRaster*			GetRasters() = 0;
+		virtual Raster*				GetRaster(const char* name) = 0;
 
-		virtual Raster*			GetRaster() = 0;
+		virtual Raster*				GetRaster() = 0;
 	};
 
 	class RasterWorkspace : virtual public Workspace
@@ -298,23 +324,29 @@ namespace auge
 		RasterWorkspace(){}
 		virtual ~RasterWorkspace(){}
 	public:
-		//virtual void			SetConnection(GConnection* pConnection) = 0;
+		//virtual void				SetConnection(GConnection* pConnection) = 0;
 
-		virtual const char*		GetRepository() = 0;
+		virtual const char*			GetRepository() = 0;		
+		virtual RasterFolder*		GetRootFolder() = 0;
+		// [path] : /a/b/c
+		virtual RasterFolder*		GetFolder(const char* path) = 0;
 
-		virtual EnumDataSet*	GetRasterDatasets() = 0;		
-		virtual RasterDataset*	CreateRasterDataset(const char* name) = 0;
-		virtual RasterDataset*	OpenRasterDataset(const char* name) = 0;
-		virtual RESULTCODE		RemoverRasterDataset(const char* name) = 0;		
+		
+		virtual RasterDataset*		OpenRasterDataset(const char* name) = 0;
+		//virtual RESULTCODE		RemoverRasterDataset(const char* name) = 0;		
 
-		virtual EnumRaster*		GetRasters() = 0;
-		virtual RESULTCODE		AddRaster(Raster* pRaster) = 0;
-		virtual	Raster*			OpenRaster(const char* name) = 0;
-		virtual RESULTCODE		RemoveRaster(const char* name) = 0;
+		//virtual EnumRaster*		GetRasters() = 0;
+		//virtual RESULTCODE		AddRaster(Raster* pRaster) = 0;
+		//virtual	Raster*			OpenRaster(const char* name) = 0;
+		//virtual RESULTCODE		RemoveRaster(const char* name) = 0;
 		// @deprecated
-		virtual RESULTCODE		RemoveRaster(const char* name, const char* path) = 0;
+		virtual RESULTCODE			RemoveRaster(const char* name, const char* path) = 0;
 		//virtual RESULTCODE		RemoveRaster(g_uint id) = 0;
 	};
+
+	//////////////////////////////////////////////////////////////////////////
+	// RasterWorkspace End
+	//////////////////////////////////////////////////////////////////////////
 
 	extern "C"
 	{

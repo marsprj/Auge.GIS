@@ -20,6 +20,7 @@ namespace auge
 		case augeDataSetAttribute:
 			return "Attribute";
 		}
+		return "";
 	}
 
 	ConnectionManagerImpl::ConnectionManagerImpl():
