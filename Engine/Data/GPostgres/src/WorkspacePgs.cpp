@@ -12,7 +12,7 @@ namespace auge
 	m_schema("public")
 	{
 		g_feature_catalog_table = "g_feature_catalog";
-		g_raster_catalog_table  = "g_raster_catalog";
+		g_raster_table  = "g_raster";
 
 #ifdef WIN32
 		m_raster_repository = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload";
@@ -84,7 +84,7 @@ namespace auge
 			CreateFeatureCatalogTable();
 		}
 
-		if(!m_pgConnection.HasTable(g_raster_catalog_table.c_str()))
+		if(!m_pgConnection.HasTable(g_raster_table.c_str()))
 		{
 			CreateRasterCatalogTable();
 		}
@@ -246,7 +246,7 @@ namespace auge
 			for(g_uint i=0; i<count; i++)
 			{
 				tname = PQgetvalue(pgResult,i,0);
-				if((g_stricmp(tname,"spatial_ref_sys")==0)||(g_stricmp(tname,"g_raster_catalog")==0))
+				if((g_stricmp(tname,"spatial_ref_sys")==0)||(g_stricmp(tname,"g_raster")==0))
 				{
 					continue;
 				}
@@ -295,7 +295,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_sprintf(sql, "delete from g_raster_catalog where name='%s' and path='%s'",name, path);
+		g_sprintf(sql, "delete from g_raster where name='%s' and path='%s'",name, path);
 		return m_pgConnection.ExecuteSQL(sql);
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -490,7 +490,7 @@ namespace auge
 	{
 		char sql[AUGE_SQL_MAX] = {0};
 		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid from %s";
-		g_snprintf(sql, AUGE_SQL_MAX, format,	g_raster_catalog_table.c_str());
+		g_snprintf(sql, AUGE_SQL_MAX, format,	g_raster_table.c_str());
 
 		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -537,7 +537,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX] = {0};
 		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid from %s where name='%s'";
-		g_snprintf(sql, AUGE_SQL_MAX, format,	g_raster_catalog_table.c_str(), name);
+		g_snprintf(sql, AUGE_SQL_MAX, format,	g_raster_table.c_str(), name);
 
 		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -611,7 +611,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		const char* format = "insert into g_raster_catalog (name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid) values('%s','%s','%s','%s',%d,%d,%d,%d,%f,%f,%f,%f,'%s')";
+		const char* format = "insert into g_raster (name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid) values('%s','%s','%s','%s',%d,%d,%d,%d,%f,%f,%f,%f,'%s')";
 		g_snprintf(sql, AUGE_SQL_MAX, format,	name,
 												alias,
 												fmt,
@@ -651,7 +651,7 @@ namespace auge
 			"	CONSTRAINT g_raster_catalog_pk PRIMARY KEY (gid)," \
 			"	CONSTRAINT g_raster_catalog_name_uk UNIQUE (name, format)" \
 			")";
-		g_sprintf(sql, format, g_raster_catalog_table.c_str());
+		g_sprintf(sql, format, g_raster_table.c_str());
 		return m_pgConnection.ExecuteSQL(sql);
 	}
 

@@ -36,6 +36,7 @@ libgsims_la_SOURCES=\
 		    RegisterLayerHandler.cpp \
 		    RegisterLayerRequest.cpp \
 		    UnRegisterLayerRequest.cpp \
+   		    RegisterLayerResponse.cpp \
     		    UnRegisterLayerHandler.cpp \
 		    RemoveMapHandler.cpp \
 		    RemoveMapRequest.cpp \

@@ -113,6 +113,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetSymbolResponse.cpp" />
     <ClCompile Include="..\src\RegisterLayerHandler.cpp" />
     <ClCompile Include="..\src\RegisterLayerRequest.cpp" />
+    <ClCompile Include="..\src\RegisterLayerResponse.cpp" />
     <ClCompile Include="..\src\RegisterMapHandler.cpp" />
     <ClCompile Include="..\src\RegisterMapRequest.cpp" />
     <ClCompile Include="..\src\RemoveMapHandler.cpp" />
@@ -165,6 +166,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetSymbolResponse.h" />
     <ClInclude Include="..\include\RegisterLayerHandler.h" />
     <ClInclude Include="..\include\RegisterLayerRequest.h" />
+    <ClInclude Include="..\include\RegisterLayerResponse.h" />
     <ClInclude Include="..\include\RegisterMapHandler.h" />
     <ClInclude Include="..\include\RegisterMapRequest.h" />
     <ClInclude Include="..\include\RemoveMapHandler.h" />

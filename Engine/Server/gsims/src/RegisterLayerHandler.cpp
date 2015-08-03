@@ -1,5 +1,6 @@
 #include "RegisterLayerHandler.h"
 #include "RegisterLayerRequest.h"
+#include "RegisterLayerResponse.h"
 #include "AugeService.h"
 #include "AugeData.h"
 #include "AugeCarto.h"
@@ -180,9 +181,14 @@ namespace auge
 		pMap->AddLayer(pLayer);
 		pCartoManager->UpdateMapLayers(pMap);
 
-		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
-		pSusResponse->SetRequest(pRequest->GetRequest());
-		return pSusResponse;
+		//WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
+		//pSusResponse->SetRequest(pRequest->GetRequest());
+		//return pSusResponse;
+
+		RegisterLayerResponse* pResponse = new RegisterLayerResponse(pRequest);
+		pResponse->SetLayer(pLayer);
+		pLayer->AddRef();
+		return pResponse;
 	}
 
 	WebResponse* RegisterLayerHandler::RegisterQuadServerLayer(RegisterLayerRequest* pRequest, Map* pMap, User* pUser)
@@ -218,8 +224,13 @@ namespace auge
 		}
 		pMap->AddLayer(pLayer);
 
-		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
-		pSusResponse->SetRequest(pRequest->GetRequest());
-		return pSusResponse;
+		//WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
+		//pSusResponse->SetRequest(pRequest->GetRequest());
+		//return pSusResponse;
+
+		RegisterLayerResponse* pResponse = new RegisterLayerResponse(pRequest);
+		pResponse->SetLayer(pLayer);
+		pLayer->AddRef();
+		return pResponse;
 	}
 }
