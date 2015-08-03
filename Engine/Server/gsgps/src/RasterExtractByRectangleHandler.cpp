@@ -90,10 +90,12 @@ namespace auge
 	{
 		RasterExtractByRectangleRequest* pRequest = static_cast<RasterExtractByRectangleRequest*>(pWebRequest);
 
-		const char* input_source_name = pRequest->GetInputDataSource();
-		const char* input_raster_name	  = pRequest->GetInputRaster();
-		const char* output_source_name= pRequest->GetOutputDataSource();
-		const char* output_raster_name  = pRequest->GetOutputRaster();
+		const char* input_source_name  = pRequest->GetInputDataSource();
+		const char* input_raster_name  = pRequest->GetInputRaster();
+		const char* input_raster_path  = pRequest->GetInputPath();
+		const char* output_source_name = pRequest->GetOutputDataSource();
+		const char* output_raster_name = pRequest->GetOutputRaster();
+		const char* output_raster_path = pRequest->GetOutputPath();
 		GEnvelope& rect = pRequest->GetRectangle();
 		
 		if(!rect.IsValid())

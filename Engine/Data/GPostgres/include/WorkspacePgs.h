@@ -74,7 +74,7 @@ namespace auge
 		std::string		m_name;
 		std::string		m_schema;
 
-		std::string		m_repository;
+		std::string		m_raster_repository;
 		std::string		g_raster_catalog_table;
 		std::string		g_feature_catalog_table;
 	};

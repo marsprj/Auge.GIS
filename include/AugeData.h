@@ -26,6 +26,7 @@ namespace auge
 	class Workspace;
 	class DataSet;
 	class EnumDataSet;
+	class EnumRaster;
 	class GConnection;
 	class GResultSet;
 	class ConnectionManager;
@@ -37,6 +38,14 @@ namespace auge
 		augeDataSetRaster,
 		augeDataSetTile
 	}augeDataSetType;
+
+	typedef enum augeWorkspaceType
+	{
+		augeWorkspaceAttribute	= 0,
+		augeWorkspaceFeature,
+		augeWorkspaceRaster,
+		augeWorkspaceTile
+	}augeWorkspaceType;
 
 	class GConnection : public GObject
 	{
@@ -205,15 +214,15 @@ namespace auge
 		virtual ~ConnectionManager(){}
 	public:
 		virtual g_int				GetCount() = 0;
-		virtual Workspace*		GetWorkspace(g_uint i) = 0;
-		virtual Workspace*		GetWorkspace(const char* name) = 0;
-		virtual Workspace*		GetWorkspaceById(g_uint id) = 0;
-		virtual EnumWorkspace*	GetWorkspaces() = 0;
+		virtual Workspace*			GetWorkspace(g_uint i) = 0;
+		virtual Workspace*			GetWorkspace(const char* name) = 0;
+		virtual Workspace*			GetWorkspaceById(g_uint id) = 0;
+		virtual EnumWorkspace*		GetWorkspaces() = 0;
 
-		virtual Workspace*		NewWorkspace(const char* name) = 0;
+		virtual Workspace*			NewWorkspace(const char* name) = 0;
 
-		virtual RESULTCODE		Register(const char* name, const char* engine, const char* constr) = 0;
-		virtual RESULTCODE		Unregister(const char* name) = 0;
+		virtual RESULTCODE			Register(const char* name, const char* engine, const char* constr) = 0;
+		virtual RESULTCODE			Unregister(const char* name) = 0;
 		//virtual RESULTCODE		Update(const char* name, const char* engine, const char* constr) = 0;
 		//virtual RESULTCODE		Update(g_uint gid, const char* name, const char* engine, const char* constr) = 0;
 
@@ -239,9 +248,7 @@ namespace auge
 		//------------------------------------------------------------------------
 		// DataSource User Methods End
 		//------------------------------------------------------------------------
-
-
-
+		
 		virtual RESULTCODE			Initialize(GConnection* pConnection) = 0;
 		virtual void				Unload() = 0;
 	};
@@ -269,15 +276,18 @@ namespace auge
 		RasterDataset(){}
 		virtual ~RasterDataset(){}
 	public:
-		virtual const char*		GetName() = 0;
-		virtual const char*		GetAlias() = 0;
-		virtual g_uint			GetWidth() = 0;
-		virtual g_uint			GetHeight() = 0;
-		virtual g_uint			GetBandCount() = 0;
-		virtual GEnvelope&		GetExtent() = 0;
-		virtual g_int			GetSRID() = 0;
-		virtual const char*		GetFormat() = 0;
-		virtual const char*		GetPath() = 0;
+		//virtual const char*		GetName() = 0;
+		//virtual const char*		GetAlias() = 0;
+		//virtual g_uint			GetWidth() = 0;
+		//virtual g_uint			GetHeight() = 0;
+		//virtual g_uint			GetBandCount() = 0;
+		//virtual GEnvelope&		GetExtent() = 0;
+		//virtual g_int				GetSRID() = 0;
+		//virtual const char*		GetFormat() = 0;
+		//virtual const char*		GetPath() = 0;
+
+		//virtual EnumRaster*		GetRasters() = 0;
+		//virtual Raster*			GetRaster(const char* name) = 0;
 
 		virtual Raster*			GetRaster() = 0;
 	};

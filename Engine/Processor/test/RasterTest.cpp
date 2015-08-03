@@ -56,9 +56,11 @@ void RasterTest::ExtractByRectangle()
 
 	pProcessor->SetInputDataSource("rsdb");
 	pProcessor->SetInputRaster("Koala.png");
+	pProcessor->SetInputPath("/");
 
 	pProcessor->SetOutputDataSource("rsdb");
 	pProcessor->SetOutputRaster("Koala_clipped.png");
+	pProcessor->SetOutputPath("/");
 
 	auge::GEnvelope extent(100,100,500,500);
 	pProcessor->SetInputRectangle(extent);

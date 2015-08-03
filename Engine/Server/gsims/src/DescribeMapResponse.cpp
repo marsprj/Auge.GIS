@@ -419,6 +419,7 @@ namespace auge
 
 	void DescribeMapResponse::AddLayerNode(XElement* pxLayers, Layer* pLayer)
 	{
+
 		XElement *pxNode = NULL;
 		XElement *pxLayer = NULL;
 

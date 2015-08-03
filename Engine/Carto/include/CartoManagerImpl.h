@@ -21,7 +21,7 @@ namespace auge
 		virtual	Map*			GetMap(const char* name);
 		virtual EnumMap*		GetMaps();
 		virtual Map*			LoadMap(g_uint mid);
-		virtual Map*			LoadMap(const char* name);
+		//virtual Map*			LoadMap(const char* name);
 
 		virtual Map*			CreateMap(const char* name);
 		virtual Map*			CreateMap(const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax);
