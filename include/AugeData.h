@@ -302,12 +302,16 @@ namespace auge
 
 		virtual const char*		GetRepository() = 0;
 
-		virtual EnumDataSet*	GetRasterDatasets() = 0;
+		virtual EnumDataSet*	GetRasterDatasets() = 0;		
+		virtual RasterDataset*	CreateRasterDataset(const char* name) = 0;
 		virtual RasterDataset*	OpenRasterDataset(const char* name) = 0;
-		//virtual RESULTCODE		RemoverRasterDataset(const char* name) = 0;
+		virtual RESULTCODE		RemoverRasterDataset(const char* name) = 0;		
 
-		//virtual	Raster*			OpenRaster(const char* name) = 0;
+		virtual EnumRaster*		GetRasters() = 0;
 		virtual RESULTCODE		AddRaster(Raster* pRaster) = 0;
+		virtual	Raster*			OpenRaster(const char* name) = 0;
+		virtual RESULTCODE		RemoveRaster(const char* name) = 0;
+		// @deprecated
 		virtual RESULTCODE		RemoveRaster(const char* name, const char* path) = 0;
 		//virtual RESULTCODE		RemoveRaster(g_uint id) = 0;
 	};

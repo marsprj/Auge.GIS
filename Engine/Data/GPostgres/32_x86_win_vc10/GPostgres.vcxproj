@@ -92,6 +92,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\AugeData.h" />
     <ClInclude Include="..\..\..\..\include\AugeFeature.h" />
     <ClInclude Include="..\..\..\..\include\AugeRaster.h" />
     <ClInclude Include="..\include\AttributeDataSetPgs.h" />

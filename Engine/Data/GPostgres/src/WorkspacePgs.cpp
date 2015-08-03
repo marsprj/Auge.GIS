@@ -13,6 +13,7 @@ namespace auge
 	{
 		g_feature_catalog_table = "g_feature_catalog";
 		g_raster_table  = "g_raster";
+		g_raster_dataset_table = "g_raster_dataset";
 
 #ifdef WIN32
 		m_raster_repository = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload";
@@ -83,12 +84,17 @@ namespace auge
 		{
 			CreateFeatureCatalogTable();
 		}
+		
+		if(!m_pgConnection.HasTable(g_raster_dataset_table.c_str()))
+		{
+			CreateRasterDatasetTable();
+		}
 
 		if(!m_pgConnection.HasTable(g_raster_table.c_str()))
 		{
-			CreateRasterCatalogTable();
+			CreateRasterTable();
 		}
-	
+
 		return rc;
 	}
 
@@ -480,98 +486,132 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	// Raster Begin
 	//////////////////////////////////////////////////////////////////////////
-
 	const char*	WorkspacePgs::GetRepository()
 	{
 		return m_raster_repository.c_str();
 	}
 
+	//EnumDataSet* WorkspacePgs::GetRasterDatasets()
+	//{
+	//	char sql[AUGE_SQL_MAX] = {0};
+	//	const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid from %s";
+	//	g_snprintf(sql, AUGE_SQL_MAX, format,	g_raster_table.c_str());
+
+	//	GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
+	//	if(pResult==NULL)
+	//	{
+	//		return NULL;
+	//	}
+
+	//	EnumDataSetImpl* pEnumDataset = new EnumDataSetImpl();
+	//	g_uint count = pResult->GetCount();
+	//	for(g_uint i=0; i<count; i++)
+	//	{
+	//		g_uint		gid	 = pResult->GetInt(i,0);
+	//		const char* name = pResult->GetString(i,1);
+	//		const char* alias= pResult->GetString(i,2);
+	//		const char* fmt	 = pResult->GetString(i,3);
+	//		const char* path = pResult->GetString(i,4);
+	//		g_uint		nband= pResult->GetInt(i,5);
+	//		g_int		srid = pResult->GetInt(i,6);
+	//		g_uint		width= pResult->GetInt(i,7);
+	//		g_uint		height=pResult->GetInt(i,8);
+	//		double		xmin = pResult->GetDouble(i,9);
+	//		double		ymin = pResult->GetDouble(i,10);
+	//		double		xmax = pResult->GetDouble(i,11);
+	//		double		ymax = pResult->GetDouble(i,12);
+	//		const char* uuid = pResult->GetString(i,13);
+
+	//		RasterDatasetImpl* pDataset = new RasterDatasetImpl();
+	//		pDataset->Create(this,gid, name, alias, fmt, path, nband, srid, width, height, xmin, ymin, xmax, ymax, uuid);
+
+	//		pEnumDataset->Add(pDataset);
+	//	}
+
+	//	pResult->Release();
+
+	//	return pEnumDataset;
+	//}
+
+	//RasterDataset* WorkspacePgs::OpenRasterDataset(const char* name)
+	//{
+	//	if(name==NULL)
+	//	{
+	//		return NULL;
+	//	}
+
+	//	char sql[AUGE_SQL_MAX] = {0};
+	//	const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid from %s where name='%s'";
+	//	g_snprintf(sql, AUGE_SQL_MAX, format,	g_raster_table.c_str(), name);
+
+	//	GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
+	//	if(pResult==NULL)
+	//	{
+	//		return NULL;
+	//	}
+
+	//	if(pResult->GetCount()==0)
+	//	{
+	//		pResult->Release();
+	//		return NULL;
+	//	}
+
+	//	g_uint		gid	 = pResult->GetInt(0,0);
+	//	//const char* name = pResult->GetString(0,1);
+	//	const char* alias= pResult->GetString(0,2);
+	//	const char* fmt	 = pResult->GetString(0,3);
+	//	const char* path = pResult->GetString(0,4);
+	//	g_uint		nband= pResult->GetInt(0,5);
+	//	g_int		srid = pResult->GetInt(0,6);
+	//	g_uint		width= pResult->GetInt(0,7);
+	//	g_uint		height=pResult->GetInt(0,8);
+	//	double		xmin = pResult->GetDouble(0,9);
+	//	double		ymin = pResult->GetDouble(0,10);
+	//	double		xmax = pResult->GetDouble(0,11);
+	//	double		ymax = pResult->GetDouble(0,12);
+	//	const char* uuid = pResult->GetString(0,13);
+
+	//	RasterDatasetImpl* pDataset = new RasterDatasetImpl();
+	//	pDataset->Create(this,gid, name, alias, fmt, path, nband, srid, width, height, xmin, ymin, xmax, ymax, uuid);
+
+	//	pResult->Release();
+
+	//	return pDataset;
+	//}
+
 	EnumDataSet* WorkspacePgs::GetRasterDatasets()
 	{
-		char sql[AUGE_SQL_MAX] = {0};
-		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid from %s";
-		g_snprintf(sql, AUGE_SQL_MAX, format,	g_raster_table.c_str());
-
-		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
-		if(pResult==NULL)
-		{
-			return NULL;
-		}
-
-		EnumDataSetImpl* pEnumDataset = new EnumDataSetImpl();
-		g_uint count = pResult->GetCount();
-		for(g_uint i=0; i<count; i++)
-		{
-			g_uint		gid	 = pResult->GetInt(i,0);
-			const char* name = pResult->GetString(i,1);
-			const char* alias= pResult->GetString(i,2);
-			const char* fmt	 = pResult->GetString(i,3);
-			const char* path = pResult->GetString(i,4);
-			g_uint		nband= pResult->GetInt(i,5);
-			g_int		srid = pResult->GetInt(i,6);
-			g_uint		width= pResult->GetInt(i,7);
-			g_uint		height=pResult->GetInt(i,8);
-			double		xmin = pResult->GetDouble(i,9);
-			double		ymin = pResult->GetDouble(i,10);
-			double		xmax = pResult->GetDouble(i,11);
-			double		ymax = pResult->GetDouble(i,12);
-			const char* uuid = pResult->GetString(i,13);
-
-			RasterDatasetImpl* pDataset = new RasterDatasetImpl();
-			pDataset->Create(this,gid, name, alias, fmt, path, nband, srid, width, height, xmin, ymin, xmax, ymax, uuid);
-
-			pEnumDataset->Add(pDataset);
-		}
-
-		pResult->Release();
-
-		return pEnumDataset;
+		return NULL;
 	}
 
+	RasterDataset* WorkspacePgs::CreateRasterDataset(const char* name)
+	{
+		return NULL;
+	}
+	
 	RasterDataset* WorkspacePgs::OpenRasterDataset(const char* name)
 	{
-		if(name==NULL)
-		{
-			return NULL;
-		}
+		return NULL;
+	}
 
-		char sql[AUGE_SQL_MAX] = {0};
-		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid from %s where name='%s'";
-		g_snprintf(sql, AUGE_SQL_MAX, format,	g_raster_table.c_str(), name);
+	RESULTCODE WorkspacePgs::RemoverRasterDataset(const char* name)
+	{
+		return AG_FAILURE;
+	}
 
-		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
-		if(pResult==NULL)
-		{
-			return NULL;
-		}
+	EnumRaster*	WorkspacePgs::GetRasters()
+	{
+		return NULL;
+	}
 
-		if(pResult->GetCount()==0)
-		{
-			pResult->Release();
-			return NULL;
-		}
+	Raster*	WorkspacePgs::OpenRaster(const char* name)
+	{
+		return NULL;
+	}
 
-		g_uint		gid	 = pResult->GetInt(0,0);
-		//const char* name = pResult->GetString(0,1);
-		const char* alias= pResult->GetString(0,2);
-		const char* fmt	 = pResult->GetString(0,3);
-		const char* path = pResult->GetString(0,4);
-		g_uint		nband= pResult->GetInt(0,5);
-		g_int		srid = pResult->GetInt(0,6);
-		g_uint		width= pResult->GetInt(0,7);
-		g_uint		height=pResult->GetInt(0,8);
-		double		xmin = pResult->GetDouble(0,9);
-		double		ymin = pResult->GetDouble(0,10);
-		double		xmax = pResult->GetDouble(0,11);
-		double		ymax = pResult->GetDouble(0,12);
-		const char* uuid = pResult->GetString(0,13);
-
-		RasterDatasetImpl* pDataset = new RasterDatasetImpl();
-		pDataset->Create(this,gid, name, alias, fmt, path, nband, srid, width, height, xmin, ymin, xmax, ymax, uuid);
-
-		pResult->Release();
-
-		return pDataset;
+	RESULTCODE WorkspacePgs::RemoveRaster(const char* name)
+	{
+		return AG_FAILURE;
 	}
 
 	RESULTCODE WorkspacePgs::AddRaster(Raster* pRaster)
@@ -627,8 +667,8 @@ namespace auge
 												uuid);
 		return m_pgConnection.ExecuteSQL(sql);
 	}
-
-	RESULTCODE WorkspacePgs::CreateRasterCatalogTable()
+	
+	RESULTCODE WorkspacePgs::CreateRasterTable()
 	{
 		char sql[AUGE_SQL_MAX];
 		const char* format = "CREATE TABLE %s(" \
@@ -636,6 +676,7 @@ namespace auge
 			"	name character varying(32)," \
 			"	alias character varying(32)," \
 			"	format character varying(8)," \
+			"   dataset integer DEFAULT 0," \
 			"	path character varying(256)," \
 			"	band_count integer," \
 			"	srid integer," \
@@ -652,6 +693,21 @@ namespace auge
 			"	CONSTRAINT g_raster_catalog_name_uk UNIQUE (name, format)" \
 			")";
 		g_sprintf(sql, format, g_raster_table.c_str());
+		return m_pgConnection.ExecuteSQL(sql);
+	}
+
+	RESULTCODE WorkspacePgs::CreateRasterDatasetTable()
+	{
+		char sql[AUGE_SQL_MAX];
+		const char* format = "CREATE TABLE %s(" \
+			"	gid serial NOT NULL," \
+			"	name character varying(32)," \
+			"	alias character varying(32)," \
+			"	format character varying(8),"
+			"	CONSTRAINT g_raster_catalog_pk PRIMARY KEY (gid)," \
+			"	CONSTRAINT g_raster_catalog_name_uk UNIQUE (name)" \
+			")";
+		g_sprintf(sql, format, g_raster_dataset_table.c_str());
 		return m_pgConnection.ExecuteSQL(sql);
 	}
 

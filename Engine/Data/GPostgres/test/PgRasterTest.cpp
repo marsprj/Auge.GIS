@@ -36,6 +36,34 @@ void PgRasterTest::tearDown()
 	printf("tearDown\n");
 }
 
+void PgRasterTest::CreateRasterDataset()
+{
+	const char* name = "ds1";
+	auge::RasterDataset* pDataset = NULL;
+	pDataset = m_pWorkspace->CreateRasterDataset(name);
+	CPPUNIT_ASSERT(pDataset!=NULL);
+	pDataset->Release();
+}
+
+void PgRasterTest::RemoveRasterDataset()
+{
+	const char* name = "ds1";
+	auge::RasterDataset* pDataset = NULL;
+	RESULTCODE rc = m_pWorkspace->RemoverRasterDataset(name);
+	CPPUNIT_ASSERT(rc!=AG_SUCCESS);
+}
+
+void PgRasterTest::RenameRasterDataset()
+{
+
+}
+
+void PgRasterTest::EnumRasterDataset()
+{
+	auge::EnumDataSet* pDatasets = m_pWorkspace->GetRasterDatasets();
+	CPPUNIT_ASSERT(pDatasets!=NULL);
+}
+
 void PgRasterTest::ReadRaster()
 {
 	auge::Raster* pRaster = NULL;

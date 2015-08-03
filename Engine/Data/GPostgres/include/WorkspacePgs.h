@@ -44,14 +44,26 @@ namespace auge
 		virtual FeatureClass*	CreateFeatureClass(const char* name, GFields* pFields);
 		virtual RESULTCODE		RemoveFeatureClass(const char* name);
 
-		// Raster
+		//////////////////////////////////////////////////////////////////////////
+		/*************************************************************************/
+		// Raster Begin
+		/*************************************************************************/
 		//virtual void			SetConnection(GConnection* pConnection);
 		virtual EnumDataSet*	GetRasterDatasets();
+		virtual RasterDataset*	CreateRasterDataset(const char* name);
 		virtual RasterDataset*	OpenRasterDataset(const char* name);
+		virtual RESULTCODE		RemoverRasterDataset(const char* name);	
+
+		virtual EnumRaster*		GetRasters();
 		virtual RESULTCODE		AddRaster(Raster* pRaster);
+		virtual	Raster*			OpenRaster(const char* name);
+		virtual RESULTCODE		RemoveRaster(const char* name);
 		virtual RESULTCODE		RemoveRaster(const char* name, const char* path);
 
 		virtual const char*		GetRepository();
+		/*************************************************************************/
+		// Raster End
+		/*************************************************************************/
 
 	private:
 		// Table
@@ -68,7 +80,8 @@ namespace auge
 		// Raster
 
 		RESULTCODE				CreateFeatureCatalogTable();
-		RESULTCODE				CreateRasterCatalogTable();
+		RESULTCODE				CreateRasterTable();
+		RESULTCODE				CreateRasterDatasetTable();
 	private:
 		ConnectionPgs	m_pgConnection;
 		std::string		m_name;
@@ -76,6 +89,7 @@ namespace auge
 
 		std::string		m_raster_repository;
 		std::string		g_raster_table;
+		std::string		g_raster_dataset_table;
 		std::string		g_feature_catalog_table;
 	};
 }
