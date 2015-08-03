@@ -68,6 +68,8 @@ namespace auge
 			pxElement->SetChildText(datasetName, true);
 			pxElement = pxDataSet->AddChild("Type");
 			pxElement->SetChildText(augeGetDataSetType(pDataSet->GetType()));
+			augeGetLoggerInstance()->Fatal(pDataSet->GetName(), __FILE__, __LINE__);
+			
 			
 			switch(pDataSet->GetType())
 			{
@@ -134,6 +136,7 @@ namespace auge
 		pxElement->SetChildText(pDataSet->GetName());
 		pxElement = pxDataSet->AddChild("Type");
 		pxElement->SetChildText(augeGetDataSetType(pDataSet->GetType()));
+		augeGetLoggerInstance()->Fatal(pDataSet->GetName(), __FILE__, __LINE__);
 
 		switch(pDataSet->GetType())
 		{
