@@ -16,4 +16,4 @@ pgstest_LDADD=	-lgcore \
 		-lgfilter \
 		-lcppunit
 
-pgstest_SOURCES=main.cpp OgcFilterTest.cpp PgsTest.cpp Transfer.cpp
+pgstest_SOURCES=main.cpp OgcFilterTest.cpp PgsTest.cpp Transfer.cpp PgRasterTest.cpp

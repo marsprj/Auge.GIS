@@ -44,6 +44,18 @@ namespace auge
 		}
 	}
 
+	void RasterExtractByRectangleProcessorImpl::SetInputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_in_raster_path.clear();
+		}
+		else
+		{
+			m_in_raster_path = rasterPath;
+		}
+	}
+
 	void RasterExtractByRectangleProcessorImpl::SetOutputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
@@ -55,7 +67,7 @@ namespace auge
 			m_out_source_name = sourceName;
 		}
 	}
-
+	
 	void RasterExtractByRectangleProcessorImpl::SetOutputRaster(const char* rasterName)
 	{
 		if(rasterName==NULL)
@@ -65,6 +77,18 @@ namespace auge
 		else
 		{
 			m_out_raster_name = rasterName;
+		}
+	}
+
+	void RasterExtractByRectangleProcessorImpl::SetOutputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_out_raster_path.clear();
+		}
+		else
+		{
+			m_out_raster_path = rasterPath;
 		}
 	}
 
@@ -78,6 +102,11 @@ namespace auge
 		return m_in_raster_name.empty() ? NULL : m_in_raster_name.c_str();
 	}
 
+	const char* RasterExtractByRectangleProcessorImpl::GetInputRasterPath()
+	{
+		return m_in_raster_path.empty() ? NULL : m_in_raster_path.c_str();
+	}
+
 	const char*	RasterExtractByRectangleProcessorImpl::GetOutputDataSource()
 	{
 		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
@@ -88,14 +117,22 @@ namespace auge
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
 	}
 
+	const char* RasterExtractByRectangleProcessorImpl::GetOutputRasterPath()
+	{
+		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
+	}
+
 	RESULTCODE RasterExtractByRectangleProcessorImpl::Execute()
 	{
 		GEnvelope&  inRect = m_rect;
 		const char* inSourceName = GetInputDataSource();
 		const char* inRasterName = GetInputRaster();
+		const char* inRasterPath = GetInputRasterPath();
+		
 		const char* outSourceName = GetOutputDataSource();
 		const char* outRasterName = GetOutputRaster();
-
+		const char* outRasterPath = GetOutputRasterPath();
+		
 		Workspace* pWorkspace = NULL;
 		RasterWorkspace* pinRasterWorkspace = NULL;
 		RasterWorkspace* poutRasterWorkspace = NULL;

@@ -339,4 +339,31 @@ namespace auge
 		}
 		m_user_root = user_path;		
 	}
+
+	 bool WebContextImpl::IsIE()
+	 {
+		 const char* http_user_agent = getenv("HTTP_USER_AGENT"); 
+		 if(http_user_agent==NULL)
+		 {
+
+#ifdef WIN32
+			 return true;
+#else
+			 return false;
+#endif
+		 }
+		 const char* ptr = strstr(http_user_agent, "MSIE");
+		 return (ptr!=NULL);
+	 }
+
+	 const char* WebContextImpl::ParameterEncoding(const char* value)
+	 {
+		 WebContext* pWebContext = augeGetWebContextInstance();
+		 if(IsIE())
+		 {
+			 return value;
+		 }
+
+		 return auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, value, strlen(value));
+	 }
 }

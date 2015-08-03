@@ -1,4 +1,5 @@
 #include "WFeatureRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -70,7 +71,8 @@ namespace auge
 		}
 		else
 		{
-			m_map_name = mapName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_map_name = pWebContext->ParameterEncoding(mapName);
 		}
 	}
 
@@ -79,15 +81,16 @@ namespace auge
 		return m_source_name.c_str();
 	}
 
-	void WFeatureRequest::SetSourceName(const char* sourcName)
+	void WFeatureRequest::SetSourceName(const char* sourceName)
 	{
-		if((sourcName==NULL)||(strlen(sourcName)==0))
+		if((sourceName==NULL)||(strlen(sourceName)==0))
 		{
 			m_source_name.clear();
 		}
 		else
 		{
-			m_source_name = sourcName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_source_name = pWebContext->ParameterEncoding(sourceName);
 		}
 	}
 

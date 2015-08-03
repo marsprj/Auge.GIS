@@ -11,7 +11,7 @@ namespace auge
 	GetFeatureRequest::GetFeatureRequest()
 	{
 		m_version = "1.1.0";
-		m_mime_type = "text/xml";
+		m_mime_type = "text/xml"; 
 		m_output_format = AUGE_WFS_OUTPUT_FORMAT_GML2;
 		m_max_features = -1;
 		m_offset = 0;
@@ -63,13 +63,28 @@ namespace auge
 
 	void GetFeatureRequest::SetTypeName(const char* value)
 	{
+		//if(value==NULL)
+		//{
+		//	return;
+		//}
+		//const char* sep = strstr(value,":");
+		//m_full_name = value;
+		//m_type_name = sep==NULL ? value : sep+1;
+
 		if(value==NULL)
 		{
-			return;
+			m_type_name.clear();
 		}
-		const char* sep = strstr(value,":");
-		m_full_name = value;
-		m_type_name = sep==NULL ? value : sep+1;
+		else
+		{
+			const char* sep = strstr(value,":");			
+			const char* typeName = (sep==NULL ? value : sep+1);
+
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_full_name = pWebContext->ParameterEncoding(value);
+			m_type_name = pWebContext->ParameterEncoding(typeName);
+
+		}
 	}
 
 	void GetFeatureRequest::SetEncoding(const char* encoding)

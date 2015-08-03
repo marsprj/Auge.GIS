@@ -29,9 +29,12 @@ namespace auge
 
 		const char*	GetInputDataSource();
 		const char*	GetInputRaster();
+		const char* GetInputPath();
 
 		const char*	GetOutputDataSource();
 		const char*	GetOutputRaster();
+		const char* GetOutputPath();
+
 		GEnvelope&	GetRectangle();
 				
 	public:
@@ -50,9 +53,11 @@ namespace auge
 
 		void		SetInputDataSource(const char* sourceName);
 		void		SetInputRaster(const char* rasterName);
+		void		SetInputPath(const char* rasterPath);
 
 		void		SetOutputDataSource(const char* sourceName);
 		void		SetOutputRaster(const char* rasterName);
+		void		SetOutputPath(const char* rasterPath);
 		
 		void		Info();
 
@@ -70,9 +75,11 @@ namespace auge
 
 		std::string	m_in_source_name;
 		std::string	m_in_raster_name;
+		std::string m_in_raster_path;
 
 		std::string	m_out_source_name;
 		std::string	m_out_raster_name;
+		std::string m_out_raster_path;
 		//////////////////////////////////////////////////////////////////////////
 
 		XDocument	*m_pxDoc;

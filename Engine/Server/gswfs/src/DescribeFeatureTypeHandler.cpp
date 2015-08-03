@@ -465,7 +465,7 @@ namespace auge
 		// schema-->complexType
 		g_sprintf(str,"%sType", typeName);
 		XElement* pxComplexType = pxRoot->AddChild("complexType", "xsd");
-		pxComplexType->SetAttribute("name", str, NULL);
+		pxComplexType->SetAttribute("name", str, NULL, true);
 		// schema-->complexType-->complexContent
 		XElement* pxComplexContent = pxComplexType->AddChild("complexContent","xsd");
 		// schema-->complexType-->complexContent-->extentsion
@@ -509,8 +509,8 @@ namespace auge
 		// schema-->element
 		pxElement = pxRoot->AddChild("element", "xsd");
 		g_sprintf(str, "%sType", typeName);
-		pxElement->SetAttribute("type",str, NULL);
-		pxElement->SetAttribute("name",typeName, NULL);
+		pxElement->SetAttribute("type",str, NULL, true);
+		pxElement->SetAttribute("name",typeName, NULL, true);
 		pxElement->SetAttribute("substitutionGroup","gml:_Feature", NULL);
 
 		pxDoc->Save(cache_file, pWebContext->GetResponseEncoding(), 1);

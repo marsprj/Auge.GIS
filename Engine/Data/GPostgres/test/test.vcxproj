@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OgcFilterTest.cpp" />
+    <ClCompile Include="PgRasterTest.cpp" />
     <ClCompile Include="PgsTest.cpp" />
     <ClCompile Include="Transfer.cpp" />
   </ItemGroup>

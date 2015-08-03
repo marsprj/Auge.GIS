@@ -83,6 +83,9 @@ namespace auge
 
 		virtual const char*		GetResponseEncoding() = 0;
 
+		virtual bool			IsIE() = 0;
+		virtual	const char*		ParameterEncoding(const char* value) = 0;
+
 	public:
 		virtual GConnection*	GetConnection() = 0;
 

@@ -32,6 +32,7 @@ namespace auge
 		augePixelDouble		= 7
 	}augePixelType;
 
+
 	class Raster : public GObject
 	{
 	protected:

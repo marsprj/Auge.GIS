@@ -103,6 +103,9 @@ typedef unsigned long int  g_uint64;
 #define AUGE_DEFAULT_ENCODING	"GBK"
 #define AUGE_DEFAULT_SRID		4326
 
+#define AUGE_ENCODING_GBK	"GBK"
+#define AUGE_ENCODING_UTF8	"UTF-8"
+
 #ifndef g_stricmp
 #	ifdef WIN32
 #		define g_stricmp	_stricmp

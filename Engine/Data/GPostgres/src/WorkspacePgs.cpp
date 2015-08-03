@@ -15,9 +15,9 @@ namespace auge
 		g_raster_catalog_table  = "g_raster_catalog";
 
 #ifdef WIN32
-		m_repository = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload";
+		m_raster_repository = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload";
 #else
-		m_repository = "/opt/auge/upload";
+		m_raster_repository = "/opt/auge/upload";
 #endif
 	}
 
@@ -46,18 +46,18 @@ namespace auge
 	
 	RESULTCODE WorkspacePgs::SetConnectionString(const char* conn_string)
 	{
-		//if(conn_string==NULL)
-		//{
-		//	return AG_FAILURE;
-		//}
+		if(conn_string==NULL)
+		{
+			return AG_FAILURE;
+		}
 
-		//GPropertySet props;
-		//props.Parse(conn_string);
-		//const char* repository = props.GetValue(AUGE_DB_REPOSITORY);
-		//if(repository==NULL)
-		//	m_repository.clear();
-		//else
-		//	m_repository = repository;
+		GPropertySet props;
+		props.Parse(conn_string);
+		const char* repository = props.GetValue(AUGE_DB_REPOSITORY);
+		if(repository==NULL)
+			m_raster_repository.clear();
+		else
+			m_raster_repository = repository;
 
 		return m_pgConnection.SetConnectionString(conn_string);
 	}
@@ -483,7 +483,7 @@ namespace auge
 
 	const char*	WorkspacePgs::GetRepository()
 	{
-		return m_repository.c_str();
+		return m_raster_repository.c_str();
 	}
 
 	EnumDataSet* WorkspacePgs::GetRasterDatasets()

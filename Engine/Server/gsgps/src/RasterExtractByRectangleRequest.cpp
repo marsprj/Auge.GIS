@@ -231,6 +231,25 @@ namespace auge
 		}
 	}
 
+	void RasterExtractByRectangleRequest::SetInputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_in_raster_path = "/";
+		}
+		else
+		{
+			if(strlen(rasterPath)==0)
+			{
+				m_in_raster_path = "/";
+			}
+			else
+			{
+				m_in_raster_path = rasterPath;
+			}
+		}
+	}
+
 	void RasterExtractByRectangleRequest::SetOutputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
@@ -255,6 +274,25 @@ namespace auge
 		}
 	}
 
+	void RasterExtractByRectangleRequest::SetOutputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_out_raster_path = "/";
+		}
+		else
+		{
+			if(strlen(rasterPath)==0)
+			{
+				m_out_raster_path = "/";
+			}
+			else
+			{
+				m_out_raster_path = rasterPath;
+			}
+		}
+	}
+
 	GEnvelope& RasterExtractByRectangleRequest::GetRectangle()
 	{
 		return m_rect;
@@ -270,6 +308,11 @@ namespace auge
 		return m_in_raster_name.empty() ? NULL : m_in_raster_name.c_str();
 	}
 
+	const char* RasterExtractByRectangleRequest::GetInputPath()
+	{
+		return m_in_raster_path.empty() ? NULL : m_in_raster_path.c_str();
+	}
+
 	const char*	RasterExtractByRectangleRequest::GetOutputDataSource()
 	{
 		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
@@ -278,6 +321,11 @@ namespace auge
 	const char*	RasterExtractByRectangleRequest::GetOutputRaster()
 	{
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
+	}
+
+	const char* RasterExtractByRectangleRequest::GetOutputPath()
+	{
+		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
 	}
 
 	void RasterExtractByRectangleRequest::SetOutputFormat(const char* format)

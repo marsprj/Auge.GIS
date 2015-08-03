@@ -145,9 +145,11 @@ namespace auge
 
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
 
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
 	};
 
 	class RasterStretchProcessor : public GProcessor

@@ -1,4 +1,5 @@
 #include "DescribeFeatureTypeRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -46,11 +47,18 @@ namespace auge
 	{
 		if(value==NULL)
 		{
-			return;
+			m_type_name.clear();
 		}
-		const char* sep = strstr(value,":");
-		m_full_name = value;
-		m_type_name = sep==NULL ? value : sep+1;
+		else
+		{
+			const char* sep = strstr(value,":");			
+			const char* typeName = (sep==NULL ? value : sep+1);
+
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_full_name = pWebContext->ParameterEncoding(value);
+			m_type_name = pWebContext->ParameterEncoding(typeName);
+			
+		}
 	}
 	
 	//const char*	DescribeFeatureTypeRequest::GetMimeType()

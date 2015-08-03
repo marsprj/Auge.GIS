@@ -1,4 +1,5 @@
 #include "GetDataSetRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -63,7 +64,9 @@ namespace auge
 		}
 		else
 		{
-			m_source_name = name;
+			//m_source_name = name;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_source_name = pWebContext->ParameterEncoding(name);
 		}
 
 	}
@@ -89,7 +92,9 @@ namespace auge
 		}
 		else
 		{
-			m_dataset_name = name;
+			//m_dataset_name = name;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_dataset_name = pWebContext->ParameterEncoding(name);
 		}
 
 	}
