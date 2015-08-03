@@ -83,10 +83,13 @@ namespace auge
 		char str[AUGE_NAME_MAX];
 		const char* lname = pLayer->GetName();
 		//XElement* pxRoot = pxLayer->AddChild("Layer", NULL);	
-		pxRoot->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
+		//pxRoot->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
+		//g_sprintf(str,"%d",pLayer->GetID());
+		//pxRoot->SetAttribute("id", str,NULL);
+		XElement* pxNode = pxRoot->AddChild("ID",NULL);
 		g_sprintf(str,"%d",pLayer->GetID());
-		pxRoot->SetAttribute("id", str,NULL);
-		XElement* pxNode = pxRoot->AddChild("Name",NULL);
+		pxNode->SetChildText(str);
+		pxNode = pxRoot->AddChild("Name",NULL);
 		pxNode->SetChildText(lname);
 		pxNode = pxRoot->AddChild("Title",NULL);
 		pxNode->SetChildText(lname);
