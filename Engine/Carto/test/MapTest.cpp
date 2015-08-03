@@ -99,7 +99,7 @@ void MapTest::DrawMap()
 	pCanvas->DrawBackground(bgColor);
 
 	auge::Map* pMap = NULL;
-	pMap = pCartoManager->LoadMap("world");
+	pMap = pCartoManager->LoadMap(2, "world");
 
 	pCanvas->SetViewer(pMap->GetViewer());
 	pCanvas->Draw(pMap);
@@ -225,7 +225,7 @@ void MapTest::Draw_Map_Point_Label()
 	pCanvas->DrawBackground(bgColor);
 
 	auge::Map* pMap = NULL;
-	pMap = pCartoManager->LoadMap("city_label");
+	pMap = pCartoManager->LoadMap(2, "city_label");
 
 	pCanvas->Draw(pMap);
 	//pCanvas->Save("g:\\temp\\map\\map.png");
@@ -599,7 +599,7 @@ void MapTest::CreateLayer()
 	pCartoManager->Initialize(m_pConnection);
 
 	auge::Map* pMap = NULL;
-	pMap = pCartoManager->LoadMap("world");
+	pMap = pCartoManager->LoadMap(2, "world");
 
 	auge::Layer *pLayer = NULL;
 	pLayer = pCartoManager->CreateLayer("cities",auge::augeLayerFeature, "cities", pMap->GetID(), pWorkspace->GetID(),1);
@@ -921,7 +921,7 @@ void MapTest::AddQuadServerLayer()
 
 	auge::CartoManager* pCartoManager = NULL;
 	pCartoManager = auge::augeGetCartoManagerInstance();
-	auge::Map* pMap = pCartoManager->LoadMap("world");
+	auge::Map* pMap = pCartoManager->LoadMap(2, "world");
 
 	pCartoManager->CreateWebLayer(name, auge::augeLayerQuadServer, url, pMap->GetID());
 
