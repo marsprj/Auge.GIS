@@ -43,8 +43,24 @@ void PgRasterTest::CreateRasterFolder()
 	CPPUNIT_ASSERT(pRoot!=NULL);
 
 	const char* name = "ds1";
-	auge::RasterFolder* pFolder = pRoot->CreateFolder(name);
-	CPPUNIT_ASSERT(pFolder!=NULL);
+	//auge::RasterFolder* pFolder = pRoot->CreateFolder(name);
+	auge::RasterFolder* pFolder = pRoot->GetFolder(name);
+	CPPUNIT_ASSERT(pFolder!=NULL);	
+	pFolder->Release();
+
+	name = "ds2";
+	pFolder = pRoot->CreateFolder(name);
+	CPPUNIT_ASSERT(pFolder!=NULL);	
+
+	auge::RasterFolder* pFolder_2 = pFolder->CreateFolder("ds_1_1");
+	CPPUNIT_ASSERT(pFolder_2!=NULL);	
+	pFolder_2->Release();
+
+	pFolder_2 = pFolder->CreateFolder("ds_1_2");
+	CPPUNIT_ASSERT(pFolder_2!=NULL);	
+	pFolder_2->Release();
+
+
 	pFolder->Release();
 	pRoot->Release();
 }
@@ -66,6 +82,18 @@ void PgRasterTest::EnumRasterFolder()
 {
 	//auge::EnumDataSet* pDatasets = m_pWorkspace->GetRasterDatasets();
 	//CPPUNIT_ASSERT(pDatasets!=NULL);
+	auge::RasterFolder* pRoot = m_pWorkspace->GetRootFolder();
+	auge::EnumRasterFolder* pFolders = pRoot->GetFolders();
+
+	auge::RasterFolder* pFolder = NULL;
+	pFolders->Reset();
+	while((pFolder=pFolders->Next()))
+	{
+		printf("%s\n", pFolder->GetName());
+	}
+
+	pFolders->Release();
+	pRoot->Release();
 }
 
 void PgRasterTest::ReadRaster()

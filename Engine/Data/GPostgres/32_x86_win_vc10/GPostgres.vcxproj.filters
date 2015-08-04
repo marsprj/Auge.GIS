@@ -69,6 +69,12 @@
     <ClInclude Include="..\include\RasterFolderImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\EnumRasterFolderImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\EnumRasterImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DataEngineImpl.cpp">
@@ -114,6 +120,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\RasterFolderImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EnumRasterFolderImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EnumRasterImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

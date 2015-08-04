@@ -17,7 +17,7 @@ namespace auge
 		g_raster_table  = "g_raster";
 		g_raster_folder_table = "g_raster_folder";
 
-		m_raster_root_folder.Create(0, "/", "/", this);
+		m_raster_root_folder.Create(0, "/", "/", "/", this);
 
 //#ifdef WIN32
 //		m_raster_repository = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload";
@@ -711,8 +711,8 @@ namespace auge
 			"	uuid character varying(128)," \
 			"	isfile integer DEFAULT 0," \
 			"	folder integer DEFAULT 0," \
-			"	CONSTRAINT g_raster_catalog_pk PRIMARY KEY (gid)," \
-			"	CONSTRAINT g_raster_catalog_name_uk UNIQUE (name, format)" \
+			"	CONSTRAINT g_raster_pk PRIMARY KEY (gid)," \
+			"	CONSTRAINT g_raster_name_uk UNIQUE (name, format)" \
 			")";
 		g_sprintf(sql, format, g_raster_table.c_str());
 		return m_pgConnection.ExecuteSQL(sql);

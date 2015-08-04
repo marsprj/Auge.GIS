@@ -30,4 +30,5 @@ libGPostgres_la_SOURCES=\
 		AttributeDataSetPgs.cpp \
 		RasterFolderImpl.cpp \
 		EnumRasterFolderImpl.cpp \
-		EnumDataSetImpl.cpp
+		EnumDataSetImpl.cpp \
+		EnumRasterImpl.cpp

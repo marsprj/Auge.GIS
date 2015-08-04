@@ -285,6 +285,7 @@ namespace auge
 	public:
 		virtual const char*			GetName() = 0;
 		virtual EnumRasterFolder*	GetFolders() = 0;
+		virtual RasterFolder*		GetFolder(const char* name) = 0;
 		virtual RasterFolder*		CreateFolder(const char* name) = 0;
 		virtual RESULTCODE			RemoveFolder(const char* name) = 0;
 		virtual RESULTCODE			RenameFolder(const char* name) = 0;
@@ -293,6 +294,30 @@ namespace auge
 		virtual RasterDataset*		GetRasterDataset() = 0;
 
 		virtual void				Release() = 0;
+	};
+
+	class EnumRasterFolder : public GObject
+	{
+	protected:
+		EnumRasterFolder(){}
+		virtual ~EnumRasterFolder(){}
+	public:
+		virtual void			Reset() = 0;
+		virtual RasterFolder*	Next() = 0;
+		virtual bool			Add(RasterFolder* pRasterFolder) = 0;
+		virtual void			Release() = 0;
+	};
+
+	class EnumRaster : public GObject
+	{
+	protected:
+		EnumRaster(){}
+		virtual ~EnumRaster(){}
+	public:
+		virtual void			Reset() = 0;
+		virtual Raster*			Next() = 0;
+		virtual bool			Add(Raster* pRaster) = 0;
+		virtual void			Release() = 0;
 	};
 
 	class RasterDataset : public DataSet
@@ -314,6 +339,10 @@ namespace auge
 		virtual const char*			GetName() = 0;
 		virtual EnumRaster*			GetRasters() = 0;
 		virtual Raster*				GetRaster(const char* name) = 0;
+		virtual RESULTCODE			AddRaster(const char* name, Raster* pRaster) = 0;
+		virtual RESULTCODE			AddRaster(const char* name, const char* raster_path) = 0;
+		virtual RESULTCODE			RemoveRaster(const char* name) = 0;
+		virtual RESULTCODE			RemoveAllRaster() = 0;
 
 		virtual Raster*				GetRaster() = 0;
 	};

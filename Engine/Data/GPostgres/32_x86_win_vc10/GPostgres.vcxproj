@@ -99,6 +99,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\ConnectionPgs.h" />
     <ClInclude Include="..\include\DataEngineImpl.h" />
     <ClInclude Include="..\include\EnumDataSetImpl.h" />
+    <ClInclude Include="..\include\EnumRasterFolderImpl.h" />
+    <ClInclude Include="..\include\EnumRasterImpl.h" />
     <ClInclude Include="..\include\FeatureClassPgs.h" />
     <ClInclude Include="..\include\FeatureCursorPgs.h" />
     <ClInclude Include="..\include\FeatureCursorStatic.h" />
@@ -116,6 +118,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\ConnectionPgs.cpp" />
     <ClCompile Include="..\src\DataEngineImpl.cpp" />
     <ClCompile Include="..\src\EnumDataSetImpl.cpp" />
+    <ClCompile Include="..\src\EnumRasterFolderImpl.cpp" />
+    <ClCompile Include="..\src\EnumRasterImpl.cpp" />
     <ClCompile Include="..\src\FeatureClassPgs.cpp" />
     <ClCompile Include="..\src\FeatureCursorPgs.cpp" />
     <ClCompile Include="..\src\FeatureCursorStatic.cpp" />

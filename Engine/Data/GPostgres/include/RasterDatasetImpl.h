@@ -14,51 +14,64 @@ namespace auge
 		RasterDatasetImpl();
 		virtual ~RasterDatasetImpl();
 	public:
-		virtual const char*		GetName();
-		virtual const char*		GetAlias();
-		virtual augeDataSetType	GetType();
-		virtual g_uint			GetWidth();
-		virtual g_uint			GetHeight();
-		virtual g_uint			GetBandCount();
-		virtual GEnvelope&		GetExtent();
-		virtual g_int			GetSRID();
-		virtual const char*		GetFormat();
-		virtual const char*		GetPath();
+		virtual const char*			GetName();
+		virtual augeDataSetType		GetType();
+
+		virtual EnumRaster*			GetRasters();
+		virtual Raster*				GetRaster(const char* name);
+		virtual RESULTCODE			AddRaster(const char* name, Raster* pRaster);
+		virtual RESULTCODE			AddRaster(const char* name, const char* raster_path);
+		virtual RESULTCODE			RemoveRaster(const char* name);
+		virtual RESULTCODE			RemoveAllRaster();
+
+		//virtual const char*		GetName();
+		//virtual const char*		GetAlias();
+		
+		//virtual g_uint			GetWidth();
+		//virtual g_uint			GetHeight();
+		//virtual g_uint			GetBandCount();
+		//virtual GEnvelope&		GetExtent();
+		//virtual g_int			GetSRID();
+		//virtual const char*		GetFormat();
+		//virtual const char*		GetPath();
 
 		virtual Raster*			GetRaster();
 
 	public:
-		void	Create( WorkspacePgs* pWorkspace,
-						g_uint gid,
-						const char* name,
-						const char* alias,
-						const char* format,
-						const char* path,
-						g_uint		nband,
-						g_int		srid,
-						g_uint		width,
-						g_uint		height,
-						double		xmin,
-						double		ymin,
-						double		xmax,
-						double		ymax,
-						const char* uuid);
+		void	Create(const char* name, RasterFolder* pFolder, WorkspacePgs* pWorkspace);
+		//void	Create( WorkspacePgs* pWorkspace,
+		//				g_uint gid,
+		//				const char* name,
+		//				const char* alias,
+		//				const char* format,
+		//				const char* path,
+		//				g_uint		nband,
+		//				g_int		srid,
+		//				g_uint		width,
+		//				g_uint		height,
+		//				double		xmin,
+		//				double		ymin,
+		//				double		xmax,
+		//				double		ymax,
+		//				const char* uuid);
 
 	public:
-		Raster*	m_pRaster;
+		//Raster*	m_pRaster;
 
-		g_uint		m_nband;
-		g_int		m_srid;
-		g_uint		m_width;
-		g_uint		m_height;
-		std::string	m_name;
-		std::string	m_alias;
-		std::string	m_format;
-		std::string	m_path;
-		std::string	m_uuid;
-		GEnvelope	m_extent;
+		//g_uint		m_nband;
+		//g_int		m_srid;
+		//g_uint		m_width;
+		//g_uint		m_height;
+		//std::string	m_name;
+		//std::string	m_alias;
+		//std::string	m_format;
+		//std::string	m_path;
+		//std::string	m_uuid;
+		//GEnvelope	m_extent;
 
-		WorkspacePgs* m_pWoskspace;
+		std::string		m_name;
+		RasterFolder*	m_pFolder;
+		WorkspacePgs*	m_pWoskspace;
 	};
 }
 
