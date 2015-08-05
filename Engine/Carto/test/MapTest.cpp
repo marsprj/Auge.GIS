@@ -882,7 +882,7 @@ void MapTest::DrawRasterMap()
 	auge::RasterDataset* pRasterDataset = NULL;
 	auge::RasterWorkspace* pRasterWorkspace = NULL;
 	pRasterWorkspace = dynamic_cast<auge::RasterWorkspace*>(pConnManager->GetWorkspace("db2"));
-	pRasterDataset = pRasterWorkspace->OpenRasterDataset(rsName);
+	//pRasterDataset = pRasterWorkspace->OpenRasterDataset(rsName);
 	auge::RasterLayer* pRasterLayer = NULL;
 	pRasterLayer = pCartoFactory->CreateRasterLayer();
 	pRasterLayer->SetName(rsName);

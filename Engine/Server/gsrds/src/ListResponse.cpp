@@ -167,7 +167,7 @@ namespace auge
 #ifdef WIN32
 			fname = auge_encoding_convert("GBK","UTF-8",pRaster->GetName(), strlen(pRaster->GetName()));
 #else
-			fname = pFolder->GetName();
+			fname = pRaster->GetName();
 #endif
 			pxNode->SetAttribute("name",fname,NULL);
 
