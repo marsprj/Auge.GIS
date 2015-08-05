@@ -58,7 +58,61 @@ namespace auge
 
 	Raster*	RasterDatasetImpl::GetRaster(const char* name)
 	{
-		return NULL;
+		if(name==NULL)
+		{
+			return NULL;
+		}
+
+		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid,dataset from %s where name='%s' and dataset=%d";
+
+		char sql[AUGE_SQL_MAX] = {0};
+		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWoskspace->g_raster_table.c_str(), name, m_pFolder->GetID());
+
+		GResultSet* pResult = m_pWoskspace->m_pgConnection.ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+
+		if(pResult->GetCount()==0)
+		{
+			pResult->Release();
+			return NULL;
+		}
+
+		g_uint		gid	 = pResult->GetInt(0,0);
+		//const char* name = pResult->GetString(0,1);
+		const char* alias= pResult->GetString(0,2);
+		const char* fmt	 = pResult->GetString(0,3);
+		//const char* path = pResult->GetString(0,4);
+		g_uint		nband= pResult->GetInt(0,5);
+		g_int		srid = pResult->GetInt(0,6);
+		g_uint		width= pResult->GetInt(0,7);
+		g_uint		height=pResult->GetInt(0,8);
+		double		xmin = pResult->GetDouble(0,9);
+		double		ymin = pResult->GetDouble(0,10);
+		double		xmax = pResult->GetDouble(0,11);
+		double		ymax = pResult->GetDouble(0,12);
+		const char* uuid = pResult->GetString(0,13);
+		g_uint	dataset  = pResult->GetInt(0,14);
+
+		char raster_path[AUGE_PATH_MAX];
+		memset(raster_path, 0, AUGE_PATH_MAX);
+		auge_make_path(raster_path, NULL, m_pFolder->GetLocalPath(), name, NULL);
+
+		Raster* pRaster = NULL;
+		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
+		pRaster = pRasterFactory->CreateRaster(name, alias, format, raster_path, nband, srid, width, height, xmin, ymin, xmax, ymax, uuid);
+
+		pResult->Release();
+		
+		if(pRaster==NULL)
+		{
+			return NULL;
+		}
+
+		pRaster->SetID(gid);
+		return pRaster;
 	}
 
 	//const char*	RasterDatasetImpl::GetAlias()
@@ -126,7 +180,7 @@ namespace auge
 	//	m_pWoskspace = pWorkspace;
 	//}
 
-	void RasterDatasetImpl::Create(const char* name, RasterFolder* pFolder, WorkspacePgs* pWorkspace)
+	void RasterDatasetImpl::Create(const char* name, RasterFolderImpl* pFolder, WorkspacePgs* pWorkspace)
 	{
 		m_name = name;
 		m_pFolder = pFolder;
@@ -140,7 +194,52 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		return AG_SUCCESS;
+		if(HasRaster(name))
+		{
+			char msg[AUGE_MSG_MAX];
+			g_snprintf(msg, AUGE_MSG_MAX, "Raster [%s] has existed", name);
+			augeGetErrorInstance()->SetError(msg);
+			return AG_FAILURE;
+		}
+
+		char raster_path[AUGE_PATH_MAX];
+		memset(raster_path, 0, AUGE_PATH_MAX);
+		auge_make_path(raster_path, NULL, m_pFolder->GetLocalPath(), name,NULL);
+		if(g_access(raster_path, 4))
+		{
+			pRaster->Save(raster_path);
+		}
+
+		char uuid[AUGE_PATH_MAX] = {0};
+		auge_generate_uuid(uuid, AUGE_PATH_MAX);
+
+		//const char* path	= pRaster->GetPath();
+		const char* alias	= pRaster->GetAlias()==NULL ? name : pRaster->GetAlias();
+		const char* fmt		= pRaster->GetFormat();
+
+		g_int		srid	= pRaster->GetSRID();
+		g_uint		width	= pRaster->GetWidth();
+		g_uint		height	= pRaster->GetHeight();
+		g_uint		nband	= pRaster->GetBandCount(); 
+		GEnvelope& extent	= pRaster->GetExtent();
+
+		char sql[AUGE_SQL_MAX] = {0};
+		const char* format = "insert into g_raster (name,alias,format,dataset,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid) values('%s','%s','%s',%d,'%s',%d,%d,%d,%d,%f,%f,%f,%f,'%s')";
+		g_snprintf(sql, AUGE_SQL_MAX, format,	name,
+										alias,
+										fmt,
+										m_pFolder->GetID(),
+										raster_path,//raster_path,
+										nband,
+										srid,
+										width,
+										height,
+										extent.m_xmin,
+										extent.m_ymin,
+										extent.m_xmax,
+										extent.m_ymax,
+										uuid);
+		return m_pWoskspace->m_pgConnection.ExecuteSQL(sql);
 	}
 
 	RESULTCODE RasterDatasetImpl::AddRaster(const char* name, const char* raster_path)
@@ -156,6 +255,29 @@ namespace auge
 	RESULTCODE RasterDatasetImpl::RemoveAllRaster()
 	{
 		return AG_FAILURE;
+	}
+
+	bool RasterDatasetImpl::HasRaster(const char* name)
+	{
+		if(name==NULL)
+		{
+			return false;
+		}
+
+		const char* format = "select count(*) from %s where name='%s' and dataset=%d";
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, format, name, m_pFolder->GetID());
+
+		GResultSet* pResult = m_pWoskspace->m_pgConnection.ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return false;
+		}
+		int count = pResult->GetInt(0, 0);
+		pResult->Release();
+		return (count>0);
 	}
 
 }

@@ -96,6 +96,36 @@ void PgRasterTest::EnumRasterFolder()
 	pRoot->Release();
 }
 
+void PgRasterTest::AddRaster()
+{
+	auge::Raster* pRaster = NULL;
+	auge::RasterIO* io = auge::augeGetRasterIOInstance();	
+
+	auge::RasterFolder* pRoot = m_pWorkspace->GetRootFolder();
+	CPPUNIT_ASSERT(pRoot!=NULL);
+
+	const char* name = "ds1";
+	//auge::RasterFolder* pFolder = pRoot->CreateFolder(name);
+	auge::RasterFolder* pFolder = pRoot->GetFolder(name);
+	CPPUNIT_ASSERT(pFolder!=NULL);	
+
+	auge::RasterDataset* pRasterDataset = pFolder->GetRasterDataset();
+
+	pRaster = io->Read("E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\Desert.jpg");
+	CPPUNIT_ASSERT(pRaster!=NULL);
+	RESULTCODE rc = pRasterDataset->AddRaster("Desert.jpg", pRaster);
+	CPPUNIT_ASSERT(rc==AG_SUCCESS);
+	pRaster->Release();
+
+	pRaster = io->Read("E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\Koala-2.png");
+	CPPUNIT_ASSERT(pRaster!=NULL);
+	rc = pRasterDataset->AddRaster("Koala.png", pRaster);
+	CPPUNIT_ASSERT(rc==AG_SUCCESS);
+
+	pFolder->Release();
+	pRoot->Release();
+}
+
 void PgRasterTest::ReadRaster()
 {
 	auge::Raster* pRaster = NULL;
@@ -133,4 +163,13 @@ void PgRasterTest::ReadRaster()
 	//AUGE_SAFE_RELEASE(pFeatureClass);
 
 	
+}
+
+void PgRasterTest::GetRasterByPath()
+{
+	const char* path = "/s1/Koala.png";
+	auge::Raster* pRaster = m_pWorkspace->GetRaster(path);
+	CPPUNIT_ASSERT(pRaster!=NULL);
+
+	pRaster->Release();
 }

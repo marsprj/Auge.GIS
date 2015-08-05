@@ -27,6 +27,11 @@ namespace auge
 		return m_path.c_str();
 	}
 
+	const char*	RasterFolderImpl::GetLocalPath()
+	{
+		return m_local_path.c_str();
+	}
+
 	EnumRasterFolder* RasterFolderImpl::GetFolders()
 	{
 		const char* format = "select gid,name,alias,path,parent from %s where parent=%d";
@@ -226,7 +231,12 @@ namespace auge
 		m_path = path;
 		m_pWoskspace = pWorkspace;
 
-		//m_raster_dataset.Create()
+		char local_path[AUGE_PATH_MAX];
+		memset(local_path, 0, AUGE_PATH_MAX);
+		auge_make_path(local_path, NULL, m_pWoskspace->GetRepository(), path+1, NULL);
+		m_local_path = local_path;
+
+		m_raster_dataset.Create(name, this, m_pWoskspace);
 	}
 
 	g_int RasterFolderImpl::RegisterFolder(const char* name, const char* alias, const char* path)

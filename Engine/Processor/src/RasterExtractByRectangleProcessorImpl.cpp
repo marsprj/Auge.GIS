@@ -153,7 +153,6 @@ namespace auge
 		}
 		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
-
 		Raster* pinRaster = NULL;
 		RasterDataset* pinRasterDataset = NULL;
 

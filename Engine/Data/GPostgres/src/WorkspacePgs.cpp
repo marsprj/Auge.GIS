@@ -508,8 +508,106 @@ namespace auge
 			return NULL;
 		}
 
-		
+		const char* format = "select gid,name,alias,path,parent from %s where path='%s'";
 
+		char sql[AUGE_PATH_MAX];
+		memset(sql, 0, AUGE_PATH_MAX);		
+		g_snprintf(sql, AUGE_PATH_MAX, format, g_raster_folder_table.c_str(), path);
+
+		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return false;
+		}
+		
+		g_uint count = pResult->GetCount();
+		if(count==0)
+		{
+			pResult->Release();
+			return NULL;
+		}
+
+		g_uint id = pResult->GetInt(0, 0);
+		const char* name = pResult->GetString(0, 1);
+		const char* alias= pResult->GetString(0, 2);
+		//const char* path = pResult->GetString(0, 3);
+		g_uint parent = pResult->GetInt(0, 4);
+
+		RasterFolderImpl *pFolder = new RasterFolderImpl();
+		pFolder->Create(id, name, alias, path, this);
+		return pFolder;
+	}
+
+	RasterFolder* WorkspacePgs::GetFolder(g_uint id)
+	{
+		const char* format = "select gid,name,alias,path,parent from %s where gid=%d";
+
+		char sql[AUGE_PATH_MAX];
+		memset(sql, 0, AUGE_PATH_MAX);		
+		g_snprintf(sql, AUGE_PATH_MAX, format, g_raster_folder_table.c_str(), id);
+
+		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return false;
+		}
+
+		g_uint count = pResult->GetCount();
+		if(count==0)
+		{
+			pResult->Release();
+			return NULL;
+		}
+
+		const char* name = pResult->GetString(0, 1);
+		const char* alias= pResult->GetString(0, 2);
+		const char* path = pResult->GetString(0, 3);
+		g_uint parent = pResult->GetInt(0, 4);
+
+		RasterFolderImpl *pFolder = new RasterFolderImpl();
+		pFolder->Create(id, name, alias, path, this);
+		return pFolder;
+	}
+
+	Raster* WorkspacePgs::GetRaster(const char* path)
+	{
+		if(path==NULL)
+		{
+			return NULL;
+		}
+		char drv[AUGE_DRV_MAX];
+		char dir[AUGE_PATH_MAX];
+		char name[AUGE_NAME_MAX];
+		char ext[AUGE_EXT_MAX];
+		auge_split_path(path, drv, dir, name, ext);
+
+		char folder_path[AUGE_PATH_MAX];
+		memset(folder_path, 0, AUGE_PATH_MAX);
+		auge_make_path(folder_path, drv, dir,NULL,NULL);
+		size_t len = strlen(folder_path);
+		if(len>1)
+		{
+			folder_path[len-1] = '\0';
+		}
+
+		char raster_name[AUGE_NAME_MAX];
+		memset(raster_name, 0, AUGE_NAME_MAX);
+		auge_make_path(raster_name, NULL, NULL, name, ext);
+
+		RasterFolder* pFolder = GetFolder(folder_path);
+		if(pFolder==NULL)
+		{
+			return NULL;
+		}
+
+		Raster* pRaster = pFolder->GetRasterDataset()->GetRaster(raster_name);
+
+		pFolder->Release();
+		return pRaster;
+	}
+
+	Raster*	WorkspacePgs::RemoveRaster(const char* path)
+	{
 		return NULL;
 	}
 
@@ -631,10 +729,10 @@ namespace auge
 		return NULL;
 	}
 
-	RESULTCODE WorkspacePgs::RemoveRaster(const char* name)
-	{
-		return AG_FAILURE;
-	}
+	//RESULTCODE WorkspacePgs::RemoveRaster(const char* name)
+	//{
+	//	return AG_FAILURE;
+	//}
 
 	RESULTCODE WorkspacePgs::AddRaster(Raster* pRaster)
 	{

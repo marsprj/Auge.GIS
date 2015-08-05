@@ -78,7 +78,7 @@ void TileTest::WriteTest()
 	auge::CartoManager* pCartoManager = auge::augeGetCartoManagerInstance();
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
-	pMap = pCartoManager->LoadMap("world");
+	//pMap = pCartoManager->LoadMap("world");
 	auge::Canvas* pCanvas = NULL;//pCartoFactory->CreateCanvas2D(256,256);
 	
 	char t_path[AUGE_PATH_MAX] = {0};
@@ -156,7 +156,7 @@ void TileTest::BuildTileStorePGIS_FS()
 	auge::CartoManager* pCartoManager = auge::augeGetCartoManagerInstance();
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
-	pMap = pCartoManager->LoadMap("world");
+	//pMap = pCartoManager->LoadMap("world");
 	auge::Canvas* pCanvas = NULL;//pCartoFactory->CreateCanvas2D(256,256);
 
 	char t_path[AUGE_PATH_MAX] = {0};
@@ -209,7 +209,7 @@ void TileTest::BuildTileStorePGIS_Mongo()
 	auge::CartoManager* pCartoManager = auge::augeGetCartoManagerInstance();
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
-	pMap = pCartoManager->LoadMap("world");
+	//pMap = pCartoManager->LoadMap("world");
 	auge::Canvas* pCanvas = NULL;//pCartoFactory->CreateCanvas2D(256,256);
 
 	char t_path[AUGE_PATH_MAX] = {0};

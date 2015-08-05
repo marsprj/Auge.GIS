@@ -20,10 +20,11 @@ namespace auge
 
 		virtual void		SetInputDataSource(const char* sourceName);
 		virtual void		SetInputRaster(const char* rasterName);
+		virtual void		SetInputPath(const char* rasterPath);
 
 		virtual void		SetOutputDataSource(const char* sourceName);
 		virtual void		SetOutputRaster(const char* rasterName);
-		virtual void		SetOutputPath(const char* path);
+		virtual void		SetOutputPath(const char* rasterPath);
 
 		virtual void		SetRed(g_uint i);
 		virtual void		SetGreen(g_uint i);
@@ -50,21 +51,24 @@ namespace auge
 	private:
 		const char*			GetInputDataSource();
 		const char*			GetInputRaster();
+		const char*			GetInputPath();
 
 		const char*			GetOutputDataSource();
 		const char*			GetOutputRaster();
-
 		const char*			GetOutputPath();
+
+		//const char*			GetOutputPath();
 
 	private:
 		GEnvelope	m_rect;
 
 		std::string	m_in_source_name;
 		std::string	m_in_raster_name;
+		std::string m_in_raster_path;
 
 		std::string	m_out_source_name;
 		std::string	m_out_raster_name;
-		std::string m_out_path;
+		std::string m_out_raster_path;
 
 		g_uint		m_red;
 		g_uint		m_green;

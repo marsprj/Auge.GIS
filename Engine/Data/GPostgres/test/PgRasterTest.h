@@ -8,7 +8,9 @@ class PgRasterTest : public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(PgRasterTest);
 	//CPPUNIT_TEST(CreateRasterFolder);
-	CPPUNIT_TEST(EnumRasterFolder);
+	//CPPUNIT_TEST(EnumRasterFolder);
+	//CPPUNIT_TEST(AddRaster);
+	CPPUNIT_TEST(GetRasterByPath);
 	//CPPUNIT_TEST(ReadRaster);
 
 	CPPUNIT_TEST_SUITE_END();
@@ -22,6 +24,9 @@ private:
 	void RemoveRasterFolder();
 	void RenameRasterFolder();
 	void EnumRasterFolder();
+
+	void AddRaster();
+	void GetRasterByPath();
 
 	void ReadRaster();
 

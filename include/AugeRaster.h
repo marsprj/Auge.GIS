@@ -128,6 +128,8 @@ namespace auge
 		virtual Raster*			CreateRasterPNG(const char* name, g_uint width, g_uint height) = 0;
 		virtual Raster*			CreateRasterJPG(const char* name, g_uint width, g_uint height) = 0;
 		//virtual Raster*			CreateRaster(const char* name, augePixelType pixelType, g_uint width, g_uint height, g_int bands, g_uint srid, GEnvelope& extent) = 0;
+		
+		virtual Raster*			CreateRaster(const char* name, const char* alias, const char* format, const char* path, g_uint bands, g_int srid, g_uint width, g_uint height, double xmin, double ymin, double xmax, double ymax, const char* uuid) = 0;
 	};
 
 	extern "C"

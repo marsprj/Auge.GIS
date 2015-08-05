@@ -359,9 +359,11 @@ namespace auge
 		virtual RasterFolder*		GetRootFolder() = 0;
 		// [path] : /a/b/c
 		virtual RasterFolder*		GetFolder(const char* path) = 0;
-
 		
-		virtual RasterDataset*		OpenRasterDataset(const char* name) = 0;
+		//virtual RasterDataset*		OpenRasterDataset(const char* name) = 0;
+		virtual Raster*				GetRaster(const char* path) = 0;
+		virtual Raster*				RemoveRaster(const char* path) = 0;
+
 		//virtual RESULTCODE		RemoverRasterDataset(const char* name) = 0;		
 
 		//virtual EnumRaster*		GetRasters() = 0;
@@ -369,7 +371,7 @@ namespace auge
 		//virtual	Raster*			OpenRaster(const char* name) = 0;
 		//virtual RESULTCODE		RemoveRaster(const char* name) = 0;
 		// @deprecated
-		virtual RESULTCODE			RemoveRaster(const char* name, const char* path) = 0;
+		//virtual RESULTCODE			RemoveRaster(const char* name, const char* path) = 0;
 		//virtual RESULTCODE		RemoveRaster(g_uint id) = 0;
 	};
 

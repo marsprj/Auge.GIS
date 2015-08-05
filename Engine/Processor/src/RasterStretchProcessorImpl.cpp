@@ -96,6 +96,40 @@ namespace auge
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
 	}
 
+	void RasterStretchProcessorImpl::SetInputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_in_raster_path.clear();
+		}
+		else
+		{
+			m_in_raster_path = rasterPath;
+		}
+	}
+
+	void RasterStretchProcessorImpl::SetOutputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_out_raster_path.clear();
+		}
+		else
+		{
+			m_out_raster_path = rasterPath;
+		}
+	}
+
+	const char* RasterStretchProcessorImpl::GetInputRasterPath()
+	{
+		return m_in_raster_path.empty() ? NULL : m_in_raster_path.c_str();
+	}
+
+	const char* RasterStretchProcessorImpl::GetOutputRasterPath()
+	{
+		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
+	}
+
 	GColor&	RasterStretchProcessorImpl::GetStartColor()
 	{
 		return m_color_start;
@@ -110,8 +144,10 @@ namespace auge
 	{
 		const char* inSourceName = GetInputDataSource();
 		const char* inRasterName = GetInputRaster();
+		const char* inRasterPath = GetInputRasterPath();
 		const char* outSourceName = GetOutputDataSource();
 		const char* outRasterName = GetOutputRaster();
+		const char* outRasterPath = GetOutputRasterPath();
 
 		Workspace* pWorkspace = NULL;
 		RasterWorkspace* pinRasterWorkspace = NULL;
@@ -134,41 +170,47 @@ namespace auge
 		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
 		Raster* pinRaster = NULL;
-		RasterDataset* pinRasterDataset = NULL;
+		RasterFolder* pinFolder = NULL;
 
 		Raster* poutRaster = NULL;
-		RasterDataset* poutRasterDataset = NULL;
+		RasterFolder* poutFolder = NULL;
 
-		pinRasterDataset = pinRasterWorkspace->OpenRasterDataset(inRasterName);
-		if(pinRasterDataset==NULL)
+		pinFolder = pinRasterWorkspace->GetFolder(inRasterPath);
+		if(pinFolder==NULL)
 		{
 			return AG_FAILURE;
 		}
-		pinRaster = pinRasterDataset->GetRaster();
+		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
 		
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
 
 		poutRaster = pRasterFactory->CreateRasterPNG(outRasterName, pinRaster->GetWidth(), pinRaster->GetHeight());
 		if(poutRaster==NULL)
 		{
-			pinRasterDataset->Release();
+			pinFolder->Release();
 			return AG_FAILURE;
 		}
 
 		if(!Stretch(pinRaster, poutRaster))
 		{
-			pinRasterDataset->Release();
+			pinFolder->Release();
 			poutRaster->Release();
 			return AG_FAILURE;
 		}
 
-		RESULTCODE rc = poutRasterWorkspace->AddRaster(poutRaster);
+		poutFolder = poutRasterWorkspace->GetFolder(outRasterPath);
+		if(poutFolder==NULL)
+		{
+			pinFolder->Release();
+			poutRaster->Release();
+			return AG_FAILURE;
+		}
+		RESULTCODE rc = poutFolder->GetRasterDataset()->AddRaster(outRasterName, poutRaster);
 		poutRaster->Release();
-		pinRasterDataset->Release();
+		pinFolder->Release();
+		poutFolder->Release();
 
 		return rc;
-
-		return AG_SUCCESS;
 	}
 
 	void RasterStretchProcessorImpl::Release()

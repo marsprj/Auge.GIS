@@ -160,9 +160,11 @@ namespace auge
 	public:
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
 
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
 
 		virtual	void		SetStartColor(GColor color) = 0;
 		virtual	void		SetEndColor(GColor color) = 0;
@@ -181,9 +183,11 @@ namespace auge
 	public:
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
 
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
 	};
 
 	/**
@@ -199,9 +203,11 @@ namespace auge
 	public:
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
 
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
 
 		virtual void		SetSmoother(augeRasterSmoother smoother) = 0;
 	};
@@ -219,9 +225,11 @@ namespace auge
 	public:
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
 
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
 
 		virtual void		SetEdgeDetector(augeEdgeDetector detector) = 0;
 	};
@@ -239,9 +247,11 @@ namespace auge
 	public:
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
 
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
 	};
 
 	/**
@@ -257,9 +267,11 @@ namespace auge
 	public:
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
 
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
 	};
 
 	/**
@@ -275,9 +287,11 @@ namespace auge
 	public:
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
 
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
 	};
 
 	/**
@@ -293,12 +307,15 @@ namespace auge
 	public:
 		virtual void		SetInputDataSource_1(const char* sourceName) = 0;
 		virtual void		SetInputRaster_1(const char* rasterName) = 0;
+		virtual void		SetInputPath_1(const char* rasterPath) = 0;
 
 		virtual void		SetInputDataSource_2(const char* sourceName) = 0;
 		virtual void		SetInputRaster_2(const char* rasterName) = 0;
+		virtual void		SetInputPath_2(const char* rasterPath) = 0;
 
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
 	};
 
 	class RasterFormatConvertToJPEGProcessor : public GProcessor
@@ -311,6 +328,7 @@ namespace auge
 
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
 
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
@@ -334,9 +352,11 @@ namespace auge
 	public:
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
 
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
 	};
 
 	/**
@@ -352,9 +372,11 @@ namespace auge
 	public:
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
 
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
 	};
 
 	//------------------------------------------------------------------------

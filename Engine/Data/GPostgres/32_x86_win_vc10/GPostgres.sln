@@ -26,6 +26,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shp2pgs", "..\shp2pgs\shp2p
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698} = {5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GRaster", "..\..\..\Raster\32_x86_win_vc10\GRaster.vcxproj", "{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -60,6 +62,10 @@ Global
 		{5AADD3E1-0DC7-4263-AA04-D53422A5C2B8}.Debug|Win32.Build.0 = Debug|Win32
 		{5AADD3E1-0DC7-4263-AA04-D53422A5C2B8}.Release|Win32.ActiveCfg = Release|Win32
 		{5AADD3E1-0DC7-4263-AA04-D53422A5C2B8}.Release|Win32.Build.0 = Release|Win32
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}.Debug|Win32.ActiveCfg = Debug|Win32
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}.Debug|Win32.Build.0 = Debug|Win32
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}.Release|Win32.ActiveCfg = Release|Win32
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

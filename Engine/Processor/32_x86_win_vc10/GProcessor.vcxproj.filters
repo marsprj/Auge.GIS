@@ -140,5 +140,8 @@
     <ClInclude Include="..\include\DemAspectProcessorImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\RasterGraylizeProcessorImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

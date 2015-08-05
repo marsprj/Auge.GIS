@@ -82,13 +82,48 @@ namespace auge
 	{
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
 	}
+	void RasterGraylizeProcessorImpl::SetInputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_in_raster_path.clear();
+		}
+		else
+		{
+			m_in_raster_path = rasterPath;
+		}
+	}
+
+	void RasterGraylizeProcessorImpl::SetOutputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_out_raster_path.clear();
+		}
+		else
+		{
+			m_out_raster_path = rasterPath;
+		}
+	}
+
+	const char* RasterGraylizeProcessorImpl::GetInputRasterPath()
+	{
+		return m_in_raster_path.empty() ? NULL : m_in_raster_path.c_str();
+	}
+
+	const char* RasterGraylizeProcessorImpl::GetOutputRasterPath()
+	{
+		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
+	}
 
 	RESULTCODE RasterGraylizeProcessorImpl::Execute()
 	{
 		const char* inSourceName = GetInputDataSource();
 		const char* inRasterName = GetInputRaster();
+		const char* inRasterPath = GetInputRasterPath();
 		const char* outSourceName = GetOutputDataSource();
 		const char* outRasterName = GetOutputRaster();
+		const char* outRasterPath = GetOutputRasterPath();
 
 		Workspace* pWorkspace = NULL;
 		RasterWorkspace* pinRasterWorkspace = NULL;
@@ -111,35 +146,37 @@ namespace auge
 		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
 		Raster* pinRaster = NULL;
-		RasterDataset* pinRasterDataset = NULL;
+		RasterFolder* pinFolder = NULL;
 
-		Raster* poutRaster = NULL;
-		RasterDataset* poutRasterDataset = NULL;
+		//Raster* poutRaster = NULL;
+		RasterFolder* poutFolder = NULL;
 
-		pinRasterDataset = pinRasterWorkspace->OpenRasterDataset(inRasterName);
-		if(pinRasterDataset==NULL)
+		pinFolder = pinRasterWorkspace->GetFolder(inRasterPath);
+		if(pinFolder==NULL)
 		{
 			return AG_FAILURE;
 		}
-		pinRaster = pinRasterDataset->GetRaster();
+		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
+
 		g_uint band_count = pinRaster->GetBandCount();
 		if(band_count<3||band_count>4)
 		{
-			pinRasterDataset->Release();
+			pinFolder->Release();
 			return AG_FAILURE;
 		}
 
 
 		if(!Greylize(pinRaster))
 		{
-			pinRasterDataset->Release();
+			pinFolder->Release();
 			return AG_FAILURE;
 		}
 		
 		
-		RESULTCODE rc = poutRasterWorkspace->AddRaster(pinRaster);
+		RESULTCODE rc = poutFolder->GetRasterDataset()->AddRaster(outRasterName, pinRaster);
 		//poutRaster->Release();
-		pinRasterDataset->Release();
+		pinFolder->Release();
+		poutFolder->Release();
 
 		return rc;
 	}

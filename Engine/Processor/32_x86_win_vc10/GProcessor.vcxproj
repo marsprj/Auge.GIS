@@ -120,6 +120,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RasterEdgeDetectProcessorImpl.h" />
     <ClInclude Include="..\include\RasterExtractByRectangleProcessorImpl.h" />
     <ClInclude Include="..\include\RasterFormatConvertToJPEGProcessorImpl.h" />
+    <ClInclude Include="..\include\RasterGraylizeProcessorImpl.h" />
     <ClInclude Include="..\include\RasterReverseProcessorImpl.h" />
     <ClInclude Include="..\include\RasterSmoothProcessorImpl.h" />
     <ClInclude Include="..\include\RasterStretchProcessorImpl.h" />

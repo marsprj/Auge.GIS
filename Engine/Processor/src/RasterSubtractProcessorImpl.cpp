@@ -41,6 +41,18 @@ namespace auge
 		}
 	}
 
+	void RasterSubtractProcessorImpl::SetInputPath_1(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_in_raster_path_1.clear();
+		}
+		else
+		{
+			m_in_raster_path_1 = rasterPath;
+		}
+	}
+
 	void RasterSubtractProcessorImpl::SetInputDataSource_2(const char* sourceName)
 	{
 		if(sourceName==NULL)
@@ -64,6 +76,19 @@ namespace auge
 			m_in_raster_name_2 = rasterName;
 		}
 	}
+
+	void RasterSubtractProcessorImpl::SetInputPath_2(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_in_raster_path_2.clear();
+		}
+		else
+		{
+			m_in_raster_path_2 = rasterPath;
+		}
+	}
+
 	void RasterSubtractProcessorImpl::SetOutputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
@@ -88,6 +113,18 @@ namespace auge
 		}
 	}
 
+	void RasterSubtractProcessorImpl::SetOutputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_out_raster_path.clear();
+		}
+		else
+		{
+			m_out_raster_path = rasterPath;
+		}
+	}
+
 	const char*	RasterSubtractProcessorImpl::GetInputDataSource_1()
 	{
 		return m_in_source_name_1.empty() ? NULL : m_in_source_name_1.c_str();
@@ -98,6 +135,11 @@ namespace auge
 		return m_in_raster_name_1.empty() ? NULL : m_in_raster_name_1.c_str();
 	}
 
+	const char* RasterSubtractProcessorImpl::GetInputPath_1()
+	{
+		return m_in_raster_path_1.empty() ? NULL : m_in_raster_path_1.c_str();
+	}
+
 	const char*	RasterSubtractProcessorImpl::GetInputDataSource_2()
 	{
 		return m_in_source_name_2.empty() ? NULL : m_in_source_name_2.c_str();
@@ -106,6 +148,11 @@ namespace auge
 	const char*	RasterSubtractProcessorImpl::GetInputRaster_2()
 	{
 		return m_in_raster_name_2.empty() ? NULL : m_in_raster_name_2.c_str();
+	}
+
+	const char* RasterSubtractProcessorImpl::GetInputPath_2()
+	{
+		return m_in_raster_path_2.empty() ? NULL : m_in_raster_path_2.c_str();
 	}
 
 	const char*	RasterSubtractProcessorImpl::GetOutputDataSource()
@@ -122,10 +169,13 @@ namespace auge
 	{
 		const char* inSourceName_1 = GetInputDataSource_1();
 		const char* inRasterName_1 = GetInputRaster_1();
+		const char* inRasterPath_1 = GetInputPath_1();
 		const char* inSourceName_2 = GetInputDataSource_2();
 		const char* inRasterName_2 = GetInputRaster_2();
+		const char* inRasterPath_2 = GetInputPath_2();
 		const char* outSourceName = GetOutputDataSource();
 		const char* outRasterName = GetOutputRaster();
+		const char* outRasterPath = GetOutputPath();
 
 		Workspace* pWorkspace = NULL;
 		RasterWorkspace* pinRasterWorkspace_1 = NULL;
@@ -156,37 +206,40 @@ namespace auge
 		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
 		Raster* pinRaster_1 = NULL;
-		RasterDataset* pinRasterDataset_1 = NULL;
+		RasterFolder*  pinFolder_1 = NULL;
+		//RasterDataset* pinRasterDataset_1 = NULL;
+
 		Raster* pinRaster_2 = NULL;
-		RasterDataset* pinRasterDataset_2 = NULL;
+		RasterFolder*  pinFolder_2 = NULL;
+		//RasterDataset* pinRasterDataset_2 = NULL;
 
 		Raster* poutRaster = NULL;
 		RasterDataset* poutRasterDataset = NULL;
 
 		// Get Raster 1
-		pinRasterDataset_1 = pinRasterWorkspace_1->OpenRasterDataset(inRasterName_1);
-		if(pinRasterDataset_1==NULL)
+		pinFolder_1 = pinRasterWorkspace_1->GetFolder(inRasterPath_1);
+		if(pinFolder_1==NULL)
 		{
 			return AG_FAILURE;
 		}
-		pinRaster_1 = pinRasterDataset_1->GetRaster();
+		pinRaster_1 = pinFolder_1->GetRasterDataset()->GetRaster(inRasterName_1);
 		if(pinRaster_1==NULL)
 		{
-			pinRasterDataset_1->Release();
+			pinFolder_1->Release();
 			return AG_FAILURE;
 		}
 
 		// Get Raster 2
-		pinRasterDataset_2 = pinRasterWorkspace_2->OpenRasterDataset(inRasterName_2);
-		if(pinRasterDataset_1==NULL)
+		pinFolder_2 = pinRasterWorkspace_2->GetFolder(inRasterPath_1);
+		if(pinFolder_2==NULL)
 		{
 			return AG_FAILURE;
 		}
-		pinRaster_2 = pinRasterDataset_2->GetRaster();
+		pinRaster_2 = pinFolder_2->GetRasterDataset()->GetRaster(inRasterName_2);
 		if(pinRaster_2==NULL)
 		{
-			pinRasterDataset_1->Release();
-			pinRasterDataset_2->Release();
+			pinFolder_1->Release();
+			pinFolder_2->Release();
 			return AG_FAILURE;
 		}
 
@@ -194,8 +247,8 @@ namespace auge
 		g_uint bands_2 = pinRaster_2->GetBandCount();
 		if(bands_1!=bands_2)
 		{
-			pinRasterDataset_1->Release();
-			pinRasterDataset_2->Release();
+			pinFolder_1->Release();
+			pinFolder_2->Release();
 			return AG_FAILURE;
 		}
 
@@ -203,8 +256,8 @@ namespace auge
 		g_uint width_2 = pinRaster_2->GetWidth();
 		if(width_1 != width_2)
 		{
-			pinRasterDataset_1->Release();
-			pinRasterDataset_2->Release();
+			pinFolder_1->Release();
+			pinFolder_2->Release();
 			return AG_FAILURE;
 		}
 
@@ -212,8 +265,8 @@ namespace auge
 		g_uint height_2 = pinRaster_2->GetHeight();
 		if(height_1 != height_1)
 		{
-			pinRasterDataset_1->Release();
-			pinRasterDataset_2->Release();
+			pinFolder_1->Release();
+			pinFolder_2->Release();
 			return AG_FAILURE;
 		}
 
@@ -223,10 +276,21 @@ namespace auge
 		{
 			poutRaster->SetName(outRasterName);
 		}
-		RESULTCODE rc = poutRasterWorkspace->AddRaster(poutRaster);
+
+		RasterFolder* poutFolder = poutRasterWorkspace->GetFolder(outRasterPath);
+		if(poutFolder==NULL)
+		{
+			poutRaster->Release();
+			pinFolder_1->Release();
+			pinFolder_2->Release();
+			return AG_FAILURE;
+		}
+		RESULTCODE rc = poutFolder->GetRasterDataset()->AddRaster(outRasterName, poutRaster);
+
 		poutRaster->Release();
-		pinRasterDataset_1->Release();
-		pinRasterDataset_2->Release();
+		poutFolder->Release();
+		pinFolder_1->Release();
+		pinFolder_2->Release();
 
 		return rc;
 	}

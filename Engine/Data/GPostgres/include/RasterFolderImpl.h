@@ -31,6 +31,7 @@ namespace auge
 
 	public:
 		const char*		GetPath();
+		const char*		GetLocalPath();
 		void			Create(g_uint id, const char* name, const char* alias, const char* path, WorkspacePgs* pWorkspace);
 
 	private:
@@ -40,6 +41,7 @@ namespace auge
 		std::string		m_name;
 		std::string		m_alias;
 		std::string		m_path;
+		std::string		m_local_path;
 
 		WorkspacePgs*	m_pWoskspace;
 		RasterDatasetImpl m_raster_dataset;

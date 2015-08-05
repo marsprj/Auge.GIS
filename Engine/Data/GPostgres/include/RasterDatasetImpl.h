@@ -6,6 +6,7 @@
 namespace auge
 {
 	class Raster;
+	class RasterFolderImpl;
 	class WorkspacePgs;
 
 	class RasterDatasetImpl : public RasterDataset
@@ -24,6 +25,8 @@ namespace auge
 		virtual RESULTCODE			RemoveRaster(const char* name);
 		virtual RESULTCODE			RemoveAllRaster();
 
+		virtual bool				HasRaster(const char* name);
+
 		//virtual const char*		GetName();
 		//virtual const char*		GetAlias();
 		
@@ -38,7 +41,7 @@ namespace auge
 		virtual Raster*			GetRaster();
 
 	public:
-		void	Create(const char* name, RasterFolder* pFolder, WorkspacePgs* pWorkspace);
+		void	Create(const char* name, RasterFolderImpl* pFolder, WorkspacePgs* pWorkspace);
 		//void	Create( WorkspacePgs* pWorkspace,
 		//				g_uint gid,
 		//				const char* name,
@@ -69,9 +72,9 @@ namespace auge
 		//std::string	m_uuid;
 		//GEnvelope	m_extent;
 
-		std::string		m_name;
-		RasterFolder*	m_pFolder;
-		WorkspacePgs*	m_pWoskspace;
+		std::string			m_name;
+		RasterFolderImpl*	m_pFolder;
+		WorkspacePgs*		m_pWoskspace;
 	};
 }
 

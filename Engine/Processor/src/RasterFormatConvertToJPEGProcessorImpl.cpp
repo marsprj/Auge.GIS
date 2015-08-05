@@ -74,16 +74,50 @@ namespace auge
 		}
 	}
 
-	void RasterFormatConvertToJPEGProcessorImpl::SetOutputPath(const char* path)
+	//void RasterFormatConvertToJPEGProcessorImpl::SetOutputPath(const char* path)
+	//{
+	//	if(path==NULL)
+	//	{
+	//		m_out_raster_path.clear();
+	//	}
+	//	else
+	//	{
+	//		m_out_raster_path = path;
+	//	}
+	//}
+
+	void RasterFormatConvertToJPEGProcessorImpl::SetInputPath(const char* rasterPath)
 	{
-		if(path==NULL)
+		if(rasterPath==NULL)
 		{
-			m_out_path.clear();
+			m_in_raster_path.clear();
 		}
 		else
 		{
-			m_out_path = path;
+			m_in_raster_path = rasterPath;
 		}
+	}
+
+	void RasterFormatConvertToJPEGProcessorImpl::SetOutputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_out_raster_path.clear();
+		}
+		else
+		{
+			m_out_raster_path = rasterPath;
+		}
+	}
+
+	const char* RasterFormatConvertToJPEGProcessorImpl::GetInputPath()
+	{
+		return m_in_raster_path.empty() ? NULL : m_in_raster_path.c_str();
+	}
+
+	const char* RasterFormatConvertToJPEGProcessorImpl::GetOutputPath()
+	{
+		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
 	}
 
 	void RasterFormatConvertToJPEGProcessorImpl::SetRed(g_uint i)
@@ -123,7 +157,7 @@ namespace auge
 
 	const char*	RasterFormatConvertToJPEGProcessorImpl::GetOutputPath()
 	{
-		return m_out_path.empty() ? NULL : m_out_path.c_str();
+		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
 	}
 
 	RESULTCODE RasterFormatConvertToJPEGProcessorImpl::Execute()

@@ -19,6 +19,7 @@ namespace auge
 		friend class FeatureInsertCommandPgs;
 		friend class AttributeDataSetPgs;
 		friend class RasterFolderImpl;
+		friend class RasterDatasetImpl;
 
 	public:
 		WorkspacePgs();
@@ -53,7 +54,11 @@ namespace auge
 		//virtual void			SetConnection(GConnection* pConnection);
 		virtual RasterFolder*	GetRootFolder();
 		virtual RasterFolder*	GetFolder(const char* path);
+		
+		virtual Raster*			GetRaster(const char* path);
+		virtual Raster*			RemoveRaster(const char* path);
 
+		// @deprecated
 		virtual EnumDataSet*	GetRasterDatasets();
 		virtual RasterDataset*	CreateRasterDataset(const char* name);
 		virtual RasterDataset*	OpenRasterDataset(const char* name);
@@ -62,7 +67,7 @@ namespace auge
 		virtual EnumRaster*		GetRasters();
 		virtual RESULTCODE		AddRaster(Raster* pRaster);
 		virtual	Raster*			OpenRaster(const char* name);
-		virtual RESULTCODE		RemoveRaster(const char* name);
+		//virtual RESULTCODE		RemoveRaster(const char* name);
 		virtual RESULTCODE		RemoveRaster(const char* name, const char* path);
 
 		virtual const char*		GetRepository();
@@ -83,6 +88,8 @@ namespace auge
 		RESULTCODE				UnRegiseterGeometryColumn(const char* name);
 		
 		// Raster
+	private:
+		RasterFolder*			GetFolder(g_uint id);
 
 		RESULTCODE				CreateFeatureCatalogTable();
 		RESULTCODE				CreateRasterTable();
