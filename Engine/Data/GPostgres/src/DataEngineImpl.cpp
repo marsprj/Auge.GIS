@@ -1,7 +1,6 @@
 #include "DataEngineImpl.h"
 #include "WorkspacePgs.h"
 #include "ConnectionPgs.h"
-#include <gdal.h>
 
 namespace auge
 {
