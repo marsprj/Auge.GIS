@@ -16,7 +16,7 @@ namespace auge
 	bool RemoveRasterRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetRasterPath(cgi["rasterPath"]);
+		SetPath(cgi["Path"]);
 		SetRasterName(cgi["rasterName"]);
 		SetSourceName(cgi["sourceName"]);
 		return true;
@@ -51,21 +51,21 @@ namespace auge
 		return m_mime_type.c_str();
 	}
 
-	void RemoveRasterRequest::SetRasterPath(const char* path)
+	void RemoveRasterRequest::SetPath(const char* path)
 	{
 		if(path==NULL)
 		{
-			m_raster_path.clear();
+			m_path.clear();
 		}
 		else
 		{
-			m_raster_path = path;
+			m_path = path;
 		}
 	}
 
-	const char* RemoveRasterRequest::GetRasterPath()
+	const char* RemoveRasterRequest::GetPath()
 	{
-		return m_raster_path.empty() ? NULL : m_raster_path.c_str();
+		return m_path.empty() ? NULL : m_path.c_str();
 	}
 
 	const char*	RemoveRasterRequest::GetEncoding()

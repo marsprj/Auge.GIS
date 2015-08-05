@@ -54,6 +54,7 @@ namespace auge
 		//virtual void			SetConnection(GConnection* pConnection);
 		virtual RasterFolder*	GetRootFolder();
 		virtual RasterFolder*	GetFolder(const char* path);
+		virtual RESULTCODE		RemoveFolder(const char* path);
 		
 		virtual Raster*			GetRaster(const char* path);
 		virtual Raster*			RemoveRaster(const char* path);

@@ -86,7 +86,7 @@ namespace auge
 					g_sprintf(msg, "User [%s] is not authenticated", user_name);
 					pLogger->Error(msg, __FILE__, __LINE__);
 					auge::WebExceptionResponse *pExpResponse = NULL;
-					pExpResponse = auge::augeCreateWebExceptionResponse();
+					pExpResponse = auge::augeCreateWebExceptionResponse(); 
 					pExpResponse->SetMessage(msg);
 					pWebResponse = pExpResponse;
 				}

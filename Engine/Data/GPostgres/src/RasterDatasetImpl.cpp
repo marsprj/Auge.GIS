@@ -257,7 +257,7 @@ namespace auge
 		auge_make_path(raster_path, NULL, m_pFolder->GetLocalPath(), name,NULL);
 		if(g_access(raster_path, 4))
 		{
-			//pRaster->Save(raster_path);
+			pRaster->Save(raster_path);
 			//auge_move(file_lo
 		}
 
@@ -368,12 +368,51 @@ namespace auge
 
 	RESULTCODE RasterDatasetImpl::RemoveRaster(const char* name)
 	{
-		return AG_FAILURE;
+		if(name==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* format = "delete from %s where name='%s' and dataset=%d";
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWoskspace->g_raster_table.c_str(), name, m_pFolder->GetID());
+
+		RESULTCODE rc = m_pWoskspace->m_pgConnection.ExecuteSQL(sql);
+		if(rc==AG_FAILURE)
+		{
+			return rc;
+		}
+		char raster_path[AUGE_PATH_MAX];
+		memset(raster_path, 0, AUGE_PATH_MAX);
+		auge_make_path(raster_path, NULL, m_pFolder->GetLocalPath(), name, NULL);
+		auge_remove_file(raster_path);
+
+		return AG_SUCCESS;
 	}
 
 	RESULTCODE RasterDatasetImpl::RemoveAllRaster()
 	{
 		return AG_FAILURE;
+	}
+
+	bool RasterDatasetImpl::IsEmpty()
+	{
+		const char* format = "select count(*) from %s where dataset=%d";
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWoskspace->g_raster_table.c_str(), m_pFolder->GetID());
+
+		GResultSet* pResult = m_pWoskspace->m_pgConnection.ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return false;
+		}
+		int count = pResult->GetInt(0, 0);
+		pResult->Release();
+		return (count==0);
 	}
 
 	bool RasterDatasetImpl::HasRaster(const char* name)

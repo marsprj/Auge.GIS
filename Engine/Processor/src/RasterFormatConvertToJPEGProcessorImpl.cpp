@@ -194,6 +194,11 @@ namespace auge
 			return AG_FAILURE;
 		}
 		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
+		if(pinRaster==NULL)
+		{
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
 
 		// recalculate the requested extent, in case of the input rect is out of the original extent
 		GEnvelope extent;
@@ -245,6 +250,7 @@ namespace auge
 			rc = poutFolder->GetRasterDataset()->AddRaster(outRasterName, poutRaster);
 
 			poutRaster->Release();
+			pinRaster->Release();
 			pinFolder->Release();
 		}
 		else
@@ -252,6 +258,7 @@ namespace auge
 			poutRaster->Save(outRasterPath);
 		}
 		poutRaster->Release();
+		pinRaster->Release();
 		pinFolder->Release();
 
 		return rc;

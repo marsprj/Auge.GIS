@@ -573,6 +573,53 @@ namespace auge
 		return pFolder;
 	}
 
+	RESULTCODE WorkspacePgs::RemoveFolder(const char* path)
+	{
+		if(path==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		if(strcmp(path, "/")==0)
+		{
+			return AG_FAILURE;
+		}
+
+		RasterFolder* pFolder = GetFolder(path);
+		if(pFolder==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Path [%s] does not exist.", path);
+			augeGetErrorInstance()->SetError(msg);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return AG_FAILURE;
+		}
+		if(!pFolder->IsEmpty())
+		{
+			pFolder->Release();
+
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Folder [%s] is not Empty.", path);
+			augeGetErrorInstance()->SetError(msg);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return AG_FAILURE;
+		}
+
+		const char* format = "delete from %s where path='%s'";
+		char sql[AUGE_PATH_MAX];
+		memset(sql, 0, AUGE_PATH_MAX);		
+		g_snprintf(sql, AUGE_PATH_MAX, format, g_raster_folder_table.c_str(), path);
+
+		m_pgConnection.ExecuteSQL(sql);
+		
+		auge_rmdir(pFolder->GetLocalPath());
+
+		pFolder->Release();
+		return AG_SUCCESS;
+	}
+
 	Raster* WorkspacePgs::GetRaster(const char* path)
 	{
 		if(path==NULL)

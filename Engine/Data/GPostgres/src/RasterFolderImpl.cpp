@@ -120,10 +120,10 @@ namespace auge
 
 		char folder_path[AUGE_PATH_MAX];
 		memset(folder_path, 0, AUGE_PATH_MAX);
-		auge_make_path(folder_path, NULL, m_path.c_str(), name+1, NULL);
+		auge_make_path(folder_path, NULL, m_path.c_str(), name, NULL);
 		char local_folder_path[AUGE_PATH_MAX];
 		memset(local_folder_path, 0, AUGE_PATH_MAX);
-		auge_make_path(local_folder_path, NULL, m_pWoskspace->GetRepository(), folder_path, NULL);
+		auge_make_path(local_folder_path, NULL, m_pWoskspace->GetRepository(), folder_path+1, NULL);
 
 		g_int id = RegisterFolder(name, name, folder_path);
 		if(id<0)
@@ -198,9 +198,14 @@ namespace auge
 
 	bool RasterFolderImpl::IsEmpty()
 	{
+		if(!m_raster_dataset.IsEmpty())
+		{
+			return false;
+		}
+
 		char sql[AUGE_PATH_MAX];
 		memset(sql, 0, AUGE_PATH_MAX);
-		const char* format = "select count(*) from %s where parent=d%s";
+		const char* format = "select count(*) from %s where parent=%d";
 		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWoskspace->g_raster_folder_table.c_str(), GetID());
 
 		GResultSet* pResult = m_pWoskspace->m_pgConnection.ExecuteQuery(sql);

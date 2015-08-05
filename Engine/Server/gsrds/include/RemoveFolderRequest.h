@@ -23,12 +23,14 @@ namespace auge
 
 	public:
 		const char*	GetPath();
+		const char* GetSourceName();
 
 	public:
 		bool		Create(rude::CGI& cgi);
 
 		void		SetVersion(const char* value);
 		void		SetPath(const char* path);
+		void		SetSourceName(const char* sourceName);
 
 	private:
 		std::string m_version;
@@ -36,6 +38,7 @@ namespace auge
 		std::string m_encoding;
 
 		std::string m_path;
+		std::string m_source_name;
 	};
 }
 

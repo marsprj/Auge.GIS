@@ -59,7 +59,7 @@ namespace auge
 		std::vector<int>	m_bands;
 		GEnvelope	m_extent;
 
-		g_uint		m_r;
+		g_uint		m_r; 
 		g_uint		m_g;
 		g_uint		m_b;
 	};
@@ -77,7 +77,7 @@ user=user1&service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterNam
 http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&Path=/
 http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&Path=/ccc
 
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&Path=/&bands=3,2,1
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&Path=/ds1&extent=0,0,500,500&bands=3,2,1
 
 
 service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb&rasterName=Koala.png&Path=/&bands=3,2,1

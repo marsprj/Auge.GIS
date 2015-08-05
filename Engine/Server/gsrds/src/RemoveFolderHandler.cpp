@@ -3,6 +3,8 @@
 
 #include "AugeUser.h"
 #include "AugeWebCore.h"
+#include "AugeData.h"
+#include "AugeRaster.h"
 
 #ifndef WIN32
 #include <sys/types.h>
@@ -61,18 +63,54 @@ namespace auge
 
 	WebResponse* RemoveFolderHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		GError*  pError = augeGetErrorInstance();
 		GLogger* pLogger = augeGetLoggerInstance();
 		RemoveFolderRequest* pRequest = static_cast<RemoveFolderRequest*>(pWebRequest);
 
-		//const char* root_path = pWebContext->GetUploadPath();
-		char raster_repository[AUGE_PATH_MAX];
-		memset(raster_repository, 0, AUGE_PATH_MAX);
-		rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
+		const char* folder_path = pRequest->GetPath();
+		const char* sourceName = pRequest->GetSourceName();
 
-		const char* rqut_path = pRequest->GetPath();
-		if(rqut_path==NULL)
+		if(folder_path==NULL)
 		{
 			const char* msg = "Parameter [Path] is NULL";
+			pError->SetError(msg);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg,__FILE__,__LINE__);
+
+			return pExpResponse;
+		}
+		if(g_stricmp(folder_path, "/")==0)
+		{
+			const char* msg = "Root Folder cannot be removed";
+			pError->SetError(msg);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg,__FILE__,__LINE__);
+
+			return pExpResponse;
+		}
+		
+		if(sourceName==NULL)
+		{
+			const char* msg = "Parameter [SourceName] is NULL";
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg,__FILE__,__LINE__);
+
+			return pExpResponse;
+		}
+		Workspace* pWorkspace = NULL;
+		RasterWorkspace* pRasterWorkspace = NULL;
+		ConnectionManager* pConnectionManager = NULL;
+		pConnectionManager = augeGetConnectionManagerInstance();
+		pWorkspace = pConnectionManager->GetWorkspace(pUser->GetID(), sourceName);
+		if(pWorkspace==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			memset(msg,0,AUGE_MSG_MAX);
+			g_sprintf(msg,"Cannot Get DataSource [%s]", sourceName);
+			pError->SetError(msg);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
 			pLogger->Error(msg,__FILE__,__LINE__);
@@ -80,32 +118,26 @@ namespace auge
 			return pExpResponse;
 		}
 
-		char local_path[AUGE_PATH_MAX];
-		memset(local_path,0,AUGE_PATH_MAX);
-		auge_make_path(local_path,NULL,raster_repository,rqut_path+1,NULL);
+		pRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
+		//if(pRasterWorkspace==NULL)
+		//{
+		//	char msg[AUGE_MSG_MAX];
+		//	memset(msg,0,AUGE_MSG_MAX);
+		//	g_sprintf(msg,"Cannot Get DataSource [%s]", sourceName);
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	pExpResponse->SetMessage(msg);
+		//	pLogger->Error(msg,__FILE__,__LINE__);
 
-		if(g_access(local_path,4))
+		//	return pExpResponse;
+		//}
+
+		RESULTCODE rc = pRasterWorkspace->RemoveFolder(folder_path);
+		if(rc!=AG_SUCCESS)
 		{
-			char msg[AUGE_MSG_MAX];
-			memset(msg,0,AUGE_MSG_MAX);
-			g_sprintf(msg,"Path [%s] does not existed.", rqut_path);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(pError->GetLastError(), __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(msg);
-			pLogger->Error(msg,__FILE__,__LINE__);
-
-			return pExpResponse;
-		}
-
-		int ret = auge_rmdir(local_path);
-		if(ret)
-		{
-			char msg[AUGE_MSG_MAX];
-			memset(msg,0,AUGE_MSG_MAX);
-			g_sprintf(msg,"Failed to create folder [%s].", rqut_path);
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(msg);
-			pLogger->Error(msg,__FILE__,__LINE__);
-
+			pExpResponse->SetMessage(pError->GetLastError());
 			return pExpResponse;
 		}
 

@@ -17,6 +17,7 @@ namespace auge
 	{
 		SetVersion(cgi["version"]);
 		SetPath(cgi["path"]);
+		SetSourceName(cgi["sourceName"]);
 		return true;
 	}
 
@@ -64,6 +65,23 @@ namespace auge
 	const char* RemoveFolderRequest::GetPath()
 	{
 		return m_path.empty() ? NULL : m_path.c_str();
+	}
+
+	void RemoveFolderRequest::SetSourceName(const char* sourceName)
+	{
+		if(sourceName==NULL)
+		{
+			m_source_name.clear();
+		}
+		else
+		{
+			m_source_name = sourceName;
+		}
+	}
+
+	const char* RemoveFolderRequest::GetSourceName()
+	{
+		return m_source_name.empty() ? NULL : m_source_name.c_str();
 	}
 
 	const char*	RemoveFolderRequest::GetEncoding()

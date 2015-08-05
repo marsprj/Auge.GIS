@@ -68,12 +68,6 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		GetRasterRequest* pRequest = static_cast<GetRasterRequest*>(pWebRequest);
 
-		////const char* root_path = pWebContext->GetUploadPath();
-		////计算raster的根目录
-		//char raster_repository[AUGE_PATH_MAX];
-		//memset(raster_repository, 0, AUGE_PATH_MAX);
-		//rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
-
 		const char* folder_path = pRequest->GetPath();
 		const char* raster_name=pRequest->GetName();
 		const char* source_name=pRequest->GetSourceName();
