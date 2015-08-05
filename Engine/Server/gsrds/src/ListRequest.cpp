@@ -17,7 +17,7 @@ namespace auge
 	{
 		SetVersion(cgi["version"]);
 		SetSourceName(cgi["sourceName"]);
-		SetPath(cgi["rasterPath"]);
+		SetPath(cgi["Path"]);
 
 		return true;
 	}

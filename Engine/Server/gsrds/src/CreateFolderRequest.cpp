@@ -16,7 +16,8 @@ namespace auge
 	bool CreateFolderRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetRasterPath(cgi["rasterPath"]);
+		SetSourceName(cgi["sourceName"]);
+		SetPath(cgi["path"]);
 		return true;
 	}
 
@@ -49,21 +50,38 @@ namespace auge
 		return m_mime_type.c_str();
 	}
 
-	void CreateFolderRequest::SetRasterPath(const char* path)
+	void CreateFolderRequest::SetPath(const char* path)
 	{
 		if(path==NULL)
 		{
-			m_raster_path.clear();
+			m_path.clear();
 		}
 		else
 		{
-			m_raster_path = path;
+			m_path = path;
 		}
 	}
 
-	const char* CreateFolderRequest::GetRasterPath()
+	const char* CreateFolderRequest::GetPath()
 	{
-		return m_raster_path.empty() ? NULL : m_raster_path.c_str();
+		return m_path.empty() ? NULL : m_path.c_str();
+	}
+
+	void CreateFolderRequest::SetSourceName(const char* sourceName)
+	{
+		if(sourceName==NULL)
+		{
+			m_source_name.clear();
+		}
+		else
+		{
+			m_source_name = sourceName;
+		}
+	}
+
+	const char* CreateFolderRequest::GetSourceName()
+	{
+		return m_source_name.empty() ? NULL : m_source_name.c_str();
 	}
 
 	const char*	CreateFolderRequest::GetEncoding()

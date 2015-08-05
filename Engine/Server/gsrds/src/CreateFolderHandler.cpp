@@ -3,6 +3,8 @@
 
 #include "AugeUser.h"
 #include "AugeWebCore.h"
+#include "AugeData.h"
+#include "AugeRaster.h"
 
 #ifndef WIN32
 #include <sys/types.h>
@@ -64,13 +66,10 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		CreateFolderRequest* pRequest = static_cast<CreateFolderRequest*>(pWebRequest);
 
-		//const char* root_path = pWebContext->GetUploadPath();
-		char raster_repository[AUGE_PATH_MAX];
-		memset(raster_repository, 0, AUGE_PATH_MAX);
-		rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
+		const char* source_name = pRequest->GetSourceName();
+		const char* folder_path = pRequest->GetPath();
 
-		const char* rqut_path = pRequest->GetRasterPath();
-		if(rqut_path==NULL)
+		if(folder_path==NULL)
 		{
 			const char* msg = "Parameter [Path] is NULL";
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
@@ -80,15 +79,9 @@ namespace auge
 			return pExpResponse;
 		}
 
-		char local_path[AUGE_PATH_MAX];
-		memset(local_path,0,AUGE_PATH_MAX);
-		auge_make_path(local_path,NULL,raster_repository,rqut_path+1,NULL);
-
-		if(!g_access(local_path,4))
+		if(source_name==NULL)
 		{
-			char msg[AUGE_MSG_MAX];
-			memset(msg,0,AUGE_MSG_MAX);
-			g_sprintf(msg,"Path [%s] already existed.", rqut_path);
+			const char* msg = "Parameter [sourceName] is NULL";
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
 			pLogger->Error(msg,__FILE__,__LINE__);
@@ -96,18 +89,24 @@ namespace auge
 			return pExpResponse;
 		}
 
-		int ret = auge_mkdir(local_path);
-		if(ret)
+		Workspace* pWorkspace = NULL;
+		RasterWorkspace* pRasterWorkspace = NULL;
+		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+		pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), source_name);
+		if(pWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
-			memset(msg,0,AUGE_MSG_MAX);
-			g_sprintf(msg,"Failed to create folder [%s].", rqut_path);
+			g_sprintf(msg, "Cannot Get DataSource [%s]", source_name);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
-			pLogger->Error(msg,__FILE__,__LINE__);
-
 			return pExpResponse;
 		}
+		pRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
+
+		RasterFolder* pRoot = pRasterWorkspace->GetRootFolder();
+		pRoot->CreateFolder(folder_path);
 
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());

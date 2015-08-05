@@ -43,7 +43,7 @@ void PgRasterTest::CreateRasterFolder()
 	auge::RasterFolder* pRoot = m_pWorkspace->GetRootFolder();
 	CPPUNIT_ASSERT(pRoot!=NULL);
 
-	const char* name = "ds3";
+	const char* name = "ds1";
 	auge::RasterFolder* pFolder = pRoot->CreateFolder(name);
 	//auge::RasterFolder* pFolder = pRoot->GetFolder(name);
 	CPPUNIT_ASSERT(pFolder!=NULL);	
