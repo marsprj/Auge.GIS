@@ -5,6 +5,8 @@
 #include "AugeProcessor.h"
 #include "AugeUser.h"
 #include "AugeWebCore.h"
+#include "AugeData.h"
+#include "AugeRaster.h"
 
 #ifndef WIN32
 #include <sys/types.h>
@@ -66,13 +68,13 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		GetRasterRequest* pRequest = static_cast<GetRasterRequest*>(pWebRequest);
 
-		//const char* root_path = pWebContext->GetUploadPath();
-		//计算raster的根目录
-		char raster_repository[AUGE_PATH_MAX];
-		memset(raster_repository, 0, AUGE_PATH_MAX);
-		rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
+		////const char* root_path = pWebContext->GetUploadPath();
+		////计算raster的根目录
+		//char raster_repository[AUGE_PATH_MAX];
+		//memset(raster_repository, 0, AUGE_PATH_MAX);
+		//rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
 
-		const char* rqut_path = pRequest->GetPath();
+		const char* folder_path = pRequest->GetPath();
 		const char* raster_name=pRequest->GetName();
 		const char* source_name=pRequest->GetSourceName();
 		GEnvelope extent = pRequest->GetExtent();
@@ -98,7 +100,7 @@ namespace auge
 
 		}
 
-		if(rqut_path==NULL)
+		if(folder_path==NULL)
 		{
 			const char* msg = "Parameter [Path] is NULL";
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
@@ -118,6 +120,7 @@ namespace auge
 			pProcessor->SetInputRectangle(extent);
 			pProcessor->SetInputDataSource(source_name);
 			pProcessor->SetInputRaster(raster_name);
+			pProcessor->SetInputPath(folder_path);
 
 			char uuid[AUGE_NAME_MAX];
 			memset(uuid, 0, AUGE_NAME_MAX);
@@ -127,9 +130,9 @@ namespace auge
 			auge_make_path(output_path, NULL, pWebContext->GetCacheMapPath(), uuid, "jpeg");
 			pProcessor->SetOutputPath(output_path);
 
-			pProcessor->SetRed(1);
-			pProcessor->SetGreen(0);
-			pProcessor->SetBlue(0);
+			pProcessor->SetRed(pRequest->GetR());
+			pProcessor->SetGreen(pRequest->GetG());
+			pProcessor->SetBlue(pRequest->GetB());
 
 			RESULTCODE rc = pProcessor->Execute();
 			pProcessor->Release();
@@ -151,31 +154,93 @@ namespace auge
 		}
 		else
 		{
-			char local_path[AUGE_PATH_MAX];
-			memset(local_path,0,AUGE_PATH_MAX);
-			auge_make_path(local_path,NULL,raster_repository,rqut_path+1,NULL);
-
-			char raster_path[AUGE_PATH_MAX];
-			memset(raster_path,0,AUGE_PATH_MAX);
-			auge_make_path(raster_path,NULL,local_path,raster_name,NULL);
-
-			if(g_access(raster_path,4))
+			Workspace* pWorkspace = NULL;
+			RasterWorkspace* pRasterWorkspace = NULL;
+			ConnectionManager* pConnectionManager = NULL;
+			pConnectionManager = augeGetConnectionManagerInstance();
+			pWorkspace = pConnectionManager->GetWorkspace(pUser->GetID(), source_name);
+			if(pWorkspace==NULL)
 			{
 				char msg[AUGE_MSG_MAX];
 				memset(msg,0,AUGE_MSG_MAX);
-				g_sprintf(msg,"Folder [%s] does not have Raster [%s] in folder  does not exist.", rqut_path, raster_name);
+				g_sprintf(msg,"Cannot Get DataSource [%s]", source_name);
 				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 				pExpResponse->SetMessage(msg);
 				pLogger->Error(msg,__FILE__,__LINE__);
 
-				pWebResponse = pExpResponse;
+				return pExpResponse;
 			}
-			else
+
+			pRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
+			//if(pRasterWorkspace==NULL)
+			//{
+			//	char msg[AUGE_MSG_MAX];
+			//	memset(msg,0,AUGE_MSG_MAX);
+			//	g_sprintf(msg,"Cannot Get DataSource [%s]", sourceName);
+			//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			//	pExpResponse->SetMessage(msg);
+			//	pLogger->Error(msg,__FILE__,__LINE__);
+
+			//	return pExpResponse;
+			//}
+
+			RasterFolder* pFolder = pRasterWorkspace->GetFolder(folder_path);
+			if(pFolder==NULL)
+			{
+				char msg[AUGE_MSG_MAX];
+				g_sprintf(msg, "Path [%s] does not exist.", folder_path);
+				GLogger* pLogger = augeGetLoggerInstance();
+				pLogger->Error(msg, __FILE__, __LINE__);
+				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+				pExpResponse->SetMessage(msg);
+				return pExpResponse;
+			}
+
+			RESULTCODE rc = AG_FAILURE;
+			RasterDataset* pRasterDataset = pFolder->GetRasterDataset();
+			Raster* pRaster = pRasterDataset->GetRaster(raster_name);
+			if(pRaster==NULL)
+			{
+				pFolder->Release();
+
+				char msg[AUGE_MSG_MAX];
+				g_sprintf(msg, "Raster [%s/%s] does not exist.", folder_path, raster_name);
+				GLogger* pLogger = augeGetLoggerInstance();
+				pLogger->Error(msg, __FILE__, __LINE__);
+				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+				pExpResponse->SetMessage(msg);
+				return pExpResponse;
+			}
+
+			const char* raster_path = pRaster->GetPath();
+
+			//char local_path[AUGE_PATH_MAX];
+			//memset(local_path,0,AUGE_PATH_MAX);
+			//auge_make_path(local_path,NULL,raster_repository,folder_path+1,NULL);
+
+			//char raster_path[AUGE_PATH_MAX];
+			//memset(raster_path,0,AUGE_PATH_MAX);
+			//auge_make_path(raster_path,NULL,local_path,raster_name,NULL);
+
+			//if(g_access(raster_path,4))
+			//{
+			//	char msg[AUGE_MSG_MAX];
+			//	memset(msg,0,AUGE_MSG_MAX);
+			//	g_sprintf(msg,"Folder [%s] does not have Raster [%s] in folder  does not exist.", folder_path, raster_name);
+			//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			//	pExpResponse->SetMessage(msg);
+			//	pLogger->Error(msg,__FILE__,__LINE__);
+
+			//	pWebResponse = pExpResponse;
+			//}
+			//else
 			{
 				GetRasterResponse* pGetRasterResponse = new GetRasterResponse(pRequest);
 				pGetRasterResponse->SetPath(raster_path);
 				pWebResponse = pGetRasterResponse;
 			}
+			pRaster->Release();
+			pFolder->Release();
 		}
 
 		return pWebResponse;
@@ -187,7 +252,7 @@ namespace auge
 	//	GetRasterRequest* pRequest = static_cast<GetRasterRequest*>(pWebRequest);
 
 	//	const char* root_path = pWebContext->GetUploadPath();
-	//	const char* rqut_path = pRequest->GetPath();
+	//	const char* folder_path = pRequest->GetPath();
 	//	const char* raster_name=pRequest->GetName();
 	//	GEnvelope extent = pRequest->GetExtent();
 
@@ -201,7 +266,7 @@ namespace auge
 	//		return pExpResponse;
 	//	}
 
-	//	if(rqut_path==NULL)
+	//	if(folder_path==NULL)
 	//	{
 	//		const char* msg = "Parameter [Path] is NULL";
 	//		WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
@@ -213,7 +278,7 @@ namespace auge
 
 	//	char local_path[AUGE_PATH_MAX];
 	//	memset(local_path,0,AUGE_PATH_MAX);
-	//	auge_make_path(local_path,NULL,root_path,rqut_path+1,NULL);
+	//	auge_make_path(local_path,NULL,root_path,folder_path+1,NULL);
 
 	//	char raster_path[AUGE_PATH_MAX];
 	//	memset(raster_path,0,AUGE_PATH_MAX);
@@ -223,7 +288,7 @@ namespace auge
 	//	{
 	//		char msg[AUGE_MSG_MAX];
 	//		memset(msg,0,AUGE_MSG_MAX);
-	//		g_sprintf(msg,"Folder [%s] does not have Raster [%s] in folder  does not exist.", rqut_path, raster_name);
+	//		g_sprintf(msg,"Folder [%s] does not have Raster [%s] in folder  does not exist.", folder_path, raster_name);
 	//		WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 	//		pExpResponse->SetMessage(msg);
 	//		pLogger->Error(msg,__FILE__,__LINE__);

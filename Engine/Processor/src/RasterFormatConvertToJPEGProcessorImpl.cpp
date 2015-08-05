@@ -185,18 +185,8 @@ namespace auge
 		}
 		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
-		pWorkspace = pConnManager->GetWorkspace(m_user, outSourceName);
-		if(pWorkspace==NULL)
-		{
-			return AG_FAILURE;
-		}
-		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
-
 		Raster* pinRaster = NULL;
 		RasterFolder* pinFolder = NULL;
-
-		Raster* poutRaster = NULL;
-		RasterFolder* poutFolder = NULL;
 
 		pinFolder = pinRasterWorkspace->GetFolder(inRasterPath);
 		if(pinFolder==NULL)
@@ -222,6 +212,7 @@ namespace auge
 		pinRaster->GetRasterRect(rastertRect, extent);
 
 		RESULTCODE rc = AG_SUCCESS;
+		Raster* poutRaster = NULL;
 		RasterDataset* poutRasterDataset = NULL;
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
 
@@ -235,24 +226,32 @@ namespace auge
 
 		Fill(poutRaster, pinRaster, rastertRect);
 
-		pWorkspace = pConnManager->GetWorkspace(m_user, outSourceName);
-		if(pWorkspace==NULL)
+		if(outSourceName!=NULL)
 		{
-			return AG_FAILURE;
-		}
-		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
+			pWorkspace = pConnManager->GetWorkspace(m_user, outSourceName);
+			if(pWorkspace==NULL)
+			{
+				return AG_FAILURE;
+			}
+			poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
-		poutFolder = poutRasterWorkspace->GetFolder(outRasterPath);
-		if(poutFolder==NULL)
-		{
+			RasterFolder* poutFolder = poutRasterWorkspace->GetFolder(outRasterPath);
+			if(poutFolder==NULL)
+			{
+				poutRaster->Release();
+				pinFolder->Release();
+				return AG_FAILURE;
+			}
+			rc = poutFolder->GetRasterDataset()->AddRaster(outRasterName, poutRaster);
+
 			poutRaster->Release();
 			pinFolder->Release();
-			return AG_FAILURE;
 		}
-		rc = poutFolder->GetRasterDataset()->AddRaster(outRasterName, poutRaster);
-
+		else
+		{
+			poutRaster->Save(outRasterPath);
+		}
 		poutRaster->Release();
-		poutFolder->Release();
 		pinFolder->Release();
 
 		return rc;

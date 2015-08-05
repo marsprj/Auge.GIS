@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_encoding = "GBK";
+		m_r=1,m_g=2,m_b=3;
 	}
 
 	GetRasterRequest::~GetRasterRequest()
@@ -16,7 +17,7 @@ namespace auge
 	bool GetRasterRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetRasterPath(cgi["rasterPath"]);
+		SetPath(cgi["Path"]);
 		SetRasterName(cgi["rasterName"]);
 		SetSourceName(cgi["sourceName"]);
 		SetFormat(cgi["format"]);
@@ -54,7 +55,7 @@ namespace auge
 		return m_mime_type.c_str();
 	}
 
-	void GetRasterRequest::SetRasterPath(const char* path)
+	void GetRasterRequest::SetPath(const char* path)
 	{
 		if(path==NULL)
 		{
@@ -164,5 +165,39 @@ namespace auge
 		}
 		free(str);
 
+		if(m_bands.empty())
+		{
+			m_r=1,m_g=2;m_b=3;
+		}
+		else
+		{
+			if(m_bands.size()==1)
+			{
+				m_r=m_bands[0], m_g=0,	m_b=0;
+			}
+			else if(m_bands.size()==2)
+			{
+				m_r=m_bands[0], m_g=m_bands[1],	m_b=0;
+			}
+			else if(m_bands.size()==3)
+			{
+				m_r=m_bands[0], m_g=m_bands[1],	m_b=m_bands[2];
+			}
+		}
+	}
+
+	g_uint GetRasterRequest::GetR()
+	{
+		return m_r;
+	}
+
+	g_uint GetRasterRequest::GetG()
+	{
+		return m_g;
+	}
+
+	g_uint GetRasterRequest::GetB()
+	{
+		return m_b;
 	}
 }
