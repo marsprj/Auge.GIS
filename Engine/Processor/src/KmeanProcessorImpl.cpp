@@ -125,7 +125,7 @@ namespace auge
 		}
 		
 		FeatureClass		*pinFeatureClass = NULL;
-		FeatureClass		*poutFeatureClass= NULL;
+		//FeatureClass		*poutFeatureClass= NULL;
 		FeatureWorksapce	*pinWorkspace = NULL;
 		FeatureWorksapce	*poutWorkspace= NULL;
 		ConnectionManager	*pConnManager = augeGetConnectionManagerInstance();
@@ -136,7 +136,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_user, sourceName_out));
+		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->NewWorkspace(m_user, sourceName_out));
 		if(poutWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -145,6 +145,7 @@ namespace auge
 		pinFeatureClass = pinWorkspace->OpenFeatureClass(className_in);
 		if(pinFeatureClass==NULL)
 		{
+			poutWorkspace->Release();
 			return AG_FAILURE;
 		}
 		g_uint srid = pinFeatureClass->GetSRID();
@@ -152,22 +153,24 @@ namespace auge
 		GField* pField = pinFeatureClass->GetFields()->GetGeometryField();
 		if(pField==NULL)
 		{
+			poutWorkspace->Release();
 			return AG_FAILURE;
 		}
 
 		if(pField->GetGeometryDef()->GeometryType()!=augeGTPoint)
 		{
+			poutWorkspace->Release();
 			return AG_FAILURE;
 		}
 		
-
-		// input points
-		poutFeatureClass = poutWorkspace->OpenFeatureClass(className_out);
-		if(poutFeatureClass!=NULL)
-		{
-			pinFeatureClass->Release();
-			return AG_FAILURE;
-		}
+		//// input points
+		//poutFeatureClass = poutWorkspace->OpenFeatureClass(className_out);
+		//if(poutFeatureClass!=NULL)
+		//{
+		//	pinFeatureClass->Release();
+		//	poutWorkspace->Release();
+		//	return AG_FAILURE;
+		//}
 		
 		Geometry *pGeometry = NULL;
 		Feature	 *pFeature = NULL;
@@ -178,6 +181,7 @@ namespace auge
 		if(pCursor==NULL)
 		{
 			pinFeatureClass->Release();
+			poutWorkspace->Release();
 			return AG_FAILURE;
 		}
 
@@ -203,13 +207,15 @@ namespace auge
 		
 		// processing cluster 
 		if(!m_kmean.Execute())
-		{
+		{	
+			poutWorkspace->Release();
 			return AG_FAILURE;
 		}
 		
 		RESULTCODE rc = SaveCentroidResult(&m_kmean, className_out, poutWorkspace, srid);
 		if(rc!=AG_SUCCESS)
 		{
+			poutWorkspace->Release();
 			return rc;
 		}
 
@@ -217,12 +223,9 @@ namespace auge
 		memset(cluster_name, 0, AUGE_NAME_MAX);
 		g_sprintf(cluster_name, "%s_cluster", className_out);
 		rc = SaveClusterResult(&m_kmean, cluster_name, poutWorkspace, srid);
-		if(rc!=AG_SUCCESS)
-		{
-			return rc;
-		}
+		poutWorkspace->Release();
 
-		return AG_SUCCESS;
+		return rc;
 	}
 
 	RESULTCODE KMeansProcessorImpl::SaveCentroidResult(KMeans* kmean, const char* className, FeatureWorksapce* pWorkspace, g_uint srid)

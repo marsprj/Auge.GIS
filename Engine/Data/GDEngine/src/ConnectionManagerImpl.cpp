@@ -630,7 +630,47 @@ namespace auge
 
 	Workspace* ConnectionManagerImpl::NewWorkspace(g_uint user_id, const char* name)
 	{
-		return NULL;
+		if(name==NULL)
+		{
+			return NULL;
+		}
+		char sql[AUGE_SQL_MAX];
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,name,engine,uri,version,state,d_uri from g_data_source where name='%s' and user_id=%d", name, user_id);
+
+		Workspace* pWorkspace = NULL;
+		GResultSet* pResultSet = NULL;
+		pResultSet = m_pConnection->ExecuteQuery(sql);
+		if(pResultSet==NULL)
+		{
+			return NULL;
+		}
+
+		g_uint count = pResultSet->GetCount();
+		if(count==0)
+		{
+			pResultSet->Release();
+			return NULL;
+		}
+		int	gid = pResultSet->GetInt(0,0);
+		//const char* name= pResultSet->GetString(0,1);
+		const char* engn= pResultSet->GetString(0,2);
+		const char* uri = pResultSet->GetString(0,3);
+		int version = pResultSet->GetInt(0,4);
+		const char* stat= pResultSet->GetString(0,5);
+		const char* d_uri = pResultSet->GetString(0,6);
+
+		pWorkspace = NewWorkspace(gid, name, engn, uri,version);
+		pResultSet->Release();
+
+		RESULTCODE rc = pWorkspace->Open();
+		if(rc!=AG_SUCCESS)
+		{
+			pWorkspace->Release();
+			return  NULL;
+		}
+
+		return pWorkspace;
+
 	}
 
 	RESULTCODE ConnectionManagerImpl::SaveWorkspace(g_uint user_id, const char* name, const char* engine, const char* uri)

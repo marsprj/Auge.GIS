@@ -135,7 +135,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_user, sourceName_out));
+		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->NewWorkspace(m_user, sourceName_out));
 		if(poutWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -144,6 +144,7 @@ namespace auge
 		pinFeatureClass = pinWorkspace->OpenFeatureClass(className_in);
 		if(pinFeatureClass==NULL)
 		{
+			poutWorkspace->Release();
 			return AG_FAILURE;
 		}
 
@@ -153,6 +154,7 @@ namespace auge
 		poutFeatureClass = CreateOutputFeatureClass(className_out, srid_out, poutWorkspace, pinFeatureClass);
 		if(poutFeatureClass==NULL)
 		{
+			poutWorkspace->Release();
 			return AG_FAILURE;
 		}
 
@@ -166,7 +168,7 @@ namespace auge
 		}
 
 		pinFeatureClass->Release();
-		
+		poutWorkspace->Release();
 		
 		return AG_SUCCESS;
 	}
