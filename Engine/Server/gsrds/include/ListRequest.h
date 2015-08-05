@@ -48,7 +48,7 @@ namespace auge
 
 [ HTTP Post ]
 -------------------------------------------------------------------------
-user=user1&service=rds&version=1.0.0&request=List&sourceName=rsdb2&Path=/
+user=user1&service=rds&version=1.0.0&request=List&sourceName=rsdb2&rasterPath=/
 http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=List&sourceName=rsdb&rasterPath=/aaaa
 
 ************************************************************************/

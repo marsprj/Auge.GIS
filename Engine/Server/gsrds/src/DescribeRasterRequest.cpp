@@ -10,13 +10,13 @@ namespace auge
 
 	DescribeRasterRequest::~DescribeRasterRequest()
 	{
-
+		
 	}
 
 	bool DescribeRasterRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetPath(cgi["path"]);
+		SetPath(cgi["rasterPath"]);
 		SetRasterName(cgi["rasterName"]);
 		SetSourceName(cgi["sourceName"]);
 		return true;

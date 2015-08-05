@@ -10,7 +10,7 @@ namespace auge
 	{
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
-		m_pRasterDataset = NULL;
+		m_pRaster = NULL;
 	}
 
 	DescribeRasterResponse::~DescribeRasterResponse()
@@ -19,15 +19,15 @@ namespace auge
 		{
 			AUGE_SAFE_RELEASE(m_pRequest);
 		}
-		if(m_pRasterDataset!=NULL)
+		if(m_pRaster!=NULL)
 		{
-			AUGE_SAFE_RELEASE(m_pRasterDataset);
+			AUGE_SAFE_RELEASE(m_pRaster);
 		}
 	}
 
-	void DescribeRasterResponse::SetRasterDataset(RasterDataset* pRasterDataset)
+	void DescribeRasterResponse::SetRaster(Raster* pRaster)
 	{
-		m_pRasterDataset = pRasterDataset;
+		m_pRaster = pRaster;
 	}
 
 	RESULTCODE DescribeRasterResponse::Write(WebWriter* pWriter)
@@ -40,7 +40,7 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		
 		char str[AUGE_NAME_MAX];
-		Raster* pRaster = m_pRasterDataset->GetRaster();
+		Raster* pRaster = m_pRaster;
 
 		XDocument	*pxDoc = new XDocument();
 		XElement	*pxRoot = pxDoc->CreateRootNode("Raster",NULL,NULL);
@@ -78,14 +78,14 @@ namespace auge
 		g_sprintf(str,"%f %f",extent.m_xmin,extent.m_ymin);
 		pxNode = pxBounding->AddChild("LowerLeft");
 		pxNode->AddChildText(str);
-
+		 
 		g_sprintf(str,"%f %f",extent.m_xmax,extent.m_ymax);
 		pxNode = pxBounding->AddChild("UpperRight");
 		pxNode->AddChildText(str);
 
-		// path
-		pxNode = pxRoot->AddChild("Path",NULL);
-		pxNode->AddChildText(pRaster->GetPath());
+		//// path
+		//pxNode = pxRoot->AddChild("Path",NULL);
+		//pxNode->AddChildText(pRaster->GetPath());
 
 
 		int len = 0;

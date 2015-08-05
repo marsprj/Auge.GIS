@@ -61,7 +61,7 @@ namespace auge
 		DescribeRasterRequest* pRequest = static_cast<DescribeRasterRequest*>(pWebRequest);
 
 		const char* root_path = pWebContext->GetUploadPath();
-		const char* rqut_path = pRequest->GetPath();
+		const char* folder_path = pRequest->GetPath();
 		const char* raster_name=pRequest->GetRasterName();
 
 		if(raster_name==NULL)
@@ -123,51 +123,37 @@ namespace auge
 		//	return pExpResponse;
 		//}
 
-		RESULTCODE rc = AG_FAILURE;
-		RasterDataset* pRasterDataset = NULL;
-		//RasterDataset* pRasterDataset = pRasterWorkspace->OpenRasterDataset(raster_name);
-		if(pRasterDataset==NULL)
+		RasterFolder* pFolder = pRasterWorkspace->GetFolder(folder_path);
+		if(pFolder==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
-			memset(msg,0,AUGE_MSG_MAX);
-			g_sprintf(msg,"Cannot find raster [%s]", raster_name);
+			g_sprintf(msg, "Path [%s] does not exist.", folder_path);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
-			pLogger->Error(msg,__FILE__,__LINE__);
-
 			return pExpResponse;
 		}
-		
-		Raster* pRaster = pRasterDataset->GetRaster();
+
+		RESULTCODE rc = AG_FAILURE;
+		RasterDataset* pRasterDataset = pFolder->GetRasterDataset();
+		Raster* pRaster = pRasterDataset->GetRaster(raster_name);
 		if(pRaster==NULL)
 		{
+			pFolder->Release();
+
 			char msg[AUGE_MSG_MAX];
-			memset(msg,0,AUGE_MSG_MAX);
-			g_sprintf(msg,"Cannot load raster [%s]", raster_name);
+			g_sprintf(msg, "Raster [%s/%s] does not exist.", folder_path, raster_name);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
-			pLogger->Error(msg,__FILE__,__LINE__);
-
 			return pExpResponse;
 		}
 
-		const char* raster_path = pRaster->GetPath();
-		if(g_access(raster_path,4))
-		{
-			pRasterDataset->Release();
-
-			char msg[AUGE_MSG_MAX];
-			memset(msg,0,AUGE_MSG_MAX);
-			g_sprintf(msg,"Cannot find raster [%s]", raster_name);
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(msg);
-			pLogger->Error(msg,__FILE__,__LINE__);
-
-			return pExpResponse;
-		}
-
+		pFolder->Release();
 		DescribeRasterResponse* pDescribeRasterResponse = new DescribeRasterResponse(pRequest);
-		pDescribeRasterResponse->SetRasterDataset(pRasterDataset);
+		pDescribeRasterResponse->SetRaster(pRaster);
 
 		return pDescribeRasterResponse;
 	}

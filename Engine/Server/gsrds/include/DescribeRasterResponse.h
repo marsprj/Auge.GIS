@@ -9,7 +9,7 @@
 
 namespace auge
 {	
-	class RasterDataset;
+	class Raster;
 	class DescribeRasterRequest;
 
 	class DescribeRasterResponse : public WebResponse
@@ -21,11 +21,11 @@ namespace auge
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 	
 	public:
-		void SetRasterDataset(RasterDataset* prasterDataset);
+		void SetRaster(Raster* praster);
 
 	private:
 		DescribeRasterRequest	*m_pRequest;
-		RasterDataset			*m_pRasterDataset;
+		Raster					*m_pRaster;
 	};
 }
 
