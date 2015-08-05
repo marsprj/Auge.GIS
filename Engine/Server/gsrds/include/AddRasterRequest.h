@@ -42,7 +42,7 @@ namespace auge
 		std::string m_encoding;
 
 		std::string m_raster_name;
-		std::string m_raster_path;
+		std::string m_raster_path; 
 		std::string m_file_path;
 		std::string m_source_name;
 	};
@@ -54,7 +54,7 @@ namespace auge
 
 [ HTTP Post ]
 -------------------------------------------------------------------------
-user=user1&service=rds&version=1.0.0&request=AddRaster&sourceName=rsdb&rasterName=Penguins.jpg&rasterPath=/aaa&filePath=/Penguins.jpg
+user=user1&service=rds&version=1.0.0&request=AddRaster&sourceName=rsdb2&rasterName=Penguins.jpg&rasterPath=/aaa&filePath=/Penguins.jpg
 user=user1&service=rds&version=1.0.0&request=AddRaster&sourceName=rsdb&rasterName=Koala.png&rasterPath=/aaa&filePath=/Koala.png
 
 user=user1&service=rds&version=1.0.0&request=AddRaster&sourceName=rsdb&rasterName=Koala.png&rasterPath=/aaa&filePath=/Koala.png
