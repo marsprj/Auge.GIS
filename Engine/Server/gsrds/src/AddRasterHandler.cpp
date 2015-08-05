@@ -187,7 +187,7 @@ namespace auge
 		pRaster->SetName(raster_name);
 		pRaster->SetAlias(raster_name);
 		pRaster->SetPath(raster_path);
-		rc = pRasterWorkspace->AddRaster(pRaster);
+		//rc = pRasterWorkspace->AddRaster(pRaster);
 		pRaster->Release();
 		
 		if(rc!=AG_SUCCESS)

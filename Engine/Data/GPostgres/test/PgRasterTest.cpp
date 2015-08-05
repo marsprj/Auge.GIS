@@ -11,7 +11,8 @@ void PgRasterTest::setUp()
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gaode;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK;repository=E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\user\\user1\\rds";
-	const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=rsdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK;repository=E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\user\\user1\\rds";
+	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=rsdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK;repository=E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\user\\user1\\rds";
+	const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=rsdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK;repository=E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\user\\user1\\rds";
 	//const char* path = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
@@ -42,9 +43,9 @@ void PgRasterTest::CreateRasterFolder()
 	auge::RasterFolder* pRoot = m_pWorkspace->GetRootFolder();
 	CPPUNIT_ASSERT(pRoot!=NULL);
 
-	const char* name = "ds1";
-	//auge::RasterFolder* pFolder = pRoot->CreateFolder(name);
-	auge::RasterFolder* pFolder = pRoot->GetFolder(name);
+	const char* name = "ds3";
+	auge::RasterFolder* pFolder = pRoot->CreateFolder(name);
+	//auge::RasterFolder* pFolder = pRoot->GetFolder(name);
 	CPPUNIT_ASSERT(pFolder!=NULL);	
 	pFolder->Release();
 
@@ -98,6 +99,8 @@ void PgRasterTest::EnumRasterFolder()
 
 void PgRasterTest::AddRaster()
 {
+	RESULTCODE rc = AG_FAILURE;
+
 	auge::Raster* pRaster = NULL;
 	auge::RasterIO* io = auge::augeGetRasterIOInstance();	
 
@@ -111,15 +114,20 @@ void PgRasterTest::AddRaster()
 
 	auge::RasterDataset* pRasterDataset = pFolder->GetRasterDataset();
 
-	pRaster = io->Read("E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\Desert.jpg");
-	CPPUNIT_ASSERT(pRaster!=NULL);
-	RESULTCODE rc = pRasterDataset->AddRaster("Desert.jpg", pRaster);
-	CPPUNIT_ASSERT(rc==AG_SUCCESS);
-	pRaster->Release();
+	//pRaster = io->Read("E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\Desert.jpg");
+	//CPPUNIT_ASSERT(pRaster!=NULL);
+	//RESULTCODE rc = pRasterDataset->AddRaster("Desert.jpg", pRaster);
+	//CPPUNIT_ASSERT(rc==AG_SUCCESS);
+	//pRaster->Release();
 
-	pRaster = io->Read("E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\Koala-2.png");
+	//pRaster = io->Read("E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload\\Koala-2.png");
+	//CPPUNIT_ASSERT(pRaster!=NULL);
+	//rc = pRasterDataset->AddRaster("Koala.png", pRaster);
+	//CPPUNIT_ASSERT(rc==AG_SUCCESS);
+
+	pRaster = io->Read("G:\\Data\\raster\\srtm_58_05\\srtm_58_05.tif");
 	CPPUNIT_ASSERT(pRaster!=NULL);
-	rc = pRasterDataset->AddRaster("Koala.png", pRaster);
+	rc = pRoot->GetRasterDataset()->AddRaster("srtm_58_05.tif", pRaster);
 	CPPUNIT_ASSERT(rc==AG_SUCCESS);
 
 	pFolder->Release();

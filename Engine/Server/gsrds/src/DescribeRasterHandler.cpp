@@ -124,7 +124,8 @@ namespace auge
 		//}
 
 		RESULTCODE rc = AG_FAILURE;
-		RasterDataset* pRasterDataset = pRasterWorkspace->OpenRasterDataset(raster_name);
+		RasterDataset* pRasterDataset = NULL;
+		//RasterDataset* pRasterDataset = pRasterWorkspace->OpenRasterDataset(raster_name);
 		if(pRasterDataset==NULL)
 		{
 			char msg[AUGE_MSG_MAX];

@@ -19,6 +19,8 @@ namespace auge
 	RasterEdgeDetectProcessorImpl::RasterEdgeDetectProcessorImpl()
 	{
 		m_user = 0;
+		m_in_raster_path = "/";
+		m_out_raster_path = "/";
 	}
 
 	RasterEdgeDetectProcessorImpl::~RasterEdgeDetectProcessorImpl()
@@ -174,7 +176,11 @@ namespace auge
 			return AG_FAILURE;
 		}
 		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
-
+		if(pinRaster==NULL)
+		{
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
 		
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
 

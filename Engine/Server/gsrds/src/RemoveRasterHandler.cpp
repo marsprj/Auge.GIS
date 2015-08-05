@@ -148,7 +148,8 @@ namespace auge
 		//	return pExpResponse;
 		//}
 
-		RESULTCODE rc = pRasterWorkspace->RemoveRaster(raster_name, raster_path);
+		RESULTCODE rc = AG_SUCCESS;
+		//pRasterWorkspace->RemoveRaster(raster_name, raster_path);
 		if(rc!=AG_SUCCESS)
 		{
 			GError* pError = augeGetErrorInstance();

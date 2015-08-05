@@ -10,6 +10,9 @@ namespace auge
 	RasterSubtractProcessorImpl::RasterSubtractProcessorImpl()
 	{
 		m_user = 0;
+		m_in_raster_path_1 = "/";
+		m_in_raster_path_2 = "/";
+		m_out_raster_path = "/";
 	}
 
 	RasterSubtractProcessorImpl::~RasterSubtractProcessorImpl()
@@ -164,6 +167,11 @@ namespace auge
 	{
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
 	}
+	
+	const char* RasterSubtractProcessorImpl::GetOutputPath()
+	{
+		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
+	}
 
 	RESULTCODE RasterSubtractProcessorImpl::Execute()
 	{
@@ -230,7 +238,7 @@ namespace auge
 		}
 
 		// Get Raster 2
-		pinFolder_2 = pinRasterWorkspace_2->GetFolder(inRasterPath_1);
+		pinFolder_2 = pinRasterWorkspace_2->GetFolder(inRasterPath_2);
 		if(pinFolder_2==NULL)
 		{
 			return AG_FAILURE;

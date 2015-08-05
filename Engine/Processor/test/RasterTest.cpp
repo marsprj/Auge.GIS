@@ -20,7 +20,8 @@ void RasterTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -54,13 +55,13 @@ void RasterTest::ExtractByRectangle()
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pProcessor = pFactory->CreateRasterExtractByRectangleProcessor();
 
-	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputDataSource("rsdb2");
 	pProcessor->SetInputRaster("Koala.png");
-	pProcessor->SetInputPath("/");
+	pProcessor->SetInputPath("/s1");
 
-	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputDataSource("rsdb2");
 	pProcessor->SetOutputRaster("Koala_clipped.png");
-	pProcessor->SetOutputPath("/");
+	pProcessor->SetOutputPath("/s2");
 
 	auge::GEnvelope extent(100,100,500,500);
 	pProcessor->SetInputRectangle(extent);
@@ -81,11 +82,12 @@ void RasterTest::Stretch()
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pProcessor = pFactory->CreateRasterStretchProcessor();
 
-	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputDataSource("rsdb2");
 	pProcessor->SetInputRaster("srtm_58_05.tif");
 
-	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputDataSource("rsdb2");
 	pProcessor->SetOutputRaster("srtm_58_05.png");
+	pProcessor->SetOutputPath("/s1");
 
 	auge::GColor start_color(0,255,0,255);
 	pProcessor->SetStartColor(start_color);
@@ -108,16 +110,16 @@ void RasterTest::EdgeDetorSobol()
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pProcessor = pFactory->CreateRasterEdgeDetectProcessor();
 
-	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputDataSource("rsdb2");
 	pProcessor->SetInputRaster("srtm_58_05.tif");
 
-	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputDataSource("rsdb2");
 	pProcessor->SetOutputRaster("srtm_58_05_edge.tif");
 
-	//pProcessor->SetInputDataSource("rsdb");
+	//pProcessor->SetInputDataSource("rsdb2");
 	//pProcessor->SetInputRaster("Koala.jpeg");
 
-	//pProcessor->SetOutputDataSource("rsdb");
+	//pProcessor->SetOutputDataSource("rsdb2");
 	//pProcessor->SetOutputRaster("Koala_edge.jpeg");
 
 	pProcessor->SetEdgeDetector(auge::augeEdgeSobel);
@@ -138,11 +140,13 @@ void RasterTest::Graylize()
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pProcessor = pFactory->CreateRasterGraylizeProcessor();
 
-	pProcessor->SetInputDataSource("rsdb");
-	pProcessor->SetInputRaster("Koala.jpeg");
+	pProcessor->SetInputDataSource("rsdb2");
+	pProcessor->SetInputRaster("Koala.png");
+	pProcessor->SetInputPath("/s1");
 
-	pProcessor->SetOutputDataSource("rsdb");
-	pProcessor->SetOutputRaster("Koala_gray.jpeg");
+	pProcessor->SetOutputDataSource("rsdb2");
+	pProcessor->SetOutputRaster("Koala_gray.jpg");
+	pProcessor->SetOutputPath("/s2/s_1_1");
 
 	RESULTCODE rc = pProcessor->Execute();
 
@@ -160,21 +164,23 @@ void RasterTest::ToJPG()
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pProcessor = pFactory->CreateRasterFormatConvertToJPEGProcessor();
 
-	//pProcessor->SetInputDataSource("rsdb");
+	//pProcessor->SetInputDataSource("rsdb2");
 	//pProcessor->SetInputRaster("srtm_58_05.tif");
 
-	//pProcessor->SetOutputDataSource("rsdb");
+	//pProcessor->SetOutputDataSource("rsdb2");
 	//pProcessor->SetOutputRaster("srtm_58_05.jpeg");
 
 	auge::GEnvelope extent;
 	extent.Set(100,100,800,800);
 
 	pProcessor->SetInputRectangle(extent);
-	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputDataSource("rsdb2");
 	pProcessor->SetInputRaster("Koala.png");
+	pProcessor->SetInputPath("/s1");
 
-	pProcessor->SetOutputDataSource("rsdb");
-	pProcessor->SetOutputRaster("Koala_xxx.png");
+	pProcessor->SetOutputDataSource("rsdb2");
+	pProcessor->SetOutputRaster("Koala_xxx.jpg");
+	//pProcessor->SetInputPath("/s1");
 
 	pProcessor->SetRed(1);
 	pProcessor->SetGreen(0);
@@ -197,11 +203,13 @@ void RasterTest::Reverse()
 	pProcessor = pFactory->CreateRasterReverseProcessor();
 
 	pProcessor->SetUser(2);
-	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputDataSource("rsdb2");
 	pProcessor->SetInputRaster("Desert.jpg");
+	pProcessor->SetInputPath("/s1");
 
-	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputDataSource("rsdb2");
 	pProcessor->SetOutputRaster("Desert_reverse.jpg");
+	pProcessor->SetOutputPath("/s2/s_1_2");
 
 	RESULTCODE rc = pProcessor->Execute();
 
@@ -220,11 +228,13 @@ void RasterTest::Smooth()
 	pProcessor = pFactory->CreateRasterSmoothProcessor();
 
 	pProcessor->SetUser(2);
-	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputDataSource("rsdb2");
 	pProcessor->SetInputRaster("Desert.jpg");
+	pProcessor->SetInputPath("/s1");
 
-	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputDataSource("rsdb2");
 	pProcessor->SetOutputRaster("Desert_mean.jpg");
+	pProcessor->SetOutputPath("/s2/s_1_2");
 	//pProcessor->SetOutputRaster("Desert_gauss.jpg");
 
 	//pProcessor->SetSmoother(auge::augeSmoothMean);
@@ -248,14 +258,17 @@ void RasterTest::Subtract()
 	pProcessor = pFactory->CreateRasterSubtractProcessor();
 
 	pProcessor->SetUser(2);
-	pProcessor->SetInputDataSource_1("rsdb");
-	pProcessor->SetInputRaster_1("Koala.png");
+	pProcessor->SetInputDataSource_1("rsdb2");
+	pProcessor->SetInputRaster_1("Desert.jpg");
+	pProcessor->SetInputPath_1("/s1");
 
-	pProcessor->SetInputDataSource_2("rsdb");
-	pProcessor->SetInputRaster_2("Koala_reverse.png");
+	pProcessor->SetInputDataSource_2("rsdb2");
+	pProcessor->SetInputRaster_2("Desert_mean.jpg");
+	pProcessor->SetInputPath_2("/s2/s_1_2");
 
-	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputDataSource("rsdb2");
 	pProcessor->SetOutputRaster("Subtract.jpg");
+	pProcessor->SetOutputPath("/s2/s_1_2");
 
 	RESULTCODE rc = pProcessor->Execute();
 
@@ -274,11 +287,12 @@ void RasterTest::DEMSlope()
 	pProcessor = pFactory->CreateDemSlopeProcessor();
 
 	pProcessor->SetUser(2);
-	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputDataSource("rsdb2");
 	pProcessor->SetInputRaster("srtm_58_05.tif");
 
-	pProcessor->SetOutputDataSource("rsdb");
-	pProcessor->SetOutputRaster("srtm_58_05_slope.tif");
+	pProcessor->SetOutputDataSource("rsdb2");
+	pProcessor->SetOutputRaster("srtm_58_05_slope_3.tif");
+	pProcessor->SetOutputPath("/s2/s_1_2");
 
 	RESULTCODE rc = pProcessor->Execute();
 
@@ -297,11 +311,12 @@ void RasterTest::DEMAspect()
 	pProcessor = pFactory->CreateDemAspectProcessor();
 
 	pProcessor->SetUser(2);
-	pProcessor->SetInputDataSource("rsdb");
+	pProcessor->SetInputDataSource("rsdb2");
 	pProcessor->SetInputRaster("srtm_58_05.tif");
 
-	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputDataSource("rsdb2");
 	pProcessor->SetOutputRaster("srtm_58_05_aspect.tif");
+	pProcessor->SetOutputPath("/s2/s_1_2");
 
 	RESULTCODE rc = pProcessor->Execute();
 

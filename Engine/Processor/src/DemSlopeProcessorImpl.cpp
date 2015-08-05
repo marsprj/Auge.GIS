@@ -10,6 +10,8 @@ namespace auge
 	DemSlopeProcessorImpl::DemSlopeProcessorImpl()
 	{
 		m_user = 0;
+		m_in_raster_path = "/";
+		m_out_raster_path = "/";
 	}
 
 	DemSlopeProcessorImpl::~DemSlopeProcessorImpl()
@@ -160,7 +162,11 @@ namespace auge
 			return AG_FAILURE;
 		}
 		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
-
+		if(pinRaster==NULL)
+		{
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
 		
 		poutRaster = Slope(pinRaster);
 
@@ -320,7 +326,7 @@ namespace auge
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
 			{
-						slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
+				slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
 				slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
 
 				value = sqrt(pow(slope_x,2) + pow(slope_y, 2));

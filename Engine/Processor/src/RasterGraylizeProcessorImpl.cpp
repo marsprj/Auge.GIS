@@ -8,6 +8,8 @@ namespace auge
 	RasterGraylizeProcessorImpl::RasterGraylizeProcessorImpl()
 	{
 		m_user = 0;
+		m_in_raster_path = "/";
+		m_out_raster_path = "/";
 	}
 
 	RasterGraylizeProcessorImpl::~RasterGraylizeProcessorImpl()
@@ -157,6 +159,11 @@ namespace auge
 			return AG_FAILURE;
 		}
 		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
+		if(pinRaster==NULL)
+		{
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
 
 		g_uint band_count = pinRaster->GetBandCount();
 		if(band_count<3||band_count>4)
@@ -172,11 +179,17 @@ namespace auge
 			return AG_FAILURE;
 		}
 		
-		
+		poutFolder = poutRasterWorkspace->GetFolder(outRasterPath);
+		if(poutFolder==NULL)
+		{
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
 		RESULTCODE rc = poutFolder->GetRasterDataset()->AddRaster(outRasterName, pinRaster);
-		//poutRaster->Release();
-		pinFolder->Release();
+
+		pinRaster->Release();
 		poutFolder->Release();
+		pinFolder->Release();
 
 		return rc;
 	}

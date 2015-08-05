@@ -71,7 +71,7 @@ namespace auge
 
 		virtual const char*		GetPath() = 0;
 		virtual void			SetPath(const char* path) = 0;
-
+		
 		virtual	RESULTCODE		Save(const char* path, const char* format=NULL) = 0;
 	};
 

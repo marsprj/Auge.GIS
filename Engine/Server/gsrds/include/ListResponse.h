@@ -12,21 +12,13 @@
 #endif
 
 namespace auge
-{	
+{
+	class RasterFolder;
+	class EnumRaster;
+	class EnumRasterFolder;
+
 	class ListResponse : public WebResponse
 	{
-	private:
-		typedef struct 
-		{
-			char fname[32];
-			int	 isfolder;
-#ifdef WIN32
-			struct _stat fstat;
-#else
-			struct stat fstat;
-#endif
-		}g_file_t;
-
 	public:
 		ListResponse(ListRequest* pRequest);
 		virtual ~ListResponse();
@@ -34,16 +26,17 @@ namespace auge
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
 	
 	public:
-		void	AddFile(const char* name);
-		void	SetPath(const char* path);
+		void		SetFolder(RasterFolder* pFolder);
 
 	private:
-		bool	IsRaster(const char* fname);
+		XDocument*	WriteDocument();
+		void		WriteRasters(XElement* pxFiles, EnumRaster* pRasters);
+		void		WriteFolders(XElement* pxFiles, EnumRasterFolder* pFolders);
+		
 
 	private:
-		ListRequest				*m_pRequest;
-		std::vector<g_file_t*>	m_files;	
-		std::string				m_path;
+		ListRequest		*m_pRequest;
+		RasterFolder	*m_pFolder;
 	};
 }
 

@@ -17,7 +17,6 @@ namespace auge
 		g_raster_table  = "g_raster";
 		g_raster_folder_table = "g_raster_folder";
 
-		m_raster_root_folder.Create(0, "/", "/", "/", this);
 
 //#ifdef WIN32
 //		m_raster_repository = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload";
@@ -98,7 +97,7 @@ namespace auge
 		{
 			CreateRasterTable();
 		}
-
+		m_raster_root_folder.Create(0, "/", "/", "/", this);
 		return rc;
 	}
 
@@ -508,6 +507,11 @@ namespace auge
 			return NULL;
 		}
 
+		if(strcmp(path, "/")==0)
+		{
+			return GetRootFolder();
+		}
+
 		const char* format = "select gid,name,alias,path,parent from %s where path='%s'";
 
 		char sql[AUGE_PATH_MAX];
@@ -823,7 +827,7 @@ namespace auge
 			"	gid serial NOT NULL," \
 			"	name character varying(32)," \
 			"	alias character varying(32)," \
-			"	path character varying(8)," \
+			"	path character varying(256)," \
 			"	parent integer," \
 			"	CONSTRAINT g_raster_folder_pk PRIMARY KEY (gid)" \
 			")";

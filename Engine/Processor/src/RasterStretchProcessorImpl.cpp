@@ -11,6 +11,8 @@ namespace auge
 		m_color_end = GColor(0,255,0,255);
 
 		m_user = 0;
+		m_in_raster_path = "/";
+		m_out_raster_path = "/";
 	}
 
 	RasterStretchProcessorImpl::~RasterStretchProcessorImpl()

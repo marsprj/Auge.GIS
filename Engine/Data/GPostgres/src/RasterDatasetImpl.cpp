@@ -1,6 +1,7 @@
 #include "RasterDatasetImpl.h"
 #include "WorkspacePgs.h"
 #include "AugeRaster.h"
+#include "EnumRasterImpl.h"
 
 namespace auge
 {
@@ -53,7 +54,55 @@ namespace auge
 
 	EnumRaster*	RasterDatasetImpl::GetRasters()
 	{
-		return NULL;
+		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid,dataset from %s where dataset=%d";
+
+		char sql[AUGE_SQL_MAX] = {0};
+		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWoskspace->g_raster_table.c_str(), m_pFolder->GetID());
+
+		GResultSet* pResult = m_pWoskspace->m_pgConnection.ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+
+		EnumRasterImpl* pRasters = new EnumRasterImpl();
+
+		g_uint count = pResult->GetCount();
+		for(g_uint i=0; i<count; i++)
+		{
+			g_uint		gid	 = pResult->GetInt(i,0);
+			const char* name = pResult->GetString(i,1);
+			const char* alias= pResult->GetString(i,2);
+			const char* fmt	 = pResult->GetString(i,3);
+			//const char* path = pResult->GetString(i,4);
+			g_uint		nband= pResult->GetInt(i,5);
+			g_int		srid = pResult->GetInt(i,6);
+			g_uint		width= pResult->GetInt(i,7);
+			g_uint		height=pResult->GetInt(i,8);
+			double		xmin = pResult->GetDouble(i,9);
+			double		ymin = pResult->GetDouble(i,10);
+			double		xmax = pResult->GetDouble(i,11);
+			double		ymax = pResult->GetDouble(i,12);
+			const char* uuid = pResult->GetString(i,13);
+			g_uint	dataset  = pResult->GetInt(i,14);
+
+			char raster_path[AUGE_PATH_MAX];
+			memset(raster_path, 0, AUGE_PATH_MAX);
+			auge_make_path(raster_path, NULL, m_pFolder->GetLocalPath(), name, NULL);
+
+			Raster* pRaster = NULL;
+			RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
+			pRaster = pRasterFactory->CreateRaster(name, alias, format, raster_path, nband, srid, width, height, xmin, ymin, xmax, ymax, uuid);
+
+			if(pRaster!=NULL)
+			{
+				pRaster->SetID(gid);
+				pRasters->Add(pRaster);
+			}
+		}
+		pResult->Release();
+		
+		return pRasters;
 	}
 
 	Raster*	RasterDatasetImpl::GetRaster(const char* name)
@@ -268,7 +317,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, format, name, m_pFolder->GetID());
+		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWoskspace->g_raster_table.c_str(), name, m_pFolder->GetID());
 
 		GResultSet* pResult = m_pWoskspace->m_pgConnection.ExecuteQuery(sql);
 		if(pResult==NULL)

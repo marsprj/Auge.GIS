@@ -293,6 +293,9 @@ namespace auge
 
 		virtual RasterDataset*		GetRasterDataset() = 0;
 
+		virtual const char*			GetPath() = 0;
+		virtual const char*			GetLocalPath() = 0;
+
 		virtual void				Release() = 0;
 	};
 

@@ -16,7 +16,9 @@ namespace auge
 	bool ListRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetPath(cgi["rasterPath"]);
+		SetSourceName(cgi["sourceName"]);
+		SetPath(cgi["Path"]);
+
 		return true;
 	}
 
@@ -53,17 +55,34 @@ namespace auge
 	{
 		if(path==NULL)
 		{
-			m_raster_path.clear();
+			m_path = "/";
 		}
 		else
 		{
-			m_raster_path = path;
+			m_path = path;
+		}
+	}
+	
+	const char* ListRequest::GetPath()
+	{
+		return m_path.empty() ? NULL : m_path.c_str();
+	}
+
+	void ListRequest::SetSourceName(const char* sourceName)
+	{
+		if(sourceName==NULL)
+		{
+			m_source_name.clear();
+		}
+		else
+		{
+			m_source_name = sourceName;
 		}
 	}
 
-	const char* ListRequest::GetRasterPath()
+	const char* ListRequest::GetSourceName()
 	{
-		return m_raster_path.empty() ? NULL : m_raster_path.c_str();
+		return m_source_name.empty() ? NULL : m_source_name.c_str();
 	}
 
 	const char*	ListRequest::GetEncoding()

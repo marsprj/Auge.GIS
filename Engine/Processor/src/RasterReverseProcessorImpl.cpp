@@ -12,6 +12,8 @@ namespace auge
 	RasterReverseProcessorImpl::RasterReverseProcessorImpl()
 	{
 		m_user = 0;
+		m_in_raster_path = "/";
+		m_out_raster_path = "/";
 	}
 
 	RasterReverseProcessorImpl::~RasterReverseProcessorImpl()

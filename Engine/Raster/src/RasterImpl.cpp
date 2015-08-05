@@ -6,6 +6,8 @@ namespace auge
 {
 	RasterImpl::RasterImpl()
 	{
+		GDALAllRegister();
+
 		m_srid = 4326;
 		m_poDataset = NULL;
 		//m_pWorkspace = NULL;
@@ -361,7 +363,8 @@ namespace auge
 
 	const char*	RasterImpl::GetPath()
 	{
-		return m_path.empty() ? NULL : m_path.c_str();
+		//return m_path.empty() ? NULL : m_path.c_str();
+		return m_full_path.empty() ? NULL : m_full_path.c_str();
 	}
 
 	void RasterImpl::SetPath(const char* path)

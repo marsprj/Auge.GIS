@@ -21,14 +21,15 @@ namespace auge
 		virtual const char*		GetMimeType();
 		virtual const char*		GetEncoding();
 
-
 	public:
-		const char*	GetRasterPath();
+		const char*	GetPath();
+		const char* GetSourceName();
 
 	public:
 		bool		Create(rude::CGI& cgi);
 
 		void		SetVersion(const char* value);
+		void		SetSourceName(const char* sourceName);
 		void		SetPath(const char* path);
 
 	private:
@@ -36,7 +37,8 @@ namespace auge
 		std::string m_mime_type;
 		std::string m_encoding;
 
-		std::string m_raster_path;
+		std::string m_path;
+		std::string m_source_name;
 	};
 }
 
@@ -46,7 +48,7 @@ namespace auge
 
 [ HTTP Post ]
 -------------------------------------------------------------------------
-service=rds&version=1.0.0&request=List&Path=/
+user=user1&service=rds&version=1.0.0&request=List&sourceName=rsdb2&Path=/
 http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=List&sourceName=rsdb&rasterPath=/aaaa
 
 ************************************************************************/

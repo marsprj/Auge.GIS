@@ -10,6 +10,8 @@ namespace auge
 	DemAspectProcessorImpl::DemAspectProcessorImpl()
 	{
 		m_user = 0;
+		m_in_raster_path = "/";
+		m_out_raster_path = "/";
 	}
 
 	DemAspectProcessorImpl::~DemAspectProcessorImpl()

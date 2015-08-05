@@ -8,6 +8,8 @@ namespace auge
 	RasterExtractByRectangleProcessorImpl::RasterExtractByRectangleProcessorImpl()
 	{
 		m_user = 0;
+		m_in_raster_path = "/";
+		m_out_raster_path = "/";
 	}
 
 	RasterExtractByRectangleProcessorImpl::~RasterExtractByRectangleProcessorImpl()
@@ -128,11 +130,10 @@ namespace auge
 		const char* inSourceName = GetInputDataSource();
 		const char* inRasterName = GetInputRaster();
 		const char* inRasterPath = GetInputRasterPath();
-		
 		const char* outSourceName = GetOutputDataSource();
 		const char* outRasterName = GetOutputRaster();
 		const char* outRasterPath = GetOutputRasterPath();
-		
+
 		Workspace* pWorkspace = NULL;
 		RasterWorkspace* pinRasterWorkspace = NULL;
 		RasterWorkspace* poutRasterWorkspace = NULL;
@@ -154,17 +155,22 @@ namespace auge
 		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
 		Raster* pinRaster = NULL;
-		RasterDataset* pinRasterDataset = NULL;
+		RasterFolder* pinFolder = NULL;
 
 		Raster* poutRaster = NULL;
-		RasterDataset* poutRasterDataset = NULL;
+		RasterFolder* poutFolder = NULL;
 
-		pinRasterDataset = pinRasterWorkspace->OpenRasterDataset(inRasterName);
-		if(pinRasterDataset==NULL)
+		pinFolder = pinRasterWorkspace->GetFolder(inRasterPath);
+		if(pinFolder==NULL)
 		{
 			return AG_FAILURE;
 		}
-		pinRaster = pinRasterDataset->GetRaster();
+		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
+		if(pinRaster==NULL)
+		{
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
 		
 		GEnvelope& raster_extent = pinRaster->GetExtent();
 		GEnvelope exent = raster_extent.Intersect(inRect);
@@ -174,13 +180,25 @@ namespace auge
 		poutRaster = pRasterFactory->CreateRaster(outRasterName, exent, pinRaster);
 		if(poutRaster==NULL)
 		{
-			pinRasterDataset->Release();
+			pinRaster->Release();
+			pinFolder->Release();
 			return AG_FAILURE;
 		}
 
-		RESULTCODE rc = poutRasterWorkspace->AddRaster(poutRaster);
+		poutFolder = poutRasterWorkspace->GetFolder(outRasterPath);
+		if(poutFolder==NULL)
+		{
+			pinRaster->Release();
+			poutRaster->Release();
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
+		RESULTCODE rc = poutFolder->GetRasterDataset()->AddRaster(outRasterName, poutRaster);
+
+		pinRaster->Release();
 		poutRaster->Release();
-		pinRasterDataset->Release();
+		poutFolder->Release();
+		pinFolder->Release();
 
 		return rc;
 	}

@@ -113,12 +113,17 @@ namespace auge
 			return NULL;
 		}
 
+		if(HasFolder(name))
+		{
+			return NULL;
+		}
+
 		char folder_path[AUGE_PATH_MAX];
 		memset(folder_path, 0, AUGE_PATH_MAX);
 		auge_make_path(folder_path, NULL, m_path.c_str(), name+1, NULL);
 		char local_folder_path[AUGE_PATH_MAX];
 		memset(local_folder_path, 0, AUGE_PATH_MAX);
-		auge_make_path(local_folder_path, NULL, m_pWoskspace->GetRepository(), folder_path+1, NULL);
+		auge_make_path(local_folder_path, NULL, m_pWoskspace->GetRepository(), folder_path, NULL);
 
 		g_int id = RegisterFolder(name, name, folder_path);
 		if(id<0)
@@ -214,7 +219,7 @@ namespace auge
 	{
 		return &m_raster_dataset;
 	}
-
+	
 	void RasterFolderImpl::Release()
 	{
 		if(!ReleaseRef())

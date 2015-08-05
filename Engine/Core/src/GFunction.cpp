@@ -57,6 +57,15 @@ namespace auge
 	void auge_make_path(char* path, const char* drv, const char* dir, const char* file, const char* ext)
 	{
 		_makepath(path, drv, dir, file, ext);
+
+		
+		for(char* ptr=path; *ptr!='\0'; ptr++)
+		{
+			if(*ptr == '\\')
+			{
+				*(ptr) = '/';
+			}
+		}
 	}
 
 	void auge_split_path( const char *path, char *drive, char *dir, char *fname, char *ext)

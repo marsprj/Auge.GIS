@@ -27,11 +27,13 @@ namespace auge
 
 		virtual RasterDataset*		GetRasterDataset();
 
+		virtual const char*			GetPath();
+		virtual const char*			GetLocalPath();
+
 		virtual void				Release();
 
 	public:
-		const char*		GetPath();
-		const char*		GetLocalPath();
+		
 		void			Create(g_uint id, const char* name, const char* alias, const char* path, WorkspacePgs* pWorkspace);
 
 	private:

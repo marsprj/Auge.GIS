@@ -4,6 +4,8 @@
 
 #include "AugeUser.h"
 #include "AugeWebCore.h"
+#include "AugeData.h"
+#include "AugeRaster.h"
 
 #ifndef WIN32
 #include <sys/types.h>
@@ -65,80 +67,50 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		ListRequest* pRequest = static_cast<ListRequest*>(pWebRequest);
 
-		//const char* root_path = pWebContext->GetUploadPath();
-		char raster_repository[AUGE_PATH_MAX];
-		memset(raster_repository, 0, AUGE_PATH_MAX);
-		rds_get_raster_repository(raster_repository, AUGE_PATH_MAX, pUser->GetName(), pWebContext);
-		const char* rqut_path = pRequest->GetRasterPath();
-		if(rqut_path==NULL)
+		const char* sourceName = pRequest->GetSourceName();
+		const char* path = pRequest->GetPath();
+
+		if(sourceName==NULL)
 		{
-			const char* msg = "Parameter [Path] is NULL";
+			const char* msg = "Parameter [sourceName] is NULL";
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
-			pLogger->Error(msg,__FILE__,__LINE__);
-
 			return pExpResponse;
 		}
-
-		char local_path[AUGE_PATH_MAX];
-		memset(local_path,0,AUGE_PATH_MAX);
-		auge_make_path(local_path,NULL,raster_repository,rqut_path+1,NULL);
-
-		if(g_access(local_path,4))
+		
+		Workspace* pWorkspace = NULL;
+		RasterWorkspace* pRasterWorkspace = NULL;
+		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+		pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), sourceName);
+		if(pWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
-			memset(msg,0,AUGE_MSG_MAX);
-			g_sprintf(msg,"Path [%s] does not exist.", rqut_path);
+			g_sprintf(msg, "Cannot Get DataSource [%s]", sourceName);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
-			pLogger->Error(msg,__FILE__,__LINE__);
-
+			return pExpResponse;
+		}
+		pRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
+		
+		RasterFolder* pFolder = pRasterWorkspace->GetFolder(path);
+		if(pFolder==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Path [%s] does not exist.", path);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
 
-		ListResponse* pListResponse = new ListResponse(pRequest);
-		pListResponse->SetPath(local_path);
+		ListResponse* pResponse = new ListResponse(pRequest);
+		pResponse->SetFolder(pFolder);
 
-#ifdef WIN32
-		
-		HANDLE hFind = NULL;
-		WIN32_FIND_DATAA wfd;
-
-		char fpath[AUGE_PATH_MAX];
-		char filter[AUGE_PATH_MAX];
-		auge_make_path(filter,NULL,local_path,"*",NULL);
-
-
-		hFind = ::FindFirstFile(filter, &wfd);
-		if(hFind == INVALID_HANDLE_VALUE)
-		{
-			::FindClose(hFind);
-			return NULL;
-		}
-
-		while(::FindNextFile(hFind, &wfd)==TRUE)
-		{
-			if(wfd.cFileName[0]!='.')
-			{
-				pListResponse->AddFile(wfd.cFileName);
-			}
-		}
-		::FindClose(hFind);
-#else
-		DIR *dp = opendir(local_path);
-		if(dp!=NULL)
-		{
-			struct dirent* dirp = NULL;
-			while((dirp = readdir(dp))!=NULL)
-			{	
-				if(dirp->d_name[0]!='.')
-				{
-					pListResponse->AddFile(dirp->d_name);
-				}
-			}
-			closedir(dp);
-		}
-#endif
-		return pListResponse;
+		return pResponse;
 	}
 }

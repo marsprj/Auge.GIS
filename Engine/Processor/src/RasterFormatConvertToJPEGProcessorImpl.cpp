@@ -14,6 +14,8 @@ namespace auge
 		m_blue = 0;
 
 		m_user = 0;
+		m_in_raster_path = "/";
+		m_out_raster_path = "/";
 	}
 
 	RasterFormatConvertToJPEGProcessorImpl::~RasterFormatConvertToJPEGProcessorImpl()
@@ -155,19 +157,20 @@ namespace auge
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
 	}
 
-	const char*	RasterFormatConvertToJPEGProcessorImpl::GetOutputPath()
-	{
-		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
-	}
+	//const char*	RasterFormatConvertToJPEGProcessorImpl::GetOutputPath()
+	//{
+	//	return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
+	//}
 
 	RESULTCODE RasterFormatConvertToJPEGProcessorImpl::Execute()
 	{
 		GEnvelope&  inRect = m_rect;
 		const char* inSourceName = GetInputDataSource();
 		const char* inRasterName = GetInputRaster();
+		const char* inRasterPath = GetInputPath();
 		const char* outSourceName = GetOutputDataSource();
 		const char* outRasterName = GetOutputRaster();
-		const char* outPath = GetOutputPath();
+		const char* outRasterPath = GetOutputPath();
 
 		Workspace* pWorkspace = NULL;
 		RasterWorkspace* pinRasterWorkspace = NULL;
@@ -180,16 +183,27 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
-		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(m_user, pWorkspace);
+		pinRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
-		Raster* pinRaster = NULL;
-		RasterDataset* pinRasterDataset = NULL;
-		pinRasterDataset = pinRasterWorkspace->OpenRasterDataset(inRasterName);
-		if(pinRasterDataset==NULL)
+		pWorkspace = pConnManager->GetWorkspace(m_user, outSourceName);
+		if(pWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
-		pinRaster = pinRasterDataset->GetRaster();
+		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
+
+		Raster* pinRaster = NULL;
+		RasterFolder* pinFolder = NULL;
+
+		Raster* poutRaster = NULL;
+		RasterFolder* poutFolder = NULL;
+
+		pinFolder = pinRasterWorkspace->GetFolder(inRasterPath);
+		if(pinFolder==NULL)
+		{
+			return AG_FAILURE;
+		}
+		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
 
 		// recalculate the requested extent, in case of the input rect is out of the original extent
 		GEnvelope extent;
@@ -208,7 +222,6 @@ namespace auge
 		pinRaster->GetRasterRect(rastertRect, extent);
 
 		RESULTCODE rc = AG_SUCCESS;
-		Raster* poutRaster = NULL;
 		RasterDataset* poutRasterDataset = NULL;
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
 
@@ -216,32 +229,31 @@ namespace auge
 		poutRaster = pRasterFactory->CreateRasterJPG(outRasterName, rastertRect.GetWidth(), rastertRect.GetHeight());
 		if(poutRaster==NULL)
 		{
-			pinRasterDataset->Release();
+			pinFolder->Release();
 			return AG_FAILURE;
 		}
 
 		Fill(poutRaster, pinRaster, rastertRect);
 
-		if(outPath!=NULL)
-		{				
-			rc = poutRaster->Save(outPath, "jpeg");
-			poutRaster->Release();
-			pinRasterDataset->Release();
-		}
-		else
+		pWorkspace = pConnManager->GetWorkspace(m_user, outSourceName);
+		if(pWorkspace==NULL)
 		{
-			pWorkspace = pConnManager->GetWorkspace(m_user, outSourceName);
-			if(pWorkspace==NULL)
-			{
-				return AG_FAILURE;
-			}
-			poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
-
-			rc = poutRasterWorkspace->AddRaster(poutRaster);
-
-			poutRaster->Release();
-			pinRasterDataset->Release();
+			return AG_FAILURE;
 		}
+		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
+
+		poutFolder = poutRasterWorkspace->GetFolder(outRasterPath);
+		if(poutFolder==NULL)
+		{
+			poutRaster->Release();
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
+		rc = poutFolder->GetRasterDataset()->AddRaster(outRasterName, poutRaster);
+
+		poutRaster->Release();
+		poutFolder->Release();
+		pinFolder->Release();
 
 		return rc;
 	}

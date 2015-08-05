@@ -1,6 +1,7 @@
 #include "DataEngineImpl.h"
 #include "WorkspacePgs.h"
 #include "ConnectionPgs.h"
+#include <gdal.h>
 
 namespace auge
 {
@@ -13,7 +14,7 @@ namespace auge
 	DataEnginePgs::DataEnginePgs():
 	m_handler(NULL)
 	{
-
+		
 	}
 
 	DataEnginePgs::~DataEnginePgs()
