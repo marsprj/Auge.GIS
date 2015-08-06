@@ -262,6 +262,11 @@ namespace auge
 		GDALDataset* poDataset = (GDALDataset*)GDALOpen(path, GA_ReadOnly);	
 		if(poDataset==NULL)
 		{
+			const char* msg = CPLGetLastErrorMsg();
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
 			return false;
 		}
 		m_poDataset = poDataset;
