@@ -113,6 +113,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetLengthHandler.cpp" />
     <ClCompile Include="..\src\GetLengthRequest.cpp" />
     <ClCompile Include="..\src\GetLengthResponse.cpp" />
+    <ClCompile Include="..\src\GetSpatialReferenceHandler.cpp" />
+    <ClCompile Include="..\src\GetSpatialReferenceRequest.cpp" />
+    <ClCompile Include="..\src\GetSpatialReferenceResponse.cpp" />
     <ClCompile Include="..\src\GProcessEngine.cpp" />
     <ClCompile Include="..\src\RasterExtractByRectangleHandler.cpp" />
     <ClCompile Include="..\src\RasterExtractByRectangleRequest.cpp" />
@@ -126,6 +129,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterStretchRequest.cpp" />
     <ClCompile Include="..\src\RasterSubtractHandler.cpp" />
     <ClCompile Include="..\src\RasterSubtractRequest.cpp" />
+    <ClCompile Include="..\src\sqlite3.c" />
     <ClCompile Include="..\src\ThreadManager.cpp" />
     <ClCompile Include="..\src\threadpool.c" />
     <ClCompile Include="..\src\TileUpdateHandler.cpp" />
@@ -162,6 +166,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetLengthHandler.h" />
     <ClInclude Include="..\include\GetLengthRequest.h" />
     <ClInclude Include="..\include\GetLengthResponse.h" />
+    <ClInclude Include="..\include\GetSpatialReferenceHandler.h" />
+    <ClInclude Include="..\include\GetSpatialReferenceRequest.h" />
+    <ClInclude Include="..\include\GetSpatialReferenceResponse.h" />
     <ClInclude Include="..\include\GProcessEngine.h" />
     <ClInclude Include="..\include\RasterExtractByRectangleHandler.h" />
     <ClInclude Include="..\include\RasterExtractByRectangleRequest.h" />

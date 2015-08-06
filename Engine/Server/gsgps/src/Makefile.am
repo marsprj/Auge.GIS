@@ -61,5 +61,9 @@ libgsgps_la_SOURCES=\
 		GetLengthHandler.cpp \
 		GetLengthResponse.cpp \
 		GetLengthRequest.cpp \
+		GetSpatialReferenceHandler.cpp \
+		GetSpatialReferenceRequest.cpp \
+		GetSpatialReferenceResponse.cpp \
+		sqlite3.c \
 		GProcessEngine.cpp
 

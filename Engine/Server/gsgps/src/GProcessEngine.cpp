@@ -31,6 +31,8 @@
 
 #include "ClusterKmeanHandler.h"
 
+#include "GetSpatialReferenceHandler.h"
+
 namespace auge
 {
 	WebEngine* augeGetWebEngineInstance()
@@ -69,6 +71,8 @@ namespace auge
 		m_raster_handlers.push_back(new DemAspectHandler());
 
 		m_cluster_handlers.push_back(new KMeanHandler());
+
+		m_misc_handlers.push_back(new GetSpatialReferenceHandler());
 	}
 
 	GeoProcessingEngine::~GeoProcessingEngine()
@@ -95,6 +99,7 @@ namespace auge
 		CleanupHandlers(m_geometry_handlers);
 		CleanupHandlers(m_tile_handlers);
 		CleanupHandlers(m_cluster_handlers);
+		CleanupHandlers(m_misc_handlers);
 	}
 
 	void GeoProcessingEngine::CleanupHandlers(std::vector<WebHandler*>& handlers)
@@ -138,6 +143,12 @@ namespace auge
 			return handler;
 		}
 		handler = GetHandler(name, m_cluster_handlers);
+		if(handler!=NULL)
+		{
+			return handler;
+		}
+
+		handler = GetHandler(name, m_misc_handlers);
 		if(handler!=NULL)
 		{
 			return handler;

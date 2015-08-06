@@ -521,7 +521,7 @@ namespace auge
 		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
-			return false;
+			return NULL;
 		}
 		
 		g_uint count = pResult->GetCount();
@@ -553,7 +553,7 @@ namespace auge
 		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
-			return false;
+			return NULL;
 		}
 
 		g_uint count = pResult->GetCount();
