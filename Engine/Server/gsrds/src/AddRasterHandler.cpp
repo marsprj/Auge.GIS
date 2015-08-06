@@ -162,12 +162,11 @@ namespace auge
 		{
 			pFolder->Release();
 
-			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "Raster [%s/%s] does not exist.", folder_path, raster_name);
+			GError* pError = augeGetErrorInstance();			
 			GLogger* pLogger = augeGetLoggerInstance();
-			pLogger->Error(msg, __FILE__, __LINE__);
+			pLogger->Error(pError->GetLastError(), __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(msg);
+			pExpResponse->SetMessage(pError->GetLastError());
 			return pExpResponse;
 		}
 
