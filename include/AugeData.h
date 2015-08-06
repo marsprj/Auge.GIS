@@ -363,6 +363,7 @@ namespace auge
 		virtual RasterFolder*		GetRootFolder() = 0;
 		// [path] : /a/b/c
 		virtual RasterFolder*		GetFolder(const char* path) = 0;
+		virtual RasterFolder*		CreateFolder(const char* path) = 0;
 		virtual RESULTCODE			RemoveFolder(const char* path) = 0;
 		
 		//virtual RasterDataset*		OpenRasterDataset(const char* name) = 0;

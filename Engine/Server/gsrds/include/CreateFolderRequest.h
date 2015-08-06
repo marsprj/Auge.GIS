@@ -49,6 +49,6 @@ namespace auge
 [ HTTP Post ]
 -------------------------------------------------------------------------
 service=rds&version=1.0.0&request=CreateFolder&rasterPath=/bbb
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=CreateFolder&sourceName=rsdb2Path=/ccc
+http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=CreateFolder&sourceName=rsdb2&Path=/ccc
 
 ************************************************************************/

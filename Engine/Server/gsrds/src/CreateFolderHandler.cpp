@@ -94,7 +94,7 @@ namespace auge
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 		pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), source_name);
 		if(pWorkspace==NULL)
-		{
+		{ 
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Cannot Get DataSource [%s]", source_name);
 			GLogger* pLogger = augeGetLoggerInstance();
@@ -105,8 +105,16 @@ namespace auge
 		}
 		pRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
-		RasterFolder* pRoot = pRasterWorkspace->GetRootFolder();
-		pRoot->CreateFolder(folder_path);
+		RasterFolder* pFolder = pRasterWorkspace->CreateFolder(folder_path);
+		if(pFolder==NULL)
+		{
+			GError* pError = augeGetErrorInstance();			
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(pError->GetLastError(), __FILE__, __LINE__);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			return pExpResponse;
+		}
 
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());

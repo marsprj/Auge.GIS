@@ -512,11 +512,20 @@ namespace auge
 			return GetRootFolder();
 		}
 
+		char path_2[AUGE_PATH_MAX];
+		memset(path_2, 0, AUGE_PATH_MAX);
+		strcpy(path_2, path);
+		size_t len = strlen(path_2);
+		if(path_2[len-1]=='/')
+		{
+			path_2[len-1]='\0';
+		}
+
 		const char* format = "select gid,name,alias,path,parent from %s where path='%s'";
 
 		char sql[AUGE_PATH_MAX];
 		memset(sql, 0, AUGE_PATH_MAX);		
-		g_snprintf(sql, AUGE_PATH_MAX, format, g_raster_folder_table.c_str(), path);
+		g_snprintf(sql, AUGE_PATH_MAX, format, g_raster_folder_table.c_str(), path_2);
 
 		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -618,6 +627,45 @@ namespace auge
 
 		pFolder->Release();
 		return AG_SUCCESS;
+	}
+
+	RasterFolder* WorkspacePgs::CreateFolder(const char* path)
+	{
+		if(path==NULL)
+		{
+			return NULL;
+		}
+
+		RasterFolder* pFolder = GetFolder(path);
+		if(pFolder != NULL)
+		{
+			pFolder->Release();
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Path [%s] has existed.", path);
+			augeGetErrorInstance()->SetError(msg);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return NULL;
+		}
+
+		char drv[AUGE_DRV_MAX];
+		char dir[AUGE_PATH_MAX]; 
+		char name[AUGE_NAME_MAX];
+		auge_split_path(path, drv, dir, name, NULL);
+
+		char parent_path[AUGE_PATH_MAX];
+		memset(parent_path, 0, AUGE_PATH_MAX);
+		auge_make_path(parent_path, drv, dir, NULL, NULL);
+		RasterFolder* pParent = GetFolder(parent_path);
+		if(pParent==NULL)
+		{
+			return NULL;
+		}
+
+		RasterFolder* pNewFolder = pParent->CreateFolder(name);
+		pParent->Release();
+
+		return pNewFolder;
 	}
 
 	Raster* WorkspacePgs::GetRaster(const char* path)
