@@ -26,7 +26,7 @@ namespace auge
 		{
 			return NULL;
 		}
-
+		 
 		if(g_access(path,4))
 		{
 			return NULL;
@@ -62,7 +62,11 @@ namespace auge
 		}
 
 		RasterImpl* pRaster = new RasterImpl();
-		pRaster->Create(name, raster_path);
+		if(!pRaster->Create(name, raster_path))
+		{
+			pRaster->Release();
+			return NULL;
+		}
 		return pRaster;
 	}
 }
