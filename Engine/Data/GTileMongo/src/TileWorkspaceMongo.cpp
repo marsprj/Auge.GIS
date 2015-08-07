@@ -121,6 +121,11 @@ namespace auge
 		return m_mongo;
 	}
 
+	GConnection* TileWorkspaceMongo::GetConnection()
+	{
+		return NULL;
+	}
+
 	EnumDataSet* TileWorkspaceMongo::GetDataSets()
 	{
 		return NULL;

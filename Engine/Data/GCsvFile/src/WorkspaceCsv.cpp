@@ -89,6 +89,11 @@ namespace auge
 		return true;
 	}
 
+	GConnection* WorkspaceCsv::GetConnection()
+	{
+		return NULL;
+	}
+
 	EnumDataSet* WorkspaceCsv::GetDataSets()
 	{
 		return NULL;

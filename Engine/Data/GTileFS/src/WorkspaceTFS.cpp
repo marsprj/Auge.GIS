@@ -101,6 +101,11 @@ namespace auge
 		return true;
 	}
 
+	GConnection* TileWorkspaceFS::GetConnection()
+	{
+		return NULL;
+	}
+
 	EnumDataSet* TileWorkspaceFS::GetDataSets()
 	{
 		return NULL;

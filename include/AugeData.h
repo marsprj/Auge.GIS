@@ -99,6 +99,7 @@ namespace auge
 		virtual RESULTCODE		Open() = 0;
 		virtual void			Close() = 0;
 		virtual bool			IsOpen() = 0;
+		virtual GConnection*	GetConnection() = 0;
 		
 		virtual EnumDataSet*	GetDataSets() = 0;
 		virtual DataSet*		OpenDataSet(const char* name) = 0;

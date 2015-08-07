@@ -111,6 +111,11 @@ namespace auge
 		return m_pgConnection.IsOpen();
 	}
 
+	GConnection* WorkspacePgs::GetConnection()
+	{
+		return &m_pgConnection;
+	}
+
 	FeatureClass* WorkspacePgs::OpenFeatureClass(const char* name)
 	{
 		if((name==NULL)||(!m_pgConnection.IsOpen()))

@@ -89,6 +89,11 @@ namespace auge
 		return true;
 	}
 
+	GConnection* WorkspaceShp::GetConnection()
+	{
+		return NULL;
+	}
+
 	DataSet* WorkspaceShp::OpenDataSet(const char* name)
 	{
 		return OpenFeatureClass(name);
