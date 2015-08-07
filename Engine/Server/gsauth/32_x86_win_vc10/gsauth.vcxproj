@@ -91,6 +91,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetUserHandler.h" />
     <ClInclude Include="..\include\GetUserRequest.h" />
     <ClInclude Include="..\include\GetUserResponse.h" />
+    <ClInclude Include="..\include\IsLoginedHandler.h" />
+    <ClInclude Include="..\include\IsLoginedRequest.h" />
+    <ClInclude Include="..\include\LoginHandler.h" />
+    <ClInclude Include="..\include\LoginRequest.h" />
+    <ClInclude Include="..\include\LogoutHandler.h" />
+    <ClInclude Include="..\include\LogoutRequest.h" />
     <ClInclude Include="..\include\RemoveUserHandler.h" />
     <ClInclude Include="..\include\RemoveUserRequest.h" />
     <ClInclude Include="..\include\WAuthEngine.h" />
@@ -104,6 +110,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetUserHandler.cpp" />
     <ClCompile Include="..\src\GetUserRequest.cpp" />
     <ClCompile Include="..\src\GetUserResponse.cpp" />
+    <ClCompile Include="..\src\IsLoginedHandler.cpp" />
+    <ClCompile Include="..\src\IsLoginedRequest.cpp" />
+    <ClCompile Include="..\src\LoginHandler.cpp" />
+    <ClCompile Include="..\src\LoginRequest.cpp" />
+    <ClCompile Include="..\src\LogoutHandler.cpp" />
+    <ClCompile Include="..\src\LogoutRequest.cpp" />
     <ClCompile Include="..\src\RemoveUserHandler.cpp" />
     <ClCompile Include="..\src\RemoveUserRequest.cpp" />
     <ClCompile Include="..\src\WAuthEngine.cpp" />

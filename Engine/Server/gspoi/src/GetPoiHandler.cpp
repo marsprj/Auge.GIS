@@ -89,7 +89,7 @@ namespace auge
 
 		Workspace* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
-		pWorkspace = pConnManager->GetWorkspace(AUGE_POI_SOURCE);
+		pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), AUGE_POI_SOURCE);
 		if(pWorkspace==NULL)
 		{
 			const char* msg = "Fail to connect poi database";
@@ -113,21 +113,23 @@ namespace auge
 
 		const char* name_encoded = NULL;
 		if(pWebContext->IsIE())
-			name_encoded = auge_encoding_convert("GBK","UTF-8",name,strlen(name));
-		else
+			//name_encoded = auge_encoding_convert("GBK","UTF-8",name,strlen(name));
 			name_encoded = name;
+		else
+			//name_encoded = name;
+			name_encoded = auge_encoding_convert("UTF-8","GBK",name,strlen(name));
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
 		if(extent.IsValid())
 		{
 			const char* format = "select gid,name,lat,lon,address,cdate,adcode,type from %s where tsv@@ to_tsquery('%s') limit %d  offset %d";
-			g_sprintf(sql, format, name_encoded, limit, offset);
+			g_sprintf(sql, format, AUGE_POI_TABLE, name_encoded, limit, offset);
 		}
 		else
 		{
 			const char* format = "select gid,name,lat,lon,address,cdate,adcode,type from %s where tsv@@ to_tsquery('%s') limit %d  offset %d";
-			g_sprintf(sql, format, name_encoded, limit, offset);
+			g_sprintf(sql, format, AUGE_POI_TABLE, name_encoded, limit, offset);
 		}
 
 		GResultSet* pResult = pConnection->ExecuteQuery(sql);

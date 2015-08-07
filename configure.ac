@@ -122,6 +122,8 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Server/gsufs/src/Makefile
 		 Engine/Server/gsauth/Makefile
                  Engine/Server/gsauth/src/Makefile
+		 Engine/Server/gspoi/Makefile
+                 Engine/Server/gspoi/src/Makefile
                  Engine/Server/ims/Makefile
                  Engine/Server/mgr/Makefile
                  Engine/Server/info/Makefile

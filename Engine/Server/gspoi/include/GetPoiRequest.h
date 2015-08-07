@@ -59,16 +59,16 @@ namespace auge
 
 [ HTTP Post ]
 -------------------------------------------------------------------------
-service=rds&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/
-user=user1&service=rds&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Penguins.jpg&Path=/aaa
+service=poi&version=1.0.0&request=GetPoi&name=¿¾´®
+user=user1&service=poi&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Penguins.jpg&Path=/aaa
 
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/ccc
+http://127.0.0.1:8088/ows/user1/mgr?service=poi&version=1.0.0&request=GetPoi&name=¿¾´®
+http://127.0.0.1:8088/ows/user1/mgr?service=poi&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/ccc
 
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/ds1&extent=0,0,500,500&bands=3,2,1
+http://127.0.0.1:8088/ows/user1/mgr?service=poi&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/ds1&extent=0,0,500,500&bands=3,2,1
 
 
-service=rds&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/&bands=3,2,1
-http://127.0.0.1:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/&bands=3,2,1
+service=poi&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/&bands=3,2,1
+http://127.0.0.1:8088/ows/user1/mgr?service=poi&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/&bands=3,2,1
 
 ************************************************************************/

@@ -8,6 +8,10 @@
 #include "GetUserHandler.h"
 #include "GetRoleHandler.h"
 
+#include "LoginHandler.h"
+#include "LogoutHandler.h"
+#include "IsLoginedHandler.h"
+
 namespace auge
 {
 	WebEngine* augeGetWebEngineInstance()
@@ -23,6 +27,10 @@ namespace auge
 		m_handlers.push_back(new RemoveUserHandler());
 		m_handlers.push_back(new GetUserHandler());
 		m_handlers.push_back(new GetRoleHandler());
+
+		m_handlers.push_back(new LoginHandler());
+		m_handlers.push_back(new LogoutHandler());
+		m_handlers.push_back(new IsLoginHandler());
 	}
 
 	WAuthEngine::~WAuthEngine()

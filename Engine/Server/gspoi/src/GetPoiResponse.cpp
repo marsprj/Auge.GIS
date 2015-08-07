@@ -73,10 +73,10 @@ namespace auge
 		g_uint count = m_pResultset->GetCount();
 		for(g_uint i=0; i<count; i++)
 		{
-			pxPoi->AddChild("Pois", NULL); 
+			pxPoi = pxRoot->AddChild("Poi", NULL); 
 			//gid,name,lat,lon,address,cdate,adcode,type
 			pxNode = pxPoi->AddChild("name", NULL);
-			pxNode->SetChildText(m_pResultset->GetString(i,1));
+			pxNode->SetChildText(m_pResultset->GetString(i,1), true);
 			
 			g_sprintf(str, "%f", m_pResultset->GetDouble(i,2));
 			pxNode = pxPoi->AddChild("lat", NULL);			
@@ -87,10 +87,10 @@ namespace auge
 			pxNode->SetChildText(str);
 
 			pxNode = pxPoi->AddChild("address", NULL);
-			pxNode->SetChildText(m_pResultset->GetString(i,4));
+			pxNode->SetChildText(m_pResultset->GetString(i,4), true);
 
 			pxNode = pxPoi->AddChild("type", NULL);
-			pxNode->SetChildText(m_pResultset->GetString(i,7));
+			pxNode->SetChildText(m_pResultset->GetString(i,7), true);
 		}
 		
 		return pxDoc; 

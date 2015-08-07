@@ -23,5 +23,11 @@ libgsauth_la_SOURCES=\
 		GetUserResponse.cpp \
 		RemoveUserHandler.cpp \
 		RemoveUserRequest.cpp \
+		LoginHandler.cpp \
+		LoginRequest.cpp \
+		LogoutHandler.cpp \
+		LogoutRequest.cpp \
+		IsLoginedHandler.cpp \
+		IsLoginedRequest.cpp \
 		WAuthEngine.cpp 
 
