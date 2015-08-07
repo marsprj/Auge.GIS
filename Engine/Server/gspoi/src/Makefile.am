@@ -12,6 +12,9 @@ libgspoi_la_LDFLAGS=\
 
 libgspoi_la_LIBADD=-lgcore -lgscore -lgsvrs
 
-libgspoi_la_SOURCES=\		    
+libgspoi_la_SOURCES=\
+		    GetPoiHandler.cpp \
+		    GetPoiRequest.cpp \
+		    GetPoiResponse.cpp \
 		    WPoiEngine.cpp
 
