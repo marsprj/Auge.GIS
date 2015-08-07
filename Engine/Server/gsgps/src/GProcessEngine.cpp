@@ -32,6 +32,7 @@
 #include "ClusterKmeanHandler.h"
 
 #include "GetSpatialReferenceHandler.h"
+#include "GetSpatialReferenceCountHandler.h"
 
 namespace auge
 {
@@ -73,6 +74,7 @@ namespace auge
 		m_cluster_handlers.push_back(new KMeanHandler());
 
 		m_misc_handlers.push_back(new GetSpatialReferenceHandler());
+		m_misc_handlers.push_back(new GetSpatialReferenceCountHandler());
 	}
 
 	GeoProcessingEngine::~GeoProcessingEngine()

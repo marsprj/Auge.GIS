@@ -113,6 +113,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetLengthHandler.cpp" />
     <ClCompile Include="..\src\GetLengthRequest.cpp" />
     <ClCompile Include="..\src\GetLengthResponse.cpp" />
+    <ClCompile Include="..\src\GetSpatialReferenceCountHandler.cpp" />
+    <ClCompile Include="..\src\GetSpatialReferenceCountRequest.cpp" />
+    <ClCompile Include="..\src\GetSpatialReferenceCountResponse.cpp" />
     <ClCompile Include="..\src\GetSpatialReferenceHandler.cpp" />
     <ClCompile Include="..\src\GetSpatialReferenceRequest.cpp" />
     <ClCompile Include="..\src\GetSpatialReferenceResponse.cpp" />
@@ -166,6 +169,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetLengthHandler.h" />
     <ClInclude Include="..\include\GetLengthRequest.h" />
     <ClInclude Include="..\include\GetLengthResponse.h" />
+    <ClInclude Include="..\include\GetSpatialReferenceCountHandler.h" />
+    <ClInclude Include="..\include\GetSpatialReferenceCountRequest.h" />
+    <ClInclude Include="..\include\GetSpatialReferenceCountResponse.h" />
     <ClInclude Include="..\include\GetSpatialReferenceHandler.h" />
     <ClInclude Include="..\include\GetSpatialReferenceRequest.h" />
     <ClInclude Include="..\include\GetSpatialReferenceResponse.h" />

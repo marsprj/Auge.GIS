@@ -64,6 +64,9 @@ libgsgps_la_SOURCES=\
 		GetSpatialReferenceHandler.cpp \
 		GetSpatialReferenceRequest.cpp \
 		GetSpatialReferenceResponse.cpp \
+		GetSpatialReferenceCountHandler.cpp \
+		GetSpatialReferenceCountRequest.cpp \
+		GetSpatialReferenceCountResponse.cpp \
 		sqlite3.c \
 		GProcessEngine.cpp
 
