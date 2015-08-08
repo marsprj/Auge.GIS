@@ -736,7 +736,7 @@ namespace auge
 
 	bool ConnectionManagerImpl::CreateDataSourceTable()
 	{
-		const char* sql = "CREATE TABLE g_data_source(gid serial NOT NULL,name character varying(32) NOT NULL, d_uri character varying(128) NOT NULL, engine character varying(16) NOT NULL, uri character varying(256) NOT NULL, user_id integer DEFAULT 1, state character varying(8),CONSTRAINT g_data_source_pkey PRIMARY KEY (gid),CONSTRAINT g_data_source_name_key UNIQUE (name))";
+		const char* sql = "CREATE TABLE g_data_source(gid serial NOT NULL,name character varying(32) NOT NULL, d_uri character varying(128), engine character varying(16) NOT NULL, uri character varying(256) NOT NULL, user_id integer DEFAULT 1, state character varying(8),CONSTRAINT g_data_source_pkey PRIMARY KEY (gid),CONSTRAINT g_data_source_name_key UNIQUE (name))";
 		if(m_pConnection->ExecuteSQL(sql)!=AG_SUCCESS)
 		{
 			return false;
