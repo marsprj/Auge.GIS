@@ -2853,7 +2853,7 @@ namespace auge
 			"	s_type character varying(16) NOT NULL," \
 			"	version integer DEFAULT 1," \
 			"	user_id integer NOT NULL DEFAULT 1," \
-			"   CONSTRAINT g_style_pkey PRIMARY KEY (gid)" \
+			"   CONSTRAINT g_style_pkey PRIMARY KEY (gid)," \
 			"	CONSTRAINT g_style_user_fkey FOREIGN KEY (user_id)" \
 			"		REFERENCES g_user (gid) MATCH SIMPLE" \
 			"		ON UPDATE NO ACTION ON DELETE NO ACTION" \
