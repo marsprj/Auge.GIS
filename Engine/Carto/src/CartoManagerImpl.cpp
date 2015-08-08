@@ -2821,7 +2821,7 @@ namespace auge
 							"	q_b integer NOT NULL DEFAULT 1," \
 							"	visible integer NOT NULL DEFAULT 1," \
 							"	version integer DEFAULT 1," \
-							"	CONSTRAINT g_layer_pkey PRIMARY KEY (gid )," \
+							"	CONSTRAINT g_layer_pkey PRIMARY KEY (gid)," \
 							/*"	CONSTRAINT g_layer_m_id_fkey FOREIGN KEY (m_id) " \
 							"	REFERENCES g_map (gid) MATCH SIMPLE " \
 							"	ON UPDATE NO ACTION ON DELETE NO ACTION," \
