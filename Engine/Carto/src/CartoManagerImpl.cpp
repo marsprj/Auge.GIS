@@ -2790,6 +2790,7 @@ namespace auge
 							"  v_maxx double precision DEFAULT -90," \
 							"  v_miny double precision DEFAULT  180," \
 							"  v_maxy double precision DEFAULT  90," \
+							"  thumbnail character varying(128) DEFAULT ''::character varying," \
 							"  m_uuid character varying(128) DEFAULT ''::character varying," \
 							"  CONSTRAINT g_map_pkey PRIMARY KEY (gid )," \
 							"  CONSTRAINT g_map_user_fk FOREIGN KEY (user_id)" \
