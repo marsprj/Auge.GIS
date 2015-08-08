@@ -404,6 +404,11 @@ namespace auge
 			return rc;
 		}
 
+		if(map_layers.empty())
+		{
+			return AG_SUCCESS;
+		}
+
 		char layer_ids[AUGE_PATH_MAX];
 		memset(layer_ids, 0, AUGE_PATH_MAX);
 		PraseMapLayerIds(layer_ids, map_layers.c_str());
