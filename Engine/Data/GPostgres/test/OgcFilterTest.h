@@ -49,7 +49,7 @@ private:
 	void DWithinFilteTest();
 
 private:
-	auge::FeatureWorksapce* m_pWorkspace;
+	auge::FeatureWorkspace* m_pWorkspace;
 
 };
 

@@ -48,7 +48,7 @@ private:
 	void RefreshFeatureClass();
 
 private:
-	auge::FeatureWorksapce* m_pWorkspace;
+	auge::FeatureWorkspace* m_pWorkspace;
 };
 
 #endif //__AUGE_CANVAS_TEST__H__

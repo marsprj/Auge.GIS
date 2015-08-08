@@ -14,7 +14,7 @@ void OgcFilterTest::setUp()
 	auge::DataEngine* pDataEngine = NULL;
 	pDataEngine = auge::augeGetDataEngineInstance();
 
-	m_pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pDataEngine->CreateWorkspace());
+	m_pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pDataEngine->CreateWorkspace());
 	m_pWorkspace->SetConnectionString(path);
 
 	rc = m_pWorkspace->Open();

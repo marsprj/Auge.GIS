@@ -17,8 +17,8 @@ private:
 	void Transfer();
 
 private:
-	auge::FeatureWorksapce* m_pwsSHP;
-	auge::FeatureWorksapce* m_pwsPGS;
+	auge::FeatureWorkspace* m_pwsSHP;
+	auge::FeatureWorkspace* m_pwsPGS;
 };
 
 #endif //__AUGE_TRANSFER_TEST__H__
