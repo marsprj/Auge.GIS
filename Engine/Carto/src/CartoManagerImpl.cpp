@@ -2822,7 +2822,7 @@ namespace auge
 							"	visible integer NOT NULL DEFAULT 1," \
 							"	version integer DEFAULT 1," \
 							"	CONSTRAINT g_layer_pkey PRIMARY KEY (gid )," \
-							"	CONSTRAINT g_layer_m_id_fkey FOREIGN KEY (m_id) " \
+							/*"	CONSTRAINT g_layer_m_id_fkey FOREIGN KEY (m_id) " \
 							"	REFERENCES g_map (gid) MATCH SIMPLE " \
 							"	ON UPDATE NO ACTION ON DELETE NO ACTION," \
 							"	CONSTRAINT g_layer_d_id_fkey FOREIGN KEY (d_id) " \
@@ -2831,7 +2831,7 @@ namespace auge
 							"	CONSTRAINT g_layer_user_fkey FOREIGN KEY (user_id)" \
 							"	REFERENCES g_user (gid) MATCH SIMPLE" \
 							"	ON UPDATE NO ACTION ON DELETE NO ACTION" \
-							/*"	CONSTRAINT g_layer_s_id_fkey FOREIGN KEY (s_id) " \
+							"	CONSTRAINT g_layer_s_id_fkey FOREIGN KEY (s_id) " \
 							/"	REFERENCES g_style (gid) MATCH SIMPLE " \
 							/"	ON UPDATE NO ACTION ON DELETE NO ACTION," \
 							"	CONSTRAINT g_layer_l_name_key UNIQUE (l_name ) " \*/
