@@ -94,9 +94,9 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		FeatureWorksapce* pobjWorkspace = NULL;
+		FeatureWorkspace* pobjWorkspace = NULL;
 		ConnectionManager* pConnectionManager = augeGetConnectionManagerInstance();
-		pobjWorkspace = dynamic_cast<FeatureWorksapce*>(pConnectionManager->GetWorkspace(m_user, m_source_name.c_str()));
+		pobjWorkspace = dynamic_cast<FeatureWorkspace*>(pConnectionManager->GetWorkspace(m_user, m_source_name.c_str()));
 		if(pobjWorkspace==NULL)
 		{
 			pLogger->Error(pError->GetLastError(),__FILE__,__LINE__);

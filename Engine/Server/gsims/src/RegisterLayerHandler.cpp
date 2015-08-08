@@ -101,6 +101,7 @@ namespace auge
 			pWebResponse = RegisterFeatureLayer(pRequest, pMap, pUser);
 			break;
 		case augeLayerRaster:
+			pWebResponse = RegisterRasterLayer(pRequest, pMap, pUser);
 			break;
 		case augeLayerQuadServer:
 			pWebResponse = RegisterQuadServerLayer(pRequest, pMap, pUser);
@@ -189,6 +190,55 @@ namespace auge
 		pResponse->SetLayer(pLayer);
 		pLayer->AddRef();
 		return pResponse;
+	}
+
+	WebResponse* RegisterLayerHandler::RegisterRasterLayer(RegisterLayerRequest* pRequest, Map* pMap, User* pUser)
+	{
+		const char* dataSource = pRequest->GetDataSource();
+		const char* layerName = pRequest->GetLayerName();
+		const char* rasterName = pRequest->GetRasterName();
+		const char* rasterPath = pRequest->GetRasterPath();
+		g_int styleID = -1;
+
+		Workspace *pWorkspace = NULL;
+		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+		pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), dataSource);
+		if(pWorkspace == NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "DataSource %s is not registered.", dataSource);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse(); 
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		Layer* pLayer = NULL;
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		pLayer = pCartoManager->CreateRasterLayer(layerName, rasterName, rasterPath, pMap->GetID(), pWorkspace->GetID());
+		if(pLayer==NULL)
+		{
+			GError* pError = augeGetErrorInstance();
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(pError->GetLastError());
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			return pExpResponse;
+		}
+		pMap->AddLayer(pLayer);
+		pCartoManager->UpdateMapLayers(pMap);
+
+		//WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
+		//pSusResponse->SetRequest(pRequest->GetRequest());
+		//return pSusResponse;
+
+		RegisterLayerResponse* pResponse = new RegisterLayerResponse(pRequest);
+		pResponse->SetLayer(pLayer);
+		pLayer->AddRef();
+		return pResponse;
+
+		return NULL;
 	}
 
 	WebResponse* RegisterLayerHandler::RegisterQuadServerLayer(RegisterLayerRequest* pRequest, Map* pMap, User* pUser)

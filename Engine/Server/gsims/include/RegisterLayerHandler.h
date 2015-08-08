@@ -30,6 +30,7 @@ namespace auge
 
 	private:
 		WebResponse*	RegisterFeatureLayer(RegisterLayerRequest* pRequest, Map* pMap, User* pUser);
+		WebResponse*	RegisterRasterLayer(RegisterLayerRequest* pRequest, Map* pMap, User* pUser);
 		WebResponse*	RegisterQuadServerLayer(RegisterLayerRequest* pRequest, Map* pMap, User* pUser);
 	};
 }

@@ -142,6 +142,7 @@ namespace auge
 				const char* lname = pLayer->GetName();
 				XElement* pxLayer_2 = pxLayer->AddChild("Layer", NULL);				
 				pxLayer_2->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
+				pxLayer_2->SetAttribute("visible", pLayer->IsVisiable()?"1":"0", NULL);
 				g_sprintf(str,"%d",pLayer->GetID());
 				pxLayer_2->SetAttribute("id", str,NULL);
 				pxNode = pxLayer_2->AddChild("Name",NULL);
@@ -152,18 +153,13 @@ namespace auge
 				g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
 				pxNode = pxLayer_2->AddChild("CRS",NULL);
 				
-				extent = pLayer->GetExtent();
-				if(!extent.IsValid())
-				{
-					extent.Set(-180.f,-90.0f,180.0f,90.0f);
-				}
-				AddLayerGeographicBoundingNode(pxLayer_2, extent);
-				AddLayerBoundingNode(pxLayer_2, extent, pMap->GetSRID());
-				 
 				switch(pLayer->GetType())
 				{
 				case augeLayerFeature:
 					{
+						XElement* pxLayerType = pxLayer_2->AddChild("Type");
+						pxLayerType->AddChildText("Feature");
+
 						FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
 						AddLayerGeomTypeNode(pxLayer_2, pFeatureLayer);
 						Style* pStyle = pFeatureLayer->GetStyle();
@@ -174,14 +170,31 @@ namespace auge
 					}
 					break;
 				case augeLayerRaster:
+					{
+						XElement* pxLayerType = pxLayer_2->AddChild("Type");
+						pxLayerType->AddChildText("Raster");
+
+						RasterLayer* pRasterLayer = static_cast<RasterLayer*>(pLayer);
+					}
 					break;
 				case augeLayerQuadServer:
 					{
+						XElement* pxLayerType = pxLayer_2->AddChild("Type");
+						pxLayerType->AddChildText("QuadServer");
+
 						QuadServerLayer* pQuadServerLayer = static_cast<QuadServerLayer*>(pLayer);
 						AddWebURLNode(pxLayer_2, pQuadServerLayer->GetURL());
 					}
 					break;
 				}
+				extent = pLayer->GetExtent();
+				if(!extent.IsValid())
+				{
+					extent.Set(-180.f,-90.0f,180.0f,90.0f);
+				}
+				AddLayerGeographicBoundingNode(pxLayer_2, extent);
+				AddLayerBoundingNode(pxLayer_2, extent, pMap->GetSRID());
+
 			}
 		}
 	}

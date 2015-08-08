@@ -36,11 +36,11 @@ namespace auge
 		augeStaticCursor	= 1
 	}augeCursorType;
 	
-	class FeatureWorksapce : virtual public Workspace
+	class FeatureWorkspace : virtual public Workspace
 	{
 	protected:
-		FeatureWorksapce(){}
-		virtual ~FeatureWorksapce(){}
+		FeatureWorkspace(){}
+		virtual ~FeatureWorkspace(){}
 	public:
 		virtual EnumDataSet*	GetFeatureClasses() = 0;
 		virtual	FeatureClass*	OpenFeatureClass(const char* name) = 0;

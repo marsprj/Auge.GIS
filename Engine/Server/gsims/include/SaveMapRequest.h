@@ -18,6 +18,7 @@ namespace auge
 		{
 			char id[32];
 			char name[32];
+			int	 visible;
 		}layer_info_t;
 
 	public:
@@ -41,6 +42,7 @@ namespace auge
 		g_uint		GetLayerCount();
 		const char*	GetLayerID(g_uint i);
 		const char*	GetLayerName(g_uint i);
+		bool		IsLayerVisible(g_uint i);
 
 		void		SetVersion(const char* value);
 		void		SetSRID(const char* srid);
@@ -80,11 +82,11 @@ namespace auge
 	<Name>world</Name>
 	<Srid>4326</Srid>
 	<Extent xmin="-180" ymin="90" xmax="180" ymax="90"/>
-	<Viewer xmin="-180" ymin="90" xmax="180" ymax="90"/>
+	<Viewer xmin="0" ymin="0" xmax="180" ymax="90"/>
 	<Layers>
-		<Layer name="cities" id="2"/>
-		<Layer name="rivers" id="3"/>
-		<Layer name="country" id="4"/>
+		<Layer name="rivers" id="195" visible="true"/>
+		<Layer name="country" id="196" visible="false"/>
+		<Layer name="cities" id="194" visible="true"/>
 	</Layers>
 </SaveMap>
 

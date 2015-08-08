@@ -116,11 +116,11 @@ auge::RasterLayer* RasterTest::CreateRasterLayer()
 	pWorkspace->SetConnectionString(connstr);
 	pWorkspace->Open();
 
-	auge::RasterDataset* pDataset = pWorkspace->OpenRasterDataset(dataName);
+	//auge::RasterDataset* pDataset = pWorkspace->OpenRasterDataset(dataName);
 	//auge::Raster* pRaster = pWorkspace->OpenRaster(dataName);
 	auge::RasterLayer* pRasterLayer = pCartoFactory->CreateRasterLayer();
 	pRasterLayer->SetName(dataName);
-	pRasterLayer->SetRasterDataset(pDataset);
+	//pRasterLayer->SetRasterDataset(pDataset);
 	return pRasterLayer;
 }
 

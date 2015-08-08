@@ -32,6 +32,8 @@ namespace auge
 		const char* GetDataSource();
 		const char* GetLayerName();
 		const char* GetTableName();
+		const char* GetRasterName();
+		const char* GetRasterPath();
 		const char* GetWebURL();
 		augeLayerType GetType();
 
@@ -43,6 +45,9 @@ namespace auge
 		void		SetTableName(const char* tableName);
 		void		SetWebURL(const char* url);
 
+		void		SetRasterName(const char* rasterName);
+		void		SetRasterPath(const char* rasterPath);
+
 	private:
 		augeLayerType m_type;
 		std::string m_version;
@@ -51,6 +56,8 @@ namespace auge
 		std::string m_data_source;
 		std::string m_layer_name;
 		std::string m_table_name;
+		std::string m_raster_name;
+		std::string m_raster_path;
 		std::string m_web_url;
 		std::string m_encoding;
 	};
@@ -62,10 +69,14 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=db1&layerName=cities&tableName=cities
-http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=db1&layerName=cities&tableName=cities
-
+service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=db1&layerName=cities&tableName=cities&layerType=Feature
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=db1&layerName=cities&tableName=cities&layerType=Feature
 http://192.168.111.160:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=db1&layerName=cities&tableName=cities
+
+// Register Raster Layer
+user=user1&service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=rsdb2&layerName=world&rasterName=world&rasterPath=/&layerType=Raster
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=rsdb2&layerName=world&rasterName=world&rasterPath=/&layerType=Raster
+
 
 [ HTP Post ]
 -------------------------------------------------------------------------

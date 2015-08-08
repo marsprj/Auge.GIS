@@ -24,6 +24,9 @@ namespace auge
 		SetType(cgi["layerType"]);
 		SetLayerName(cgi["layerName"]);
 		SetTableName(cgi["tableName"]);
+
+		SetRasterName(cgi["rasterName"]);
+		SetRasterPath(cgi["rasterPath"]);
 		
 		 return true;
 	}
@@ -175,5 +178,39 @@ namespace auge
 		{
 			m_web_url = url;
 		}
+	}
+
+	void RegisterLayerRequest::SetRasterName(const char* rasterName)
+	{
+		if(rasterName==NULL)
+		{
+			m_raster_name.clear();
+		}
+		else
+		{
+			m_raster_name = rasterName;
+		}
+	}
+
+	const char* RegisterLayerRequest::GetRasterName()
+	{
+		return m_raster_name.empty() ? NULL : m_raster_name.c_str();
+	}
+
+	void RegisterLayerRequest::SetRasterPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_raster_path.clear();
+		}
+		else
+		{
+			m_raster_path = rasterPath;
+		}
+	}
+
+	const char* RegisterLayerRequest::GetRasterPath()
+	{
+		return m_raster_path.empty() ? NULL : m_raster_path.c_str();
 	}
 }

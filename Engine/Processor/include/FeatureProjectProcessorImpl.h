@@ -11,7 +11,7 @@
 namespace auge
 {
 	class FeatureClass;
-	class FeatureWorksapce;
+	class FeatureWorkspace;
 
 	class FeatureProjectProcessorImpl : public FeatureProjectProcessor
 	{
@@ -39,7 +39,7 @@ namespace auge
 		const char*			GetOutputSource();
 		const char*			GetOutputFatureClass();
 
-		FeatureClass*		CreateOutputFeatureClass(const char* className, g_uint srid, FeatureWorksapce* pWorkspace, FeatureClass* pinFeatureClass);
+		FeatureClass*		CreateOutputFeatureClass(const char* className, g_uint srid, FeatureWorkspace* pWorkspace, FeatureClass* pinFeatureClass);
 		RESULTCODE			Project(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass);
 
 	private:

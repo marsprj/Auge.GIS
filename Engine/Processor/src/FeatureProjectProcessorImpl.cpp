@@ -125,17 +125,17 @@ namespace auge
 		
 		FeatureClass		*pinFeatureClass = NULL;
 		FeatureClass		*poutFeatureClass= NULL;
-		FeatureWorksapce	*pinWorkspace = NULL;
-		FeatureWorksapce	*poutWorkspace= NULL;
+		FeatureWorkspace	*pinWorkspace = NULL;
+		FeatureWorkspace	*poutWorkspace= NULL;
 		ConnectionManager	*pConnManager = augeGetConnectionManagerInstance();
 		
-		pinWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_user, sourceName_in));
+		pinWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspace(m_user, sourceName_in));
 		if(pinWorkspace==NULL)
 		{
 			return AG_FAILURE;
 		}
 
-		poutWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->NewWorkspace(m_user, sourceName_out));
+		poutWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->NewWorkspace(m_user, sourceName_out));
 		if(poutWorkspace==NULL)
 		{
 			return AG_FAILURE;
@@ -178,7 +178,7 @@ namespace auge
 		delete this;
 	}
 
-	FeatureClass* FeatureProjectProcessorImpl::CreateOutputFeatureClass(const char* className, g_uint srid, FeatureWorksapce* poutWorkspace, FeatureClass* pinFeatureClass)
+	FeatureClass* FeatureProjectProcessorImpl::CreateOutputFeatureClass(const char* className, g_uint srid, FeatureWorkspace* poutWorkspace, FeatureClass* pinFeatureClass)
 	{
 		FeatureClass* poutFatureClass = NULL;
 		poutFatureClass = poutWorkspace->OpenFeatureClass(className);

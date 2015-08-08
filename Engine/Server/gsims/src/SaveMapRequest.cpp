@@ -236,6 +236,11 @@ namespace auge
 			{
 				strcpy(m_layers[i].name, pxAttr->GetValue());
 			}
+			pxAttr = pxNode->GetAttribute("visible");
+			if(pxAttr!=NULL)
+			{
+				m_layers[i].visible = g_stricmp(pxAttr->GetValue(),"false");
+			}
 		}
 
 		pxNodeSet->Release();
@@ -281,4 +286,12 @@ namespace auge
 		return m_layers[i].name;
 	}
 
+	bool SaveMapRequest::IsLayerVisible(g_uint i)
+	{
+		if(i>=m_layer_count)
+		{
+			return false;
+		}
+		return m_layers[i].visible;
+	}
 }

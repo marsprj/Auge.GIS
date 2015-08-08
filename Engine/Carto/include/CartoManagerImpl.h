@@ -37,6 +37,7 @@ namespace auge
 		virtual RESULTCODE		SetMapThumbnail(g_uint user_id, g_uint map_id, const char* thumbnail);
 		
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_id, g_uint style_id);
+		virtual Layer*			CreateRasterLayer(const char* name, const char* rasterName, const char* rasterPath, g_uint map_id, g_uint source_id);
 		virtual Layer*			CreateWebLayer(const char* name, augeLayerType type, const char* url, g_uint map_id);
 
 		virtual RESULTCODE		RemoveLayers(const char* mapName);
@@ -114,14 +115,16 @@ namespace auge
 		RESULTCODE				LoadLayers(Map* pMap);
 		RESULTCODE				GetMapLayers(std::string& map_layers, g_uint mapID);
 
-		Layer*					CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url);
+		Layer*					CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, const char* f_path, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url);
 		FeatureLayer*			CreateFeatureLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible);
+		RasterLayer*			CreateRasterLayer(int id, const char* name, const char* f_name, const char* f_path, g_int source_id, g_int version, bool visible);
 		GraphicLayer*			CreateGraphicLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible);
 
-		GraphicLayer*			CreateGraphicLayer(const char* name, const char* f_name, g_uint source_id);
+		GraphicLayer*			CreateGraphicLayer(const char* name, const char* f_name, g_uint source_id);		
 		QuadServerLayer*		CreateQuadServerLayer(int id, const char* name, const char* url, int version, bool visible);
 
 		FeatureLayer*			CreateFeatureLayer(const char* name, const char* f_name,g_uint source_id);
+		RasterLayer*			CreateRasterLayer(const char* name, const char* r_name, const char* r_path, g_uint source_id);
 		bool					HasLayer(const char* layerName, int mapID);
 
 		bool					IsValiad(const char* text);
@@ -131,7 +134,7 @@ namespace auge
 		// Map User Methods Begin
 		//------------------------------------------------------------------------
 		Layer*					CreateLayer(g_uint user_id, int id, const char* name, augeLayerType type, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url);
-		FeatureLayer*			CreateFeatureLayer(g_uint user_id, int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible);
+		FeatureLayer*			CreateFeatureLayer(g_uint user_id, int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible);		
 		GraphicLayer*			CreateGraphicLayer(g_uint user_id, int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible);
 
 		GraphicLayer*			CreateGraphicLayer(g_uint user_id, const char* name, const char* f_name, g_uint source_id);
@@ -139,6 +142,7 @@ namespace auge
 		//------------------------------------------------------------------------
 		// Map User Methods End
 		//------------------------------------------------------------------------
+		RESULTCODE				PraseMapLayerIds(char* layer_ids, const char* map_layers);
 
 	private:
 		RESULTCODE				CreateMapTable();

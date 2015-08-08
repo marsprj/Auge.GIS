@@ -131,11 +131,13 @@ namespace auge
 		virtual ~RasterLayer(){}
 
 	public:
-		virtual augeLayerType	GetType() = 0;
-		//virtual RESULTCODE		SetRaster(Raster* pRaster) = 0;
-		//virtual Raster*			GetRaster() = 0;
-		virtual RESULTCODE		SetRasterDataset(RasterDataset* pRasterDataset) = 0;
-		virtual RasterDataset*	GetRasterDataset() = 0;
+		virtual augeLayerType	GetType() = 0;		
+		//virtual RESULTCODE		SetRasterDataset(RasterDataset* pRasterDataset) = 0;
+		//virtual RasterDataset*	GetRasterDataset() = 0;
+
+		virtual RESULTCODE		SetRaster(Raster* pRaster) = 0;
+		virtual RESULTCODE		SetRaster(Raster* pRaster, RasterDataset* pRasterDataset) = 0;
+		virtual Raster*			GetRaster() = 0;
 
 	};
 
@@ -304,7 +306,8 @@ namespace auge
 		virtual g_int			GetMapID(g_uint user_id, const char* name) = 0;
 		virtual RESULTCODE		SetMapThumbnail(g_uint user_id, g_uint map_id, const char* thumbnail) = 0;
 
-		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_i, g_uint style_id) = 0;
+		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_id, g_uint style_id) = 0;
+		virtual Layer*			CreateRasterLayer(const char* name, const char* rasterName, const char* rasterPath, g_uint map_id, g_uint source_id) = 0;
 		virtual Layer*			CreateWebLayer(const char* name, augeLayerType type, const char* url, g_uint map_id) = 0;
 		virtual RESULTCODE		RemoveLayers(const char* mapName) = 0;
 		virtual RESULTCODE		RemoveLayers(g_uint map_id) = 0;

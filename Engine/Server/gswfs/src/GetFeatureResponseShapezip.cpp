@@ -107,7 +107,7 @@ namespace auge
 		g_sprintf(connstr, "DATABASE=%s",path);
 
 		RESULTCODE rc = AG_FAILURE;
-		FeatureWorksapce* pshpWorkspace = dynamic_cast<FeatureWorksapce*>(pshpEngine->CreateWorkspace());
+		FeatureWorkspace* pshpWorkspace = dynamic_cast<FeatureWorkspace*>(pshpEngine->CreateWorkspace());
 		pshpWorkspace->SetConnectionString(connstr);
 		rc = pshpWorkspace->Open();
 		if(rc!=AG_SUCCESS)

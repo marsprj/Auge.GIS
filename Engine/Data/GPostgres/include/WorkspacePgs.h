@@ -10,7 +10,7 @@
 
 namespace auge
 {
-	class WorkspacePgs : virtual public FeatureWorksapce,
+	class WorkspacePgs : virtual public FeatureWorkspace,
 						 virtual public RasterWorkspace
 	{
 		friend class FeaturePgs;

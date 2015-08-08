@@ -56,6 +56,10 @@ namespace auge
 			{
 				return AG_FAILURE;
 			}
+			else
+			{
+				//InitStyleTable();
+			}
 		}
 		if(!m_pConnection->HasTable("g_layer"))
 		{
@@ -247,7 +251,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,web_url from g_layer where m_id=%d order by gid", mid);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,f_path,web_url from g_layer where m_id=%d order by gid", mid);
 		
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -258,7 +262,7 @@ namespace auge
 
 		Layer* pLayer = NULL;
 		int gid, d_id,s_id,l_type, version, visible;
-		const char* l_name, *f_name,*web_url;
+		const char* l_name, *f_name, *f_path, *web_url;
 		g_int count = pResult->GetCount();
 		for(g_int i=0; i<count; i++)
 		{
@@ -266,13 +270,14 @@ namespace auge
 			l_name = pResult->GetString(i, 1);
 			l_type = pResult->GetInt(i, 2);
 			f_name = pResult->GetString(i, 3);
+			f_path = pResult->GetString(i, 11);
 			d_id   = pResult->GetInt(i, 4);
 			s_id   = pResult->GetInt(i, 5);
 			version= pResult->GetInt(i, 6);
 			visible= pResult->GetInt(i, 7);
-			web_url= pResult->GetString(i,11);
+			web_url= pResult->GetString(i,12);
 
-			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, s_id, version,visible, web_url);
+			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, f_path, d_id, s_id, version,visible, web_url);
 			if(pLayer!=NULL)
 			{
 				pMap->AddLayer(pLayer);
@@ -399,8 +404,12 @@ namespace auge
 			return rc;
 		}
 
+		char layer_ids[AUGE_PATH_MAX];
+		memset(layer_ids, 0, AUGE_PATH_MAX);
+		PraseMapLayerIds(layer_ids, map_layers.c_str());
+
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,web_url from g_layer where gid in (%s)", map_layers.c_str());
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,f_path,web_url from g_layer where gid in (%s)", layer_ids);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -411,42 +420,69 @@ namespace auge
 
 		Layer* pLayer = NULL;
 		int gid, d_id,s_id,l_type, version, visible;
-		const char* l_name, *f_name,*web_url;
-
+		const char* l_name, *f_name, *f_path, *web_url;
+		
 		int layer_id = 0;
+		int layer_visiblity = 1;
 		int count = pResult->GetCount();
 		char* str = strdup(map_layers.c_str());
-		char* ptr = strtok(str,",");
+		const char* ptr = strtok(str,",");
 		while(ptr!=NULL)
 		{
 			for(int i=0; i<count; i++)
 			{
-				layer_id = atoi(ptr);
+				//layer_id = atoi(ptr);
+				sscanf(ptr, "%d:%d", &layer_id, &layer_visiblity);
 				if(pResult->GetInt(i,0)==layer_id)
 				{
 					gid = pResult->GetInt(i, 0);
 					l_name = pResult->GetString(i, 1);
 					l_type = pResult->GetInt(i, 2);
 					f_name = pResult->GetString(i, 3);
+					f_path = pResult->GetString(i, 11);
 					d_id   = pResult->GetInt(i, 4);
 					s_id   = pResult->GetInt(i, 5);
 					version= pResult->GetInt(i, 6);
 					visible= pResult->GetInt(i, 7);
-					web_url= pResult->GetString(i,11);
+					web_url= pResult->GetString(i,12);
 
-					pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, d_id, s_id, version,visible, web_url);
+					pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, f_path, d_id, s_id, version,visible, web_url);
 					if(pLayer!=NULL)
 					{
+						pLayer->SetVisiable(layer_visiblity);
 						pMap->AddLayer(pLayer);
-					}
+					} 
 				}
 			}
 
 			ptr = strtok(NULL,",");
 		}
-
 		free(str);
 
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE CartoManagerImpl::PraseMapLayerIds(char* layer_ids, const char* map_layers)
+	{
+		layer_ids[0] = '\0';
+		int id,v;
+		char szid[AUGE_NAME_MAX];
+		char* str = strdup(map_layers);
+		char* ptr = strtok(str,",");
+		while(ptr!=NULL)
+		{
+			sscanf(ptr, "%d:%d", &id, &v);
+			g_sprintf(szid, "%d,", id);
+			strcat(layer_ids, szid);
+
+			ptr = strtok(NULL,",");
+		}
+		free(str);
+		size_t len = strlen(layer_ids);
+		if(len>0)
+		{ 
+			layer_ids[len-1] = '\0';
+		}
 		return AG_SUCCESS;
 	}
 
@@ -642,6 +678,47 @@ namespace auge
 		return pLayer;
 	}
 
+	Layer* CartoManagerImpl::CreateRasterLayer(const char* name, const char* r_name, const char* r_path, g_uint map_id, g_uint source_id)
+	{
+		if(r_name==NULL||r_path==NULL)
+		{
+			return NULL;
+		}
+
+		if(HasLayer(name, map_id))
+		{
+			char msg[AUGE_MSG_MAX] = {0};
+			g_sprintf(msg, "Layer [%s] already exists.", name);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return NULL;
+		}
+		
+		Layer* pLayer = CreateRasterLayer(name, r_name, r_path, source_id);
+		if(pLayer==NULL)
+		{
+			return NULL;
+		}
+
+
+		char sql[AUGE_SQL_MAX] = {0};
+		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_layer (l_name,l_type,f_name,f_path,m_id,d_id) values('%s',%d,'%s','%s',%d,%d) returning gid", name, augeLayerRaster, r_name, r_path, map_id, source_id);
+
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+		int gid = pResult->GetInt(0,0);
+		pResult->Release();
+		pLayer->SetID(gid);
+
+		return pLayer;
+	}
+
 	Layer* CartoManagerImpl::CreateWebLayer(const char* name, augeLayerType type, const char* url, g_uint map_id)
 	{
 		if(name==NULL||url==NULL||m_pConnection==NULL)
@@ -756,10 +833,10 @@ namespace auge
 		FeatureLayer* pFLayer = pCartoFactory->CreateFeatureLayer();
 		pFLayer->SetName(f_name);
 
-		FeatureWorksapce* pWorkspace = NULL;
+		FeatureWorkspace* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
+		pWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspaceById(source_id));
 		if(pWorkspace==NULL)
 		{
 			return NULL;
@@ -783,10 +860,10 @@ namespace auge
 		GraphicLayer* pGLayer = pCartoFactory->CreateGraphicLayer();
 		pGLayer->SetName(f_name);
 
-		FeatureWorksapce* pWorkspace = NULL;
+		FeatureWorkspace* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
+		pWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspaceById(source_id));
 		if(pWorkspace==NULL)
 		{
 			return NULL;
@@ -803,7 +880,43 @@ namespace auge
 		return pGLayer;
 	}
 
-	Layer* CartoManagerImpl::CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url)
+	RasterLayer* CartoManagerImpl::CreateRasterLayer(const char* name, const char* r_name, const char* r_path, g_uint source_id)
+	{
+		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
+
+		RasterLayer* pRLayer = pCartoFactory->CreateRasterLayer();
+		pRLayer->SetName(name);
+
+		RasterWorkspace* pWorkspace = NULL;
+		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+
+		pWorkspace = dynamic_cast<RasterWorkspace*>(pConnManager->GetWorkspaceById(source_id));
+		if(pWorkspace==NULL)
+		{
+			return NULL;
+		}
+
+		RasterFolder* pRasterFolder = NULL;
+		pRasterFolder = pWorkspace->GetFolder(r_path);
+		if(pRasterFolder==NULL)
+		{
+			return NULL;
+		}
+		RasterDataset* pRasterDataset = NULL;
+		pRasterDataset = pRasterFolder->GetRasterDataset();
+
+		Raster* pRaster = NULL;
+		pRaster = pRasterDataset->GetRaster(r_name);
+		if(pRaster==NULL)
+		{
+			pRasterFolder->Release();
+			return NULL;
+		}
+		pRLayer->SetRaster(pRaster, pRasterDataset);
+		return pRLayer;
+	}
+
+	Layer* CartoManagerImpl::CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, const char* f_path, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url)
 	{
 		Layer* pLayer = NULL;
 		switch(type)
@@ -815,6 +928,7 @@ namespace auge
 			pLayer = CreateGraphicLayer(id, name, f_name, source_id, style_id, version, visible);
 			break;
 		case augeLayerRaster:
+ 			pLayer = CreateRasterLayer(id, name, f_name, f_path, source_id, version, visible);
 			break;
 		case augeLayerQuadServer:
 			pLayer = CreateQuadServerLayer(id, name, web_url, version, visible);
@@ -827,10 +941,10 @@ namespace auge
 	{
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
 
-		FeatureWorksapce* pWorkspace = NULL;
+		FeatureWorkspace* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
+		pWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspaceById(source_id));
 		if(pWorkspace==NULL)
 		{
 			return NULL;
@@ -864,10 +978,10 @@ namespace auge
 	{
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
 
-		FeatureWorksapce* pWorkspace = NULL;
+		FeatureWorkspace* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
+		pWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspaceById(source_id));
 		if(pWorkspace==NULL)
 		{
 			return NULL;
@@ -895,6 +1009,47 @@ namespace auge
 		pGLayer->SetStyle(pStyle);
 
 		return pGLayer;
+	}
+
+	RasterLayer* CartoManagerImpl::CreateRasterLayer(int id, const char* name, const char* r_name, const char* r_path, g_int source_id, g_int version, bool visible)
+	{
+		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
+
+		RasterLayer* pRLayer = pCartoFactory->CreateRasterLayer();
+		pRLayer->SetName(name);
+
+		RasterWorkspace* pWorkspace = NULL;
+		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+
+		pWorkspace = dynamic_cast<RasterWorkspace*>(pConnManager->GetWorkspaceById(source_id));
+		if(pWorkspace==NULL)
+		{
+			return NULL;
+		}
+
+		RasterFolder* pRasterFolder = NULL;
+		pRasterFolder = pWorkspace->GetFolder(r_path);
+		if(pRasterFolder==NULL)
+		{
+			return NULL;
+		}
+		RasterDataset* pRasterDataset = NULL;
+		pRasterDataset = pRasterFolder->GetRasterDataset();
+
+		Raster* pRaster = NULL;
+		pRaster = pRasterDataset->GetRaster(r_name);
+		if(pRaster==NULL)
+		{
+			pRasterFolder->Release();
+			return NULL;
+		}
+		pRLayer->SetRaster(pRaster, pRasterDataset);
+
+		pRLayer->SetID(id);
+		pRLayer->SetVersion(version);
+		pRLayer->SetVisiable(visible);
+
+		return pRLayer;
 	}
 
 	QuadServerLayer* CartoManagerImpl::CreateQuadServerLayer(int id, const char* name, const char* url, int version, bool visible)
@@ -2094,10 +2249,10 @@ namespace auge
 	{
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
 
-		FeatureWorksapce* pWorkspace = NULL;
+		FeatureWorkspace* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
+		pWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspaceById(source_id));
 		if(pWorkspace==NULL)
 		{
 			return NULL;
@@ -2131,10 +2286,10 @@ namespace auge
 	{
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
 
-		FeatureWorksapce* pWorkspace = NULL;
+		FeatureWorkspace* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspaceById(source_id));
+		pWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspaceById(source_id));
 		if(pWorkspace==NULL)
 		{
 			return NULL;
@@ -2623,7 +2778,7 @@ namespace auge
 							"  gid serial NOT NULL," \
 							"  user_id integer NOT NULL DEFAULT 1," \
 							"  m_name character varying(32) NOT NULL," \
-							"  m_layers character varying(1024) NOT NULL," \
+							"  m_layers character varying(4096) NOT NULL," \
 							"  m_uri  character varying(128) NOT NULL," \
 							"  srid integer DEFAULT 4326," \
 							"  version integer DEFAULT 1," \
@@ -2655,6 +2810,7 @@ namespace auge
 							"	l_name character varying(32) NOT NULL," \
 							"	l_type integer NOT NULL DEFAULT 0," \
 							"	f_name character varying(32) NOT NULL," \
+							"	f_path character varying(256) DEFAULT ''::character varying," \
 							"	user_id integer NOT NULL DEFAULT 1," \
 							"	m_id integer NOT NULL," \
 							"	s_id integer DEFAULT -1," \

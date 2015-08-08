@@ -82,7 +82,7 @@ namespace auge
 		}
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
-		FeatureWorksapce* pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(pUser->GetID(), sourceName));
+		FeatureWorkspace* pWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspace(pUser->GetID(), sourceName));
 		if(pWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX] = {0};

@@ -106,6 +106,29 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	RESULTCODE RasterLayerImpl::SetRaster(Raster* pRaster, RasterDataset* pRasterDataset)
+	{
+		if(pRaster==NULL||pRasterDataset==NULL)
+		{
+			return AG_FAILURE;
+		}
+		if(m_pRaster)
+		{
+			AUGE_SAFE_RELEASE(m_pRaster);
+		}
+		m_pRaster = pRaster;
+		if(m_pRasterDataset!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pRasterDataset);
+		}
+		m_pRasterDataset = pRasterDataset;
+		if(m_pRasterDataset!=NULL)
+		{
+			m_pRasterDataset->AddRef();
+		}
+		return AG_SUCCESS;
+	}
+
 	Raster* RasterLayerImpl::GetRaster()
 	{
 		return m_pRaster;

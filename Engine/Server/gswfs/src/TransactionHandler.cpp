@@ -162,7 +162,7 @@ namespace auge
 			return pExpResponse;
 		}
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
-		FeatureWorksapce* pWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(pUser->GetID(), sourceName));
+		FeatureWorkspace* pWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspace(pUser->GetID(), sourceName));
 		if(pWorkspace==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -517,7 +517,7 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	// Exectue By DataSource
 	//////////////////////////////////////////////////////////////////////////
-	g_uint TransactionHandler::Insert(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorksapce* pWorkspace)
+	g_uint TransactionHandler::Insert(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorkspace* pWorkspace)
 	{
 		g_uint count = 0;
 		XNode *pxNode = NULL;
@@ -532,7 +532,7 @@ namespace auge
 		return count;
 	}
 
-	g_uint TransactionHandler::Update(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorksapce* pWorkspace)
+	g_uint TransactionHandler::Update(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorkspace* pWorkspace)
 	{
 		g_uint count = 0;
 		XNode *pxNode = NULL;
@@ -547,7 +547,7 @@ namespace auge
 		return count;
 	}
 
-	g_uint TransactionHandler::Delete(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorksapce* pWorkspace)
+	g_uint TransactionHandler::Delete(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorkspace* pWorkspace)
 	{
 		g_uint count = 0;
 		XNode *pxNode = NULL;
@@ -559,7 +559,7 @@ namespace auge
 		return count;
 	}
 
-	g_int TransactionHandler::Delete(XNode* pxDelete, WebContext* pWebContext, FeatureWorksapce* pWorkspace)
+	g_int TransactionHandler::Delete(XNode* pxDelete, WebContext* pWebContext, FeatureWorkspace* pWorkspace)
 	{
 		int count = 0;
 
@@ -596,7 +596,7 @@ namespace auge
 		return count;
 	}
 
-	bool TransactionHandler::Insert(XNode* pxInsert, WebContext* pWebContext, FeatureWorksapce* pWorkspace)
+	bool TransactionHandler::Insert(XNode* pxInsert, WebContext* pWebContext, FeatureWorkspace* pWorkspace)
 	{	
 		XNode* pxType = pxInsert->GetFirstChild();
 		if(pxType==NULL)

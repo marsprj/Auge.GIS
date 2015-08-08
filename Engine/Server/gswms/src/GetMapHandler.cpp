@@ -236,25 +236,26 @@ namespace auge
 				FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
 				FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
 				pStyle = pCartoManager->GetStyle(style_name, pFeatureClass);
+				if(pStyle!=NULL)
+				{
+					pCanvas->DrawLayer(pLayer, pStyle);
+				}
+				else
+				{
+					char msg[AUGE_MSG_MAX];
+					g_sprintf(msg, "Style [%s] Not Defined", style_name);
+					GLogger* pLogger = augeGetLoggerInstance();
+					pLogger->Info(msg, __FILE__, __LINE__);
+				}
 			}
 			break;
 		case augeLayerRaster:
 			{
-
+				pCanvas->DrawLayer(pLayer, pStyle);
 			}
 			break;
 		}
-		if(pStyle!=NULL)
-		{
-			pCanvas->DrawLayer(pLayer, pStyle);
-		}
-		else
-		{
-			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "Style [%s] Not Defined", style_name);
-			GLogger* pLogger = augeGetLoggerInstance();
-			pLogger->Info(msg, __FILE__, __LINE__);
-		}
+		
 	}
 
 }

@@ -31,6 +31,7 @@ namespace auge
 		virtual Style*			GetStyle();
 
 		virtual RESULTCODE		SetRaster(Raster* pRaster);
+		virtual RESULTCODE		SetRaster(Raster* pRaster, RasterDataset* pRasterDataset);
 		virtual Raster*			GetRaster();
 
 		virtual RESULTCODE		SetRasterDataset(RasterDataset* pRasterDataset);

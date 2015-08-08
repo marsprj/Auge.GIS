@@ -7,7 +7,7 @@
 
 namespace auge
 {
-	class WorkspaceShp : public FeatureWorksapce
+	class WorkspaceShp : public FeatureWorkspace
 	{
 		friend class FeatureClassShp;
 

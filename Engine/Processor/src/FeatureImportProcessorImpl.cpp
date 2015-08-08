@@ -139,7 +139,7 @@ namespace auge
 		RESULTCODE rc = AG_SUCCESS;
 		char constr[AUGE_MSG_MAX];
 		g_sprintf(constr,"DATABASE=%s", shp_path);
-		FeatureWorksapce* pshpWorkspace = dynamic_cast<FeatureWorksapce*>(pshpEngine->CreateWorkspace());
+		FeatureWorkspace* pshpWorkspace = dynamic_cast<FeatureWorkspace*>(pshpEngine->CreateWorkspace());
 		pshpWorkspace->SetConnectionString(constr);
 		rc = pshpWorkspace->Open();
 		if(rc!=AG_SUCCESS)
@@ -163,9 +163,9 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		FeatureWorksapce* pdbWorkspace = NULL;
+		FeatureWorkspace* pdbWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
-		pdbWorkspace = dynamic_cast<FeatureWorksapce*>(pConnManager->GetWorkspace(m_user, source_name));
+		pdbWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspace(m_user, source_name));
 		if(pdbWorkspace==NULL)
 		{
 			pshpFeatureClass->Release();

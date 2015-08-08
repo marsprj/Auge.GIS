@@ -699,7 +699,7 @@ namespace auge
 		DataSet* pDataSet = NULL;
 		const char* datasetName = NULL;
 		augeDataSetType type = augeDataSetAttribute;
-		FeatureWorksapce* pFeatureWorkspace = dynamic_cast<FeatureWorksapce*>(pWorkspace);
+		FeatureWorkspace* pFeatureWorkspace = dynamic_cast<FeatureWorkspace*>(pWorkspace);
 		//EnumDataSet* pDataSets = pFeatureWorkspace->GetFeatureClasses();
 		EnumDataSet* pDataSets = pFeatureWorkspace->GetDataSets();
 		if(pDataSets!=NULL)

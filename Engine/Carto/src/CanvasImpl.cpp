@@ -86,17 +86,17 @@ namespace auge
 
 	void CanvasImpl::DrawLayer(RasterLayer* pLayer)
 	{
-		RasterDataset* pRasterDataset = pLayer->GetRasterDataset();
-		if(pRasterDataset!=NULL)
-		{
-			Raster* pRaster = pRasterDataset->GetRaster();
-			if(pRaster!=NULL)
-			{
-				m_pRenderer->DrawRaster(pRaster, &m_transform);
-			}
-		}
-		//Raster* pRaster = pLayer->GetRaster();
-		//m_pRenderer->DrawRaster(pRaster, &m_transform);
+		//RasterDataset* pRasterDataset = pLayer->GetRasterDataset();
+		//if(pRasterDataset!=NULL)
+		//{
+		//	Raster* pRaster = pRasterDataset->GetRaster();
+		//	if(pRaster!=NULL)
+		//	{
+		//		m_pRenderer->DrawRaster(pRaster, &m_transform);
+		//	}
+		//}
+		Raster* pRaster = pLayer->GetRaster();
+		m_pRenderer->DrawRaster(pRaster, &m_transform);
 	}
 
 	void CanvasImpl::DrawLayer(Layer* pLayer, Style* pStyle)

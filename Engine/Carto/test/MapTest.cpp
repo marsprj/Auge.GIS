@@ -364,7 +364,7 @@ void MapTest::Create_Map_Point_Label()
 	pStyle = pCartoManager->GetStyle("cities_label", NULL);
 
 	auge::Layer *pLayer = NULL;
-	pLayer = pCartoManager->CreateLayer("cities",auge::augeLayerFeature, "cities", pMap->GetID(), pWorkspace->GetID(),pStyle->GetID());
+	//pLayer = pCartoManager->CreateLayer("cities",auge::augeLayerFeature, "cities", pMap->GetID(), pWorkspace->GetID(),pStyle->GetID());
 	pMap->AddLayer(pLayer);
 
 	AUGE_SAFE_RELEASE(pMap);
@@ -602,12 +602,12 @@ void MapTest::CreateLayer()
 	pMap = pCartoManager->LoadMap(2, "world");
 
 	auge::Layer *pLayer = NULL;
-	pLayer = pCartoManager->CreateLayer("cities",auge::augeLayerFeature, "cities", pMap->GetID(), pWorkspace->GetID(),1);
-	pMap->AddLayer(pLayer);
-	pLayer = pCartoManager->CreateLayer("rivers",auge::augeLayerFeature, "rivers", pMap->GetID(), pWorkspace->GetID(),3);
-	pMap->AddLayer(pLayer);
-	pLayer = pCartoManager->CreateLayer("country",auge::augeLayerFeature, "country", pMap->GetID(), pWorkspace->GetID(),4);
-	pMap->AddLayer(pLayer);
+	//pLayer = pCartoManager->CreateLayer("cities",auge::augeLayerFeature, "cities", pMap->GetID(), pWorkspace->GetID(),1);
+	//pMap->AddLayer(pLayer);
+	//pLayer = pCartoManager->CreateLayer("rivers",auge::augeLayerFeature, "rivers", pMap->GetID(), pWorkspace->GetID(),3);
+	//pMap->AddLayer(pLayer);
+	//pLayer = pCartoManager->CreateLayer("country",auge::augeLayerFeature, "country", pMap->GetID(), pWorkspace->GetID(),4);
+	//pMap->AddLayer(pLayer);
 
 	//AUGE_SAFE_RELEASE(pMap);
 
@@ -886,7 +886,7 @@ void MapTest::DrawRasterMap()
 	auge::RasterLayer* pRasterLayer = NULL;
 	pRasterLayer = pCartoFactory->CreateRasterLayer();
 	pRasterLayer->SetName(rsName);
-	pRasterLayer->SetRasterDataset(pRasterDataset);
+	//pRasterLayer->SetRasterDataset(pRasterDataset);
 
 	auge::Map* pMap = pCartoFactory->CreateMap();
 	pMap->SetName("world");
@@ -923,8 +923,36 @@ void MapTest::AddQuadServerLayer()
 	pCartoManager = auge::augeGetCartoManagerInstance();
 	auge::Map* pMap = pCartoManager->LoadMap(2, "world");
 
-	pCartoManager->CreateWebLayer(name, auge::augeLayerQuadServer, url, pMap->GetID());
+	//pCartoManager->CreateWebLayer(name, auge::augeLayerQuadServer, url, pMap->GetID());
 
+}
+
+void MapTest::AddRasterLayer()
+{
+	auge::ConnectionManager* pConnManager = NULL;
+	pConnManager = auge::augeGetConnectionManagerInstance();
+
+	auge::CartoManager* pCartoManager = NULL;
+	pCartoManager = auge::augeGetCartoManagerInstance();
+	auge::CartoFactory* pCartoFactory = NULL;
+	pCartoFactory = auge::augeGetCartoFactoryInstance();
+	auge::Map* pMap = pCartoManager-> LoadMap(2, "world");
+
+	const char* rsName = "world.tif";
+	//auge::RasterDataset* pRasterDataset = NULL;
+	auge::RasterWorkspace* pRasterWorkspace = NULL;
+	pRasterWorkspace = dynamic_cast<auge::RasterWorkspace*>(pConnManager->GetWorkspace("rsdb2"));
+	auge::RasterFolder* pFolder = pRasterWorkspace->GetFolder("/");
+	auge::RasterDataset* pRasterDataset = pFolder->GetRasterDataset();
+	auge::Raster* pRaster = pRasterDataset->GetRaster(rsName);
+
+	auge::RasterLayer* pRasterLayer = NULL;
+	pRasterLayer = pCartoFactory->CreateRasterLayer();
+	pRasterLayer->SetName(rsName);
+	pRasterLayer->SetRaster(pRaster, pRasterDataset);
+	//pRasterLayer->SetRasterDataset(pRasterDataset);
+
+	//pCartoManager->CreateWebLayer(name, auge::augeLayerQuadServer, url, pMap->GetID());
 }
 
 void MapTest::DrawLayerStar()

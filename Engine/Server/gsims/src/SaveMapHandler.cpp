@@ -74,6 +74,8 @@ namespace auge
 		//for(g_int i=0; i<count; i++)
 		{
 			strcat(layers, pRequest->GetLayerID(i));
+			strcat(layers, ":");
+			strcat(layers, pRequest->IsLayerVisible(i) ? "1" : "0");
 			if(i)
 			{
 				strcat(layers, ",");

@@ -7,7 +7,7 @@
 
 namespace auge
 {
-	class FeatureWorksapce;
+	class FeatureWorkspace;
 
 	class KMeansProcessorImpl : public KMeansProcessor
 	{
@@ -36,8 +36,8 @@ namespace auge
 		const char*			GetOutputSource();
 		const char*			GetOutputFatureClass();
 
-		RESULTCODE			SaveCentroidResult(KMeans* kmean, const char* className, FeatureWorksapce* pWorkspace, g_uint srid);
-		RESULTCODE			SaveClusterResult(KMeans* kmean, const char* className, FeatureWorksapce* pWorkspace, g_uint srid);
+		RESULTCODE			SaveCentroidResult(KMeans* kmean, const char* className, FeatureWorkspace* pWorkspace, g_uint srid);
+		RESULTCODE			SaveClusterResult(KMeans* kmean, const char* className, FeatureWorkspace* pWorkspace, g_uint srid);
 
 	private:
 		g_uint		m_k;
