@@ -57,7 +57,7 @@ namespace auge
 		const char* name = pRequest->GetName();
 		if(name==NULL)
 		{
-			const char* msg = "Parameter [name] is NULL";
+			const char* msg = "Parameter [name] is NULL"; 
 			pLogger->Error(msg,__FILE__,__LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
@@ -71,6 +71,7 @@ namespace auge
 		memset(layers, 0, AUGE_PATH_MAX);
 		g_uint count = pRequest->GetLayerCount();
 		for(g_int i=count-1; i>=0; i--)
+		//for(g_int i=0; i<count; i++)
 		{
 			strcat(layers, pRequest->GetLayerID(i));
 			if(i)

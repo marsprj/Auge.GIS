@@ -44,7 +44,7 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-user=admin&service=ims&version=1.0.0&request=DescribeMap&name=world
-http://127.0.0.1:8088/ows/admin/mgr?service=ims&version=1.0.0&request=DescribeMap&name=world
+user=user1&service=ims&version=1.0.0&request=DescribeMap&name=world
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=DescribeMap&name=world
 
 ************************************************************************/

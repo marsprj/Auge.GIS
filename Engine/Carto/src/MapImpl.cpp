@@ -120,7 +120,8 @@ namespace auge
 
 		//std::string strName = name;
 		//m_layers[strName] = pLayer;
-		m_layers.push_back(pLayer);
+		//m_layers.push_back(pLayer);
+		m_layers.insert(m_layers.begin(), pLayer);
 		return AG_SUCCESS;
 	}
 

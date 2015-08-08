@@ -179,7 +179,6 @@ namespace auge
 						}
 						break;
 					}
-					
 				}
 
 				ts = auge_get_time();

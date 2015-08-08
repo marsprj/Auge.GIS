@@ -21,8 +21,10 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetMapName(cgi["mapName"]);
 		SetDataSource(cgi["datasource"]);
+		SetType(cgi["layerType"]);
 		SetLayerName(cgi["layerName"]);
 		SetTableName(cgi["tableName"]);
+		
 		 return true;
 	}
 
