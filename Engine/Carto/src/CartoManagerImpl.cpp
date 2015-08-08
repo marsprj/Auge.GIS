@@ -2779,7 +2779,7 @@ namespace auge
 							"  user_id integer NOT NULL DEFAULT 1," \
 							"  m_name character varying(32) NOT NULL," \
 							"  m_layers character varying(4096)," \
-							"  m_uri  character varying(128) NOT NULL," \
+							"  m_uri  character varying(128)," \
 							"  srid integer DEFAULT 4326," \
 							"  version integer DEFAULT 1," \
 							"  minx double precision DEFAULT -180," \
