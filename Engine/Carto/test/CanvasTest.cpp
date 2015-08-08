@@ -158,7 +158,7 @@ void CanvasTest::DrawPolygon()
 //	auge::DataEngine* pDataEngine = NULL;
 //	pDataEngine = auge::augeGetDataEngineInstance();
 //
-//	auge::FeatureWorksapce* pWorkspace = NULL;
+//	auge::FeatureWorkspace* pWorkspace = NULL;
 //	pWorkspace = pDataEngine->CreateFeatureWorkspace();
 //	pWorkspace->SetConnectionString(path);
 //
@@ -224,7 +224,7 @@ void CanvasTest::DrawPolygon()
 //	auge::DataEngine* pDataEngine = NULL;
 //	pDataEngine = auge::augeGetDataEngineInstance();
 //
-//	auge::FeatureWorksapce* pWorkspace = NULL;
+//	auge::FeatureWorkspace* pWorkspace = NULL;
 //	pWorkspace = pDataEngine->CreateFeatureWorkspace();
 //	pWorkspace->SetConnectionString(path);
 //
@@ -287,7 +287,7 @@ void CanvasTest::DrawPolygon()
 //	auge::DataEngine* pDataEngine = NULL;
 //	pDataEngine = auge::augeGetDataEngineInstance();
 //
-//	auge::FeatureWorksapce* pWorkspace = NULL;
+//	auge::FeatureWorkspace* pWorkspace = NULL;
 //	pWorkspace = pDataEngine->CreateFeatureWorkspace();
 //	pWorkspace->SetConnectionString(path);
 //
@@ -362,8 +362,8 @@ void CanvasTest::DrawShpPolygon()
 	//auge::DataEngine* pEngine = NULL;
 	//pEngine = auge::augeGetDataEngineInstance();
 
-	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pEngine->CreateWorkspace());
+	auge::FeatureWorkspace* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pEngine->CreateWorkspace());
 	pWorkspace->SetConnectionString(path);
 
 	rc = pWorkspace->Open();

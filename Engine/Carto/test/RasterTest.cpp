@@ -135,8 +135,8 @@ auge::FeatureLayer* RasterTest::CreateFeatureLayer()
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
 	
-	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureWorkspace* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("db1"));
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;

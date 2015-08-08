@@ -257,8 +257,8 @@ void MapTest::Draw_Map_Polygon_Label()
 	auge::GColor bgColor(255,0,0,0);
 	pCanvas->DrawBackground(bgColor);
 
-	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureWorkspace* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("db1"));
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
@@ -303,8 +303,8 @@ void MapTest::Draw_Map_Point_Graphic()
 	auge::GColor bgColor(255,0,0,0);
 	pCanvas->DrawBackground(bgColor);
 
-	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureWorkspace* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("db1"));
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
@@ -390,8 +390,8 @@ void MapTest::Draw_Map_Point_Label_Anchor()
 	auge::GColor bgColor(255,0,0,0);
 	pCanvas->DrawBackground(bgColor);
 
-	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureWorkspace* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("db1"));
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass("cities");
 
 	auge::Style* pStyle = NULL;
@@ -439,8 +439,8 @@ void MapTest::Draw_Line()
 	auge::GColor bgColor(255,0,0,0);
 	pCanvas->DrawBackground(bgColor);
 
-	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureWorkspace* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("db1"));
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
@@ -494,8 +494,8 @@ void MapTest::DrawLayerRailway()
 	auge::GColor bgColor(255,0,0,0);
 	pCanvas->DrawBackground(bgColor);
 
-	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureWorkspace* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("db1"));
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
@@ -550,8 +550,8 @@ void MapTest::DrawLayerRegion()
 	auge::GColor bgColor(255,0,0,0);
 	pCanvas->DrawBackground(bgColor);
 
-	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureWorkspace* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("db1"));
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
@@ -618,14 +618,14 @@ void MapTest::CreateLayer()
 auge::Map* CreateMapObj()
 {
 	auge::Workspace *pWorkspace = NULL;
-	auge::FeatureWorksapce* pFWorkspace = NULL;
+	auge::FeatureWorkspace* pFWorkspace = NULL;
 	auge::FeatureClass* pFeatureClass = NULL;
 
 	auge::ConnectionManager* pConnectionManager = NULL;
 	pConnectionManager = auge::augeGetConnectionManagerInstance();
 
 	pWorkspace = pConnectionManager->GetWorkspace("db1");
-	pFWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pWorkspace);
+	pFWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pWorkspace);
 
 	auge::Map* pMap = NULL;
 	auge::FeatureLayer* pFLayer = NULL;
@@ -687,14 +687,14 @@ auge::Map* CreateMapObj_SLD()
 	const char* path = "/home/renyc/auge.gis/Engine/Carto/sld/cities_1.xml";
 
 	auge::Workspace *pWorkspace = NULL;
-	auge::FeatureWorksapce* pFWorkspace = NULL;
+	auge::FeatureWorkspace* pFWorkspace = NULL;
 	auge::FeatureClass* pFeatureClass = NULL;
 
 	auge::ConnectionManager* pConnectionManager = NULL;
 	pConnectionManager = auge::augeGetConnectionManagerInstance();
 
 	pWorkspace = pConnectionManager->GetWorkspace("db1");
-	pFWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pWorkspace);
+	pFWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pWorkspace);
 
 	auge::Map* pMap = NULL;
 	auge::FeatureLayer* pFLayer = NULL;
@@ -775,8 +775,8 @@ void MapTest::DrawCountry()
 	auge::GColor bgColor(255,0,0,0);
 	pCanvas->DrawBackground(bgColor);
 
-	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureWorkspace* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("db1"));
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
@@ -822,8 +822,8 @@ void MapTest::DrawCities()
 	auge::GColor bgColor(255,0,0,0);
 	pCanvas->DrawBackground(bgColor);
 
-	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureWorkspace* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("db1"));
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;
@@ -869,8 +869,8 @@ void MapTest::DrawRasterMap()
 
 	const char* className = "country";
 	auge::FeatureClass* pFeatureClass = NULL;
-	auge::FeatureWorksapce* pFeatureWorkspace = NULL;
-	pFeatureWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureWorkspace* pFeatureWorkspace = NULL;
+	pFeatureWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("db1"));
 	pFeatureClass = pFeatureWorkspace->OpenFeatureClass("country");
 	auge::FeatureLayer* pFeatureLayer = NULL;
 	pFeatureLayer = pCartoFactory->CreateFeatureLayer();
@@ -975,8 +975,8 @@ void MapTest::DrawLayerStar()
 	auge::GColor bgColor(255,0,0,0);
 	pCanvas->DrawBackground(bgColor);
 
-	auge::FeatureWorksapce* pWorkspace = NULL;
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureWorkspace* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("db1"));
 	auge::FeatureClass* pFeatureClass = pWorkspace->OpenFeatureClass(className);
 
 	auge::Style* pStyle = NULL;

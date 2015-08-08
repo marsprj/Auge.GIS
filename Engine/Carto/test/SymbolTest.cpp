@@ -111,10 +111,10 @@ void SymbolTest::DrawStars()
 	pCanvas->DrawBackground(bgColor);
 
 	RESULTCODE rc = AG_FAILURE;
-	auge::FeatureWorksapce*	 pWorkspace = NULL;
+	auge::FeatureWorkspace*	 pWorkspace = NULL;
 	auge::ConnectionManager* pConnectionManager = auge::augeGetConnectionManagerInstance();
 	
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnectionManager->GetWorkspace("db1"));
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnectionManager->GetWorkspace("db1"));
 	
 	auge::FeatureClass* pFeatureClass = NULL;
 	pFeatureClass = pWorkspace->OpenFeatureClass("cities");
@@ -190,10 +190,10 @@ void SymbolTest::DrawRailways()
 	pCanvas->DrawBackground(bgColor);
 
 	RESULTCODE rc = AG_FAILURE;
-	auge::FeatureWorksapce*	 pWorkspace = NULL;
+	auge::FeatureWorkspace*	 pWorkspace = NULL;
 	auge::ConnectionManager* pConnectionManager = auge::augeGetConnectionManagerInstance();
 
-	pWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnectionManager->GetWorkspace("db1"));
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnectionManager->GetWorkspace("db1"));
 
 	auge::FeatureClass* pFeatureClass = NULL;
 	pFeatureClass = pWorkspace->OpenFeatureClass("rivers");
