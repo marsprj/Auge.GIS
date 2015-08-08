@@ -495,10 +495,12 @@ namespace auge
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
+			map_layers.clear();
 			return AG_FAILURE;
 		}
 		if(!pResult->GetCount())
 		{
+			map_layers.clear();
 			pResult->Release();
 			return AG_FAILURE;
 		}
