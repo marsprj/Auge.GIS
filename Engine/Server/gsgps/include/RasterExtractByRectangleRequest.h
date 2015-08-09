@@ -99,6 +99,7 @@ namespace auge
 -------------------------------------------------------------------------
 1)
 service=gps&version=1.0.0&request=RasterExtractByRectangle&inputSourceName=rsdb&inputRasterName=Koala.png&outputSourceName=rsdb&outputRasterName=Koala_900913.png&extent=100,100,500,500
+
 http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=RasterExtractByRectangle&inputSourceName=rsdb&inputRasterName=cities&outputSourceName=rsdb&outputRasterName=cities_900913&outputSrid=900913
 http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=RasterExtractByRectangle&inputSourceName=rsdb&inputRasterName=cities&outputSourceName=rsdb&outputRasterName=cities_900913&outputSrid=900913
 

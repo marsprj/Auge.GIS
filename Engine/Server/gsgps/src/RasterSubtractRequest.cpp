@@ -56,11 +56,11 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
 
-		SetInputRaster_1(cgi["inputRasterName"]);
-		SetInputDataSource_1(cgi["inputSourceName"]);
+		SetInputRaster_1(cgi["inputRasterName_1"]);
+		SetInputDataSource_1(cgi["inputSourceName_1"]);
 
-		SetInputRaster_2(cgi["inputRasterName"]);
-		SetInputDataSource_2(cgi["inputSourceName"]);
+		SetInputRaster_2(cgi["inputRasterName_2"]);
+		SetInputDataSource_2(cgi["inputSourceName_2"]);
 
 		SetOutputRaster(cgi["outputRasterName"]);
 		SetOutputDataSource(cgi["outputSourceName"]);
