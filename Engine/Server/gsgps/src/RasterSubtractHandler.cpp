@@ -4,6 +4,7 @@
 #include "AugeXML.h"
 #include "AugeWebCore.h"
 #include "AugeProcessor.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -104,6 +105,7 @@ namespace auge
 		auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 		pProcessor = pFactory->CreateRasterSubtractProcessor();
 
+		pProcessor->SetUser(pUser->GetID());
 		pProcessor->SetInputDataSource_1(input_source_name_1);
 		pProcessor->SetInputRaster_1(input_raster_name_1);
 		pProcessor->SetInputPath_1(input_raster_path_1);

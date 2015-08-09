@@ -4,6 +4,8 @@
 #include "AugeXML.h"
 #include "AugeWebCore.h"
 #include "AugeProcessor.h"
+#include "AugeUser.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -111,6 +113,7 @@ namespace auge
 		auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 		pProcessor = pFactory->CreateRasterExtractByRectangleProcessor();
 
+		pProcessor->SetUser(pUser->GetID());
 		pProcessor->SetInputRectangle(rect);
 		pProcessor->SetInputDataSource(input_source_name);
 		pProcessor->SetInputRaster(input_raster_name);
