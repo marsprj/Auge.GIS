@@ -92,10 +92,13 @@ namespace auge
 
 		const char* input_source_name_1 = pRequest->GetInputDataSource_1();
 		const char* input_raster_name_1 = pRequest->GetInputRaster_1();
+		const char* input_raster_path_1 = pRequest->GetInputPath_1();
 		const char* input_source_name_2 = pRequest->GetInputDataSource_2();
 		const char* input_raster_name_2 = pRequest->GetInputRaster_2();
+		const char* input_raster_path_2 = pRequest->GetInputPath_2();
 		const char* output_source_name  = pRequest->GetOutputDataSource();
 		const char* output_raster_name  = pRequest->GetOutputRaster();
+		const char* output_raster_path = pRequest->GetOutputPath();
 
 		auge::RasterSubtractProcessor* pProcessor = NULL;
 		auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
@@ -103,11 +106,14 @@ namespace auge
 
 		pProcessor->SetInputDataSource_1(input_source_name_1);
 		pProcessor->SetInputRaster_1(input_raster_name_1);
+		pProcessor->SetInputPath_1(input_raster_path_1);
 		pProcessor->SetInputDataSource_2(input_source_name_2);
 		pProcessor->SetInputRaster_2(input_raster_name_2);
+		pProcessor->SetInputPath_2(input_raster_path_2);
 
 		pProcessor->SetOutputDataSource(output_source_name);
 		pProcessor->SetOutputRaster(output_raster_name);
+		pProcessor->SetOutputPath(output_raster_path);
 
 		RESULTCODE rc = pProcessor->Execute();
 		pProcessor->Release();

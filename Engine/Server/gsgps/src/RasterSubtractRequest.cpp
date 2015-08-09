@@ -228,6 +228,27 @@ namespace auge
 		}
 	}
 
+
+	void RasterSubtractRequest::SetInputPath_1(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_in_raster_path_1 = "/";
+		}
+		else
+		{
+			if(strlen(rasterPath)==0)
+			{
+				m_in_raster_path_1 = "/";
+			}
+			else
+			{
+				m_in_raster_path_1 = rasterPath;
+			}
+		}
+	}
+
+
 	void RasterSubtractRequest::SetInputDataSource_2(const char* sourceName)
 	{
 		if(sourceName==NULL)
@@ -251,6 +272,26 @@ namespace auge
 			m_in_raster_name_2 = rasterName;
 		}
 	}
+
+	void RasterSubtractRequest::SetInputPath_2(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_in_raster_path_2 = "/";
+		}
+		else
+		{
+			if(strlen(rasterPath)==0)
+			{
+				m_in_raster_path_2 = "/";
+			}
+			else
+			{
+				m_in_raster_path_2 = rasterPath;
+			}
+		}
+	}
+
 	void RasterSubtractRequest::SetOutputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
@@ -274,6 +315,25 @@ namespace auge
 			m_out_raster_name = rasterName;
 		}
 	}
+
+	void RasterSubtractRequest::SetOutputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_out_raster_path = "/";
+		}
+		else
+		{
+			if(strlen(rasterPath)==0)
+			{
+				m_out_raster_path = "/";
+			}
+			else
+			{
+				m_out_raster_path = rasterPath;
+			}
+		}
+	}
 	
 	const char*	RasterSubtractRequest::GetInputDataSource_1()
 	{
@@ -283,6 +343,11 @@ namespace auge
 	const char*	RasterSubtractRequest::GetInputRaster_1()
 	{
 		return m_in_raster_name_1.empty() ? NULL : m_in_raster_name_1.c_str();
+	}
+
+	const char* RasterSubtractRequest::GetInputPath_1()
+	{
+		return m_in_raster_path_1.empty()? NULL : m_in_raster_path_1.c_str();
 	}
 
 	const char*	RasterSubtractRequest::GetInputDataSource_2()
@@ -295,6 +360,11 @@ namespace auge
 		return m_in_raster_name_2.empty() ? NULL : m_in_raster_name_2.c_str();
 	}
 
+	const char* RasterSubtractRequest::GetInputPath_2()
+	{
+		return m_in_raster_path_2.empty()? NULL : m_in_raster_path_2.c_str();
+	}
+
 	const char*	RasterSubtractRequest::GetOutputDataSource()
 	{
 		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
@@ -303,6 +373,11 @@ namespace auge
 	const char*	RasterSubtractRequest::GetOutputRaster()
 	{
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
+	}
+
+	const char* RasterSubtractRequest::GetOutputPath()
+	{
+		return m_out_raster_path.empty()? NULL : m_out_raster_path.c_str();
 	}
 
 	void RasterSubtractRequest::SetOutputFormat(const char* format)
