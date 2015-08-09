@@ -117,6 +117,7 @@ namespace auge
 
 		pProcessor->SetOutputDataSource(output_source_name);
 		pProcessor->SetOutputRaster(output_raster_name);
+		pProcessor->SetOutputPath(output_raster_path);
 
 		RESULTCODE rc = pProcessor->Execute();
 		pProcessor->Release();
