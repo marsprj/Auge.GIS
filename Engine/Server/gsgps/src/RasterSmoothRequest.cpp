@@ -58,9 +58,11 @@ namespace auge
 
 		SetInputRaster(cgi["inputRasterName"]);
 		SetInputDataSource(cgi["inputSourceName"]);
+		SetInputPath(cgi["inputPath"]);
 
 		SetOutputRaster(cgi["outputRasterName"]);
 		SetOutputDataSource(cgi["outputSourceName"]);
+		SetOutputPath(cgi["outputPath"]);
 
 		return true;
 	}
@@ -224,6 +226,25 @@ namespace auge
 			m_in_raster_name = rasterName;
 		}
 	}
+	
+	void RasterSmoothRequest::SetInputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_in_raster_path = "/";
+		}
+		else
+		{
+			if(strlen(rasterPath)==0)
+			{
+				m_in_raster_path = "/";
+			}
+			else
+			{
+				m_in_raster_path = rasterPath;
+			}
+		}
+	}
 
 	void RasterSmoothRequest::SetOutputDataSource(const char* sourceName)
 	{
@@ -248,7 +269,26 @@ namespace auge
 			m_out_raster_name = rasterName;
 		}
 	}
-	
+
+	void RasterSmoothRequest::SetOutputPath(const char* rasterPath)
+	{
+		if(rasterPath==NULL)
+		{
+			m_out_raster_path = "/";
+		}
+		else
+		{
+			if(strlen(rasterPath)==0)
+			{
+				m_out_raster_path = "/";
+			}
+			else
+			{
+				m_out_raster_path = rasterPath;
+			}
+		}
+	}
+
 	const char*	RasterSmoothRequest::GetInputDataSource()
 	{
 		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
@@ -259,6 +299,11 @@ namespace auge
 		return m_in_raster_name.empty() ? NULL : m_in_raster_name.c_str();
 	}
 
+	const char* RasterSmoothRequest::GetInputPath()
+	{
+		return m_in_raster_path.empty() ? NULL : m_in_raster_path.c_str();
+	}
+
 	const char*	RasterSmoothRequest::GetOutputDataSource()
 	{
 		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
@@ -267,6 +312,11 @@ namespace auge
 	const char*	RasterSmoothRequest::GetOutputRaster()
 	{
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
+	}
+
+	const char* RasterSmoothRequest::GetOutputPath()
+	{
+		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
 	}
 
 	void RasterSmoothRequest::SetOutputFormat(const char* format)

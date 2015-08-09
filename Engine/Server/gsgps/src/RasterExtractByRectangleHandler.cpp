@@ -114,6 +114,7 @@ namespace auge
 		pProcessor->SetInputRectangle(rect);
 		pProcessor->SetInputDataSource(input_source_name);
 		pProcessor->SetInputRaster(input_raster_name);
+		pProcessor->SetInputPath(input_raster_path);
 
 		pProcessor->SetOutputDataSource(output_source_name);
 		pProcessor->SetOutputRaster(output_raster_name);
