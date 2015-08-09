@@ -89,3 +89,5 @@ namespace auge
 1)
 service=gps&version=1.0.0&request=RasterReverse&inputSourceName=rsdb&inputRasterName=Koala.png&outputSourceName=rsdb&outputRasterName=Koala_900913.png&extent=100,100,500,500
 http://182.92.114.80:8088/ows/admin/mgr?service=gps&version=1.0.0&request=RasterReverse&inputSourceName=rsdb2&inputRasterName=Koala.jpg&outputSourceName=rsdb2&outputRasterName=Koala_reverse.png
+
+************************************************************************/
