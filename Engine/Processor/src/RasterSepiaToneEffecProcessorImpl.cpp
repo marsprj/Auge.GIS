@@ -214,24 +214,24 @@ namespace auge
 		g_uchar* g = (g_uchar*)(pgBand->GetData());
 		g_uchar* b = (g_uchar*)(pbBand->GetData());
 
-		g_uchar or,og, ob;
+		g_uchar br, bg, bb;
 		double nr, ng, nb;
 		double noise; 
 
 		for(g_uint64 i=0; i<size; i++)
 		{
-			or = r[i];
-			og = g[i];
-			ob = b[i];
+			br = r[i];
+			bg = g[i];
+			bb = b[i];
 
-			nr = ((double)or * 0.393) + ((double)og * 0.769) + ((double)ob * 0.189);  
-			ng = ((double)or * 0.349) + ((double)og * 0.686) + ((double)ob * 0.168);   
-			nb = ((double)or * 0.272) + ((double)og * 0.534) + ((double)ob * 0.131); 
+			nr = ((double)br * 0.393) + ((double)bg * 0.769) + ((double)bb * 0.189);  
+			ng = ((double)br * 0.349) + ((double)bg * 0.686) + ((double)bb * 0.168);   
+			nb = ((double)br * 0.272) + ((double)bg * 0.534) + ((double)bb * 0.131); 
 
 			noise = ((rand() % 100) * 0.01) * 0.5 + 0.5;
-			nr = nr * noise + (1.0-noise)*or;
-			ng = ng * noise + (1.0-noise)*og;
-			nb = nb * noise + (1.0-noise)*ob;
+			nr = nr * noise + (1.0-noise)*br;
+			ng = ng * noise + (1.0-noise)*bg;
+			nb = nb * noise + (1.0-noise)*bb;
 
 			r[i] = nr < 255 ? nr : 255;
 			g[i] = ng < 255 ? ng : 255;
