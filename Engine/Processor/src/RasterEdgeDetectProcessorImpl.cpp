@@ -21,6 +21,7 @@ namespace auge
 		m_user = 0;
 		m_in_raster_path = "/";
 		m_out_raster_path = "/";
+		m_detector = augeEdgeSobel;
 	}
 
 	RasterEdgeDetectProcessorImpl::~RasterEdgeDetectProcessorImpl()
