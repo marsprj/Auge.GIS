@@ -19,6 +19,7 @@
 #include "FeatureImportHandler.h"
 #include "FeatureProjectHandler.h"
 
+#include "RasterEdgeDetectHandler.h"
 #include "RasterExtractByRectangleHandler.h"
 #include "RasterReverseHandler.h"
 #include "RasterGraylizeHandler.h"
@@ -61,6 +62,7 @@ namespace auge
 		m_feature_handlers.push_back(new FeatureImportHandler());
 		m_feature_handlers.push_back(new FeatureProjectHandler());
 
+		m_raster_handlers.push_back(new RasterEdgeDetectHandler());
 		m_raster_handlers.push_back(new RasterExtractByRectangleHandler());
 		m_raster_handlers.push_back(new RasterReverseHandler());
 		m_raster_handlers.push_back(new RasterGraylizeHandler());

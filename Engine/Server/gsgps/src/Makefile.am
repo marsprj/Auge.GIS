@@ -38,6 +38,8 @@ libgsgps_la_SOURCES=\
 		RasterExtractByRectangleRequest.cpp \
 		ClusterKmeanHandler.cpp \
 		ClusterKmeanRequest.cpp \
+		RasterEdgeDetectHandler.cpp \
+		RasterEdgeDetectRequest.cpp \
 		RasterReverseHandler.cpp \
 		RasterReverseRequest.cpp \
 		RasterGraylizeHandler.cpp \

@@ -120,6 +120,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetSpatialReferenceRequest.cpp" />
     <ClCompile Include="..\src\GetSpatialReferenceResponse.cpp" />
     <ClCompile Include="..\src\GProcessEngine.cpp" />
+    <ClCompile Include="..\src\RasterEdgeDetectHandler.cpp" />
+    <ClCompile Include="..\src\RasterEdgeDetectRequest.cpp" />
     <ClCompile Include="..\src\RasterExtractByRectangleHandler.cpp" />
     <ClCompile Include="..\src\RasterExtractByRectangleRequest.cpp" />
     <ClCompile Include="..\src\RasterGraylizeHandler.cpp" />
@@ -176,6 +178,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetSpatialReferenceRequest.h" />
     <ClInclude Include="..\include\GetSpatialReferenceResponse.h" />
     <ClInclude Include="..\include\GProcessEngine.h" />
+    <ClInclude Include="..\include\RasterEdgeDetectHandler.h" />
+    <ClInclude Include="..\include\RasterEdgeDetectRequest.h" />
     <ClInclude Include="..\include\RasterExtractByRectangleHandler.h" />
     <ClInclude Include="..\include\RasterExtractByRectangleRequest.h" />
     <ClInclude Include="..\include\RasterGraylizeHandler.h" />
