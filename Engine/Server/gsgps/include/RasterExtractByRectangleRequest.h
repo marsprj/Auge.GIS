@@ -100,39 +100,4 @@ namespace auge
 1)
 service=gps&version=1.0.0&request=RasterExtractByRectangle&inputSourceName=rsdb&inputRasterName=Koala.png&outputSourceName=rsdb&outputRasterName=Koala_900913.png&extent=100,100,500,500
 
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=RasterExtractByRectangle&inputSourceName=rsdb&inputRasterName=cities&outputSourceName=rsdb&outputRasterName=cities_900913&outputSrid=900913
-http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=RasterExtractByRectangle&inputSourceName=rsdb&inputRasterName=cities&outputSourceName=rsdb&outputRasterName=cities_900913&outputSrid=900913
-
-service=gps&version=1.0.0&request=RasterExtractByRectangle&inputSourceName=rsdb&inputRasterName=rivers&outputSourceName=rsdb&outputRasterName=rivers_900913&outputSrid=900913
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=RasterExtractByRectangle&inputSourceName=rsdb&inputRasterName=rivers&outputSourceName=rsdb&outputRasterName=rivers_900913&outputSrid=900913
-
-service=gps&version=1.0.0&request=RasterExtractByRectangle&inputSourceName=rsdb&inputRasterName=country&outputSourceName=rsdb&outputRasterName=country_900913&outputSrid=900913
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=RasterExtractByRectangle&inputSourceName=rsdb&inputRasterName=country&outputSourceName=rsdb&outputRasterName=country_900913&outputSrid=900913
-
-//service=gps&version=1.0.0&request=RasterExtractByRectangle&sourceName=db1&RasterName=cities&distancefeild=id
-//http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=RasterExtractByRectangle&sourceName=db1&RasterName=cities&distancefeild=id
-//http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=RasterExtractByRectangle&sourceName=db1&RasterName=cities&distancefeild=id
-
-2)
-service=gps&version=1.0.0&request=RasterExtractByRectangle&featureset=
-	<FeatureCollection>
-		<FeatureMember>
-		</FeatureMember>
-	</FeatureCollection>
-
-
-[ HTTP Post ]
--------------------------------------------------------------------------
-1)
-<RasterExtractByRectangle service="gps" version="1.0.0">
-  <Input>
-	<SourceName>rsdb</SourceName>
-	<RasterName>cities</RasterName>
-  </Input>
-  <Output>
-	<SourceName>rsdb</SourceName>
-	<RasterName>cities_900913_post</RasterName>
-	<SRID>900913</SRID>
-  </Output>
-</RasterExtractByRectangle>
 ************************************************************************/

@@ -89,3 +89,5 @@ namespace auge
 1)
 service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb2&rasterName=Koala_smooth.jpg&Path=/
 http://182.92.114.80:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb2&rasterName=Koala_smooth.jpg&Path=/
+
+************************************************************************/
