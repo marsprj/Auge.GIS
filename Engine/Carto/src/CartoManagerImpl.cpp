@@ -2828,6 +2828,7 @@ namespace auge
 							"	q_b integer NOT NULL DEFAULT 1," \
 							"	visible integer NOT NULL DEFAULT 1," \
 							"	version integer DEFAULT 1," \
+							"   web_url character varying(256) DEFAULT ''::character varying," \
 							"	CONSTRAINT g_layer_pkey PRIMARY KEY (gid)" \
 							/*"	CONSTRAINT g_layer_m_id_fkey FOREIGN KEY (m_id) " \
 							"	REFERENCES g_map (gid) MATCH SIMPLE " \
