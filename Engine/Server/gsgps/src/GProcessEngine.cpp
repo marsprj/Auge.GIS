@@ -26,6 +26,7 @@
 #include "RasterSmoothHandler.h"
 #include "RasterStretchHandler.h"
 #include "RasterSubtractHandler.h"
+#include "RasterSepiaToneHandler.h"
 
 #include "DemSlopeHandler.h"
 #include "DemAspectHandler.h"
@@ -69,6 +70,7 @@ namespace auge
 		m_raster_handlers.push_back(new RasterSmoothHandler());
 		m_raster_handlers.push_back(new RasterStretchHandler());
 		m_raster_handlers.push_back(new RasterSubtractHandler());
+		m_raster_handlers.push_back(new RasterSepiaToneHandler());
 		
 		m_raster_handlers.push_back(new DemSlopeHandler());
 		m_raster_handlers.push_back(new DemAspectHandler());

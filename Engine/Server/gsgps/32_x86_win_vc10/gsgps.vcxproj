@@ -128,6 +128,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterGraylizeRequest.cpp" />
     <ClCompile Include="..\src\RasterReverseHandler.cpp" />
     <ClCompile Include="..\src\RasterReverseRequest.cpp" />
+    <ClCompile Include="..\src\RasterSepiaToneHandler.cpp" />
+    <ClCompile Include="..\src\RasterSepiaToneRequest.cpp" />
     <ClCompile Include="..\src\RasterSmoothHandler.cpp" />
     <ClCompile Include="..\src\RasterSmoothRequest.cpp" />
     <ClCompile Include="..\src\RasterStretchHandler.cpp" />
@@ -186,6 +188,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RasterGraylizeRequest.h" />
     <ClInclude Include="..\include\RasterReverseHandler.h" />
     <ClInclude Include="..\include\RasterReverseRequest.h" />
+    <ClInclude Include="..\include\RasterSepiaToneHandler.h" />
+    <ClInclude Include="..\include\RasterSepiaToneRequest.h" />
     <ClInclude Include="..\include\RasterSmoothHandler.h" />
     <ClInclude Include="..\include\RasterSmoothRequest.h" />
     <ClInclude Include="..\include\RasterStretchHandler.h" />

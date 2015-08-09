@@ -121,7 +121,7 @@ void FeatureTest::CsvImportTest()
 
 	const char* className = "people_age_60";
 	auge::FeatureClass* pFeatureClass = NULL;
-	auge::FeatureWorksapce* pFeatureWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pConnManager->GetWorkspace("db1"));
+	auge::FeatureWorkspace* pFeatureWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("db1"));
 	pFeatureClass = pFeatureWorkspace->OpenFeatureClass(className);
 	if(pFeatureClass==NULL)
 	{

@@ -20,8 +20,8 @@ void RasterTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
-	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -269,6 +269,32 @@ void RasterTest::Subtract()
 	pProcessor->SetOutputDataSource("rsdb2");
 	pProcessor->SetOutputRaster("Subtract.jpg");
 	pProcessor->SetOutputPath("/s2/s_1_2");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[Ê±¼ä]:%dºÁÃë\n", te-ts);
+}
+
+void RasterTest::SepiaTone()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterSepiaToneEffectProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterSepiaToneEffectProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("rsdb2");
+	pProcessor->SetInputRaster("Koala.jpg");
+	pProcessor->SetInputPath("/ds1");
+
+	pProcessor->SetOutputDataSource("rsdb2");
+	pProcessor->SetOutputRaster("Koala_Sepia_2.jpg");
+	pProcessor->SetOutputPath("/ds1");
+	//pProcessor->SetOutputRaster("Desert_gauss.jpg");
 
 	RESULTCODE rc = pProcessor->Execute();
 

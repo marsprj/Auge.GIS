@@ -15,8 +15,9 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(Reverse);
 	//CPPUNIT_TEST(Smooth);
 	//CPPUNIT_TEST(Subtract);
-	CPPUNIT_TEST(DEMSlope);
-	CPPUNIT_TEST(DEMAspect);
+	CPPUNIT_TEST(SepiaTone);
+	//CPPUNIT_TEST(DEMSlope);
+	//CPPUNIT_TEST(DEMAspect);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -31,6 +32,8 @@ private:
 	void	Reverse();
 	void	Smooth();
 	void	Subtract();
+
+	void	SepiaTone();
 
 	void	DEMSlope();
 	void	DEMAspect();

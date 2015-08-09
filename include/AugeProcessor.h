@@ -277,7 +277,7 @@ namespace auge
 	/**
 	 * RasterReverseProcessor
 	 *
-	 * 图像二值化
+	 * 图像反转
 	 */
 	class RasterReverseProcessor : public GProcessor
 	{
@@ -297,7 +297,7 @@ namespace auge
 	/**
 	 * RasterSubstractProcessor
 	 *
-	 * 图像二值化
+	 * 图像相减
 	 */
 	class RasterSubtractProcessor : public GProcessor
 	{
@@ -316,6 +316,24 @@ namespace auge
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 		virtual void		SetOutputPath(const char* rasterPath) = 0;
+	};
+
+	class RasterSepiaToneEffectProcessor : public GProcessor
+	{
+	protected:
+		RasterSepiaToneEffectProcessor(){}
+		virtual ~RasterSepiaToneEffectProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual RESULTCODE	Execute() = 0;
+		virtual void		Release() = 0;
 	};
 
 	class RasterFormatConvertToJPEGProcessor : public GProcessor
@@ -461,6 +479,7 @@ namespace auge
 		virtual RasterSmoothProcessor*				CreateRasterSmoothProcessor() = 0;
 		virtual RasterSubtractProcessor*			CreateRasterSubtractProcessor() = 0;
 		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor() = 0;
+		virtual RasterSepiaToneEffectProcessor*		CreateRasterSepiaToneEffectProcessor() = 0;
 
 		// DEM
 		virtual DemSlopeProcessor*					CreateDemSlopeProcessor() = 0;
