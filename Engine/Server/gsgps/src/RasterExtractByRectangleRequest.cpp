@@ -62,7 +62,7 @@ namespace auge
 
 		SetOutputRaster(cgi["outputRasterName"]);
 		SetOutputDataSource(cgi["outputSourceName"]);
-		SetInputPath(cgi["outputPath"]);
+		SetOutputPath(cgi["outputPath"]);
 
 		SetRectangle(cgi["extent"]);
 
