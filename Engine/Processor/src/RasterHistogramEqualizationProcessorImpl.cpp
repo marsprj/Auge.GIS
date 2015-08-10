@@ -282,8 +282,8 @@ namespace auge
 			*ptr = n_hist[*ptr];
 		}
 
-		//free(hist);
-		//free(n_hist);
+		free(hist);
+		free(n_hist);
 		pBand->SetData(data);
 		//free(data);
 		return true;
