@@ -276,6 +276,9 @@ namespace auge
 		g_uint bands_2 = pinRaster_2->GetBandCount();
 		if(bands_1!=bands_2)
 		{
+			GError* pError = augeGetErrorInstance();
+			pError->SetError("Tow Raster should have same bands");
+
 			pinFolder_1->Release();
 			pinFolder_2->Release();
 			return AG_FAILURE;
@@ -285,6 +288,9 @@ namespace auge
 		g_uint width_2 = pinRaster_2->GetWidth();
 		if(width_1 != width_2)
 		{
+			GError* pError = augeGetErrorInstance();
+			pError->SetError("Tow Raster should have same size");
+
 			pinFolder_1->Release();
 			pinFolder_2->Release();
 			return AG_FAILURE;
@@ -294,6 +300,9 @@ namespace auge
 		g_uint height_2 = pinRaster_2->GetHeight();
 		if(height_1 != height_1)
 		{
+			GError* pError = augeGetErrorInstance();
+			pError->SetError("Tow Raster should have same size");
+
 			pinFolder_1->Release();
 			pinFolder_2->Release();
 			return AG_FAILURE;
