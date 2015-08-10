@@ -15,6 +15,7 @@
 #include "RasterSmoothProcessorImpl.h"
 #include "RasterSubtractProcessorImpl.h"
 #include "RasterPixelBlendProcessorImpl.h"
+#include "RasterHistogramEqualizationProcessorImpl.h"
 #include "RasterFormatConvertToJPEGProcessorImpl.h"
 
 #include "RasterSepiaToneEffectProcessorImpl.h"
@@ -123,6 +124,11 @@ namespace auge
 	RasterPixelBlendProcessor* GProcessorFactoryImpl::CreateRasterPixelBlendProcessor()
 	{
 		return (new RasterPixelBlendProcessorImpl());
+	}
+
+	RasterHistogramEqualizationProcessor* GProcessorFactoryImpl::CreateRasterHistogramEqualizationProcessor()
+	{
+		return (new RasterHistogramEqualizationProcessorImpl());
 	}
 
 	RasterFormatConvertToJPEGProcessor*	GProcessorFactoryImpl::CreateRasterFormatConvertToJPEGProcessor()

@@ -31,6 +31,7 @@ libgprocessor_la_SOURCES=\
 		RasterExtractByRectangleProcessorImpl.cpp \
 		RasterEdgeDetectProcessorImpl.cpp \
 		RasterStretchProcessorImpl.cpp \
+		RasterHistogramEqualizationProcessorImpl.cpp \
 		RasterGraylizeProcessorImpl.cpp \
 		RasterReverseProcessorImpl.cpp \
 		RasterSmoothProcessorImpl.cpp \

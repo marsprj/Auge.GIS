@@ -378,6 +378,23 @@ namespace auge
 		virtual void		Release() = 0;
 	};
 
+	class RasterHistogramEqualizationProcessor : public GProcessor
+	{
+	protected:
+		RasterHistogramEqualizationProcessor(){}
+		virtual ~RasterHistogramEqualizationProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual RESULTCODE	Execute() = 0;
+		virtual void		Release() = 0;
+	};
 	
 
 	class RasterFormatConvertToJPEGProcessor : public GProcessor
@@ -523,6 +540,7 @@ namespace auge
 		virtual RasterSmoothProcessor*				CreateRasterSmoothProcessor() = 0;
 		virtual RasterSubtractProcessor*			CreateRasterSubtractProcessor() = 0;
 		virtual RasterPixelBlendProcessor*			CreateRasterPixelBlendProcessor() = 0;
+		virtual RasterHistogramEqualizationProcessor* CreateRasterHistogramEqualizationProcessor() = 0;
 		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor() = 0;
 		virtual RasterSepiaToneEffectProcessor*		CreateRasterSepiaToneEffectProcessor() = 0;
 		virtual RasterPenEffectProcessor*			CreateRasterPenEffectProcessor() = 0;

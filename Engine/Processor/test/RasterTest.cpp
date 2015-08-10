@@ -141,12 +141,12 @@ void RasterTest::Graylize()
 	pProcessor = pFactory->CreateRasterGraylizeProcessor();
 
 	pProcessor->SetInputDataSource("rsdb2");
-	pProcessor->SetInputRaster("Koala.png");
-	pProcessor->SetInputPath("/s1");
+	pProcessor->SetInputRaster("Desert.jpg");
+	pProcessor->SetInputPath("/ds1");
 
 	pProcessor->SetOutputDataSource("rsdb2");
-	pProcessor->SetOutputRaster("Koala_gray.jpg");
-	pProcessor->SetOutputPath("/s2/s_1_1");
+	pProcessor->SetOutputRaster("gray.jpg");
+	pProcessor->SetOutputPath("/ds1");
 
 	RESULTCODE rc = pProcessor->Execute();
 
@@ -299,6 +299,30 @@ void RasterTest::PixelBlend()
 	pProcessor->SetOutputRaster("Desert_Koala_5.jpg");
 	pProcessor->SetOutputPath("/ds1");
 
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[Ê±¼ä]:%dºÁÃë\n", te-ts);
+}
+
+void RasterTest::HistgramEqualization()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterHistogramEqualizationProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterHistogramEqualizationProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("rsdb2");
+	pProcessor->SetInputRaster("gray.jpg");
+	pProcessor->SetInputPath("/ds1");
+
+	pProcessor->SetOutputDataSource("rsdb2");
+	pProcessor->SetOutputRaster("gray_histeql.jpg");
+	pProcessor->SetOutputPath("/ds1");
 	RESULTCODE rc = pProcessor->Execute();
 
 	pProcessor->Release();

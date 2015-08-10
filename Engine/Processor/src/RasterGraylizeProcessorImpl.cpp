@@ -88,11 +88,18 @@ namespace auge
 	{
 		if(rasterPath==NULL)
 		{
-			m_in_raster_path.clear();
+			m_in_raster_path = "/";
 		}
 		else
 		{
-			m_in_raster_path = rasterPath;
+			if(!strlen(rasterPath))
+			{
+				m_in_raster_path = "/";
+			}
+			else
+			{
+				m_in_raster_path = rasterPath;
+			}
 		}
 	}
 
@@ -100,11 +107,18 @@ namespace auge
 	{
 		if(rasterPath==NULL)
 		{
-			m_out_raster_path.clear();
+			m_out_raster_path = "/";
 		}
 		else
 		{
-			m_out_raster_path = rasterPath;
+			if(!strlen(rasterPath))
+			{
+				m_out_raster_path = "/";
+			}
+			else
+			{
+				m_out_raster_path = rasterPath;
+			}
 		}
 	}
 

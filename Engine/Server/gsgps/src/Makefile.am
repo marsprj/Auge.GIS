@@ -54,6 +54,8 @@ libgsgps_la_SOURCES=\
 		RasterSepiaToneRequest.cpp \
 		RasterPixelBlendHandler.cpp \
 		RasterPixelBlendRequest.cpp \
+		RasterHistogramEqualizationHandler.cpp \
+		RasterHistogramEqualizationRequest.cpp \
 		DemSlopeHandler.cpp \
 		DemSlopeRequest.cpp \
 		DemAspectHandler.cpp \

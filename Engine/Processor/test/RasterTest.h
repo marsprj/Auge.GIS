@@ -15,7 +15,8 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(Reverse);
 	//CPPUNIT_TEST(Smooth);
 	//CPPUNIT_TEST(Subtract);
-	CPPUNIT_TEST(PixelBlend);
+	//CPPUNIT_TEST(PixelBlend);
+	CPPUNIT_TEST(HistgramEqualization);
 
 	//CPPUNIT_TEST(SepiaTone);
 	//CPPUNIT_TEST(PenEffect);
@@ -36,6 +37,7 @@ private:
 	void	Smooth();
 	void	Subtract();
 	void	PixelBlend();
+	void	HistgramEqualization();
 
 	void	SepiaTone();
 	void	PenEffect();
