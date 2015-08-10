@@ -260,12 +260,12 @@ namespace auge
 	bool RasterHistogramEqualizationProcessorImpl::HistogramEqualize(RasterBand* pBand, g_uint64 w, g_uint64 h, g_uint64 size)
 	{
 		//g_uint hist[255];
-		g_uint* hist = (g_uint*)malloc(sizeof(g_int) * m_gray_size);
-		memset(hist, 0, sizeof(g_int)*m_gray_size);
+		g_uint* hist = (g_uint*)malloc(sizeof(g_int) * (m_gray_size+1));
+		memset(hist, 0, sizeof(g_int)*(m_gray_size+1));
 
 		//g_uint n_hist[255];
-		g_uint* n_hist = (g_uint*)malloc(sizeof(g_int) * m_gray_size);
-		memset(n_hist, 0, sizeof(g_int)*m_gray_size);
+		g_uint* n_hist = (g_uint*)malloc(sizeof(g_int) * (m_gray_size+1));
+		memset(n_hist, 0, sizeof(g_int)*(m_gray_size+1));
 
 		g_uchar* data = (g_uchar*)(pBand->GetData());
 		g_uchar* ptr = data;
