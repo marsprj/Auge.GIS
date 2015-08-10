@@ -2,6 +2,7 @@
 #include "AugeData.h"
 #include "AugeRaster.h"
 #include "AugeUser.h"
+#include <math.h>
 
 namespace auge
 {
