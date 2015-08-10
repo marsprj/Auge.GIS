@@ -109,6 +109,7 @@ namespace auge
 		pProcessor->SetInputDataSource_1(input_source_name_1);
 		pProcessor->SetInputRaster_1(input_raster_name_1);
 		pProcessor->SetInputPath_1(input_raster_path_1);
+
 		pProcessor->SetInputDataSource_2(input_source_name_2);
 		pProcessor->SetInputRaster_2(input_raster_name_2);
 		pProcessor->SetInputPath_2(input_raster_path_2);
