@@ -35,6 +35,7 @@ libgprocessor_la_SOURCES=\
 		RasterReverseProcessorImpl.cpp \
 		RasterSmoothProcessorImpl.cpp \
 		RasterSubtractProcessorImpl.cpp \
+		RasterPixelBlendProcessorImpl.cpp \
 		RasterFormatConvertToJPEGProcessorImpl.cpp \
 		RasterSepiaToneEffecProcessorImpl.cpp \
 		DemAspectProcessorImpl.cpp \

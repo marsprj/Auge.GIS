@@ -189,6 +189,12 @@
     <ClCompile Include="..\src\RasterSepiaToneRequest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\RasterPixelBlendHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RasterPixelBlendRequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\GProcessEngine.h">
@@ -363,6 +369,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\RasterSepiaToneRequest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\RasterPixelBlendHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\RasterPixelBlendRequest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

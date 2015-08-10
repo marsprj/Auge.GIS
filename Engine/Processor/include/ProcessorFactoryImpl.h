@@ -30,9 +30,11 @@ namespace auge
 		virtual RasterReverseProcessor*				CreateRasterReverseProcessor();
 		virtual RasterSmoothProcessor*				CreateRasterSmoothProcessor();
 		virtual RasterSubtractProcessor*			CreateRasterSubtractProcessor();
+		virtual RasterPixelBlendProcessor*			CreateRasterPixelBlendProcessor();
 		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor();
 
 		virtual RasterSepiaToneEffectProcessor*		CreateRasterSepiaToneEffectProcessor();
+		virtual RasterPenEffectProcessor*			CreateRasterPenEffectProcessor();
 
 		virtual DemSlopeProcessor*					CreateDemSlopeProcessor();
 		virtual DemAspectProcessor*					CreateDemAspectProcessor();

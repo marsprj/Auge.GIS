@@ -126,6 +126,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterExtractByRectangleRequest.cpp" />
     <ClCompile Include="..\src\RasterGraylizeHandler.cpp" />
     <ClCompile Include="..\src\RasterGraylizeRequest.cpp" />
+    <ClCompile Include="..\src\RasterPixelBlendHandler.cpp" />
+    <ClCompile Include="..\src\RasterPixelBlendRequest.cpp" />
     <ClCompile Include="..\src\RasterReverseHandler.cpp" />
     <ClCompile Include="..\src\RasterReverseRequest.cpp" />
     <ClCompile Include="..\src\RasterSepiaToneHandler.cpp" />
@@ -186,6 +188,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RasterExtractByRectangleRequest.h" />
     <ClInclude Include="..\include\RasterGraylizeHandler.h" />
     <ClInclude Include="..\include\RasterGraylizeRequest.h" />
+    <ClInclude Include="..\include\RasterPixelBlendHandler.h" />
+    <ClInclude Include="..\include\RasterPixelBlendRequest.h" />
     <ClInclude Include="..\include\RasterReverseHandler.h" />
     <ClInclude Include="..\include\RasterReverseRequest.h" />
     <ClInclude Include="..\include\RasterSepiaToneHandler.h" />

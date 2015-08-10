@@ -336,6 +336,50 @@ namespace auge
 		virtual void		Release() = 0;
 	};
 
+	class RasterPixelBlendProcessor : public GProcessor
+	{
+	public:
+		RasterPixelBlendProcessor(){}
+		virtual ~RasterPixelBlendProcessor(){}
+	public:
+		virtual void		SetUser(g_uint user) = 0;
+
+		virtual void		SetInputDataSource_1(const char* sourceName) = 0;
+		virtual void		SetInputRaster_1(const char* rasterName) = 0;
+		virtual void		SetInputPath_1(const char* rasterPath) = 0;
+
+		virtual void		SetInputDataSource_2(const char* sourceName) = 0;
+		virtual void		SetInputRaster_2(const char* rasterName) = 0;
+		virtual void		SetInputPath_2(const char* rasterPath) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual RESULTCODE	Execute() = 0;
+		virtual void		Release() = 0;
+	};
+
+	class RasterPenEffectProcessor : public GProcessor
+	{
+	protected:
+		RasterPenEffectProcessor(){}
+		virtual ~RasterPenEffectProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual RESULTCODE	Execute() = 0;
+		virtual void		Release() = 0;
+	};
+
+	
+
 	class RasterFormatConvertToJPEGProcessor : public GProcessor
 	{
 	protected:
@@ -478,8 +522,10 @@ namespace auge
 		virtual RasterReverseProcessor*				CreateRasterReverseProcessor() = 0;
 		virtual RasterSmoothProcessor*				CreateRasterSmoothProcessor() = 0;
 		virtual RasterSubtractProcessor*			CreateRasterSubtractProcessor() = 0;
+		virtual RasterPixelBlendProcessor*			CreateRasterPixelBlendProcessor() = 0;
 		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor() = 0;
 		virtual RasterSepiaToneEffectProcessor*		CreateRasterSepiaToneEffectProcessor() = 0;
+		virtual RasterPenEffectProcessor*			CreateRasterPenEffectProcessor() = 0;
 
 		// DEM
 		virtual DemSlopeProcessor*					CreateDemSlopeProcessor() = 0;

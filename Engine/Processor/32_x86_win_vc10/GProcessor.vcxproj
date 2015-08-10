@@ -97,6 +97,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterExtractByRectangleProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterFormatConvertToJPEGProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterGraylizeProcessorImpl.cpp" />
+    <ClCompile Include="..\src\RasterPenEffectProcessorImpl.cpp" />
+    <ClCompile Include="..\src\RasterPixelBlendProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterReverseProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterSepiaToneEffecProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterSmoothProcessorImpl.cpp" />
@@ -121,6 +123,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RasterExtractByRectangleProcessorImpl.h" />
     <ClInclude Include="..\include\RasterFormatConvertToJPEGProcessorImpl.h" />
     <ClInclude Include="..\include\RasterGraylizeProcessorImpl.h" />
+    <ClInclude Include="..\include\RasterPenEffectProcessorImpl.h" />
+    <ClInclude Include="..\include\RasterPixelBlendProcessorImpl.h" />
     <ClInclude Include="..\include\RasterReverseProcessorImpl.h" />
     <ClInclude Include="..\include\RasterSepiaToneEffecProcessorImpl.h" />
     <ClInclude Include="..\include\RasterSmoothProcessorImpl.h" />

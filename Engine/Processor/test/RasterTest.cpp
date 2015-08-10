@@ -278,6 +278,35 @@ void RasterTest::Subtract()
 	printf("[时间]:%d毫秒\n", te-ts);
 }
 
+void RasterTest::PixelBlend()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterPixelBlendProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterPixelBlendProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource_1("rsdb2");
+	pProcessor->SetInputRaster_1("Desert.jpg");
+	pProcessor->SetInputPath_1("/ds1");
+
+	pProcessor->SetInputDataSource_2("rsdb2");
+	pProcessor->SetInputRaster_2("Koala.jpg");
+	pProcessor->SetInputPath_2("/ds1");
+
+	pProcessor->SetOutputDataSource("rsdb2");
+	pProcessor->SetOutputRaster("Desert_Koala_5.jpg");
+	pProcessor->SetOutputPath("/ds1");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
+
 void RasterTest::SepiaTone()
 {
 	DWORD ts = GetTickCount();
@@ -293,6 +322,32 @@ void RasterTest::SepiaTone()
 
 	pProcessor->SetOutputDataSource("rsdb2");
 	pProcessor->SetOutputRaster("Koala_Sepia_2.jpg");
+	pProcessor->SetOutputPath("/ds1");
+	//pProcessor->SetOutputRaster("Desert_gauss.jpg");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
+
+void RasterTest::PenEffect()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterPenEffectProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterPenEffectProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("rsdb2");
+	pProcessor->SetInputRaster("Koala.jpg");
+	pProcessor->SetInputPath("/ds1");
+
+	pProcessor->SetOutputDataSource("rsdb2");
+	pProcessor->SetOutputRaster("Koala_pen.jpg");
 	pProcessor->SetOutputPath("/ds1");
 	//pProcessor->SetOutputRaster("Desert_gauss.jpg");
 

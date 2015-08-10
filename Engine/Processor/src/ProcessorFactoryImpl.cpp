@@ -14,9 +14,11 @@
 #include "RasterReverseProcessorImpl.h"
 #include "RasterSmoothProcessorImpl.h"
 #include "RasterSubtractProcessorImpl.h"
+#include "RasterPixelBlendProcessorImpl.h"
 #include "RasterFormatConvertToJPEGProcessorImpl.h"
 
 #include "RasterSepiaToneEffectProcessorImpl.h"
+#include "RasterPenEffectProcessorImpl.h"
 
 #include "DemSlopeProcessorImpl.h"
 #include "DemAspectProcessorImpl.h"
@@ -118,6 +120,11 @@ namespace auge
 		return (new RasterSubtractProcessorImpl());
 	}
 
+	RasterPixelBlendProcessor* GProcessorFactoryImpl::CreateRasterPixelBlendProcessor()
+	{
+		return (new RasterPixelBlendProcessorImpl());
+	}
+
 	RasterFormatConvertToJPEGProcessor*	GProcessorFactoryImpl::CreateRasterFormatConvertToJPEGProcessor()
 	{
 		return (new RasterFormatConvertToJPEGProcessorImpl());
@@ -126,6 +133,11 @@ namespace auge
 	RasterSepiaToneEffectProcessor*	GProcessorFactoryImpl::CreateRasterSepiaToneEffectProcessor()
 	{
 		return new RasterSepiaToneEffectProcessorImpl();
+	}
+
+	RasterPenEffectProcessor* GProcessorFactoryImpl::CreateRasterPenEffectProcessor()
+	{
+		return (new RasterPenEffectProcessorImpl());
 	}
 
 	DemSlopeProcessor* GProcessorFactoryImpl::CreateDemSlopeProcessor()
