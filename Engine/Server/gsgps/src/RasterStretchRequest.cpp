@@ -13,7 +13,8 @@ namespace auge
 	m_host(DEFAULT_HOST),
 	m_request_method(DEFAULT_METHOD)
 	{
-
+		m_start_color.Set(0,0,0,255);
+		m_start_color.Set(255,255,255,255);
 	}
 
 	RasterStretchRequest::~RasterStretchRequest()
@@ -63,6 +64,9 @@ namespace auge
 		SetOutputRaster(cgi["outputRasterName"]);
 		SetOutputDataSource(cgi["outputSourceName"]);
 		SetOutputPath(cgi["outputPath"]);
+
+		SetStartColor(cgi["startColor"]);
+		SetEndColor(cgi["endColor"]);
 
 		return true;
 	}
@@ -330,6 +334,64 @@ namespace auge
 		{
 			m_output_format = format;
 		}
+	}
+
+	void RasterStretchRequest::SetStartColor(const char* value)
+	{
+		if(value==NULL)
+		{
+			return;
+		}
+		size_t size = strlen(value);
+		if(!size)
+		{
+			return;
+		}
+		if(value[0]!='#')
+		{
+			return;
+		}
+		if(size!=7)
+		{
+			return;
+		}
+		int r=0,g=0,b=0;
+		sscanf(value, "#%2x%2x%2x", &r,&g,&b);
+		m_start_color.Set(r,g,b,255);
+	}
+
+	void RasterStretchRequest::SetEndColor(const char* value)
+	{
+		if(value==NULL)
+		{
+			return;
+		}
+		size_t size = strlen(value);
+		if(!size)
+		{
+			return;
+		}
+		if(value[0]!='#')
+		{
+			return;
+		}
+		if(size!=7)
+		{
+			return;
+		}
+		int r=0,g=0,b=0;
+		sscanf(value, "#%2x%2x%2x", &r,&g,&b);
+		m_end_color.Set(r,g,b,255);
+	}
+
+	GColor&	RasterStretchRequest::GetStartColor()
+	{
+		return m_start_color;
+	}
+
+	GColor&	RasterStretchRequest::GetEndColor()
+	{
+		return m_end_color;
 	}
 
 	//const char* RasterStretchRequest::GetOutputFormat()

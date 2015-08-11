@@ -35,6 +35,9 @@ namespace auge
 		const char*	GetOutputRaster();
 		const char* GetOutputPath();
 		GEnvelope&	GetRectangle();
+
+		GColor&		GetStartColor();
+		GColor&		GetEndColor();
 				
 	public:
 		bool		Create(rude::CGI& cgi);
@@ -55,6 +58,9 @@ namespace auge
 		void		SetOutputDataSource(const char* sourceName);
 		void		SetOutputRaster(const char* rasterName);
 		void		SetOutputPath(const char* rasterPath);
+
+		void		SetStartColor(const char* value);
+		void		SetEndColor(const char* value);
 		
 		void		Info();
 
@@ -75,6 +81,9 @@ namespace auge
 		std::string	m_out_source_name;
 		std::string	m_out_raster_name;
 		std::string m_out_raster_path;
+
+		GColor		m_start_color;
+		GColor		m_end_color;
 		//////////////////////////////////////////////////////////////////////////
 
 		XDocument	*m_pxDoc;
@@ -95,5 +104,7 @@ namespace auge
 1)
 user=user1&service=gps&version=1.0.0&request=RasterSubtract&inputSourceName=rsdb2&inputRasterName=srtm_58_05.tif&outputSourceName=rsdb2&outputRasterName=srtm_58_05_stretch.jpg&outputPath=/
 http://182.92.114.80:8088/ows/user1/mgr?service=gps&version=1.0.0&request=RasterSubtract&inputSourceName=rsdb2&inputRasterName=srtm_58_05.tif&outputSourceName=rsdb2&outputRasterName=srtm_58_05_stretch.jpg&outputPath=/
+
+http://182.92.114.80:8088/ows/user1/mgr?service=gps&version=1.0.0&request=RasterSubtract&inputSourceName=rsdb2&inputRasterName=srtm_58_05.tif&outputSourceName=rsdb2&outputRasterName=srtm_58_05_stretch.jpg&outputPath=/&startColor=#000000&endColor=#ffffff
 
 ************************************************************************/
