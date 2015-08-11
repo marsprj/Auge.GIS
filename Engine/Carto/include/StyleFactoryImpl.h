@@ -13,6 +13,7 @@ namespace auge
 	public:
 		virtual	FeatureStyle*		CreateFeatureStyle();
 		virtual FeatureStyle*		CreateFeatureStyle(augeSymbolizerType type);
+		virtual FeatureStyle*		CreateFeatureStyle(augeSymbolizerType type, g_uint limit);
 		virtual FeatureStyle*		CreateFeatureStyle(augeGeometryType type);
 		virtual RasterStyle*		CreateRasterStyle();
 

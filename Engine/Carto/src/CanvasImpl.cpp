@@ -214,7 +214,7 @@ namespace auge
 		return pFilter;
 	}
 
-	void CanvasImpl::DrawLayer(FeatureLayer* pLayer, Symbolizer* pSymbolizer, GFilter* pFilter)
+	void CanvasImpl::DrawLayer(FeatureLayer* pLayer, Symbolizer* pSymbolizer, GFilter* pFilter, g_uint limit)
 	{	
 		FeatureCursor	*pCursor = NULL;
 		FeatureClass	*pFeatureClass = pLayer->GetFeatureClass();
@@ -231,6 +231,10 @@ namespace auge
 		pQuery->AddSubField(pGeomField->GetName());
 		pQuery->SetFilter(pFilter);
 		pFilter->AddRef();
+		if(limit>0)
+		{
+			pQuery->SetMaxFeatures(limit);
+		}
 
 		pCursor = pFeatureClass->Query(pQuery);
 
@@ -459,7 +463,7 @@ namespace auge
 		return pLabel;
 	}
 
-	void CanvasImpl::LabelLayer(FeatureLayer* pLayer, TextSymbolizer* pSymbolizer, GFilter* pFilter)
+	void CanvasImpl::LabelLayer(FeatureLayer* pLayer, TextSymbolizer* pSymbolizer, GFilter* pFilter, g_uint limit)
 	{
 		FeatureCursor	*pCursor = NULL;
 		FeatureClass	*pFeatureClass = pLayer->GetFeatureClass();

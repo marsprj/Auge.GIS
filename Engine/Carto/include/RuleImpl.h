@@ -41,6 +41,9 @@ namespace auge
 		virtual GFilter*		GetFilter();
 		virtual void			SetFilter(GFilter* pagFilter);
 
+		virtual g_uint			GetLimit();
+		virtual void			SetLimit(g_uint limit);
+
 		virtual void			Release();
 	private:
 		std::string		m_strName;
@@ -55,6 +58,7 @@ namespace auge
 
 		GFilter			*m_pFilter;
 
+		g_uint			m_limit;
 	};
 
 }

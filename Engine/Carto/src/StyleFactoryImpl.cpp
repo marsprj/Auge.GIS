@@ -27,6 +27,12 @@ namespace auge
 	FeatureStyle* CreateTextStyle();
 	FeatureStyle* CreateRasterStyle();
 
+	FeatureStyle* CreatePointStyle(g_uint limit);
+	FeatureStyle* CreateLineStyle(g_uint limit);
+	FeatureStyle* CreatePolygonStyle(g_uint limit);
+	FeatureStyle* CreateTextStyle(g_uint limit);
+	//FeatureStyle* CreateRasterStyle(g_uint limit);
+
 	PointSymbolizer*	CreatePointSymbolizer();	
 	LineSymbolizer*		CreateLineSymbolizer();	
 	PolygonSymbolizer*	CreatePolygonSymbolizer();	
@@ -172,6 +178,30 @@ namespace auge
 		return pFeatureStyle;
 	}
 
+	FeatureStyle* StyleFactoryImpl::CreateFeatureStyle(augeSymbolizerType type, g_uint limit)
+	{
+		FeatureStyle* pFeatureStyle = NULL;
+		switch(type)
+		{
+		case augeSymbolPoint:
+			pFeatureStyle = CreatePointStyle(limit);
+			break;
+		case augeSymbolLine:
+			pFeatureStyle = CreateLineStyle(limit);
+			break;
+		case augeSymbolPolygon:
+			pFeatureStyle = CreatePolygonStyle(limit);
+			break;
+		case augeSymbolText:
+			pFeatureStyle = CreateTextStyle(limit);
+			break;
+			//case augeSymbolRaster:
+			//	pFeatureStyle = CreateRasterStyle();
+			//	break;
+		}
+		return pFeatureStyle;
+	}
+
 	FeatureStyle* StyleFactoryImpl::CreateFeatureStyle(augeGeometryType type)
 	{
 		FeatureStyle* pFeatureStyle = NULL;
@@ -295,7 +325,85 @@ namespace auge
 		return pFeatureStyle;
 	}
 
+	FeatureStyle* CreatePointStyle(g_uint limit)
+	{
+		// Point Symbol 
+		Fill *pFill = new FillImpl();
+
+		Stroke *pStroke = new StrokeImpl();
+
+		PointSymbolizer *pPointSymbolizer = NULL;
+		pPointSymbolizer = CreatePointSymbolizer();
+
+		Rule *pRule = new RuleImpl();
+		pRule->SetLimit(limit);
+		pRule->SetSymbolizer(pPointSymbolizer);		
+
+		GFilter *pFilter = NULL;
+		pRule->SetFilter(pFilter);
+
+		FeatureStyle *pFeatureStyle = NULL;
+		pFeatureStyle = new FeatureStyleImpl();
+		pFeatureStyle->AddRule(pRule);
+		
+
+		return pFeatureStyle;
+	}
+
+	FeatureStyle* CreateLineStyle(g_uint limit)
+	{
+		// Polygon Symbol 
+		Fill *pFill = new FillImpl();
+
+		Stroke *pStroke = new StrokeImpl();
+
+		LineSymbolizer *pSymbolizer = NULL;
+		pSymbolizer = CreateLineSymbolizer();
+
+		Rule *pRule = new RuleImpl();
+		pRule->SetLimit(limit);
+		pRule->SetSymbolizer(pSymbolizer);
+
+		GFilter *pFilter = NULL;
+		pRule->SetFilter(pFilter);
+
+		FeatureStyle *pFeatureStyle = NULL;
+		pFeatureStyle = new FeatureStyleImpl();
+		pFeatureStyle->AddRule(pRule);
+
+		return pFeatureStyle;
+	}
+
+	FeatureStyle* CreatePolygonStyle(g_uint limit)
+	{
+		// Polygon Symbol 
+		Fill *pFill = new FillImpl();
+
+		Stroke *pStroke = new StrokeImpl();
+
+		PolygonSymbolizer *pSymbolizer = NULL;		
+		pSymbolizer = CreatePolygonSymbolizer();
+
+		Rule *pRule = new RuleImpl();
+		pRule->SetLimit(limit);
+		pRule->SetSymbolizer(pSymbolizer);
+
+		GFilter *pFilter = NULL;
+		pRule->SetFilter(pFilter);
+
+		FeatureStyle *pFeatureStyle = NULL;
+		pFeatureStyle = new FeatureStyleImpl();
+		pFeatureStyle->AddRule(pRule);
+
+		return pFeatureStyle;
+	}
+
 	FeatureStyle* CreateTextStyle()
+	{
+		return NULL;
+	}
+
+	FeatureStyle* CreateTextStyle(g_uint limit)
 	{
 		return NULL;
 	}

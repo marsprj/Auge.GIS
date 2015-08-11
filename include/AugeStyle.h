@@ -166,6 +166,9 @@ namespace auge
 
 		virtual GFilter*		GetFilter() = 0;
 		virtual void			SetFilter(GFilter* pFilter) = 0;
+		
+		virtual g_uint			GetLimit() = 0;
+		virtual void			SetLimit(g_uint limit) = 0;
 	};
 
 	////========================================================================
@@ -573,6 +576,7 @@ namespace auge
 	public:
 		virtual	FeatureStyle*		CreateFeatureStyle() = 0;
 		virtual FeatureStyle*		CreateFeatureStyle(augeSymbolizerType type) = 0;
+		virtual FeatureStyle*		CreateFeatureStyle(augeSymbolizerType type, g_uint limit) = 0;
 		virtual FeatureStyle*		CreateFeatureStyle(augeGeometryType type) = 0;
 		virtual RasterStyle*		CreateRasterStyle() = 0;
 

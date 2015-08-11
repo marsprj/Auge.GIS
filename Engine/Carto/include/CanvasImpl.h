@@ -37,9 +37,9 @@ namespace auge
 
 	private:
 		void		DrawLayer(FeatureLayer* pLayer, Rule* pRule);
-		void		DrawLayer(FeatureLayer* pLayer, Symbolizer* pSymbolizer, GFilter* pFilter);
+		void		DrawLayer(FeatureLayer* pLayer, Symbolizer* pSymbolizer, GFilter* pFilter, g_uint limit=0);
 
-		void		LabelLayer(FeatureLayer* pLayer, TextSymbolizer* pSymbolizer, GFilter* pFilter);
+		void		LabelLayer(FeatureLayer* pLayer, TextSymbolizer* pSymbolizer, GFilter* pFilter, g_uint limit=0);
 		void		LabelGeometry(g_uchar* wkb, TextSymbolizer* pSymbolizer, const char* text);
 		void		LabelPoint(WKBPoint* pWKBPoint, TextSymbolizer* pSymbolizer,const char* text);
 

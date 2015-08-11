@@ -159,6 +159,16 @@ namespace auge
 		m_pFilter = pFilter;
 	}
 
+	void RuleImpl::SetLimit(g_uint limit)
+	{
+		m_limit = limit;
+	}
+
+	g_uint RuleImpl::GetLimit()
+	{
+		return m_limit;
+	}
+
 	void RuleImpl::Release()
 	{
 		delete this;
