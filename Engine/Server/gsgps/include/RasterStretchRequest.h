@@ -93,7 +93,7 @@ namespace auge
 [ HTTP Get ]
 -------------------------------------------------------------------------
 1)
-user=user1&service=gps&version=1.0.0&request=RasterSubtract&inputSourceName_1=rsdb2&inputRasterName_1=Koala.jpg&inputSourceName_2=rsdb2&inputRasterName_2=Desert.jpg&outputSourceName=rsdb2&outputRasterName=Koala_Desert.jpg
-http://182.92.114.80:8088/ows/user1/mgr?service=gps&version=1.0.0&request=RasterSubtract&inputSourceName_1=rsdb2&inputRasterName_1=Koala.jpg&inputSourceName_2=rsdb2&inputRasterName_2=Desert.jpg&outputSourceName=rsdb2&outputRasterName=Koala_Desert.jpg
+user=user1&service=gps&version=1.0.0&request=RasterSubtract&inputSourceName=rsdb2&inputRasterName=srtm_58_05.tif&outputSourceName=rsdb2&outputRasterName=srtm_58_05_stretch.jpg&outputPath=/
+http://182.92.114.80:8088/ows/user1/mgr?service=gps&version=1.0.0&request=RasterSubtract&inputSourceName=rsdb2&inputRasterName=srtm_58_05.tif&outputSourceName=rsdb2&outputRasterName=srtm_58_05_stretch.jpg&outputPath=/
 
 ************************************************************************/

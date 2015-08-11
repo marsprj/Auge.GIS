@@ -20,8 +20,8 @@ void RasterTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
-	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -82,17 +82,17 @@ void RasterTest::Stretch()
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pProcessor = pFactory->CreateRasterStretchProcessor();
 
-	pProcessor->SetInputDataSource("rsdb2");
+	pProcessor->SetInputDataSource("rsdb");
 	pProcessor->SetInputRaster("srtm_58_05.tif");
 
 	pProcessor->SetOutputDataSource("rsdb2");
-	pProcessor->SetOutputRaster("srtm_58_05.png");
-	pProcessor->SetOutputPath("/s1");
+	pProcessor->SetOutputRaster("srtm_58_05.jpg");
+	//pProcessor->SetOutputPath("/ds1");
 
-	auge::GColor start_color(0,255,0,255);
-	pProcessor->SetStartColor(start_color);
-	auge::GColor end_color(255,0,0,255);
-	pProcessor->SetEndColor(end_color);
+	//auge::GColor start_color(0,255,0,255);
+	//pProcessor->SetStartColor(start_color);
+	//auge::GColor end_color(255,0,0,255);
+	//pProcessor->SetEndColor(end_color);
 
 	RESULTCODE rc = pProcessor->Execute();
 

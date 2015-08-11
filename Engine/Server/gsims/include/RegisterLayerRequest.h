@@ -71,7 +71,8 @@ namespace auge
 -------------------------------------------------------------------------
 service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=db1&layerName=cities&tableName=cities&layerType=Feature
 http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=db1&layerName=cities&tableName=cities&layerType=Feature
-http://192.168.111.160:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=db1&layerName=cities&tableName=cities
+
+http://192.168.111.160:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=db1&layerName=cities&tableName=cities&layerType=Feature
 
 // Register Raster Layer
 user=user1&service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=rsdb2&layerName=world&rasterName=world&rasterPath=/&layerType=Raster
