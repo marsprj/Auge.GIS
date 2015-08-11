@@ -217,11 +217,18 @@ namespace auge
 		RasterWorkspace* pinRasterWorkspace_2 = NULL;
 		RasterWorkspace* poutRasterWorkspace = NULL;
 
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
 		pWorkspace = pConnManager->GetWorkspace(m_user, inSourceName_1);
 		if(pWorkspace==NULL)
 		{
+			char msg[AUGE_PATH_MAX];
+			g_sprintf(msg, "Cannot get inputSource_1 [%s].", inSourceName_1);
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
 			return AG_FAILURE;
 		}
 		pinRasterWorkspace_1 = dynamic_cast<RasterWorkspace*>(pWorkspace);
@@ -229,6 +236,10 @@ namespace auge
 		pWorkspace = pConnManager->GetWorkspace(m_user, inSourceName_2);
 		if(pWorkspace==NULL)
 		{
+			char msg[AUGE_PATH_MAX];
+			g_sprintf(msg, "Cannot get inputSource_2 [%s].", inSourceName_2);
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
 			return AG_FAILURE;
 		}
 		pinRasterWorkspace_2 = dynamic_cast<RasterWorkspace*>(pWorkspace);
@@ -236,6 +247,10 @@ namespace auge
 		pWorkspace = pConnManager->GetWorkspace(m_user, outSourceName);
 		if(pWorkspace==NULL)
 		{
+			char msg[AUGE_PATH_MAX];
+			g_sprintf(msg, "Cannot get outputSource [%s].", outSourceName);
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
 			return AG_FAILURE;
 		}
 		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
@@ -255,11 +270,21 @@ namespace auge
 		pinFolder_1 = pinRasterWorkspace_1->GetFolder(inRasterPath_1);
 		if(pinFolder_1==NULL)
 		{
+			char msg[AUGE_PATH_MAX];
+			g_sprintf(msg, "inputPath_1 [%s] does not exist.", inRasterPath_1);
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
 			return AG_FAILURE;
 		}
 		pinRaster_1 = pinFolder_1->GetRasterDataset()->GetRaster(inRasterName_1);
 		if(pinRaster_1==NULL)
 		{
+			char msg[AUGE_PATH_MAX];
+			g_sprintf(msg, "inRasterName_1 [%s] does not exist.", inRasterName_1);
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
 			pinFolder_1->Release();
 			return AG_FAILURE;
 		}
@@ -268,11 +293,24 @@ namespace auge
 		pinFolder_2 = pinRasterWorkspace_2->GetFolder(inRasterPath_2);
 		if(pinFolder_2==NULL)
 		{
+			char msg[AUGE_PATH_MAX];
+			g_sprintf(msg, "inputPath_2 [%s] does not exist.", inRasterPath_2);
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			pinRaster_1->Release();
+			pinFolder_1->Release();
 			return AG_FAILURE;
 		}
 		pinRaster_2 = pinFolder_2->GetRasterDataset()->GetRaster(inRasterName_2);
 		if(pinRaster_2==NULL)
 		{
+			char msg[AUGE_PATH_MAX];
+			g_sprintf(msg, "inRasterName_2 [%s] does not exist.", inRasterName_2);
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			pinRaster_1->Release();
 			pinFolder_1->Release();
 			pinFolder_2->Release();
 			return AG_FAILURE;
@@ -285,6 +323,8 @@ namespace auge
 			GError* pError = augeGetErrorInstance();
 			pError->SetError("Tow Raster should have same bands");
 
+			pinRaster_1->Release();
+			pinRaster_2->Release();
 			pinFolder_1->Release();
 			pinFolder_2->Release();
 			return AG_FAILURE;
@@ -297,6 +337,8 @@ namespace auge
 			GError* pError = augeGetErrorInstance();
 			pError->SetError("Tow Raster should have same size");
 
+			pinRaster_1->Release();
+			pinRaster_2->Release();
 			pinFolder_1->Release();
 			pinFolder_2->Release();
 			return AG_FAILURE;
@@ -308,6 +350,9 @@ namespace auge
 		{
 			GError* pError = augeGetErrorInstance();
 			pError->SetError("Tow Raster should have same size");
+
+			pinRaster_1->Release();
+			pinRaster_2->Release();
 			pinFolder_1->Release();
 			pinFolder_2->Release();
 			return AG_FAILURE;
@@ -323,6 +368,8 @@ namespace auge
 		RasterFolder* poutFolder = poutRasterWorkspace->GetFolder(outRasterPath);
 		if(poutFolder==NULL)
 		{
+			pinRaster_1->Release();
+			pinRaster_2->Release();
 			poutRaster->Release();
 			pinFolder_1->Release();
 			pinFolder_2->Release();
@@ -330,6 +377,8 @@ namespace auge
 		}
 		RESULTCODE rc = poutFolder->GetRasterDataset()->AddRaster(outRasterName, poutRaster);
 
+		pinRaster_1->Release();
+		pinRaster_2->Release();
 		poutRaster->Release();
 		poutFolder->Release();
 		pinFolder_1->Release();
