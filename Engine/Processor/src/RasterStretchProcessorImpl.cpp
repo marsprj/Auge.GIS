@@ -10,8 +10,8 @@ namespace auge
 		//m_color_start = GColor(255,0,0,255);
 		//m_color_end = GColor(0,255,0,255);
 
-		m_color_start = GColor(255,255,255,255);
-		m_color_end = GColor(0,0,0,255);
+		m_color_end = GColor(255,255,255,255);
+		m_color_start = GColor(0,0,0,255);
 
 		m_user = 0;
 		m_in_raster_path = "/";
