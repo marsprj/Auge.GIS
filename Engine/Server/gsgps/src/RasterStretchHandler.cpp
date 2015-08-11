@@ -97,6 +97,8 @@ namespace auge
 		const char* output_source_name = pRequest->GetOutputDataSource();
 		const char* output_raster_name = pRequest->GetOutputRaster();
 		const char* output_raster_path = pRequest->GetOutputPath();
+		GColor& startColor = pRequest->GetStartColor();
+		GColor& endColor = pRequest->GetEndColor();
 
 		auge::RasterStretchProcessor* pProcessor = NULL;
 		auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
@@ -107,9 +109,13 @@ namespace auge
 		pProcessor->SetInputRaster(input_raster_name);
 		pProcessor->SetInputPath(input_raster_path);
 
+		pProcessor->SetStartColor(startColor);
+		pProcessor->SetEndColor(endColor);
+
 		pProcessor->SetOutputDataSource(output_source_name);
 		pProcessor->SetOutputRaster(output_raster_name);
 		pProcessor->SetOutputPath(output_raster_path);
+
 
 		RESULTCODE rc = pProcessor->Execute();
 		pProcessor->Release();
