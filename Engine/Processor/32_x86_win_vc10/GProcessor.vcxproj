@@ -105,6 +105,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterSmoothProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterStretchProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterSubtractProcessorImpl.cpp" />
+    <ClCompile Include="..\src\RasterThresholdProcessorImpl.cpp" />
     <ClCompile Include="..\src\sqlite3.c" />
     <ClCompile Include="..\src\SrsBase.cpp" />
   </ItemGroup>
@@ -132,6 +133,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RasterSmoothProcessorImpl.h" />
     <ClInclude Include="..\include\RasterStretchProcessorImpl.h" />
     <ClInclude Include="..\include\RasterSubtractProcessorImpl.h" />
+    <ClInclude Include="..\include\RasterThresholdProcessorImpl.h" />
     <ClInclude Include="..\include\SrsBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

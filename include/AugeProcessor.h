@@ -39,6 +39,12 @@ namespace auge
 		augeSmoothBilateral			//双边滤波
 	}augeRasterSmoother;
 
+	typedef enum augeRasterThresholder
+	{
+		augeThresholderAverage = 0,	//灰度均值
+
+	}augeRasterThresholder;
+
 	class GProcessor : public GObject
 	{
 	protected:
@@ -255,26 +261,6 @@ namespace auge
 	};
 
 	/**
-	 * RasterBinarizationProcessor
-	 *
-	 * 图像二值化
-	 */
-	class RasterBinarizationProcessor : public GProcessor
-	{
-	protected:
-		RasterBinarizationProcessor(){}
-		virtual ~RasterBinarizationProcessor(){}
-	public:
-		virtual void		SetInputDataSource(const char* sourceName) = 0;
-		virtual void		SetInputRaster(const char* rasterName) = 0;
-		virtual void		SetInputPath(const char* rasterPath) = 0;
-
-		virtual void		SetOutputDataSource(const char* sourceName) = 0;
-		virtual void		SetOutputRaster(const char* rasterName) = 0;
-		virtual void		SetOutputPath(const char* rasterPath) = 0;
-	};
-
-	/**
 	 * RasterReverseProcessor
 	 *
 	 * 图像反转
@@ -396,6 +382,32 @@ namespace auge
 		virtual void		Release() = 0;
 	};
 	
+	/**
+	 * RasterThresholdProcessor
+	 *
+	 * 图像二值化
+	 */
+	class RasterThresholdProcessor : public GProcessor
+	{
+	public:
+		RasterThresholdProcessor(){}
+		virtual ~RasterThresholdProcessor(){}
+	public:
+		virtual void		SetUser(g_uint user) = 0;
+
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual void		SetThresholder(augeRasterThresholder smoother) = 0;
+
+		virtual RESULTCODE	Execute() = 0;
+		virtual void		Release() = 0;
+	};
 
 	class RasterFormatConvertToJPEGProcessor : public GProcessor
 	{
@@ -532,16 +544,25 @@ namespace auge
 		virtual FeatureProjectProcessor*	CreateFeatureProjectProcessor() = 0;
 
 		// Raster
-		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor() = 0;
-		virtual RasterStretchProcessor*				CreateRasterStretchProcessor() = 0;
-		virtual RasterEdgeDetectProcessor*			CreateRasterEdgeDetectProcessor() = 0;
 		virtual RasterGraylizeProcessor*			CreateRasterGraylizeProcessor() = 0;
 		virtual RasterReverseProcessor*				CreateRasterReverseProcessor() = 0;
+
+		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor() = 0;
+
+		// 图形增强
+		virtual RasterStretchProcessor*				CreateRasterStretchProcessor() = 0;
+		virtual RasterEdgeDetectProcessor*			CreateRasterEdgeDetectProcessor() = 0;		
 		virtual RasterSmoothProcessor*				CreateRasterSmoothProcessor() = 0;
 		virtual RasterSubtractProcessor*			CreateRasterSubtractProcessor() = 0;
-		virtual RasterPixelBlendProcessor*			CreateRasterPixelBlendProcessor() = 0;
 		virtual RasterHistogramEqualizationProcessor* CreateRasterHistogramEqualizationProcessor() = 0;
+
+		// 图像融合
+		virtual RasterPixelBlendProcessor*			CreateRasterPixelBlendProcessor() = 0;
+		// 图像分割
+		virtual RasterThresholdProcessor*			CreateRasterThresholdProcessor() = 0;
+
 		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor() = 0;
+		// 图像特效
 		virtual RasterSepiaToneEffectProcessor*		CreateRasterSepiaToneEffectProcessor() = 0;
 		virtual RasterPenEffectProcessor*			CreateRasterPenEffectProcessor() = 0;
 

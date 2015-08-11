@@ -15,6 +15,9 @@
 #include "RasterSmoothProcessorImpl.h"
 #include "RasterSubtractProcessorImpl.h"
 #include "RasterPixelBlendProcessorImpl.h"
+
+#include "RasterThresholdProcessorImpl.h"
+
 #include "RasterHistogramEqualizationProcessorImpl.h"
 #include "RasterFormatConvertToJPEGProcessorImpl.h"
 
@@ -144,6 +147,11 @@ namespace auge
 	RasterPenEffectProcessor* GProcessorFactoryImpl::CreateRasterPenEffectProcessor()
 	{
 		return (new RasterPenEffectProcessorImpl());
+	}
+
+	RasterThresholdProcessor* GProcessorFactoryImpl::CreateRasterThresholdProcessor()
+	{
+		return (new RasterThresholdProcessorImpl());
 	}
 
 	DemSlopeProcessor* GProcessorFactoryImpl::CreateDemSlopeProcessor()

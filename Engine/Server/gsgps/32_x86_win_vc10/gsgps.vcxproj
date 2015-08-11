@@ -140,6 +140,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterStretchRequest.cpp" />
     <ClCompile Include="..\src\RasterSubtractHandler.cpp" />
     <ClCompile Include="..\src\RasterSubtractRequest.cpp" />
+    <ClCompile Include="..\src\RasterThresholdHandler.cpp" />
+    <ClCompile Include="..\src\RasterThresholdRequest.cpp" />
     <ClCompile Include="..\src\sqlite3.c" />
     <ClCompile Include="..\src\ThreadManager.cpp" />
     <ClCompile Include="..\src\threadpool.c" />
@@ -204,6 +206,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RasterStretchRequest.h" />
     <ClInclude Include="..\include\RasterSubtractHandler.h" />
     <ClInclude Include="..\include\RasterSubtractRequest.h" />
+    <ClInclude Include="..\include\RasterThresholdHandler.h" />
+    <ClInclude Include="..\include\RasterThresholdRequest.h" />
     <ClInclude Include="..\include\spthread.h" />
     <ClInclude Include="..\include\ThreadManager.h" />
     <ClInclude Include="..\include\threadpool.h" />

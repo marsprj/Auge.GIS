@@ -27,6 +27,7 @@
 #include "RasterStretchHandler.h"
 #include "RasterSubtractHandler.h"
 #include "RasterPixelBlendHandler.h"
+#include "RasterThresholdHandler.h"
 #include "RasterHistogramEqualizationHandler.h"
 
 #include "RasterSepiaToneHandler.h"
@@ -74,6 +75,7 @@ namespace auge
 		m_raster_handlers.push_back(new RasterStretchHandler());
 		m_raster_handlers.push_back(new RasterSubtractHandler());
 		m_raster_handlers.push_back(new RasterPixelBlendHandler());
+		m_raster_handlers.push_back(new RasterThresholdHandler());
 		m_raster_handlers.push_back(new RasterHistogramEqualizationHandler());
 
 		m_raster_handlers.push_back(new RasterSepiaToneHandler());

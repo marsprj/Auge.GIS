@@ -19,24 +19,36 @@ namespace auge
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor();
 
+		// Cluster 
 		virtual KMeansProcessor*			CreateKMeansProcessor();
 
+		// projection
 		virtual FeatureProjectProcessor*	CreateFeatureProjectProcessor();
 
-		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor();
-		virtual RasterStretchProcessor*				CreateRasterStretchProcessor();
-		virtual RasterEdgeDetectProcessor*			CreateRasterEdgeDetectProcessor();
+		// Raster
 		virtual RasterGraylizeProcessor*			CreateRasterGraylizeProcessor();
 		virtual RasterReverseProcessor*				CreateRasterReverseProcessor();
+
+		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor();
+
+		// 图形增强
+		virtual RasterStretchProcessor*				CreateRasterStretchProcessor();
+		virtual RasterEdgeDetectProcessor*			CreateRasterEdgeDetectProcessor();		
 		virtual RasterSmoothProcessor*				CreateRasterSmoothProcessor();
 		virtual RasterSubtractProcessor*			CreateRasterSubtractProcessor();
-		virtual RasterPixelBlendProcessor*			CreateRasterPixelBlendProcessor();
 		virtual RasterHistogramEqualizationProcessor* CreateRasterHistogramEqualizationProcessor();
-		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor();
 
+		// 图像融合
+		virtual RasterPixelBlendProcessor*			CreateRasterPixelBlendProcessor();
+		// 图像分割
+		virtual RasterThresholdProcessor*			CreateRasterThresholdProcessor();
+
+		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor();
+		// 图像特效
 		virtual RasterSepiaToneEffectProcessor*		CreateRasterSepiaToneEffectProcessor();
 		virtual RasterPenEffectProcessor*			CreateRasterPenEffectProcessor();
 
+		// DEM
 		virtual DemSlopeProcessor*					CreateDemSlopeProcessor();
 		virtual DemAspectProcessor*					CreateDemAspectProcessor();
 	};

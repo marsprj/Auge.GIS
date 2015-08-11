@@ -369,6 +369,7 @@ namespace auge
 
 
 		AUGE_API g_byte		auge_get_median(g_byte* values, g_uint size);
+		AUGE_API g_byte		auge_average_byte(g_byte* data, g_uint64 count);
 
 		AUGE_API const char*	auge_encoding_convert(const char* from, const char* to, const char* instr, size_t instrlen);
 		AUGE_API size_t	auge_encoding_convert_2(const char* from, const char* to, const char* instr, size_t instrlen, char* outstr, size_t* outlen);

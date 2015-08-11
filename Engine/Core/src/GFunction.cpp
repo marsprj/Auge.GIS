@@ -752,4 +752,16 @@ namespace auge
 
 		return v;
 	}
+
+
+	g_byte auge_average_byte(g_byte* data, g_uint64 count)
+	{
+		g_uint64 sum = 0;
+		g_byte* ptr = data;
+		for(g_uint64 i=0; i<count; i++, ptr++)
+		{
+			sum += *ptr;
+		}
+		return sum / count;
+	}
 }

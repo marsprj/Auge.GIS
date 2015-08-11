@@ -20,8 +20,8 @@ void RasterTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
-	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -322,6 +322,30 @@ void RasterTest::HistgramEqualization()
 
 	pProcessor->SetOutputDataSource("rsdb2");
 	pProcessor->SetOutputRaster("gray_histeql.jpg");
+	pProcessor->SetOutputPath("/ds1");
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[Ê±¼ä]:%dºÁÃë\n", te-ts);
+}
+
+void RasterTest::Threshold()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterThresholdProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterThresholdProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("rsdb2");
+	pProcessor->SetInputRaster("Desert.jpg");
+	pProcessor->SetInputPath("/ds1");
+
+	pProcessor->SetOutputDataSource("rsdb2");
+	pProcessor->SetOutputRaster("Desert_threshold_average.jpg");
 	pProcessor->SetOutputPath("/ds1");
 	RESULTCODE rc = pProcessor->Execute();
 
