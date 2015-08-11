@@ -223,6 +223,27 @@ namespace auge
 		return pFeatureStyle;
 	}
 
+	FeatureStyle* StyleFactoryImpl::CreateFeatureStyle(augeGeometryType type, g_uint limit)
+	{
+		FeatureStyle* pFeatureStyle = NULL;
+		switch(type)
+		{
+		case augeGTPoint:
+		case augeGTMultiPoint:
+			pFeatureStyle = CreatePointStyle(limit);
+			break;
+		case augeGTLineString:
+		case augeGTMultiLineString:
+			pFeatureStyle = CreateLineStyle(limit);
+			break;
+		case augeGTPolygon:
+		case augeGTMultiPolygon:
+			pFeatureStyle = CreatePolygonStyle(limit);
+			break;
+		}
+		return pFeatureStyle;
+	}
+
 	RasterStyle* StyleFactoryImpl::CreateRasterStyle()
 	{
 		return (new RasterStyleImpl());
