@@ -24,7 +24,15 @@ namespace auge
 	//创建带spatialreference的图像时有bug
 	Raster*	RasterFactoryImpl::CreateRaster(const char* name, GEnvelope& extent, Raster* pinRaster)
 	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
 		if(pinRaster==NULL)
+		{
+			return NULL;
+		}
+		if(!extent.IsValid())
 		{
 			return NULL;
 		}
@@ -90,6 +98,105 @@ namespace auge
 											r_width, r_height,
 											pixelType, 
 											0, 0 );
+			if(err>CE_Warning)
+			{
+				break;
+			}
+		}
+
+		free(buffer);
+
+		if(err>CE_Warning)
+		{
+			GDALClose(pmemDataset);
+			return NULL;
+		}
+
+		RasterImpl* poutRaster = new RasterImpl();
+		poutRaster->Create(name, pmemDataset);
+		return poutRaster;
+	}
+
+	Raster* RasterFactoryImpl::CreateRaster(const char* name, augePixelType pixelType, GEnvelope& extent, Raster* pinRaster)
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+		if(pinRaster==NULL)
+		{
+			return NULL;
+		}
+		if(!extent.IsValid())
+		{
+			return NULL;
+		}
+		if(pixelType==augePixelUnknown)
+		{
+			return NULL;
+		}
+
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		GRect rect;
+		if(!pinRaster->GetRasterRect(rect,extent))
+		{
+			return NULL;
+		}
+		g_uint r_width = rect.GetWidth();
+		g_uint r_height= rect.GetHeight();
+		GDALDataType g_pixelType =  (GDALDataType)pixelType;
+		const char*  spatialref = pinRaster->GetSpatialReference();
+
+		// Create Dataset in memory
+		GDALDriver* pmemDriver  = NULL;
+		pmemDriver = GetGDALDriverManager()->GetDriverByName("MEM");
+		GDALDataset* pmemDataset = NULL;
+		pmemDataset = pmemDriver->Create("", r_width, r_height, pinRaster->GetBandCount(), g_pixelType, NULL);
+		if(pmemDataset==NULL)
+		{
+			const char* msg = CPLGetLastErrorMsg();			
+			pError->SetError(msg);
+			pLogger->Error(msg,__FILE__,__LINE__);
+
+			return NULL;
+		}
+		// GeoTransform
+		double adfGeoTransform[6];
+		adfGeoTransform[0] = extent.m_xmin;							/* top left x */
+		adfGeoTransform[1] = extent.GetWidth() / rect.GetWidth();	/* w-e pixel resolution */
+		adfGeoTransform[2] = 0;										/* 0 */
+		adfGeoTransform[3] = extent.m_ymax;							/* top left y */
+		adfGeoTransform[4] = 0;										/* 0 */
+		adfGeoTransform[5] =-extent.GetHeight() / rect.GetHeight();	/* n-s pixel resolution (negative value) */
+		pmemDataset->SetGeoTransform(adfGeoTransform);
+		// spatial reference
+		pmemDataset->SetProjection(spatialref);
+
+		// read and write new raster
+		g_uint64 buffer_size = (g_uint64)r_width * (g_uint64)r_height * pinRaster->GetPixelSize();
+		unsigned char* buffer = (unsigned char*)malloc(buffer_size);
+
+		CPLErr err = CE_None;
+		RasterBand* pBand = NULL;
+		GDALRasterBand* pmemBand = NULL;
+		g_uint band_count = pinRaster->GetBandCount();
+		for(g_uint i=0; i<band_count; i++)
+		{
+			pBand = pinRaster->GetBand(i);
+			pmemBand = pmemDataset->GetRasterBand(i+1);
+
+			memset(buffer, 0, buffer_size);
+			pBand->Read(buffer, rect.m_xmin, rect.m_ymin, r_width, r_height);
+
+			CPLErr err = pmemBand->RasterIO(GF_Write, 
+				0, 0,
+				r_width, r_height, 
+				buffer,
+				r_width, r_height,
+				g_pixelType, 
+				0, 0 );
 			if(err>CE_Warning)
 			{
 				break;

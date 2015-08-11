@@ -204,7 +204,7 @@ namespace auge
 	{
 		Raster* poutRaster = NULL;
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
-		poutRaster = pRasterFactory->CreateRaster("", pinRaster->GetExtent(), pinRaster);
+		poutRaster = pRasterFactory->CreateRaster("", augePixelDouble, pinRaster->GetExtent(), pinRaster);
 		if(poutRaster==NULL)
 		{
 			return NULL;
@@ -228,7 +228,7 @@ namespace auge
 				break;
 			case augePixelUInt16:
 			case augePixelInt16:
-				Slope_Short(pinBand, poutBand);
+				rc = Slope_Short(pinBand, poutBand);
 				break;
 			case augePixelUInt32:
 			case augePixelInt32:
@@ -236,7 +236,7 @@ namespace auge
 			case augePixelFloat32:
 				break;
 			case augePixelDouble:
-				Slope_Double(pinBand, poutBand);
+				rc = Slope_Double(pinBand, poutBand);
 				break;
 			}
 
@@ -271,12 +271,12 @@ namespace auge
 		double reslution_x = pinBand->GetResolution_X();
 		double reslution_y = pinBand->GetResolution_Y();
 
-		g_int64 size = width*height*sizeof(g_byte);
-		g_byte* output = (g_byte*)malloc(size);
+		g_int64 size = ((g_int64)width) * ((g_int64)height) * poutBand->GetPixelSize();
+		double* output = (double*)malloc(size);
 		memset(output, 0, size);
 
 		g_int sum = 0;
-		g_byte* ptr = output + width + 1;
+		double* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
@@ -315,13 +315,13 @@ namespace auge
 		double radian;
 		double reslution_x = pinBand->GetResolution_X();
 		double reslution_y = pinBand->GetResolution_Y();
-
-		g_int64 size = width*height*sizeof(short);
-		short* output = (short*)malloc(size);
+		
+		g_int64 size = ((g_int64)width) * ((g_int64)height) * poutBand->GetPixelSize();
+		double* output = (double*)malloc(size);
 		memset(output, 0, size);
 		
 		g_int sum = 0;
-		short* ptr = output + width + 1;
+		double* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)

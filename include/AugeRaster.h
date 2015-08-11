@@ -125,6 +125,7 @@ namespace auge
 		virtual ~RasterFactory(){}
 	public:
 		virtual Raster*			CreateRaster(const char* name, GEnvelope& extent, Raster* pinRaster) = 0;
+		virtual Raster*			CreateRaster(const char* name, augePixelType pixelType, GEnvelope& extent, Raster* pinRaster) = 0;
 		virtual Raster*			CreateRasterPNG(const char* name, g_uint width, g_uint height) = 0;
 		virtual Raster*			CreateRasterJPG(const char* name, g_uint width, g_uint height) = 0;
 		//virtual Raster*			CreateRaster(const char* name, augePixelType pixelType, g_uint width, g_uint height, g_int bands, g_uint srid, GEnvelope& extent) = 0;
