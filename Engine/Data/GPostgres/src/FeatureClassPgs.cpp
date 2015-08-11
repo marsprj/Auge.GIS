@@ -142,6 +142,12 @@ namespace auge
 			return false;
 		}
 
+		GField* pGeomField = m_pFields->GetGeometryField();
+		if(pGeomField!=NULL)
+		{
+			m_srid = pGeomField->GetGeometryDef()->GetSRID();
+		}
+
 		return true;
 	}
 
@@ -170,6 +176,12 @@ namespace auge
 		if(!CreateFields(pgResult))
 		{
 			return false;
+		}
+
+		GField* pGeomField = m_pFields->GetGeometryField();
+		if(pGeomField!=NULL)
+		{
+			m_srid = pGeomField->GetGeometryDef()->GetSRID();
 		}
 
 		return true;
