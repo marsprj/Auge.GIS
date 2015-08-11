@@ -71,6 +71,7 @@ namespace auge
 		const char* folder_path = pRequest->GetPath();
 		const char* raster_name=pRequest->GetName();
 		const char* source_name=pRequest->GetSourceName();
+		const char* format = pRequest->GetFormat();
 		GEnvelope extent = pRequest->GetExtent();
 
 		if(raster_name==NULL)
