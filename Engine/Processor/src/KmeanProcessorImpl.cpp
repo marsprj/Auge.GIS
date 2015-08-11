@@ -278,8 +278,10 @@ namespace auge
 			cmd->Insert(pFeature);
 		}
 		pFeature->Release();
-
+		
 		cmd->Release();
+		pFeatureClass->Refresh();
+		pFeatureClass->Release();
 
 		return AG_SUCCESS;
 	}
@@ -352,6 +354,8 @@ namespace auge
 		pFeature->Release();
 
 		cmd->Release();
+		pFeatureClass->Refresh();
+		pFeatureClass->Release();
 
 		return AG_SUCCESS;
 	}

@@ -142,6 +142,7 @@ namespace auge
 		cmd->Release();
 		pCursor->Release();		
 
+		pFeatureClass->Refresh();
 		pFeatureClass->Release();
 		pcsvDataset->Release();
 		pcsvWorkspace->Release();
