@@ -225,6 +225,8 @@ namespace auge
 
 	bool RasterStretchProcessorImpl::Stretch(Raster* pinRaster, Raster* poutRaster)
 	{
+		GLogger* pLogger = augeGetLoggerInstance();
+
 		RasterBand* pinBand = pinRaster->GetBand(0);
 
 		RasterBand* poutBand_R = poutRaster->GetBand(0);
@@ -254,6 +256,12 @@ namespace auge
 		g_uchar r_e = m_color_end.GetRed();
 		g_uchar g_e = m_color_end.GetGreen();
 		g_uchar b_e = m_color_end.GetBlue();
+
+		char color[AUGE_NAME_MAX];
+		g_sprintf(color, "[Start Color]:r=%c,	g=%c,	b=%c\n", r_s, g_s, b_s);
+		pLogger->Info(color, __FILE__, __LINE__);
+		g_sprintf(color, "[End Color]:r=%c,	g=%c,	b=%c\n", r_e, g_e, b_e);
+		pLogger->Info(color, __FILE__, __LINE__);
 
 		float h_s=0.0f, s_s=0.0f, v_s=0.0f;
 		float h_e=0.0f, s_e=0.0f, v_e=0.0f;
@@ -308,3 +316,4 @@ namespace auge
 		m_user = user;
 	}
 }
+
