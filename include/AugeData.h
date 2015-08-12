@@ -242,6 +242,7 @@ namespace auge
 		virtual g_int				GetCount(g_uint user) = 0;
 		virtual Workspace*			GetWorkspace(g_uint user, const char* name) = 0;
 		virtual EnumWorkspace*		GetWorkspaces(g_uint user) = 0;
+		virtual EnumWorkspace*		GetWorkspaces(g_uint user_id, augeWorkspaceType type) = 0;
 
 		virtual Workspace*			NewWorkspace(g_uint user, const char* name) = 0;
 

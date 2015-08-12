@@ -18,6 +18,7 @@ namespace auge
 	{
 		SetVersion(cgi["version"]);
 		SetName(cgi["name"]);
+		SetSourceType(cgi["type"]);
 		return true;
 	}
 
@@ -81,4 +82,33 @@ namespace auge
 		return m_name.c_str();
 	}
 
+	void GetDataSourceRequest::SetSourceType(const char* type)
+	{
+		if(type==NULL)
+		{
+			return;
+		}
+
+		if(g_stricmp(type, "Feature")==0)
+		{
+			m_source_type = augeWorkspaceFeature;
+		}
+		else if(g_stricmp(type, "Raster")==0)
+		{
+			m_source_type = augeWorkspaceRaster;
+		}
+		else if(g_stricmp(type, "Tile")==0)
+		{
+			m_source_type = augeWorkspaceTile;
+		}
+		else
+		{
+			m_source_type = augeWorkspaceUnknown;
+		}
+	}
+
+	augeWorkspaceType GetDataSourceRequest::GetSourceType()
+	{
+		return m_source_type;
+	}
 }

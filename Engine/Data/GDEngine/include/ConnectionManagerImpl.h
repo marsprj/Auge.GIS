@@ -36,6 +36,7 @@ namespace auge
 		virtual Workspace*			GetWorkspace(g_uint user_id, const char* name);
 		/*virtual Workspace*			GetWorkspaceById(g_uint user_id, g_uint id);*/
 		virtual EnumWorkspace*		GetWorkspaces(g_uint user_id);
+		virtual EnumWorkspace*		GetWorkspaces(g_uint user_id, augeWorkspaceType type);
 
 		virtual Workspace*			NewWorkspace(g_uint user_id, const char* name);
 

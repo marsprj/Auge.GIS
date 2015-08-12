@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "AugeData.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
@@ -22,6 +23,7 @@ namespace auge
 		virtual const char*		GetRequest();
 		virtual const char*		GetMimeType();
 		virtual const char*		GetEncoding();
+		augeWorkspaceType		GetSourceType();
 
 		virtual const char*		GetName();
 	public:
@@ -29,12 +31,15 @@ namespace auge
 
 		void		SetVersion(const char* value);
 		void		SetName(const char* name);
+		void		SetSourceType(const char* type);
 
 	private:
 		std::string m_version;
 		std::string m_mime_type;
 		std::string m_name;
 		std::string m_encoding;
+
+		augeWorkspaceType m_source_type;
 	};
 }
 

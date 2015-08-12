@@ -34,8 +34,9 @@ namespace auge
 		const char* name = m_pRequest->GetName();
 		if(name==NULL)
 		{
+			
 			XElement *pxRoot = pxDoc->CreateRootNode("IMS_DataSources", NULL, NULL);
-			EnumWorkspace* pEnum = pConnManager->GetWorkspaces(m_pUser->GetID());
+			EnumWorkspace* pEnum = pConnManager->GetWorkspaces(m_pUser->GetID(), m_pRequest->GetSourceType());
 			pEnum->Reset();
 			while((pWorkspace=pEnum->Next()))
 			{
