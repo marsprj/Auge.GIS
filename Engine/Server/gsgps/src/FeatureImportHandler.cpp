@@ -182,7 +182,7 @@ namespace auge
 		processor->SetShapePath(shp_path);
 		processor->SetShapeName(shp_name);
 		processor->SetDataSourceName(source_name);
-		processor->SetTypeName(type_name);
+		processor->SetFeatureClassName(type_name);
 
 		RESULTCODE rc = processor->Execute();
 		if(rc!=AG_SUCCESS)

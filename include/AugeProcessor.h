@@ -135,7 +135,19 @@ namespace auge
 		virtual void		SetShapePath(const char* path) = 0;
 		virtual void		SetShapeName(const char* className) = 0;
 		virtual void		SetDataSourceName(const char* sourceName) = 0;
-		virtual void		SetTypeName(const char* typeName) = 0;
+		virtual void		SetFeatureClassName(const char* className) = 0;
+	};
+
+	class FeatureExportProcessor : public GProcessor
+	{
+	protected:
+		FeatureExportProcessor(){}
+		virtual ~FeatureExportProcessor(){}
+	public:
+		virtual void		SetShapePath(const char* path) = 0;
+		virtual void		SetShapeName(const char* className) = 0;
+		virtual void		SetDataSourceName(const char* sourceName) = 0;
+		virtual void		SetFeatureClassName(const char* className) = 0;
 	};
 
 	//------------------------------------------------------------------------
@@ -534,6 +546,7 @@ namespace auge
 		virtual MapTileStoreGenerator*		CreateMongoTileStoreGenerator() = 0;
 		virtual ArchiveProcessor*			CreateArchiveProcessor() = 0;
 		virtual FeatureImportProcessor*		CreateFeatureImportProcessor() = 0;
+		virtual FeatureExportProcessor*		CreateFeatureExportProcessor() = 0;
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor() = 0;
 

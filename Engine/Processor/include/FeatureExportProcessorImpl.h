@@ -1,16 +1,16 @@
-#ifndef __AUGE_FEATURE_IMPORT_PROCESSOR_H__
-#define __AUGE_FEATURE_IMPORT_PROCESSOR_H__
+#ifndef __AUGE_FEATURE_EXPORT_PROCESSOR_H__
+#define __AUGE_FEATURE_EXPORT_PROCESSOR_H__
 
 #include "AugeProcessor.h"
 #include <string>
 
 namespace auge
 {
-	class FeatureImportProcessorImpl : public FeatureImportProcessor
+	class FeatureExportProcessorImpl : public FeatureExportProcessor
 	{
 	public:
-		FeatureImportProcessorImpl();
-		virtual ~FeatureImportProcessorImpl();
+		FeatureExportProcessorImpl();
+		virtual ~FeatureExportProcessorImpl();
 	public:
 
 		virtual void		SetUser(g_uint user);
@@ -37,4 +37,4 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_FEATURE_IMPORT_PROCESSOR_H__
+#endif //__AUGE_FEATURE_EXPORT_PROCESSOR_H__

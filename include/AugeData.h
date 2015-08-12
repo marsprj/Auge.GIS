@@ -223,6 +223,7 @@ namespace auge
 		virtual Workspace*			GetWorkspace(const char* name) = 0;
 		virtual Workspace*			GetWorkspaceById(g_uint id) = 0;
 		virtual EnumWorkspace*		GetWorkspaces() = 0;
+		virtual EnumWorkspace*		GetWorkspaces(augeWorkspaceType type) = 0;
 
 		virtual Workspace*			NewWorkspace(const char* name) = 0;
 

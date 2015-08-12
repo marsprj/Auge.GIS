@@ -163,6 +163,64 @@ namespace auge
 		return pWorkspaces;
 	}
 
+	EnumWorkspace* ConnectionManagerImpl::GetWorkspaces(augeWorkspaceType type)
+	{
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+		EnumWorkspaceImpl* pWorkspaces = new EnumWorkspaceImpl();
+		if(type>3)
+		{
+			const char* msg = "Invalid Workspace type";
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			return pWorkspaces;
+		}
+		if(m_pConnection==NULL)
+		{
+			const char* msg = "Cannot connect to database";
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			return pWorkspaces;
+		}
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_sprintf(sql, "select gid,name,engine,uri,version,state,d_uri from g_data_source where type=%d", (int)type);
+		GResultSet* pResultSet = NULL;
+		pResultSet = m_pConnection->ExecuteQuery(sql);
+		if(pResultSet!=NULL)
+		{
+			Workspace* pWorkspace = NULL;
+			int gid = -1;
+			int version = 0;
+			const char* name= NULL;
+			const char* engn=NULL;
+			const char* uri = NULL;
+			const char* stat= NULL;
+			const char* d_uri = NULL;
+			g_uint count = pResultSet->GetCount();
+			for(g_uint i=0; i<count; i++)
+			{
+				gid = pResultSet->GetInt(i,0);
+				name= pResultSet->GetString(i,1);
+				engn= pResultSet->GetString(i,2);
+				uri = pResultSet->GetString(i,3);
+				version=pResultSet->GetInt(i,4);
+				stat= pResultSet->GetString(i,5);
+				d_uri = pResultSet->GetString(i,6);
+
+				pWorkspace = NewWorkspace(gid,name, engn, uri,version);
+				if(pWorkspace!=NULL)
+				{
+					pWorkspaces->Add(pWorkspace);
+				}
+			}
+		}
+		return pWorkspaces;
+	}
+
 	RESULTCODE ConnectionManagerImpl::Register(const char* name, const char* engine, const char* constr)
 	{
 		if(name==NULL || engine==NULL || constr==NULL)
@@ -736,7 +794,18 @@ namespace auge
 
 	bool ConnectionManagerImpl::CreateDataSourceTable()
 	{
-		const char* sql = "CREATE TABLE g_data_source(gid serial NOT NULL,name character varying(32) NOT NULL, d_uri character varying(128), engine character varying(16) NOT NULL, uri character varying(256) NOT NULL, user_id integer DEFAULT 1, version integer NOT NULL DEFAULT 1,state character varying(8),CONSTRAINT g_data_source_pkey PRIMARY KEY (gid),CONSTRAINT g_data_source_name_key UNIQUE (name))";
+		const char* sql = "CREATE TABLE g_data_source( " \
+								"gid serial NOT NULL, " \
+								"name character varying(32) NOT NULL, " \
+								"d_uri character varying(128), " \
+								"engine character varying(16) NOT NULL, " \
+								"uri character varying(256) NOT NULL, " \
+								"user_id integer DEFAULT 1, " \
+								"version integer NOT NULL DEFAULT 1," \
+								"state character varying(8)," \
+								"type integer DEFAULT 1,"\
+								"CONSTRAINT g_data_source_pkey PRIMARY KEY (gid)," \
+								"CONSTRAINT g_data_source_name_key UNIQUE (name))";
 		if(m_pConnection->ExecuteSQL(sql)!=AG_SUCCESS)
 		{
 			return false;

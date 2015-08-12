@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(FeatureTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(FeatureTest);
 
 void FeatureTest::setUp() 
 {
@@ -22,7 +22,8 @@ void FeatureTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=UTF-8");
+	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=UTF-8");
+	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -105,6 +106,33 @@ void FeatureTest::FeatureImportTest()
 	////	}
 	////}
 	
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+
+	AUGE_SAFE_RELEASE(processor);
+
+}
+
+void FeatureTest::FeatureExportTest()
+{	
+	DWORD ts = GetTickCount();
+
+	const char* shp_path = "g:\\temp\\aqi";
+	const char* shp_name = "aqi_ranking_2015_02_05_07";
+	const char* source_name = "160_ourgis";
+
+	auge::GProcessorFactory* factory = auge::augeGetGeoProcessorFactoryInstance();
+	auge::FeatureExportProcessor* processor = factory->CreateFeatureExportProcessor();
+
+	processor->SetUser(2);
+	processor->SetShapePath(shp_path);
+	processor->SetShapeName(shp_name);
+	processor->SetDataSourceName(source_name);
+	processor->SetFeatureClassName(shp_name);
+
+	processor->Execute();
+
+
 	DWORD te = GetTickCount();
 	printf("[时间]:%d毫秒\n", te-ts);
 

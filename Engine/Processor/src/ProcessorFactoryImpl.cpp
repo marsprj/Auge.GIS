@@ -2,6 +2,7 @@
 #include "FileSytemTileStoreGeneratorImpl.h"
 #include "MongoTileStoreGenerator.h"
 #include "FeatureImportProcessorImpl.h"
+#include "FeatureExportProcessorImpl.h"
 #include "CsvImportProcessorImpl.h"
 
 #include "KmeanProcessorImpl.h"
@@ -72,6 +73,11 @@ namespace auge
 	FeatureImportProcessor* GProcessorFactoryImpl::CreateFeatureImportProcessor()
 	{
 		return (new FeatureImportProcessorImpl());
+	}
+
+	FeatureExportProcessor* GProcessorFactoryImpl::CreateFeatureExportProcessor()
+	{
+		return (new FeatureExportProcessorImpl());
 	}
 
 	CsvImportProcessor*	GProcessorFactoryImpl::CreateCsvImportProcessor()
