@@ -81,6 +81,7 @@ namespace auge
 				strcat(layers, ",");
 			}
 		}
+		pLogger->Debug(layers, __FILE__, __LINE__);
 
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
 		RESULTCODE rc = pCartoManager->SaveMap(0, name, atoi(pRequest->GetSRID()), extent, viewer, layers);
