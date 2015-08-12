@@ -33,6 +33,11 @@ libgsdbs_la_SOURCES=\
 		    CreateDataSetHandler.cpp \
 		    RemoveDataSetRequest.cpp \
 		    RemoveDataSetHandler.cpp \
+		    CreateTileStoreHandler.cpp \
+		    CreateTileStoreRequest.cpp \
+		    DescribeTileStoreHandler.cpp \
+		    DescribeTileStoreRequest.cpp \
+		    DescribeTileStoreResponse.cpp \
 		    TestConnectionRequest.cpp \
 		    TestConnectionHandler.cpp \
 		    WDataEngine.cpp

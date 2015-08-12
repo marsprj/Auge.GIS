@@ -12,6 +12,10 @@
 
 #include "TestConnectionHandler.h"
 
+#include "DescribeTileStoreHandler.h"
+#include "CreateTileStoreHandler.h"
+
+
 #include "AugeCore.h"
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
@@ -38,6 +42,9 @@ namespace auge
 		m_handlers.push_back(new RemoveDataSetHandler());
 		m_handlers.push_back(new TryConnectionHandler());
 		m_handlers.push_back(new RefreshDatasetHandler());
+
+		m_handlers.push_back(new CreateTileStoreHandler());
+		m_handlers.push_back(new DescribeTileStoreHandler());
 	}
 
 	WDataEngine::~WDataEngine()

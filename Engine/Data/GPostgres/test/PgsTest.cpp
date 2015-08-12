@@ -2,6 +2,8 @@
 #include "AugeCore.h"
 #include "AugeFeature.h"
 
+#include "AugeTile.h"
+
 CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
 
 void PgsTest::setUp() 

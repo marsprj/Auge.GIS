@@ -5,6 +5,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsdbs", "gsdbs.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDEngine", "..\..\..\Data\GDEngine\32_x86_win_vc10\GDEngine.vcxproj", "{07AF14F1-448D-4018-80BF-0298C9A7D022}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GTileMgo", "..\..\..\Data\GTileMongo\32_x86_win_vc10\GTileMgo.vcxproj", "{483450F0-61B4-49A8-BF5C-0358B6C38E25}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswmts", "..\..\gswmts\32_x86_win_vc10\gswmts.vcxproj", "{CA2105E9-5D81-4D6A-8D32-1E992F46F9A7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mgr", "..\..\mgr\32_x86_win_vc10\mgr.vcxproj", "{C315E5BD-713B-4812-9B05-8A0F6475DAB0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E} = {48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +28,18 @@ Global
 		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Debug|Win32.Build.0 = Debug|Win32
 		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Release|Win32.ActiveCfg = Release|Win32
 		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Release|Win32.Build.0 = Release|Win32
+		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Debug|Win32.ActiveCfg = Debug|Win32
+		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Debug|Win32.Build.0 = Debug|Win32
+		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Release|Win32.ActiveCfg = Release|Win32
+		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Release|Win32.Build.0 = Release|Win32
+		{CA2105E9-5D81-4D6A-8D32-1E992F46F9A7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CA2105E9-5D81-4D6A-8D32-1E992F46F9A7}.Debug|Win32.Build.0 = Debug|Win32
+		{CA2105E9-5D81-4D6A-8D32-1E992F46F9A7}.Release|Win32.ActiveCfg = Release|Win32
+		{CA2105E9-5D81-4D6A-8D32-1E992F46F9A7}.Release|Win32.Build.0 = Release|Win32
+		{C315E5BD-713B-4812-9B05-8A0F6475DAB0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C315E5BD-713B-4812-9B05-8A0F6475DAB0}.Debug|Win32.Build.0 = Debug|Win32
+		{C315E5BD-713B-4812-9B05-8A0F6475DAB0}.Release|Win32.ActiveCfg = Release|Win32
+		{C315E5BD-713B-4812-9B05-8A0F6475DAB0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

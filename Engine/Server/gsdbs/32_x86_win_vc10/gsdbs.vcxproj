@@ -85,6 +85,11 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   <ItemGroup>
     <ClCompile Include="..\src\CreateDataSetHandler.cpp" />
     <ClCompile Include="..\src\CreateDataSetRequest.cpp" />
+    <ClCompile Include="..\src\CreateTileStoreHandler.cpp" />
+    <ClCompile Include="..\src\CreateTileStoreRequest.cpp" />
+    <ClCompile Include="..\src\DescribeTileStoreHandler.cpp" />
+    <ClCompile Include="..\src\DescribeTileStoreRequest.cpp" />
+    <ClCompile Include="..\src\DescribeTileStoreResponse.cpp" />
     <ClCompile Include="..\src\GetDataSetHandler.cpp" />
     <ClCompile Include="..\src\GetDataSetRequest.cpp" />
     <ClCompile Include="..\src\GetDataSetResponse.cpp" />
@@ -109,6 +114,11 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   <ItemGroup>
     <ClInclude Include="..\include\CreateDataSetHandler.h" />
     <ClInclude Include="..\include\CreateDataSetRequest.h" />
+    <ClInclude Include="..\include\CreateTileStoreHandler.h" />
+    <ClInclude Include="..\include\CreateTileStoreRequest.h" />
+    <ClInclude Include="..\include\DescribeTileStoreHandler.h" />
+    <ClInclude Include="..\include\DescribeTileStoreRequest.h" />
+    <ClInclude Include="..\include\DescribeTileStoreResponse.h" />
     <ClInclude Include="..\include\GetDataSetHandler.h" />
     <ClInclude Include="..\include\GetDataSetRequest.h" />
     <ClInclude Include="..\include\GetDataSetResponse.h" />

@@ -149,8 +149,8 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	RESULTCODE TileWorkspaceMongo::CreateTileStore(const char* name, augeTileType type)
 	{
-
-		return AG_SUCCESS;
+		GEnvelope extent(-180,-90,180,90);
+		return CreateTileStore(name, type, 1, 18, extent);
 	}
 
 	RESULTCODE	TileWorkspaceMongo::CreateTileStore(const char* name, augeTileType type, g_uint start_level, g_uint end_level, GEnvelope& extent)

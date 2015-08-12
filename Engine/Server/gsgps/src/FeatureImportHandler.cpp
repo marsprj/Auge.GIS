@@ -72,6 +72,13 @@ namespace auge
 		return pWebResponse;
 	}
 
+	/// <summary>
+	/// Executes the specified p web request.
+	/// </summary>
+	/// <param name="pWebRequest">The p web request.</param>
+	/// <param name="pWebContext">The p web context.</param>
+	/// <param name="pUser">The p user.</param>
+	/// <returns></returns>
 	WebResponse* FeatureImportHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		GError* pError = augeGetErrorInstance();
@@ -169,6 +176,14 @@ namespace auge
 		return pWebResponse;
 	}
 
+	/// <summary>
+	/// Imports the shape file.
+	/// </summary>
+	/// <param name="shp_path">The shp_path.</param>
+	/// <param name="shp_name">The shp_name.</param>
+	/// <param name="source_name">The source_name.</param>
+	/// <param name="type_name">The type_name.</param>
+	/// <returns></returns>
 	WebResponse* FeatureImportHandler::ImportShapeFile(const char* shp_path, const char* shp_name, const char* source_name, const char* type_name)
 	{
 		WebResponse* pWebResponse = NULL;
