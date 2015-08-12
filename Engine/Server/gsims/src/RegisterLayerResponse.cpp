@@ -108,15 +108,23 @@ namespace auge
 		switch(pLayer->GetType())
 		{
 		case augeLayerFeature:
-			{
+			{	
+				pxNode = pxRoot->AddChild("Type",NULL);
+				pxRoot->AddChildText("Feature");
 				FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
 				AddLayerGeomTypeNode(pxRoot, pFeatureLayer);
 			}
 			break;
 		case augeLayerRaster:
+			{
+				pxNode = pxRoot->AddChild("Type",NULL);
+				pxRoot->AddChildText("Raster");
+			}
 			break;
 		case augeLayerQuadServer:
 			{
+				pxNode = pxRoot->AddChild("Type",NULL);
+				pxRoot->AddChildText("Tile");
 				QuadServerLayer* pQuadServerLayer = static_cast<QuadServerLayer*>(pLayer);
 				AddWebURLNode(pxRoot, pQuadServerLayer->GetURL());
 			}
