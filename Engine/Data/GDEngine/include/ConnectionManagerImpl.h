@@ -21,7 +21,7 @@ namespace auge
 
 		virtual Workspace*			NewWorkspace(const char* name);
 
-		virtual RESULTCODE			Register(const char* name, const char* engine, const char* constr);
+		virtual RESULTCODE			Register(const char* name, const char* engine, const char* constr, augeWorkspaceType type);
 		virtual RESULTCODE			Unregister(const char* name);
 		virtual RESULTCODE			Update(const char* name, const char* engine, const char* constr);
 		virtual RESULTCODE			Update(g_uint gid, const char* name, const char* engine, const char* constr);
@@ -59,7 +59,7 @@ namespace auge
 		bool		CreateDataSourceTable();
 		Workspace*	NewWorkspace(g_uint gid, const char* name, const char* engine, const char* uri, g_uint version);
 		Workspace*	LoadWorkspace(const char* name);
-		RESULTCODE	SaveWorkspace(const char* name, const char* engine, const char* uri);
+		RESULTCODE	SaveWorkspace(const char* name, const char* engine, const char* uri, augeWorkspaceType type);
 
 		Workspace*	NewWorkspace(g_uint user_id, g_uint gid, const char* name, const char* engine, const char* uri, g_uint version);
 		Workspace*	LoadWorkspace(g_uint user_id, const char* name);

@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsdbs", "gsdbs.vcxproj", "{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDEngine", "..\..\..\Data\GDEngine\32_x86_win_vc10\GDEngine.vcxproj", "{07AF14F1-448D-4018-80BF-0298C9A7D022}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}.Debug|Win32.Build.0 = Debug|Win32
 		{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}.Release|Win32.ActiveCfg = Release|Win32
 		{48B5A744-A1F7-46F1-95B8-00B2ABEFD18E}.Release|Win32.Build.0 = Release|Win32
+		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Debug|Win32.ActiveCfg = Debug|Win32
+		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Debug|Win32.Build.0 = Debug|Win32
+		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Release|Win32.ActiveCfg = Release|Win32
+		{07AF14F1-448D-4018-80BF-0298C9A7D022}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

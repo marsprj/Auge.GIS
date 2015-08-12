@@ -168,7 +168,7 @@ namespace auge
 		GError* pError = augeGetErrorInstance();
 		GLogger* pLogger = augeGetLoggerInstance();
 		EnumWorkspaceImpl* pWorkspaces = new EnumWorkspaceImpl();
-		if(type>3)
+		if(type>4||type==0)
 		{
 			const char* msg = "Invalid Workspace type";
 			pError->SetError(msg);
@@ -221,7 +221,7 @@ namespace auge
 		return pWorkspaces;
 	}
 
-	RESULTCODE ConnectionManagerImpl::Register(const char* name, const char* engine, const char* constr)
+	RESULTCODE ConnectionManagerImpl::Register(const char* name, const char* engine, const char* constr, augeWorkspaceType type)
 	{
 		if(name==NULL || engine==NULL || constr==NULL)
 		{
@@ -236,7 +236,7 @@ namespace auge
 		}
 
 		RESULTCODE rc = AG_FAILURE;
-		rc = SaveWorkspace(name, engine, constr);
+		rc = SaveWorkspace(name, engine, constr, type);
 		if(rc!=AG_SUCCESS)
 		{
 			pWorkspace->Release();
@@ -411,10 +411,10 @@ namespace auge
 		return pWorkspace;
 	}
 
-	RESULTCODE ConnectionManagerImpl::SaveWorkspace(const char* name, const char* engine, const char* uri)
+	RESULTCODE ConnectionManagerImpl::SaveWorkspace(const char* name, const char* engine, const char* uri, augeWorkspaceType type)
 	{
 		char sql[AUGE_NAME_MAX];
-		g_snprintf(sql, AUGE_NAME_MAX, "insert into g_data_source (name, engine, uri) values('%s','%s','%s')", name, engine, uri);
+		g_snprintf(sql, AUGE_NAME_MAX, "insert into g_data_source (name, engine, uri, type) values('%s','%s','%s')", name, engine, uri, (int)type);
 		return m_pConnection->ExecuteSQL(sql);
 	}
 

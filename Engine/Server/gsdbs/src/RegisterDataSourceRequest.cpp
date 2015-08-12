@@ -7,6 +7,7 @@ namespace auge
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
 		m_encoding = AUGE_DEFAULT_ENCODING;
+		m_source_type = augeWorkspaceUnknown;
 	}
 
 	RegisterDataSourceRequest::~RegisterDataSourceRequest()
@@ -20,6 +21,7 @@ namespace auge
 		SetName(cgi["name"]);
 		SetDataEngine(cgi["engine"]);
 		SetURI(cgi["uri"]);
+		SetSourceType(cgi["type"]);
 		return true;
 	}
 
@@ -110,5 +112,35 @@ namespace auge
 		{
 			m_uri = uri;
 		}
+	}
+
+	void RegisterDataSourceRequest::SetSourceType(const char* type)
+	{
+		if(type==NULL)
+		{
+			return;
+		}
+
+		if(g_stricmp(type, "Feature")==0)
+		{
+			m_source_type = augeWorkspaceFeature;
+		}
+		else if(g_stricmp(type, "Raster")==0)
+		{
+			m_source_type = augeWorkspaceRaster;
+		}
+		else if(g_stricmp(type, "Tile")==0)
+		{
+			m_source_type = augeWorkspaceTile;
+		}
+		else
+		{
+			m_source_type = augeWorkspaceUnknown;
+		}
+	}
+
+	augeWorkspaceType RegisterDataSourceRequest::GetSourceType()
+	{
+		return m_source_type;
 	}
 }

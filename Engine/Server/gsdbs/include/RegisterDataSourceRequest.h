@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "AugeData.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
@@ -22,6 +23,7 @@ namespace auge
 		virtual const char*		GetRequest();
 		virtual const char*		GetMimeType();
 		virtual const char*		GetEncoding();
+		augeWorkspaceType		GetSourceType();
 
 	public:
 		bool		Create(rude::CGI& cgi);
@@ -34,6 +36,7 @@ namespace auge
 		void		SetName(const char* name);
 		void		SetDataEngine(const char* engine);
 		void		SetURI(const char* uri);
+		void		SetSourceType(const char* type);
 
 	private:
 		std::string m_version;
@@ -42,6 +45,8 @@ namespace auge
 		std::string m_data_engine;
 		std::string m_uri;
 		std::string m_encoding;
+
+		augeWorkspaceType m_source_type;
 	};
 }
 

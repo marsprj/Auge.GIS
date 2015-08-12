@@ -45,7 +45,8 @@ namespace auge
 
 	typedef enum augeWorkspaceType
 	{
-		augeWorkspaceAttribute	= 0,
+		augeWorkspaceUnknown	= 0,
+		augeWorkspaceAttribute,
 		augeWorkspaceFeature,
 		augeWorkspaceRaster,
 		augeWorkspaceTile
@@ -227,7 +228,7 @@ namespace auge
 
 		virtual Workspace*			NewWorkspace(const char* name) = 0;
 
-		virtual RESULTCODE			Register(const char* name, const char* engine, const char* constr) = 0;
+		virtual RESULTCODE			Register(const char* name, const char* engine, const char* constr, augeWorkspaceType type) = 0;
 		virtual RESULTCODE			Unregister(const char* name) = 0;
 		//virtual RESULTCODE		Update(const char* name, const char* engine, const char* constr) = 0;
 		//virtual RESULTCODE		Update(g_uint gid, const char* name, const char* engine, const char* constr) = 0;
