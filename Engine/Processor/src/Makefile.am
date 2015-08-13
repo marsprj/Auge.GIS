@@ -21,6 +21,7 @@ libgprocessor_la_SOURCES=\
 		MongoTileStoreGenerator.cpp \
 		ArchiveProcessorImpl.cpp \
 		FeatureImportProcessorImpl.cpp \
+		FeatureExportProcessorImpl.cpp \
 		ProcessorFactoryImpl.cpp \
 		CsvImportProcessorImpl.cpp \
 		FeatureProjectProcessorImpl.cpp \
