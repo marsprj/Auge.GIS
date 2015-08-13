@@ -40,6 +40,9 @@ libgsdbs_la_SOURCES=\
 		    DescribeTileStoreHandler.cpp \
 		    DescribeTileStoreRequest.cpp \
 		    DescribeTileStoreResponse.cpp \
+		    GetTileHandler.cpp \
+		    GetTileRequest.cpp \
+		    GetTileResponse.cpp \
 		    TestConnectionRequest.cpp \
 		    TestConnectionHandler.cpp \
 		    WDataEngine.cpp

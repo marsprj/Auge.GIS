@@ -14,6 +14,7 @@
 
 #include "DescribeTileStoreHandler.h"
 #include "CreateTileStoreHandler.h"
+#include "GetTileHandler.h"
 
 
 #include "AugeCore.h"
@@ -45,6 +46,7 @@ namespace auge
 
 		m_handlers.push_back(new CreateTileStoreHandler());
 		m_handlers.push_back(new DescribeTileStoreHandler());
+		m_handlers.push_back(new GetTileHandler());
 	}
 
 	WDataEngine::~WDataEngine()
