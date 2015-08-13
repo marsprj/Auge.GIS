@@ -2,6 +2,9 @@
 
 namespace auge
 {	
+	std::string GetTileRequest::DEFAULT_HOST   = "127.0.0.1";
+	std::string GetTileRequest::DEFAULT_METHOD = "wms";
+
 	GetTileRequest::GetTileRequest()
 	{
 		m_mime_type = "image/png";
@@ -43,6 +46,16 @@ namespace auge
 
 		//SetServiceName(cgi["servicename"]);
 		return true;
+	}
+
+	const char*	GetTileRequest::GetEngine()
+	{
+		return "wms";
+	}
+
+	const char*	GetTileRequest::GetVersion()
+	{
+		return m_version.c_str();
 	}
 
 	const char*	GetTileRequest::GetEncoding()
@@ -190,6 +203,96 @@ namespace auge
 	g_int GetTileRequest::GetCol()
 	{
 		return m_col;
+	}
+
+	const char* GetTileRequest::GetMapName()
+	{
+		return m_map_name.c_str();
+	}
+
+	void GetTileRequest::SetMapName(const char* mapName)
+	{
+		if(mapName==NULL)
+		{
+			m_map_name.clear();
+		}
+		else
+		{
+			m_map_name = mapName;
+		}
+	}
+
+	void GetTileRequest::SetVersion(const char* value)
+	{
+		if(value==NULL)
+		{
+			return;
+		}
+		m_version = value;
+	}
+
+	void GetTileRequest::SetUser(const char* user)
+	{
+		if(user==NULL)
+		{
+			m_user.clear();
+		}
+		else
+		{
+			m_user = user;
+		}
+	}
+
+	const char* GetTileRequest::GetUser()
+	{
+		return m_user.c_str();
+	}
+
+	const char*	GetTileRequest::GetMimeType()
+	{
+		return m_mime_type.c_str();
+	}
+
+	const char* GetTileRequest::GetRequestMethod()
+	{
+		return m_request_method.c_str();
+	}
+
+	const char* GetTileRequest::GetHost()
+	{
+		return m_host.c_str();
+	}
+
+	void GetTileRequest::SetRequestMethod(const char* method)
+	{
+		if(method==NULL)
+		{
+			m_request_method = DEFAULT_METHOD;
+		}
+		else if(!strlen(method))
+		{
+			m_request_method = DEFAULT_METHOD;
+		}
+		else
+		{
+			m_request_method = method;
+		}
+	}
+
+	void GetTileRequest::SetHost(const char* host)
+	{
+		if(host==NULL)
+		{
+			m_host = DEFAULT_HOST;
+		}
+		else if(!strlen(host))
+		{
+			m_host = DEFAULT_HOST;
+		}
+		else
+		{
+			m_host = host;
+		}
 	}
 
 }

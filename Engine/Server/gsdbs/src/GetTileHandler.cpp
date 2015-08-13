@@ -1,7 +1,6 @@
 #include "GetTileHandler.h"
 #include "GetTileRequest.h"
 #include "GetTileResponse.h"
-#include "WTileEngine.h"
 #include "AugeService.h"
 #include "AugeTile.h"
 #include "AugeUser.h"

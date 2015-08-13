@@ -7,19 +7,27 @@
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
-#include "WTileRequest.h"
 
 namespace auge
 {
-	class GetTileRequest : public WTileRequest
+	class GetTileRequest : public WebRequest
 	{
 	public:
 		GetTileRequest();
 		virtual ~GetTileRequest();
 
 	public:
+		
+		virtual const char*		GetEngine();
+		virtual const char*		GetUser();
+		virtual const char*		GetVersion();
 		virtual const char*		GetRequest();
+		virtual const char*		GetMimeType();
+		virtual const char*		GetMapName();
 		virtual const char*		GetEncoding();
+
+		virtual const char*		GetHost();
+		virtual const char*		GetRequestMethod();
 
 		const char* GetStoreName();
 		const char*	GetStyle();
@@ -32,7 +40,15 @@ namespace auge
 	public:
 		bool		Create(rude::CGI& cgi);
 
-	private:
+
+		void		SetHost(const char* host);
+		void		SetRequestMethod(const char* method);
+
+		void		SetVersion(const char* value);
+		void		SetUser(const char* user);
+		void		SetMapName(const char* mapName);
+
+
 		void		SetStoreName(const char* name);
 		void		SetStyle(const char* style);
 		void		SetFormat(const char* format);
@@ -42,6 +58,14 @@ namespace auge
 		void		SetCol(const char* col);
 
 	private:
+		std::string m_user;
+		std::string m_version;
+		std::string m_mime_type;
+		std::string m_host;
+		std::string m_request_method;
+		std::string m_map_name;
+		std::string m_encoding;
+
 		std::string m_store_name;
 		std::string	m_style;
 		//std::string m_format;
@@ -49,6 +73,10 @@ namespace auge
 		g_int		m_level;
 		g_int		m_row;
 		g_int		m_col;
+
+	private:
+		static std::string	DEFAULT_HOST;
+		static std::string	DEFAULT_METHOD;
 	};
 
 }
