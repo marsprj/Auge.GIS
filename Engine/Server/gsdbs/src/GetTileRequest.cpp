@@ -30,9 +30,9 @@ namespace auge
 		const char* val = NULL;
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
-		SetMapName(cgi["mapName"]);
+		SetSourceName(cgi["sourceName"]);
 		SetStoreName(cgi["layer"]);
-		//SetMapName(cgi["layer"]);
+		//SetSourceName(cgi["layer"]);
 		
 		SetStyle(cgi["style"]);
 		SetFormat(cgi["format"]);
@@ -42,7 +42,7 @@ namespace auge
 		SetCol(cgi["tilecol"]);
 
 		GLogger* pLogger = augeGetLoggerInstance();
-		pLogger->Debug(m_map_name.c_str(),__FILE__,__LINE__);
+		pLogger->Debug(m_source_name.c_str(),__FILE__,__LINE__);
 
 		//SetServiceName(cgi["servicename"]);
 		return true;
@@ -205,20 +205,20 @@ namespace auge
 		return m_col;
 	}
 
-	const char* GetTileRequest::GetMapName()
+	const char* GetTileRequest::GetSourceName()
 	{
-		return m_map_name.c_str();
+		return m_source_name.c_str();
 	}
 
-	void GetTileRequest::SetMapName(const char* mapName)
+	void GetTileRequest::SetSourceName(const char* SourceName)
 	{
-		if(mapName==NULL)
+		if(SourceName==NULL)
 		{
-			m_map_name.clear();
+			m_source_name.clear();
 		}
 		else
 		{
-			m_map_name = mapName;
+			m_source_name = SourceName;
 		}
 	}
 

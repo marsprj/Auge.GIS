@@ -23,7 +23,7 @@ namespace auge
 		virtual const char*		GetVersion();
 		virtual const char*		GetRequest();
 		virtual const char*		GetMimeType();
-		virtual const char*		GetMapName();
+		virtual const char*		GetSourceName();
 		virtual const char*		GetEncoding();
 
 		virtual const char*		GetHost();
@@ -46,7 +46,7 @@ namespace auge
 
 		void		SetVersion(const char* value);
 		void		SetUser(const char* user);
-		void		SetMapName(const char* mapName);
+		void		SetSourceName(const char* SourceName);
 
 
 		void		SetStoreName(const char* name);
@@ -63,7 +63,7 @@ namespace auge
 		std::string m_mime_type;
 		std::string m_host;
 		std::string m_request_method;
-		std::string m_map_name;
+		std::string m_source_name;
 		std::string m_encoding;
 
 		std::string m_store_name;

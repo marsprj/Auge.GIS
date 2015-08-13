@@ -37,18 +37,18 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	GetTileHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	WebRequest*	GetTileHandler::ParseRequest(rude::CGI& cgi, const char* SourceName)
 	{
 		WebRequest* pWebRequest = ParseRequest(cgi);
 		if(pWebRequest!=NULL)
 		{
 			GetTileRequest* pWRequest = static_cast<GetTileRequest*>(pWebRequest);
-			pWRequest->SetMapName(mapName);
+			pWRequest->SetSourceName(SourceName);
 		}
 		return pWebRequest;
 	}
 
-	WebRequest*	GetTileHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
+	WebRequest*	GetTileHandler::ParseRequest(XDocument* pxDoc, const char* SourceName)
 	{
 		GetTileRequest* pRequest = new GetTileRequest();
 		//if(!pRequest->Create(cgi))
@@ -74,7 +74,7 @@ namespace auge
 		GetTileRequest* pRequest = static_cast<GetTileRequest*>(pWebRequest);
 		GLogger* pLogger = augeGetLoggerInstance();
 
-		const char* sourceName = pRequest->GetMapName();
+		const char* sourceName = pRequest->GetSourceName();
 		if(sourceName==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
