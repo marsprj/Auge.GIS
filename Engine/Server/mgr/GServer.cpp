@@ -105,8 +105,15 @@ namespace auge
 				}
 			}
 
+			g_ulong ts_w = auge_get_time();		
+
 			pWebResponse->Write(pWebWriter);
 			AUGE_SAFE_RELEASE(pWebResponse);
+
+			g_ulong te_w = auge_get_time();
+			char msg[AUGE_MSG_MAX] = {0};
+			g_sprintf(msg, "[Web Writng Time]:%ld ms", te_w-ts_w);
+			m_pLogger->Debug(msg);
 
 			g_ulong te = auge_get_time();
 			WriteTime(ts, te);
