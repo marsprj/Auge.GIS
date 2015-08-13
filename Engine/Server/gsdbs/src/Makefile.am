@@ -35,6 +35,8 @@ libgsdbs_la_SOURCES=\
 		    RemoveDataSetHandler.cpp \
 		    CreateTileStoreHandler.cpp \
 		    CreateTileStoreRequest.cpp \
+		    RemoveTileStoreHandler.cpp \
+		    RemoveTileStoreRequest.cpp \
 		    DescribeTileStoreHandler.cpp \
 		    DescribeTileStoreRequest.cpp \
 		    DescribeTileStoreResponse.cpp \

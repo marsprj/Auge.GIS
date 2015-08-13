@@ -105,6 +105,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RegisterDataSourceRequest.cpp" />
     <ClCompile Include="..\src\RemoveDataSetHandler.cpp" />
     <ClCompile Include="..\src\RemoveDataSetRequest.cpp" />
+    <ClCompile Include="..\src\RemoveTileStoreHandler.cpp" />
+    <ClCompile Include="..\src\RemoveTileStoreRequest.cpp" />
     <ClCompile Include="..\src\TestConnectionHandler.cpp" />
     <ClCompile Include="..\src\TestConnectionRequest.cpp" />
     <ClCompile Include="..\src\UnRegisterDataSourceHandler.cpp" />
@@ -134,6 +136,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RegisterDataSourceRequest.h" />
     <ClInclude Include="..\include\RemoveDataSetHandler.h" />
     <ClInclude Include="..\include\RemoveDataSetRequest.h" />
+    <ClInclude Include="..\include\RemoveTileStoreHandler.h" />
+    <ClInclude Include="..\include\RemoveTileStoreRequest.h" />
     <ClInclude Include="..\include\TestConnectionHandler.h" />
     <ClInclude Include="..\include\TestConnectionRequest.h" />
     <ClInclude Include="..\include\UnRegisterDataSourceHandler.h" />

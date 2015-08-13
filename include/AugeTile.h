@@ -114,7 +114,7 @@ namespace auge
 		virtual TileStore*		OpenTileStore(const char* name) = 0;
 		virtual RESULTCODE		CreateTileStore(const char* name, augeTileType type) = 0;
 		virtual RESULTCODE		CreateTileStore(const char* name, augeTileType type, g_uint start_level, g_uint end_level, GEnvelope& extent) = 0;
-		virtual RESULTCODE		RemoveTileStore() = 0;
+		virtual RESULTCODE		RemoveTileStore(const char* name) = 0;
 
 		virtual EnumTileStore*	GetTileStores() = 0;
 

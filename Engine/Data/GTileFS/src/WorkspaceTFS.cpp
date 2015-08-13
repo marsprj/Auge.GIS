@@ -200,7 +200,7 @@ namespace auge
 		return m_pTileStore;
 	}
 	
-	RESULTCODE TileWorkspaceFS::RemoveTileStore()
+	RESULTCODE TileWorkspaceFS::RemoveTileStore(const char* name)
 	{
 		return AG_SUCCESS;
 	}

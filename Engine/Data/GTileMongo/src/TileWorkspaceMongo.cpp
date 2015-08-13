@@ -250,7 +250,7 @@ namespace auge
 		return pTileStore;
 	}
 	
-	RESULTCODE TileWorkspaceMongo::RemoveTileStore()
+	RESULTCODE TileWorkspaceMongo::RemoveTileStore(const char* name)
 	{
 		return AG_SUCCESS;
 	}
