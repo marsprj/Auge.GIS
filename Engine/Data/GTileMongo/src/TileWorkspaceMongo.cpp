@@ -252,6 +252,45 @@ namespace auge
 	
 	RESULTCODE TileWorkspaceMongo::RemoveTileStore(const char* name)
 	{
+		TileStore* pTileStore = OpenTileStore(name);
+		if(pTileStore==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		if(!pTileStore->IsEmpty())
+		{
+			char msg[AUGE_MSG_MAX];
+			memset(msg, 0, AUGE_MSG_MAX);
+			g_sprintf(msg, "TileStore [%s] is not empty, and cannot be removed. Please cleanup TileStore first.", name);
+			augeGetLoggerInstance()->Error(msg, __FILE__, __LINE__);
+			augeGetErrorInstance()->SetError(msg);
+			return AG_FAILURE;
+		}
+
+		bson_t *filter = NULL;
+		bson_oid_t b_oid;
+		bson_error_t b_error;
+		RESULTCODE rc = AG_SUCCESS;
+
+		filter = bson_new();
+		//bson_oid_init(&b_oid, NULL);
+		BSON_APPEND_UTF8(filter, "name", name);
+
+		if(!mongoc_collection_delete(m_mongo_meta, MONGOC_DELETE_NONE, filter, NULL, &b_error))
+		{
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(b_error.message);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(b_error.message);
+
+			rc = AG_FAILURE;
+		}
+
+		bson_destroy(filter);
+
+		return AG_SUCCESS;
+
 		return AG_SUCCESS;
 	}
 

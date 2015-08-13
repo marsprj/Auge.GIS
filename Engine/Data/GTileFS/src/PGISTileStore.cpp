@@ -23,6 +23,11 @@ namespace auge
 
 	}
 
+	bool PGISTileStore::IsEmpty()
+	{
+		return true;
+	}
+
 	GEnvelope& PGISTileStore::GetExtent()
 	{
 		return m_extent;
@@ -165,6 +170,16 @@ namespace auge
 		auge_make_path(key, NULL, r_path, c_tile, m_tile_format.c_str());
 
 		//g_snprintf(key, size, "%s/%d/%d_%d.%s",m_path.c_str(), level, row, col,m_tile_format.c_str());
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE PGISTileStore::RemoveTile(g_uint level, g_uint64 row, g_uint64 col)
+	{
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE PGISTileStore::RemoveAll()
+	{
 		return AG_SUCCESS;
 	}
 

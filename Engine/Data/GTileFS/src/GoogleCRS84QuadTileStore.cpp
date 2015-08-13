@@ -43,6 +43,11 @@ namespace auge
 
 	}
 
+	bool GoogleCRS84QuadTileStore::IsEmpty()
+	{
+		return true;
+	}
+
 	GEnvelope& GoogleCRS84QuadTileStore::GetExtent()
 	{
 		return m_extent;
@@ -137,6 +142,17 @@ namespace auge
 	{
 		return AG_SUCCESS;
 	}
+
+	RESULTCODE GoogleCRS84QuadTileStore::RemoveTile(g_uint level, g_uint64 row, g_uint64 col)
+	{
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE GoogleCRS84QuadTileStore::RemoveAll()
+	{
+		return AG_SUCCESS;
+	}
+
 	/*
 	 * ------------------------------------------------------------
 	 * augeTileGoogleCrs84Quad

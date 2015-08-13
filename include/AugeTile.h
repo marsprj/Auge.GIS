@@ -65,6 +65,7 @@ namespace auge
 		virtual ~TileStore(){}
 	public:
 		virtual const char*		GetName() = 0;
+		virtual bool			IsEmpty() = 0;
 
 		virtual GEnvelope&		GetExtent() = 0;
 		virtual GEnvelope&		GetFullExtent() = 0;
@@ -82,8 +83,8 @@ namespace auge
 		virtual	Tile*			GetTile(g_uint level, g_uint64 row, g_uint64 col) = 0;
 		virtual RESULTCODE		PutTile(g_uint level, g_uint64 row, g_uint64 col, const char* path) = 0;
 		virtual RESULTCODE		PutTile(g_uint level, g_uint64 row, g_uint64 col, g_uchar* data, size_t size) = 0;
-
-		
+		virtual RESULTCODE		RemoveTile(g_uint level, g_uint64 row, g_uint64 col) = 0;
+		virtual RESULTCODE		RemoveAll() = 0;		
 
 		virtual RESULTCODE		GetKey(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col) = 0;
 		virtual RESULTCODE		GetTileExtent(GEnvelope& extent, g_uint level, g_uint64 row, g_uint64 col) = 0;

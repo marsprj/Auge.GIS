@@ -20,6 +20,7 @@ namespace auge
 	public:
 		virtual const char*		GetName();
 		virtual void			SetName(const char* name);
+		virtual bool			IsEmpty();
 
 		virtual GEnvelope&		GetExtent();
 		virtual GEnvelope&		GetFullExtent();
@@ -42,6 +43,9 @@ namespace auge
 		virtual RESULTCODE		GetKey(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col);
 		virtual RESULTCODE		GetTileExtent(GEnvelope& extent, g_uint level, g_uint64 row, g_uint64 col);
 		virtual RESULTCODE		GetTilePath(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col);
+
+		virtual RESULTCODE		RemoveTile(g_uint level, g_uint64 row, g_uint64 col);
+		virtual RESULTCODE		RemoveAll();
 
 		virtual RESULTCODE		GetBoundingBox(GEnvelope& viewer, g_uint level, g_uint& r_min, g_uint& r_max, g_uint& c_min, g_uint& c_max);
 		virtual g_uint			GetOriginalLevel(GEnvelope& viewer, g_uint viewer_w, g_uint viewer_h);

@@ -27,6 +27,11 @@ namespace auge
 		}
 	}
 
+	bool GoogleCRS84QuadTileStore::IsEmpty()
+	{
+		return true;
+	}
+
 	GEnvelope& GoogleCRS84QuadTileStore::GetExtent()
 	{
 		return m_extent;
@@ -308,6 +313,52 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	RESULTCODE GoogleCRS84QuadTileStore::RemoveTile(g_uint level, g_uint64 row, g_uint64 col)
+	{
+		char key[AUGE_NAME_MAX] = {0};
+		MakeKey(key, AUGE_NAME_MAX, level, row, col);
+
+		bson_error_t error;
+		mongoc_gridfs_file_t *mgo_file = NULL;
+		//DWORD ts = GetTickCount();
+		mgo_file = mongoc_gridfs_find_one_by_filename(m_gridfs, key, &error);
+		//DWORD te = GetTickCount();
+		//printf("[Ê±¼ä]:%dºÁÃë\n",te-ts);
+		if(!mgo_file)
+		{
+			char msg[AUGE_MSG_MAX];
+			memset(msg, 0, AUGE_MSG_MAX);
+			g_sprintf(msg, "[%s] does not exist.", key);
+			GError* pError = augeGetErrorInstance();
+			GLogger* pLogger = augeGetLoggerInstance();
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return AG_FAILURE;
+		}
+
+		bson_error_t b_error;
+		if(!mongoc_gridfs_file_remove(mgo_file, &b_error))
+		{
+			mongoc_gridfs_file_destroy(mgo_file);
+
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(b_error.message);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(b_error.message);
+
+			return AG_FAILURE;
+		}
+
+		mongoc_gridfs_file_destroy(mgo_file);
+		
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE GoogleCRS84QuadTileStore::RemoveAll()
+	{
+		return AG_SUCCESS;
+	}
+
 	RESULTCODE GoogleCRS84QuadTileStore::Create(TileWorkspaceMongo* pWorkspace, mongoc_gridfs_t *mgo_gridfs, const char* name)
 	{
 		m_pWorkspace = pWorkspace;
@@ -328,7 +379,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	inline
+	//inline
 	void GoogleCRS84QuadTileStore::MakeKey(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col)
 	{
 		g_snprintf(key, size,  "%dx%lldx%lld",level,row,col);
