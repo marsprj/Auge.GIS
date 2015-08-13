@@ -257,10 +257,8 @@ namespace auge
 
 	EnumTileStore* TileWorkspaceMongo::GetTileStores()
 	{
-		char name[AUGE_NAME_MAX];
-		memset(name, 0, AUGE_NAME_MAX);
+		char name[AUGE_NAME_MAX];		
 		char type[AUGE_NAME_MAX];
-		memset(type, 0, AUGE_NAME_MAX);
 		
 		bson_t query;
 		bson_init (&query);
@@ -293,12 +291,15 @@ namespace auge
 
 			bson_iter_find(&bson_iter, "name");
 			value = bson_iter_utf8(&bson_iter, &length);
+			memset(name, 0, AUGE_NAME_MAX);
 			memcpy(name, value, length);
 
 			bson_iter_find(&bson_iter, "type");
 			value = bson_iter_utf8(&bson_iter, &length);
+			memset(type, 0, AUGE_NAME_MAX);
 			memcpy(type, value, length);
 
+			memset(name, 0, AUGE_NAME_MAX);
 			mgo_gridfs = mongoc_client_get_gridfs(m_mongo, m_database.c_str(), name,&error);
 			if(mgo_gridfs!=NULL) 
 			{
@@ -405,6 +406,6 @@ namespace auge
 
 		bson_destroy(b_doc);
 
-		return AG_SUCCESS;
+		return AG_FAILURE;
 	}
 }
