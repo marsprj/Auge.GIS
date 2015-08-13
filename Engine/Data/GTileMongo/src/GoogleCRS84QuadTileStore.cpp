@@ -382,7 +382,7 @@ namespace auge
 	//inline
 	void GoogleCRS84QuadTileStore::MakeKey(char* key, size_t size, g_uint level, g_uint64 row, g_uint64 col)
 	{
-		g_snprintf(key, size,  "%dx%lldx%lld",level,row,col);
+		g_snprintf(key, size,  "%dx%ldx%ld",level,row,col);
 	}
 
 	RESULTCODE GoogleCRS84QuadTileStore::GetBoundingBox(GEnvelope& viewer, g_uint level, g_uint& r_min, g_uint& r_max, g_uint& c_min, g_uint& c_max)
