@@ -299,7 +299,7 @@ namespace auge
 			memset(type, 0, AUGE_NAME_MAX);
 			memcpy(type, value, length);
 
-			memset(name, 0, AUGE_NAME_MAX);
+			//memset(name, 0, AUGE_NAME_MAX);
 			mgo_gridfs = mongoc_client_get_gridfs(m_mongo, m_database.c_str(), name,&error);
 			if(mgo_gridfs!=NULL) 
 			{
