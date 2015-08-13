@@ -246,7 +246,7 @@ namespace auge
 
 		virtual Workspace*			NewWorkspace(g_uint user, const char* name) = 0;
 
-		virtual RESULTCODE			Register(g_uint user, const char* name, const char* engine, const char* constr) = 0;
+		virtual RESULTCODE			Register(g_uint user, const char* name, const char* engine, const char* constr, augeWorkspaceType type) = 0;
 		virtual RESULTCODE			Unregister(g_uint user, const char* name) = 0;
 		//virtual RESULTCODE		Update(g_uint user,const char* name, const char* engine, const char* constr) = 0;
 		//virtual RESULTCODE		Update(g_uint user,g_uint gid, const char* name, const char* engine, const char* constr) = 0;

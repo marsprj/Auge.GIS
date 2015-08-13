@@ -607,7 +607,7 @@ namespace auge
 		return pWorkspaces;
 	}
 
-	RESULTCODE ConnectionManagerImpl::Register(g_uint user_id, const char* name, const char* engine, const char* constr)
+	RESULTCODE ConnectionManagerImpl::Register(g_uint user_id, const char* name, const char* engine, const char* constr, augeWorkspaceType type)
 	{
 		if(name==NULL || engine==NULL || constr==NULL)
 		{
@@ -622,7 +622,7 @@ namespace auge
 		}
 
 		RESULTCODE rc = AG_FAILURE;
-		rc = SaveWorkspace(user_id, name, engine, constr);
+		rc = SaveWorkspace(user_id, name, engine, constr, type);
 		if(rc!=AG_SUCCESS)
 		{
 			pWorkspace->Release();
@@ -789,10 +789,10 @@ namespace auge
 
 	}
 
-	RESULTCODE ConnectionManagerImpl::SaveWorkspace(g_uint user_id, const char* name, const char* engine, const char* uri)
+	RESULTCODE ConnectionManagerImpl::SaveWorkspace(g_uint user_id, const char* name, const char* engine, const char* uri, augeWorkspaceType type)
 	{
 		char sql[AUGE_NAME_MAX];
-		g_snprintf(sql, AUGE_NAME_MAX, "insert into g_data_source (name, engine, uri, user_id) values('%s','%s','%s', %d)", name, engine, uri, user_id);
+		g_snprintf(sql, AUGE_NAME_MAX, "insert into g_data_source (name, engine, uri, user_id, type) values('%s','%s','%s', %d)", name, engine, uri, user_id, (int)type);
 		return m_pConnection->ExecuteSQL(sql);
 	}
 

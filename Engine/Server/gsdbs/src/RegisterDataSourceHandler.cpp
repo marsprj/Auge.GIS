@@ -50,15 +50,17 @@ namespace auge
 		const char* name = NULL;
 		const char* engine = NULL;
 		const char* uri = NULL;
+		augeWorkspaceType type = augeWorkspaceUnknown;
 		WebResponse* pWebResponse = NULL;
 		RegisterDataSourceRequest* pRequest = static_cast<RegisterDataSourceRequest*>(pWebRequest);
 
 		name = pRequest->GetName();
 		engine = pRequest->GetDataEngine();
 		uri = pRequest->GetURI();
+		pRequest->GetSourceType();
 
 		ConnectionManager*	pConnManager = augeGetConnectionManagerInstance();
-		RESULTCODE rc = pConnManager->Register(pUser->GetID(), name, engine, uri);
+		RESULTCODE rc = pConnManager->Register(pUser->GetID(), name, engine, uri, type);
 		if(rc!=AG_SUCCESS)
 		{
 			GError* pError = augeGetErrorInstance();

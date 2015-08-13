@@ -40,7 +40,7 @@ namespace auge
 
 		virtual Workspace*			NewWorkspace(g_uint user_id, const char* name);
 
-		virtual RESULTCODE			Register(g_uint user_id, const char* name, const char* engine, const char* constr);
+		virtual RESULTCODE			Register(g_uint user_id, const char* name, const char* engine, const char* constr, augeWorkspaceType type);
 		virtual RESULTCODE			Unregister(g_uint user_id, const char* name);
 		//virtual RESULTCODE			Update(g_uint user_id, const char* name, const char* engine, const char* constr);
 		//virtual RESULTCODE			Update(g_uint user_id, g_uint gid, const char* name, const char* engine, const char* constr);
@@ -65,6 +65,7 @@ namespace auge
 		Workspace*	NewWorkspace(g_uint user_id, g_uint gid, const char* name, const char* engine, const char* uri, g_uint version);
 		Workspace*	LoadWorkspace(g_uint user_id, const char* name);
 		RESULTCODE	SaveWorkspace(g_uint user_id, const char* name, const char* engine, const char* uri);
+		RESULTCODE	SaveWorkspace(g_uint user_id, const char* name, const char* engine, const char* uri, augeWorkspaceType type);
 
 		bool		IsUpdated(Workspace* pWorkspace);
 		g_int		GetWorkspaceVersion(g_uint gid);
