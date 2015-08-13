@@ -57,7 +57,7 @@ namespace auge
 		name = pRequest->GetName();
 		engine = pRequest->GetDataEngine();
 		uri = pRequest->GetURI();
-		pRequest->GetSourceType();
+		type = pRequest->GetSourceType();
 
 		ConnectionManager*	pConnManager = augeGetConnectionManagerInstance();
 		RESULTCODE rc = pConnManager->Register(pUser->GetID(), name, engine, uri, type);
