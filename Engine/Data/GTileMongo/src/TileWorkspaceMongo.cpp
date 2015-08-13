@@ -405,6 +405,6 @@ namespace auge
 
 		bson_destroy(b_doc);
 
-		return AG_FAILURE;
+		return AG_SUCCESS;
 	}
 }
