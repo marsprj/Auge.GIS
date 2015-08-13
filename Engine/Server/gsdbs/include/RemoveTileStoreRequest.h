@@ -47,7 +47,7 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-user=user1&service=dbs&version=1.0.0&request=RemoveTileStore&sourceName=tfs&storeName=google&type=GoogleCRS84Quad
-http://127.0.0.1:8088/ows/user1/mgr?service=dbs&version=1.0.0&request=RemoveTileStore&sourceName=tfs&storeName=google&type=GoogleCRS84Quad
+user=user1&service=dbs&version=1.0.0&request=RemoveTileStore&sourceName=tfs&storeName=google
+http://127.0.0.1:8088/ows/user1/mgr?service=dbs&version=1.0.0&request=RemoveTileStore&sourceName=tfs&storeName=google
 
 ************************************************************************/

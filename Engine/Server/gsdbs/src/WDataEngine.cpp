@@ -14,6 +14,7 @@
 
 #include "DescribeTileStoreHandler.h"
 #include "CreateTileStoreHandler.h"
+#include "RemoveTileStoreHandler.h"
 #include "GetTileHandler.h"
 
 
@@ -46,6 +47,7 @@ namespace auge
 
 		m_handlers.push_back(new CreateTileStoreHandler());
 		m_handlers.push_back(new DescribeTileStoreHandler());
+		m_handlers.push_back(new RemoveTileStoreHandler());
 		m_handlers.push_back(new GetTileHandler());
 	}
 
