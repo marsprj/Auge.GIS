@@ -895,6 +895,11 @@ namespace auge
 		{
 			return -1;
 		}
+		if(pResult->GetCount()==0)
+		{
+			pResult->Release();
+			return -1;
+		}
 		g_int version = pResult->GetInt(0,0);
 		pResult->Release();
 		return version;

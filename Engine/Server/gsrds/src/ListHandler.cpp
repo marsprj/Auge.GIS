@@ -79,10 +79,11 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
-		
+
 		Workspace* pWorkspace = NULL;
 		RasterWorkspace* pRasterWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+
 		pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), sourceName);
 		if(pWorkspace==NULL)
 		{
@@ -94,8 +95,9 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
+
 		pRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
-		
+
 		RasterFolder* pFolder = pRasterWorkspace->GetFolder(path);
 		if(pFolder==NULL)
 		{
