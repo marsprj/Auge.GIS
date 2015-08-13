@@ -282,7 +282,16 @@ namespace auge
 			g_sprintf(msg, "Request %s is not supported", request);
 		}
 
-		return handler->Execute(pWebRequest, pUser);
+		g_ulong ts = auge_get_time();
+
+		WebResponse* pWebResponse = handler->Execute(pWebRequest, pUser);
+
+		g_ulong te = auge_get_time();
+		char msg[AUGE_MSG_MAX];
+		g_sprintf(msg, "[%s Execute]:%ld ms", pWebRequest->GetRequest(), te-ts);
+		augeGetLoggerInstance()->Debug(msg, __FILE__, __LINE__);
+
+		return pWebResponse;
 	}
 
 	/*WebResponse* WDataEngine::Execute(WebRequest* pWebRequest, User* pUser)

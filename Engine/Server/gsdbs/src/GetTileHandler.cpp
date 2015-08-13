@@ -124,6 +124,8 @@ namespace auge
 			return pExpResponse;
 		}
 
+		g_ulong ts = auge_get_time();
+
 		g_int level = pRequest->GetLevel();
 		g_int row = pRequest->GetRow();
 		g_int col = pRequest->GetCol();
@@ -138,6 +140,11 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
+
+		g_ulong te = auge_get_time();
+		g_sprintf(msg, "[GetTile From DB Time ]:%ld ms", te-ts);
+		augeGetLoggerInstance()->Debug(msg, __FILE__, __LINE__);
+
 		pTileStore->Release();
 
 		GetTileResponse* pResponse = new GetTileResponse(pRequest);
