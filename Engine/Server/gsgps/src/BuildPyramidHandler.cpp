@@ -138,7 +138,8 @@ namespace auge
 
 		MapTileStoreGenerator* pProcessor = NULL;
 		GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
-		pProcessor = pFactory->CreateTileStoreGenerator();
+		//pProcessor = pFactory->CreateTileStoreGenerator();
+		pProcessor = pFactory->CreateMongoTileStoreGenerator();
 
 		pProcessor->SetMap(pMap);
 		pProcessor->SetTileStore(pTileStore);
