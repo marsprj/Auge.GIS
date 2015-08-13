@@ -31,8 +31,8 @@ namespace auge
 
 		virtual augeSymbolizerType GetType();
 
-		virtual void			SetSymbol(RegionSymbol* pSymbol);
-		virtual RegionSymbol*	GetSymbol();
+		virtual void			SetSymbol(FillSymbol* pSymbol);
+		virtual FillSymbol*	GetSymbol();
 
 	private:
 		Fill		*m_pFill;
@@ -43,7 +43,7 @@ namespace auge
 		int			m_perpendicular_offset;
 		const char	*m_geometry_prop_name;
 
-		RegionSymbol	*m_pSymbol;
+		FillSymbol	*m_pSymbol;
 	};
 
 }

@@ -126,7 +126,7 @@ namespace auge
 		return augeSymbolPolygon;
 	}
 
-	void PolygonSymbolizerImpl::SetSymbol(RegionSymbol* pSymbol)
+	void PolygonSymbolizerImpl::SetSymbol(FillSymbol* pSymbol)
 	{
 		if(m_pSymbol!=NULL)
 		{
@@ -135,7 +135,7 @@ namespace auge
 		m_pSymbol = pSymbol;
 	}
 
-	RegionSymbol* PolygonSymbolizerImpl::GetSymbol()
+	FillSymbol* PolygonSymbolizerImpl::GetSymbol()
 	{
 		return m_pSymbol;
 	}

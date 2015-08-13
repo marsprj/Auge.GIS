@@ -167,7 +167,7 @@ namespace auge
 		XElement *pxMark = NULL;
 		pxMark = pxGraphic->AddChild("Mark", "sld");
 
-		MarkerSymbol* pMarker = pSymbolizer->GetMarker();
+		SimpleMarkerSymbol* pMarker = pSymbolizer->GetMarker();
 		if(pMarker==NULL)
 		{
 			return AG_FAILURE;
@@ -275,7 +275,7 @@ namespace auge
 		XElement *pxSymbolizer = NULL;
 		pxSymbolizer = pxRule->AddChild("PolygonSymbolizer", "sld");
 
-		RegionSymbol* pRegionSymbol = pSymbolizer->GetSymbol();
+		SimpleFillSymbol* pRegionSymbol = static_cast<SimpleFillSymbol*>(pSymbolizer->GetSymbol());
 		if(pRegionSymbol==NULL)
 		{
 			return AG_FAILURE;

@@ -1,5 +1,5 @@
-#ifndef __AUGE_SIMPLE_REGION_SYMBOL_IMPL_H__
-#define __AUGE_SIMPLE_REGION_SYMBOL_IMPL_H__
+#ifndef __AUGE_FERRY_REGION_SYMBOL_IMPL_H__
+#define __AUGE_FERRY_REGION_SYMBOL_IMPL_H__
 
 #include "AugeRegionSymbol.h"
 
@@ -11,11 +11,11 @@
 
 namespace auge
 {
-	class SimpleRegionSymbolImpl : public SimpleFillSymbol
+	class FerryRegionSymbolImpl : public FerryRegionSymbol
 	{
 	public:
-		SimpleRegionSymbolImpl();
-		virtual ~SimpleRegionSymbolImpl();
+		FerryRegionSymbolImpl();
+		virtual ~FerryRegionSymbolImpl();
 
 	public:
 		virtual const char*			GetName();
@@ -60,4 +60,4 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_SIMPLE_REGION_SYMBOL_IMPL_H__
+#endif //__AUGE_FERRY_REGION_SYMBOL_IMPL_H__

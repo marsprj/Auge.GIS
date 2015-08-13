@@ -452,7 +452,7 @@ namespace auge
 		//return pPointSymbolizer;
 
 		SymbolManager	*pSymbolManager = augeGetSymbolManagerInstance();
-		MarkerSymbol	*pSymbol = pSymbolManager->CreateMarkerSymbol(augeMarkerCircle);
+		SimpleMarkerSymbol	*pSymbol = pSymbolManager->CreateMarkerSymbol(augeMarkerCircle);
 		pSymbol->SetSize(6.0);
 
 		PointSymbolizer *pPointSymbolizer = NULL;
@@ -494,7 +494,7 @@ namespace auge
 		
 
 		SymbolManager	*pSymbolManager = augeGetSymbolManagerInstance();
-		RegionSymbol	*pSymbol = pSymbolManager->CreateRegionSymbol(augeRegionSimple);
+		FillSymbol	*pSymbol = pSymbolManager->CreateRegionSymbol(augeRegionSimple);
 
 		PolygonSymbolizer *pPolygonSymbolizer = NULL;
 		pPolygonSymbolizer = new PolygonSymbolizerImpl();

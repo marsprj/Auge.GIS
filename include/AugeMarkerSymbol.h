@@ -5,49 +5,49 @@
 
 namespace auge
 {
-	class SimpleMarker : public MarkerSymbol
+	class SimpleMarker : public SimpleMarkerSymbol
 	{
 	protected:
 		SimpleMarker(){}
 		virtual ~SimpleMarker(){}
 	};
 
-	class CapitalMarker : public MarkerSymbol
+	class CapitalMarker : public SimpleMarkerSymbol
 	{
 	protected:
 		CapitalMarker(){}
 		virtual ~CapitalMarker(){}
 	};
 
-	class CircleMarker : public MarkerSymbol
+	class CircleMarker : public SimpleMarkerSymbol
 	{
 	protected:
 		CircleMarker(){}
 		virtual ~CircleMarker(){}
 	};
 
-	class PentagonMarker : public MarkerSymbol
+	class PentagonMarker : public SimpleMarkerSymbol
 	{
 	protected:
 		PentagonMarker(){}
 		virtual ~PentagonMarker(){}
 	};
 
-	class SquareMarker : public MarkerSymbol
+	class SquareMarker : public SimpleMarkerSymbol
 	{
 	protected:
 		SquareMarker(){}
 		virtual ~SquareMarker(){}
 	};
 
-	class StarMarker : public MarkerSymbol
+	class StarMarker : public SimpleMarkerSymbol
 	{
 	protected:
 		StarMarker(){}
 		virtual ~StarMarker(){}
 	};
 
-	class TriangleMarker : public MarkerSymbol
+	class TriangleMarker : public SimpleMarkerSymbol
 	{
 	protected:
 		TriangleMarker(){}

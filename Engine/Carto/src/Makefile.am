@@ -55,6 +55,8 @@ libgcarto_la_SOURCES=\
 		GraphicImpl.cpp \
 		EnumSymbolImpl.cpp \
 		SymbolManagerImpl.cpp \
+		GraphicFillSymbolImpl.cpp \
+		GraphicMarkerSymbolImpl.cpp \
 		CapitalMarkerImpl.cpp \
 		CircleMarkerImpl.cpp \
 		PentagonMarkerImpl.cpp \
@@ -64,4 +66,6 @@ libgcarto_la_SOURCES=\
 		SimpleLineSymbolImpl.cpp \
 		RailwaySymbolImpl.cpp \
 		GrassLandSymbolImpl.cpp \
-		SimpleRegionSymbolImpl.cpp
+		SimpleRegionSymbolImpl.cpp \
+		FerryRegionSymbolImpl.cpp \
+		ContinentShelfRegionSymbolImpl.cpp

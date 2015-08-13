@@ -38,8 +38,8 @@ namespace auge
 		virtual void			SetRotation(float rotation);
 		virtual float			GetRotation();	
 
-		virtual void			SetMarker(MarkerSymbol* pMarker);
-		virtual MarkerSymbol*	GetMarker();
+		virtual void			SetMarker(SimpleMarkerSymbol* pMarker);
+		virtual SimpleMarkerSymbol*	GetMarker();
 
 		virtual augeSymbolizerType	GetType();	
 
@@ -55,7 +55,7 @@ namespace auge
 		float		m_rotation;
 		augeMarkerType m_mark_type;
 
-		MarkerSymbol*	m_pMarker;
+		SimpleMarkerSymbol*	m_pMarker;
 	};
 
 }

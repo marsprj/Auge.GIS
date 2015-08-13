@@ -5,19 +5,34 @@
 
 namespace auge
 {
-	class SimpleRegionSymbol : public RegionSymbol
-	{
-	protected:
-		SimpleRegionSymbol(){}
-		virtual ~SimpleRegionSymbol(){}
-	};
+	//class SimpleRegionSymbol : public RegionSymbol
+	//{
+	//public:
+	//	SimpleRegionSymbol(){}
+	//	virtual ~SimpleRegionSymbol(){}
+	//};
 
-	class GrassLandSymbol : public RegionSymbol
+	class GrassLandSymbol : public SimpleFillSymbol
 	{
 	protected:
 		GrassLandSymbol(){}
 		virtual ~GrassLandSymbol(){}
 	};
+
+	class FerryRegionSymbol : public SimpleFillSymbol
+	{
+	protected:
+		FerryRegionSymbol(){}
+		virtual ~FerryRegionSymbol(){}
+	};
+
+	class ContinentShelfRegionSymbol : public SimpleFillSymbol
+	{
+	protected:
+		ContinentShelfRegionSymbol(){}
+		virtual ~ContinentShelfRegionSymbol(){}
+	};
+
 }
 
 #endif //__AUGE_REGION_SYMBOL_H__

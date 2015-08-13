@@ -13,6 +13,8 @@
 
 #include "SimpleRegionSymbolImpl.h"
 #include "GrassLandSymbolImpl.h"
+#include "FerryRegionSymbolImpl.h"
+#include "ContinentShelfRegionSymbolImpl.h"
 
 namespace auge
 {
@@ -29,6 +31,8 @@ namespace auge
 
 	#define AUGE_REGION_SYMBOL_SIMPLE	"SimpleRegion"
 	#define AUGE_REGION_SYMBOL_GRASS	"GrassLand"
+	#define AUGE_REGION_SYMBOL_FERRY	"Ferry"				//°Ú¶ÉÇø
+	#define AUGE_REGION_SYMBOL_CONTINENTAL_SHELF "ContinentalShelf"	//´óÂ½¼Ü
 
 	SymbolManager* augeGetSymbolManagerInstance()
 	{
@@ -113,14 +117,15 @@ namespace auge
 		{
 			m_region_symbols = new EnumSymbolImpl();
 			m_region_symbols->Add(new SimpleRegionSymbolImpl());
-
+			m_region_symbols->Add(new FerryRegionSymbolImpl());
+			m_region_symbols->Add(new ContinentShelfRegionSymbolImpl());
 		}
 		return m_region_symbols;
 	}
 
-	MarkerSymbol* SymbolManagerImpl::CreateMarkerSymbol(augeMarkerType type)
+	SimpleMarkerSymbol* SymbolManagerImpl::CreateMarkerSymbol(augeMarkerType type)
 	{
-		MarkerSymbol* pSymbol = NULL;
+		SimpleMarkerSymbol* pSymbol = NULL;
 		switch(type)
 		{
 		case augeMarkerSquare:
@@ -151,14 +156,14 @@ namespace auge
 		return pSymbol;
 	}
 
-	MarkerSymbol* SymbolManagerImpl::CreateMarkerSymbol(const char* name)
+	SimpleMarkerSymbol* SymbolManagerImpl::CreateMarkerSymbol(const char* name)
 	{
 		if(name==NULL)
 		{
 			return NULL;
 		}
 
-		MarkerSymbol* pSymbol = NULL;
+		SimpleMarkerSymbol* pSymbol = NULL;
 		if(g_stricmp(name, AUGE_MARKER_SYMBOL_SIMPLE)==0)
 		{
 			pSymbol = NULL;
@@ -238,9 +243,9 @@ namespace auge
 		return pSymbol;
 	}
 
-	RegionSymbol* SymbolManagerImpl::CreateRegionSymbol(augeRegionType type)
+	FillSymbol* SymbolManagerImpl::CreateRegionSymbol(augeRegionType type)
 	{
-		RegionSymbol* pSymbol = NULL;
+		FillSymbol* pSymbol = NULL;
 		switch(type)
 		{
 		case augeRegionSimple:
@@ -249,6 +254,12 @@ namespace auge
 		case augeRegionGrass:
 			pSymbol = new GrassLandSymbolImpl();
 			break;
+		case augeRegionFerry:
+			pSymbol = new FerryRegionSymbolImpl();
+			break;
+		case augeRegionContinentShelf:
+			pSymbol = new ContinentShelfRegionSymbolImpl();
+			break;
 		default:
 			pSymbol = new SimpleRegionSymbolImpl();
 			break;
@@ -256,19 +267,23 @@ namespace auge
 		return pSymbol;
 	}
 
-	RegionSymbol* SymbolManagerImpl::CreateRegionSymbol(const char* name)
+	FillSymbol* SymbolManagerImpl::CreateRegionSymbol(const char* name)
 	{
 		if(name==NULL)
 		{
 			return NULL;
 		}
 
-		RegionSymbol* pSymbol = NULL;
+		FillSymbol* pSymbol = NULL;
 		if(g_stricmp(name, AUGE_REGION_SYMBOL_SIMPLE)==0)
 		{
 			pSymbol = new SimpleRegionSymbolImpl();
 		}
 		else if(g_stricmp(name, AUGE_REGION_SYMBOL_GRASS)==0)
+		{
+			pSymbol = new GrassLandSymbolImpl();
+		}
+		else if(g_stricmp(name, AUGE_REGION_SYMBOL_FERRY)==0)
 		{
 			pSymbol = new GrassLandSymbolImpl();
 		}

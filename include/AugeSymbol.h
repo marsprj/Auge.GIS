@@ -37,9 +37,9 @@ namespace auge
 	class Transformation;
 	class Renderer;
 
-	class MarkerSymbol;
+	class SimpleMarkerSymbol;
 	class LineSymbol;
-	class RegionSymbol;
+	class FillSymbol;
 
 	//========================================================================
 	// augeSymbolType Enum
@@ -106,7 +106,9 @@ namespace auge
 	typedef enum
 	{
 		augeRegionSimple		= 0,
-		augeRegionGrass			= 1
+		augeRegionGrass			= 1,
+		augeRegionFerry			= 2,
+		augeRegionContinentShelf
 	}augeRegionType;
 
 	//========================================================================
@@ -353,8 +355,8 @@ namespace auge
 		//virtual void			SetRotation(float rotation) = 0;
 		//virtual float			GetRotation() = 0;
 
-		virtual void			SetMarker(MarkerSymbol* pMarker) = 0;
-		virtual MarkerSymbol*	GetMarker() = 0;
+		virtual void			SetMarker(SimpleMarkerSymbol* pMarker) = 0;
+		virtual SimpleMarkerSymbol*	GetMarker() = 0;
 	};
 
 	//========================================================================
@@ -432,8 +434,8 @@ namespace auge
 		virtual const char*		GetGemetry() = 0;
 		virtual void			SetGeometry(const char* prop_name) = 0;
 
-		virtual void			SetSymbol(RegionSymbol* pSymbol) = 0;
-		virtual RegionSymbol*	GetSymbol() = 0;
+		virtual void			SetSymbol(FillSymbol* pSymbol) = 0;
+		virtual FillSymbol*	GetSymbol() = 0;
 	};
 	//////////////////////////////////////////////////////////////////////////
 	// Marker Symbol
@@ -456,6 +458,13 @@ namespace auge
 	protected:
 		MarkerSymbol(){}
 		virtual ~MarkerSymbol(){}
+	};
+
+	class SimpleMarkerSymbol : public MarkerSymbol
+	{
+	protected:
+		SimpleMarkerSymbol(){}
+		virtual ~SimpleMarkerSymbol(){}
 	public:
 		virtual void			SetStroke(Stroke* pStroke) = 0;
 		virtual Stroke*			GetStroke() = 0;
@@ -473,6 +482,19 @@ namespace auge
 		virtual float			GetRotation() = 0;
 	};
 
+	class GraphicMarkerSymbol : public MarkerSymbol
+	{
+	protected:
+		GraphicMarkerSymbol(){}
+		virtual ~GraphicMarkerSymbol(){}
+
+	public:
+		virtual const char*		GetName() = 0;
+		virtual const char*		GetPath() = 0;
+		virtual void			SetOpacity(float opacity) = 0;
+		virtual float			GetOpacity() = 0;
+	};
+	
 	class LineSymbol : public Symbol
 	{
 	public:
@@ -485,12 +507,24 @@ namespace auge
 		virtual augeLineType	GetLineType() = 0;
 	};
 
-	class RegionSymbol : public Symbol
+	class FillSymbol : public Symbol
 	{
 	public:
-		RegionSymbol(){}
-		virtual ~RegionSymbol(){}
+		FillSymbol(){}
+		virtual ~FillSymbol(){}
+	public:
+		//virtual	bool			IsGraphic() = 0;
 
+		//virtual float			GetDisplacement_X() = 0;
+		//virtual float			GetDisplacement_Y() = 0;
+		//virtual void			SetDisplacement(float x, float y) = 0;
+	};
+
+	class SimpleFillSymbol : public FillSymbol
+	{
+	public:
+		SimpleFillSymbol(){}
+		virtual ~SimpleFillSymbol(){}
 	public:
 		virtual Fill*			GetFill() = 0;
 		virtual void			SetFill(Fill* pFill) = 0;
@@ -500,10 +534,18 @@ namespace auge
 
 		virtual void			SetOpacity(float opacity) = 0;
 		virtual float			GetOpacity() = 0;
+	};
 
-		//virtual float			GetDisplacement_X() = 0;
-		//virtual float			GetDisplacement_Y() = 0;
-		//virtual void			SetDisplacement(float x, float y) = 0;
+	class GraphicFillSymbol : public FillSymbol
+	{
+	public:
+		GraphicFillSymbol(){}
+		virtual ~GraphicFillSymbol(){}
+	public:
+		virtual const char*		GetName() = 0;
+		virtual const char*		GetPath() = 0;
+		virtual void			SetOpacity(float opacity) = 0;
+		virtual float			GetOpacity() = 0;
 	};
 
 	class EnumSymbol : public GObject
@@ -528,14 +570,14 @@ namespace auge
 		virtual EnumSymbol*		GetLineSymbols() = 0;
 		virtual EnumSymbol*		GetRegionSymbols() = 0;
 
-		virtual MarkerSymbol*	CreateMarkerSymbol(augeMarkerType type) = 0;
-		virtual MarkerSymbol*	CreateMarkerSymbol(const char* name) = 0;
+		virtual SimpleMarkerSymbol*	CreateMarkerSymbol(augeMarkerType type) = 0;
+		virtual SimpleMarkerSymbol*	CreateMarkerSymbol(const char* name) = 0;
 
 		virtual LineSymbol*		CreateLineSymbol(augeLineType type) = 0;
 		virtual LineSymbol*		CreateLineSymbol(const char* name) = 0;
 
-		virtual RegionSymbol*	CreateRegionSymbol(augeRegionType type) = 0;	
-		virtual RegionSymbol*	CreateRegionSymbol(const char* name) = 0;
+		virtual FillSymbol*	CreateRegionSymbol(augeRegionType type) = 0;	
+		virtual FillSymbol*	CreateRegionSymbol(const char* name) = 0;
 	};
 
 	extern "C"

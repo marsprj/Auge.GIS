@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\FillSymbol">
+      <UniqueIdentifier>{4efc4730-8875-4f40-b21a-e08435dab52f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Marker">
+      <UniqueIdentifier>{f7df5a9d-0fd6-41f0-9198-70e3918acfaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\LineSymbol">
+      <UniqueIdentifier>{320249e9-146e-4d9d-a691-ca6a3ea70459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FillSymbol">
+      <UniqueIdentifier>{42ca6bff-141f-4bce-ba46-fe1532144ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Marker">
+      <UniqueIdentifier>{3759c208-509a-4b53-9fee-5448efb31cdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LineSymbol">
+      <UniqueIdentifier>{0a1a8abe-9f12-40f3-b611-a690fb9f2395}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\CanvasImpl.cpp">
@@ -141,34 +159,46 @@
     <ClCompile Include="..\src\EnumSymbolImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\StarMarkerImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\CircleMarkerImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\TriangleMarkerImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\SquareMarkerImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\PentagonMarkerImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\CapitalMarkerImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\RailwaySymbolImpl.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\CircleMarkerImpl.cpp">
+      <Filter>Source Files\Marker</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\SimpleLineSymbolImpl.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\ContinentShelfRegionSymbolImpl.cpp">
+      <Filter>Source Files\FillSymbol</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\SimpleRegionSymbolImpl.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\FerryRegionSymbolImpl.cpp">
+      <Filter>Source Files\FillSymbol</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GrassLandSymbolImpl.cpp">
+      <Filter>Source Files\FillSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PentagonMarkerImpl.cpp">
+      <Filter>Source Files\FillSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SquareMarkerImpl.cpp">
+      <Filter>Source Files\Marker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RailwaySymbolImpl.cpp">
+      <Filter>Source Files\LineSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\StarMarkerImpl.cpp">
+      <Filter>Source Files\Marker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SimpleLineSymbolImpl.cpp">
+      <Filter>Source Files\LineSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SimpleRegionSymbolImpl.cpp">
+      <Filter>Source Files\FillSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GraphicFillSymbolImpl.cpp">
+      <Filter>Source Files\FillSymbol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GraphicMarkerSymbolImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -314,34 +344,46 @@
     <ClInclude Include="..\include\EnumSymbolImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\StarMarkerImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\CircleMarkerImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\TriangleMarkerImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\SquareMarkerImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\PentagonMarkerImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\CapitalMarkerImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\RailwaySymbolImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\SimpleLineSymbolImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\SimpleRegionSymbolImpl.h">
+    <ClInclude Include="..\include\ContinentShelfRegionSymbolImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\GrassLandSymbolImpl.h">
+      <Filter>Header Files\FillSymbol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SimpleRegionSymbolImpl.h">
+      <Filter>Header Files\FillSymbol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\StarMarkerImpl.h">
+      <Filter>Header Files\Marker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\RailwaySymbolImpl.h">
+      <Filter>Header Files\LineSymbol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SimpleLineSymbolImpl.h">
+      <Filter>Header Files\LineSymbol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SquareMarkerImpl.h">
+      <Filter>Header Files\Marker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\FerryRegionSymbolImpl.h">
+      <Filter>Header Files\FillSymbol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CapitalMarkerImpl.h">
+      <Filter>Header Files\Marker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CircleMarkerImpl.h">
+      <Filter>Header Files\Marker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\PentagonMarkerImpl.h">
+      <Filter>Header Files\Marker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\GraphicFillSymbolImpl.h">
+      <Filter>Header Files\FillSymbol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\GraphicMarkerSymbolImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

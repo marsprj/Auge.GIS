@@ -1,5 +1,5 @@
-#ifndef __AUGE_SIMPLE_REGION_SYMBOL_IMPL_H__
-#define __AUGE_SIMPLE_REGION_SYMBOL_IMPL_H__
+#ifndef __AUGE_CONTINENT_SHELF_REGION_SYMBOL_IMPL_H__
+#define __AUGE_CONTINENT_SHELF_REGION_SYMBOL_IMPL_H__
 
 #include "AugeRegionSymbol.h"
 
@@ -11,11 +11,11 @@
 
 namespace auge
 {
-	class SimpleRegionSymbolImpl : public SimpleFillSymbol
+	class ContinentShelfRegionSymbolImpl : public ContinentShelfRegionSymbol
 	{
 	public:
-		SimpleRegionSymbolImpl();
-		virtual ~SimpleRegionSymbolImpl();
+		ContinentShelfRegionSymbolImpl();
+		virtual ~ContinentShelfRegionSymbolImpl();
 
 	public:
 		virtual const char*			GetName();
@@ -60,4 +60,4 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_SIMPLE_REGION_SYMBOL_IMPL_H__
+#endif //__AUGE_CONTINENT_SHELF_REGION_SYMBOL_IMPL_H__

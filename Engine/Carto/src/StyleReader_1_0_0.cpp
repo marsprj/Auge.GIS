@@ -443,19 +443,19 @@ namespace auge
 		const char	*nodeName = NULL;
 		PolygonSymbolizer *pSymbolizer = new PolygonSymbolizerImpl();
 
-		RegionSymbol* pSymbol = NULL;
+		SimpleFillSymbol* pSymbol = NULL;
 		SymbolManager* pSymbolManager = augeGetSymbolManagerInstance();
 
 		// Create 
 		pxNode = pxSymbolizerNode->GetFirstChild(AUGE_SLD_WELLKNOWN_NAME);
 		if(pxNode==NULL)
 		{
-			pSymbol = pSymbolManager->CreateRegionSymbol(augeRegionSimple);
+			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->CreateRegionSymbol(augeRegionSimple));
 		}
 		else
 		{
 			const char* wellName = pxNode->GetContent();
-			pSymbol = pSymbolManager->CreateRegionSymbol(wellName);
+			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->CreateRegionSymbol(wellName));
 		}
 		pSymbolizer->SetSymbol(pSymbol);
 
@@ -634,7 +634,7 @@ namespace auge
 				if(g_stricmp(nodeName, AUGE_SLD_MARK)==0)
 				{
 					ReadMark(pSymbolizer, pxNode);
-					MarkerSymbol* pMarker = pSymbolizer->GetMarker();
+					SimpleMarkerSymbol* pMarker = pSymbolizer->GetMarker();
 					if(pMarker!=NULL||size>=0)
 					{
 						pMarker->SetSize(size);
@@ -697,7 +697,7 @@ namespace auge
 		Style		*pStyle = NULL;
 		const char	*nodeName = NULL;
 
-		MarkerSymbol* pMarker = NULL;
+		SimpleMarkerSymbol* pMarker = NULL;
 		SymbolManager* pSymbolManager = augeGetSymbolManagerInstance();
 
 		// Create 
