@@ -792,7 +792,7 @@ namespace auge
 	RESULTCODE ConnectionManagerImpl::SaveWorkspace(g_uint user_id, const char* name, const char* engine, const char* uri, augeWorkspaceType type)
 	{
 		char sql[AUGE_NAME_MAX];
-		g_snprintf(sql, AUGE_NAME_MAX, "insert into g_data_source (name, engine, uri, user_id, type) values('%s','%s','%s', %d)", name, engine, uri, user_id, (int)type);
+		g_snprintf(sql, AUGE_NAME_MAX, "insert into g_data_source (name, engine, uri, user_id, type) values('%s','%s','%s', %d, %d)", name, engine, uri, user_id, (int)type);
 		return m_pConnection->ExecuteSQL(sql);
 	}
 
