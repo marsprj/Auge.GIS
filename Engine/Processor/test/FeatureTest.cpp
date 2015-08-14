@@ -54,7 +54,7 @@ void FeatureTest::FeatureImportTest()
 	DWORD ts = GetTickCount();
 
 	const char* shp_path = "D:\\GeoBeans\\data\\world";
-	const char* shp_name = "cities";
+	const char* shp_name = "country";
 	const char* source_name = "db1";
 
 	auge::GProcessorFactory* factory = auge::augeGetGeoProcessorFactoryInstance();
@@ -63,6 +63,7 @@ void FeatureTest::FeatureImportTest()
 	processor->SetShapePath(shp_path);
 	processor->SetShapeName(shp_name);
 	processor->SetDataSourceName(source_name);
+	processor->SetFeatureClassName("country");
 
 	processor->Execute();
 

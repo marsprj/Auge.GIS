@@ -7,8 +7,8 @@
 class FeatureTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(FeatureTest);
-	//CPPUNIT_TEST(FeatureImportTest);
-	CPPUNIT_TEST(FeatureExportTest);
+	CPPUNIT_TEST(FeatureImportTest);
+	//CPPUNIT_TEST(FeatureExportTest);
 	//CPPUNIT_TEST(CsvImportTest);
 
 	//CPPUNIT_TEST(ProjectTest);

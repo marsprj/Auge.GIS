@@ -1334,9 +1334,10 @@ namespace auge
 				break;
 			case augeFieldTypeString:
 				{
+					auge_normalize_single_quote(str, AUGE_MSG_MAX, pFeature->GetString(i));
 					fields.append(fname);
 					values.append("'");
-					values.append(pFeature->GetString(i));
+					values.append(str);
 					values.append("'");
 				}
 				break;

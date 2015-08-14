@@ -221,6 +221,22 @@ namespace auge
 		}
 	}
 
+	void auge_normalize_single_quote(char* output, size_t size, const char* input)
+	{
+		memset(output, 0 , size);
+		const char* ip = input;
+		char* op = output;
+		size_t len = strlen(input);
+		for(int i=0; i<len; i++)
+		{
+			*op++ = *ip++;
+			if(*ip == '\'')
+			{
+				*op++ = '\'';
+			}
+		}
+	}
+
 	void* auge_load_library(const char* path)
 	{
 		if(path==NULL)
