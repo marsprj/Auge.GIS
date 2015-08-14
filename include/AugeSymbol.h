@@ -576,8 +576,10 @@ namespace auge
 		virtual LineSymbol*		CreateLineSymbol(augeLineType type) = 0;
 		virtual LineSymbol*		CreateLineSymbol(const char* name) = 0;
 
-		virtual FillSymbol*	CreateRegionSymbol(augeRegionType type) = 0;	
-		virtual FillSymbol*	CreateRegionSymbol(const char* name) = 0;
+		virtual FillSymbol*		CreateRegionSymbol(augeRegionType type) = 0;	
+		virtual FillSymbol*		CreateRegionSymbol(const char* name) = 0;
+
+		virtual const char*		GetPath() = 0;
 	};
 
 	extern "C"

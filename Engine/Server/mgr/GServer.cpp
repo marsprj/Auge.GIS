@@ -653,6 +653,7 @@ namespace auge
 		{
 			m_pLogger->Error(m_pError->GetLastError(), __FILE__, __LINE__);
 		}
+
 		return rc;
 	}
 

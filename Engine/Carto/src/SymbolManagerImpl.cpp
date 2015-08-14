@@ -36,7 +36,11 @@ namespace auge
 
 	SymbolManager* augeGetSymbolManagerInstance()
 	{
-		static SymbolManagerImpl g_symbolManger;
+		static SymbolManagerImpl g_symbolManger;		
+		if(!g_symbolManger.IsInitialized())
+		{
+			g_symbolManger.Initialize();
+		}
 		return &g_symbolManger;
 	}
 
@@ -63,6 +67,11 @@ namespace auge
 		}
 	}
 
+	const char* SymbolManagerImpl::GetPath()
+	{
+		return m_path.c_str();
+	}
+
 	void SymbolManagerImpl::Initialize()
 	{
 		if(m_path.empty())
@@ -83,6 +92,11 @@ namespace auge
 			auge_mkdir(s_dir);
 			m_path = s_dir;
 		}
+	}
+
+	bool SymbolManagerImpl::IsInitialized()
+	{
+		return !m_path.empty();
 	}
 
 	EnumSymbol*	SymbolManagerImpl::GetMarkerSymbols()

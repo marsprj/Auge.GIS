@@ -25,11 +25,14 @@ namespace auge
 		virtual LineSymbol*		CreateLineSymbol(augeLineType type);		
 		virtual LineSymbol*		CreateLineSymbol(const char* name);
 
-		virtual FillSymbol*	CreateRegionSymbol(augeRegionType type);		
-		virtual FillSymbol*	CreateRegionSymbol(const char* name);
+		virtual FillSymbol*		CreateRegionSymbol(augeRegionType type);		
+		virtual FillSymbol*		CreateRegionSymbol(const char* name);
+
+		virtual const char*		GetPath();
 
 	public:
 		void			Initialize();
+		bool			IsInitialized();
 
 	private:
 		EnumSymbolImpl*	m_marker_symbols;

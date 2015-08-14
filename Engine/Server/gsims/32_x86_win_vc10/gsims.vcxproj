@@ -109,6 +109,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetStyleRequest.cpp" />
     <ClCompile Include="..\src\GetStyleResponse.cpp" />
     <ClCompile Include="..\src\GetSymbolHandler.cpp" />
+    <ClCompile Include="..\src\GetSymbolIconHandler.cpp" />
+    <ClCompile Include="..\src\GetSymbolIconRequest.cpp" />
+    <ClCompile Include="..\src\GetSymbolIconResponse.cpp" />
     <ClCompile Include="..\src\GetSymbolRequest.cpp" />
     <ClCompile Include="..\src\GetSymbolResponse.cpp" />
     <ClCompile Include="..\src\RegisterLayerHandler.cpp" />
@@ -162,6 +165,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetStyleRequest.h" />
     <ClInclude Include="..\include\GetStyleResponse.h" />
     <ClInclude Include="..\include\GetSymbolHandler.h" />
+    <ClInclude Include="..\include\GetSymbolIconHandler.h" />
+    <ClInclude Include="..\include\GetSymbolIconRequest.h" />
+    <ClInclude Include="..\include\GetSymbolIconResponse.h" />
     <ClInclude Include="..\include\GetSymbolRequest.h" />
     <ClInclude Include="..\include\GetSymbolResponse.h" />
     <ClInclude Include="..\include\RegisterLayerHandler.h" />
