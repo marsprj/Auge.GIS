@@ -239,7 +239,7 @@ namespace auge
 			pxAttr = pxNode->GetAttribute("visible");
 			if(pxAttr!=NULL)
 			{
-				m_layers[i].visible = g_stricmp(pxAttr->GetValue(),"false");
+				m_layers[i].visible = g_stricmp(pxAttr->GetValue(),"0");
 			}
 		}
 
