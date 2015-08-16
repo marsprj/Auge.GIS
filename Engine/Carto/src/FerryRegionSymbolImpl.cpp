@@ -49,7 +49,7 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	const char*	FerryRegionSymbolImpl::GetName()
 	{
-		return "SimpleRegion";
+		return "Ferry";
 	}
 
 	const char*	FerryRegionSymbolImpl::GetIcon()
