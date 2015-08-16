@@ -20,7 +20,7 @@ namespace auge
 	bool GetValueRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetPath(cgi["rasterPath"]);
+		SetPath(cgi["Path"]);
 		SetRasterName(cgi["rasterName"]);
 		SetSourceName(cgi["sourceName"]);
 		SetIX(cgi["sx"]);

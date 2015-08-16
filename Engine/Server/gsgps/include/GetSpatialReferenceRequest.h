@@ -63,8 +63,8 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-user=user1&service=gps&version=1.0.0&request=GetSpatialReference&sird=4326
-http://127.0.0.1:8088/ows/user1/mgr?service=gps&version=1.0.0&request=GetSpatialReference&sird=4326
+user=user1&service=gps&version=1.0.0&request=GetSpatialReference&srid=4326
+http://127.0.0.1:8088/ows/user1/mgr?service=gps&version=1.0.0&request=GetSpatialReference&srid=4326
 
 
 ************************************************************************/
