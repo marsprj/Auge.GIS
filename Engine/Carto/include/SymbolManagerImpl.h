@@ -35,6 +35,10 @@ namespace auge
 		bool			IsInitialized();
 
 	private:
+		void			LoadVectorMarkers();
+		void			LoadGraphicMarkers();
+
+	private:
 		EnumSymbolImpl*	m_marker_symbols;
 		EnumSymbolImpl*	m_line_symbols;
 		EnumSymbolImpl* m_region_symbols;

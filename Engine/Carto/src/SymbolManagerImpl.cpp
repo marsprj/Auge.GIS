@@ -16,6 +16,8 @@
 #include "FerryRegionSymbolImpl.h"
 #include "ContinentShelfRegionSymbolImpl.h"
 
+#include "GraphicMarkerSymbolImpl.h"
+
 namespace auge
 {
 	#define AUGE_MARKER_SYMBOL_SIMPLE	"Simple"
@@ -34,6 +36,8 @@ namespace auge
 	#define AUGE_REGION_SYMBOL_FERRY	"Ferry"				//°Ú¶ÉÇø
 	#define AUGE_REGION_SYMBOL_CONTINENTAL_SHELF "ContinentalShelf"	//´óÂ½¼Ü
 
+	#define AUGE_GRAPHIC_MARKER_BASE_PATH	"graphic/marker"
+	
 	SymbolManager* augeGetSymbolManagerInstance()
 	{
 		static SymbolManagerImpl g_symbolManger;		
@@ -110,6 +114,8 @@ namespace auge
 			m_marker_symbols->Add(new StarMarkerImpl());
 			m_marker_symbols->Add(new SquareMarkerImpl());
 			m_marker_symbols->Add(new TriangleMarkerImpl());
+
+			LoadGraphicMarkers();
 		}
 		return m_marker_symbols;
 	}
@@ -309,6 +315,59 @@ namespace auge
 		return pSymbol;
 	}
 
+	void SymbolManagerImpl::LoadVectorMarkers()
+	{
+
+	}
+
+	void SymbolManagerImpl::LoadGraphicMarkers()
+	{
+#ifdef WIN32
+
+		HANDLE hFind = NULL;
+		WIN32_FIND_DATAA wfd;
+
+		char fpath[AUGE_PATH_MAX];
+		char filter[AUGE_PATH_MAX];
+		char graphic_filter[AUGE_PATH_MAX];
+		auge_make_path(graphic_filter,NULL, AUGE_GRAPHIC_MARKER_BASE_PATH,"*","png");
+		auge_make_path(filter,NULL,m_path.c_str(), graphic_filter,NULL);
+		
+		hFind = ::FindFirstFile(filter, &wfd);
+		if(hFind == INVALID_HANDLE_VALUE)
+		{
+			::FindClose(hFind);
+		}
+
+		GraphicMarkerSymbolImpl* pMarker = NULL;
+		while(::FindNextFile(hFind, &wfd)==TRUE)
+		{
+			if(wfd.cFileName[0]!='.')
+			{
+				//pMarker = new GraphicMarkerSymbolImpl();
+				
+				//pListResponse->AddFile(wfd.cFileName);
+			}
+		}
+		::FindClose(hFind);
+#else
+		DIR *dp = opendir(local_path);
+		if(dp!=NULL)
+		{
+			struct dirent* dirp = NULL;
+			while((dirp = readdir(dp))!=NULL)
+			{	
+				if(dirp->d_name[0]!='.')
+				{
+					pListResponse->AddFile(dirp->d_name);
+				}
+			}
+			closedir(dp);
+		}
+#endif
+
+	}
+
 	void auge_make_symbol_icon_path(const char* icon_name, char* icon_path, size_t size)
 	{
 		char c_dir[AUGE_PATH_MAX];
@@ -327,5 +386,22 @@ namespace auge
 
 		memset(icon_path, 0, size);
 		auge_make_path(icon_path, NULL, s_dir, icon_name, NULL);
+	}
+
+	void auge_make_graphic_marker_symbol_base_path(char* graphic_marker_base_path, size_t size)
+	{
+		char c_dir[AUGE_PATH_MAX];
+		char s_dir[AUGE_PATH_MAX];
+		memset(c_dir, 0, AUGE_PATH_MAX);
+		memset(s_dir, 0, AUGE_PATH_MAX);
+		auge_get_cwd(c_dir, AUGE_PATH_MAX);
+#ifdef WIN32
+		strcpy(s_dir, c_dir);
+#else		
+		auge_get_parent_dir(c_dir, s_dir, AUGE_PATH_MAX);
+#endif
+
+		memset(graphic_marker_base_path, 0, size);
+		auge_make_path(graphic_marker_base_path, NULL, s_dir, "symbol/graphic/marker", NULL);
 	}
 }

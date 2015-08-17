@@ -23,6 +23,11 @@ namespace auge
 		virtual void			SetOpacity(float opacity);
 		virtual float			GetOpacity();
 
+	public:
+		//void	SetName(const char* name);
+		//void	SetPath(const char* path);
+		//void	SetIconPath(const char* icon_path);
+
 	private:
 		float	m_opacity;
 		std::string m_name;
