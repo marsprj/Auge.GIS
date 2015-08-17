@@ -27,6 +27,9 @@ libgsims_la_SOURCES=\
 		    DescribeMapHandler.cpp \
 		    DescribeMapRequest.cpp \
 		    DescribeMapResponse.cpp \
+		    DescribeLayerHandler.cpp \
+		    DescribeLayerRequest.cpp \
+		    DescribeLayerResponse.cpp \
 		    GetServiceHandler.cpp \
 		    GetServiceRequest.cpp \
 		    GetServiceResponse.cpp \

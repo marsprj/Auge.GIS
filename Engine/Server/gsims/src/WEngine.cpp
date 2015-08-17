@@ -19,6 +19,7 @@
 #include "DescribeMapHandler.h"
 #include "RemoveMapHandler.h"
 #include "SetStyleHandler.h"
+#include "DescribeLayerHandler.h"
 
 #include "GetStyleHandler.h"
 #include "AddStyleHandler.h"
@@ -69,6 +70,7 @@ namespace auge
 		m_handlers.push_back(new DescribeMapHandler());
 		m_handlers.push_back(new RemoveMapHandler());
 		m_handlers.push_back(new SetStyleHandler());
+		m_handlers.push_back(new DescribeLayerHandler());
 
 		m_handlers.push_back(new GetStyleHandler());
 		m_handlers.push_back(new AddStyleHandler());
