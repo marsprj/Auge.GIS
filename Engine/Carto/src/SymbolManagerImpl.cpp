@@ -17,6 +17,7 @@
 #include "ContinentShelfRegionSymbolImpl.h"
 
 #include "GraphicMarkerSymbolImpl.h"
+#include "GraphicFillSymbolImpl.h"
 
 namespace auge
 {
@@ -412,7 +413,7 @@ namespace auge
 				pMarker->SetPath(graphic_path);
 				pMarker->SetFilePath(file_path);
 
-				m_marker_symbols->Add(pMarker);
+				pSymbols->Add(pMarker);
 			}
 		}
 		::FindClose(hFind);
@@ -448,7 +449,7 @@ namespace auge
 							pMarker->SetPath(graphic_path);
 							pMarker->SetFilePath(file_path);
 
-							m_marker_symbols->Add(pMarker);
+							pSymbols->Add(pMarker);
 						}
 					}
 				}
@@ -465,7 +466,7 @@ namespace auge
 		char graphic_name[AUGE_NAME_MAX];
 		char graphic_path[AUGE_PATH_MAX];
 		char file_path[AUGE_PATH_MAX];
-		GraphicMarkerSymbolImpl* pMarker = NULL;
+		GraphicFillSymbolImpl* pSymbol = NULL;
 
 #ifdef WIN32
 		HANDLE hFind = NULL;
@@ -495,12 +496,12 @@ namespace auge
 				auge_make_path(graphic_path, NULL, graphic_base, wfd.cFileName, NULL);
 				auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
 
-				pMarker = new GraphicMarkerSymbolImpl();	
-				pMarker->SetName(graphic_name);
-				pMarker->SetPath(graphic_path);
-				pMarker->SetFilePath(file_path);
+				pSymbol = new GraphicFillSymbolImpl();	
+				pSymbol->SetName(graphic_name);
+				pSymbol->SetPath(graphic_path);
+				pSymbol->SetFilePath(file_path);
 
-				m_marker_symbols->Add(pMarker);
+				pSymbols->Add(pSymbol);
 			}
 		}
 		::FindClose(hFind);
@@ -531,12 +532,12 @@ namespace auge
 							auge_make_path(graphic_path, NULL, graphic_base, dirp->d_name, NULL);
 							auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
 
-							pMarker = new GraphicMarkerSymbolImpl();	
-							pMarker->SetName(graphic_name);
-							pMarker->SetPath(graphic_path);
-							pMarker->SetFilePath(file_path);
+							pSymbol = new GraphicFillSymbolImpl();	
+							pSymbol->SetName(graphic_name);
+							pSymbol->SetPath(graphic_path);
+							pSymbol->SetFilePath(file_path);
 
-							m_marker_symbols->Add(pMarker);
+							pSymbols->Add(pMarker);
 						}
 					}
 				}
