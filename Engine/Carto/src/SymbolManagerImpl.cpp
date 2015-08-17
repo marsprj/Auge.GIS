@@ -327,7 +327,7 @@ namespace auge
 		HANDLE hFind = NULL;
 		WIN32_FIND_DATAA wfd;
 
-		char fpath[AUGE_PATH_MAX];
+		//char fpath[AUGE_PATH_MAX];
 		char filter[AUGE_PATH_MAX];
 		char graphic_filter[AUGE_PATH_MAX];
 		auge_make_path(graphic_filter,NULL, AUGE_GRAPHIC_MARKER_BASE_PATH,"*","png");
@@ -351,15 +351,27 @@ namespace auge
 		}
 		::FindClose(hFind);
 #else
+		char local_path[AUGE_PATH_MAX];
+		auge_make_path(local_path,NULL,m_path.c_str(), graphic_path,NULL);
+
 		DIR *dp = opendir(local_path);
 		if(dp!=NULL)
 		{
 			struct dirent* dirp = NULL;
 			while((dirp = readdir(dp))!=NULL)
 			{	
-				if(dirp->d_name[0]!='.')
+				if(dirp->d_type=='\b')
 				{
-					pListResponse->AddFile(dirp->d_name);
+					str_len = strlen(dirp->d_name); 
+					if(str_len>4)
+					{
+						if(g_strnicmp(dirp->d_name+str_len-4, ".shp", 4)==0)
+						{
+							//memset(szName, 0, NAME_MAX);
+							//memcpy(szName, dirp->d_name, str_len-4);
+							//pEnumString->Add(szName);
+						}
+					}
 				}
 			}
 			closedir(dp);

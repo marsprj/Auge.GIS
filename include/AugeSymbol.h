@@ -458,13 +458,6 @@ namespace auge
 	protected:
 		MarkerSymbol(){}
 		virtual ~MarkerSymbol(){}
-	};
-
-	class SimpleMarkerSymbol : public MarkerSymbol
-	{
-	protected:
-		SimpleMarkerSymbol(){}
-		virtual ~SimpleMarkerSymbol(){}
 	public:
 		virtual void			SetStroke(Stroke* pStroke) = 0;
 		virtual Stroke*			GetStroke() = 0;
@@ -480,6 +473,28 @@ namespace auge
 
 		virtual void			SetRotation(float rotation) = 0;
 		virtual float			GetRotation() = 0;
+	};
+
+	class SimpleMarkerSymbol : public MarkerSymbol
+	{
+	protected:
+		SimpleMarkerSymbol(){}
+		virtual ~SimpleMarkerSymbol(){}
+	public:
+		//virtual void			SetStroke(Stroke* pStroke) = 0;
+		//virtual Stroke*			GetStroke() = 0;
+
+		//virtual void			SetFill(Fill* pFill) = 0;
+		//virtual Fill*			GetFill() = 0;
+
+		//virtual void			SetOpacity(float opacity) = 0;
+		//virtual float			GetOpacity() = 0;
+
+		//virtual void			SetSize(float size) = 0;
+		//virtual float			GetSize() = 0;
+
+		//virtual void			SetRotation(float rotation) = 0;
+		//virtual float			GetRotation() = 0;
 	};
 
 	class GraphicMarkerSymbol : public MarkerSymbol
