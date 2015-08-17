@@ -434,9 +434,11 @@ namespace auge
 					{
 						if(g_strnicmp(dirp->d_name+len-4, ".png", 4)==0)
 						{
-							strncpy(graphic_name, dirp->d_name, len-4);
+							memset(graphic_name, 0, AUGE_NAME_MAX);
 							memset(graphic_path, 0, AUGE_PATH_MAX);
 							memset(file_path, 0, AUGE_PATH_MAX);
+
+							strncpy(graphic_name, dirp->d_name, len-4);
 
 							auge_make_path(graphic_path, NULL, graphic_base, dirp->d_name, NULL);
 							auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
