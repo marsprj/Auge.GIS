@@ -66,4 +66,14 @@ namespace auge
 	{
 		return m_viewer;
 	}
+
+	g_uint TransformationImpl::GetCanvasWidth()
+	{
+		return m_canvas_width;
+	}
+
+	g_uint TransformationImpl::GetCanvasHeight()
+	{
+		return m_canvas_height;
+	}
 }

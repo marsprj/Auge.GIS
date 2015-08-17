@@ -19,6 +19,8 @@ namespace auge
 		void		SetViewer(GEnvelope& viewer);
 
 		GEnvelope&	GetViewer();
+		virtual g_uint			GetCanvasWidth();
+		virtual g_uint			GetCanvasHeight();
 	private:
 		double		m_scale;
 		GEnvelope	m_viewer;

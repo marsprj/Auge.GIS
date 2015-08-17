@@ -266,6 +266,80 @@ void CairoTest::DrawRailway_2()
 	}
 }
 
+void CairoTest::DrawMatrix()
+{
+	int              w, h;
+	cairo_surface_t *image;
+	cairo_pattern_t *pattern;
+	cairo_matrix_t   matrix;
+
+	double canvas_width = 800.0;
+	double canvas_height= 600.0;
+
+	cairo_surface_t	*m_cairo_surface;
+	cairo_t			*m_cairo;
+	m_cairo_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
+	m_cairo = cairo_create(m_cairo_surface);
+
+
+	image = cairo_image_surface_create_from_png ("E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\symbol\\graphic\\fill\\3001.png");
+	w = cairo_image_surface_get_width (image);
+	h = cairo_image_surface_get_height (image);
+
+	pattern = cairo_pattern_create_for_surface (image);
+	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+
+	cairo_matrix_init_scale (&matrix, 1.0, 1.0);
+	cairo_pattern_set_matrix (pattern, &matrix);
+
+	cairo_set_source (m_cairo, pattern);
+
+	cairo_rectangle (m_cairo, 0, 0, canvas_width, canvas_height);
+	cairo_fill (m_cairo);
+
+	cairo_pattern_destroy (pattern);
+	cairo_surface_destroy (image);
+
+	cairo_surface_write_to_png(m_cairo_surface, "g:\\temp\\map\\matrix.png");
+
+	if(m_cairo!=NULL)
+	{
+		cairo_destroy(m_cairo);
+		cairo_surface_destroy(m_cairo_surface);
+		m_cairo = NULL;
+		m_cairo_surface = NULL;
+	}
+}
+
+void CairoTest::ClipImage()
+{
+	int width = 256;
+	int height= 256;
+	cairo_surface_t	*base_surface=cairo_image_surface_create_from_png("g:\\temp\\map\\matrix.png");
+	cairo_surface_t *cairo_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+	cairo_t *cr = cairo_create(cairo_surface);
+
+	//cairo_arc (cr, 128.0, 128.0, 76.8, 0, 2 * 3.14159265358979323846);
+	cairo_new_path(cr);
+	cairo_move_to(cr, 30, 30);
+	cairo_line_to(cr, 100, 30);
+	cairo_line_to(cr, 100, 100);
+	cairo_line_to(cr, 30, 100);
+	cairo_line_to(cr, 30, 30);
+	cairo_close_path(cr);
+	cairo_clip (cr);
+
+	cairo_scale (cr, 1.0, 1.0);
+	cairo_set_source_surface (cr, base_surface, 0, 0);
+	cairo_paint (cr);
+
+	cairo_surface_write_to_png(cairo_surface, "g:\\temp\\map\\clip.png");
+
+	cairo_destroy(cr);
+	cairo_surface_destroy(base_surface);
+
+}
+
 //void CairoTest::DrawRailway()
 //{
 //	int points_x[] = {100,400,700};
@@ -377,3 +451,4 @@ void draw_dash_line(cairo_t *m_cairo, int* points_x, int* points_y, int count)
 
 	cairo_restore(m_cairo);
 }
+

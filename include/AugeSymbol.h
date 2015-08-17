@@ -514,6 +514,12 @@ namespace auge
 		FillSymbol(){}
 		virtual ~FillSymbol(){}
 	public:
+		virtual Stroke*			GetStroke() = 0;
+		virtual void			SetStroke(Stroke* pStroke) = 0;
+
+		virtual void			SetOpacity(float opacity) = 0;
+		virtual float			GetOpacity() = 0;
+
 		//virtual	bool			IsGraphic() = 0;
 
 		//virtual float			GetDisplacement_X() = 0;
@@ -545,6 +551,10 @@ namespace auge
 	public:
 		virtual const char*		GetName() = 0;
 		virtual const char*		GetPath() = 0;
+
+		virtual Stroke*			GetStroke() = 0;
+		virtual void			SetStroke(Stroke* pStroke) = 0;
+
 		virtual void			SetOpacity(float opacity) = 0;
 		virtual float			GetOpacity() = 0;
 	};

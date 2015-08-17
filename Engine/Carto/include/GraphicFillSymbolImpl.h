@@ -26,14 +26,11 @@ namespace auge
 		virtual augeSymbolizerType	GetType();
 		virtual RESULTCODE			Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform);
 
+		virtual Stroke*				GetStroke();
+		virtual void				SetStroke(Stroke* pStroke);
+
 		virtual void				SetOpacity(float opacity);
 		virtual float				GetOpacity();
-
-		virtual void				SetSize(float size);
-		virtual float				GetSize();
-
-		virtual void				SetRotation(float rotation);
-		virtual float				GetRotation();	
 
 	public:
 		void	SetName(const char* name);
@@ -43,17 +40,20 @@ namespace auge
 	private:
 		void	LoadSymbol();
 
+		cairo_surface_t*			CreateBaseSurface(int width, int height);
+		cairo_surface_t*			CreateClipedSurface(Geometry* pGeometry, Transformation* pTransform, cairo_surface_t* base_surface, int width, int height);
+		void						DrawStroke(Geometry* pGeometry, Transformation* pTransform, Stroke* pStroke, cairo_surface_t* mask_surface);
+
 	private:
-		float		m_size;
-		float		m_rotation;
 		float		m_opacity;
+		Stroke*		m_pStroke;
 
 		std::string m_name;		
 		std::string m_icon_path;
 		std::string m_file_path;
 
-		cairo_surface_t *m_icon;
-		cairo_t			*m_cairo;
+		cairo_surface_t *m_icon_surface;
+		cairo_t			*m_icon_cairo;
 	};
 }
 

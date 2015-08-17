@@ -255,6 +255,8 @@ namespace auge
 		virtual void			SetViewer(GEnvelope& viewer) = 0;
 
 		virtual GEnvelope&		GetViewer() = 0;
+		virtual g_uint			GetCanvasWidth() = 0;
+		virtual g_uint			GetCanvasHeight() = 0;
 	};
 
 	class EnumStyle

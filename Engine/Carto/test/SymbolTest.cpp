@@ -252,6 +252,73 @@ void SymbolTest::DrawRailways()
 	AUGE_SAFE_RELEASE(pCanvas);
 }
 
+void SymbolTest::DrawFillSymbol()
+{
+	DWORD ts, te;
+
+	auge::Canvas* pCanvas = NULL;
+	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
+
+	//auge::Geometry* pGeometry = NULL;
+	//auge::GeometryFactory* pGeometryFactory = auge::augeGetGeometryFactoryInstance();
+	//pGeometry = pGeometryFactory->CreateGeometryFromWKT("POINT(116 39)");
+
+	auge::FillSymbol* pFillSymbol = NULL;
+	auge::SymbolManager* pSymbolManager = auge::augeGetSymbolManagerInstance();
+	//pFillSymbol = pSymbolManager->GetFillSymbol("BeddedLimestone");
+	pFillSymbol = pSymbolManager->GetFillSymbol("open_pasture");
+
+	auge::GColor  color(0,0,0,255);
+	auge::Stroke* pStroke = auge::augeGetStyleFactoryInstance()->CreateStroke();
+	pStroke->SetColor(color);
+	pStroke->SetWidth(0.5);
+	pFillSymbol->SetStroke(pStroke);
+	
+
+	auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
+	pCanvas = pCartoFactory->CreateCanvas2D(800, 600);
+	pCanvas->SetViewer(viewer);
+
+	auge::GColor bgColor(255,0,0,0);
+	pCanvas->DrawBackground(bgColor);
+
+	RESULTCODE rc = AG_FAILURE;
+	auge::FeatureWorkspace*	 pWorkspace = NULL;
+	auge::ConnectionManager* pConnectionManager = auge::augeGetConnectionManagerInstance();
+
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnectionManager->GetWorkspace("db1"));
+
+	auge::FeatureClass* pFeatureClass = NULL;
+	pFeatureClass = pWorkspace->OpenFeatureClass("country");
+	CPPUNIT_ASSERT(pFeatureClass!=NULL);
+
+	ts = GetTickCount();
+
+	auge::FeatureCursor* pCursor = NULL;
+	pCursor = pFeatureClass->Query();
+	CPPUNIT_ASSERT(pCursor!=NULL);
+
+	auge::Geometry	*pGeometry = NULL;
+	auge::Feature	*pFeature = NULL;
+	while((pFeature=pCursor->NextFeature())!=NULL)
+	{	
+		pGeometry = pFeature->GetGeometry();
+		pCanvas->DrawSymbol(pGeometry, pFillSymbol);
+		pFeature->Release();
+	}
+
+	te = GetTickCount();
+	printf("[Ê±¼ä]:%8.3f\n", (te-ts)/1000.0f);
+
+	pCanvas->Save("g:\\temp\\map\\country.png");
+	//pCanvas->Save("/home/renyc/map/map.png");
+
+	AUGE_SAFE_RELEASE(pFillSymbol);
+	AUGE_SAFE_RELEASE(pCursor);
+	AUGE_SAFE_RELEASE(pFeatureClass);
+	AUGE_SAFE_RELEASE(pCanvas);
+}
+
 auge::Style* SymbolTest::LoadSLD(const char* path)
 {
 	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Carto\\sld\\point_user_4.xml";

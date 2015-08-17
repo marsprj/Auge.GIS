@@ -4,26 +4,29 @@
 namespace auge
 {
 	GraphicFillSymbolImpl::GraphicFillSymbolImpl():
-	m_cairo(NULL),
-	m_icon(NULL),	
+	m_icon_surface(NULL),
+	m_icon_cairo(NULL),	
 	m_opacity(0.0f),
-	m_size(20.0f),
-	m_rotation(0.0f)
+	m_pStroke(NULL)
 	{
 
 	}
 
 	GraphicFillSymbolImpl::~GraphicFillSymbolImpl()
 	{
-		if(m_cairo!=NULL)
+		if(m_icon_cairo!=NULL)
 		{
-			cairo_destroy(m_cairo);
-			m_cairo = NULL;
+			cairo_destroy(m_icon_cairo);
+			m_icon_cairo = NULL;
 		}
-		if(m_icon!=NULL)
+		if(m_icon_surface!=NULL)
 		{
-			cairo_surface_destroy(m_icon);
-			m_cairo = NULL;
+			cairo_surface_destroy(m_icon_surface);
+			m_icon_surface = NULL;
+		}
+		if(m_pStroke!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pStroke);
 		}
 	}
 
@@ -88,24 +91,20 @@ namespace auge
 		}
 	}
 
-	void GraphicFillSymbolImpl::SetSize(float size)
+
+	void GraphicFillSymbolImpl::SetStroke(Stroke* pStroke)
 	{
-		m_size = size;
+		if(m_pStroke!=NULL)
+		{
+			m_pStroke->Release();
+			m_pStroke = NULL;
+		}
+		m_pStroke = pStroke;
 	}
 
-	float GraphicFillSymbolImpl::GetSize()
+	Stroke* GraphicFillSymbolImpl::GetStroke()
 	{
-		return m_size;
-	}
-
-	void GraphicFillSymbolImpl::SetRotation(float rotation)
-	{
-		m_rotation = rotation;
-	}
-
-	float GraphicFillSymbolImpl::GetRotation()
-	{
-		return m_rotation;
+		return m_pStroke;
 	}
 
 	const char*	GraphicFillSymbolImpl::GetIcon()
@@ -124,11 +123,8 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
-		if(pGeometry->GeometryType()!=augeGTPoint)
-		{
-			return AG_FAILURE;
-		}
-		if(m_size==0)
+		augeGeometryType geom_type = pGeometry->GeometryType();
+		if(geom_type!=augeGTPolygon && geom_type!=augeGTMultiPolygon)
 		{
 			return AG_FAILURE;
 		}
@@ -137,36 +133,128 @@ namespace auge
 		cairo_t			*canvas_cairo = pRendererCairo->GetCairo();
 		cairo_surface_t	*canvas_surface=pRendererCairo->GetCairoSurface();
 
-		int sx=0, sy=0;
-		WKBPoint* pWKBPoint = (WKBPoint*)pGeometry->AsBinary();
-		pTransform->ToScreenPoint(pWKBPoint->point.x, pWKBPoint->point.y, sx, sy);
-
-		//cairo_surface_t *image = cairo_image_surface_create_from_png(resource);
-		if(m_cairo==NULL)
+		if(m_icon_cairo==NULL)
 		{
 			LoadSymbol();
 		}
 
-		if(m_cairo!=NULL)
+		// Create Base Surface
+		double canvas_w = pTransform->GetCanvasWidth();
+		double canvas_h = pTransform->GetCanvasHeight();
+		
+		//------------------------------------------------------------------------
+		// Generate base by cairo matrix
+		//------------------------------------------------------------------------
+		cairo_surface_t	*base_surface = CreateBaseSurface(canvas_w, canvas_h);
+
+		//------------------------------------------------------------------------
+		// Clip base surface by mask
+		//------------------------------------------------------------------------
+		cairo_surface_t	*mask_surface = CreateClipedSurface(pGeometry, pTransform, base_surface, canvas_w, canvas_h);
+		if(m_pStroke!=NULL)
 		{
-			cairo_save(canvas_cairo);
-			cairo_translate(canvas_cairo, sx-m_size, sy-m_size);
-			
-			cairo_set_source_surface(canvas_cairo, m_icon, 0,0);
-			cairo_paint(canvas_cairo);
-			cairo_surface_flush(canvas_surface);
-			cairo_restore(canvas_cairo);
+			DrawStroke(pGeometry, pTransform, m_pStroke, mask_surface);
 		}
+
+		//------------------------------------------------------------------------
+		// paint mask surfact to canvas
+		//------------------------------------------------------------------------
+		cairo_set_source_surface(canvas_cairo, mask_surface, 0, 0);
+		cairo_paint(canvas_cairo);
+
+		cairo_surface_destroy(mask_surface);
+		cairo_surface_destroy(base_surface);
 
 		return AG_SUCCESS;
 	}
 
 	void GraphicFillSymbolImpl::LoadSymbol()
 	{
-		m_icon = cairo_image_surface_create_from_png(m_file_path.c_str());
-		if(m_icon)
+		m_icon_surface = cairo_image_surface_create_from_png(m_file_path.c_str());
+		if(m_icon_surface)
 		{
-			m_cairo = cairo_create(m_icon);
+			m_icon_cairo = cairo_create(m_icon_surface);
 		}
+	}
+
+	cairo_surface_t* GraphicFillSymbolImpl::CreateBaseSurface(int width, int height)
+	{
+		if(m_icon_cairo==NULL)
+		{
+			LoadSymbol();
+		}
+
+		int icon_w = cairo_image_surface_get_width(m_icon_surface);
+		int icon_h = cairo_image_surface_get_height(m_icon_surface);
+
+		cairo_pattern_t *pattern;
+		pattern = cairo_pattern_create_for_surface (m_icon_surface);
+		cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+
+		cairo_matrix_t   matrix;
+		cairo_matrix_init_scale (&matrix, 1.0, 1.0);
+		cairo_pattern_set_matrix (pattern, &matrix);
+
+		cairo_surface_t	*base_surface=cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+		cairo_t			*base_cairo = cairo_create(base_surface);
+
+		cairo_set_source (base_cairo, pattern);
+		cairo_rectangle (base_cairo, 0, 0, width, height);
+		cairo_fill (base_cairo);
+		cairo_destroy(base_cairo);
+
+		return base_surface;
+	}
+
+	cairo_surface_t* GraphicFillSymbolImpl::CreateClipedSurface(Geometry* pGeometry, Transformation* pTransform, cairo_surface_t* base_surface, int width, int height)
+	{
+		cairo_surface_t	*mask_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+		cairo_t *mask_cairo = cairo_create(mask_surface);
+
+		// Clip Base Surface
+		g_uchar* wkb = pGeometry->AsBinary();
+		cairo_new_path(mask_cairo);
+		switch(pGeometry->GeometryType())
+		{
+		case augeGTPolygon:
+			build_path(mask_cairo, (WKBPolygon*)wkb, pTransform);
+			break;
+		case augeGTMultiPolygon:
+			build_path(mask_cairo, (WKBMultiPolygon*)wkb, pTransform);
+			break;
+		}
+
+		//------------------------------------------------------------------------
+		// clip base surface by mask
+		//------------------------------------------------------------------------
+		cairo_clip (mask_cairo);
+		cairo_scale (mask_cairo, 1.0, 1.0);
+		
+		cairo_set_source_surface(mask_cairo, base_surface, 0, 0);
+		cairo_paint(mask_cairo);
+		cairo_destroy(mask_cairo);
+
+		return mask_surface;
+	}
+
+	void GraphicFillSymbolImpl::DrawStroke(Geometry* pGeometry, Transformation* pTransform, Stroke* pStroke, cairo_surface_t* mask_surface)
+	{
+		cairo_t *mask_cairo = cairo_create(mask_surface);
+
+		g_uchar* wkb = pGeometry->AsBinary();
+		cairo_new_path(mask_cairo);
+		switch(pGeometry->GeometryType())
+		{
+		case augeGTPolygon:
+			build_path(mask_cairo, (WKBPolygon*)wkb, pTransform);
+			break;
+		case augeGTMultiPolygon:
+			build_path(mask_cairo, (WKBMultiPolygon*)wkb, pTransform);
+			break;
+		}
+		set_stroke_style(mask_cairo, m_pStroke);
+		cairo_stroke(mask_cairo);
+
+		cairo_destroy(mask_cairo);
 	}
 }

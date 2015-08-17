@@ -18,7 +18,10 @@ class CairoTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(DrawData_ARGB32);
 	//CPPUNIT_TEST(DrawData_RGB24);
 	//CPPUNIT_TEST(DrawRailway);
-	CPPUNIT_TEST(DrawRailway_2);
+	//CPPUNIT_TEST(DrawRailway_2);
+
+	//CPPUNIT_TEST(DrawMatrix);
+	CPPUNIT_TEST(ClipImage);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -34,6 +37,9 @@ private:
 
 	void DrawRailway();
 	void DrawRailway_2();
+
+	void DrawMatrix();
+	void ClipImage();
 private:
 	cairo_surface_t	*m_cairo_surface;
 	cairo_t			*m_cairo;
