@@ -634,7 +634,7 @@ namespace auge
 				if(g_stricmp(nodeName, AUGE_SLD_MARK)==0)
 				{
 					ReadMark(pSymbolizer, pxNode);
-					SimpleMarkerSymbol* pMarker = pSymbolizer->GetMarker();
+					MarkerSymbol* pMarker = pSymbolizer->GetMarker();
 					if(pMarker!=NULL||size>=0)
 					{
 						pMarker->SetSize(size);
@@ -697,7 +697,7 @@ namespace auge
 		Style		*pStyle = NULL;
 		const char	*nodeName = NULL;
 
-		SimpleMarkerSymbol* pMarker = NULL;
+		MarkerSymbol* pMarker = NULL;
 		SymbolManager* pSymbolManager = augeGetSymbolManagerInstance();
 
 		// Create 
@@ -709,41 +709,51 @@ namespace auge
 		else
 		{
 			const char* wellName = pxNode->GetContent();
-			pMarker = pSymbolManager->CreateMarkerSymbol(wellName);
+			//pMarker = pSymbolManager->CreateMarkerSymbol(wellName);
+			pMarker = pSymbolManager->GetMarker(wellName);
 		}
 		pSymbolizer->SetMarker(pMarker);
 
-		pxNodeSet = pxMarkNode->GetChildren();
-		if(pxNodeSet==NULL)
+		if(pMarker!=NULL)
 		{
-			return false;
-		}
-
-		pxNodeSet->Reset();
-		while(!pxNodeSet->IsEOF())
-		{
-			pxNode = pxNodeSet->Next();
-			if(pxNode!=NULL)
+			if(!pMarker->IsGraphic())
 			{
-				nodeName = pxNode->GetName();
-				if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
+				SimpleMarkerSymbol* pSimpleMarker = static_cast<SimpleMarkerSymbol*>(pMarker);
+
+				pxNodeSet = pxMarkNode->GetChildren();
+				if(pxNodeSet==NULL)
 				{
-					Stroke* pStroke = ReadStroke(pxNode);
-					pMarker->SetStroke(pStroke);
+					return false;
 				}
-				else if(g_stricmp(nodeName, AUGE_SLD_FILL)==0)
+
+				pxNodeSet->Reset();
+				while(!pxNodeSet->IsEOF())
 				{
-					Fill* pFill = ReadFill(pxNode);
-					pMarker->SetFill(pFill);
-					if(pFill!=NULL)
+					pxNode = pxNodeSet->Next();
+					if(pxNode!=NULL)
 					{
-						pMarker->SetOpacity(pFill->GetColor().GetAlphaF());
+						nodeName = pxNode->GetName();
+						if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
+						{
+							Stroke* pStroke = ReadStroke(pxNode);
+							pSimpleMarker->SetStroke(pStroke);
+						}
+						else if(g_stricmp(nodeName, AUGE_SLD_FILL)==0)
+						{
+							Fill* pFill = ReadFill(pxNode);
+							pSimpleMarker->SetFill(pFill);
+							if(pFill!=NULL)
+							{
+								pSimpleMarker->SetOpacity(pFill->GetColor().GetAlphaF());
+							}
+						}	
 					}
-				}	
+				}
+
+				pxNodeSet->Release();
 			}
 		}
-
-		pxNodeSet->Release();
+		
 		return true;
 	}
 

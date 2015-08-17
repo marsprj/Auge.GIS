@@ -62,6 +62,11 @@ namespace auge
 		return m_icon_name.c_str();
 	}
 
+	bool SquareMarkerImpl::IsGraphic()
+	{
+		return false;
+	}
+
 	augeMarkerType SquareMarkerImpl::GetMarkType()
 	{
 		return augeMarkerSquare;

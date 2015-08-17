@@ -31,4 +31,9 @@ namespace auge
 	{
 		return m_opacity;
 	}
+
+	bool GraphicFillSymbolImpl::IsGraphic()
+	{
+		return false;
+	}
 }

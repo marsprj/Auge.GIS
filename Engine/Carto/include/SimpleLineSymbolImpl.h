@@ -21,6 +21,7 @@ namespace auge
 	public:
 		virtual const char*			GetName();
 		virtual const char*			GetIcon();
+		virtual bool				IsGraphic();
 		virtual augeSymbolizerType	GetType();
 		virtual RESULTCODE			Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform);
 

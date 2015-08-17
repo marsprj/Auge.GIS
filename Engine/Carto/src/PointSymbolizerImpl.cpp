@@ -156,13 +156,13 @@ namespace auge
 		return augeSymbolPoint;
 	}
 
-	void PointSymbolizerImpl::SetMarker(SimpleMarkerSymbol* pMarker)
+	void PointSymbolizerImpl::SetMarker(MarkerSymbol* pMarker)
 	{
 		AUGE_SAFE_RELEASE(m_pMarker);
 		m_pMarker = pMarker;
 	}
 
-	SimpleMarkerSymbol* PointSymbolizerImpl::GetMarker()
+	MarkerSymbol* PointSymbolizerImpl::GetMarker()
 	{
 		return m_pMarker;
 	}

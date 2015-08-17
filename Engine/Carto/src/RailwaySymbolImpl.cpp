@@ -57,6 +57,11 @@ namespace auge
 		return m_icon_name.c_str();
 	}
 
+	bool RailwaySymbolImpl::IsGraphic()
+	{
+		return true;
+	}
+
 	augeLineType RailwaySymbolImpl::GetLineType()
 	{
 		return augeLineRailway;

@@ -66,6 +66,11 @@ namespace auge
 		return m_icon_name.c_str();
 	}
 
+	bool ContinentShelfRegionSymbolImpl::IsGraphic()
+	{
+		return false;
+	}
+
 	augeMarkerType ContinentShelfRegionSymbolImpl::GetMarkType()
 	{
 		return augeMarkerSquare;

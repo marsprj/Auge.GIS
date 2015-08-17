@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(SymbolTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(SymbolTest);
 
 void SymbolTest::setUp() 
 {
@@ -61,7 +61,12 @@ void SymbolTest::DrawStar()
 
 	auge::MarkerSymbol* pMarker = NULL;
 	auge::SymbolManager* pSymbolManager = auge::augeGetSymbolManagerInstance();
-	pMarker = pSymbolManager->CreateMarkerSymbol(auge::augeMarkerStar);
+	//pMarker = pSymbolManager->CreateMarkerSymbol(auge::augeMarkerStar);
+	pMarker = pSymbolManager->GetMarker("b020200");
+	pMarker->SetRotation(10.0);
+	pMarker->SetSize(20.0);
+
+	//pSymbolManager->GetMarkerSymbols();
 
 	auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
 	//auge::GEnvelope viewer(90.46,22.41,127.08,41.15);
@@ -77,7 +82,7 @@ void SymbolTest::DrawStar()
 	pCanvas->Save("g:\\temp\\map\\star.png");
 	//pCanvas->Save("/home/renyc/map/map.png");
 
-	AUGE_SAFE_RELEASE(pMarker);
+	//AUGE_SAFE_RELEASE(pMarker);
 	AUGE_SAFE_RELEASE(pGeometry);
 	AUGE_SAFE_RELEASE(pCanvas);
 }
@@ -102,6 +107,7 @@ void SymbolTest::DrawStars()
 	//pMarker = pSymbolManager->CreateMarkerSymbol(auge::augeMarkerPentagon);
 	//pMarker = pSymbolManager->CreateMarkerSymbol(auge::augeMarkerCapital);
 	pMarker->SetRotation(10.0f);
+
 
 	auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
 	pCanvas = pCartoFactory->CreateCanvas2D(1600, 1200);

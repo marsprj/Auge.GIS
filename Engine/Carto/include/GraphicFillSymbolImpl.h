@@ -20,6 +20,7 @@ namespace auge
 	public:
 		virtual const char*		GetName();
 		virtual const char*		GetPath();
+		virtual bool				IsGraphic();
 		virtual void			SetOpacity(float opacity);
 		virtual float			GetOpacity();
 

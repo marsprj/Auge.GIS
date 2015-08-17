@@ -71,6 +71,11 @@ namespace auge
 		return m_icon_name.c_str();
 	}
 
+	bool PentagonMarkerImpl::IsGraphic()
+	{
+		return false;
+	}
+
 	augeMarkerType PentagonMarkerImpl::GetMarkType()
 	{
 		return augeMarkerPentagon;

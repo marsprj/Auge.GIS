@@ -62,6 +62,11 @@ namespace auge
 		return m_icon_name.c_str();
 	}
 
+	bool SimpleRegionSymbolImpl::IsGraphic()
+	{
+		return false;
+	}
+
 	augeMarkerType SimpleRegionSymbolImpl::GetMarkType()
 	{
 		return augeMarkerSquare;

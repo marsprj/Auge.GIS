@@ -62,6 +62,11 @@ namespace auge
 		return m_icon_name.c_str();
 	}
 
+	bool CircleMarkerImpl::IsGraphic()
+	{
+		return false;
+	}
+
 	augeMarkerType CircleMarkerImpl::GetMarkType()
 	{
 		return augeMarkerCircle;

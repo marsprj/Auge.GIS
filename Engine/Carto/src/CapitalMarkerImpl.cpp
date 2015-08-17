@@ -62,6 +62,11 @@ namespace auge
 		return m_icon_name.c_str();
 	}
 
+	bool CapitalMarkerImpl::IsGraphic()
+	{
+		return false;
+	}
+
 	augeMarkerType CapitalMarkerImpl::GetMarkType()
 	{
 		return augeMarkerCapital;

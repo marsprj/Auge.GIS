@@ -66,6 +66,11 @@ namespace auge
 		return m_icon_name.c_str();
 	}
 
+	bool GrassLandSymbolImpl::IsGraphic()
+	{
+		return false;
+	}
+
 	augeMarkerType GrassLandSymbolImpl::GetMarkType()
 	{
 		return augeMarkerSquare;

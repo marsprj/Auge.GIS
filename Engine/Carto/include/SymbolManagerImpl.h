@@ -16,6 +16,8 @@ namespace auge
 
 	public:
 		virtual EnumSymbol*		GetMarkerSymbols();
+		virtual MarkerSymbol*	GetMarker(const char* name);
+
 		virtual EnumSymbol*		GetLineSymbols();
 		virtual EnumSymbol*		GetRegionSymbols();
 

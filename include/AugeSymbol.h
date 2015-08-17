@@ -37,7 +37,7 @@ namespace auge
 	class Transformation;
 	class Renderer;
 
-	class SimpleMarkerSymbol;
+	class MarkerSymbol;
 	class LineSymbol;
 	class FillSymbol;
 
@@ -355,8 +355,8 @@ namespace auge
 		//virtual void			SetRotation(float rotation) = 0;
 		//virtual float			GetRotation() = 0;
 
-		virtual void			SetMarker(SimpleMarkerSymbol* pMarker) = 0;
-		virtual SimpleMarkerSymbol*	GetMarker() = 0;
+		virtual void			SetMarker(MarkerSymbol* pMarker) = 0;
+		virtual MarkerSymbol*	GetMarker() = 0;
 	};
 
 	//========================================================================
@@ -450,6 +450,7 @@ namespace auge
 		virtual const char*			GetName() = 0;
 		virtual const char*			GetIcon() = 0;
 		virtual augeSymbolizerType	GetType() = 0;
+		virtual bool				IsGraphic() = 0;
 		virtual RESULTCODE			Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform) = 0;
 	};
 
@@ -459,12 +460,6 @@ namespace auge
 		MarkerSymbol(){}
 		virtual ~MarkerSymbol(){}
 	public:
-		virtual void			SetStroke(Stroke* pStroke) = 0;
-		virtual Stroke*			GetStroke() = 0;
-
-		virtual void			SetFill(Fill* pFill) = 0;
-		virtual Fill*			GetFill() = 0;
-
 		virtual void			SetOpacity(float opacity) = 0;
 		virtual float			GetOpacity() = 0;
 
@@ -481,20 +476,11 @@ namespace auge
 		SimpleMarkerSymbol(){}
 		virtual ~SimpleMarkerSymbol(){}
 	public:
-		//virtual void			SetStroke(Stroke* pStroke) = 0;
-		//virtual Stroke*			GetStroke() = 0;
+		virtual void			SetStroke(Stroke* pStroke) = 0;
+		virtual Stroke*			GetStroke() = 0;
 
-		//virtual void			SetFill(Fill* pFill) = 0;
-		//virtual Fill*			GetFill() = 0;
-
-		//virtual void			SetOpacity(float opacity) = 0;
-		//virtual float			GetOpacity() = 0;
-
-		//virtual void			SetSize(float size) = 0;
-		//virtual float			GetSize() = 0;
-
-		//virtual void			SetRotation(float rotation) = 0;
-		//virtual float			GetRotation() = 0;
+		virtual void			SetFill(Fill* pFill) = 0;
+		virtual Fill*			GetFill() = 0;
 	};
 
 	class GraphicMarkerSymbol : public MarkerSymbol
@@ -582,6 +568,8 @@ namespace auge
 
 	public:
 		virtual EnumSymbol*		GetMarkerSymbols() = 0;
+		virtual MarkerSymbol*	GetMarker(const char* name) = 0;
+
 		virtual EnumSymbol*		GetLineSymbols() = 0;
 		virtual EnumSymbol*		GetRegionSymbols() = 0;
 

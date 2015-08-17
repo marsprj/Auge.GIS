@@ -159,12 +159,6 @@
     <ClCompile Include="..\src\EnumSymbolImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\TriangleMarkerImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\CapitalMarkerImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\CircleMarkerImpl.cpp">
       <Filter>Source Files\Marker</Filter>
     </ClCompile>
@@ -198,8 +192,14 @@
     <ClCompile Include="..\src\GraphicFillSymbolImpl.cpp">
       <Filter>Source Files\FillSymbol</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\CapitalMarkerImpl.cpp">
+      <Filter>Source Files\Marker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TriangleMarkerImpl.cpp">
+      <Filter>Source Files\Marker</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\GraphicMarkerSymbolImpl.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Marker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -344,12 +344,6 @@
     <ClInclude Include="..\include\EnumSymbolImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\TriangleMarkerImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ContinentShelfRegionSymbolImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\GrassLandSymbolImpl.h">
       <Filter>Header Files\FillSymbol</Filter>
     </ClInclude>
@@ -384,7 +378,13 @@
       <Filter>Header Files\FillSymbol</Filter>
     </ClInclude>
     <ClInclude Include="..\include\GraphicMarkerSymbolImpl.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Marker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ContinentShelfRegionSymbolImpl.h">
+      <Filter>Header Files\FillSymbol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TriangleMarkerImpl.h">
+      <Filter>Header Files\Marker</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

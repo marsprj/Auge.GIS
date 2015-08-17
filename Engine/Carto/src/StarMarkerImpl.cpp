@@ -76,6 +76,11 @@ namespace auge
 		return m_icon_name.c_str();
 	}
 
+	bool StarMarkerImpl::IsGraphic()
+	{
+		return false;
+	}
+
 	augeMarkerType StarMarkerImpl::GetMarkType()
 	{
 		return augeMarkerStar;

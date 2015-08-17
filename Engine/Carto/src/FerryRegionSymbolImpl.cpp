@@ -66,6 +66,11 @@ namespace auge
 		return m_icon_name.c_str();
 	}
 
+	bool FerryRegionSymbolImpl::IsGraphic()
+	{
+		return false;
+	}
+
 	augeMarkerType FerryRegionSymbolImpl::GetMarkType()
 	{
 		return augeMarkerSquare;

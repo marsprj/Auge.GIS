@@ -167,7 +167,7 @@ namespace auge
 		XElement *pxMark = NULL;
 		pxMark = pxGraphic->AddChild("Mark", "sld");
 
-		SimpleMarkerSymbol* pMarker = pSymbolizer->GetMarker();
+		MarkerSymbol* pMarker = pSymbolizer->GetMarker();
 		if(pMarker==NULL)
 		{
 			return AG_FAILURE;
@@ -178,18 +178,23 @@ namespace auge
 		XElement* pxWellKnownName = pxMark->AddChild("WellKnownName", "sld");
 		pxWellKnownName->SetChildText(wellKnownName);
 
-		Fill* pFill = pMarker->GetFill();
-		if(pFill!=NULL)
+		if(!pMarker->IsGraphic())
 		{
-			XElement *pxFill = pxMark->AddChild("Fill", "sld");
-			WriteFill(pxFill, pFill);
+			SimpleMarkerSymbol* pSimpleMarker = static_cast<SimpleMarkerSymbol*>(pMarker);
+			Fill* pFill = pSimpleMarker->GetFill();
+			if(pFill!=NULL)
+			{
+				XElement *pxFill = pxMark->AddChild("Fill", "sld");
+				WriteFill(pxFill, pFill);
+			}
+			Stroke* pStroke = pSimpleMarker->GetStroke();
+			if(pStroke!=NULL)
+			{
+				XElement *pxStroke = pxMark->AddChild("Stroke", "sld");
+				WriteStroke(pxStroke, pStroke);
+			}
 		}
-		Stroke* pStroke = pMarker->GetStroke();
-		if(pStroke!=NULL)
-		{
-			XElement *pxStroke = pxMark->AddChild("Stroke", "sld");
-			WriteStroke(pxStroke, pStroke);
-		}
+		
 		char buffer[AUGE_NAME_MAX] = {0};
 		g_sprintf(buffer, "%f", pMarker->GetSize());
 		pxNode = pxGraphic->AddChild("Size", NULL);

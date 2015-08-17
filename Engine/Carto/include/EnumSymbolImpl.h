@@ -8,6 +8,8 @@ namespace auge
 {
 	class EnumSymbolImpl : public EnumSymbol
 	{
+		friend class SymbolManagerImpl;
+
 	public:
 		EnumSymbolImpl();
 		virtual ~EnumSymbolImpl();
