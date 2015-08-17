@@ -352,7 +352,7 @@ namespace auge
 		::FindClose(hFind);
 #else
 		char local_path[AUGE_PATH_MAX];
-		auge_make_path(local_path,NULL,m_path.c_str(), graphic_path,NULL);
+		auge_make_path(local_path,NULL,m_path.c_str(), AUGE_GRAPHIC_MARKER_BASE_PATH, NULL);
 
 		DIR *dp = opendir(local_path);
 		if(dp!=NULL)
