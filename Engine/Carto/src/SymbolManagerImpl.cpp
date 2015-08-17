@@ -362,7 +362,7 @@ namespace auge
 			{	
 				if(dirp->d_type=='\b')
 				{
-					str_len = strlen(dirp->d_name); 
+					size_t str_len = strlen(dirp->d_name); 
 					if(str_len>4)
 					{
 						if(g_strnicmp(dirp->d_name+str_len-4, ".shp", 4)==0)
