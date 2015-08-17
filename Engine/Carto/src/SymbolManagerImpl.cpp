@@ -350,6 +350,7 @@ namespace auge
 		char graphic_name[AUGE_NAME_MAX];
 		char graphic_path[AUGE_PATH_MAX];
 		char file_path[AUGE_PATH_MAX];
+		GraphicMarkerSymbolImpl* pMarker = NULL;
 
 #ifdef WIN32
 		HANDLE hFind = NULL;
@@ -366,7 +367,6 @@ namespace auge
 			::FindClose(hFind);
 		}
 
-		GraphicMarkerSymbolImpl* pMarker = NULL;
 		while(::FindNextFile(hFind, &wfd)==TRUE)
 		{
 			len = strlen(wfd.cFileName);
