@@ -389,7 +389,9 @@ namespace auge
 			}
 		}
 		::FindClose(hFind);
-#else		
+#else
+		char local_path[AUGE_NAME_MAX];
+		memset(local_path, 0, AUGE_NAME_MAX);
 		auge_make_path(local_path,NULL,m_path.c_str(), AUGE_GRAPHIC_MARKER_BASE_PATH, NULL);
 
 		DIR *dp = opendir(local_path);
@@ -405,11 +407,11 @@ namespace auge
 					{
 						if(g_strnicmp(dirp->d_name+len-4, ".png", 4)==0)
 						{
-							strncpy(graphic_name, wfd.cFileName, len-4);
+							strncpy(graphic_name, dirp->d_name, len-4);
 							memset(graphic_path, 0, AUGE_PATH_MAX);
 							memset(file_path, 0, AUGE_PATH_MAX);
 
-							auge_make_path(graphic_path, NULL, AUGE_GRAPHIC_MARKER_BASE_PATH, wfd.cFileName, NULL);
+							auge_make_path(graphic_path, NULL, AUGE_GRAPHIC_MARKER_BASE_PATH, dirp->d_name, NULL);
 							auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
 
 							pMarker = new GraphicMarkerSymbolImpl();	
