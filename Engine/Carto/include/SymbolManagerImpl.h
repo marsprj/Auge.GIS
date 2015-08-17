@@ -19,7 +19,7 @@ namespace auge
 		virtual MarkerSymbol*	GetMarker(const char* name);
 
 		virtual EnumSymbol*		GetLineSymbols();
-		virtual EnumSymbol*		GetRegionSymbols();
+		virtual EnumSymbol*		GetFillSymbols();
 
 		virtual SimpleMarkerSymbol*	CreateMarkerSymbol(augeMarkerType type);
 		virtual SimpleMarkerSymbol*	CreateMarkerSymbol(const char* name);
@@ -27,8 +27,9 @@ namespace auge
 		virtual LineSymbol*		CreateLineSymbol(augeLineType type);		
 		virtual LineSymbol*		CreateLineSymbol(const char* name);
 
-		virtual FillSymbol*		CreateRegionSymbol(augeRegionType type);		
-		virtual FillSymbol*		CreateRegionSymbol(const char* name);
+		virtual FillSymbol*		CreateFillSymbol(augeRegionType type);		
+		virtual FillSymbol*		CreateFillSymbol(const char* name);
+		virtual FillSymbol*		GetFillSymbol(const char* name);
 
 		virtual const char*		GetPath();
 
@@ -38,12 +39,12 @@ namespace auge
 
 	private:
 		void			LoadVectorMarkers();
-		void			LoadGraphicMarkers();
+		void			LoadGraphicSymbols(EnumSymbolImpl* pSymbols, const char* graphic_base);
 
 	private:
 		EnumSymbolImpl*	m_marker_symbols;
 		EnumSymbolImpl*	m_line_symbols;
-		EnumSymbolImpl* m_region_symbols;
+		EnumSymbolImpl* m_fill_symbols;
 
 		std::string		m_path;
 	};

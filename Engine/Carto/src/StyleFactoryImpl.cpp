@@ -494,7 +494,7 @@ namespace auge
 		
 
 		SymbolManager	*pSymbolManager = augeGetSymbolManagerInstance();
-		FillSymbol	*pSymbol = pSymbolManager->CreateRegionSymbol(augeRegionSimple);
+		FillSymbol	*pSymbol = pSymbolManager->CreateFillSymbol(augeFillSimple);
 
 		PolygonSymbolizer *pPolygonSymbolizer = NULL;
 		pPolygonSymbolizer = new PolygonSymbolizerImpl();

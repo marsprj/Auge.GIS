@@ -105,10 +105,10 @@ namespace auge
 	//========================================================================
 	typedef enum
 	{
-		augeRegionSimple		= 0,
-		augeRegionGrass			= 1,
-		augeRegionFerry			= 2,
-		augeRegionContinentShelf
+		augeFillSimple		= 0,
+		augeFillGrass			= 1,
+		augeFillFerry			= 2,
+		augeFillContinentShelf
 	}augeRegionType;
 
 	//========================================================================
@@ -571,7 +571,7 @@ namespace auge
 		virtual MarkerSymbol*	GetMarker(const char* name) = 0;
 
 		virtual EnumSymbol*		GetLineSymbols() = 0;
-		virtual EnumSymbol*		GetRegionSymbols() = 0;
+		virtual EnumSymbol*		GetFillSymbols() = 0;
 
 		virtual SimpleMarkerSymbol*	CreateMarkerSymbol(augeMarkerType type) = 0;
 		virtual SimpleMarkerSymbol*	CreateMarkerSymbol(const char* name) = 0;
@@ -579,8 +579,9 @@ namespace auge
 		virtual LineSymbol*		CreateLineSymbol(augeLineType type) = 0;
 		virtual LineSymbol*		CreateLineSymbol(const char* name) = 0;
 
-		virtual FillSymbol*		CreateRegionSymbol(augeRegionType type) = 0;	
-		virtual FillSymbol*		CreateRegionSymbol(const char* name) = 0;
+		virtual FillSymbol*		CreateFillSymbol(augeRegionType type) = 0;	
+		virtual FillSymbol*		CreateFillSymbol(const char* name) = 0;
+		virtual FillSymbol*		GetFillSymbol(const char* name) = 0;
 
 		virtual const char*		GetPath() = 0;
 	};

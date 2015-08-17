@@ -450,12 +450,12 @@ namespace auge
 		pxNode = pxSymbolizerNode->GetFirstChild(AUGE_SLD_WELLKNOWN_NAME);
 		if(pxNode==NULL)
 		{
-			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->CreateRegionSymbol(augeRegionSimple));
+			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->CreateFillSymbol(augeFillSimple));
 		}
 		else
 		{
 			const char* wellName = pxNode->GetContent();
-			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->CreateRegionSymbol(wellName));
+			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->CreateFillSymbol(wellName));
 		}
 		pSymbolizer->SetSymbol(pSymbol);
 

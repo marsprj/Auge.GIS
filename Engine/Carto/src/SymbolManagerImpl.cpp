@@ -37,6 +37,7 @@ namespace auge
 	#define AUGE_REGION_SYMBOL_CONTINENTAL_SHELF "ContinentalShelf"	//´óÂ½¼Ü
 
 	#define AUGE_GRAPHIC_MARKER_BASE_PATH	"graphic/marker"
+	#define AUGE_GRAPHIC_FILL_BASE_PATH		"graphic/fill"
 	
 	SymbolManager* augeGetSymbolManagerInstance()
 	{
@@ -52,7 +53,7 @@ namespace auge
 	{
 		m_marker_symbols = NULL;
 		m_line_symbols   = NULL;
-		m_region_symbols = NULL;
+		m_fill_symbols = NULL;
 	}
 
 	SymbolManagerImpl::~SymbolManagerImpl()
@@ -65,9 +66,9 @@ namespace auge
 		{
 			AUGE_SAFE_RELEASE(m_line_symbols);
 		}
-		if(m_region_symbols!=NULL)
+		if(m_fill_symbols!=NULL)
 		{
-			AUGE_SAFE_RELEASE(m_region_symbols);
+			AUGE_SAFE_RELEASE(m_fill_symbols);
 		}
 	}
 
@@ -115,7 +116,7 @@ namespace auge
 			m_marker_symbols->Add(new SquareMarkerImpl());
 			m_marker_symbols->Add(new TriangleMarkerImpl());
 
-			LoadGraphicMarkers();
+			LoadGraphicSymbols(m_marker_symbols, AUGE_GRAPHIC_MARKER_BASE_PATH);
 		}
 		return m_marker_symbols;
 	}
@@ -144,6 +145,30 @@ namespace auge
 	}
 
 
+	FillSymbol*	SymbolManagerImpl::GetFillSymbol(const char* name)
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+		Symbol* pSymbol = NULL;
+		EnumSymbolImpl* pSymbols = (EnumSymbolImpl*)GetFillSymbols();
+
+		std::vector<Symbol*>::iterator iter;
+		for(iter=pSymbols->m_symbols.begin(); iter!=pSymbols->m_symbols.end(); iter++)
+		{
+			pSymbol = *iter;
+			if(g_stricmp(pSymbol->GetName(), name)==0)
+			{
+				pSymbol->AddRef();
+				return (FillSymbol*)pSymbol;
+			}
+		}
+
+		return NULL;
+	}
+
+
 	EnumSymbol*	SymbolManagerImpl::GetLineSymbols()
 	{
 		if(m_line_symbols == NULL)
@@ -155,18 +180,20 @@ namespace auge
 		return m_line_symbols;
 	}
 
-	EnumSymbol*	SymbolManagerImpl::GetRegionSymbols()
+	EnumSymbol*	SymbolManagerImpl::GetFillSymbols()
 	{
-		if(m_region_symbols == NULL)
+		if(m_fill_symbols == NULL)
 		{
-			m_region_symbols = new EnumSymbolImpl();
-			m_region_symbols->Add(new SimpleRegionSymbolImpl());
-			m_region_symbols->Add(new FerryRegionSymbolImpl());
-			m_region_symbols->Add(new ContinentShelfRegionSymbolImpl());
-		}
-		return m_region_symbols;
-	}
+			m_fill_symbols = new EnumSymbolImpl();
+			m_fill_symbols->Add(new SimpleRegionSymbolImpl());
+			m_fill_symbols->Add(new FerryRegionSymbolImpl());
+			m_fill_symbols->Add(new ContinentShelfRegionSymbolImpl());
 
+			LoadGraphicSymbols(m_fill_symbols, AUGE_GRAPHIC_FILL_BASE_PATH);
+		}
+		return m_fill_symbols;
+	}
+	
 	SimpleMarkerSymbol* SymbolManagerImpl::CreateMarkerSymbol(augeMarkerType type)
 	{
 		SimpleMarkerSymbol* pSymbol = NULL;
@@ -287,21 +314,21 @@ namespace auge
 		return pSymbol;
 	}
 
-	FillSymbol* SymbolManagerImpl::CreateRegionSymbol(augeRegionType type)
+	FillSymbol* SymbolManagerImpl::CreateFillSymbol(augeRegionType type)
 	{
 		FillSymbol* pSymbol = NULL;
 		switch(type)
 		{
-		case augeRegionSimple:
+		case augeFillSimple:
 			pSymbol = new SimpleRegionSymbolImpl();
 			break;
-		case augeRegionGrass:
+		case augeFillGrass:
 			pSymbol = new GrassLandSymbolImpl();
 			break;
-		case augeRegionFerry:
+		case augeFillFerry:
 			pSymbol = new FerryRegionSymbolImpl();
 			break;
-		case augeRegionContinentShelf:
+		case augeFillContinentShelf:
 			pSymbol = new ContinentShelfRegionSymbolImpl();
 			break;
 		default:
@@ -311,7 +338,7 @@ namespace auge
 		return pSymbol;
 	}
 
-	FillSymbol* SymbolManagerImpl::CreateRegionSymbol(const char* name)
+	FillSymbol* SymbolManagerImpl::CreateFillSymbol(const char* name)
 	{
 		if(name==NULL)
 		{
@@ -344,7 +371,7 @@ namespace auge
 
 	}
 
-	void SymbolManagerImpl::LoadGraphicMarkers()
+	void SymbolManagerImpl::LoadGraphicSymbols(EnumSymbolImpl* pSymbols, const char* graphic_base)
 	{
 		size_t len = 0;
 		char graphic_name[AUGE_NAME_MAX];
@@ -358,7 +385,7 @@ namespace auge
 
 		char filter[AUGE_PATH_MAX];
 		char graphic_filter[AUGE_PATH_MAX];
-		auge_make_path(graphic_filter,NULL, AUGE_GRAPHIC_MARKER_BASE_PATH,"*","png");
+		auge_make_path(graphic_filter,NULL, graphic_base,"*","png");
 		auge_make_path(filter,NULL,m_path.c_str(), graphic_filter,NULL);
 				
 		hFind = ::FindFirstFile(filter, &wfd);
@@ -377,7 +404,7 @@ namespace auge
 				memset(file_path, 0, AUGE_PATH_MAX);
 
 				strncpy(graphic_name, wfd.cFileName, len-4);
-				auge_make_path(graphic_path, NULL, AUGE_GRAPHIC_MARKER_BASE_PATH, wfd.cFileName, NULL);
+				auge_make_path(graphic_path, NULL, graphic_base, wfd.cFileName, NULL);
 				auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
 
 				pMarker = new GraphicMarkerSymbolImpl();	
@@ -392,7 +419,7 @@ namespace auge
 #else
 		char local_path[AUGE_NAME_MAX];
 		memset(local_path, 0, AUGE_NAME_MAX);
-		auge_make_path(local_path,NULL,m_path.c_str(), AUGE_GRAPHIC_MARKER_BASE_PATH, NULL);
+		auge_make_path(local_path,NULL,m_path.c_str(), graphic_base, NULL);
 
 		DIR *dp = opendir(local_path);
 		if(dp!=NULL)
@@ -411,7 +438,7 @@ namespace auge
 							memset(graphic_path, 0, AUGE_PATH_MAX);
 							memset(file_path, 0, AUGE_PATH_MAX);
 
-							auge_make_path(graphic_path, NULL, AUGE_GRAPHIC_MARKER_BASE_PATH, dirp->d_name, NULL);
+							auge_make_path(graphic_path, NULL, graphic_base, dirp->d_name, NULL);
 							auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
 
 							pMarker = new GraphicMarkerSymbolImpl();	
