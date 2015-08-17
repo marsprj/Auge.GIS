@@ -39,7 +39,8 @@ namespace auge
 
 	private:
 		void			LoadVectorMarkers();
-		void			LoadGraphicSymbols(EnumSymbolImpl* pSymbols, const char* graphic_base);
+		void			LoadGraphicMarkerSymbols(EnumSymbolImpl* pSymbols, const char* graphic_base);
+		void			LoadGraphicFillSymbols(EnumSymbolImpl* pSymbols, const char* graphic_base);
 
 	private:
 		EnumSymbolImpl*	m_marker_symbols;

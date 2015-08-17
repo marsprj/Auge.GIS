@@ -49,7 +49,7 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	const char*	ContinentShelfRegionSymbolImpl::GetName()
 	{
-		return "SimpleRegion";
+		return "ContinentShelf";
 	}
 
 	const char*	ContinentShelfRegionSymbolImpl::GetIcon()
