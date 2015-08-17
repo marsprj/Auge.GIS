@@ -102,9 +102,9 @@ namespace auge
 		else if(g_stricmp(type, "Region")==0)
 		{
 			if(name==NULL)
-				pSymbols = pSymbolManager->GetRegionSymbols();
+				pSymbols = pSymbolManager->GetFillSymbols();
 			else
-				pSymbol = pSymbolManager->CreateMarkerSymbol(name);
+				pSymbol = pSymbolManager->CreateFillSymbol(name);
 		}
 		else
 		{
