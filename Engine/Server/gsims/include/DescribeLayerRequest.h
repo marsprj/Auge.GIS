@@ -48,6 +48,6 @@ namespace auge
 [ HTTP Get ]
 -------------------------------------------------------------------------
 user=user1&service=ims&version=1.0.0&request=DescribeLayer&name=world
-http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=DescribeLayer&name=world
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=DescribeLayer&mapName=world&layerName=cities
 
 ************************************************************************/
