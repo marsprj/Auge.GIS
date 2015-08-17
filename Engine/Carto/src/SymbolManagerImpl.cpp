@@ -400,7 +400,7 @@ namespace auge
 			struct dirent* dirp = NULL;
 			while((dirp = readdir(dp))!=NULL)
 			{	
-				if(dirp->d_type=='\b')
+//				if(dirp->d_type=='\b')
 				{
 					len = strlen(dirp->d_name); 
 					if(len>4)
