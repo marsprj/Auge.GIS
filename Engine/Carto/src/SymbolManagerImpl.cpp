@@ -537,7 +537,7 @@ namespace auge
 							pSymbol->SetPath(graphic_path);
 							pSymbol->SetFilePath(file_path);
 
-							pSymbols->Add(pMarker);
+							pSymbols->Add(pSymbol);
 						}
 					}
 				}
