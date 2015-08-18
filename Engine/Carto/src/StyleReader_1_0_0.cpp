@@ -455,7 +455,7 @@ namespace auge
 		else
 		{
 			const char* wellName = pxNode->GetContent();
-			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->CreateFillSymbol(wellName));
+			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->GetFillSymbol(wellName));
 		}
 		pSymbolizer->SetSymbol(pSymbol);
 

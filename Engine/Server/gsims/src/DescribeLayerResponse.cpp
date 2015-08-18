@@ -285,7 +285,6 @@ namespace auge
 
 	}
 
-
 	void DescribeLayerResponse::AddFeatureNode(XElement* pxLayer, FeatureClass* pFeatureClass)
 	{
 		XElement* pxClass = pxLayer->AddChild("Feature");
