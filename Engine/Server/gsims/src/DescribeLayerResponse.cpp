@@ -72,10 +72,10 @@ namespace auge
 		Layer* pLayer = m_pLayer;
 		
 		XElement* pxLayer = pxDoc->CreateRootNode("Layer_Capabilities", NULL, NULL);
-		pxLayer->SetNamespaceDeclaration("http://www.opengis.net/wms",NULL);
-		pxLayer->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
-		pxLayer->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
-		pxLayer->SetAttribute("version", "1.0.0", NULL);
+		//pxLayer->SetNamespaceDeclaration("http://www.opengis.net/wms",NULL);
+		//pxLayer->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
+		//pxLayer->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
+		pxLayer->SetAttribute("version", m_pRequest->GetVersion(), NULL);
 
 		const char* lname = pLayer->GetName();
 		XElement* pxLayer_2 = pxLayer->AddChild("Layer", NULL);				
@@ -99,7 +99,12 @@ namespace auge
 				pxLayerType->AddChildText("Feature");
 
 				FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-				AddLayerGeomTypeNode(pxLayer_2, pFeatureLayer);
+				// FeatureClass
+				FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();				
+				AddFeatureNode(pxLayer_2, pFeatureClass);
+				
+
+				// Style
 				Style* pStyle = pFeatureLayer->GetStyle();
 				if(pStyle!=NULL)
 				{
@@ -112,7 +117,7 @@ namespace auge
 				XElement* pxLayerType = pxLayer_2->AddChild("Type");
 				pxLayerType->AddChildText("Raster");
 
-				RasterLayer* pRasterLayer = static_cast<RasterLayer*>(pLayer);
+				RasterLayer* pRasterLayer = static_cast<RasterLayer*>(pLayer);				
 			}
 			break;
 		case augeLayerQuadServer:
@@ -220,20 +225,27 @@ namespace auge
 		pxNode->SetChildText(str);
 	}
 
-	void DescribeLayerResponse::AddLayerGeomTypeNode(XElement* pxLayer, FeatureLayer* pFeatureLayer)
+	void DescribeLayerResponse::AddFeatureNode(XElement* pxLayer, FeatureClass* pFeatureClass)
 	{
-		XElement* pxGeomType = pxLayer->AddChild("GeometryType", NULL);
-		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-		if(pFeatureClass!=NULL)
+		XElement* pxClass = pxLayer->AddChild("Feature");
+		if(pFeatureClass==NULL)
 		{
-			GField* pField = pFeatureClass->GetFields()->GetGeometryField();
-			if(pField!=NULL)
-			{
-				GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
-				const char* type = pGeometryFactory->Encode(pField->GetGeometryDef()->GeometryType());
-				pxGeomType->AddChildText(type);
-			}
+			return;
 		}
+		
+		XElement* pxGeomType = pxClass->AddChild("GeometryType", NULL);
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pField!=NULL)
+		{
+			GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+			const char* type = pGeometryFactory->Encode(pField->GetGeometryDef()->GeometryType());
+			pxGeomType->AddChildText(type);
+		}
+
+		char str[AUGE_NAME_MAX];
+		g_sprintf(str, "%d", pFeatureClass->GetCount());
+		XElement* pxCount = pxClass->AddChild("Count", NULL);
+		pxCount->AddChildText(str);
 	}
 	
 	//////////////////////////////////////////////////////////////////////////
