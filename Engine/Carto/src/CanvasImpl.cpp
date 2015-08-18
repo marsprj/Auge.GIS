@@ -149,7 +149,7 @@ namespace auge
 		pSymbolizer = pRule->GetSymbolizer();
 		if(pSymbolizer!=NULL)
 		{
-			DrawLayer(pLayer, pSymbolizer, pFilter);
+			DrawLayer(pLayer, pSymbolizer, pFilter, pRule->GetLimit());
 		}
 		
 		TextSymbolizer* pTextSymbolzer = NULL;
