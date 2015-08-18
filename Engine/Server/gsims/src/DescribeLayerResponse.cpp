@@ -350,7 +350,7 @@ namespace auge
 		pXNode = pxRaster->AddChild("Resolution_X", NULL);
 		pXNode->AddChildText(str);
 		g_sprintf(str, "%f", pRaster->GetResolution_Y());		
-		pXNode = pxRaster->AddChild("GetResolution_Y", NULL);
+		pXNode = pxRaster->AddChild("Resolution_Y", NULL);
 		pXNode->AddChildText(str);
 
 		//¿í¶È
