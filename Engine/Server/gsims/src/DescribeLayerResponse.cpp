@@ -294,7 +294,7 @@ namespace auge
 			return;
 		}
 
-		XElement* pxNode = pxClass->AddChild("ClassName", NULL);
+		XElement* pxNode = pxClass->AddChild("Name", NULL);
 		pxNode->AddChildText(pFeatureClass->GetName());
 
 		pxNode = pxClass->AddChild("GeometryType", NULL);
@@ -323,7 +323,7 @@ namespace auge
 
 		char str[AUGE_NAME_MAX];
 		// Ãû³Æ
-		XElement* pXNode = pxRaster->AddChild("RasterName", NULL);
+		XElement* pXNode = pxRaster->AddChild("Name", NULL);
 		pXNode->AddChildText(pRaster->GetName());		
 
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
