@@ -47,6 +47,12 @@ namespace auge
 
 	WebResponse* UpdateStyleHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
+		return NULL;
+	}
+
+	WebResponse* UpdateStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
+	{
+
 		UpdateStyleRequest* pRequest = static_cast<UpdateStyleRequest*>(pWebRequest);
 		WebResponse* pWebResponse = NULL;
 
@@ -56,7 +62,17 @@ namespace auge
 		const char* name = pRequest->GetName();
 		const char* text = pRequest->GetStyle();
 
-		RESULTCODE rc = pCartoManager->UpdateStyle(pUser->GetID(), name, text);
+		size_t text_len = strlen(text);
+		size_t buff_len = text_len << 1;
+		char* text_gbk = (char*)malloc(buff_len);
+		memset(text_gbk, 0, buff_len);
+		auge_encoding_convert_2("UTF-8", "GBK", text, text_len, text_gbk, &buff_len);
+
+		pLogger->Info(text_gbk,__FILE__,__LINE__);
+		
+		RESULTCODE rc = pCartoManager->UpdateStyle(pUser->GetID(), name, text_gbk);
+		free(text_gbk);
+
 		if(rc!=AG_SUCCESS) 
 		{
 			GError* pError = augeGetErrorInstance();
@@ -72,10 +88,6 @@ namespace auge
 			pWebResponse = pSusResponse;
 		}
 		return pWebResponse;
-	}
-
-	WebResponse* UpdateStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
-	{
-		return Execute(pWebRequest, pUser);
+		//return Execute(pWebRequest, pUser);
 	}
 }
