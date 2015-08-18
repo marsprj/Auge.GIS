@@ -10,6 +10,7 @@ namespace auge
 	class Map;
 	class Layer;
 	class EnumMap;
+	class Raster;
 	class FeatureClass;
 	class FeatureLayer;
 	class DescribeLayerRequest;
@@ -43,6 +44,8 @@ namespace auge
 
 		void	AddWebURLNode(XElement* pxLayer, const char* url);
 		void	AddThumbnailNode(XElement* pxThumbnail, Map* pMap);
+
+		void	AddRasterNode(XElement* pxLayer, Raster* pRaster);
 
 		void	Cleanup();
 		
