@@ -12,7 +12,7 @@ namespace auge
 	m_pgResult(NULL),
 	m_geom_findex(-1),
 	m_has_more_data(true),
-	m_fetch_count(200),
+	m_fetch_count(1000),
 	m_fetched_count(0),
 	m_last_fetched_count(0)
 	{
