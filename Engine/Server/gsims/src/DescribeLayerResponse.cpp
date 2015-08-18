@@ -227,13 +227,13 @@ namespace auge
 
 	void DescribeLayerResponse::AddFeatureNode(XElement* pxLayer, FeatureClass* pFeatureClass)
 	{
-		XElement* pxClass = pxLayer->AddChild("Feature");
-		if(pFeatureClass==NULL)
-		{
-			return;
-		}
+		//XElement* pxClass = pxLayer->AddChild("Feature");
+		//if(pFeatureClass==NULL)
+		//{
+		//	return;
+		//}
 		
-		XElement* pxGeomType = pxClass->AddChild("GeometryType", NULL);
+		XElement* pxGeomType = pxLayer->AddChild("GeometryType", NULL);
 		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
 		if(pField!=NULL)
 		{
@@ -244,7 +244,7 @@ namespace auge
 
 		char str[AUGE_NAME_MAX];
 		g_sprintf(str, "%d", pFeatureClass->GetCount());
-		XElement* pxCount = pxClass->AddChild("Count", NULL);
+		XElement* pxCount = pxLayer->AddChild("FeatureCount", NULL);
 		pxCount->AddChildText(str);
 	}
 	
