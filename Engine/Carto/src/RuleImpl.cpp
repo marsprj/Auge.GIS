@@ -10,7 +10,8 @@ namespace auge
 	m_pTextSymbolizer(NULL),
 	m_pFilter(NULL),
 	m_min_scale(0.0f),
-	m_max_scale(0.0f)
+	m_max_scale(0.0f),
+	m_limit(0)
 	{
 	}
 
