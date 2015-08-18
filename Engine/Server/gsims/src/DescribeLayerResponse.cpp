@@ -72,49 +72,49 @@ namespace auge
 		g_uint srid = 0;
 		Layer* pLayer = m_pLayer;
 		
-		XElement* pxLayer = pxDoc->CreateRootNode("Layer_Capabilities", NULL, NULL);
-		//pxLayer->SetNamespaceDeclaration("http://www.opengis.net/wms",NULL);
-		//pxLayer->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
-		//pxLayer->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
-		pxLayer->SetAttribute("version", m_pRequest->GetVersion(), NULL);
+		//XElement* pxLayer = pxDoc->CreateRootNode("Layer_Capabilities", NULL, NULL);
+		////pxLayer->SetNamespaceDeclaration("http://www.opengis.net/wms",NULL);
+		////pxLayer->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
+		////pxLayer->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
+		//pxLayer->SetAttribute("version", m_pRequest->GetVersion(), NULL);
 
 		const char* lname = pLayer->GetName();
-		XElement* pxLayer_2 = pxLayer->AddChild("Layer", NULL);				
-		pxLayer_2->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
-		pxLayer_2->SetAttribute("visible", pLayer->IsVisiable()?"1":"0", NULL);
+		XElement* pxLayer = pxDoc->CreateRootNode("Layer", NULL, NULL);//pxLayer->AddChild("Layer", NULL);				
+		pxLayer->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
+		pxLayer->SetAttribute("visible", pLayer->IsVisiable()?"1":"0", NULL);
 		g_sprintf(str,"%d",pLayer->GetID());
-		pxLayer_2->SetAttribute("id", str,NULL);
-		pxNode = pxLayer_2->AddChild("Name",NULL);
+		pxLayer->SetAttribute("id", str,NULL);
+		pxNode = pxLayer->AddChild("Name",NULL);
 		pxNode->SetChildText(lname);
-		pxNode = pxLayer_2->AddChild("Title",NULL);
+		pxNode = pxLayer->AddChild("Title",NULL);
 		pxNode->SetChildText(lname);
-		pxNode = pxLayer_2->AddChild("Abstract",NULL);
+		pxNode = pxLayer->AddChild("Abstract",NULL);
 		g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
-		pxNode = pxLayer_2->AddChild("CRS",NULL);
+		pxNode = pxLayer->AddChild("CRS",NULL);
 
 		switch(pLayer->GetType())
 		{
 		case augeLayerFeature:
 			{
-				XElement* pxLayerType = pxLayer_2->AddChild("Type");
+				XElement* pxLayerType = pxLayer->AddChild("Type");
 				pxLayerType->AddChildText("Feature");
 
 				FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
 				// FeatureClass
 				FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
 				srid = pFeatureClass->GetSRID();
-				AddFeatureNode(pxLayer_2, pFeatureClass);				
+				AddFeatureNode(pxLayer, pFeatureClass);				
 				// Style
 				Style* pStyle = pFeatureLayer->GetStyle();
 				if(pStyle!=NULL)
 				{
-					AddStyleNode(pxLayer_2, pStyle);
+					AddStyleNode(pxLayer, pStyle);
 				}
 			}
 			break;
 		case augeLayerRaster:
 			{
-				XElement* pxLayerType = pxLayer_2->AddChild("Type");
+				XElement* pxLayerType = pxLayer->AddChild("Type");
 				pxLayerType->AddChildText("Raster");
 				RasterLayer* pRasterLayer = static_cast<RasterLayer*>(pLayer);				
 				Raster* pRaster = pRasterLayer->GetRaster();
@@ -126,11 +126,11 @@ namespace auge
 			break;
 		case augeLayerQuadServer:
 			{
-				XElement* pxLayerType = pxLayer_2->AddChild("Type");
+				XElement* pxLayerType = pxLayer->AddChild("Type");
 				pxLayerType->AddChildText("QuadServer");
 
 				QuadServerLayer* pQuadServerLayer = static_cast<QuadServerLayer*>(pLayer);
-				AddWebURLNode(pxLayer_2, pQuadServerLayer->GetURL());
+				AddWebURLNode(pxLayer, pQuadServerLayer->GetURL());
 			}
 			break;
 		}
@@ -139,8 +139,8 @@ namespace auge
 		{
 			extent.Set(-180.f,-90.0f,180.0f,90.0f);
 		}
-		AddLayerGeographicBoundingNode(pxLayer_2, extent);
-		AddLayerBoundingNode(pxLayer_2, extent, srid);
+		AddLayerGeographicBoundingNode(pxLayer, extent);
+		AddLayerBoundingNode(pxLayer, extent, srid);
 	}
 
 	//////////////////////////////////////////////////////////////////////////
