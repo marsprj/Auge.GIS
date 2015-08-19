@@ -982,7 +982,7 @@ namespace auge
 		const char* wkt = pGeometry->AsText(true);
 
 		char srid[AUGE_NAME_MAX] = {0};
-		g_snprintf(srid, AUGE_BUFFER_MAX,"%d",pField->GetGeometryDef()->GetSRID());
+		g_snprintf(srid, AUGE_NAME_MAX,"%d",pField->GetGeometryDef()->GetSRID());
 
 		sql = "st_within(";
 		sql.append("st_geomfromtext(upper('");

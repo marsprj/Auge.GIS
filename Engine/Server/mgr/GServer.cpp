@@ -66,8 +66,8 @@ namespace auge
 
 			g_ulong ts = auge_get_time();
 
-			//const char* user_name = cgi["user"];
-			const char* user_name = "user1";
+			const char* user_name = cgi["user"];
+			//const char* user_name = "user1";
 			User* pUser = m_pUserManager->GetUser(user_name);
 			if(pUser==NULL)
 			{
@@ -93,8 +93,8 @@ namespace auge
 				}
 				else
 				{	
-					//switch(GetMethod())
-					switch(augeHttpPost)
+					switch(GetMethod())
+					//switch(augeHttpPost)
 					{
 					case augeHttpGet:
 						pWebResponse = DoGet(cgi, pUser);
@@ -180,41 +180,41 @@ namespace auge
 
 		const char* szService = NULL;
 		const char* conent_type = getenv("CONTENT_TYPE"); 
-		//if(conent_type==NULL)
-		//{
-		//	szService = cgi["service"];
-		//	szService = "wfs";
-		//	pWebEngine = m_pWebEngineManager->GetEngine(szService);
-		//	if(pWebEngine==NULL)
-		//	{
-		//		// wrong service engine
-		//		auge::WebExceptionResponse *pExpResponse = NULL;
-		//		pExpResponse = auge::augeCreateWebExceptionResponse();
-		//		pExpResponse->SetMessage(m_pError->GetLastError());
-		//		pWebResponse = pExpResponse;
-		//		return pWebResponse;
-		//	}
-		//	pWebRequest = pWebEngine->ParseRequest(cgi);
-		//	if(pWebRequest==NULL) 
-		//	{
-		//		// wrong service engine
-		//		auge::WebExceptionResponse *pExpResponse = NULL;
-		//		pExpResponse = auge::augeCreateWebExceptionResponse();
-		//		pExpResponse->SetMessage(m_pError->GetLastError());
-		//		pWebResponse = pExpResponse;
-		//		return pWebResponse;
-		//	}
-		//}
-		//else
+		if(conent_type==NULL)
 		{
-			//char msg[AUGE_MSG_MAX] = {0};
-			//g_sprintf(msg, "[Conent-Type]:%s", conent_type);
-			//GLogger *pLogger = augeGetLoggerInstance();
-			//pLogger->Debug(msg, __FILE__, __LINE__);
-			//if(!g_stricmp(conent_type,"text/xml"))
+			szService = cgi["service"];
+			szService = "wfs";
+			pWebEngine = m_pWebEngineManager->GetEngine(szService);
+			if(pWebEngine==NULL)
+			{
+				// wrong service engine
+				auge::WebExceptionResponse *pExpResponse = NULL;
+				pExpResponse = auge::augeCreateWebExceptionResponse();
+				pExpResponse->SetMessage(m_pError->GetLastError());
+				pWebResponse = pExpResponse;
+				return pWebResponse;
+			}
+			pWebRequest = pWebEngine->ParseRequest(cgi);
+			if(pWebRequest==NULL)
+			{
+				// wrong service engine
+				auge::WebExceptionResponse *pExpResponse = NULL;
+				pExpResponse = auge::augeCreateWebExceptionResponse();
+				pExpResponse->SetMessage(m_pError->GetLastError());
+				pWebResponse = pExpResponse;
+				return pWebResponse;
+			}
+		}
+		else
+		{
+			char msg[AUGE_MSG_MAX] = {0};
+			g_sprintf(msg, "[Conent-Type]:%s", conent_type);
+			GLogger *pLogger = augeGetLoggerInstance();
+			pLogger->Debug(msg, __FILE__, __LINE__);
+			if(!g_stricmp(conent_type,"text/xml"))
 			{
 				const char* mapName = cgi["mapName"];
-				//const char* xml_string = cgi["xml"];
+				const char* xml_string = cgi["xml"];
 				//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\"  mapName=\"world\" xmlns:topp=\"http://www.openplans.org/topp\"	xmlns:wfs=\"http://www.opengis.net/wfs\"	xmlns:ogc=\"http://www.opengis.net/ogc\"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"	xsi:schemaLocation=\"http://www.opengis.net/wfs	http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\">	<wfs:Query typeName=\"world:cities\">		<ogc:Filter>			<ogc:FeatureId fid=\"world.3\"/>		</ogc:Filter>	</wfs:Query></wfs:GetFeature>";
 				//const char* xml_string = "<wfs:Transaction service=\"WFS\" version=\"1.0.0\"  mapName=\"world\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:world=\"http://www.openplans.org/world\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-transaction.xsd http://www.openplans.org/cities  http://localhost:8080/geoserver/wfs/DescribeFeaturename?namename=world:cities\"><wfs:Insert><world:cities><world:the_geom><gml:Point srsName=\"http://www.opengis.net/gml/srs/epsg.xml#4326\"><gml:coordinates>33.086040496826172,68.963546752929687</gml:coordinates></gml:Point></world:the_geom><world:name>alley</world:name></world:cities></wfs:Insert><wfs:Update name=\"cities\"><wfs:Property><wfs:Name>name</wfs:Name><wfs:Value>xxxx</wfs:Value></wfs:Property><ogc:Filter><ogc:FeatureId fid=\"cities.1\"/></ogc:Filter></wfs:Update><wfs:Delete name=\"cities\"><ogc:Filter><ogc:PropertyIsEqualTo><ogc:PropertyName>gid</ogc:PropertyName><ogc:Literal>610</ogc:Literal></ogc:PropertyIsEqualTo></ogc:Filter></wfs:Delete></wfs:Transaction>";
 				//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\"  mapName=\"world\" xmlns:world=\"http://www.radi.ac.cn/world\"	xmlns:wfs=\"http://www.opengis.net/wfs\"	xmlns:ogc=\"http://www.opengis.net/ogc\"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"	xsi:schemaLocation=\"http://www.opengis.net/wfs	http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\">	<wfs:Query typeName=\"world:cities\">		<wfs:PropertyName>world:gid</wfs:PropertyName>		<wfs:PropertyName>world:name</wfs:PropertyName>		<wfs:PropertyName>world:the_geom</wfs:PropertyName>	</wfs:Query></wfs:GetFeature>";
@@ -234,7 +234,7 @@ namespace auge
 				//const char* xml_string = "<FeatureProject service=\"gps\" version=\"1.0.0\">  <Input>	<SourceName>test</SourceName>	<TypeName>cities</TypeName>  </Input>  <Output>	<SourceName>test</SourceName>	<TypeName>cities_900913_post</TypeName>	<SRID>900913</SRID>  </Output></FeatureProject>";
 				//const char* xml_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><wfs:GetFeature xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" service=\"WFS\" version=\"1.0.0\" outputFormat=\"GML2\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\" sourceName=\"test2\"><wfs:Query typeName=\"gc_aqi\"><wfs:PropertyName>aqi</wfs:PropertyName><ogc:Filter><ogc:PropertyIsEqualTo><ogc:PropertyName>time_point</ogc:PropertyName><ogc:Literal>2014-05-19 08:00:00</ogc:Literal></ogc:PropertyIsEqualTo></ogc:Filter></wfs:Query></wfs:GetFeature>";
 				//const char* xml_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><wfs:GetFeature xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" service=\"WFS\" version=\"1.0.0\" outputFormat=\"GML2\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\" sourceName=\"test2\"><wfs:Query typeName=\"gc_aqi\"><wfs:PropertyName>pm2_5</wfs:PropertyName><wfs:PropertyName>pos</wfs:PropertyName><wfs:PropertyName>position_name</wfs:PropertyName><ogc:Filter><ogc:And><ogc:PropertyIsEqualTo><ogc:PropertyName>time_point</ogc:PropertyName><ogc:Literal>2014-05-19 08:00:00</ogc:Literal></ogc:PropertyIsEqualTo><ogc:BBOX><ogc:PropertyName>pos</ogc:PropertyName><gml:Envelope xmlns:gml=\"http://www.opengis.net/gml\"><gml:lowerCorner>0.0 0.0</gml:lowerCorner><gml:upperCorner>180.0 90.0</gml:upperCorner></gml:Envelope></ogc:BBOX></ogc:And></ogc:Filter></wfs:Query></wfs:GetFeature>";
-				const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\" mapName=\"map2\" xmlns:world=\"www.world.ac.cn\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\"><wfs:Query typeName=\"country\">	<Filter>		<Within>			<PropertyName>shape</PropertyName> <gml:Point><gml:coordinates xmlns:gml=\"http://www.opengis.net/gml\" decimal=\".\" cs=\",\" ts=\" \">7.913751714677634,28.96000514403292</gml:coordinates></gml:Point>		</Within>	</Filter></wfs:Query></wfs:GetFeature>";
+				//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\" mapName=\"map2\" xmlns:world=\"www.world.ac.cn\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\"><wfs:Query typeName=\"country\">	<Filter>		<Within>			<PropertyName>shape</PropertyName> <gml:Point><gml:coordinates xmlns:gml=\"http://www.opengis.net/gml\" decimal=\".\" cs=\",\" ts=\" \">7.913751714677634,28.96000514403292</gml:coordinates></gml:Point>		</Within>	</Filter></wfs:Query></wfs:GetFeature>";
 				//m_pLogger->Trace("[Request]",__FILE__, __LINE__);
 				m_pLogger->Trace(xml_string,__FILE__, __LINE__);
 
@@ -299,38 +299,38 @@ namespace auge
 					return pWebResponse; 
 				}
 			}
-			//else 
-			//{
-			//	szService = cgi["service"];
-			//	if(service==NULL)
-			//	{
-			//		pLogger->Error("service is null",__FILE__,__LINE__);
-			//	}
-			//	else
-			//	{
-			//		pLogger->Error(service,__FILE__,__LINE__);
-			//	}
-			//	pWebEngine = m_pWebEngineManager->GetEngine(szService);
-			//	if(pWebEngine==NULL)
-			//	{
-			//		// wrong service engine
-			//		auge::WebExceptionResponse *pExpResponse = NULL;
-			//		pExpResponse = auge::augeCreateWebExceptionResponse();
-			//		pExpResponse->SetMessage(m_pError->GetLastError());
-			//		pWebResponse = pExpResponse;
-			//		return pWebResponse;
-			//	}
-			//	pWebRequest = pWebEngine->ParseRequest(cgi);
-			//	if(pWebRequest==NULL)
-			//	{
-			//		// wrong service engine
-			//		auge::WebExceptionResponse *pExpResponse = NULL;
-			//		pExpResponse = auge::augeCreateWebExceptionResponse();
-			//		pExpResponse->SetMessage(m_pError->GetLastError());
-			//		pWebResponse = pExpResponse;
-			//		return pWebResponse;
-			//	}
-			//}
+			else 
+			{
+				szService = cgi["service"];
+				if(service==NULL)
+				{
+					pLogger->Error("service is null",__FILE__,__LINE__);
+				}
+				else
+				{
+					pLogger->Error(service,__FILE__,__LINE__);
+				}
+				pWebEngine = m_pWebEngineManager->GetEngine(szService);
+				if(pWebEngine==NULL)
+				{
+					// wrong service engine
+					auge::WebExceptionResponse *pExpResponse = NULL;
+					pExpResponse = auge::augeCreateWebExceptionResponse();
+					pExpResponse->SetMessage(m_pError->GetLastError());
+					pWebResponse = pExpResponse;
+					return pWebResponse;
+				}
+				pWebRequest = pWebEngine->ParseRequest(cgi);
+				if(pWebRequest==NULL)
+				{
+					// wrong service engine
+					auge::WebExceptionResponse *pExpResponse = NULL;
+					pExpResponse = auge::augeCreateWebExceptionResponse();
+					pExpResponse->SetMessage(m_pError->GetLastError());
+					pWebResponse = pExpResponse;
+					return pWebResponse;
+				}
+			}
 		}
 
 		pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, pUser);
