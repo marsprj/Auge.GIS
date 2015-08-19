@@ -394,4 +394,26 @@ namespace auge
 	{
 		return NULL;
 	}
+
+	const char* RasterFactoryImpl::Encoding(augePixelType type)
+	{
+		switch(type)
+		{
+		case augePixelByte:
+			return "Byte";
+		case augePixelUInt16:
+			return "UInt16";
+		case augePixelInt16:
+			return "Int16";
+		case augePixelUInt32:
+			return "UInt32";
+		case augePixelInt32:
+			return "Int32";
+		case augePixelFloat32:
+			return "Float32";
+		case augePixelDouble:
+			return "Double";
+		}
+		return "Byte";
+	}
 }

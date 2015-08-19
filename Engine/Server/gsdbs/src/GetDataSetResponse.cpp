@@ -253,7 +253,7 @@ namespace auge
 
 		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
 		augeGeometryType type = pField->GetGeometryDef()->GeometryType();
-		pStyle = pStyleFactory->CreateFeatureStyle(type, 10000);		
+		pStyle = pStyleFactory->CreateFeatureStyle(type, 5000);		
 
 		GColor bgColor(255,255,255,255);
 		pCanvas = pCartoFactory->CreateCanvas2D(width, height);

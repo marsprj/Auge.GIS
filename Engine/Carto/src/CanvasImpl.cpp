@@ -149,7 +149,7 @@ namespace auge
 		pSymbolizer = pRule->GetSymbolizer();
 		if(pSymbolizer!=NULL)
 		{
-			DrawLayer(pLayer, pSymbolizer, pFilter);
+			DrawLayer(pLayer, pSymbolizer, pFilter, pRule->GetLimit());
 		}
 		
 		TextSymbolizer* pTextSymbolzer = NULL;
@@ -237,6 +237,11 @@ namespace auge
 		}
 
 		pCursor = pFeatureClass->Query(pQuery);
+		if(pCursor==NULL)
+		{
+			pQuery->Release();
+			return;
+		}
 
 		int fid = 0;
 		g_uchar* wkb = NULL;
@@ -383,14 +388,24 @@ namespace auge
 		auge::Feature	*pFeature = NULL;
 		auge::GLabel	*pLabel = NULL;
 
+
+		pCursor = pFeatureClass->Query(pViewFilter);
+		if(pCursor==NULL)
+		{
+			if(pViewFilter!=NULL)
+			{
+				AUGE_SAFE_RELEASE(pViewFilter);
+			}
+			return;
+		}
+
 		Font* pFont = pSymbolizer->GetFont();
 		m_pRenderer->Save();
 		m_pRenderer->SetFont(pFont->GetFamily(),
-							pFont->GetSize(),
-							pFont->GetStyle(),
-							pFont->GetWeight());
+			pFont->GetSize(),
+			pFont->GetStyle(),
+			pFont->GetWeight());
 
-		pCursor = pFeatureClass->Query(pViewFilter);
 		while((pFeature=pCursor->NextFeature())!=NULL)
 		{
 			pGeometry = pFeature->GetGeometry();
@@ -469,6 +484,10 @@ namespace auge
 		FeatureClass	*pFeatureClass = pLayer->GetFeatureClass();
 
 		pCursor = pFeatureClass->Query();
+		if(pCursor==NULL)
+		{
+			return;
+		}
 
 		const char* label_text = NULL;
 		g_uchar* wkb = NULL;

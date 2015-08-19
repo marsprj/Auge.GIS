@@ -69,59 +69,68 @@ namespace auge
 		XElement  *pxRoot = NULL;
 		char str[AUGE_MSG_MAX];
 
+		g_uint srid = 0;
 		Layer* pLayer = m_pLayer;
 		
-		XElement* pxLayer = pxDoc->CreateRootNode("Layer_Capabilities", NULL, NULL);
-		pxLayer->SetNamespaceDeclaration("http://www.opengis.net/wms",NULL);
-		pxLayer->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
-		pxLayer->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
-		pxLayer->SetAttribute("version", "1.0.0", NULL);
+		//XElement* pxLayer = pxDoc->CreateRootNode("Layer_Capabilities", NULL, NULL);
+		////pxLayer->SetNamespaceDeclaration("http://www.opengis.net/wms",NULL);
+		////pxLayer->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
+		////pxLayer->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
+		//pxLayer->SetAttribute("version", m_pRequest->GetVersion(), NULL);
 
 		const char* lname = pLayer->GetName();
-		XElement* pxLayer_2 = pxLayer->AddChild("Layer", NULL);				
-		pxLayer_2->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
-		pxLayer_2->SetAttribute("visible", pLayer->IsVisiable()?"1":"0", NULL);
+		XElement* pxLayer = pxDoc->CreateRootNode("Layer", NULL, NULL);//pxLayer->AddChild("Layer", NULL);				
+		pxLayer->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
+		pxLayer->SetAttribute("visible", pLayer->IsVisiable()?"1":"0", NULL);
 		g_sprintf(str,"%d",pLayer->GetID());
-		pxLayer_2->SetAttribute("id", str,NULL);
-		pxNode = pxLayer_2->AddChild("Name",NULL);
+		pxLayer->SetAttribute("id", str,NULL);
+		pxNode = pxLayer->AddChild("Name",NULL);
 		pxNode->SetChildText(lname);
-		pxNode = pxLayer_2->AddChild("Title",NULL);
+		pxNode = pxLayer->AddChild("Title",NULL);
 		pxNode->SetChildText(lname);
-		pxNode = pxLayer_2->AddChild("Abstract",NULL);
+		pxNode = pxLayer->AddChild("Abstract",NULL);
 		g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
-		pxNode = pxLayer_2->AddChild("CRS",NULL);
+		pxNode = pxLayer->AddChild("CRS",NULL);
 
 		switch(pLayer->GetType())
 		{
 		case augeLayerFeature:
 			{
-				XElement* pxLayerType = pxLayer_2->AddChild("Type");
+				XElement* pxLayerType = pxLayer->AddChild("Type");
 				pxLayerType->AddChildText("Feature");
 
 				FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-				AddLayerGeomTypeNode(pxLayer_2, pFeatureLayer);
+				// FeatureClass
+				FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+				srid = pFeatureClass->GetSRID();
+				AddFeatureNode(pxLayer, pFeatureClass);				
+				// Style
 				Style* pStyle = pFeatureLayer->GetStyle();
 				if(pStyle!=NULL)
 				{
-					AddStyleNode(pxLayer_2, pStyle);
+					AddStyleNode(pxLayer, pStyle);
 				}
 			}
 			break;
 		case augeLayerRaster:
 			{
-				XElement* pxLayerType = pxLayer_2->AddChild("Type");
+				XElement* pxLayerType = pxLayer->AddChild("Type");
 				pxLayerType->AddChildText("Raster");
+				RasterLayer* pRasterLayer = static_cast<RasterLayer*>(pLayer);				
+				Raster* pRaster = pRasterLayer->GetRaster();
+				srid = pRasterLayer->GetSRID();
 
-				RasterLayer* pRasterLayer = static_cast<RasterLayer*>(pLayer);
+				AddRasterNode(pxLayer, pRaster);
+
 			}
 			break;
 		case augeLayerQuadServer:
 			{
-				XElement* pxLayerType = pxLayer_2->AddChild("Type");
+				XElement* pxLayerType = pxLayer->AddChild("Type");
 				pxLayerType->AddChildText("QuadServer");
 
 				QuadServerLayer* pQuadServerLayer = static_cast<QuadServerLayer*>(pLayer);
-				AddWebURLNode(pxLayer_2, pQuadServerLayer->GetURL());
+				AddWebURLNode(pxLayer, pQuadServerLayer->GetURL());
 			}
 			break;
 		}
@@ -130,8 +139,8 @@ namespace auge
 		{
 			extent.Set(-180.f,-90.0f,180.0f,90.0f);
 		}
-		AddLayerGeographicBoundingNode(pxLayer_2, extent);
-		AddLayerBoundingNode(pxLayer_2, extent, 0);
+		AddLayerGeographicBoundingNode(pxLayer, extent);
+		AddLayerBoundingNode(pxLayer, extent, srid);
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -220,22 +229,6 @@ namespace auge
 		pxNode->SetChildText(str);
 	}
 
-	void DescribeLayerResponse::AddLayerGeomTypeNode(XElement* pxLayer, FeatureLayer* pFeatureLayer)
-	{
-		XElement* pxGeomType = pxLayer->AddChild("GeometryType", NULL);
-		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-		if(pFeatureClass!=NULL)
-		{
-			GField* pField = pFeatureClass->GetFields()->GetGeometryField();
-			if(pField!=NULL)
-			{
-				GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
-				const char* type = pGeometryFactory->Encode(pField->GetGeometryDef()->GeometryType());
-				pxGeomType->AddChildText(type);
-			}
-		}
-	}
-	
 	//////////////////////////////////////////////////////////////////////////
 	// Add Maps
 	//////////////////////////////////////////////////////////////////////////
@@ -290,5 +283,82 @@ namespace auge
 		pxNode = pxLayer->AddChild("URL");
 		pxNode->AddChildText(url);
 
+	}
+
+	void DescribeLayerResponse::AddFeatureNode(XElement* pxLayer, FeatureClass* pFeatureClass)
+	{
+		XElement* pxClass = pxLayer->AddChild("Feature");
+		if(pFeatureClass==NULL)
+		{
+			return;
+		}
+
+		XElement* pxNode = pxClass->AddChild("Name", NULL);
+		pxNode->AddChildText(pFeatureClass->GetName());
+
+		pxNode = pxClass->AddChild("GeometryType", NULL);
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pField!=NULL)
+		{
+			GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+			const char* type = pGeometryFactory->Encode(pField->GetGeometryDef()->GeometryType());
+			pxNode->AddChildText(type);
+		}
+
+		char str[AUGE_NAME_MAX];
+		g_sprintf(str, "%d", pFeatureClass->GetCount());
+		pxNode = pxClass->AddChild("FeatureCount", NULL);
+		pxNode->AddChildText(str);
+	}
+
+	void DescribeLayerResponse::AddRasterNode(XElement* pxLayer, Raster* pRaster)
+	{
+		XElement* pxRaster = pxLayer->AddChild("Raster", NULL);
+
+		if(pRaster==NULL)
+		{
+			return;
+		}
+
+		char str[AUGE_NAME_MAX];
+		// 名称
+		XElement* pXNode = pxRaster->AddChild("Name", NULL);
+		pXNode->AddChildText(pRaster->GetName());		
+
+		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
+		//波段
+		g_sprintf(str, "%d", pRaster->GetBandCount());
+		pXNode = pxRaster->AddChild("Bands", NULL);
+		pXNode->AddChildText(str);
+
+		// 格式
+		pXNode = pxRaster->AddChild("Format", NULL);
+		pXNode->AddChildText(pRaster->GetFormat());
+		
+		//像素类型
+		pXNode = pxRaster->AddChild("PixelType", NULL);
+		pXNode->AddChildText(pRasterFactory->Encoding(pRaster->GetPixelType()));
+
+		//像素宽度
+		g_sprintf(str, "%d", pRaster->GetPixelSize());
+		pXNode = pxRaster->AddChild("PixelSize", NULL);
+		pXNode->AddChildText(str);
+
+		//分辨率
+		g_sprintf(str, "%f", pRaster->GetResolution_X());		
+		pXNode = pxRaster->AddChild("Resolution_X", NULL);
+		pXNode->AddChildText(str);
+		g_sprintf(str, "%f", pRaster->GetResolution_Y());		
+		pXNode = pxRaster->AddChild("Resolution_Y", NULL);
+		pXNode->AddChildText(str);
+
+		//宽度
+		g_sprintf(str, "%d", pRaster->GetWidth());		
+		pXNode = pxRaster->AddChild("Width", NULL);
+		pXNode->AddChildText(str);
+		//高度
+		g_sprintf(str, "%d", pRaster->GetHeight());		
+		pXNode = pxRaster->AddChild("Height", NULL);
+		pXNode->AddChildText(str);
 	}
 }

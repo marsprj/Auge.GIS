@@ -10,6 +10,8 @@ namespace auge
 	class Map;
 	class Layer;
 	class EnumMap;
+	class Raster;
+	class FeatureClass;
 	class FeatureLayer;
 	class DescribeLayerRequest;
 	class Style;
@@ -34,7 +36,7 @@ namespace auge
 
 		void	WriteLayer(XDocument* pxDoc);
 
-		void	AddLayerGeomTypeNode(XElement* pxLayer, FeatureLayer* pFeatureLayer);
+		void	AddFeatureNode(XElement* pxLayer, FeatureClass* pFeatureClass);
 		void	AddLayerGeographicBoundingNode(XElement* pxLayer, GEnvelope& extent);
 		void	AddLayerBoundingNode(XElement* pxParent, GEnvelope& extent, int srid);
 		void	AddViewerNode(XElement* pxParent, GEnvelope& extent, int srid);
@@ -42,6 +44,8 @@ namespace auge
 
 		void	AddWebURLNode(XElement* pxLayer, const char* url);
 		void	AddThumbnailNode(XElement* pxThumbnail, Map* pMap);
+
+		void	AddRasterNode(XElement* pxLayer, Raster* pRaster);
 
 		void	Cleanup();
 		

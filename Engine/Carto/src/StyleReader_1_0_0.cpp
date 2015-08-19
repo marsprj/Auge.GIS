@@ -455,7 +455,7 @@ namespace auge
 		else
 		{
 			const char* wellName = pxNode->GetContent();
-			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->CreateFillSymbol(wellName));
+			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->GetFillSymbol(wellName));
 		}
 		pSymbolizer->SetSymbol(pSymbol);
 
@@ -474,9 +474,15 @@ namespace auge
 				nodeName = pxNode->GetName();
 				if(g_stricmp(nodeName, AUGE_SLD_FILL)==0)
 				{
-					//ReadFill(pSymbolizer, pxNode);
-					Fill* pFill = ReadFill(pxNode);
-					pSymbol->SetFill(pFill);
+					if(!pSymbol->IsGraphic())
+					{
+						//ReadFill(pSymbolizer, pxNode);
+						Fill* pFill = ReadFill(pxNode);
+						if(pFill!=NULL)
+						{
+							pSymbol->SetFill(pFill);
+						}
+					}
 				}
 				else if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
 				{
