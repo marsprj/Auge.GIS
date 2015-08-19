@@ -25,6 +25,7 @@ namespace auge
 		virtual const char*			GetIcon();
 		virtual augeSymbolizerType	GetType();
 		virtual RESULTCODE			Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform);
+		virtual Symbol*				Clone();
 
 		virtual void				SetOpacity(float opacity);
 		virtual float				GetOpacity();

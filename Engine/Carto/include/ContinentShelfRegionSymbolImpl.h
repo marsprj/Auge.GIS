@@ -23,6 +23,7 @@ namespace auge
 		virtual augeSymbolizerType	GetType();
 		virtual bool				IsGraphic();
 		virtual RESULTCODE			Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform);
+		virtual Symbol*				Clone();
 				
 		virtual augeMarkerType		GetMarkType();
 

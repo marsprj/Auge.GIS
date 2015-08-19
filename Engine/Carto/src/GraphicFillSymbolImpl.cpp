@@ -257,4 +257,19 @@ namespace auge
 
 		cairo_destroy(mask_cairo);
 	}
+
+	Symbol*	GraphicFillSymbolImpl::Clone()
+	{
+		GraphicFillSymbolImpl* pSymbol = new GraphicFillSymbolImpl();
+		pSymbol->SetName(m_name.c_str());
+		pSymbol->SetPath(m_icon_path.c_str());
+		pSymbol->SetFilePath(m_file_path.c_str());
+		pSymbol->SetOpacity(m_opacity);
+		pSymbol->SetStroke(m_pStroke);
+		if(m_pStroke)
+		{
+			m_pStroke->AddRef();
+		}
+		return pSymbol;
+	}
 }

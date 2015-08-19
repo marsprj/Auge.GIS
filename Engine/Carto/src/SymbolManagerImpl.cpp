@@ -137,8 +137,7 @@ namespace auge
 			pSymbol = *iter;
 			if(g_stricmp(pSymbol->GetName(), name)==0)
 			{
-				pSymbol->AddRef();
-				return (MarkerSymbol*)pSymbol;
+				return (MarkerSymbol*)(pSymbol->Clone());
 			}
 		}
 
@@ -161,8 +160,7 @@ namespace auge
 			pSymbol = *iter;
 			if(g_stricmp(pSymbol->GetName(), name)==0)
 			{
-				pSymbol->AddRef();
-				return (FillSymbol*)pSymbol;
+				return (FillSymbol*)(pSymbol->Clone());
 			}
 		}
 

@@ -298,4 +298,9 @@ namespace auge
 	{
 		cairo_surface_write_to_png(m_icon, icon_path);
 	}
+
+	Symbol*	PentagonMarkerImpl::Clone()
+	{
+		return (new PentagonMarkerImpl());
+	}
 }

@@ -169,4 +169,16 @@ namespace auge
 			m_cairo = cairo_create(m_icon);
 		}
 	}
+
+	Symbol*	GraphicMarkerSymbolImpl::Clone()
+	{
+		GraphicMarkerSymbolImpl* pMarker = new GraphicMarkerSymbolImpl();
+		pMarker->SetName(m_name.c_str());
+		pMarker->SetPath(m_icon_path.c_str());
+		pMarker->SetFilePath(m_file_path.c_str());
+		pMarker->SetOpacity(m_opacity);
+		pMarker->SetSize(m_size);
+		pMarker->SetRotation(m_rotation);
+		return pMarker;
+	}
 }

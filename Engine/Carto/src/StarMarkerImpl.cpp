@@ -304,4 +304,9 @@ namespace auge
 	{
 		cairo_surface_write_to_png(m_icon, icon_path);
 	}
+
+	Symbol*	StarMarkerImpl::Clone()
+	{
+		return (new StarMarkerImpl());
+	}
 }

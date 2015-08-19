@@ -24,6 +24,7 @@ namespace auge
 		virtual bool				IsGraphic();
 		virtual augeSymbolizerType	GetType();
 		virtual RESULTCODE			Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform);
+		virtual Symbol*				Clone();
 
 		virtual Stroke*				GetStroke();
 		virtual void				SetStroke(Stroke* pStroke);

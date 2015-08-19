@@ -452,6 +452,7 @@ namespace auge
 		virtual augeSymbolizerType	GetType() = 0;
 		virtual bool				IsGraphic() = 0;
 		virtual RESULTCODE			Draw(Geometry* pGeometry, Renderer* pRenderer, Transformation* pTransform) = 0;
+		virtual Symbol*				Clone() = 0;
 	};
 
 	class MarkerSymbol : public Symbol
