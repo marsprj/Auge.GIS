@@ -21,6 +21,11 @@ namespace auge
 		return "RegisterDataSource";
 	}
 
+	const char*	RegisterDataSourceHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	RegisterDataSourceHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RegisterDataSourceRequest* pRequest = new RegisterDataSourceRequest();

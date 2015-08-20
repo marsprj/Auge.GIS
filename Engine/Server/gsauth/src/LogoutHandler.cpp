@@ -22,6 +22,11 @@ namespace auge
 		return "Logout";
 	}
 
+	const char*	LogoutHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	LogoutHandler::ParseRequest(rude::CGI& cgi)
 	{
 		LogoutRequest* pRequest = new LogoutRequest();

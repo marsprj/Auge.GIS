@@ -21,6 +21,11 @@ namespace auge
 		return "CreateMap";
 	}
 
+	const char*	CreateMapHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	CreateMapHandler::ParseRequest(rude::CGI& cgi)
 	{
 		CreateMapRequest* pRequest = new CreateMapRequest();

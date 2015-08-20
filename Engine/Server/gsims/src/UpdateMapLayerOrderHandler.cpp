@@ -20,6 +20,11 @@ namespace auge
 		return "UpdateMapLayerOrder";
 	}
 
+	const char*	UpdateMapLayerOrderHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	UpdateMapLayerOrderHandler::ParseRequest(rude::CGI& cgi)
 	{
 		UpdateMapLayerOrderRequest* pRequest = new UpdateMapLayerOrderRequest();

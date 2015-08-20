@@ -28,6 +28,11 @@ namespace auge
 		return "CreateFolder";
 	}
 
+	const char*	CreateFolderHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	CreateFolderHandler::ParseRequest(rude::CGI& cgi)
 	{
 		CreateFolderRequest* pRequest = new CreateFolderRequest();

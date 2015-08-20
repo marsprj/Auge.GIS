@@ -20,6 +20,11 @@ namespace auge
 		return "CreateService";
 	}
 
+	const char*	CreateServiceHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	CreateServiceHandler::ParseRequest(rude::CGI& cgi)
 	{
 		CreateServiceRequest* pRequest = new CreateServiceRequest();

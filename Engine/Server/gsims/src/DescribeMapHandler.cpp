@@ -22,6 +22,11 @@ namespace auge
 		return "DescribeMap";
 	}
 
+	const char*	DescribeMapHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	DescribeMapHandler::ParseRequest(rude::CGI& cgi)
 	{
 		DescribeMapRequest* pRequest = new DescribeMapRequest();

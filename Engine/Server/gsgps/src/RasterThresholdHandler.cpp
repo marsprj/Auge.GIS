@@ -23,6 +23,11 @@ namespace auge
 		return "RasterThreshold";
 	}
 
+	const char*	RasterThresholdHandler::GetDescription()
+	{
+		return "¶þÖµ»¯";
+	}
+
 	WebRequest*	RasterThresholdHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RasterThresholdRequest* pRequest = new RasterThresholdRequest();

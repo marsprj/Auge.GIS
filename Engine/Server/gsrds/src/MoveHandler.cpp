@@ -21,6 +21,11 @@ namespace auge
 		return "Move";
 	}
 
+	const char*	MoveHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	MoveHandler::ParseRequest(rude::CGI& cgi)
 	{
 		MoveRequest* pRequest = new MoveRequest();

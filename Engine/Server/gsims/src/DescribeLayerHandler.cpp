@@ -22,6 +22,11 @@ namespace auge
 		return "DescribeLayer";
 	}
 
+	const char*	DescribeLayerHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	DescribeLayerHandler::ParseRequest(rude::CGI& cgi)
 	{
 		DescribeLayerRequest* pRequest = new DescribeLayerRequest();

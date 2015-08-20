@@ -20,6 +20,11 @@ namespace auge
 		return "SaveMap";
 	}
 
+	const char*	SaveMapHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	SaveMapHandler::ParseRequest(rude::CGI& cgi)
 	{
 		return NULL;

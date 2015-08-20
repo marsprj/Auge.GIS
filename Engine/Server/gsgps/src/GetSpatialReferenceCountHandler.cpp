@@ -21,6 +21,11 @@ namespace auge
 		return "GetSpatialReferenceCount";
 	}
 
+	const char*	GetSpatialReferenceCountHandler::GetDescription()
+	{
+		return "¿Õ¼ä²Î¿¼";
+	}
+
 	WebRequest*	GetSpatialReferenceCountHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetSpatialReferenceCountRequest* pRequest = new GetSpatialReferenceCountRequest();

@@ -27,6 +27,11 @@ namespace auge
 		return "GetPreview";
 	}
 
+	const char*	GetPreviewHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetPreviewHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetPreviewRequest* pRequest = new GetPreviewRequest();

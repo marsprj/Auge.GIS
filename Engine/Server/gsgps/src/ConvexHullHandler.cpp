@@ -28,6 +28,11 @@ namespace auge
 		return "ConvexHull";
 	}
 
+	const char*	ConvexHullHandler::GetDescription()
+	{
+		return "Í¹°ü";
+	}
+
 	WebRequest*	ConvexHullHandler::ParseRequest(rude::CGI& cgi)
 	{
 		ConvexHullRequest* pRequest = new ConvexHullRequest();

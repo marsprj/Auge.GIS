@@ -21,6 +21,11 @@ namespace auge
 	{
 		return "SetStyle";
 	}
+
+	const char*	SetStyleHandler::GetDescription()
+	{
+		return GetName();
+	}
 	 
 	WebRequest*	SetStyleHandler::ParseRequest(rude::CGI& cgi)
 	{

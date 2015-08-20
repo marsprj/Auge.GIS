@@ -23,6 +23,11 @@ namespace auge
 		return "GetValue";
 	}
 
+	const char*	GetValueHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest* GetValueHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetValueRequest* pRequest = new GetValueRequest();

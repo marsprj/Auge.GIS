@@ -23,6 +23,11 @@ namespace auge
 		return "RasterStretch";
 	}
 
+	const char*	RasterStretchHandler::GetDescription()
+	{
+		return "ª“∂»¿≠…Ï";
+	}
+
 	WebRequest*	RasterStretchHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RasterStretchRequest* pRequest = new RasterStretchRequest();

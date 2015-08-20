@@ -28,6 +28,11 @@ namespace auge
 		return "Buffer";
 	}
 
+	const char*	BufferHandler::GetDescription()
+	{
+		return "»º³åÇø";
+	}
+
 	WebRequest*	BufferHandler::ParseRequest(rude::CGI& cgi)
 	{
 		BufferRequest* pRequest = new BufferRequest();

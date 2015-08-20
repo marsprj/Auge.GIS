@@ -20,6 +20,11 @@ namespace auge
 		return "GetFont";
 	}
 
+	const char*	GetFontHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetFontHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetFontRequest* pRequest = new GetFontRequest();

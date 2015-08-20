@@ -29,6 +29,11 @@ namespace auge
 		return "RemoveRaster";
 	}
 
+	const char*	RemoveRasterHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	RemoveRasterHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RemoveRasterRequest* pRequest = new RemoveRasterRequest();

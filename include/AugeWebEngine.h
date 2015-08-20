@@ -56,7 +56,7 @@ namespace auge
 		virtual ~WebHandler(){}
 	public:
 		virtual const char*		GetName() = 0;
-		//virtual const char*		GetDescription() = 0;
+		virtual const char*		GetDescription() = 0;
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi) = 0;
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi, const char* mapName) = 0;
 		//virtual WebRequest*		ParseRequest(rude::CGI& cgi, WebContext* pWebContext=NULL, Map* pMap=NULL) = 0;

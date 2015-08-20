@@ -24,6 +24,11 @@ namespace auge
 		return "GetDataSet";
 	}
 
+	const char*	GetDataSetHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetDataSetHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetDataSetRequest* pRequest = new GetDataSetRequest();

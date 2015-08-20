@@ -21,6 +21,11 @@ namespace auge
 		return "RemoveStyle";
 	}
 
+	const char*	RemoveStyleHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	RemoveStyleHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RemoveStyleRequest* pRequest = new RemoveStyleRequest();

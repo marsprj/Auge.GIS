@@ -20,6 +20,12 @@ namespace auge
 		return "RemoveService";
 	}
 
+	const char*	RemoveServiceHandler::GetDescription()
+	{
+		return GetName();
+	}
+
+
 	WebRequest*	RemoveServiceHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RemoveServiceRequest* pRequest = new RemoveServiceRequest();

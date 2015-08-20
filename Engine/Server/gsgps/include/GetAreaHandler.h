@@ -23,7 +23,7 @@ namespace auge
 		virtual ~GetAreaHandler();
 	public:
 		virtual const char*		GetName();
-
+		virtual const char*		GetDescription();
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi);
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi, const char* mapName);
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc, const char* mapName);

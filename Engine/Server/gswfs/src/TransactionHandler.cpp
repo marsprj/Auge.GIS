@@ -26,6 +26,11 @@ namespace auge
 		return "Transaction";
 	}
 
+	const char*	TransactionHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	TransactionHandler::ParseRequest(rude::CGI& cgi)
 	{
 		return NULL;

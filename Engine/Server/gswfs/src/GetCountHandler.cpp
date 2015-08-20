@@ -25,6 +25,11 @@ namespace auge
 		return "GetCount";
 	}
 
+	const char*	GetCountHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetCountHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetCountRequest* pRequest = new GetCountRequest();

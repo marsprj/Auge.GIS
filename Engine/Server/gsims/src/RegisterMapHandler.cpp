@@ -21,6 +21,11 @@ namespace auge
 		return "RegisterMap";
 	}
 
+	const char*	RegisterMapHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	RegisterMapHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RegisterMapRequest* pRequest = new RegisterMapRequest();

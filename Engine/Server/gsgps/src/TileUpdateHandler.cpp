@@ -26,6 +26,11 @@ namespace auge
 		return "UpdateTile";
 	}
 
+	const char*	UpdateTileHandler::GetDescription()
+	{
+		return "ÍßÆ¬¸üÐÂ";
+	}
+
 	WebRequest*	UpdateTileHandler::ParseRequest(rude::CGI& cgi)
 	{
 		UpdateTileRequest* pRequest = new UpdateTileRequest();

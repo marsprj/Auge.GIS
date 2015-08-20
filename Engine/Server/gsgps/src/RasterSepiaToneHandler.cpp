@@ -23,6 +23,11 @@ namespace auge
 		return "RasterSepiaTone";
 	}
 
+	const char*	RasterSepiaToneHandler::GetDescription()
+	{
+		return "¾ÉÕÕÆ¬Ğ§¹û";
+	}
+
 	WebRequest*	RasterSepiaToneHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RasterSepiaToneRequest* pRequest = new RasterSepiaToneRequest();

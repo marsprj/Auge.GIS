@@ -26,6 +26,11 @@ namespace auge
 		return "GetFeature";
 	}
 
+	const char*	GetFeatureHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetFeatureHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetFeatureRequest* pRequest = new GetFeatureRequest();

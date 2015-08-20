@@ -20,6 +20,11 @@ namespace auge
 		return "TryConnection";
 	}
 
+	const char*	TryConnectionHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	TryConnectionHandler::ParseRequest(rude::CGI& cgi)
 	{
 		TryConnectionRequest* pRequest = new TryConnectionRequest();

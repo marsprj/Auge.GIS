@@ -22,6 +22,11 @@ namespace auge
 		return "DemSlope";
 	}
 
+	const char*	DemSlopeHandler::GetDescription()
+	{
+		return "ÆÂ¶È";
+	}
+
 	WebRequest*	DemSlopeHandler::ParseRequest(rude::CGI& cgi)
 	{
 		DemSlopeRequest* pRequest = new DemSlopeRequest();

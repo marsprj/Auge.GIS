@@ -19,6 +19,11 @@ namespace auge
 		return "GetCapabilities";
 	}
 
+	const char*	CapabilitiesHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi)
 	{
 		CapabilitiesRequest* pRequest = new CapabilitiesRequest();

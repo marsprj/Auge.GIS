@@ -23,6 +23,11 @@ namespace auge
 		return "RasterGraylize";
 	}
 
+	const char*	RasterGraylizeHandler::GetDescription()
+	{
+		return "²ÊÉ«Í¼Ïñ»Ò¶È»¯";
+	}
+
 	WebRequest*	RasterGraylizeHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RasterGraylizeRequest* pRequest = new RasterGraylizeRequest();

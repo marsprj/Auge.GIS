@@ -24,6 +24,11 @@ namespace auge
 		return "DescribeTileStore";
 	}
 
+	const char*	DescribeTileStoreHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	DescribeTileStoreHandler::ParseRequest(rude::CGI& cgi)
 	{
 		DescribeTileStoreRequest* pRequest = new DescribeTileStoreRequest();

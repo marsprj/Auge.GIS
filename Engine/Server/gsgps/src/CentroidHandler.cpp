@@ -26,6 +26,11 @@ namespace auge
 		return "Centroid";
 	}
 
+	const char*	CentroidHandler::GetDescription()
+	{
+		return "ÖÐÐÄµã";
+	}
+
 	WebRequest*	CentroidHandler::ParseRequest(rude::CGI& cgi)
 	{
 		CentroidRequest* pRequest = new CentroidRequest();

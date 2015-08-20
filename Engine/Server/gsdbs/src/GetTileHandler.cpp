@@ -22,6 +22,11 @@ namespace auge
 		return "GetTile";
 	}
 
+	const char*	GetTileHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetTileHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetTileRequest* pRequest = new GetTileRequest();

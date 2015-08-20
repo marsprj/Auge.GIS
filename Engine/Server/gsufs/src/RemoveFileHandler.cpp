@@ -28,6 +28,11 @@ namespace auge
 		return "RemoveFile";
 	}
 
+	const char*	RemoveFileHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	RemoveFileHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RemoveFileRequest* pRequest = new RemoveFileRequest();

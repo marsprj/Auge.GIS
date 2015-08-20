@@ -26,6 +26,11 @@ namespace auge
 		return "GetArea";
 	}
 
+	const char*	GetAreaHandler::GetDescription()
+	{
+		return "Ãæ»ý";
+	}
+
 	WebRequest*	GetAreaHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetAreaRequest* pRequest = new GetAreaRequest();

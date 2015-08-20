@@ -21,6 +21,11 @@ namespace auge
 		return "UnRegisterDataSource";
 	}
 
+	const char*	UnRegisterDataSourceHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	UnRegisterDataSourceHandler::ParseRequest(rude::CGI& cgi)
 	{
 		UnRegisterDataSourceRequest* pRequest = new UnRegisterDataSourceRequest();

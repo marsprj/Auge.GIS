@@ -22,6 +22,11 @@ namespace auge
 		return "DemAspect";
 	}
 
+	const char*	DemAspectHandler::GetDescription()
+	{
+		return "ÆÂÏò";
+	}
+
 	WebRequest*	DemAspectHandler::ParseRequest(rude::CGI& cgi)
 	{
 		DemAspectRequest* pRequest = new DemAspectRequest();

@@ -22,6 +22,11 @@ namespace auge
 		return "IsLogin";
 	}
 
+	const char*	IsLoginHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	IsLoginHandler::ParseRequest(rude::CGI& cgi)
 	{
 		IsLoginRequest* pRequest = new IsLoginRequest();

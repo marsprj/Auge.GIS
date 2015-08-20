@@ -23,6 +23,11 @@ namespace auge
 		return "RasterEdgeDetect";
 	}
 
+	const char*	RasterEdgeDetectHandler::GetDescription()
+	{
+		return "±ﬂ‘µÃ·»°";
+	}
+
 	WebRequest*	RasterEdgeDetectHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RasterEdgeDetectRequest* pRequest = new RasterEdgeDetectRequest();

@@ -26,6 +26,11 @@ namespace auge
 		return "GetLength";
 	}
 
+	const char*	GetLengthHandler::GetDescription()
+	{
+		return "³¤¶È";
+	}
+
 	WebRequest*	GetLengthHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetLengthRequest* pRequest = new GetLengthRequest();

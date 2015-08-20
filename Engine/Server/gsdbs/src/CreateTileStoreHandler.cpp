@@ -22,6 +22,11 @@ namespace auge
 		return "CreateTileStore";
 	}
 
+	const char*	CreateTileStoreHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	CreateTileStoreHandler::ParseRequest(rude::CGI& cgi)
 	{
 		CreateTileStoreRequest* pRequest = new CreateTileStoreRequest();

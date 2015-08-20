@@ -33,6 +33,11 @@ namespace auge
 		return "GetCapabilities";
 	}
 
+	const char*	WmtsCapabilitiesHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	WmtsCapabilitiesHandler::ParseRequest(rude::CGI& cgi)
 	{
 		WmtsCapabilitiesRequest* pRequest = new WmtsCapabilitiesRequest();

@@ -29,6 +29,11 @@ namespace auge
 		return "List";
 	}
 
+	const char*	ListHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	ListHandler::ParseRequest(rude::CGI& cgi)
 	{
 		ListRequest* pRequest = new ListRequest();

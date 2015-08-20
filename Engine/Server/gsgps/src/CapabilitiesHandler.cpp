@@ -27,6 +27,11 @@ namespace auge
 		return "GetCapabilities";
 	}
 
+	const char*	GeoProcessingCapabilitiesHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GeoProcessingCapabilitiesHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GeoProcessingCapabilitiesRequest* pRequest = new GeoProcessingCapabilitiesRequest();
@@ -253,7 +258,9 @@ namespace auge
 
 	void GeoProcessingCapabilitiesHandler::AddOperationNode(WebHandler* handler, XElement* pxOperation, const char* gps_xlink)
 	{
-		pxOperation->SetAttribute("name", handler->GetName(),NULL);
+		//const name = handler->GetName();
+		const char* name = auge_encoding_convert("GBK","UTF-8", handler->GetDescription(), strlen(handler->GetDescription()));
+		pxOperation->SetAttribute("name", name,NULL);
 		// WPS_Capabilities-->OperationsMetadata-->Operation-->DCP
 		XElement* pxDCP = pxOperation->AddChild("DCP", "ows");
 		// WPS_Capabilities-->OperationsMetadata-->Operation-->DCP-->HTTP

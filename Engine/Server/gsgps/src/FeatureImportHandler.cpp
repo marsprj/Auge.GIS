@@ -21,6 +21,11 @@ namespace auge
 		return "FeatureImport";
 	}
 
+	const char*	FeatureImportHandler::GetDescription()
+	{
+		return "矢量数据导入";
+	}
+
 	WebRequest*	FeatureImportHandler::ParseRequest(rude::CGI& cgi)
 	{
 		FeatureImportRequest* pRequest = new FeatureImportRequest();

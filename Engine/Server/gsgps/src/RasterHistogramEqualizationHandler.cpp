@@ -23,6 +23,11 @@ namespace auge
 		return "RasterHistogramEqualization";
 	}
 
+	const char*	RasterHistogramEqualizationHandler::GetDescription()
+	{
+		return "Ö±·½Í¼¾ùºâ";
+	}
+
 	WebRequest*	RasterHistogramEqualizationHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RasterHistogramEqualizationRequest* pRequest = new RasterHistogramEqualizationRequest();

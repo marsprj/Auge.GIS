@@ -21,6 +21,11 @@ namespace auge
 		return "GetColorMap";
 	}
 
+	const char*	GetColorMapHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetColorMapHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetColorMapRequest* pRequest = new GetColorMapRequest();

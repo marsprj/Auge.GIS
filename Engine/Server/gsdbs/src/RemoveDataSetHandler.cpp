@@ -22,6 +22,11 @@ namespace auge
 		return "RemoveDataSet";
 	}
 
+	const char*	RemoveDataSetHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	RemoveDataSetHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RemoveDataSetRequest* pRequest = new RemoveDataSetRequest();

@@ -23,6 +23,11 @@ namespace auge
 		return "KMean";
 	}
 
+	const char*	KMeanHandler::GetDescription()
+	{
+		return "kmeansæ€¿‡";
+	}
+
 	WebRequest*	KMeanHandler::ParseRequest(rude::CGI& cgi)
 	{
 		KMeanRequest* pRequest = new KMeanRequest();

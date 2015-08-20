@@ -24,6 +24,11 @@ namespace auge
 		return "GetMap";
 	}
 
+	const char*	GetMapHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetMapHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetMapRequest* pRequest = new GetMapRequest();

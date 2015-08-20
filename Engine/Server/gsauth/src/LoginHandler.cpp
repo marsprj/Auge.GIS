@@ -22,6 +22,11 @@ namespace auge
 		return "Login";
 	}
 
+	const char*	LoginHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	LoginHandler::ParseRequest(rude::CGI& cgi)
 	{
 		LoginRequest* pRequest = new LoginRequest();

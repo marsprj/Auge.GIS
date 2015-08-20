@@ -22,6 +22,11 @@ namespace auge
 		return "GetSymbol";
 	}
 
+	const char*	GetSymbolHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetSymbolHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetSymbolRequest* pRequest = new GetSymbolRequest();

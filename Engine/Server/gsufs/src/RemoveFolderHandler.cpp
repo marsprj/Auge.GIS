@@ -28,6 +28,11 @@ namespace auge
 		return "RemoveFolder";
 	}
 
+	const char*	RemoveFolderHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	RemoveFolderHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RemoveFolderRequest* pRequest = new RemoveFolderRequest();

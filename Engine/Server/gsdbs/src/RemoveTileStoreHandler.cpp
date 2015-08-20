@@ -22,6 +22,11 @@ namespace auge
 		return "RemoveTileStore";
 	}
 
+	const char*	RemoveTileStoreHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	RemoveTileStoreHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RemoveTileStoreRequest* pRequest = new RemoveTileStoreRequest();

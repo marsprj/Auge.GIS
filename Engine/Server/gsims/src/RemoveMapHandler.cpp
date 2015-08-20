@@ -21,6 +21,12 @@ namespace auge
 		return "RemoveMap";
 	}
 
+	const char*	RemoveMapHandler::GetDescription()
+	{
+		return GetName();
+	}
+
+
 	WebRequest*	RemoveMapHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RemoveMapRequest* pRequest = new RemoveMapRequest();

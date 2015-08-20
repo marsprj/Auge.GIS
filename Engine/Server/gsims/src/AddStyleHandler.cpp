@@ -21,6 +21,11 @@ namespace auge
 		return "AddStyle";
 	}
 
+	const char*	AddStyleHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	AddStyleHandler::ParseRequest(rude::CGI& cgi)
 	{
 		AddStyleRequest* pRequest = new AddStyleRequest();

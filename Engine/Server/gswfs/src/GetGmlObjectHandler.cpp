@@ -24,6 +24,11 @@ namespace auge
 		return "GetGmlObject";
 	}
 
+	const char*	GetGmlObjectHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetGmlObjectHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetGmlObjectRequest* pRequest = new GetGmlObjectRequest();		

@@ -23,6 +23,11 @@ namespace auge
 		return "RegisterLayer";
 	}
 
+	const char*	RegisterLayerHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	RegisterLayerHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RegisterLayerRequest* pRequest = new RegisterLayerRequest();

@@ -23,6 +23,11 @@ namespace auge
 		return "RasterReverse";
 	}
 
+	const char*	RasterReverseHandler::GetDescription()
+	{
+		return "»Ò¶È·´×ª";
+	}
+
 	WebRequest*	RasterReverseHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RasterReverseRequest* pRequest = new RasterReverseRequest();

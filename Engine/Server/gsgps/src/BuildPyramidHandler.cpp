@@ -27,6 +27,11 @@ namespace auge
 		return "BuildPyramid";
 	}
 
+	const char*	BuildPyramidHandler::GetDescription()
+	{
+		return "Õ¤¸ñ½ð×ÖËþ";
+	}
+
 	WebRequest*	BuildPyramidHandler::ParseRequest(rude::CGI& cgi)
 	{
 		BuildPyramidRequest* pRequest = new BuildPyramidRequest();

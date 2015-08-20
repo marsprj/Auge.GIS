@@ -21,6 +21,11 @@ namespace auge
 		return "GetSpatialReference";
 	}
 
+	const char*	GetSpatialReferenceHandler::GetDescription()
+	{
+		return "¿Õ¼ä²Î¿¼";
+	}
+
 	WebRequest*	GetSpatialReferenceHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetSpatialReferenceRequest* pRequest = new GetSpatialReferenceRequest();

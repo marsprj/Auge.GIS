@@ -22,6 +22,11 @@ namespace auge
 		return "GetRole";
 	}
 
+	const char*	GetRoleHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetRoleHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetRoleRequest* pRequest = new GetRoleRequest();

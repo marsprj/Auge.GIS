@@ -21,6 +21,11 @@ namespace auge
 		return "RemoveUser";
 	}
 
+	const char*	RemoveUserHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	RemoveUserHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RemoveUserRequest* pRequest = new RemoveUserRequest();

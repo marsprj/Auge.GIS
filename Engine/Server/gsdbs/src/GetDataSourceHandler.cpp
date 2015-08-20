@@ -20,6 +20,11 @@ namespace auge
 		return "GetDataSource";
 	}
 
+	const char*	GetDataSourceHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetDataSourceHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetDataSourceRequest* pRequest = new GetDataSourceRequest();

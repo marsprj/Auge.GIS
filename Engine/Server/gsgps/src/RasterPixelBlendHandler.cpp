@@ -23,6 +23,11 @@ namespace auge
 		return "RasterPixelBlend";
 	}
 
+	const char*	RasterPixelBlendHandler::GetDescription()
+	{
+		return "ÏñËØÈÚºÏ";
+	}
+
 	WebRequest*	RasterPixelBlendHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RasterPixelBlendRequest* pRequest = new RasterPixelBlendRequest();

@@ -26,6 +26,11 @@ namespace auge
 		return "DescribeFeatureType";
 	}
 
+	const char*	DescribeFeatureTypeHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	DescribeFeatureTypeHandler::ParseRequest(rude::CGI& cgi)
 	{
 		DescribeFeatureTypeRequest* pRequest = new DescribeFeatureTypeRequest();

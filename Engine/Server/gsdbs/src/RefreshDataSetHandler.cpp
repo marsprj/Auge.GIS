@@ -23,6 +23,11 @@ namespace auge
 		return "Refresh";
 	}
 
+	const char*	RefreshDatasetHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	RefreshDatasetHandler::ParseRequest(rude::CGI& cgi)
 	{
 		RefreshDatasetRequest* pRequest = new RefreshDatasetRequest();

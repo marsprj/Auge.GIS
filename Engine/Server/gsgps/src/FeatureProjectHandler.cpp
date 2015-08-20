@@ -20,7 +20,12 @@ namespace auge
 
 	const char*	FeatureProjectHandler::GetName()
 	{
-		return "FeatureProject";
+		return "矢量数据投影";
+	}
+
+	const char*	FeatureProjectHandler::GetDescription()
+	{
+		return GetName();
 	}
 
 	WebRequest*	FeatureProjectHandler::ParseRequest(rude::CGI& cgi)

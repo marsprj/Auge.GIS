@@ -24,6 +24,11 @@ namespace auge
 		return "GetCapabilities";
 	}
 
+	const char*	WFSCapabilitiesHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	WFSCapabilitiesHandler::ParseRequest(rude::CGI& cgi)
 	{
 		WFSCapabilitiesRequest* pRequest = new WFSCapabilitiesRequest();

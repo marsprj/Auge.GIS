@@ -22,6 +22,11 @@ namespace auge
 		return "GetUser";
 	}
 
+	const char*	GetUserHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	GetUserHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetUserRequest* pRequest = new GetUserRequest();

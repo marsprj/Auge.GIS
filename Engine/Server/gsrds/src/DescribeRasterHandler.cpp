@@ -24,6 +24,11 @@ namespace auge
 		return "DescribeRaster";
 	}
 
+	const char*	DescribeRasterHandler::GetDescription()
+	{
+		return GetName();
+	}
+
 	WebRequest*	DescribeRasterHandler::ParseRequest(rude::CGI& cgi)
 	{
 		DescribeRasterRequest* pRequest = new DescribeRasterRequest();
