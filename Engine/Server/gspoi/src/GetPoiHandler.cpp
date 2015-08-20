@@ -33,6 +33,11 @@ namespace auge
 		return "GetPoi";
 	}
 
+	const char*	GetPoiHandler::GetDescription()
+	{
+		return "POI¼ìË÷·þÎñ";
+	}
+
 	WebRequest*	GetPoiHandler::ParseRequest(rude::CGI& cgi)
 	{
 		GetPoiRequest* pRequest = new GetPoiRequest();
