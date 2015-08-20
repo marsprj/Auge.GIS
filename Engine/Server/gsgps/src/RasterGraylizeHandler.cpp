@@ -25,7 +25,7 @@ namespace auge
 
 	const char*	RasterGraylizeHandler::GetDescription()
 	{
-		return "彩色图像灰度化";
+		return "影像灰度化";
 	}
 
 	WebRequest*	RasterGraylizeHandler::ParseRequest(rude::CGI& cgi)

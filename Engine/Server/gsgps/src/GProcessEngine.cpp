@@ -80,8 +80,8 @@ namespace auge
 
 		m_raster_handlers.push_back(new RasterSepiaToneHandler());
 		
-		m_raster_handlers.push_back(new DemSlopeHandler());
-		m_raster_handlers.push_back(new DemAspectHandler());
+		m_dem_handlers.push_back(new DemSlopeHandler());
+		m_dem_handlers.push_back(new DemAspectHandler());
 
 		m_cluster_handlers.push_back(new KMeanHandler());
 
@@ -110,6 +110,7 @@ namespace auge
 	{
 		CleanupHandlers(m_feature_handlers);
 		CleanupHandlers(m_raster_handlers);
+		CleanupHandlers(m_dem_handlers);
 		CleanupHandlers(m_geometry_handlers);
 		CleanupHandlers(m_tile_handlers);
 		CleanupHandlers(m_cluster_handlers);
@@ -142,6 +143,11 @@ namespace auge
 			return handler;
 		}
 		handler = GetHandler(name, m_raster_handlers);
+		if(handler!=NULL)
+		{
+			return handler;
+		}
+		handler = GetHandler(name, m_dem_handlers);
 		if(handler!=NULL)
 		{
 			return handler;

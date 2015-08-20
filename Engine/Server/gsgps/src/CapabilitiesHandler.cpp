@@ -228,11 +228,12 @@ namespace auge
 	{
 		XElement* pxOperationsMetadata = pxParent->AddChild("OperationsMetadata", "ows");
 
-		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_feature_handlers, "Feature", "要素", gps_xlink);
-		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_raster_handlers, "Raster", "栅格", gps_xlink);
+		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_feature_handlers, "Feature", "要素分析", gps_xlink);
+		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_raster_handlers, "Raster", "栅格分析", gps_xlink);
+		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_dem_handlers, "DEM", "地形分析", gps_xlink);
 		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_geometry_handlers, "Geometry", "空间分析", gps_xlink);
 		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_tile_handlers, "Tile", "瓦片金字塔", gps_xlink);
-		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_cluster_handlers, "Tile", "聚类", gps_xlink);
+		AddOperationsNodes_1_1_0(pxOperationsMetadata, m_pEngine->m_cluster_handlers, "Cluster", "聚类", gps_xlink);
 	}
 
 	void GeoProcessingCapabilitiesHandler::AddOperationsNodes_1_1_0(XElement* pxParent, std::vector<WebHandler*>& handlers, const char* type, const char* description, const char* gps_xlink)

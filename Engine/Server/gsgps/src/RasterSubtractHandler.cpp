@@ -25,7 +25,7 @@ namespace auge
 
 	const char*	RasterSubtractHandler::GetDescription()
 	{
-		return "Ó°Ïñ²î";
+		return "Ó°ÏñÏà¼õ";
 	}
 
 	WebRequest*	RasterSubtractHandler::ParseRequest(rude::CGI& cgi)
