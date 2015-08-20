@@ -5,8 +5,11 @@
 #include "AugeXML.h"
 #include "AugeWebCore.h"
 #include "AugeFeature.h"
+#include "AugeField.h"
 #include "AugeCarto.h"
 #include "AugeUser.h"
+
+#include "geos_c.h"
 
 namespace auge
 {
@@ -81,30 +84,29 @@ namespace auge
 		WebResponse* pWebResponse = NULL;
 		BufferRequest* pRequest = static_cast<BufferRequest*>(pWebRequest);
 
-		FeatureClass* pFeatureClass = NULL;
-		pFeatureClass = GetFeatureClass(pRequest,pWebContext,pUser);
-		if(pFeatureClass==NULL)
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		FeatureClass* pinFeatureClass = NULL;
+		pinFeatureClass = GetFeatureClass(pRequest,pWebContext,pUser);
+		if(pinFeatureClass==NULL)
 		{
-			GError* pError = augeGetErrorInstance();
+			pLogger->Error(pError->GetLastError(), __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(pError->GetLastError());
 			return pExpResponse;
 		}
-
-		FeatureCursor* pCursor = pFeatureClass->Query(pRequest->GetFilter());
-		if(pCursor!=NULL) 
-		{ 
-			BufferResponse *pResponse = new BufferResponse(pRequest);
-			pResponse->SetWebContenxt(pWebContext);
-			pResponse->SetFeatureCursor(pCursor);
-			pWebResponse = pResponse;
+		
+		const char* outputSourceName = pRequest->GetOutputSourceName();
+		const char* outputTypeName = pRequest->GetOutputTypeName();
+		if(outputTypeName==NULL && outputSourceName==NULL)
+		{
+			// return result xml document
+			pWebResponse = Execute_2_Client(pinFeatureClass, pRequest, pWebContext);
 		}
 		else
 		{
-			GError* pError = augeGetErrorInstance();
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(pError->GetLastError());
-			pWebResponse = pExpResponse;
+			pWebResponse = Execute_2_Datasource(pinFeatureClass, pRequest, pWebContext, pUser);
 		}
 
 		return pWebResponse;
@@ -113,7 +115,7 @@ namespace auge
 	FeatureClass* BufferHandler::GetFeatureClass(BufferRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		FeatureClass* pFeatureClass = NULL;
-		if(pWebRequest->GetSourceName())
+		if(pWebRequest->GetInputSourceName())
 		{
 			pFeatureClass = GetFeatureClassBySource(pWebRequest, pWebContext, pUser);
 		}
@@ -196,9 +198,9 @@ namespace auge
 		Layer* pLayer = NULL;
 		GLogger *pLogger = augeGetLoggerInstance();
 		BufferRequest* pRequest = static_cast<BufferRequest*>(pWebRequest);
-		typeName = pRequest->GetTypeName();
+		typeName = pRequest->GetInputTypeName();
 
-		const char* sourceName = pRequest->GetSourceName();
+		const char* sourceName = pRequest->GetInputSourceName();
 		if(sourceName==NULL)
 		{
 			GError* pError = augeGetErrorInstance();
@@ -229,5 +231,259 @@ namespace auge
 			return NULL;
 		}
 		return pFeatureClass;
+	}
+
+	FeatureClass* BufferHandler::CreateOutputFeatureClass(FeatureWorkspace* pFeatureWorkspace, const char* className, g_uint srid)
+	{
+		GFields	*pFields = NULL;
+		FieldFactory* pFieldFactory = augeGetFieldFactoryInstance();
+		pFields = pFieldFactory->CreateFields();
+
+		GField	 *pField  = NULL;
+		GField_2 *pField_2= NULL;
+		GeometryDef* pGeometryDef = NULL;
+		GeometryDef_2* pGeometryDef_2 = NULL;
+
+		pField = pFieldFactory->CreateField();
+		pField_2 = pField->Field_2();
+		pField_2->SetName("id");
+		pField_2->SetType(augeFieldTypeInt);
+		pFields->Add(pField);
+
+		pField = pFieldFactory->CreateField();
+		pField_2 = pField->Field_2();
+		pField_2->SetName("shape");
+		pField_2->SetType(augeFieldTypeGeometry);
+		pGeometryDef_2 = pField->GetGeometryDef()->GetGeometryDef_2();
+		pGeometryDef_2->SetGeometryType(augeGTMultiPolygon);
+		pGeometryDef_2->SetDimension(2);
+		pGeometryDef_2->SetSRID(srid);
+		pFields->Add(pField);
+
+		FeatureClass* pFeatureClass = NULL;
+		pFeatureClass = pFeatureWorkspace->CreateFeatureClass(className, pFields);
+		pFields->Release();
+
+		return pFeatureClass;
+	}
+
+	Geometry* BufferHandler::CreateBuffer(Feature* pFeature, BufferRequest* pRequest)
+	{
+		GeometryUtil* pGeometryUtil = augeGetGeometryUtilInstance();
+		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+
+		double distance = 0.0;
+		const char* distance_field = pRequest->GetDistanceField();
+		if(distance_field!=NULL)
+		{
+			distance = GetDistance(pFeature->GetValue(distance_field));
+		}
+		else
+		{
+			distance = pRequest->GetDistance();
+		}
+		
+		Geometry* pGeometry = NULL;
+		Geometry* pBuffer = NULL;
+		if(distance>0)
+		{
+			pGeometry = pFeature->GetGeometry();
+			if(pGeometry!=NULL)
+			{
+				g_uchar* wkb = pGeometry->AsBinary();
+				g_uint   wkb_size = pGeometryUtil->GetWKBSize(wkb);
+
+				GEOSGeometry* pgeosGeomtrySrc = GEOSGeomFromWKB_buf(wkb, wkb_size);
+				if(pgeosGeomtrySrc!=NULL)
+				{
+					GEOSGeometry* pgeosBuffer = GEOSBuffer(pgeosGeomtrySrc, distance, 5);
+					if(pgeosBuffer!=NULL)
+					{	
+						size_t wkbSize = 0;
+						unsigned char* pwkbBuffer = NULL;
+						pwkbBuffer = GEOSGeomToWKB_buf(pgeosBuffer, &wkbSize);
+						if(pwkbBuffer!=NULL||wkbSize>0)
+						{
+							pBuffer = pGeometryFactory->CreateGeometryFromWKB(pwkbBuffer, true);
+							////////////////////////////////////////////////////////////////
+							//这里有内存泄露，需要名曲pwkbBuffer由谁释放
+							//free(pwkbBuffer);
+							////////////////////////////////////////////////////////////////
+
+						}
+						GEOSGeom_destroy(pgeosBuffer);
+					}
+					GEOSGeom_destroy(pgeosGeomtrySrc);
+				}
+			}
+		}
+		return pBuffer;
+	}
+
+	double BufferHandler::GetDistance(GValue* pValue)
+	{
+		if(pValue==NULL)
+		{
+			return -1.0f;
+		}
+
+		double distance = -1.0f;
+		augeValueType type = pValue->GetType();
+		switch(type)
+		{
+		case augeValueTypeInt:
+			distance = pValue->GetInt();
+			break;
+		case augeValueTypeLong:
+			distance = pValue->GetLong();
+			break;
+		case augeValueTypeInt64:
+			distance = pValue->GetInt64();
+			break;
+		case augeValueTypeFloat:
+			distance = pValue->GetFloat();
+			break;
+		case augeValueTypeDouble:
+			distance = pValue->GetDouble();
+			break;
+		}
+		return distance;
+	}
+
+	WebResponse* BufferHandler::Execute_2_Client(FeatureClass* pinFeatureClass, BufferRequest* pRequest, WebContext* pWebContext)
+	{
+		WebResponse* pWebResponse = NULL;
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		FeatureCursor* pCursor = pinFeatureClass->Query(pRequest->GetFilter());
+		if(pCursor!=NULL) 
+		{ 
+			BufferResponse *pResponse = new BufferResponse(pRequest);
+			pResponse->SetWebContenxt(pWebContext);
+			pResponse->SetFeatureCursor(pCursor);
+			pWebResponse = pResponse;
+		}
+		else
+		{
+			pLogger->Error(pError->GetLastError(), __FILE__, __LINE__);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			pWebResponse = pExpResponse;
+		}
+		return pWebResponse;
+	}
+
+	WebResponse* BufferHandler::Execute_2_Datasource(FeatureClass* pinFeatureClass, BufferRequest* pRequest, WebContext* pWebContext, User* pUser)
+	{
+		WebResponse* pWebResponse = NULL;
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		const char* outputSourceName = pRequest->GetOutputSourceName();
+		const char* outputTypeName = pRequest->GetOutputTypeName();
+
+		Workspace* pWorkspace = NULL;
+		FeatureWorkspace* pFeatureWorkspace = NULL;
+		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+		pWorkspace = pConnManager->NewWorkspace(pUser->GetID(), outputSourceName);
+		if(pWorkspace==NULL)
+		{
+			pLogger->Error(pError->GetLastError(), __FILE__, __LINE__);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			pWebResponse = pExpResponse;
+		}
+		else
+		{
+			pFeatureWorkspace = dynamic_cast<FeatureWorkspace*>(pWorkspace);
+			if(pFeatureWorkspace==NULL)
+			{
+				char msg[AUGE_MSG_MAX];
+				memset(msg, 0, AUGE_MSG_MAX);
+				g_sprintf(msg, "[%s] is not a Feature Datasource", outputSourceName);
+				pError->SetError(msg);
+				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+				pExpResponse->SetMessage(pError->GetLastError());
+				pWebResponse = pExpResponse;
+			}
+			else
+			{
+				FeatureClass* poutFeatureClass = NULL;
+				poutFeatureClass = pFeatureWorkspace->OpenFeatureClass( outputTypeName);
+				if(poutFeatureClass!=NULL)
+				{
+					pFeatureWorkspace->Release();
+
+					char msg[AUGE_MSG_MAX];
+					memset(msg, 0, AUGE_MSG_MAX);
+					g_sprintf(msg, "outputType [%s] already exists", outputTypeName);
+					pError->SetError(msg);
+					WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+					pExpResponse->SetMessage(pError->GetLastError());
+					pWebResponse = pExpResponse;
+				}
+				else
+				{
+					poutFeatureClass = CreateOutputFeatureClass(pFeatureWorkspace, outputTypeName, pinFeatureClass->GetSRID());
+					if(poutFeatureClass==NULL)
+					{
+						pFeatureWorkspace->Release();
+
+						pLogger->Error(pError->GetLastError(), __FILE__, __LINE__);
+						WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+						pExpResponse->SetMessage(pError->GetLastError());
+						pWebResponse = pExpResponse;
+					}
+					else
+					{
+						FeatureCursor* pCursor = pinFeatureClass->Query(pRequest->GetFilter());
+						if(pCursor==NULL) 
+						{
+							poutFeatureClass->Release();
+							pFeatureWorkspace->Release();
+
+							pLogger->Error(pError->GetLastError(), __FILE__, __LINE__);
+							WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+							pExpResponse->SetMessage(pError->GetLastError());
+							pWebResponse = pExpResponse;
+						}
+						else
+						{	
+							Feature* poutFeature = NULL;
+							FeatureInsertCommand* cmd = poutFeatureClass->CreateInsertCommand();
+
+							Feature* pFeature = NULL;
+							while((pFeature=pCursor->NextFeature())!=NULL)
+							{	
+								Geometry *pBuffer = CreateBuffer(pFeature, pRequest);
+								if(pBuffer!=NULL)
+								{
+									poutFeature = poutFeatureClass->NewFeature();
+									poutFeature->SetValue("id", new GValue(pFeature->GetFID()));
+									poutFeature->SetValue("shape", new GValue(pBuffer));
+
+									cmd->Insert(poutFeature);
+
+									poutFeature->Release();
+								}
+								pFeature->Release();
+							}
+
+							cmd->Release();
+							pCursor->Release();
+							poutFeatureClass->Release();
+							pFeatureWorkspace->Release();
+
+							WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
+							pSusResponse->SetRequest(pRequest->GetRequest());
+							pWebResponse = pSusResponse;
+						}
+					}
+				}
+			}
+		}
+
+		return pWebResponse;
 	}
 }

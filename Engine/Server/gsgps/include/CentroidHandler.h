@@ -14,6 +14,7 @@ namespace auge
 	class CentroidRequest;
 	class CentroidResponse;
 	class FeatureClass;
+	class FeatureWorkspace;
 
 	class CentroidHandler : public WebHandler
 	{
@@ -34,6 +35,11 @@ namespace auge
 		FeatureClass*			GetFeatureClass(CentroidRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 		FeatureClass*			GetFeatureClassByMap(CentroidRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 		FeatureClass*			GetFeatureClassBySource(CentroidRequest* pWebRequest, WebContext* pWebContext, User* pUser);
+
+		WebResponse*			Execute_2_Client(FeatureClass* pinFeatureClass, CentroidRequest* pRequest, WebContext* pWebContext);
+		WebResponse*			Execute_2_Datasource(FeatureClass* pinFeatureClass, CentroidRequest* pRequest, WebContext* pWebContext, User* pUser);
+
+		FeatureClass*			CreateOutputFeatureClass(FeatureWorkspace* pFeatureWorkspace, const char* className, g_uint srid);
 		
 	};
 }

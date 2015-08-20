@@ -29,16 +29,16 @@ namespace auge
 		virtual const char*		GetHost();
 		virtual const char*		GetRequestMethod();
 
-		const char* GetTypeName();
-		const char*	GetSourceName();
+		const char* GetInputTypeName();
+		const char*	GetInputSourceName();
 
 		const char* GetDistanceField();
 		double		GetDistance();
 		GFilter*	GetFilter();
 
 		const char* GetOutputFormat();
-		const char* GetOutSourceName();
-		const char* SetOutTypeName();
+		const char* GetOutputSourceName();
+		const char* GetOutputTypeName();
 				
 	public:
 		bool		Create(rude::CGI& cgi);
@@ -49,11 +49,11 @@ namespace auge
 		void		SetRequestMethod(const char* method);
 		void		SetOutputFormat(const char* format);
 
-		void		SetInTypeName(const char* typeName);
-		void		SetInSourceName(const char* sourceName);		
+		void		SetInputTypeName(const char* typeName);
+		void		SetInputSourceName(const char* sourceName);		
 
-		void		SetOutSourceName(const char* sourceName);
-		void		SetOutTypeName(const char* typeName);
+		void		SetOutputSourceName(const char* sourceName);
+		void		GetOutputTypeName(const char* typeName);
 
 		void		SetDistance(const char* distance);
 		void		SetDistanceField(const char* distance_field);
@@ -97,13 +97,17 @@ namespace auge
 [ HTTP Get ]
 -------------------------------------------------------------------------
 1)
-service=gps&version=1.0.0&request=Buffer&sourceName=db1&typeName=cities&distance=1
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=Buffer&sourceName=db1&typeName=cities&distance=1
-http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=Buffer&sourceName=db1&typeName=cities&distance=1
+user=user1&service=gps&version=1.0.0&request=Buffer&inputSourceName=db1&inputTypeName=cities&distance=1
+http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=Buffer&inputSourceName=db1&inputTypeName=cities&distance=1
+http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=Buffer&inputSourceName=db1&inputTypeName=cities&distance=1
+
+user=user1&service=gps&version=1.0.0&request=Buffer&inputSourceName=db1&inputTypeName=cities&outputSourceName=db1&outputTypeName=cities_buffer&distance=1
+http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=Buffer&inputSourceName=db1&inputTypeName=cities&outputSourceName=db1&outputTypeName=cities_buffer&distance=1
+http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=Buffer&inputSourceName=db1&inputTypeName=cities&outputSourceName=db1&outputTypeName=cities_buffer&distance=1
 
 service=gps&version=1.0.0&request=Buffer&sourceName=db1&typeName=cities&distancefeild=id
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=Buffer&sourceName=db1&typeName=cities&distancefeild=id
-http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=Buffer&sourceName=db1&typeName=cities&distancefeild=id
+http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=Buffer&inputSourceName=db1&inputTypeName=cities&distancefeild=id
+http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=Buffer&inputSourceName=db1&inputTypeName=cities&distancefeild=id
 
 2)
 service=gps&version=1.0.0&request=Buffer&featureset=

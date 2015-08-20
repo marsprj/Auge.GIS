@@ -29,13 +29,14 @@ namespace auge
 		virtual const char*		GetHost();
 		virtual const char*		GetRequestMethod();
 
-		const char* GetTypeName();
-		const char*	GetSourceName();
-		GFilter*	GetFilter();
+		const char* GetInputTypeName();
+		const char*	GetInputSourceName();
 
+		const char* GetOutputSourceName();
+		const char* GetOutputTypeName();
+
+		GFilter*	GetFilter();
 		const char* GetOutputFormat();
-		const char* GetOutSourceName();
-		const char* SetOutTypeName();
 				
 	public:
 		bool		Create(rude::CGI& cgi);
@@ -46,11 +47,11 @@ namespace auge
 		void		SetRequestMethod(const char* method);
 		void		SetOutputFormat(const char* format);
 
-		void		SetInTypeName(const char* typeName);
-		void		SetInSourceName(const char* sourceName);		
+		void		SetInputTypeName(const char* typeName);
+		void		SetInputSourceName(const char* sourceName);		
 
-		void		SetOutSourceName(const char* sourceName);
-		void		SetOutTypeName(const char* typeName);
+		void		SetOutputSourceName(const char* sourceName);
+		void		SetOutputTypeName(const char* typeName);
 
 		void		SetFilter(XElement* pxFilter);
 		

@@ -14,6 +14,7 @@ namespace auge
 	class GetAreaRequest;
 	class GetAreaResponse;
 	class FeatureClass;
+	class FeatureWorkspace;
 
 	class GetAreaHandler : public WebHandler
 	{
@@ -34,6 +35,11 @@ namespace auge
 		FeatureClass*			GetFeatureClass(GetAreaRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 		FeatureClass*			GetFeatureClassByMap(GetAreaRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 		FeatureClass*			GetFeatureClassBySource(GetAreaRequest* pWebRequest, WebContext* pWebContext, User* pUser);
+
+		WebResponse*			Execute_2_Client(FeatureClass* pinFeatureClass, GetAreaRequest* pRequest, WebContext* pWebContext);
+		WebResponse*			Execute_2_Datasource(FeatureClass* pinFeatureClass, GetAreaRequest* pRequest, WebContext* pWebContext, User* pUser);
+
+		FeatureClass*			CreateOutputFeatureClass(FeatureWorkspace* pFeatureWorkspace, const char* className, g_uint srid);
 
 	};
 }

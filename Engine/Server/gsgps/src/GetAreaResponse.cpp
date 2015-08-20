@@ -66,7 +66,7 @@ namespace auge
 
 	XDocument* GetAreaResponse::WriteDocument()
 	{
-		const char* type_name = m_pRequest->GetTypeName(); 
+		const char* type_name = m_pRequest->GetInputTypeName(); 
 		const char* service_name = m_pWebContext->GetService();
 		const char* service_uri = m_pWebContext->GetURI();
 		

@@ -29,8 +29,12 @@ namespace auge
 		virtual const char*		GetHost();
 		virtual const char*		GetRequestMethod();
 
-		const char* GetTypeName();
-		const char*	GetSourceName();
+		const char* GetInputTypeName();
+		const char*	GetInputSourceName();
+
+		const char* GetOutputSourceName();
+		const char* GetOutputTypeName();
+
 		const char* GetOutputFormat();
 		GFilter*	GetFilter();
 		
@@ -42,8 +46,11 @@ namespace auge
 		void		SetHost(const char* host);
 		void		SetRequestMethod(const char* method);
 
-		void		SetTypeName(const char* typeName);
-		void		SetSourceName(const char* sourceName);
+		void		SetInputTypeName(const char* typeName);
+		void		SetInputSourceName(const char* sourceName);		
+
+		void		SetOutputSourceName(const char* sourceName);
+		void		SetOutputTypeName(const char* typeName);
 		void		SetOutputFormat(const char* format);
 
 		void		SetFilter(XElement* pxFilter);
@@ -57,8 +64,12 @@ namespace auge
 		std::string m_host;
 		std::string m_request_method;
 
-		std::string m_source_name;
-		std::string m_type_name;
+		std::string m_in_source_name;
+		std::string m_in_type_name;
+
+		std::string m_out_source_name;
+		std::string m_out_type_name;
+
 		std::string m_output_format;
 		std::string m_encoding;
 

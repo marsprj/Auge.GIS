@@ -62,8 +62,11 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
 
-		SetInTypeName(cgi["typeName"]);
-		SetInSourceName(cgi["sourceName"]);
+		SetInputTypeName(cgi["inputTypeName"]);
+		SetInputSourceName(cgi["inputSourceName"]);
+
+		GetOutputTypeName(cgi["outputTypeName"]);
+		SetOutputSourceName(cgi["outputSourceName"]);
 
 		SetDistance(cgi["distance"]);
 		SetDistanceField(cgi["distancefield"]);
@@ -173,12 +176,12 @@ namespace auge
 		return m_host.c_str();
 	}
 
-	const char* BufferRequest::GetTypeName()
+	const char* BufferRequest::GetInputTypeName()
 	{
 		return m_in_type_name.c_str();
 	}
 
-	void BufferRequest::SetInTypeName(const char* typeName)
+	void BufferRequest::SetInputTypeName(const char* typeName)
 	{
 		if(typeName==NULL)
 		{
@@ -190,12 +193,12 @@ namespace auge
 		}
 	}
 
-	const char* BufferRequest::GetSourceName()
+	const char* BufferRequest::GetInputSourceName()
 	{
 		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
 	}
 
-	void BufferRequest::SetInSourceName(const char* sourceName)
+	void BufferRequest::SetInputSourceName(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -204,6 +207,40 @@ namespace auge
 		else
 		{
 			m_in_source_name = sourceName;
+		}
+	}
+
+	const char* BufferRequest::GetOutputTypeName()
+	{
+		return m_out_type_name.c_str();
+	}
+
+	void BufferRequest::GetOutputTypeName(const char* typeName)
+	{
+		if(typeName==NULL)
+		{
+			m_out_type_name.clear();
+		}
+		else
+		{
+			m_out_type_name = typeName;
+		}
+	}
+
+	const char* BufferRequest::GetOutputSourceName()
+	{
+		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
+	}
+
+	void BufferRequest::SetOutputSourceName(const char* sourceName)
+	{
+		if(sourceName==NULL)
+		{
+			m_out_source_name.clear();
+		}
+		else
+		{
+			m_out_source_name = sourceName;
 		}
 	}
 

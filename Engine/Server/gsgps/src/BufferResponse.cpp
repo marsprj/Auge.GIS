@@ -71,7 +71,7 @@ namespace auge
 
 	XDocument* BufferResponse::WriteDocument()
 	{
-		const char* type_name = m_pRequest->GetTypeName(); 
+		const char* type_name = m_pRequest->GetInputTypeName(); 
 		const char* service_name = m_pWebContext->GetService();
 		const char* service_uri = m_pWebContext->GetURI();
 		const char* distance_field = m_pRequest->GetDistanceField();
@@ -134,7 +134,6 @@ namespace auge
 			Geometry *pGeometry = pFeature->GetGeometry();
 			if(pGeometry!=NULL)
 			{
-
 				distance = GetDistance(pFeature->GetValue(distance_field));
 				if(distance>0)
 				{

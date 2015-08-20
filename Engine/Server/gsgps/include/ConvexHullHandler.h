@@ -13,7 +13,9 @@ namespace auge
 	class WebContext;
 	class ConvexHullRequest;
 	class ConvexHullResponse;
+	class Feature;
 	class FeatureClass;
+	class FeatureWorkspace;
 
 	class ConvexHullHandler : public WebHandler
 	{
@@ -34,6 +36,12 @@ namespace auge
 		FeatureClass*			GetFeatureClass(ConvexHullRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 		FeatureClass*			GetFeatureClassByMap(ConvexHullRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 		FeatureClass*			GetFeatureClassBySource(ConvexHullRequest* pWebRequest, WebContext* pWebContext, User* pUser);
+
+		WebResponse*			Execute_2_Client(FeatureClass* pinFeatureClass, ConvexHullRequest* pRequest, WebContext* pWebContext);
+		WebResponse*			Execute_2_Datasource(FeatureClass* pinFeatureClass, ConvexHullRequest* pRequest, WebContext* pWebContext, User* pUser);
+
+		FeatureClass*			CreateOutputFeatureClass(FeatureWorkspace* pFeatureWorkspace, const char* className, g_uint srid);
+		Geometry*				CreateConvexHull(Geometry* pGeometry);
 
 	};
 }

@@ -61,8 +61,12 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
 
-		SetTypeName(cgi["typeName"]);
-		SetSourceName(cgi["sourceName"]);
+		SetInputTypeName(cgi["inputTypeName"]);
+		SetInputSourceName(cgi["inputSourceName"]);
+
+		SetOutputTypeName(cgi["outputTypeName"]);
+		SetOutputSourceName(cgi["outputSourceName"]);
+
 		return true;
 	}
 
@@ -125,42 +129,71 @@ namespace auge
 		return m_host.c_str();
 	}
 
-	const char* CentroidRequest::GetTypeName()
+	const char* CentroidRequest::GetInputTypeName()
 	{
-		return m_type_name.c_str();
+		return m_in_type_name.c_str();
 	}
 
-	const char* CentroidRequest::GetEncoding()
-	{
-		return m_encoding.c_str();
-	}
-
-	void CentroidRequest::SetTypeName(const char* typeName)
+	void CentroidRequest::SetInputTypeName(const char* typeName)
 	{
 		if(typeName==NULL)
 		{
-			m_type_name.clear();
+			m_in_type_name.clear();
 		}
 		else
 		{
-			m_type_name = typeName;
+			m_in_type_name = typeName;
 		}
 	}
 
-	const char* CentroidRequest::GetSourceName()
+	const char* CentroidRequest::GetInputSourceName()
 	{
-		return m_source_name.empty() ? NULL : m_source_name.c_str();
+		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
 	}
 
-	void CentroidRequest::SetSourceName(const char* sourceName)
+	void CentroidRequest::SetInputSourceName(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
-			m_source_name.clear();
+			m_in_source_name.clear();
 		}
 		else
 		{
-			m_source_name = sourceName;
+			m_in_source_name = sourceName;
+		}
+	}
+
+	const char* CentroidRequest::GetOutputTypeName()
+	{
+		return m_out_type_name.c_str();
+	}
+
+	void CentroidRequest::SetOutputTypeName(const char* typeName)
+	{
+		if(typeName==NULL)
+		{
+			m_out_type_name.clear();
+		}
+		else
+		{
+			m_out_type_name = typeName;
+		}
+	}
+
+	const char* CentroidRequest::GetOutputSourceName()
+	{
+		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
+	}
+
+	void CentroidRequest::SetOutputSourceName(const char* sourceName)
+	{
+		if(sourceName==NULL)
+		{
+			m_out_source_name.clear();
+		}
+		else
+		{
+			m_out_source_name = sourceName;
 		}
 	}
 
@@ -189,6 +222,11 @@ namespace auge
 	void CentroidRequest::SetFilter(XElement* pxFilter)
 	{
 		
+	}
+
+	const char*	CentroidRequest::GetEncoding()
+	{
+		return m_encoding.c_str();
 	}
 
 	void CentroidRequest::Info()

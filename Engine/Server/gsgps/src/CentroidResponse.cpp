@@ -67,7 +67,9 @@ namespace auge
 
 	XDocument* CentroidResponse::WriteDocument()
 	{
-		const char* type_name = m_pRequest->GetTypeName(); 
+		const char* type_name = m_pRequest->GetInputTypeName(); 
+
+
 		const char* service_name = m_pWebContext->GetService();
 		const char* service_uri = m_pWebContext->GetURI();
 		const char* output_format = m_pRequest->GetOutputFormat();

@@ -61,8 +61,11 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
 
-		SetInTypeName(cgi["typeName"]);
-		SetInSourceName(cgi["sourceName"]);
+		SetInputTypeName(cgi["inputTypeName"]);
+		SetInputSourceName(cgi["inputSourceName"]);
+
+		SetOutputTypeName(cgi["outputTypeName"]);
+		SetOutputSourceName(cgi["outputSourceName"]);
 
 		return true;
 	}
@@ -131,12 +134,12 @@ namespace auge
 		return m_host.c_str();
 	}
 
-	const char* ConvexHullRequest::GetTypeName()
+	const char* ConvexHullRequest::GetInputTypeName()
 	{
 		return m_in_type_name.c_str();
 	}
 
-	void ConvexHullRequest::SetInTypeName(const char* typeName)
+	void ConvexHullRequest::SetInputTypeName(const char* typeName)
 	{
 		if(typeName==NULL)
 		{
@@ -148,12 +151,12 @@ namespace auge
 		}
 	}
 
-	const char* ConvexHullRequest::GetSourceName()
+	const char* ConvexHullRequest::GetInputSourceName()
 	{
 		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
 	}
 
-	void ConvexHullRequest::SetInSourceName(const char* sourceName)
+	void ConvexHullRequest::SetInputSourceName(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -162,6 +165,40 @@ namespace auge
 		else
 		{
 			m_in_source_name = sourceName;
+		}
+	}
+
+	const char* ConvexHullRequest::GetOutputTypeName()
+	{
+		return m_out_type_name.c_str();
+	}
+
+	void ConvexHullRequest::SetOutputTypeName(const char* typeName)
+	{
+		if(typeName==NULL)
+		{
+			m_out_type_name.clear();
+		}
+		else
+		{
+			m_out_type_name = typeName;
+		}
+	}
+
+	const char* ConvexHullRequest::GetOutputSourceName()
+	{
+		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
+	}
+
+	void ConvexHullRequest::SetOutputSourceName(const char* sourceName)
+	{
+		if(sourceName==NULL)
+		{
+			m_out_source_name.clear();
+		}
+		else
+		{
+			m_out_source_name = sourceName;
 		}
 	}
 
