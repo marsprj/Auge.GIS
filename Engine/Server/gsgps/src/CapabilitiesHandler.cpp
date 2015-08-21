@@ -260,14 +260,14 @@ namespace auge
 	void GeoProcessingCapabilitiesHandler::AddOperationNode(WebHandler* handler, XElement* pxOperation, const char* gps_xlink)
 	{
 		const char* name = handler->GetName();
-		const char* alias = auge_encoding_convert("GBK","UTF-8", handler->GetDescription(), strlen(handler->GetDescription()));
+		const char* alias = handler->GetDescription();//auge_encoding_convert("GBK","UTF-8", handler->GetDescription(), strlen(handler->GetDescription()));
 		// WPS_Capabilities-->OperationsMetadata-->Operation-->Name
-		//pxOperation->SetAttribute("name", name, NULL);
+		pxOperation->SetAttribute("name", name, NULL);
 		XElement* pxName = pxOperation->AddChild("Name", NULL);
 		pxName->SetChildText(name);
 		// WPS_Capabilities-->OperationsMetadata-->Operation-->Alias
 		XElement* pxAlias = pxOperation->AddChild("Alias", NULL);
-		pxAlias->SetChildText(alias);
+		pxAlias->SetChildText(alias, true);
 		// WPS_Capabilities-->OperationsMetadata-->Operation-->DCP
 		XElement* pxDCP = pxOperation->AddChild("DCP", "ows");
 		// WPS_Capabilities-->OperationsMetadata-->Operation-->DCP-->HTTP
@@ -277,7 +277,7 @@ namespace auge
 		pxNode->SetAttribute("href",gps_xlink,"xlink");
 		pxNode = pxHTTP->AddChild("Post", "ows");
 		pxNode->SetAttribute("href",gps_xlink,"xlink");
-		// WPS_Capabilities-->OperationsMetadata-->Operation-->Parameter(AcceptVersion)
+		// WPS_Capabilities-->OperationsMetadata-->Operation-->Parameter(AcceptVersion) 
 		XElement* pxParameter = pxOperation->AddChild("Parameter", "ows");
 		pxNode = pxParameter->AddChild("Value", "ows");
 		pxNode->AddChildText("1.0.0");
