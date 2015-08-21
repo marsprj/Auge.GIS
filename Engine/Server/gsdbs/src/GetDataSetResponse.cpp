@@ -209,6 +209,8 @@ namespace auge
 				g_sprintf(str, "%d", pGeometryDef->GetSRID());
 				pxNode = pxGeometry->AddChild("SRID");
 				pxNode->AddChildText(str);
+
+				AddThumbnailNode(pxClass, pFeatureClass);
 			}
 			
 		}
@@ -239,8 +241,6 @@ namespace auge
 			}
 		}
 
-		AddThumbnailNode(pxClass, pFeatureClass);
-	}
 
 	void GetDataSetResponse::AddThumbnailNode(XElement* pxClass, FeatureClass* pFeatureClass)
 	{
