@@ -190,7 +190,7 @@ namespace auge
 	void GetDataSetResponse::AddFeatureClassNode(XElement* pxClass, FeatureClass* pFeatureClass)
 	{	
 		char str[AUGE_NAME_MAX] = {0};
-		pFeatureClass->Refresh();
+		//pFeatureClass->Refresh();
 
 		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
 		XElement* pxGeometry = pxClass->AddChild("Geometry");
@@ -213,26 +213,29 @@ namespace auge
 			
 		}
 
-		g_uint count = pFeatureClass->GetCount();
-		g_sprintf(str, "%d", count);
-		pxNode = pxClass->AddChild("Count");
-		pxNode->AddChildText(str);
-
-		if(pField!=NULL)
+		if(m_pDataSet!=NULL)
 		{
-			GEnvelope& extent = pFeatureClass->GetExtent();
-			pxNode = pxClass->AddChild("BoundingBox");
-			if(extent.IsValid())
-			{
-				g_snprintf(str, AUGE_NAME_MAX, "%f", extent.m_xmin);
-				pxNode->SetAttribute("minx", str, NULL);
-				g_snprintf(str, AUGE_NAME_MAX, "%f", extent.m_ymin);
-				pxNode->SetAttribute("miny", str, NULL);
+			g_uint count = pFeatureClass->GetCount();
+			g_sprintf(str, "%d", count);
+			pxNode = pxClass->AddChild("Count");
+			pxNode->AddChildText(str);
 
-				g_snprintf(str, AUGE_NAME_MAX, "%f", extent.m_xmax);
-				pxNode->SetAttribute("maxx", str, NULL);
-				g_snprintf(str, AUGE_NAME_MAX, "%f", extent.m_ymax);
-				pxNode->SetAttribute("maxy", str, NULL);
+			if(pField!=NULL)
+			{
+				GEnvelope& extent = pFeatureClass->GetExtent();
+				pxNode = pxClass->AddChild("BoundingBox");
+				if(extent.IsValid())
+				{
+					g_snprintf(str, AUGE_NAME_MAX, "%f", extent.m_xmin);
+					pxNode->SetAttribute("minx", str, NULL);
+					g_snprintf(str, AUGE_NAME_MAX, "%f", extent.m_ymin);
+					pxNode->SetAttribute("miny", str, NULL);
+
+					g_snprintf(str, AUGE_NAME_MAX, "%f", extent.m_xmax);
+					pxNode->SetAttribute("maxx", str, NULL);
+					g_snprintf(str, AUGE_NAME_MAX, "%f", extent.m_ymax);
+					pxNode->SetAttribute("maxy", str, NULL);
+				}
 			}
 		}
 
