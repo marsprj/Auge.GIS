@@ -131,6 +131,11 @@ namespace auge
 			build_path(canvas_cairo, (WKBMultiLineString*)wkb, pTransform);
 			break;
 		}
+		if(m_pStroke!=NULL)
+		{
+			m_block_width = m_pStroke->GetWidth();
+		}
+
 		cairo_set_source_rgba(canvas_cairo,	0.0f, 0.0f, 0.0f, 1.0f);
 		cairo_set_line_width(canvas_cairo, m_block_width);
 		cairo_set_line_cap(canvas_cairo, CAIRO_LINE_CAP_BUTT);
