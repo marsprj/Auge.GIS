@@ -240,6 +240,7 @@ namespace auge
 				}
 			}
 		}
+	}
 
 
 	void GetDataSetResponse::AddThumbnailNode(XElement* pxClass, FeatureClass* pFeatureClass)
