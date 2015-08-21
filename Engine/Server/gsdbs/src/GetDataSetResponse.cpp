@@ -188,9 +188,13 @@ namespace auge
 	}
 
 	void GetDataSetResponse::AddFeatureClassNode(XElement* pxClass, FeatureClass* pFeatureClass)
-	{
+	{	
+		char str[AUGE_NAME_MAX] = {0};
+		pFeatureClass->Refresh();
+
 		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
 		XElement* pxGeometry = pxClass->AddChild("Geometry");
+		XElement* pxNode = NULL;
 		if(pField!=NULL)
 		{
 			GeometryDef* pGeometryDef = pField->GetGeometryDef();
@@ -200,13 +204,35 @@ namespace auge
 				GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
 				const char* geomType = pGeometryFactory->Encode(type);
 
-				XElement* pxElem = pxGeometry->AddChild("Type");
-				pxElem->AddChildText(geomType);
-				 
-				char str[AUGE_NAME_MAX] = {0};
+				pxNode = pxGeometry->AddChild("Type");
+				pxNode->AddChildText(geomType);
 				g_sprintf(str, "%d", pGeometryDef->GetSRID());
-				pxElem = pxGeometry->AddChild("SRID");
-				pxElem->AddChildText(str);
+				pxNode = pxGeometry->AddChild("SRID");
+				pxNode->AddChildText(str);
+			}
+			
+		}
+
+		g_uint count = pFeatureClass->GetCount();
+		g_sprintf(str, "%d", count);
+		pxNode = pxClass->AddChild("Count");
+		pxNode->AddChildText(str);
+
+		if(pField!=NULL)
+		{
+			GEnvelope& extent = pFeatureClass->GetExtent();
+			pxNode = pxClass->AddChild("BoundingBox");
+			if(extent.IsValid())
+			{
+				g_snprintf(str, AUGE_NAME_MAX, "%f", extent.m_xmin);
+				pxNode->SetAttribute("minx", str, NULL);
+				g_snprintf(str, AUGE_NAME_MAX, "%f", extent.m_ymin);
+				pxNode->SetAttribute("miny", str, NULL);
+
+				g_snprintf(str, AUGE_NAME_MAX, "%f", extent.m_xmax);
+				pxNode->SetAttribute("maxx", str, NULL);
+				g_snprintf(str, AUGE_NAME_MAX, "%f", extent.m_ymax);
+				pxNode->SetAttribute("maxy", str, NULL);
 			}
 		}
 
@@ -237,7 +263,6 @@ namespace auge
 	{
 		g_uint width  = AUGE_THUMBNAIL_WIDTH;
 		g_uint height = AUGE_THUMBNAIL_HEIGHT;
-
 
 		Canvas* pCanvas = NULL;
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();

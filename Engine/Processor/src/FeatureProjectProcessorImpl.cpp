@@ -160,6 +160,7 @@ namespace auge
 
 		RESULTCODE rc = AG_FAILURE;
 		rc = Project(pinFeatureClass, poutFeatureClass);
+		poutFeatureClass->Refresh();
 		poutFeatureClass->Release();
 
 		if(rc!=AG_SUCCESS)
