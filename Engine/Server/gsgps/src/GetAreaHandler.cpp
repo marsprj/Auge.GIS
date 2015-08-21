@@ -382,6 +382,7 @@ namespace auge
 							}
 
 							poutFeature->Release();
+							poutFeatureClass->Refresh();
 
 							cmd->Release();
 							pCursor->Release();

@@ -398,6 +398,8 @@ namespace auge
 								
 							}
 
+							poutFeatureClass->Refresh();
+
 							cmd->Release();
 							pCursor->Release();
 							poutFeatureClass->Release();
