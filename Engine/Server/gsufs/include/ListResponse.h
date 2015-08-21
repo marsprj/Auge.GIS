@@ -18,7 +18,7 @@ namespace auge
 	private:
 		typedef struct 
 		{
-			char fname[32];
+			char fname[AUGE_NAME_MAX];
 			int	 isfolder;
 #ifdef WIN32
 			struct _stat fstat;

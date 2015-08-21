@@ -134,12 +134,16 @@ namespace auge
 		DIR *dp = opendir(local_path);
 		if(dp!=NULL)
 		{
+			char name[AUGE_NAME_MAX];
 			struct dirent* dirp = NULL;
 			while((dirp = readdir(dp))!=NULL)
 			{	
 				if(dirp->d_name[0]!='.')
 				{
-					pListResponse->AddFile(dirp->d_name);
+					memset(name, 0, AUGE_NAME_MAX);
+					g_snprintf(name, AUGE_NAME_MAX, "%s", dirp->d_name);
+					pLogger->Info(name, __FILE__, __LINE__);
+					pListResponse->AddFile(name);
 				}
 			}
 			closedir(dp);
