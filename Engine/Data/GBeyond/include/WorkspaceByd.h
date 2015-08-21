@@ -1,9 +1,11 @@
 #ifndef __AUGE_WORKSPACE_BYD_H__
 #define __AUGE_WORKSPACE_BYD_H__
 
-#include "AugeFeature.h"
-#include <string>
 #include <cppi.h>
+#include <string.h>
+#include <string>
+
+#include "AugeFeature.h"
 
 namespace auge
 {
