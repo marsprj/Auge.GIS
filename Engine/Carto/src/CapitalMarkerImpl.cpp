@@ -14,8 +14,10 @@ namespace auge
 	{
 		m_icon_name = "Capital.png";
 
-		m_pStroke = new StrokeImpl();
-		m_pFill = new FillImpl();
+		//m_pStroke = new StrokeImpl();
+		//m_pFill = new FillImpl();
+		m_pStroke = NULL;
+		m_pFill = NULL;
 	}
 
 	CapitalMarkerImpl::~CapitalMarkerImpl()

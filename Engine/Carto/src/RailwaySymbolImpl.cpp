@@ -9,6 +9,7 @@ namespace auge
 	{
 		m_block_width = 5;
 		m_block_length= 10;
+		m_opacity = 1.0;
 		m_pStroke = new StrokeImpl();
 
 		m_cairo = NULL;
@@ -136,7 +137,7 @@ namespace auge
 			m_block_width = m_pStroke->GetWidth();
 		}
 
-		cairo_set_source_rgba(canvas_cairo,	0.0f, 0.0f, 0.0f, 1.0f);
+		cairo_set_source_rgba(canvas_cairo,	0.4f, 0.4f, 0.4f, m_opacity);
 		cairo_set_line_width(canvas_cairo, m_block_width);
 		cairo_set_line_cap(canvas_cairo, CAIRO_LINE_CAP_BUTT);
 		cairo_stroke(canvas_cairo);
@@ -151,7 +152,7 @@ namespace auge
 			build_path(canvas_cairo, (WKBMultiLineString*)wkb, pTransform);
 			break;
 		}
-		cairo_set_source_rgba(canvas_cairo,	1.0f, 1.0f, 1.0f, 1.0f);
+		cairo_set_source_rgba(canvas_cairo,	1.0f, 1.0f, 1.0f, m_opacity);
 		cairo_set_line_width(canvas_cairo, m_block_width-1);
 		cairo_set_dash (canvas_cairo, dashes, ndash, dash_offset);
 		cairo_set_line_cap(canvas_cairo, CAIRO_LINE_CAP_BUTT);
