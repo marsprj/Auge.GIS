@@ -115,10 +115,10 @@ namespace auge
 		RESULTCODE				LoadLayers(Map* pMap);
 		RESULTCODE				GetMapLayers(std::string& map_layers, g_uint mapID);
 
-		Layer*					CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, const char* f_path, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url);
-		FeatureLayer*			CreateFeatureLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible);
-		RasterLayer*			CreateRasterLayer(int id, const char* name, const char* f_name, const char* f_path, g_int source_id, g_int version, bool visible);
-		GraphicLayer*			CreateGraphicLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible);
+		Layer*					CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, const char* f_path, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url, double min_scale, double max_scale);
+		FeatureLayer*			CreateFeatureLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible, double min_scale, double max_scale);
+		RasterLayer*			CreateRasterLayer(int id, const char* name, const char* f_name, const char* f_path, g_int source_id, g_int version, bool visible, double min_scale, double max_scale);
+		GraphicLayer*			CreateGraphicLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, g_int version, bool visible, double min_scale, double max_scale);
 
 		GraphicLayer*			CreateGraphicLayer(const char* name, const char* f_name, g_uint source_id);		
 		QuadServerLayer*		CreateQuadServerLayer(int id, const char* name, const char* url, int version, bool visible);

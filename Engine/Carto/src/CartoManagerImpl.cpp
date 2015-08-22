@@ -251,7 +251,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,f_path,web_url from g_layer where m_id=%d order by gid", mid);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,f_path,web_url,min_scale,max_scale from g_layer where m_id=%d order by gid", mid);
 		
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -262,6 +262,7 @@ namespace auge
 
 		Layer* pLayer = NULL;
 		int gid, d_id,s_id,l_type, version, visible;
+		double min_scale, max_scale;
 		const char* l_name, *f_name, *f_path, *web_url;
 		g_int count = pResult->GetCount();
 		for(g_int i=0; i<count; i++)
@@ -276,8 +277,10 @@ namespace auge
 			version= pResult->GetInt(i, 6);
 			visible= pResult->GetInt(i, 7);
 			web_url= pResult->GetString(i,12);
+			min_scale = pResult->GetDouble(i,13);
+			max_scale = pResult->GetDouble(i,14);
 
-			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, f_path, d_id, s_id, version,visible, web_url);
+			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, f_path, d_id, s_id, version,visible, web_url, min_scale, max_scale);
 			if(pLayer!=NULL)
 			{
 				pMap->AddLayer(pLayer);
@@ -414,7 +417,7 @@ namespace auge
 		PraseMapLayerIds(layer_ids, map_layers.c_str());
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,f_path,web_url from g_layer where gid in (%s)", layer_ids);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,f_path,web_url,min_scale,max_scale from g_layer where gid in (%s)", layer_ids);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -425,6 +428,7 @@ namespace auge
 
 		Layer* pLayer = NULL;
 		int gid, d_id,s_id,l_type, version, visible;
+		double min_scale, max_scale;
 		const char* l_name, *f_name, *f_path, *web_url;
 		
 		int layer_id = 0;
@@ -450,8 +454,10 @@ namespace auge
 					version= pResult->GetInt(i, 6);
 					visible= pResult->GetInt(i, 7);
 					web_url= pResult->GetString(i,12);
+					min_scale = pResult->GetDouble(i,13);
+					max_scale = pResult->GetDouble(i,14);
 
-					pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, f_path, d_id, s_id, version,visible, web_url);
+					pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, f_path, d_id, s_id, version,visible, web_url, min_scale, max_scale);
 					if(pLayer!=NULL)
 					{
 						pLayer->SetVisiable(layer_visiblity);
@@ -923,19 +929,19 @@ namespace auge
 		return pRLayer;
 	}
 
-	Layer* CartoManagerImpl::CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, const char* f_path, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url)
+	Layer* CartoManagerImpl::CreateLayer(int id, const char* name, augeLayerType type, const char* f_name, const char* f_path, g_int source_id, g_int style_id, g_int version, bool visible, const char* web_url, double min_scale, double max_scale)
 	{
 		Layer* pLayer = NULL;
 		switch(type)
 		{
 		case augeLayerFeature:
-			pLayer = CreateFeatureLayer(id, name, f_name, source_id, style_id, version, visible);
+			pLayer = CreateFeatureLayer(id, name, f_name, source_id, style_id, version, visible, min_scale, max_scale);
 			break;
 		case augeLayerGraphic:
-			pLayer = CreateGraphicLayer(id, name, f_name, source_id, style_id, version, visible);
+			pLayer = CreateGraphicLayer(id, name, f_name, source_id, style_id, version, visible, min_scale, max_scale);
 			break;
 		case augeLayerRaster:
- 			pLayer = CreateRasterLayer(id, name, f_name, f_path, source_id, version, visible);
+ 			pLayer = CreateRasterLayer(id, name, f_name, f_path, source_id, version, visible, min_scale, max_scale);
 			break;
 		case augeLayerQuadServer:
 			pLayer = CreateQuadServerLayer(id, name, web_url, version, visible);
@@ -944,7 +950,7 @@ namespace auge
 		return pLayer;
 	}
 
-	FeatureLayer* CartoManagerImpl::CreateFeatureLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, int version, bool visible)
+	FeatureLayer* CartoManagerImpl::CreateFeatureLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, int version, bool visible, double min_scale, double max_scale)
 	{
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
 
@@ -974,6 +980,8 @@ namespace auge
 		pFLayer->SetVersion(version);
 		pFLayer->SetVisiable(visible);
 		pFLayer->SetFeatureClass(pFeatureClass);
+		pFLayer->SetMinScale(min_scale);
+		pFLayer->SetMaxScale(max_scale);
 
 		Style* pStyle = GetStyle(style_id, pFeatureClass);
 		pFLayer->SetStyle(pStyle);
@@ -981,7 +989,7 @@ namespace auge
 		return pFLayer;
 	}
 
-	GraphicLayer* CartoManagerImpl::CreateGraphicLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, int version, bool visible)
+	GraphicLayer* CartoManagerImpl::CreateGraphicLayer(int id, const char* name, const char* f_name, g_int source_id, g_int style_id, int version, bool visible, double min_scale, double max_scale)
 	{
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
 
@@ -1011,6 +1019,8 @@ namespace auge
 		pGLayer->SetVersion(version);
 		pGLayer->SetVisiable(visible);
 		pGLayer->SetFeatureClass(pFeatureClass);
+		pGLayer->SetMinScale(min_scale);
+		pGLayer->SetMaxScale(max_scale);
 
 		Style* pStyle = GetStyle(style_id, pFeatureClass);
 		pGLayer->SetStyle(pStyle);
@@ -1018,7 +1028,7 @@ namespace auge
 		return pGLayer;
 	}
 
-	RasterLayer* CartoManagerImpl::CreateRasterLayer(int id, const char* name, const char* r_name, const char* r_path, g_int source_id, g_int version, bool visible)
+	RasterLayer* CartoManagerImpl::CreateRasterLayer(int id, const char* name, const char* r_name, const char* r_path, g_int source_id, g_int version, bool visible, double min_scale, double max_scale)
 	{
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
 
@@ -1055,6 +1065,8 @@ namespace auge
 		pRLayer->SetID(id);
 		pRLayer->SetVersion(version);
 		pRLayer->SetVisiable(visible);
+		pRLayer->SetMinScale(min_scale);
+		pRLayer->SetMaxScale(max_scale);
 
 		return pRLayer;
 	}
@@ -2827,6 +2839,8 @@ namespace auge
 							"	w_b integer NOT NULL DEFAULT 1," \
 							"	q_b integer NOT NULL DEFAULT 1," \
 							"	visible integer NOT NULL DEFAULT 1," \
+							"	min_scale double precision DEFAULT (-1)," \
+							"	max_scale double precision DEFAULT (-1)," \
 							"	version integer DEFAULT 1," \
 							"   web_url character varying(256) DEFAULT ''::character varying," \
 							"	CONSTRAINT g_layer_pkey PRIMARY KEY (gid)" \

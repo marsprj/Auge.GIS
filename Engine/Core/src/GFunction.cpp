@@ -769,7 +769,6 @@ namespace auge
 		return v;
 	}
 
-
 	g_byte auge_average_byte(g_byte* data, g_uint64 count)
 	{
 		g_uint64 sum = 0;
@@ -779,5 +778,34 @@ namespace auge
 			sum += *ptr;
 		}
 		return sum / count;
+	}
+
+	double auge_get_map_sacle(g_uint srid, double map_width, g_uint pixel_width)
+	{
+		if(pixel_width==0)
+		{
+			return -1.0;
+		}
+		double map_scale = 1.0f;
+		switch(srid)
+		{
+		case 4326:		//wgs84
+			{
+				//map_width is degree
+				double map_width_cm = PI * AUGE_EARTH_RADIUS * (map_width / 1.8);
+				double pixel_width_cm = pixel_width * AUGE_PIXEL_WIDTH;
+				map_scale = map_width_cm / pixel_width_cm;
+			}
+			break;
+		case 900913:	//web mercator
+			{
+				double map_width_cm =  map_width * 100.0;
+				double pixel_width_cm = pixel_width * AUGE_PIXEL_WIDTH;
+				map_scale = map_width_cm / pixel_width_cm;
+			}
+			break;
+		}
+
+		return map_scale;
 	}
 }

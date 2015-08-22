@@ -4,9 +4,11 @@
 namespace auge
 {
 	RasterLayerImpl::RasterLayerImpl():
-	m_srid(4326),
+	m_srid(AUGE_DEFAULT_SRID),
 	m_pRasterDataset(NULL),
-	m_pRaster(NULL)
+	m_pRaster(NULL),
+	m_min_scale(-1.0),
+	m_max_scale(-1.0)
 	{
 		
 	}
@@ -81,6 +83,16 @@ namespace auge
 		return m_visiable;
 	}
 
+	bool RasterLayerImpl::IsVisiable(double scale)
+	{
+		if(scale<0)
+		{
+			return true;
+		}
+
+		return ((scale>m_min_scale) && (scale<m_max_scale));
+	}
+
 	void RasterLayerImpl::SetVisiable(bool flag)
 	{
 		m_visiable = flag;
@@ -147,5 +159,25 @@ namespace auge
 	RasterDataset* RasterLayerImpl::GetRasterDataset()
 	{
 		return m_pRasterDataset;
+	}
+
+	double RasterLayerImpl::GetMinScale()
+	{
+		return m_min_scale;
+	}
+
+	void RasterLayerImpl::SetMinScale(double scale)
+	{
+		m_min_scale = scale;
+	}
+
+	double RasterLayerImpl::GetMaxScale()
+	{
+		return m_max_scale;
+	}
+
+	void RasterLayerImpl::SetMaxScale(double scale)
+	{
+		m_max_scale = scale;
 	}
 }

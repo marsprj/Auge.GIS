@@ -8,7 +8,9 @@ namespace auge
 		m_visiable = true;
 		m_pStyle = NULL;
 		m_pFeatureClass = NULL;
-		m_srid = 4326; 
+		m_srid = AUGE_DEFAULT_SRID;
+		m_min_scale = -1.0;
+		m_max_scale = -1.0;
 	}
 
 	FeatureLayerImpl::~FeatureLayerImpl()
@@ -101,6 +103,16 @@ namespace auge
 		return m_visiable;
 	}
 
+	bool FeatureLayerImpl::IsVisiable(double scale)
+	{
+		if(scale<0)
+		{
+			return true;
+		}
+
+		return ((scale>m_min_scale) && (scale<m_max_scale));
+	}
+
 	void FeatureLayerImpl::SetVisiable(bool flag)
 	{
 		m_visiable = flag;
@@ -121,4 +133,23 @@ namespace auge
 		return m_pStyle;
 	}
 
+	double FeatureLayerImpl::GetMinScale()
+	{
+		return m_min_scale;
+	}
+
+	void FeatureLayerImpl::SetMinScale(double scale)
+	{
+		m_min_scale = scale;
+	}
+
+	double FeatureLayerImpl::GetMaxScale()
+	{
+		return m_max_scale;
+	}
+
+	void FeatureLayerImpl::SetMaxScale(double scale)
+	{
+		m_max_scale = scale;
+	}
 }

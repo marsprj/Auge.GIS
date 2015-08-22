@@ -8,7 +8,10 @@ namespace auge
 		m_visiable = true;
 		m_pStyle = NULL;
 		m_pFeatureClass = NULL;
-		m_srid = 4326; 
+		m_srid = AUGE_DEFAULT_SRID;
+
+		m_min_scale = -1.0;
+		m_max_scale = -1.0;
 	}
 
 	GraphicLayerImpl::~GraphicLayerImpl()
@@ -101,6 +104,16 @@ namespace auge
 		return m_visiable;
 	}
 
+	bool GraphicLayerImpl::IsVisiable(double scale)
+	{
+		if(scale<0)
+		{
+			return true;
+		}
+
+		return ((scale>m_min_scale) && (scale<m_max_scale));
+	}
+
 	void GraphicLayerImpl::SetVisiable(bool flag)
 	{
 		m_visiable = flag;
@@ -119,6 +132,26 @@ namespace auge
 	Style* GraphicLayerImpl::GetStyle()
 	{
 		return m_pStyle;
+	}
+
+	double GraphicLayerImpl::GetMinScale()
+	{
+		return m_min_scale;
+	}
+
+	void GraphicLayerImpl::SetMinScale(double scale)
+	{
+		m_min_scale = scale;
+	}
+
+	double GraphicLayerImpl::GetMaxScale()
+	{
+		return m_max_scale;
+	}
+
+	void GraphicLayerImpl::SetMaxScale(double scale)
+	{
+		m_max_scale = scale;
 	}
 
 }
