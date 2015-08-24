@@ -128,6 +128,76 @@ namespace auge
 		return pGeometry;
 	}
 
+	Geometry* GeometryFactoryImpl::CreateMultiPolygonFromWKB(g_uchar* wkb)
+	{
+		if(wkb==NULL)
+		{
+			return NULL;
+		}
+
+		WKBGeometryType type = (WKBGeometryType)(WKBTYPE(wkb));
+		if( (type!=wkbPolygon) || (type!=wkbMultiPolygon))
+		{
+			return NULL;
+		}
+
+		Geometry* pGeometry = NULL;
+		//g_uchar* wkbd = NULL;
+		//GeometryUtilImpl gutil;
+		//g_uint wkbSize = gutil.GetWKBSize(wkb);
+		//if(wkbSize==0)
+		//{
+		//	return NULL;
+		//}
+
+		//switch(WKBTYPE(wkb))
+		//{
+		//case wkbPoint:
+		//	{
+		//		GPointWKB* ptr = new GPointWKB();
+		//		ptr->Create(wkbd, attach);
+		//		pGeometry = ptr;
+		//	}
+		//	break;
+		//case wkbLineString:
+		//	{
+		//		GLineStringWKB* ptr = new GLineStringWKB();
+		//		ptr->Create(wkbd, attach);
+		//		pGeometry = ptr;
+		//	}
+		//	break;
+		//case wkbPolygon:
+		//	{
+		//		GPolygonWKB* ptr = new GPolygonWKB();
+		//		ptr->Create(wkbd, attach);
+		//		pGeometry = ptr;
+		//	}
+		//	break;
+		//case wkbMultiPoint:
+		//	{
+		//		GMultiPointWKB* ptr = new GMultiPointWKB();
+		//		ptr->Create(wkbd, attach);
+		//		pGeometry = ptr;
+		//	}
+		//	break;
+		//case wkbMultiLineString:
+		//	{
+		//		GMultiLineStringWKB* ptr = new GMultiLineStringWKB();
+		//		ptr->Create(wkbd, attach);
+		//		pGeometry = ptr;
+		//	}
+		//	break;
+		//case wkbMultiPolygon:
+		//	{
+		//		GMultiPolygonWKB* ptr = new GMultiPolygonWKB();
+		//		ptr->Create(wkbd, attach);
+		//		pGeometry = ptr;
+		//	}
+		//	break;
+		//}
+		//return pGeometry;
+	}
+
 	Geometry* GeometryFactoryImpl::CreateGeometryFromWKT(const char* wkt)
 	{
 		if(wkt==NULL)

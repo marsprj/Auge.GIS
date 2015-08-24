@@ -319,6 +319,7 @@ namespace auge
 						else
 						{	
 							double x=0.0, y=0.0;
+							char str[AUGE_PATH_MAX];
 							WKBPoint* pWKBPoint = NULL;
 							Geometry* pGeometry = NULL;
 							Geometry* pCentroid = NULL;
@@ -327,13 +328,13 @@ namespace auge
 							Feature* poutFeature = NULL;
 							GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
 							
-							poutFeature = poutFeatureClass->NewFeature();
-							pCentroid = pGeometryFactory->CreateGeometryFromWKT("POINT(0 0)");
-							pidValue = new GValue(0);
-							pgeoValue = new GValue(pCentroid);
-							pWKBPoint = (WKBPoint*)pCentroid->AsBinary();
-							poutFeature->SetValue("id", pidValue);
-							poutFeature->SetValue("shape", pgeoValue);
+							//poutFeature = poutFeatureClass->NewFeature();	
+							//pCentroid = pGeometryFactory->CreateGeometryFromWKT("POINT(0 0)");	
+							//pidValue = new GValue(0);
+							//pgeoValue = new GValue(pCentroid);
+							//pWKBPoint = (WKBPoint*)pCentroid->AsBinary();
+							//poutFeature->SetValue("id", pidValue);
+							//poutFeature->SetValue("shape", pgeoValue);
 
 							FeatureInsertCommand* cmd = poutFeatureClass->CreateInsertCommand();
 
@@ -344,13 +345,23 @@ namespace auge
 								if(pGeometry!=NULL)
 								{
 									pGeometry->Centroid(x, y);
-									pWKBPoint->point.x = x;
-									pWKBPoint->point.y = y;
-									pidValue->SetInt(pFeature->GetFID());
-								}
+									g_snprintf(str, AUGE_PATH_MAX, "POINT(%f %f)", x, y);
+									
+									//pCentroid = pGeometryFactory->CreateGeometryFromWKT(str);									
+									//pidValue->SetInt(pFeature->GetFID());
+									//pgeoValue->SetValue(pCentroid);
 
-								cmd->Insert(poutFeature);
-								pFeature->Release();
+									poutFeature = poutFeatureClass->NewFeature();	
+									pCentroid = pGeometryFactory->CreateGeometryFromWKT(str);	
+									pidValue = new GValue(pFeature->GetFID());
+									pgeoValue = new GValue(pCentroid);
+									poutFeature->SetValue("id", pidValue);
+									poutFeature->SetValue("shape", pgeoValue);
+
+									cmd->Insert(poutFeature);
+
+									poutFeature->Release();
+								}
 							}
 
 							poutFeature->Release();
