@@ -542,6 +542,7 @@ namespace auge
 			pGeometryDef_2->SetGeometryType(m_geom_type);
 			pGeometryDef_2->SetM(false);
 			pGeometryDef_2->SetZ(false);
+			pGeometryDef_2->SetSRID(m_srid);
 		}
 
 		return pField;

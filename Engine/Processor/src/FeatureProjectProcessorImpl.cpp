@@ -103,6 +103,7 @@ namespace auge
 		const char* sourceName_out= GetOutputSource();
 		const char* className_out = GetOutputFatureClass();
 
+
 		if(sourceName_in==NULL)
 		{
 			return AG_FAILURE;
