@@ -25,7 +25,7 @@ namespace auge
 
 	const char*	RasterSmoothHandler::GetDescription()
 	{
-		return "Æ½»¬";
+		return "Ó°ÏñÆ½»¬";
 	}
 
 	WebRequest*	RasterSmoothHandler::ParseRequest(rude::CGI& cgi)

@@ -260,7 +260,7 @@ namespace auge
 	void GeoProcessingCapabilitiesHandler::AddOperationNode(WebHandler* handler, XElement* pxOperation, const char* gps_xlink)
 	{
 		const char* name = handler->GetName();
-		const char* alias = handler->GetDescription();//auge_encoding_convert("GBK","UTF-8", handler->GetDescription(), strlen(handler->GetDescription()));
+		const char* alias = "";//handler->GetDescription();//auge_encoding_convert("GBK","UTF-8", handler->GetDescription(), strlen(handler->GetDescription()));
 		// WPS_Capabilities-->OperationsMetadata-->Operation-->Name
 		//pxOperation->SetAttribute("name", name, NULL);
 		XElement* pxName = pxOperation->AddChild("Name", NULL);
