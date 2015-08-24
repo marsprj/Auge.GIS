@@ -364,7 +364,7 @@ namespace auge
 								}
 							}
 
-							poutFeature->Release();
+							//poutFeature->Release();
 							poutFeatureClass->Refresh();
 
 							cmd->Release();
