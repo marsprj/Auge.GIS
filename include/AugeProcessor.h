@@ -151,6 +151,131 @@ namespace auge
 	};
 
 	//------------------------------------------------------------------------
+	// Geometry Processor Begin
+	//------------------------------------------------------------------------
+	/**
+	 * 多点转换为单点
+	 */
+	class MultiPointToPointsProcessor : public GProcessor
+	{
+	protected:
+		MultiPointToPointsProcessor(){}
+		virtual ~MultiPointToPointsProcessor(){}
+	};
+
+	class LineToPointsProcessor : public GProcessor
+	{
+	protected:
+		LineToPointsProcessor(){}
+		virtual ~LineToPointsProcessor(){}
+	};
+
+	class PolygonToLinesProcessor : public GProcessor
+	{
+	protected:
+		PolygonToLinesProcessor(){}
+		virtual ~PolygonToLinesProcessor(){}
+	};
+
+	/**
+	 * 提取位于多边形内的点
+	 */
+	class ClipPointWithPoygon : public GProcessor
+	{
+	protected:
+		ClipPointWithPoygon(){}
+		virtual ~ClipPointWithPoygon(){}
+	};
+
+	/**
+	 * 线融合
+	 */
+	class LineDissoveProcessor : public GProcessor
+	{
+	protected:
+		LineDissoveProcessor(){}
+		virtual ~LineDissoveProcessor(){}
+	};
+
+	/**
+	 * 线化简
+	 */
+	class LineSimplificationProcessor : public GProcessor
+	{
+	protected:
+		LineSimplificationProcessor(){}
+		virtual ~LineSimplificationProcessor(){}
+	};
+
+	/**
+	 * 多个多边形合并成一个
+	 */
+	class PolygonDissolveProcessor : public GProcessor
+	{
+	protected:
+		PolygonDissolveProcessor(){}
+		virtual ~PolygonDissolveProcessor(){}
+
+	public:
+		virtual void	AddField(GField* pField) = 0;
+	};
+
+	/**
+	 * 具有相同属性的多个多边形合并成一个
+	 * 要执行一下distinct
+	 */
+	class PolygonDissolveByAttributeProcessor : public GProcessor
+	{
+	protected:
+		PolygonDissolveByAttributeProcessor(){}
+		virtual ~PolygonDissolveByAttributeProcessor(){}
+	};
+
+	/**
+	 * 多边形的parts分解为独立多边形
+	 */
+	class SeperatePartsToPolygonsProcessor : public GProcessor
+	{
+	protected:
+		PolygonDissolveByAttributeProcessor(){}
+		virtual ~PolygonDissolveByAttributeProcessor(){}
+	};
+
+	/**
+	 * 多边形形状指数、
+	 * 1)面积	A
+	 * 2)周长	P
+	 * 3)周长/面积			P/A
+	 * 4)周长/面积开平方	P/sqrt(A)
+	 * 5)...参考qgis
+	 */
+	class PolygonShapeIndicesProcessor : public GProcessor
+	{
+	protected:
+		PolygonShapeIndicesProcessor(){}
+		virtual ~PolygonShapeIndicesProcessor(){}
+	};
+
+	/**
+	 * 多边形属性
+	 * 1)点个数
+	 * 2)Part个数
+	 * 3)周长
+	 * 4)面积
+	 */
+	class PolygonPropertiesProcessor : public GProcessor
+	{
+	protected:
+		PolygonPropertiesProcessor(){}
+		virtual ~PolygonPropertiesProcessor(){}
+
+	};
+
+	//------------------------------------------------------------------------
+	// Geometry Processor Begin
+	//------------------------------------------------------------------------
+
+	//------------------------------------------------------------------------
 	// Raster Processor Begin
 	//------------------------------------------------------------------------
 	class RasterExtractByRectangleProcessor : public GProcessor
