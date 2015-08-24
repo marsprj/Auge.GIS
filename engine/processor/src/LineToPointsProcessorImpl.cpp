@@ -143,6 +143,22 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		GField* pField = pinFeatureClass->GetFields()->GetGeometryField();
+		if(pField==NULL)
+		{
+			pinFeatureClass->Release();
+			poutWorkspace->Release();
+			return AG_FAILURE;
+		}
+		augeGeometryType type = pField->GetGeometryDef()->GeometryType();
+		if(type!=augeGTLineString||type!=augeGTMultiLineString)
+		{
+			pinFeatureClass->Release();
+			poutWorkspace->Release();
+			return AG_FAILURE;
+		}
+
+
 		poutFeatureClass = CreateOutputFeatureClass(className_out, poutWorkspace, pinFeatureClass);
 		if(poutFeatureClass==NULL)
 		{
@@ -151,7 +167,7 @@ namespace auge
 		}
 
 		RESULTCODE rc = AG_FAILURE;
-		rc = LineToPoints(pinFeatureClass, poutFeatureClass);
+		rc = Process(pinFeatureClass, poutFeatureClass);
 		poutFeatureClass->Refresh();
 		poutFeatureClass->Release();
 
@@ -235,84 +251,85 @@ namespace auge
 		return poutFeatureClass;
 	}
 
-	RESULTCODE LineToPointsProcessorImpl::LineToPoints(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass)
+	RESULTCODE LineToPointsProcessorImpl::Process(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass)
 	{
-		//g_uint i_srid = pinFeatureClass->GetSRID();
-		//g_uint o_srid = poutFeatureClass->GetSRID();
+		Geometry *pGeometry = NULL;
+		Feature	 *pFeature = NULL;
+		Feature	 *pnewFeature = NULL;
+		FeatureCursor* pCursor = pinFeatureClass->Query();
 
-		//m_srsbase.Open();
+		FeatureInsertCommand* cmd = poutFeatureClass->CreateInsertCommand();
 
-		//char i_pj_str[AUGE_MSG_MAX];
-		//memset(i_pj_str, 0, AUGE_MSG_MAX);
-		//m_srsbase.GetProj4Text(i_srid, i_pj_str, AUGE_MSG_MAX);
+		while((pFeature=pCursor->NextFeature())!=NULL)
+		{
+			pGeometry = pFeature->GetGeometry();
+			if( pGeometry != NULL )
+			{
+				switch(pGeometry->GeometryType())
+				{
+				case augeGTLineString:
+					ProcessLineString(pFeature, poutFeatureClass, cmd);
+					break;
+				case augeGTMultiLineString:
+					ProcessMultiLineString(pFeature, poutFeatureClass, cmd);
+					break;
+				}
+			}
 
-		//char o_pj_str[AUGE_MSG_MAX];
-		//memset(o_pj_str, 0, AUGE_MSG_MAX);
-		//m_srsbase.GetProj4Text(o_srid, o_pj_str, AUGE_MSG_MAX);
-
-		////const char* i_pj_str = "+proj=longlat +datum=WGS84 +no_defs";
-		////const char* o_pj_str = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
-
-		//m_srsbase.Close();
-
-		//projPJ i_pj = pj_init_plus(i_pj_str);
-		//projPJ o_pj = pj_init_plus(o_pj_str);
-
-		//if(i_pj==NULL)
-		//{
-		//	return AG_FAILURE;
-		//}
-		//if(o_pj==NULL)
-		//{
-		//	return AG_FAILURE;
-		//}
-		//
-		//g_uchar	 *wkb = NULL;
-		//Geometry *pGeometry = NULL;
-		//Feature	 *pFeature = NULL;
-		//FeatureCursor* pCursor = pinFeatureClass->Query();
-
-		//FeatureInsertCommand* cmd = poutFeatureClass->CreateInsertCommand();
-		//
-		//while((pFeature=pCursor->NextFeature())!=NULL)
-		//{
-		//	pGeometry = pFeature->GetGeometry();
-		//	if( pGeometry != NULL )
-		//	{
-		//		wkb = pGeometry->AsBinary();
-
-		//		switch(pGeometry->GeometryType())
-		//		{
-		//		case augeGTPoint:
-		//			Project((WKBPoint*)wkb, i_pj, o_pj);
-		//			break;
-		//		case augeGTMultiPoint:
-		//			Project((WKBMultiPoint*)wkb, i_pj, o_pj);
-		//			break;
-		//		case augeGTLineString:
-		//			Project((WKBLineString*)wkb, i_pj, o_pj);
-		//			break;
-		//		case augeGTMultiLineString:
-		//			Project((WKBMultiLineString*)wkb, i_pj, o_pj);
-		//			break;
-		//		case augeGTPolygon:
-		//			Project((WKBPolygon*)wkb, i_pj, o_pj);
-		//			break;
-		//		case augeGTMultiPolygon:
-		//			Project((WKBMultiPolygon*)wkb, i_pj, o_pj);
-		//			break;
-		//		}
-		//	}
-
-		//	cmd->Insert(pFeature);
-
-		//	pFeature->Release();
-		//}
-
-		//pCursor->Release();
+			pFeature->Release();
+		}
+		pnewFeature->Release();
+		pCursor->Release();
 
 		return AG_SUCCESS;
 	}
+
+	void LineToPointsProcessorImpl::ProcessLineString(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd)
+	{
+		Geometry* pGeometry = NULL;
+		pGeometry = pinFeature->GetGeometry();
+		if(pGeometry==NULL)
+		{
+			return;
+		}
+
+		const char* fname = NULL;
+		GField*  pField = NULL;
+		GFields* pFields = pinFeature->GetFeatureClass()->GetFields();
+		g_uint count = pFields->Count();
+
+		GValue* pValue = NULL;
+		GValue* pGeoValue = NULL;		
+		Feature* poutFeature = poutFeatureClass->NewFeature();
+
+		augeFieldType type = augeFieldTypeNone;
+		for(g_uint i=0; i<count; i++)
+		{
+			pField = pFields->GetField(i);
+			type = pField->GetType();
+			if(type==augeFieldTypeGeometry)
+			{
+				continue;
+			}
+
+			fname = pField->GetName();
+			pValue = pinFeature->GetValue(i);			
+			poutFeature->SetValue(fname, pValue);
+		}
+
+		Geometry* pGeoPoint = NULL;
+		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+		pField = pinFeature->GetFeatureClass()->GetFields()->GetGeometryField();
+
+		
+		poutFeature->Release();
+	}
+
+	void LineToPointsProcessorImpl::ProcessMultiLineString(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd)
+	{
+
+	}
+
 
 	void LineToPointsProcessorImpl::SetUser(g_uint user)
 	{

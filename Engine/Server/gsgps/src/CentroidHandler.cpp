@@ -395,7 +395,7 @@ namespace auge
 		pField_2->SetName("shape");
 		pField_2->SetType(augeFieldTypeGeometry);
 		pGeometryDef_2 = pField->GetGeometryDef()->GetGeometryDef_2();
-		pGeometryDef_2->SetGeometryType(augeGTMultiPolygon);
+		pGeometryDef_2->SetGeometryType(augeGTPoint);
 		pGeometryDef_2->SetDimension(2);
 		pGeometryDef_2->SetSRID(srid);
 		pFields->Add(pField);

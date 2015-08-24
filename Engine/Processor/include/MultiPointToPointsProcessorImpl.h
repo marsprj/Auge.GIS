@@ -39,7 +39,7 @@ namespace auge
 		const char*			GetOutputFatureClass();
 
 		FeatureClass*		CreateOutputFeatureClass(const char* className, FeatureWorkspace* pWorkspace, FeatureClass* pinFeatureClass);
-		RESULTCODE			MultiPointToPoints(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass);
+		RESULTCODE			Process(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass);
 
 
 	private:

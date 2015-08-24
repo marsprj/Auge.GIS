@@ -10,8 +10,10 @@
 
 namespace auge
 {
+	class Feature;
 	class FeatureClass;
 	class FeatureWorkspace;
+	class FeatureInsertCommand;
 
 	class LineToPointsProcessorImpl : public LineToPointsProcessor
 	{
@@ -39,8 +41,10 @@ namespace auge
 		const char*			GetOutputFatureClass();
 
 		FeatureClass*		CreateOutputFeatureClass(const char* className, FeatureWorkspace* pWorkspace, FeatureClass* pinFeatureClass);
-		RESULTCODE			LineToPoints(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass);
+		RESULTCODE			Process(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass);
 
+		void				ProcessLineString(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd);
+		void				ProcessMultiLineString(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd);
 
 	private:
 		std::string	m_in_source_name;
