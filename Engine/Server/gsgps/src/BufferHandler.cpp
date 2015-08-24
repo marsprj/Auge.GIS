@@ -15,12 +15,12 @@ namespace auge
 {
 	BufferHandler::BufferHandler()
 	{
-
+		initGEOS(NULL, NULL);
 	}
 
 	BufferHandler::~BufferHandler()
 	{
-
+		finishGEOS();
 	}
 
 	const char*	BufferHandler::GetName()

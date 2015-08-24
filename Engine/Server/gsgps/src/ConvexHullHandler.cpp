@@ -15,12 +15,12 @@ namespace auge
 {
 	ConvexHullHandler::ConvexHullHandler()
 	{
-
+		initGEOS(NULL, NULL);
 	}
 
 	ConvexHullHandler::~ConvexHullHandler()
 	{
-
+		finishGEOS();
 	}
 
 	const char*	ConvexHullHandler::GetName()
