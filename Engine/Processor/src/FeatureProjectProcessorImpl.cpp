@@ -189,7 +189,7 @@ namespace auge
 		}
 
 		GField * pField  = NULL;
-		GFields* pFields = pFields = pinFeatureClass->GetFields();
+		GFields* pFields = pinFeatureClass->GetFields();
 		pField = pFields->GetGeometryField();
 		if(pField==NULL)
 		{

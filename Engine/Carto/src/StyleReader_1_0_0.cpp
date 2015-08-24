@@ -347,44 +347,62 @@ namespace auge
 		}
 		pSymbolizer->SetSymbol(pSymbol);
 
-		pxNodeSet = pxLineSymbolNode->GetChildren();
-		if(pxNodeSet==NULL)
+		// AUGE_SLD_STROKE
+		pxNode = pxLineSymbolNode->GetFirstChild(AUGE_SLD_STROKE);
+		if(pxNode==NULL)
 		{
-			return NULL;
+			pSymbol->SetStroke(NULL);
+		}
+		else
+		{
+			Stroke* pStroke = ReadStroke(pxNode);
+			pSymbol->SetStroke(pStroke);
 		}
 
-		pxNodeSet->Reset();
-		while(!pxNodeSet->IsEOF())
+		// AUGE_SLD_GEOMETRY
+		pxNode = pxLineSymbolNode->GetFirstChild(AUGE_SLD_GEOMETRY);
+		if(pxNode!=NULL)
 		{
-			pxNode = pxNodeSet->Next();
-			if(pxNode!=NULL)
-			{
-				nodeName = pxNode->GetName();
-				if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
-				{
-					//ReadStroke(pSymbolizer, pxNode);
-					Stroke* pStroke = ReadStroke(pxNode);
-					pSymbol->SetStroke(pStroke);
-				}
-				else if(g_stricmp(nodeName, AUGE_SLD_GEOMETRY)==0)
-				{
-					ReadGeometry(pSymbolizer, pxNode);
-				}
-				//else if(g_stricmp(nodeName, AUGE_SLD_WELLKNOWN_NAME)==0)
-				//{
-				//	const char* wellName = pxNode->GetContent();
-				//	if(wellName!=NULL)
-				//	{
-				//		if(g_stricmp(wellName,"railway")==0)
-				//			pSymbolizer->SetLineType(augeLineRailway);
-				//		else
-				//			pSymbolizer->SetLineType(augeLineSimple);
-				//	}
-				//}	
-			}
+			ReadGeometry(pSymbolizer, pxNode);
 		}
 
-		pxNodeSet->Release();
+		//pxNodeSet = pxLineSymbolNode->GetChildren();
+		//if(pxNodeSet==NULL)
+		//{
+		//	return NULL;
+		//}
+		//pxNodeSet->Reset();
+		//while(!pxNodeSet->IsEOF())
+		//{
+		//	pxNode = pxNodeSet->Next();
+		//	if(pxNode!=NULL)
+		//	{
+		//		nodeName = pxNode->GetName();
+		//		if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
+		//		{
+		//			//ReadStroke(pSymbolizer, pxNode);
+		//			Stroke* pStroke = ReadStroke(pxNode);
+		//			pSymbol->SetStroke(pStroke);
+		//		}
+		//		else if(g_stricmp(nodeName, AUGE_SLD_GEOMETRY)==0)
+		//		{
+		//			ReadGeometry(pSymbolizer, pxNode);
+		//		}
+		//		//else if(g_stricmp(nodeName, AUGE_SLD_WELLKNOWN_NAME)==0)
+		//		//{
+		//		//	const char* wellName = pxNode->GetContent();
+		//		//	if(wellName!=NULL)
+		//		//	{
+		//		//		if(g_stricmp(wellName,"railway")==0)
+		//		//			pSymbolizer->SetLineType(augeLineRailway);
+		//		//		else
+		//		//			pSymbolizer->SetLineType(augeLineSimple);
+		//		//	}
+		//		//}	
+		//	}
+		//}
+		//pxNodeSet->Release();
+
 		return pSymbolizer;
 	}
 
@@ -459,45 +477,71 @@ namespace auge
 		}
 		pSymbolizer->SetSymbol(pSymbol);
 
-		pxNodeSet = pxSymbolizerNode->GetChildren();
-		if(pxNodeSet==NULL)
+		// AUGE_SLD_STROKE
+		pxNode = pxSymbolizerNode->GetFirstChild(AUGE_SLD_STROKE);
+		if(pxNode==NULL)
 		{
-			return NULL;
+			pSymbol->SetStroke(NULL);
+		}
+		else
+		{
+			Stroke* pStroke = ReadStroke(pxNode);
+			pSymbol->SetStroke(pStroke);
 		}
 
-		pxNodeSet->Reset();
-		while(!pxNodeSet->IsEOF())
+		// AUGE_SLD_FILL
+		pxNode = pxSymbolizerNode->GetFirstChild(AUGE_SLD_FILL);
+		if(pxNode==NULL)
 		{
-			pxNode = pxNodeSet->Next();
-			if(pxNode!=NULL)
+			pSymbol->SetFill(NULL);
+		}
+		else
+		{
+			Fill* pFill = ReadFill(pxNode);
+			pSymbol->SetFill(pFill);
+			if(pFill!=NULL)
 			{
-				nodeName = pxNode->GetName();
-				if(g_stricmp(nodeName, AUGE_SLD_FILL)==0)
-				{
-					if(!pSymbol->IsGraphic())
-					{
-						//ReadFill(pSymbolizer, pxNode);
-						Fill* pFill = ReadFill(pxNode);
-						if(pFill!=NULL)
-						{
-							pSymbol->SetFill(pFill);
-						}
-					}
-				}
-				else if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
-				{
-					//ReadStroke(pSymbolizer, pxNode);
-					Stroke* pStroke = ReadStroke(pxNode);
-					pSymbol->SetStroke(pStroke);
-				}
-				else if(g_stricmp(nodeName, AUGE_SLD_GEOMETRY)==0)
-				{
-					ReadGeometry(pSymbolizer, pxNode);
-				}	
+				pSymbol->SetOpacity(pFill->GetColor().GetAlphaF());
 			}
 		}
 
-		pxNodeSet->Release();
+		//pxNodeSet = pxSymbolizerNode->GetChildren();
+		//if(pxNodeSet==NULL)
+		//{
+		//	return NULL;
+		//}
+		//pxNodeSet->Reset();
+		//while(!pxNodeSet->IsEOF())
+		//{
+		//	pxNode = pxNodeSet->Next();
+		//	if(pxNode!=NULL)
+		//	{
+		//		nodeName = pxNode->GetName();
+		//		if(g_stricmp(nodeName, AUGE_SLD_FILL)==0)
+		//		{
+		//			if(!pSymbol->IsGraphic())
+		//			{
+		//				//ReadFill(pSymbolizer, pxNode);
+		//				Fill* pFill = ReadFill(pxNode);
+		//				if(pFill!=NULL)
+		//				{
+		//					pSymbol->SetFill(pFill);
+		//				}
+		//			}
+		//		}
+		//		else if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
+		//		{
+		//			//ReadStroke(pSymbolizer, pxNode);
+		//			Stroke* pStroke = ReadStroke(pxNode);
+		//			pSymbol->SetStroke(pStroke);
+		//		}
+		//		else if(g_stricmp(nodeName, AUGE_SLD_GEOMETRY)==0)
+		//		{
+		//			ReadGeometry(pSymbolizer, pxNode);
+		//		}	
+		//	}
+		//}
+		//pxNodeSet->Release();
 
 		return pSymbolizer;
 	}
@@ -639,7 +683,7 @@ namespace auge
 				nodeName = pxNode->GetName();
 				if(g_stricmp(nodeName, AUGE_SLD_MARK)==0)
 				{
-					ReadMark(pSymbolizer, pxNode);
+					ReadMarker(pSymbolizer, pxNode);
 					MarkerSymbol* pMarker = pSymbolizer->GetMarker();
 					if(pMarker!=NULL||size>=0)
 					{
@@ -654,40 +698,6 @@ namespace auge
 		}
 		pxNodeSet->Release();
 
-
-		//pxNodeSet = pxGraphicNode->GetChildren();
-		//if(pxNodeSet==NULL)
-		//{
-		//	return false;
-		//}
-
-		//pxNodeSet->Reset();
-		//while(!pxNodeSet->IsEOF())
-		//{
-		//	pxNode = pxNodeSet->Next();
-		//	if(pxNode!=NULL)
-		//	{
-		//		nodeName = pxNode->GetName();
-		//		if(g_stricmp(nodeName, AUGE_SLD_SIZE)==0)
-		//		{
-		//			double size = 1.0f;
-		//			if(pxNode->GetContent()!=NULL)
-		//			{
-		//				size = atof(pxNode->GetContent());
-		//				pSymbolizer->SetSize(size);
-		//			}
-		//		}
-		//		else if(g_stricmp(nodeName, AUGE_SLD_MARK)==0)
-		//		{
-		//			ReadMark(pSymbolizer, pxNode);
-		//		}
-		//		else if(g_stricmp(nodeName, AUGE_SLD_EXTERNAL_GRAPHIC)==0)
-		//		{
-		//			ReadExternalGraphic(pSymbolizer, pxNode);
-		//		}
-		//	}
-		//}
-		//pxNodeSet->Release();
 		return true;
 	}
 
@@ -696,7 +706,7 @@ namespace auge
 		return true;
 	}
 
-	bool StyleReader_1_0_0::ReadMark(PointSymbolizer* pSymbolizer, XNode* pxMarkNode)
+	bool StyleReader_1_0_0::ReadMarker(PointSymbolizer* pSymbolizer, XNode* pxMarkNode)
 	{
 		XNode		*pxNode    = NULL;
 		XNodeSet	*pxNodeSet = NULL;
@@ -726,37 +736,65 @@ namespace auge
 			{
 				SimpleMarkerSymbol* pSimpleMarker = static_cast<SimpleMarkerSymbol*>(pMarker);
 
-				pxNodeSet = pxMarkNode->GetChildren();
-				if(pxNodeSet==NULL)
+				// AUGE_SLD_STROKE
+				pxNode = pxMarkNode->GetFirstChild(AUGE_SLD_STROKE);
+				if(pxNode==NULL)
 				{
-					return false;
+					pSimpleMarker->SetStroke(NULL);
+				}
+				else
+				{
+					Stroke* pStroke = ReadStroke(pxNode);
+					pSimpleMarker->SetStroke(pStroke);
 				}
 
-				pxNodeSet->Reset();
-				while(!pxNodeSet->IsEOF())
+				// AUGE_SLD_FILL
+				pxNode = pxMarkNode->GetFirstChild(AUGE_SLD_FILL);
+				if(pxNode==NULL)
 				{
-					pxNode = pxNodeSet->Next();
-					if(pxNode!=NULL)
+					pSimpleMarker->SetFill(NULL);
+				}
+				else
+				{
+					Fill* pFill = ReadFill(pxNode);
+					pSimpleMarker->SetFill(pFill);
+					if(pFill!=NULL)
 					{
-						nodeName = pxNode->GetName();
-						if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
-						{
-							Stroke* pStroke = ReadStroke(pxNode);
-							pSimpleMarker->SetStroke(pStroke);
-						}
-						else if(g_stricmp(nodeName, AUGE_SLD_FILL)==0)
-						{
-							Fill* pFill = ReadFill(pxNode);
-							pSimpleMarker->SetFill(pFill);
-							if(pFill!=NULL)
-							{
-								pSimpleMarker->SetOpacity(pFill->GetColor().GetAlphaF());
-							}
-						}	
+						pSimpleMarker->SetOpacity(pFill->GetColor().GetAlphaF());
 					}
 				}
 
-				pxNodeSet->Release();
+				//pxNodeSet = pxMarkNode->GetChildren();
+				//if(pxNodeSet==NULL)
+				//{
+				//	return false;
+				//}
+
+				//pxNodeSet->Reset();
+				//while(!pxNodeSet->IsEOF())
+				//{
+				//	pxNode = pxNodeSet->Next();
+				//	if(pxNode!=NULL)
+				//	{
+				//		nodeName = pxNode->GetName();
+				//		if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
+				//		{
+				//			Stroke* pStroke = ReadStroke(pxNode);
+				//			pSimpleMarker->SetStroke(pStroke);
+				//		}
+				//		else if(g_stricmp(nodeName, AUGE_SLD_FILL)==0)
+				//		{
+				//			Fill* pFill = ReadFill(pxNode);
+				//			pSimpleMarker->SetFill(pFill);
+				//			if(pFill!=NULL)
+				//			{
+				//				pSimpleMarker->SetOpacity(pFill->GetColor().GetAlphaF());
+				//			}
+				//		}	
+				//	}
+				//}
+
+				//pxNodeSet->Release();
 			}
 		}
 		
@@ -866,7 +904,7 @@ namespace auge
 	}
 
 	// @deprecated
-	bool StyleReader_1_0_0::ReadMark(PolygonSymbolizer* pSymbolizer, XNode* pxMarkNode)
+	bool StyleReader_1_0_0::ReadMarker(PolygonSymbolizer* pSymbolizer, XNode* pxMarkNode)
 	{
 		//XNode		*pxNode    = NULL;
 		//XNodeSet	*pxNodeSet = NULL;

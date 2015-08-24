@@ -11,8 +11,7 @@ namespace auge
 	SimpleLineSymbolImpl::SimpleLineSymbolImpl()
 	{
 		m_line_type = augeLineSimple;
-		//m_pStroke = new StrokeImpl();
-		m_pStroke = NULL;
+		m_pStroke = new StrokeImpl();
 
 		m_cairo = NULL;
 		m_icon = NULL;

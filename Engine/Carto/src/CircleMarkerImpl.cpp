@@ -14,11 +14,8 @@ namespace auge
 	{
 		m_icon_name = "Circle.png";
 
-                //m_pStroke = new StrokeImpl();
-                //m_pFill = new FillImpl();
-                m_pStroke = NULL;
-                m_pFill = NULL;
-
+        m_pStroke = new StrokeImpl();
+        m_pFill = new FillImpl();
 	}
 
 	CircleMarkerImpl::~CircleMarkerImpl()
