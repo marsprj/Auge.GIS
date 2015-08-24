@@ -21,8 +21,10 @@ namespace auge
 	m_size(20.0f),
 	m_rotation(0.0f)
 	{
-		m_pStroke = new StrokeImpl();
-		m_pFill = new FillImpl();
+                //m_pStroke = new StrokeImpl();
+                //m_pFill = new FillImpl();
+                m_pStroke = NULL;
+                m_pFill = NULL;
 
 		m_icon_name = "Pentagon.png";
 	}

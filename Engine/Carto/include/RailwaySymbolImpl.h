@@ -39,6 +39,7 @@ namespace auge
 		Stroke		*m_pStroke;
 		g_uint		m_block_width;
 		g_uint		m_block_length;
+		float		m_opacity;
 
 		std::string m_icon_name;
 

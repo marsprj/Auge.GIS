@@ -11,7 +11,8 @@ namespace auge
 	SimpleLineSymbolImpl::SimpleLineSymbolImpl()
 	{
 		m_line_type = augeLineSimple;
-		m_pStroke = new StrokeImpl();
+		//m_pStroke = new StrokeImpl();
+		m_pStroke = NULL;
 
 		m_cairo = NULL;
 		m_icon = NULL;
@@ -164,7 +165,8 @@ namespace auge
 
 		cairo_set_source_rgba(m_cairo,	color.GetRedF(), color.GetGreenF(), color.GetBlueF(), color.GetAlphaF());
 		cairo_set_line_width(m_cairo, m_pStroke->GetWidth());
-		cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_BUTT);
+		cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_ROUND);
+		cairo_set_line_join(m_cairo, CAIRO_LINE_JOIN_ROUND);
 		cairo_stroke(m_cairo);
 
 		cairo_restore(m_cairo);

@@ -90,7 +90,14 @@ namespace auge
 		virtual void			SetQueryable(bool flag) = 0;
 
 		virtual bool			IsVisiable() = 0;
+		virtual bool			IsVisiable(double scale) = 0;
 		virtual void			SetVisiable(bool flag) = 0;
+
+		virtual	double			GetMinScale() = 0;
+		virtual	void			SetMinScale(double scale) = 0;
+
+		virtual	double			GetMaxScale() = 0;
+		virtual	void			SetMaxScale(double scale) = 0;
 
 		//virtual RESULTCODE		SetStyle(Style* pStyle) = 0;
 		//virtual Style*			GetStyle() = 0;

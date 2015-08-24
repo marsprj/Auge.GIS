@@ -196,11 +196,20 @@ namespace auge
 
 		FeatureInsertCommand* cmd = pdbFeatureClass->CreateInsertCommand();
 		
+		long ts = auge_get_time();
+
 		while((pFeature=pshpCursor->NextFeature())!=NULL)
 		{
 			cmd->Insert(pFeature);
 			pFeature->Release();
 		}
+
+		long te = auge_get_time();
+
+		char msg[AUGE_MSG_MAX];
+		memset(msg, 0, AUGE_MSG_MAX);
+		g_sprintf(msg, "[%s] import Finished, using\t%ld\ts", shp_name, (te-ts)/1000);
+		pLogger->Info(msg, __FILE__, __LINE__);
 
 		pdbFeatureClass->Refresh();
 		cmd->Release();
@@ -210,6 +219,8 @@ namespace auge
 		pshpFeatureClass->Release();
 		pshpWorkspace->Close();
 		pshpWorkspace->Release();
+
+		
 
 		return AG_SUCCESS;
 	}

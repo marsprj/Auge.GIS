@@ -4,7 +4,9 @@ namespace auge
 {
 	QuadServerLayerImpl::QuadServerLayerImpl()
 	{
-		m_srid = 4326;
+		m_srid = AUGE_DEFAULT_SRID;
+		m_min_scale = -1.0;
+		m_max_scale = -1.0;
 	}
 
 	QuadServerLayerImpl::~QuadServerLayerImpl()
@@ -59,6 +61,16 @@ namespace auge
 		return m_visible;
 	}
 
+	bool QuadServerLayerImpl::IsVisiable(double scale)
+	{
+		if(scale<0)
+		{
+			return true;
+		}
+
+		return ((scale>m_min_scale) && (scale<m_max_scale));
+	}
+
 	void QuadServerLayerImpl::SetVisiable(bool flag)
 	{
 		m_visible = flag;
@@ -78,6 +90,26 @@ namespace auge
 		}
 		m_url = url;
 		return AG_SUCCESS;
+	}
+
+	double QuadServerLayerImpl::GetMinScale()
+	{
+		return m_min_scale;
+	}
+
+	void QuadServerLayerImpl::SetMinScale(double scale)
+	{
+		m_min_scale = scale;
+	}
+
+	double QuadServerLayerImpl::GetMaxScale()
+	{
+		return m_max_scale;
+	}
+
+	void QuadServerLayerImpl::SetMaxScale(double scale)
+	{
+		m_max_scale = scale;
 	}
 
 }

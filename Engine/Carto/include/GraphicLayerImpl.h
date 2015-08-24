@@ -28,7 +28,14 @@ namespace auge
 		virtual void			SetQueryable(bool flag);
 
 		virtual bool			IsVisiable();
+		virtual bool			IsVisiable(double scale);
 		virtual void			SetVisiable(bool flag);
+
+		virtual	double			GetMinScale();
+		virtual	void			SetMinScale(double scale);
+
+		virtual	double			GetMaxScale();
+		virtual	void			SetMaxScale(double scale);
 
 		virtual RESULTCODE		SetStyle(Style* pStyle);
 		virtual Style*			GetStyle();
@@ -42,6 +49,9 @@ namespace auge
 		bool			m_queryable;
 		bool			m_visiable;
 		Style*			m_pStyle;
+
+		double			m_min_scale;
+		double			m_max_scale;
 
 		FeatureClass*	m_pFeatureClass;
 	};

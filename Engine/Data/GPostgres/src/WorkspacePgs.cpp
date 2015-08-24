@@ -98,12 +98,21 @@ namespace auge
 			CreateRasterTable();
 		}
 		m_raster_root_folder.Create(0, "/", "/", "/", this);
+
+		char msg[AUGE_MSG_MAX];
+		g_sprintf(msg, "Wokspace [%d] is opened.", m_name.c_str());
+		augeGetLoggerInstance()->Info(msg, __FILE__, __LINE__);
+
 		return rc;
 	}
 
 	void WorkspacePgs::Close()
 	{
 		m_pgConnection.Close();
+
+                char msg[AUGE_MSG_MAX];
+                g_sprintf(msg, "Wokspace [%d] is closed.", m_name.c_str());
+                augeGetLoggerInstance()->Info(msg, __FILE__, __LINE__);
 	}
 
 	bool WorkspacePgs::IsOpen()
