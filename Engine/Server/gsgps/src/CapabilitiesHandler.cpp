@@ -152,7 +152,9 @@ namespace auge
 		AddLanguagesNode_1_1_0(pxRoot, gps_xlink);
 
 		
-
+		pxDoc->Save("/home/geobeans/aaa.xml", pWebContext->GetResponseEncoding(), 1);
+		
+		augeGetLoggerInstance()->Debug(capa_path,__FILE__,__LINE__);
 		pxDoc->Save(capa_path, pWebContext->GetResponseEncoding(), 1);
 		pxDoc->Release();
 
