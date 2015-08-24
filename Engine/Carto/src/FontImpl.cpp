@@ -6,7 +6,7 @@ namespace auge
 {
 
 	FontImpl::FontImpl():
-m_style(augeFontStyleNormal),
+m_slant(augeFontStyleNormal),
 	m_weght(augeFontWeightNormal),
 	m_size(10.0f)
 {
@@ -38,14 +38,14 @@ bool FontImpl::SetFamily(const char* szFamily)
 	return true;
 }
 
-augeFontSlant FontImpl::GetStyle()
+augeFontSlant FontImpl::GetSlant()
 {
-	return m_style;
+	return m_slant;
 }
 
-void FontImpl::SetStyle(augeFontSlant style)
+void FontImpl::SetSlant(augeFontSlant slant)
 {
-	m_style = style;
+	m_slant = slant;
 }
 
 augeFontWeight FontImpl::GetWeight()

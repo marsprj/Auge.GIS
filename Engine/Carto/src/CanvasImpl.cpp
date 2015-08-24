@@ -403,7 +403,7 @@ namespace auge
 		m_pRenderer->Save();
 		m_pRenderer->SetFont(pFont->GetFamily(),
 			pFont->GetSize(),
-			pFont->GetStyle(),
+			pFont->GetSlant(),
 			pFont->GetWeight());
 
 		while((pFeature=pCursor->NextFeature())!=NULL)

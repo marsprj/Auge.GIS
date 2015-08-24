@@ -341,7 +341,7 @@ namespace auge
 		pxNode->SetChildText(str);
 
 		const char* style = NULL;
-		switch(pFont->GetStyle())
+		switch(pFont->GetSlant())
 		{
 		case augeFontStyleNormal:
 			style = "normal";

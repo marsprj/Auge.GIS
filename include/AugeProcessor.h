@@ -178,6 +178,16 @@ namespace auge
 	};
 
 	/**
+	 * 多边形的parts分解为独立多边形
+	 */
+	class PartsToPolygonsProcessor : public GProcessor
+	{
+	protected:
+		PartsToPolygonsProcessor(){}
+		virtual ~PartsToPolygonsProcessor(){}
+	};
+
+	/**
 	 * 提取位于多边形内的点
 	 */
 	class ClipPointWithPoygon : public GProcessor
@@ -217,7 +227,7 @@ namespace auge
 		virtual ~PolygonDissolveProcessor(){}
 
 	public:
-		virtual void	AddField(GField* pField) = 0;
+		//virtual void	AddField(GField* pField) = 0;
 	};
 
 	/**
@@ -231,15 +241,7 @@ namespace auge
 		virtual ~PolygonDissolveByAttributeProcessor(){}
 	};
 
-	/**
-	 * 多边形的parts分解为独立多边形
-	 */
-	class SeperatePartsToPolygonsProcessor : public GProcessor
-	{
-	protected:
-		PolygonDissolveByAttributeProcessor(){}
-		virtual ~PolygonDissolveByAttributeProcessor(){}
-	};
+
 
 	/**
 	 * 多边形形状指数、

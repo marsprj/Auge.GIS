@@ -1037,15 +1037,15 @@ namespace auge
 					{
 						if(g_stricmp(value,"normal")==0)
 						{
-							pFont->SetStyle(augeFontStyleNormal);
+							pFont->SetSlant(augeFontStyleNormal);
 						}
 						else if(g_stricmp(value,"italic")==0)
 						{
-							pFont->SetStyle(augeFontStyleItalic);
+							pFont->SetSlant(augeFontStyleItalic);
 						}
 						else if(g_stricmp(value,"oblique")==0)
 						{
-							pFont->SetStyle(augeFontStyleOblique);
+							pFont->SetSlant(augeFontStyleOblique);
 						}
 					}
 				}

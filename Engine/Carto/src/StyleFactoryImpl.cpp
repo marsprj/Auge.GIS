@@ -520,7 +520,7 @@ namespace auge
 		Font *pFont = NULL;
 		pFont = new FontImpl();
 		pFont->SetFamily("Arial");
-		pFont->SetStyle(augeFontStyleItalic);
+		pFont->SetSlant(augeFontStyleItalic);
 		pFont->SetSize(15.0f);
 		pFont->SetWeight(augeFontWeightBold);
 		pTextSymbolizer->SetFont(pFont);

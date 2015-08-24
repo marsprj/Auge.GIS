@@ -441,8 +441,11 @@ namespace auge
 		Font* pFont = pSymbolizer->GetFont();
 		//cairo_select_font_face(m_cairo, "Sazanami Gothic", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
 		//cairo_select_font_face(m_cairo, "Microsoft Yahei", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-		cairo_select_font_face(m_cairo, pFont->GetFamily(), (cairo_font_slant_t)(pFont->GetStyle()), (cairo_font_weight_t)(pFont->GetWeight()));
-		//cairo_set_font_size(m_cairo, 30.0);
+
+		const char* family = pFont->GetFamily();
+		cairo_font_slant_t slant = (cairo_font_slant_t)pFont->GetSlant();
+		cairo_font_weight_t weight = (cairo_font_weight_t)pFont->GetWeight();
+		cairo_select_font_face(m_cairo, family, slant, weight);
 		cairo_set_font_size(m_cairo, pFont->GetSize());
 
 		cairo_move_to(m_cairo, x, y);
