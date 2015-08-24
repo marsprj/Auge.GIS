@@ -262,7 +262,7 @@ namespace auge
 		const char* name = handler->GetName();
 		const char* alias = "";//handler->GetDescription();//auge_encoding_convert("GBK","UTF-8", handler->GetDescription(), strlen(handler->GetDescription()));
 		// WPS_Capabilities-->OperationsMetadata-->Operation-->Name
-		//pxOperation->SetAttribute("name", name, NULL);
+		//pxOperation->SetAttribute("name", name, NULL); 
 		XElement* pxName = pxOperation->AddChild("Name", NULL);
 		pxName->SetChildText(name);
 		// WPS_Capabilities-->OperationsMetadata-->Operation-->Alias
