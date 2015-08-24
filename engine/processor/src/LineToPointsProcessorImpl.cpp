@@ -320,7 +320,6 @@ namespace auge
 		Geometry* pGeoPoint = NULL;
 		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
 		pField = pinFeature->GetFeatureClass()->GetFields()->GetGeometryField();
-
 		
 		poutFeature->Release();
 	}

@@ -1320,7 +1320,7 @@ namespace auge
 				break;
 			case augeFieldTypeDouble:
 				{
-					g_snprintf(str, AUGE_BUFFER_MAX,"%d",pFeature->GetDouble(i));
+					g_snprintf(str, AUGE_BUFFER_MAX,"%f",pFeature->GetDouble(i));
 					fields.append(fname);
 					values.append(str);
 				}
