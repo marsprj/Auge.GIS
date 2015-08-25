@@ -105,6 +105,10 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
+		if(m_pStroke==NULL)
+		{
+			return AG_FAILURE;
+		}
 
 		augeGeometryType geom_type = pGeometry->GeometryType();
 		if((geom_type!=augeGTLineString) &&(geom_type!=augeGTMultiLineString))
