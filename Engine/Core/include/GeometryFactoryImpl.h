@@ -13,7 +13,6 @@ namespace auge
 	public:
 		virtual	GPoint*				CeatePoint(double x, double y);
 		virtual Geometry*			CreateGeometryFromWKB(g_uchar* wkb, bool attach=false);
-		virtual Geometry*			CreateMultiPolygonFromWKB(g_uchar* wkb);
 		virtual Geometry*			CreateGeometryFromWKT(const char* wkt);
 		virtual Geometry*			CreateGeometryFromGML(const char* gml);
 

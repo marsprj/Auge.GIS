@@ -130,6 +130,12 @@ namespace auge
 		WebRequest	*pWebRequest = NULL;
 		WebResponse	*pWebResponse = NULL;
 
+		const char* query_string = getenv("QUERY_STRING");
+		if(query_string!=NULL)
+		{
+			augeGetLoggerInstance()->Debug(query_string, __FILE__, __LINE__);
+		}
+
 		szService = cgi["service"];
 		pWebEngine = m_pWebEngineManager->GetEngine(szService);
 		if(pWebEngine==NULL)
