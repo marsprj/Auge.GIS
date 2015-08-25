@@ -20,6 +20,10 @@ namespace auge
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor();
 
+		// Geometry
+		virtual MultiPointToPointsProcessor* CreateMultiPointToPointsProcessor();
+		virtual LineToPointsProcessor*		CreateLineToPointsProcessor();
+
 		// Cluster 
 		virtual KMeansProcessor*			CreateKMeansProcessor();
 

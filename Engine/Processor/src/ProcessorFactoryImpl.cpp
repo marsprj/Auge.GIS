@@ -28,6 +28,9 @@
 #include "DemSlopeProcessorImpl.h"
 #include "DemAspectProcessorImpl.h"
 
+#include "MultiPointToPointsProcessorImpl.h"
+#include "LineToPointsProcessorImpl.h"
+
 #ifndef WIN32
 #include "ArchiveProcessorImpl.h"
 #endif
@@ -68,6 +71,16 @@ namespace auge
 		procesor = new ArchiveProcessorImpl();
 #endif
 		return procesor;
+	}
+
+	MultiPointToPointsProcessor* GProcessorFactoryImpl::CreateMultiPointToPointsProcessor()
+	{
+		return (new MultiPointToPointsProcessorImpl());
+	}
+
+	LineToPointsProcessor* GProcessorFactoryImpl::CreateLineToPointsProcessor()
+	{
+		return (new LineToPointsProcessorImpl());
 	}
 
 	FeatureImportProcessor* GProcessorFactoryImpl::CreateFeatureImportProcessor()

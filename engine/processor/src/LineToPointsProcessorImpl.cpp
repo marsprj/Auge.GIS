@@ -151,7 +151,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 		augeGeometryType type = pField->GetGeometryDef()->GeometryType();
-		if(type!=augeGTLineString||type!=augeGTMultiLineString)
+		if(type!=augeGTLineString&&type!=augeGTMultiLineString)
 		{
 			pinFeatureClass->Release();
 			poutWorkspace->Release();
@@ -231,7 +231,7 @@ namespace auge
 
 				poutGeometryDef = poutField->GetGeometryDef();
 				poutGeometryDef_2 = poutGeometryDef->GetGeometryDef_2();
-				poutGeometryDef_2->SetGeometryType(augeGTMultiPoint);
+				poutGeometryDef_2->SetGeometryType(augeGTPoint);
 				poutGeometryDef_2->SetDimension(pGeometryDef->GetDimension());	
 				poutGeometryDef_2->SetSRID(pGeometryDef->GetSRID());
 				pGeometryDef->GetExtent(extent);
@@ -256,7 +256,6 @@ namespace auge
 	{
 		Geometry *pGeometry = NULL;
 		Feature	 *pFeature = NULL;
-		Feature	 *pnewFeature = NULL;
 		FeatureCursor* pCursor = pinFeatureClass->Query();
 
 		FeatureInsertCommand* cmd = poutFeatureClass->CreateInsertCommand();
@@ -279,7 +278,6 @@ namespace auge
 
 			pFeature->Release();
 		}
-		pnewFeature->Release();
 		pCursor->Release();
 
 		return AG_SUCCESS;
@@ -321,13 +319,109 @@ namespace auge
 		Geometry* pGeoPoint = NULL;
 		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
 		pField = pinFeature->GetFeatureClass()->GetFields()->GetGeometryField();
-		
+		if(pField!=NULL)
+		{
+			pValue = pinFeature->GetValue(pField->GetName());
+			if(pValue!=NULL)
+			{
+				pGeometry = pValue->GetGeometry();
+				if(pGeometry!=NULL)
+				{
+					g_uint numPoints = NULL;					
+					WKBLineString* pWKBLineString = (WKBLineString*)pGeometry->AsBinary();
+					WKBPoint* pt = NULL;					
+
+					numPoints = pWKBLineString->numPoints;
+					pt = (WKBPoint*)(&(pWKBLineString->points[0]));
+					for(g_uint i=0; i<numPoints; i++,pt++)
+					{
+						pGeoPoint = pGeometryFactory->CreateGeometryFromWKB((g_byte*)pt, true);
+						pGeoValue = new GValue(pGeoPoint);
+						poutFeature->SetValue(pField->GetName(), pGeoValue);
+
+						cmd->Insert(poutFeature);
+					}
+				}
+			}
+		}
 		poutFeature->Release();
 	}
 
 	void LineToPointsProcessorImpl::ProcessMultiLineString(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd)
 	{
+		Geometry* pGeometry = NULL;
+		pGeometry = pinFeature->GetGeometry();
+		if(pGeometry==NULL)
+		{
+			return;
+		}
 
+		const char* fname = NULL;
+		GField*  pField = NULL;
+		GFields* pFields = pinFeature->GetFeatureClass()->GetFields();
+		g_uint count = pFields->Count();
+
+		GValue* pValue = NULL;
+		GValue* pGeoValue = NULL;		
+		Feature* poutFeature = poutFeatureClass->NewFeature();
+
+		augeFieldType type = augeFieldTypeNone;
+		for(g_uint i=0; i<count; i++)
+		{
+			pField = pFields->GetField(i);
+			type = pField->GetType();
+			if(type==augeFieldTypeGeometry)
+			{
+				continue;
+			}
+
+			fname = pField->GetName();
+			pValue = pinFeature->GetValue(i);			
+			poutFeature->SetValue(fname, pValue);
+		}
+
+		Geometry* pGeoPoint = NULL;
+		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+		pField = pinFeature->GetFeatureClass()->GetFields()->GetGeometryField();
+		if(pField!=NULL)
+		{
+			pValue = pinFeature->GetValue(pField->GetName());
+			if(pValue!=NULL)
+			{
+				pGeometry = pValue->GetGeometry();
+				if(pGeometry!=NULL)
+				{
+					g_uint numPoints = NULL;
+					g_uint numLineStrings = NULL;
+					WKBLineString* pWKBLineString = NULL;
+					WKBMultiLineString* pWKBMultiLineString = (WKBMultiLineString*)pGeometry->AsBinary();
+					auge::Point* pt = NULL;
+					WKBPoint wkbpt;
+					wkbpt.byteOrder = coDefaultByteOrder;
+					wkbpt.wkbType = wkbPoint;
+
+					numLineStrings = pWKBMultiLineString->numLineStrings;
+					pWKBLineString = (WKBLineString*)(&(pWKBMultiLineString->lineStrings[0]));
+					for(g_uint i=0; i<numLineStrings; i++)
+					{
+						pt = (auge::Point*)(&(pWKBLineString->points[0]));
+						numPoints = pWKBLineString->numPoints;
+						for(g_uint j=0; j<numPoints; j++,pt++)
+						{
+							wkbpt.point.x = pt->x;
+							wkbpt.point.y = pt->y;
+							pGeoPoint = pGeometryFactory->CreateGeometryFromWKB((g_byte*)(&wkbpt), true);
+							pGeoValue = new GValue(pGeoPoint);
+							poutFeature->SetValue(pField->GetName(), pGeoValue);
+
+							cmd->Insert(poutFeature);
+						}
+						pWKBLineString = (WKBLineString*)(pt);
+					}
+				}
+			}
+		}
+		poutFeature->Release();
 	}
 
 

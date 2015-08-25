@@ -22,8 +22,8 @@ void FeatureTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=UTF-8");
-	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=UTF-8");
+	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -230,6 +230,30 @@ void FeatureTest::ProjectTest()
 	pProcessor->SetOutputFeatureClass("cities_900913");
 	pProcessor->SetOutputSRID(900913);
 	
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[Ê±¼ä]:%dºÁÃë\n", te-ts);
+}
+
+
+void FeatureTest::LineToPoints()
+{
+	DWORD ts = GetTickCount();
+
+	auge::LineToPointsProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateLineToPointsProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("db1");
+	pProcessor->SetInputFeatureClass("rivers");
+
+	pProcessor->SetOutputDataSource("db1");
+	pProcessor->SetOutputFeatureClass("rivers_points");
+
 	RESULTCODE rc = pProcessor->Execute();
 
 	pProcessor->Release();

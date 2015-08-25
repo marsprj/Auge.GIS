@@ -168,6 +168,12 @@ namespace auge
 	protected:
 		LineToPointsProcessor(){}
 		virtual ~LineToPointsProcessor(){}
+	public:
+		virtual	void		SetInputDataSource(const char* sourceName) = 0;
+		virtual	void		SetInputFeatureClass(const char* className) = 0;
+
+		virtual	void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual	void		SetOutputFeatureClass(const char* className) = 0;
 	};
 
 	class PolygonToLinesProcessor : public GProcessor
@@ -676,6 +682,10 @@ namespace auge
 		virtual FeatureExportProcessor*		CreateFeatureExportProcessor() = 0;
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor() = 0;
+
+		// Geometry
+		virtual MultiPointToPointsProcessor* CreateMultiPointToPointsProcessor() = 0;
+		virtual LineToPointsProcessor*		CreateLineToPointsProcessor() = 0;
 
 		// Cluster 
 		virtual KMeansProcessor*			CreateKMeansProcessor() = 0;
