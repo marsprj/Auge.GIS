@@ -407,7 +407,7 @@ namespace auge
 				{
 					g_uint numPoints = 0;
 					g_uint numRings = 0;
-					g_uint numPolygons = NULL;
+					g_uint numPolygons = 0;
 					LinearRing* pRing = NULL;
 					WKBPolygon* pWKBPolygon = NULL;
 					WKBMultiPolygon* pWKBMultiPolygon = (WKBMultiPolygon*)pGeometry->AsBinary();

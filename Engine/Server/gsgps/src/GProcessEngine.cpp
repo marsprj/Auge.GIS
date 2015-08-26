@@ -20,8 +20,8 @@
 #include "FeatureProjectHandler.h"
 
 #include "MultiPointToPointsHandler.h"
-#include "LineToPointsProcessorImpl.h"
-#include "PolygonToPointsProcessorImpl.h"
+#include "LineToPointsHandler.h"
+#include "PolygonToPointsHandler.h"
 
 #include "RasterEdgeDetectHandler.h"
 #include "RasterExtractByRectangleHandler.h"
