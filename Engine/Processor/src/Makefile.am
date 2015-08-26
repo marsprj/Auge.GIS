@@ -27,6 +27,7 @@ libgprocessor_la_SOURCES=\
 		FeatureProjectProcessorImpl.cpp \
 		MultiPointToPointsProcessorImpl.cpp \
 		LineToPointsProcessorImpl.cpp \
+		PolygonToPointsProcessorImpl.cpp \
 		KmeanProcessorImpl.cpp \
 		Kmean.cpp \
 		SrsBase.cpp \

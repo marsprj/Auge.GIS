@@ -258,7 +258,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, "select tablename from pg_tables where schemaname='%s'",m_schema.c_str());
+		g_snprintf(sql, AUGE_SQL_MAX, "select tablename from pg_tables where schemaname='%s' order by tablename",m_schema.c_str());
 
 		PGresult* pgResult = m_pgConnection.PgExecute(sql);
 		if(pgResult!=NULL)

@@ -332,6 +332,9 @@ namespace auge
 					WKBPolygon* pWKBPolygon = (WKBPolygon*)pGeometry->AsBinary();
 					LinearRing* pLinearRing = NULL;
 					auge::Point* pt = NULL;
+					WKBPoint wkbpt;
+					wkbpt.byteOrder = coDefaultByteOrder;
+					wkbpt.wkbType = wkbPoint;
 
 					numRings = pWKBPolygon->numRings;
 					pLinearRing = (LinearRing*)(&(pWKBPolygon->rings[0]));
@@ -341,7 +344,9 @@ namespace auge
 						pt = (auge::Point*)(&(pLinearRing->points[0]));
 						for(g_uint j=0; j<numPoints; j++,pt++)
 						{
-							pGeoPoint = pGeometryFactory->CreateGeometryFromWKB((g_byte*)pt, true);
+							wkbpt.point.x = pt->x;
+							wkbpt.point.y = pt->y;
+							pGeoPoint = pGeometryFactory->CreateGeometryFromWKB((g_byte*)(&wkbpt), true);
 							pGeoValue = new GValue(pGeoPoint);
 							poutFeature->SetValue(pField->GetName(), pGeoValue);
 
@@ -349,6 +354,7 @@ namespace auge
 						}
 						pLinearRing = (LinearRing*)pt;
 					}
+					pWKBPolygon = (WKBPolygon*)pt;
 				}
 			}
 		}
@@ -400,31 +406,39 @@ namespace auge
 				if(pGeometry!=NULL)
 				{
 					g_uint numPoints = NULL;
-					g_uint numLineStrings = NULL;
-					WKBLineString* pWKBLineString = NULL;
-					WKBMultiLineString* pWKBMultiLineString = (WKBMultiLineString*)pGeometry->AsBinary();
+					g_uint numRings = NULL;
+					g_uint numPolygons = NULL;
+					LinearRing* pRing = NULL;
+					WKBPolygon* pWKBPolygon = NULL;
+					WKBMultiPolygon* pWKBMultiPolygon = (WKBMultiPolygon*)pGeometry->AsBinary();
 					auge::Point* pt = NULL;
 					WKBPoint wkbpt;
 					wkbpt.byteOrder = coDefaultByteOrder;
 					wkbpt.wkbType = wkbPoint;
 
-					numLineStrings = pWKBMultiLineString->numLineStrings;
-					pWKBLineString = (WKBLineString*)(&(pWKBMultiLineString->lineStrings[0]));
-					for(g_uint i=0; i<numLineStrings; i++)
+					numPolygons = pWKBMultiPolygon->numPolygons;
+					pWKBPolygon = (WKBPolygon*)(&(pWKBMultiPolygon->polygons[0]));
+					for(g_uint i=0; i<numPolygons; i++)
 					{
-						pt = (auge::Point*)(&(pWKBLineString->points[0]));
-						numPoints = pWKBLineString->numPoints;
-						for(g_uint j=0; j<numPoints; j++,pt++)
+						numRings = pWKBPolygon->numRings;
+						pRing = (LinearRing*)(&(pWKBPolygon->rings[0]));
+						for(g_uint j=0; i<numRings; j++)
 						{
-							wkbpt.point.x = pt->x;
-							wkbpt.point.y = pt->y;
-							pGeoPoint = pGeometryFactory->CreateGeometryFromWKB((g_byte*)(&wkbpt), true);
-							pGeoValue = new GValue(pGeoPoint);
-							poutFeature->SetValue(pField->GetName(), pGeoValue);
+							pt = (auge::Point*)(&(pRing->points[0]));
+							numPoints = pRing->numPoints;
+							for(g_uint j=0; j<numPoints; j++,pt++)
+							{
+								wkbpt.point.x = pt->x;
+								wkbpt.point.y = pt->y;
+								pGeoPoint = pGeometryFactory->CreateGeometryFromWKB((g_byte*)(&wkbpt), true);
+								pGeoValue = new GValue(pGeoPoint);
+								poutFeature->SetValue(pField->GetName(), pGeoValue);
 
-							cmd->Insert(poutFeature);
+								cmd->Insert(poutFeature);
+							}
+							pRing = (LinearRing*)(pt);
 						}
-						pWKBLineString = (WKBLineString*)(pt);
+						pWKBPolygon = (WKBPolygon*)pt;
 					}
 				}
 			}

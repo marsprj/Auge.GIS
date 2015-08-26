@@ -30,6 +30,7 @@
 
 #include "MultiPointToPointsProcessorImpl.h"
 #include "LineToPointsProcessorImpl.h"
+#include "PolygonToPointsProcessorImpl.h"
 
 #ifndef WIN32
 #include "ArchiveProcessorImpl.h"
@@ -81,6 +82,11 @@ namespace auge
 	LineToPointsProcessor* GProcessorFactoryImpl::CreateLineToPointsProcessor()
 	{
 		return (new LineToPointsProcessorImpl());
+	}
+
+	PolygonToPointsProcessor* GProcessorFactoryImpl::CreatePolygonToPointsProcessor()
+	{
+		return (new PolygonToPointsProcessorImpl());
 	}
 
 	FeatureImportProcessor* GProcessorFactoryImpl::CreateFeatureImportProcessor()
