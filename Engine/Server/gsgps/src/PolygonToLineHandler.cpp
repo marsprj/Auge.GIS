@@ -1,5 +1,5 @@
-#include "PolygonToPointsHandler.h"
-#include "PolygonToPointsRequest.h"
+#include "PolygonToLineHandler.h"
+#include "PolygonToLineRequest.h"
 #include "GProcessEngine.h"
 #include "AugeXML.h"
 #include "AugeWebCore.h"
@@ -8,29 +8,29 @@
 
 namespace auge
 {
-	PolygonToPointsHandler::PolygonToPointsHandler()
+	PolygonToLineHandler::PolygonToLineHandler()
 	{
 
 	}
 
-	PolygonToPointsHandler::~PolygonToPointsHandler()
+	PolygonToLineHandler::~PolygonToLineHandler()
 	{
 
 	}
 
-	const char*	PolygonToPointsHandler::GetName()
+	const char*	PolygonToLineHandler::GetName()
 	{
-		return "PolygonToPoints";
+		return "PolygonToLine";
 	}
 
-	const char*	PolygonToPointsHandler::GetDescription()
+	const char*	PolygonToLineHandler::GetDescription()
 	{
-		return "多边形转点";
+		return "多边形转线";
 	}
 
-	WebRequest*	PolygonToPointsHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	PolygonToLineHandler::ParseRequest(rude::CGI& cgi)
 	{
-		PolygonToPointsRequest* pRequest = new PolygonToPointsRequest();
+		PolygonToLineRequest* pRequest = new PolygonToLineRequest();
 		if(!pRequest->Create(cgi))
 		{
 			GLogger* pLogger = augeGetLoggerInstance();
@@ -42,14 +42,14 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	PolygonToPointsHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	WebRequest*	PolygonToLineHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
 		return ParseRequest(cgi);
 	}
 
-	WebRequest*	PolygonToPointsHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
+	WebRequest*	PolygonToLineHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
-		PolygonToPointsRequest* pRequest = new PolygonToPointsRequest();
+		PolygonToLineRequest* pRequest = new PolygonToLineRequest();
 		//if(!pRequest->Create(pxDoc, pMap))
 		if(!pRequest->Create(pxDoc))
 		{
@@ -66,10 +66,10 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* PolygonToPointsHandler::Execute(WebRequest* pWebRequest, User* pUser)
+	WebResponse* PolygonToLineHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
-		PolygonToPointsRequest* pRequest = static_cast<PolygonToPointsRequest*>(pWebRequest);
+		PolygonToLineRequest* pRequest = static_cast<PolygonToLineRequest*>(pWebRequest);
 
 		const char* version = pRequest->GetVersion();
 		if(strcmp(version,"1.0.0")==0)
@@ -92,18 +92,18 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* PolygonToPointsHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
+	WebResponse* PolygonToLineHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		PolygonToPointsRequest* pRequest = static_cast<PolygonToPointsRequest*>(pWebRequest);
+		PolygonToLineRequest* pRequest = static_cast<PolygonToLineRequest*>(pWebRequest);
 
 		const char* input_source_name = pRequest->GetInputSourceName();
 		const char* input_type_name	  = pRequest->GetInputTypeName();
 		const char* output_source_name= pRequest->GetOutputSourceName();
 		const char* output_type_name  = pRequest->GetOutputTypeName();
 		
-		auge::PolygonToPointsProcessor* pProcessor = NULL;
+		auge::PolygonToLineProcessor* pProcessor = NULL;
 		auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
-		pProcessor = pFactory->CreatePolygonToPointsProcessor();
+		pProcessor = pFactory->CreatePolygonToLineProcessor();
 
 		pProcessor->SetUser(pUser->GetID());
 		pProcessor->SetInputDataSource(input_source_name);

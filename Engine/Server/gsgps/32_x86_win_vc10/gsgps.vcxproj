@@ -124,6 +124,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\LineToPointsRequest.cpp" />
     <ClCompile Include="..\src\MultiPointToPointsHandler.cpp" />
     <ClCompile Include="..\src\MultiPointToPointsRequest.cpp" />
+    <ClCompile Include="..\src\PolygonToLineHandler.cpp" />
+    <ClCompile Include="..\src\PolygonToLineRequest.cpp" />
     <ClCompile Include="..\src\PolygonToPointsHandler.cpp" />
     <ClCompile Include="..\src\PolygonToPointsRequest.cpp" />
     <ClCompile Include="..\src\RasterEdgeDetectHandler.cpp" />
@@ -196,6 +198,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\LineToPointsRequest.h" />
     <ClInclude Include="..\include\MultiPointToPointsHandler.h" />
     <ClInclude Include="..\include\MultiPointToPointsRequest.h" />
+    <ClInclude Include="..\include\PolygonToLineHandler.h" />
+    <ClInclude Include="..\include\PolygonToLineRequest.h" />
     <ClInclude Include="..\include\PolygonToPointsHandler.h" />
     <ClInclude Include="..\include\PolygonToPointsRequest.h" />
     <ClInclude Include="..\include\RasterEdgeDetectHandler.h" />
