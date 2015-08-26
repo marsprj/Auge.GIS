@@ -219,6 +219,22 @@ namespace auge
 	};
 
 	/**
+	 * 随机点生成器
+	 */
+	class RandomPointsGenerator : public GProcessor
+	{
+	protected:
+		RandomPointsGenerator(){}
+		virtual ~RandomPointsGenerator(){}
+	public:
+		virtual	void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual	void		SetOutputFeatureClass(const char* className) = 0;
+		virtual void		SetSRID(g_uint srid) = 0;
+		virtual void		SetExtent(GEnvelope& extent) = 0;
+		virtual void		SetCount(g_uint count) = 0;
+	};
+
+	/**
 	 * 提取位于多边形内的点
 	 */
 	class ClipPointWithPoygon : public GProcessor
@@ -705,6 +721,7 @@ namespace auge
 		virtual ArchiveProcessor*			CreateArchiveProcessor() = 0;
 		virtual FeatureImportProcessor*		CreateFeatureImportProcessor() = 0;
 		virtual FeatureExportProcessor*		CreateFeatureExportProcessor() = 0;
+		virtual RandomPointsGenerator*		CreateRandomPointsGenerator() = 0;
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor() = 0;
 

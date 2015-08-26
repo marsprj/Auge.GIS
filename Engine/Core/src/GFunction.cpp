@@ -808,4 +808,10 @@ namespace auge
 
 		return map_scale;
 	}
+
+	double auge_get_random_value(double max_value)
+	{
+		return max_value * (rand()/(double)(RAND_MAX));
+	}
+
 }

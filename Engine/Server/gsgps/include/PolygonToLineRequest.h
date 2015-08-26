@@ -86,19 +86,19 @@ namespace auge
 [ HTTP Get ]
 -------------------------------------------------------------------------
 1)
-service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=cities&outputSourceName=test&outputTypeName=cities_900913&outputSrid=900913
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=cities&outputSourceName=test&outputTypeName=cities_900913&outputSrid=900913
-http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=cities&outputSourceName=test&outputTypeName=cities_900913&outputSrid=900913
+service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=country_line
+http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=country_line
+http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=country_line
 
-service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=rivers&outputSourceName=test&outputTypeName=rivers_900913&outputSrid=900913
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=rivers&outputSourceName=test&outputTypeName=rivers_900913&outputSrid=900913
+service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=rivers&outputSourceName=test&outputTypeName=rivers_900913
+http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=rivers&outputSourceName=test&outputTypeName=rivers_900913
 
-service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=country_900913&outputSrid=900913
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=country_900913&outputSrid=900913
+service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=country_line
+http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=PolygonToLine&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=country_line
 
-//service=gps&version=1.0.0&request=PolygonToLine&sourceName=db1&typeName=cities&distancefeild=id
-//http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=PolygonToLine&sourceName=db1&typeName=cities&distancefeild=id
-//http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=PolygonToLine&sourceName=db1&typeName=cities&distancefeild=id
+//service=gps&version=1.0.0&request=PolygonToLine&sourceName=db1&typeName=country&distancefeild=id
+//http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=PolygonToLine&sourceName=db1&typeName=country&distancefeild=id
+//http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=PolygonToLine&sourceName=db1&typeName=country&distancefeild=id
 
 2)
 service=gps&version=1.0.0&request=PolygonToLine&featureset=
@@ -114,11 +114,11 @@ service=gps&version=1.0.0&request=PolygonToLine&featureset=
 <PolygonToLine service="gps" version="1.0.0">
   <Input>
 	<SourceName>test</SourceName>
-	<TypeName>cities</TypeName>
+	<TypeName>country</TypeName>
   </Input>
   <Output>
 	<SourceName>test</SourceName>
-	<TypeName>cities_900913_post</TypeName>
+	<TypeName>country_900913_post</TypeName>
 	<SRID>900913</SRID>
   </Output>
 </PolygonToLine>

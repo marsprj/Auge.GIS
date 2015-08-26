@@ -29,6 +29,7 @@ libgprocessor_la_SOURCES=\
 		LineToPointsProcessorImpl.cpp \
 		PolygonToPointsProcessorImpl.cpp \
 		PolygonToLinieProcessorImpl.cpp \
+		RandomPointsGeneratorImpl.cpp \
 		KmeanProcessorImpl.cpp \
 		Kmean.cpp \
 		SrsBase.cpp \

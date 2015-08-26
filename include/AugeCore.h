@@ -351,6 +351,7 @@ namespace auge
 
 		AUGE_API void		auge_generate_uuid(char* uuid, size_t size);
 		AUGE_API g_int		auge_get_image_suffix(const char* mime_type, char* suffix, size_t size);
+		AUGE_API double		auge_get_random_value(double max_value);
 	
 		AUGE_API void*		auge_load_library(const char* path);
 		AUGE_API void		auge_free_library(void* handler);

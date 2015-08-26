@@ -7,6 +7,7 @@
 
 #include "KmeanProcessorImpl.h"
 #include "FeatureProjectProcessorImpl.h"
+#include "RandomPointsGeneratorImpl.h"
 
 #include "RasterExtractByRectangleProcessorImpl.h"
 #include "RasterStretchProcessorImpl.h"
@@ -193,6 +194,12 @@ namespace auge
 	DemAspectProcessor*	GProcessorFactoryImpl::CreateDemAspectProcessor()
 	{
 		return (new DemAspectProcessorImpl());
+	}
+
+
+	RandomPointsGenerator* GProcessorFactoryImpl::CreateRandomPointsGenerator()
+	{
+		return (new RandomPointsGeneratorImpl());
 	}
 
 }

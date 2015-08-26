@@ -98,6 +98,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\PolygonToLinieProcessorImpl.cpp" />
     <ClCompile Include="..\src\PolygonToPointsProcessorImpl.cpp" />
     <ClCompile Include="..\src\ProcessorFactoryImpl.cpp" />
+    <ClCompile Include="..\src\RandomPointsGeneratorImpl.cpp" />
     <ClCompile Include="..\src\RasterEdgeDetectProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterExtractByRectangleProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterFormatConvertToJPEGProcessorImpl.cpp" />
@@ -131,6 +132,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\PolygonToLineProcessorImpl.h" />
     <ClInclude Include="..\include\PolygonToPointsProcessorImpl.h" />
     <ClInclude Include="..\include\ProcessorFactoryImpl.h" />
+    <ClInclude Include="..\include\RandomPointsGeneratorImpl.h" />
     <ClInclude Include="..\include\RasterEdgeDetectProcessorImpl.h" />
     <ClInclude Include="..\include\RasterExtractByRectangleProcessorImpl.h" />
     <ClInclude Include="..\include\RasterFormatConvertToJPEGProcessorImpl.h" />

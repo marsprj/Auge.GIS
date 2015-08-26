@@ -17,6 +17,7 @@ namespace auge
 		virtual ArchiveProcessor*			CreateArchiveProcessor();
 		virtual FeatureImportProcessor*		CreateFeatureImportProcessor();
 		virtual FeatureExportProcessor*		CreateFeatureExportProcessor();
+		virtual RandomPointsGenerator*		CreateRandomPointsGenerator();
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor();
 
@@ -58,6 +59,7 @@ namespace auge
 		// DEM
 		virtual DemSlopeProcessor*					CreateDemSlopeProcessor();
 		virtual DemAspectProcessor*					CreateDemAspectProcessor();
+		
 	};
 }
 

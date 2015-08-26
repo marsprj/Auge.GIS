@@ -285,3 +285,26 @@ void FeatureTest::PolygonToLine()
 	DWORD te = GetTickCount();
 	printf("[时间]:%d毫秒\n", te-ts);
 }
+
+void FeatureTest::GenerateRandomPoints()
+{
+	DWORD ts = GetTickCount();
+
+	auge::GEnvelope exetent(-180,-90,180,90);
+	auge::RandomPointsGenerator* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRandomPointsGenerator();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetOutputDataSource("db1");
+	pProcessor->SetOutputFeatureClass("random_points_5000");	
+	pProcessor->SetExtent(exetent);
+	pProcessor->SetCount(5000);
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
