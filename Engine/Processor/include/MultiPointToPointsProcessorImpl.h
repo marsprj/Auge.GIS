@@ -3,13 +3,10 @@
 
 #include <string>
 #include "AugeProcessor.h"
-#include "Kmean.h"
-
-#include "proj_api.h"
-#include "SrsBase.h"
 
 namespace auge
 {
+	class Feature;
 	class FeatureClass;
 	class FeatureWorkspace;
 
@@ -40,6 +37,7 @@ namespace auge
 
 		FeatureClass*		CreateOutputFeatureClass(const char* className, FeatureWorkspace* pWorkspace, FeatureClass* pinFeatureClass);
 		RESULTCODE			Process(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass);
+		void				ProcessMultiPoint(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd);
 
 
 	private:

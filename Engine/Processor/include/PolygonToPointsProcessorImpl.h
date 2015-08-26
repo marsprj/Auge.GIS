@@ -1,5 +1,5 @@
-#ifndef __AUGE_FEATURE_LINE_TO_POINTS_PROCESSOR_H__
-#define __AUGE_FEATURE_LINE_TO_POINTS_PROCESSOR_H__
+#ifndef __AUGE_FEATURE_POLYGON_TO_POINTS_PROCESSOR_H__
+#define __AUGE_FEATURE_POLYGON_TO_POINTS_PROCESSOR_H__
 
 #include <string>
 #include "AugeProcessor.h"
@@ -11,11 +11,11 @@ namespace auge
 	class FeatureWorkspace;
 	class FeatureInsertCommand;
 
-	class LineToPointsProcessorImpl : public LineToPointsProcessor
+	class PolygonToPointsProcessorImpl : public PolygonToPointsProcessor
 	{
 	public:
-		LineToPointsProcessorImpl();
-		virtual ~LineToPointsProcessorImpl();
+		PolygonToPointsProcessorImpl();
+		virtual ~PolygonToPointsProcessorImpl();
 	public:
 
 		virtual void		SetUser(g_uint user);
@@ -39,8 +39,8 @@ namespace auge
 		FeatureClass*		CreateOutputFeatureClass(const char* className, FeatureWorkspace* pWorkspace, FeatureClass* pinFeatureClass);
 		RESULTCODE			Process(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass);
 
-		void				ProcessLineString(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd);
-		void				ProcessMultiLineString(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd);
+		void				ProcessPolygon(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd);
+		void				ProcessMultiPolygon(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd);
 
 	private:
 		std::string	m_in_source_name;
@@ -48,9 +48,9 @@ namespace auge
 
 		std::string m_out_source_name;
 		std::string m_out_class_name;
-		
+
 		g_uint		m_user;
 	};
 }
 
-#endif //__AUGE_FEATURE_LINE_TO_POINTS_PROCESSOR_H__
+#endif //__AUGE_FEATURE_POLYGON_TO_POINTS_PROCESSOR_H__

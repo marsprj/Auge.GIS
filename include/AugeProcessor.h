@@ -161,6 +161,12 @@ namespace auge
 	protected:
 		MultiPointToPointsProcessor(){}
 		virtual ~MultiPointToPointsProcessor(){}
+	public:
+		virtual	void		SetInputDataSource(const char* sourceName) = 0;
+		virtual	void		SetInputFeatureClass(const char* className) = 0;
+
+		virtual	void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual	void		SetOutputFeatureClass(const char* className) = 0;
 	};
 
 	class LineToPointsProcessor : public GProcessor
@@ -168,6 +174,19 @@ namespace auge
 	protected:
 		LineToPointsProcessor(){}
 		virtual ~LineToPointsProcessor(){}
+	public:
+		virtual	void		SetInputDataSource(const char* sourceName) = 0;
+		virtual	void		SetInputFeatureClass(const char* className) = 0;
+
+		virtual	void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual	void		SetOutputFeatureClass(const char* className) = 0;
+	};
+
+	class PolygonToPointsProcessor : public GProcessor
+	{
+	protected:
+		PolygonToPointsProcessor(){}
+		virtual ~PolygonToPointsProcessor(){}
 	public:
 		virtual	void		SetInputDataSource(const char* sourceName) = 0;
 		virtual	void		SetInputFeatureClass(const char* className) = 0;
