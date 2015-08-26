@@ -229,6 +229,12 @@ namespace auge
 
 		poutField = pFieldFactory->CreateField();
 		poutField_2 = poutField->Field_2();
+		poutField_2->SetName("id");
+		poutField_2->SetType(augeFieldTypeInt);
+		poutFields->Add(poutField);
+
+		poutField = pFieldFactory->CreateField();
+		poutField_2 = poutField->Field_2();
 		poutField_2->SetName(m_geom_field.c_str());
 		poutField_2->SetType(augeFieldTypeGeometry);
 
@@ -336,10 +342,15 @@ namespace auge
 		Geometry* pPoints = Execute(pGeometry, m_count);
 		if(pPoints!=NULL)
 		{
-			GValue* pValue = new GValue(pPoints);
+			GValue* pValue = NULL;
 			Feature* pFeature = poutFeatureClass->NewFeature();
+			pValue = new GValue(pFeature->GetFID());
+			pFeature->SetValue("id", pValue);
+			pValue = new GValue(pPoints);
 			pFeature->SetValue(m_geom_field.c_str(), pValue);
 			cmd->Insert(pFeature);
+
+			pFeature->Release();
 		}
 
 		free(pWKBMultiPoint);

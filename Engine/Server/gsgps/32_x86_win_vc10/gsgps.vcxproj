@@ -108,6 +108,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\FeatureProjectHandler.cpp" />
     <ClCompile Include="..\src\FeatureProjectRequest.cpp" />
     <ClCompile Include="..\src\GenerateRandomPointsHandler.cpp" />
+    <ClCompile Include="..\src\GenerateRandomPointsInPolygonHandler.cpp" />
+    <ClCompile Include="..\src\GenerateRandomPointsInPolygonRequest.cpp" />
     <ClCompile Include="..\src\GenerateRandomPointsRequest.cpp" />
     <ClCompile Include="..\src\GetAreaHandler.cpp" />
     <ClCompile Include="..\src\GetAreaRequest.cpp" />
@@ -184,6 +186,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\FeatureProjectHandler.h" />
     <ClInclude Include="..\include\FeatureProjectRequest.h" />
     <ClInclude Include="..\include\GenerateRandomPointsHandler.h" />
+    <ClInclude Include="..\include\GenerateRandomPointsInPolygonHandler.h" />
+    <ClInclude Include="..\include\GenerateRandomPointsInPolygonRequest.h" />
     <ClInclude Include="..\include\GenerateRandomPointsRequest.h" />
     <ClInclude Include="..\include\GetAreaHandler.h" />
     <ClInclude Include="..\include\GetAreaRequest.h" />
