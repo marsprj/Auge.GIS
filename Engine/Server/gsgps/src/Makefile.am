@@ -79,6 +79,8 @@ libgsgps_la_SOURCES=\
 		PolygonToPointsRequest.cpp \
 		PolygonToLineHandler.cpp \
 		PolygonToLineRequest.cpp \
+		GenerateRandomPointsHandler.cpp \
+		GenerateRandomPointsRequest.cpp \
 		GetSpatialReferenceHandler.cpp \
 		GetSpatialReferenceRequest.cpp \
 		GetSpatialReferenceResponse.cpp \

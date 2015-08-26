@@ -23,6 +23,7 @@
 #include "LineToPointsHandler.h"
 #include "PolygonToPointsHandler.h"
 #include "PolygonToLineHandler.h"
+#include "GenerateRandomPointsHandler.h"
 
 #include "RasterEdgeDetectHandler.h"
 #include "RasterExtractByRectangleHandler.h"
@@ -69,6 +70,7 @@ namespace auge
 		m_geometry_handlers.push_back(new LineToPointsHandler());
 		m_geometry_handlers.push_back(new PolygonToPointsHandler());
 		m_geometry_handlers.push_back(new PolygonToLineHandler());
+		m_geometry_handlers.push_back(new GenerateRandomPointsHandler());
 
 		m_tile_handlers.push_back(new BuildPyramidHandler());
 		m_tile_handlers.push_back(new UpdateTileHandler());
