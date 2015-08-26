@@ -327,7 +327,7 @@ namespace auge
 				pGeometry = pValue->GetGeometry();
 				if(pGeometry!=NULL)
 				{
-					g_uint numPoints = NULL;					
+					g_uint numPoints = 0;					
 					WKBLineString* pWKBLineString = (WKBLineString*)pGeometry->AsBinary();
 					WKBPoint* pt = NULL;					
 
@@ -391,8 +391,8 @@ namespace auge
 				pGeometry = pValue->GetGeometry();
 				if(pGeometry!=NULL)
 				{
-					g_uint numPoints = NULL;
-					g_uint numLineStrings = NULL;
+					g_uint numPoints = 0;
+					g_uint numLineStrings = 0;
 					WKBLineString* pWKBLineString = NULL;
 					WKBMultiLineString* pWKBMultiLineString = (WKBMultiLineString*)pGeometry->AsBinary();
 					auge::Point* pt = NULL;

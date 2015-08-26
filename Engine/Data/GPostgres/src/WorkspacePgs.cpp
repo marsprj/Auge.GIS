@@ -224,7 +224,7 @@ namespace auge
 
 	EnumDataSet* WorkspacePgs::GetFeatureClasses()
 	{
-		const char* sql = "select f_table_name from geometry_columns";
+		const char* sql = "select f_table_name from geometry_columns order by f_table_name";
 
 		PGresult* pgResult = m_pgConnection.PgExecute(sql);
 		if(pgResult==NULL)

@@ -71,6 +71,12 @@ libgsgps_la_SOURCES=\
 		GetLengthHandler.cpp \
 		GetLengthResponse.cpp \
 		GetLengthRequest.cpp \
+		LineToPointsHandler.cpp \
+		LineToPointsRequest.cpp \
+		MultiPointToPointsHandler.cpp \
+		MultiPointToPointsRequest.cpp \
+		PolygonToPointsHandler.cpp \
+		PolygonToPointsRequest.cpp \
 		GetSpatialReferenceHandler.cpp \
 		GetSpatialReferenceRequest.cpp \
 		GetSpatialReferenceResponse.cpp \

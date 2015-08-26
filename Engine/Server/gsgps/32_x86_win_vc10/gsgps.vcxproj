@@ -120,6 +120,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetSpatialReferenceRequest.cpp" />
     <ClCompile Include="..\src\GetSpatialReferenceResponse.cpp" />
     <ClCompile Include="..\src\GProcessEngine.cpp" />
+    <ClCompile Include="..\src\LineToPointsHandler.cpp" />
+    <ClCompile Include="..\src\LineToPointsRequest.cpp" />
+    <ClCompile Include="..\src\MultiPointToPointsHandler.cpp" />
+    <ClCompile Include="..\src\MultiPointToPointsRequest.cpp" />
+    <ClCompile Include="..\src\PolygonToPointsHandler.cpp" />
+    <ClCompile Include="..\src\PolygonToPointsRequest.cpp" />
     <ClCompile Include="..\src\RasterEdgeDetectHandler.cpp" />
     <ClCompile Include="..\src\RasterEdgeDetectRequest.cpp" />
     <ClCompile Include="..\src\RasterExtractByRectangleHandler.cpp" />
@@ -186,6 +192,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetSpatialReferenceRequest.h" />
     <ClInclude Include="..\include\GetSpatialReferenceResponse.h" />
     <ClInclude Include="..\include\GProcessEngine.h" />
+    <ClInclude Include="..\include\LineToPointsHandler.h" />
+    <ClInclude Include="..\include\LineToPointsRequest.h" />
+    <ClInclude Include="..\include\MultiPointToPointsHandler.h" />
+    <ClInclude Include="..\include\MultiPointToPointsRequest.h" />
+    <ClInclude Include="..\include\PolygonToPointsHandler.h" />
+    <ClInclude Include="..\include\PolygonToPointsRequest.h" />
     <ClInclude Include="..\include\RasterEdgeDetectHandler.h" />
     <ClInclude Include="..\include\RasterEdgeDetectRequest.h" />
     <ClInclude Include="..\include\RasterExtractByRectangleHandler.h" />

@@ -405,8 +405,8 @@ namespace auge
 				pGeometry = pValue->GetGeometry();
 				if(pGeometry!=NULL)
 				{
-					g_uint numPoints = NULL;
-					g_uint numRings = NULL;
+					g_uint numPoints = 0;
+					g_uint numRings = 0;
 					g_uint numPolygons = NULL;
 					LinearRing* pRing = NULL;
 					WKBPolygon* pWKBPolygon = NULL;

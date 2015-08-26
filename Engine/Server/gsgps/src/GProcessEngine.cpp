@@ -19,6 +19,10 @@
 #include "FeatureImportHandler.h"
 #include "FeatureProjectHandler.h"
 
+#include "MultiPointToPointsHandler.h"
+#include "LineToPointsProcessorImpl.h"
+#include "PolygonToPointsProcessorImpl.h"
+
 #include "RasterEdgeDetectHandler.h"
 #include "RasterExtractByRectangleHandler.h"
 #include "RasterReverseHandler.h"
@@ -60,6 +64,9 @@ namespace auge
 		m_geometry_handlers.push_back(new BufferHandler());
 		m_geometry_handlers.push_back(new CentroidHandler());
 		m_geometry_handlers.push_back(new ConvexHullHandler());
+		m_geometry_handlers.push_back(new MultiPointToPointsHandler());
+		m_geometry_handlers.push_back(new LineToPointsHandler());
+		m_geometry_handlers.push_back(new PolygonToPointsHandler());
 
 		m_tile_handlers.push_back(new BuildPyramidHandler());
 		m_tile_handlers.push_back(new UpdateTileHandler());
