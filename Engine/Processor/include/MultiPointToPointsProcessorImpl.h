@@ -9,6 +9,7 @@ namespace auge
 	class Feature;
 	class FeatureClass;
 	class FeatureWorkspace;
+	class FeatureInsertCommand;
 
 	class MultiPointToPointsProcessorImpl : public MultiPointToPointsProcessor
 	{
@@ -46,9 +47,7 @@ namespace auge
 
 		std::string m_out_source_name;
 		std::string m_out_class_name;
-
-		SrsBase		m_srsbase;
-
+		
 		g_uint		m_user;
 	};
 }

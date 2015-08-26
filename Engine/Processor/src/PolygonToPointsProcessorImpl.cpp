@@ -340,7 +340,7 @@ namespace auge
 						numPoints = pLinearRing->numPoints;
 						pt = (auge::Point*)(&(pLinearRing->points[0]));
 						for(g_uint j=0; j<numPoints; j++,pt++)
-						
+						{
 							pGeoPoint = pGeometryFactory->CreateGeometryFromWKB((g_byte*)pt, true);
 							pGeoValue = new GValue(pGeoPoint);
 							poutFeature->SetValue(pField->GetName(), pGeoValue);

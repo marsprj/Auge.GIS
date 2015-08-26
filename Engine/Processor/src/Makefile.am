@@ -25,6 +25,8 @@ libgprocessor_la_SOURCES=\
 		ProcessorFactoryImpl.cpp \
 		CsvImportProcessorImpl.cpp \
 		FeatureProjectProcessorImpl.cpp \
+		MultiPointToPointsProcessorImpl.cpp \
+		LineToPointsProcessorImpl.cpp \
 		KmeanProcessorImpl.cpp \
 		Kmean.cpp \
 		SrsBase.cpp \
