@@ -261,3 +261,27 @@ void FeatureTest::LineToPoints()
 	DWORD te = GetTickCount();
 	printf("[时间]:%d毫秒\n", te-ts);
 }
+
+
+void FeatureTest::PolygonToLine()
+{
+	DWORD ts = GetTickCount();
+
+	auge::PolygonToLineProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreatePolygonToLineProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("db1");
+	pProcessor->SetInputFeatureClass("country");
+
+	pProcessor->SetOutputDataSource("db1");
+	pProcessor->SetOutputFeatureClass("country_line");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}

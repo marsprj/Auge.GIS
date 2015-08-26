@@ -61,6 +61,8 @@ namespace auge
 		bool		CreateFields(PGresult* pgResult);
 		bool		GetGeometryInfo();
 
+		RESULTCODE	RemoveMetaInfo();
+
 	private:
 		g_uint		ComputeCount();
 		RESULTCODE	ComputeExtent(GEnvelope& extent);

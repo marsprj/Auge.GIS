@@ -814,6 +814,15 @@ namespace auge
 		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
 	}
 
+	RESULTCODE FeatureClassPgs::RemoveMetaInfo()
+	{
+		const char* format = "delete from %s where name='%s'";
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), GetName());
+		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+	}
+
 	RESULTCODE FeatureClassPgs::UpdateMetaInfo()
 	{
 		GEnvelope extent;

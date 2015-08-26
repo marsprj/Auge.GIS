@@ -95,6 +95,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\LineToPointsProcessorImpl.cpp" />
     <ClCompile Include="..\src\MongoTileStoreGenerator.cpp" />
     <ClCompile Include="..\src\MultiPointToPointsProcessorImpl.cpp" />
+    <ClCompile Include="..\src\PolygonToLinieProcessorImpl.cpp" />
     <ClCompile Include="..\src\PolygonToPointsProcessorImpl.cpp" />
     <ClCompile Include="..\src\ProcessorFactoryImpl.cpp" />
     <ClCompile Include="..\src\RasterEdgeDetectProcessorImpl.cpp" />
@@ -127,6 +128,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\LineToPointsProcessorImpl.h" />
     <ClInclude Include="..\include\MongoTileStoreGenerator.h" />
     <ClInclude Include="..\include\MultiPointToPointsProcessorImpl.h" />
+    <ClInclude Include="..\include\PolygonToLineProcessorImpl.h" />
     <ClInclude Include="..\include\PolygonToPointsProcessorImpl.h" />
     <ClInclude Include="..\include\ProcessorFactoryImpl.h" />
     <ClInclude Include="..\include\RasterEdgeDetectProcessorImpl.h" />

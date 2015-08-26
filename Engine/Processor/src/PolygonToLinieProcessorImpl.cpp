@@ -1,4 +1,4 @@
-#include "PolygonToPointsProcessorImpl.h"
+#include "PolygonToLineProcessorImpl.h"
 #include "Kmean.h"
 
 #include "AugeData.h"
@@ -9,17 +9,17 @@
 
 namespace auge
 {
-	PolygonToPointsProcessorImpl::PolygonToPointsProcessorImpl()
+	PolygonToLineProcessorImpl::PolygonToLineProcessorImpl()
 	{
 		m_user = 0;
 	}
 
-	PolygonToPointsProcessorImpl::~PolygonToPointsProcessorImpl()
+	PolygonToLineProcessorImpl::~PolygonToLineProcessorImpl()
 	{
 
 	}
 
-	void PolygonToPointsProcessorImpl::SetInputDataSource(const char* sourceName)
+	void PolygonToLineProcessorImpl::SetInputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -31,7 +31,7 @@ namespace auge
 		}
 	}
 
-	void PolygonToPointsProcessorImpl::SetInputFeatureClass(const char* className)
+	void PolygonToLineProcessorImpl::SetInputFeatureClass(const char* className)
 	{
 		if(className==NULL)
 		{
@@ -43,7 +43,7 @@ namespace auge
 		}
 	}
 
-	void PolygonToPointsProcessorImpl::SetOutputDataSource(const char* sourceName)
+	void PolygonToLineProcessorImpl::SetOutputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -55,7 +55,7 @@ namespace auge
 		}
 	}
 
-	void PolygonToPointsProcessorImpl::SetOutputFeatureClass(const char* className)
+	void PolygonToLineProcessorImpl::SetOutputFeatureClass(const char* className)
 	{
 		if(className==NULL)
 		{
@@ -67,27 +67,27 @@ namespace auge
 		}
 	}
 
-	const char* PolygonToPointsProcessorImpl::GetInputSource()
+	const char* PolygonToLineProcessorImpl::GetInputSource()
 	{
 		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
 	}
 
-	const char* PolygonToPointsProcessorImpl::GetInputFatureClass()
+	const char* PolygonToLineProcessorImpl::GetInputFatureClass()
 	{
 		return m_in_class_name.empty() ? NULL : m_in_class_name.c_str();
 	}
 
-	const char*	PolygonToPointsProcessorImpl::GetOutputSource()
+	const char*	PolygonToLineProcessorImpl::GetOutputSource()
 	{
 		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
 	}
 
-	const char*	PolygonToPointsProcessorImpl::GetOutputFatureClass()
+	const char*	PolygonToLineProcessorImpl::GetOutputFatureClass()
 	{
 		return m_out_source_name.empty() ? NULL : m_out_class_name.c_str();
 	}
 
-	RESULTCODE PolygonToPointsProcessorImpl::Execute()
+	RESULTCODE PolygonToLineProcessorImpl::Execute()
 	{
 		GError	*pError  = augeGetErrorInstance();
 		GLogger	*pLogger = augeGetLoggerInstance();
@@ -151,7 +151,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 		augeGeometryType type = pField->GetGeometryDef()->GeometryType();
-		if(type!=augeGTLineString&&type!=augeGTMultiLineString)
+		if(type!=augeGTPolygon&&type!=augeGTMultiPolygon)
 		{
 			pinFeatureClass->Release();
 			poutWorkspace->Release();
@@ -182,12 +182,12 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void PolygonToPointsProcessorImpl::Release()
+	void PolygonToLineProcessorImpl::Release()
 	{
 		delete this;
 	}
 
-	FeatureClass* PolygonToPointsProcessorImpl::CreateOutputFeatureClass(const char* className, FeatureWorkspace* poutWorkspace, FeatureClass* pinFeatureClass)
+	FeatureClass* PolygonToLineProcessorImpl::CreateOutputFeatureClass(const char* className, FeatureWorkspace* poutWorkspace, FeatureClass* pinFeatureClass)
 	{
 		FeatureClass* poutFatureClass = NULL;
 		poutFatureClass = poutWorkspace->OpenFeatureClass(className);
@@ -231,7 +231,7 @@ namespace auge
 
 				poutGeometryDef = poutField->GetGeometryDef();
 				poutGeometryDef_2 = poutGeometryDef->GetGeometryDef_2();
-				poutGeometryDef_2->SetGeometryType(augeGTPoint);
+				poutGeometryDef_2->SetGeometryType(augeGTMultiLineString);
 				poutGeometryDef_2->SetDimension(pGeometryDef->GetDimension());	
 				poutGeometryDef_2->SetSRID(pGeometryDef->GetSRID());
 				pGeometryDef->GetExtent(extent);
@@ -252,7 +252,7 @@ namespace auge
 		return poutFeatureClass;
 	}
 
-	RESULTCODE PolygonToPointsProcessorImpl::Process(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass)
+	RESULTCODE PolygonToLineProcessorImpl::Process(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass)
 	{
 		Geometry *pGeometry = NULL;
 		Feature	 *pFeature = NULL;
@@ -283,7 +283,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void PolygonToPointsProcessorImpl::ProcessPolygon(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd)
+	void PolygonToLineProcessorImpl::ProcessPolygon(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd)
 	{
 		Geometry* pGeometry = NULL;
 		pGeometry = pinFeature->GetGeometry();
@@ -316,7 +316,7 @@ namespace auge
 			poutFeature->SetValue(fname, pValue);
 		}
 
-		Geometry* pGeoPoint = NULL;
+		Geometry* pGeoLine = NULL;
 		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
 		pField = pinFeature->GetFeatureClass()->GetFields()->GetGeometryField();
 		if(pField!=NULL)
@@ -329,39 +329,47 @@ namespace auge
 				{
 					g_uint numPoints = 0;
 					g_uint numRings = 0;
+					g_uint ring_size = 0;
+					g_uint line_size = 0;
 					WKBPolygon* pWKBPolygon = (WKBPolygon*)pGeometry->AsBinary();
 					LinearRing* pLinearRing = NULL;
-					auge::Point* pt = NULL;
-					WKBPoint wkbpt;
-					wkbpt.byteOrder = coDefaultByteOrder;
-					wkbpt.wkbType = wkbPoint;
+					WKBLineString* pWKBLineString = NULL;
+					g_byte* ptr = NULL;
 
 					numRings = pWKBPolygon->numRings;
 					pLinearRing = (LinearRing*)(&(pWKBPolygon->rings[0]));
 					for(g_uint i=0; i<numRings; i++)
 					{
 						numPoints = pLinearRing->numPoints;
-						pt = (auge::Point*)(&(pLinearRing->points[0]));
-						for(g_uint j=0; j<numPoints; j++,pt++)
-						{
-							wkbpt.point.x = pt->x;
-							wkbpt.point.y = pt->y;
-							pGeoPoint = pGeometryFactory->CreateGeometryFromWKB((g_byte*)(&wkbpt), true);
-							pGeoValue = new GValue(pGeoPoint);
-							poutFeature->SetValue(pField->GetName(), pGeoValue);
+						ring_size = sizeof(auge::Point) * numPoints + sizeof(g_int32);
+						line_size = ring_size * numPoints + sizeof(g_int32) + sizeof(g_byte);
+						
+						pWKBLineString = (WKBLineString*)malloc(line_size);
+						memset(pWKBLineString, 0, line_size);
 
-							cmd->Insert(poutFeature);
-						}
-						pLinearRing = (LinearRing*)pt;
+						pWKBLineString->byteOrder = coDefaultByteOrder;
+						pWKBLineString->wkbType = wkbLineString;
+						pWKBLineString->numPoints = numPoints;
+						memcpy(&(pWKBLineString->points[0]), &(pLinearRing->points[0]), sizeof(auge::Point) * numPoints);
+
+						pGeoLine = pGeometryFactory->CreateGeometryFromWKB((g_byte*)(pWKBLineString), true);
+						pGeoValue = new GValue(pGeoLine);
+						poutFeature->SetValue(pField->GetName(), pGeoValue);
+
+						cmd->Insert(poutFeature);
+
+						free(pWKBLineString);
+
+						ptr = (g_byte*)pLinearRing;
+						pLinearRing = (LinearRing*)(ptr + ring_size);
 					}
-					pWKBPolygon = (WKBPolygon*)pt;
 				}
 			}
 		}
 		poutFeature->Release();
 	}
 
-	void PolygonToPointsProcessorImpl::ProcessMultiPolygon(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd)
+	void PolygonToLineProcessorImpl::ProcessMultiPolygon(Feature* pinFeature, FeatureClass* poutFeatureClass, FeatureInsertCommand* cmd)
 	{
 		Geometry* pGeometry = NULL;
 		pGeometry = pinFeature->GetGeometry();
@@ -394,7 +402,7 @@ namespace auge
 			poutFeature->SetValue(fname, pValue);
 		}
 
-		Geometry* pGeoPoint = NULL;
+		Geometry* pGeoLine = NULL;
 		GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
 		pField = pinFeature->GetFeatureClass()->GetFields()->GetGeometryField();
 		if(pField!=NULL)
@@ -408,37 +416,46 @@ namespace auge
 					g_uint numPoints = 0;
 					g_uint numRings = 0;
 					g_uint numPolygons = 0;
-					LinearRing* pRing = NULL;
+					g_uint ring_size = 0;
+					g_uint line_size = 0;
+					LinearRing* pLinearRing = NULL;
 					WKBPolygon* pWKBPolygon = NULL;
 					WKBMultiPolygon* pWKBMultiPolygon = (WKBMultiPolygon*)pGeometry->AsBinary();
-					auge::Point* pt = NULL;
-					WKBPoint wkbpt;
-					wkbpt.byteOrder = coDefaultByteOrder;
-					wkbpt.wkbType = wkbPoint;
+					WKBLineString* pWKBLineString = NULL;
+					g_byte* ptr = NULL;
 
 					numPolygons = pWKBMultiPolygon->numPolygons;
 					pWKBPolygon = (WKBPolygon*)(&(pWKBMultiPolygon->polygons[0]));
 					for(g_uint i=0; i<numPolygons; i++)
 					{
 						numRings = pWKBPolygon->numRings;
-						pRing = (LinearRing*)(&(pWKBPolygon->rings[0]));
+						pLinearRing = (LinearRing*)(&(pWKBPolygon->rings[0]));
 						for(g_uint j=0; j<numRings; j++)
 						{
-							pt = (auge::Point*)(&(pRing->points[0]));
-							numPoints = pRing->numPoints;
-							for(g_uint j=0; j<numPoints; j++,pt++)
-							{
-								wkbpt.point.x = pt->x;
-								wkbpt.point.y = pt->y;
-								pGeoPoint = pGeometryFactory->CreateGeometryFromWKB((g_byte*)(&wkbpt), true);
-								pGeoValue = new GValue(pGeoPoint);
-								poutFeature->SetValue(pField->GetName(), pGeoValue);
+							numPoints = pLinearRing->numPoints;
+							ring_size = sizeof(auge::Point) * numPoints + sizeof(g_int32);
+							line_size = ring_size + sizeof(g_int32) + sizeof(g_byte);
 
-								cmd->Insert(poutFeature);
-							}
-							pRing = (LinearRing*)(pt);
+							pWKBLineString = (WKBLineString*)malloc(line_size);
+							memset(pWKBLineString, 0, line_size);
+
+							pWKBLineString->byteOrder = coDefaultByteOrder;
+							pWKBLineString->wkbType = wkbLineString;
+							pWKBLineString->numPoints = numPoints;
+							memcpy(&(pWKBLineString->points[0]), &(pLinearRing->points[0]), sizeof(auge::Point) * numPoints);
+
+							pGeoLine = pGeometryFactory->CreateGeometryFromWKB((g_byte*)(pWKBLineString), true);
+							pGeoValue = new GValue(pGeoLine);
+							poutFeature->SetValue(pField->GetName(), pGeoValue);
+
+							cmd->Insert(poutFeature);
+
+							free(pWKBLineString);
+
+							ptr = (g_byte*)pLinearRing;
+							pLinearRing = (LinearRing*)(ptr + ring_size);
 						}
-						pWKBPolygon = (WKBPolygon*)pt;
+						pWKBPolygon = (WKBPolygon*)pLinearRing;
 					}
 				}
 			}
@@ -447,7 +464,7 @@ namespace auge
 	}
 
 
-	void PolygonToPointsProcessorImpl::SetUser(g_uint user)
+	void PolygonToLineProcessorImpl::SetUser(g_uint user)
 	{
 		m_user = user;
 	}

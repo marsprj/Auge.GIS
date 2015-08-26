@@ -24,6 +24,7 @@ namespace auge
 		virtual MultiPointToPointsProcessor* CreateMultiPointToPointsProcessor();
 		virtual LineToPointsProcessor*		CreateLineToPointsProcessor();
 		virtual PolygonToPointsProcessor*	CreatePolygonToPointsProcessor();
+		virtual PolygonToLineProcessor*		CreatePolygonToLineProcessor();
 
 		// Cluster 
 		virtual KMeansProcessor*			CreateKMeansProcessor();

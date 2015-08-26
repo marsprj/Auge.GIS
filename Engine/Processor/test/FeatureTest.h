@@ -12,7 +12,8 @@ class FeatureTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(CsvImportTest);
 
 	//CPPUNIT_TEST(ProjectTest);
-	CPPUNIT_TEST(LineToPoints);
+	//CPPUNIT_TEST(LineToPoints);
+	CPPUNIT_TEST(PolygonToLine);
 
 	CPPUNIT_TEST_SUITE_END();
 public:
@@ -28,6 +29,7 @@ private:
 	void	ProjectTest();
 
 	void	LineToPoints();
+	void	PolygonToLine();
 private:
 	auge::GConnection* m_pConnection;
 };

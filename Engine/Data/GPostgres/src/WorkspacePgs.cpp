@@ -219,6 +219,8 @@ namespace auge
 			return AG_SUCCESS;
 		}
 
+		RemoveMetaInfo(name);
+
 		return UnRegiseterGeometryColumn(name);
 	}
 
@@ -901,6 +903,15 @@ namespace auge
 		return m_pgConnection.ExecuteSQL(sql);
 	}
 	
+	RESULTCODE WorkspacePgs::RemoveMetaInfo(const char* name)
+	{
+		const char* format = "delete from %s where name='%s'";
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, format, g_feature_catalog_table.c_str(), name);
+		return m_pgConnection.ExecuteSQL(sql);
+	}
+
 	RESULTCODE WorkspacePgs::CreateRasterTable()
 	{
 		char sql[AUGE_SQL_MAX];

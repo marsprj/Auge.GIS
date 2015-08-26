@@ -6,7 +6,7 @@ namespace auge
 
 	StrokeImpl::StrokeImpl():
 //m_color(0L),
-m_width(1.0f),
+m_width(0.5),
 	m_opacity(1.0f),
 	m_line_cap(augeButtCap),
 	m_line_join(augeMiterJoin),

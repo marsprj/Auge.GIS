@@ -97,6 +97,8 @@ namespace auge
 		RESULTCODE				CreateFeatureCatalogTable();
 		RESULTCODE				CreateRasterTable();
 		RESULTCODE				CreateRasterFolderTable();
+
+		RESULTCODE				RemoveMetaInfo(const char* name);
 	private:
 		ConnectionPgs	m_pgConnection;
 		std::string		m_name;

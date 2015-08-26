@@ -195,11 +195,17 @@ namespace auge
 		virtual	void		SetOutputFeatureClass(const char* className) = 0;
 	};
 
-	class PolygonToLinesProcessor : public GProcessor
+	class PolygonToLineProcessor : public GProcessor
 	{
 	protected:
-		PolygonToLinesProcessor(){}
-		virtual ~PolygonToLinesProcessor(){}
+		PolygonToLineProcessor(){}
+		virtual ~PolygonToLineProcessor(){}
+	public:
+		virtual	void		SetInputDataSource(const char* sourceName) = 0;
+		virtual	void		SetInputFeatureClass(const char* className) = 0;
+
+		virtual	void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual	void		SetOutputFeatureClass(const char* className) = 0;
 	};
 
 	/**
@@ -706,6 +712,7 @@ namespace auge
 		virtual MultiPointToPointsProcessor* CreateMultiPointToPointsProcessor() = 0;
 		virtual LineToPointsProcessor*		CreateLineToPointsProcessor() = 0;
 		virtual PolygonToPointsProcessor*	CreatePolygonToPointsProcessor() = 0;
+		virtual PolygonToLineProcessor*		CreatePolygonToLineProcessor() = 0;
 
 		// Cluster 
 		virtual KMeansProcessor*			CreateKMeansProcessor() = 0;
