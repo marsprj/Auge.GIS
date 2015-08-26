@@ -74,6 +74,16 @@ namespace auge
 		return m_pFields->GetField(name);
 	}
 
+	RESULTCODE FeatureClassShp::AddField(const char* name, augeFieldType type, g_uint width)
+	{
+		return AG_FAILURE;
+	}
+
+	RESULTCODE FeatureClassShp::RemoveField(const char* name)
+	{
+		return AG_FAILURE;
+	}
+
 	bool FeatureClassShp::Create(const char* name, WorkspaceShp* pWorkspace)
 	{
 		if(!OpenSHPFile(name, pWorkspace))

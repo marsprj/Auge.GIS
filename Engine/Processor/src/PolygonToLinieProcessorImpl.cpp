@@ -231,7 +231,7 @@ namespace auge
 
 				poutGeometryDef = poutField->GetGeometryDef();
 				poutGeometryDef_2 = poutGeometryDef->GetGeometryDef_2();
-				poutGeometryDef_2->SetGeometryType(augeGTMultiLineString);
+				poutGeometryDef_2->SetGeometryType(augeGTLineString);
 				poutGeometryDef_2->SetDimension(pGeometryDef->GetDimension());	
 				poutGeometryDef_2->SetSRID(pGeometryDef->GetSRID());
 				pGeometryDef->GetExtent(extent);

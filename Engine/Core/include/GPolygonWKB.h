@@ -22,6 +22,8 @@ namespace auge
 		virtual double				Perimeter() const;
 		virtual void				Release();
 
+		virtual	bool				Contain(double x, double y);
+
 	public:
 		bool	Create(g_uchar *wkb, bool attach);
 

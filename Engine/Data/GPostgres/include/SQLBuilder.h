@@ -63,7 +63,7 @@ namespace auge
 		static RESULTCODE BuildGetMinMaxValueSQL(std::string& sql, const char* field_name, FeatureClassPgs* pFeatureClass);
 		
 
-		static void BuildInsertFeature(std::string& sql, const char* className, Feature* pFeature, g_uint srid);
+		static void BuildInsertFeature(std::string& sql, const char* className, Feature* pFeature, g_uint srid, augeGeometryType geomtype);
 		static void BuildDeleteFeature(std::string& sql, GFilter* pFilter, FeatureClassPgs* pFeatureClass);
 
 		static const char* GetPgFieldType(augeFieldType type);

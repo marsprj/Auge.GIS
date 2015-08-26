@@ -32,6 +32,27 @@ namespace auge
 
 	const GEnvelope* GPolygonWKB::Envelope() const
 	{
+		GPolygonWKB* that = (GPolygonWKB*)this;
+		if(!that->m_extent.IsValid())
+		{
+			Point* pt = NULL;
+			int numRings = m_pWKBPolygon->numRings;
+			LinearRing* pLinearRing = &(m_pWKBPolygon->rings[0]);
+			for(int i=0; i<numRings; i++)
+			{	
+				int numPoints = pLinearRing->numPoints;
+				pt = &(pLinearRing->points[0]);
+				for(int j=0; j<numPoints; j++, pt++)
+				{
+					that->m_extent.m_xmin = that->m_extent.m_xmin < pt->x ? that->m_extent.m_xmin : pt->x;
+					that->m_extent.m_xmax = that->m_extent.m_xmax > pt->x ? that->m_extent.m_xmax : pt->x;
+
+					that->m_extent.m_ymin = that->m_extent.m_ymin < pt->y ? that->m_extent.m_ymin : pt->y;
+					that->m_extent.m_ymax = that->m_extent.m_ymax > pt->y ? that->m_extent.m_ymax : pt->y;
+				}
+				pLinearRing = (LinearRing*)pt;
+			}
+		}
 		return &m_extent;
 	}
 
@@ -150,5 +171,64 @@ namespace auge
 		}
 
 		return length;
+	}
+
+	bool GPolygonWKB::Contain(double x, double y)
+	{
+		g_uint counter = 0;
+
+		int i=0, j=0;
+		int numPoints = 0;
+		int numRings  = m_pWKBPolygon->numRings;
+		auge::LinearRing* pLinearRing = NULL;
+		auge::Point *pt0 = NULL;
+		auge::Point *pt1 = NULL;
+		double xmax;
+		double ymin, ymax;
+		double v0, v1;
+
+		pLinearRing = (auge::LinearRing*)(&(m_pWKBPolygon->rings[0]));
+		for(i=0; i<numRings; i++)
+		{
+			numPoints = pLinearRing->numPoints;
+			pt0 = (auge::Point*)(&(pLinearRing->points[0]));
+			pt1 = pt0 + 1;
+
+			for(j=1; j<numPoints; j++, pt0++, pt1++)
+			{
+				v0 = y - pt0->y;
+				v1 = y - pt1->y;
+				if((v0==0.0) && (v1==0.0))
+				{	//horizonal segment
+					counter++;
+				}
+				else
+				{
+					ymin = g_min(pt0->y, pt1->y);
+					ymax = g_max(pt0->y, pt1->y);
+					v0 = y - ymin;
+					v1 = y - ymax;
+
+					if( v0>0.0 && v1<0.0)
+					{
+						// x locates between y0 and y1, then x may be accross the segment [pt0, pt1];
+						xmax = g_max(pt0->x, pt1->x);
+						if(xmax > x)
+						{	// intersection point locates the right side of x
+							counter++;
+						}
+					}
+				}
+			}
+
+			pLinearRing = (auge::LinearRing*)(pt1);
+		}
+
+		bool contain = true;
+		if(contain==0)
+		{
+			return false;
+		}
+		return (counter%2);
 	}
 }

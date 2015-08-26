@@ -115,6 +115,48 @@ namespace auge
 		return m_pFields->GetField(name);
 	}
 
+	RESULTCODE FeatureClassPgs::AddField(const char* name, augeFieldType type, g_uint width)
+	{
+		if(name==NULL||type==augeFieldTypeNone)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* field_type = m_pWorkspace->m_pgConnection.GetFieldType(type);
+		if(field_type==NULL)
+		{
+			return NULL;
+		}
+
+		//ALTER TABLE cities_900913 ADD COLUMN aaa double precision;
+		const char* format = "alter table %s add column %s %s";
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		if(type==augeFieldTypeString)
+		{
+			g_snprintf(sql, AUGE_SQL_MAX, "alter table %s add column %s %s(%d)", GetName(), name, field_type, width);
+		}
+		else
+		{
+			g_snprintf(sql, AUGE_SQL_MAX, "alter table %s add column %s %s", GetName(), name, field_type);
+		}
+	
+		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+	}
+
+	RESULTCODE FeatureClassPgs::RemoveField(const char* name)
+	{
+		if(name==NULL)
+		{
+			return AG_FAILURE;
+		}
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, "ALTER TABLE %s DROP COLUMN %s", GetName(), name);
+		
+		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+	}
+
 	bool FeatureClassPgs::Create(const char* name, WorkspacePgs* pWorkspace)
 	{
 		m_name = name;

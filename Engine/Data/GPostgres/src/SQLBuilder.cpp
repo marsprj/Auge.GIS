@@ -1240,7 +1240,7 @@ namespace auge
 		}
 	}
 
-	void SQLBuilder::BuildInsertFeature(std::string& sql, const char* className, Feature* pFeature, g_uint srid)
+	void SQLBuilder::BuildInsertFeature(std::string& sql, const char* className, Feature* pFeature, g_uint srid, augeGeometryType geomtype)
 	{
 		std::string fields = "";
 		std::string values = "";
@@ -1361,7 +1361,15 @@ namespace auge
 					Geometry *pGeometry = pFeature->GetGeometry();
 					if(pGeometry!=NULL)
 					{
-						const char* wkt = pGeometry->AsText(true);
+						const char* wkt = NULL;
+						if((geomtype==augeGTMultiPoint) || (geomtype==augeGTMultiLineString) || (geomtype==augeGTMultiPolygon))
+						{
+							wkt = pGeometry->AsText(true);
+						}
+						else
+						{
+							wkt = pGeometry->AsText();
+						}
 						if(wkt!=NULL)
 						{
 							g_snprintf(str, AUGE_BUFFER_MAX,"%d",srid);

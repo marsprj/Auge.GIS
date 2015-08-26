@@ -26,6 +26,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsgps", "..\..\Server\gsgps
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswms", "..\..\Server\gswms\32_x86_win_vc10\gswms.vcxproj", "{C6045F1B-77E7-4716-84F1-E8E0B8A70290}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GShape", "..\..\Data\GShape\32_x86_win_vc10\GShape.vcxproj", "{C17AA319-6571-48F3-BFD6-111B3B0445C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -64,6 +66,10 @@ Global
 		{C6045F1B-77E7-4716-84F1-E8E0B8A70290}.Debug|Win32.Build.0 = Debug|Win32
 		{C6045F1B-77E7-4716-84F1-E8E0B8A70290}.Release|Win32.ActiveCfg = Release|Win32
 		{C6045F1B-77E7-4716-84F1-E8E0B8A70290}.Release|Win32.Build.0 = Release|Win32
+		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Debug|Win32.Build.0 = Debug|Win32
+		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Release|Win32.ActiveCfg = Release|Win32
+		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

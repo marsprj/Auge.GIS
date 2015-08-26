@@ -21,6 +21,7 @@ namespace auge
 	class TileStore;
 	class Raster;
 	class Geometry;
+	class GMultiPoint;
 	class User;
 
 	typedef enum augeEdgeDetector
@@ -154,6 +155,9 @@ namespace auge
 	// Geometry Processor Begin
 	//------------------------------------------------------------------------
 	/**
+	 *
+	 * MultiPointToPointsProcessor
+	 * 
 	 * 多点转换为单点
 	 */
 	class MultiPointToPointsProcessor : public GProcessor
@@ -169,6 +173,12 @@ namespace auge
 		virtual	void		SetOutputFeatureClass(const char* className) = 0;
 	};
 
+	/**
+	 *
+	 * LineToPointsProcessor
+	 * 
+	 * 线转换为点
+	 */
 	class LineToPointsProcessor : public GProcessor
 	{
 	protected:
@@ -182,6 +192,12 @@ namespace auge
 		virtual	void		SetOutputFeatureClass(const char* className) = 0;
 	};
 
+	/**
+	 *
+	 * PolygonToPointsProcessor
+	 * 
+	 * 多边形转换为点
+	 */
 	class PolygonToPointsProcessor : public GProcessor
 	{
 	protected:
@@ -195,6 +211,12 @@ namespace auge
 		virtual	void		SetOutputFeatureClass(const char* className) = 0;
 	};
 
+	/**
+	 *
+	 * PolygonToLineProcessor
+	 * 
+	 * 多边形转换为线
+	 */
 	class PolygonToLineProcessor : public GProcessor
 	{
 	protected:
@@ -219,6 +241,8 @@ namespace auge
 	};
 
 	/**
+	 *　RandomPointsGenerator
+	 ×　
 	 * 随机点生成器
 	 */
 	class RandomPointsGenerator : public GProcessor
@@ -232,6 +256,24 @@ namespace auge
 		virtual void		SetSRID(g_uint srid) = 0;
 		virtual void		SetExtent(GEnvelope& extent) = 0;
 		virtual void		SetCount(g_uint count) = 0;
+	};
+
+	class RandomPointsInPolygonGenerator : public GProcessor
+	{
+	protected:
+		RandomPointsInPolygonGenerator(){}
+		virtual ~RandomPointsInPolygonGenerator(){}
+	public:
+		virtual	void		SetInputDataSource(const char* sourceName) = 0;
+		virtual	void		SetInputFeatureClass(const char* className) = 0;
+
+		virtual	void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual	void		SetOutputFeatureClass(const char* className) = 0;
+
+		virtual void		SetCount(g_uint count) = 0;
+
+		virtual RESULTCODE	Execute() = 0;
+		virtual GMultiPoint* Execute(Geometry* pGeometry, g_uint count) = 0;
 	};
 
 	/**
@@ -262,6 +304,7 @@ namespace auge
 	protected:
 		LineSimplificationProcessor(){}
 		virtual ~LineSimplificationProcessor(){}
+
 	};
 
 	/**
@@ -722,6 +765,7 @@ namespace auge
 		virtual FeatureImportProcessor*		CreateFeatureImportProcessor() = 0;
 		virtual FeatureExportProcessor*		CreateFeatureExportProcessor() = 0;
 		virtual RandomPointsGenerator*		CreateRandomPointsGenerator() = 0;
+		virtual RandomPointsInPolygonGenerator* CreateRandomPointsInPolygonGenerator() = 0;
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor() = 0;
 

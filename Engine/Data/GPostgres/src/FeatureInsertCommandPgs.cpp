@@ -28,8 +28,15 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		augeGeometryType type = augeGTNull;
+		GField* pField = m_pFeatureClass->GetFields()->GetGeometryField();
+		if(pField!=NULL)
+		{
+			type = pField->GetGeometryDef()->GeometryType();
+		}
+
 		std::string sql;
-		SQLBuilder::BuildInsertFeature(sql, m_pFeatureClass->GetName(), pFeature, m_pFeatureClass->GetSRID());
+		SQLBuilder::BuildInsertFeature(sql, m_pFeatureClass->GetName(), pFeature, m_pFeatureClass->GetSRID(), type);
 		return m_pgConnection->ExecuteSQL(sql.c_str());
 	}
 

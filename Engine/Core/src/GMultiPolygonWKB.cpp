@@ -32,6 +32,31 @@ namespace auge
 
 	const GEnvelope* GMultiPolygonWKB::Envelope() const
 	{
+		GMultiPolygonWKB* that = (GMultiPolygonWKB*)this;
+
+		Point* pt = NULL;
+		int numPolygons = m_pWKBMultiPolygon->numPolygons;
+		WKBPolygon* pWKBPolygon = &(m_pWKBMultiPolygon->polygons[0]);
+		for(int i=0; i<numPolygons; i++)
+		{
+			int numRings = pWKBPolygon->numRings;
+			LinearRing* pLinearRing = &(pWKBPolygon->rings[0]);
+			for(int j=0; j<numRings; j++)
+			{	
+				int numPoints = pLinearRing->numPoints;
+				pt = &(pLinearRing->points[0]);
+				for(int k=0; k<numPoints; k++, pt++)
+				{
+					that->m_extent.m_xmin = that->m_extent.m_xmin < pt->x ? that->m_extent.m_xmin : pt->x;
+					that->m_extent.m_xmax = that->m_extent.m_xmax > pt->x ? that->m_extent.m_xmax : pt->x;
+
+					that->m_extent.m_ymin = that->m_extent.m_ymin < pt->y ? that->m_extent.m_ymin : pt->y;
+					that->m_extent.m_ymax = that->m_extent.m_ymax > pt->y ? that->m_extent.m_ymax : pt->y;
+				}
+				pLinearRing = (LinearRing*)pt;
+			}
+			pWKBPolygon = (WKBPolygon*)pt;
+		}
 		return &m_extent;
 	}
 
@@ -155,5 +180,64 @@ namespace auge
 			pWKBPolygon = (WKBPolygon*)pt1;
 		}
 		return length;
+	}
+
+	bool GMultiPolygonWKB::Contain(double x, double y)
+	{
+		g_uint counter = 0;
+		auge::Point* pt0 = NULL;
+		auge::Point* pt1 = NULL; 
+		double xmax;
+		double ymin, ymax;
+		double v0, v1;
+
+		int numPolygons = m_pWKBMultiPolygon->numPolygons;
+		WKBPolygon* pWKBPolygon = &(m_pWKBMultiPolygon->polygons[0]);
+		for(int i=0; i<numPolygons; i++)
+		{
+			int numRings = pWKBPolygon->numRings;
+			LinearRing* pLinearRing = &(pWKBPolygon->rings[0]);
+			for(int j=0; j<numRings; j++)
+			{	
+				int numPoints = pLinearRing->numPoints;
+				pt0 = &(pLinearRing->points[0]);
+				pt1 = pt0 + 1;
+				for(int k=1; k<numPoints; k++, pt0++, pt1++)
+				{
+					v0 = y - pt0->y;
+					v1 = y - pt1->y;
+					if((v0==0.0) && (v1==0.0))
+					{	//horizonal segment
+						counter++;
+					}
+					else
+					{
+						ymin = g_min(pt0->y, pt1->y);
+						ymax = g_max(pt0->y, pt1->y);
+						v0 = y - ymin;
+						v1 = y - ymax;
+
+						if( v0>0.0 && v1<0.0)
+						{
+							// x locates between y0 and y1, then x may be accross the segment [pt0, pt1];
+							xmax = g_max(pt0->x, pt1->x);
+							if(xmax > x)
+							{	// intersection point locates the right side of x
+								counter++;
+							}
+						}
+					}
+				}
+				pLinearRing = (LinearRing*)pt1;
+			}
+			pWKBPolygon = (WKBPolygon*)pt1;
+		}
+
+		bool contain = true;
+		if(contain==0)
+		{
+			return false;
+		}
+		return (counter%2);
 	}
 }

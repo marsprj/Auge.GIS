@@ -15,7 +15,8 @@ class FeatureTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(LineToPoints);
 	//CPPUNIT_TEST(PolygonToLine);
 
-	CPPUNIT_TEST(GenerateRandomPoints);
+	//CPPUNIT_TEST(GenerateRandomPoints);
+	CPPUNIT_TEST(GenerateRandomPointsInPolygon);
 
 	CPPUNIT_TEST_SUITE_END();
 public:
@@ -34,6 +35,7 @@ private:
 	void	PolygonToLine();
 
 	void	GenerateRandomPoints();
+	void	GenerateRandomPointsInPolygon();
 private:
 	auge::GConnection* m_pConnection;
 };

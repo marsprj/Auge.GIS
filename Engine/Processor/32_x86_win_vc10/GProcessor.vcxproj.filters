@@ -108,6 +108,9 @@
     <ClCompile Include="..\src\RandomPointsGeneratorImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\RandomPointsInPolygonGeneratorImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ProcessorFactoryImpl.h">
@@ -201,6 +204,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\RandomPointsGeneratorImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\RandomPointsInPolygonGeneratorImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

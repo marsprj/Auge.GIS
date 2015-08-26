@@ -62,6 +62,8 @@ namespace auge
 	
 		virtual GFields*			GetFields() = 0;
 		virtual GField*				GetField(const char* name) = 0;
+		virtual RESULTCODE			AddField(const char* name, augeFieldType type, g_uint width=32) = 0;
+		virtual RESULTCODE			RemoveField(const char* name) = 0;
 
 		virtual g_uint				GetCount() = 0;
 		virtual g_uint				GetCount(GEnvelope& extent) = 0;

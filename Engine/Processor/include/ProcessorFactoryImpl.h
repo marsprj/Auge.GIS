@@ -18,6 +18,7 @@ namespace auge
 		virtual FeatureImportProcessor*		CreateFeatureImportProcessor();
 		virtual FeatureExportProcessor*		CreateFeatureExportProcessor();
 		virtual RandomPointsGenerator*		CreateRandomPointsGenerator();
+		virtual RandomPointsInPolygonGenerator* CreateRandomPointsInPolygonGenerator();
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor();
 

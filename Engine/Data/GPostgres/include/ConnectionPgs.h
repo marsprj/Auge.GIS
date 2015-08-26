@@ -38,6 +38,7 @@ namespace auge
 
 	public:
 		augeFieldType	GetFieldType(Oid oid);
+		const char*		GetFieldType(augeFieldType type);
 
 	private:
 		PGconn			*m_pgConnection;

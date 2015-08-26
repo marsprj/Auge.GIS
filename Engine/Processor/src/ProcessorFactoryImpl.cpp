@@ -8,6 +8,7 @@
 #include "KmeanProcessorImpl.h"
 #include "FeatureProjectProcessorImpl.h"
 #include "RandomPointsGeneratorImpl.h"
+#include "RandomPointsInPolygonGeneratorImpl.h"
 
 #include "RasterExtractByRectangleProcessorImpl.h"
 #include "RasterStretchProcessorImpl.h"
@@ -202,4 +203,8 @@ namespace auge
 		return (new RandomPointsGeneratorImpl());
 	}
 
+	RandomPointsInPolygonGenerator* GProcessorFactoryImpl::CreateRandomPointsInPolygonGenerator()
+	{
+		return (new RandomPointsInPolygonGeneratorImpl());
+	}
 }

@@ -33,6 +33,8 @@ namespace auge
 
 		virtual GFields*			GetFields();
 		virtual GField*				GetField(const char* name);
+		virtual RESULTCODE			AddField(const char* name, augeFieldType type, g_uint width=32);
+		virtual RESULTCODE			RemoveField(const char* name);
 
 		virtual FeatureCursor*		Query(augeCursorType type=augeStaticCursor);
 		virtual FeatureCursor*		Query(GEnvelope& extent, augeCursorType type=augeStaticCursor);

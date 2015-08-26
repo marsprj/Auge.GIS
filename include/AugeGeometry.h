@@ -138,6 +138,8 @@ namespace auge
 		virtual ~GPolygon(){}
 	public:
 	//	//--------------------------------------------------------------------------
+		virtual	bool			Contain(double x, double y) = 0;
+
 	//	virtual const GLineString*	ExterorRing()        const =0; // : LineString
 	//	virtual       GLineString*	ExterorRing()              =0; // : LineString
 	//	virtual       int			NumInteriorRing()    const =0; // : Integer
@@ -197,6 +199,7 @@ namespace auge
 	public:
 		//--------------------------------------------------------------------------
 		//virtual bool      AddPolygon(GPolygon* pPolygon) =0;
+		virtual	bool			Contain(double x, double y) = 0;
 	};
 
 	class AUGE_GEOMETRY_API GEnvelope

@@ -155,6 +155,7 @@ namespace auge
 		poutFeatureClass = CreateOutputFeatureClass(className_out, srid_out, poutWorkspace, pinFeatureClass);
 		if(poutFeatureClass==NULL)
 		{
+			pinFeatureClass->Release();
 			poutWorkspace->Release();
 			return AG_FAILURE;
 		}

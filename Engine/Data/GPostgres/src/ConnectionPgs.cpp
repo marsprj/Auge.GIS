@@ -320,4 +320,21 @@ namespace auge
 
 		return ftype;
 	}
+
+	const char* ConnectionPgs::GetFieldType(augeFieldType type)
+	{
+		switch(type)
+		{
+		case augeFieldTypeInt:
+			return "integer";
+		case augeFieldTypeFloat:
+		case augeFieldTypeDouble:
+			return "double precision";
+		case augeFieldTypeString:
+			return "character varying";
+		case augeFieldTypeTime:
+			return "timestamp without time zone";
+		}
+		return NULL;
+	}
 }
