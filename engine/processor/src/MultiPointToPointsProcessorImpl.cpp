@@ -7,7 +7,7 @@
 #include "AugeField.h"
 #include "AugeUser.h"
 
-namespace auge
+namespace auge 
 {
 	MultiPointToPointsProcessorImpl::MultiPointToPointsProcessorImpl()
 	{

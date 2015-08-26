@@ -8,7 +8,7 @@
 #include "AugeUser.h"
 
 namespace auge
-{
+{ 
 	LineToPointsProcessorImpl::LineToPointsProcessorImpl()
 	{
 		m_user = 0;
