@@ -326,7 +326,7 @@ namespace auge
 				pGeometry = pValue->GetGeometry();
 				if(pGeometry!=NULL)
 				{
-					g_uint numPoints = NULL;					
+					g_uint numPoints = 0;					
 					WKBMultiPoint* pWKBMultiPoint = (WKBMultiPoint*)pGeometry->AsBinary();
 					WKBPoint* pt = NULL;					
 
