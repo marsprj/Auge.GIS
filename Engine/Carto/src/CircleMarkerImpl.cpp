@@ -151,10 +151,29 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
-		if(pGeometry->GeometryType()!=augeGTPoint)
+
+		augeGeometryType type = pGeometry->GeometryType();
+		switch(type)
 		{
-			return AG_FAILURE;
+		case augeGTPoint:
+			{
+				WKBPoint* pWKBPoint = (WKBPoint*)pGeometry->AsBinary();
+				Draw(pWKBPoint, pRenderer, pTransform);
+			}
+			break;
+		case augeGTMultiPoint:
+			{
+				WKBMultiPoint* pWKBMultiPoint = (WKBMultiPoint*)pGeometry->AsBinary();
+				Draw(pWKBMultiPoint, pRenderer, pTransform);
+			}
+			break;
 		}
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE CircleMarkerImpl::Draw(WKBPoint* pWKBPoint, Renderer* pRenderer, Transformation* pTransform)
+	{
 		if(m_size==0)
 		{
 			return AG_FAILURE;
@@ -164,8 +183,7 @@ namespace auge
 		cairo_t			*canvas_cairo = pRendererCairo->GetCairo();
 		cairo_surface_t	*canvas_surface=pRendererCairo->GetCairoSurface();
 
-		int sx=0, sy=0;
-		WKBPoint* pWKBPoint = (WKBPoint*)pGeometry->AsBinary();
+		int sx=0, sy=0;		
 		pTransform->ToScreenPoint(pWKBPoint->point.x, pWKBPoint->point.y, sx, sy);
 		
 		//cairo_surface_t *image = cairo_image_surface_create_from_png(resource);
@@ -182,6 +200,18 @@ namespace auge
 			cairo_paint(canvas_cairo);
 			cairo_surface_flush(canvas_surface);
 			cairo_restore(canvas_cairo);
+		}
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE CircleMarkerImpl::Draw(WKBMultiPoint* pWKBMultiPoint, Renderer* pRenderer, Transformation* pTransform)
+	{
+		g_uint numPoints = pWKBMultiPoint->numPoints;
+		WKBPoint* pWKBPoint = (WKBPoint*)(&(pWKBMultiPoint->points[0]));
+		for(g_uint i=0; i<numPoints; i++, pWKBPoint++)
+		{
+			Draw(pWKBPoint, pRenderer, pTransform);
 		}
 
 		return AG_SUCCESS;

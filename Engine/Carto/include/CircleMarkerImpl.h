@@ -47,6 +47,8 @@ namespace auge
 
 	private:
 		void		DrawSymbol();
+		RESULTCODE	Draw(WKBPoint* pWKBPoint, Renderer* pRenderer, Transformation* pTransform);
+		RESULTCODE	Draw(WKBMultiPoint* pWKBMultiPoint, Renderer* pRenderer, Transformation* pTransform);
 
 		void		DrawIcon();
 		void		SaveIcon(const char* icon_path);
