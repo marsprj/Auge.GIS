@@ -228,10 +228,6 @@ namespace auge
 
 	void DescribeMapResponse::AddLayerBoundingNode(XElement* pxParent, GEnvelope& extent, int srid)
 	{
-		if(!extent.IsValid())
-		{
-			return;
-		}
 		XElement* pxNode = NULL;
 		XElement* pxBounding = NULL;
 		char str[AUGE_NAME_MAX];
@@ -239,6 +235,12 @@ namespace auge
 		pxBounding = pxParent->AddChild("BoundingBox", NULL);
 		g_sprintf(str, "CRS:%d", srid);
 		pxBounding->SetAttribute("CRS", str,NULL);
+
+		if(!extent.IsValid())
+		{
+			return;
+		}
+		
 		g_sprintf(str, "%.6f", extent.m_xmin);
 		pxBounding->SetAttribute("minx", str,NULL);
 		g_sprintf(str, "%.6f", extent.m_xmax);
@@ -254,10 +256,15 @@ namespace auge
 		XElement* pxNode = NULL;
 		XElement* pxBounding = NULL;
 		char str[AUGE_NAME_MAX];
-
 		pxBounding = pxParent->AddChild("Viewer", NULL);
 		g_sprintf(str, "CRS:%d", srid);
 		pxBounding->SetAttribute("CRS", str,NULL);
+
+		if(!extent.IsValid())
+		{
+			return;
+		}
+		
 		g_sprintf(str, "%.6f", extent.m_xmin);
 		pxBounding->SetAttribute("minx", str,NULL);
 		g_sprintf(str, "%.6f", extent.m_xmax);
