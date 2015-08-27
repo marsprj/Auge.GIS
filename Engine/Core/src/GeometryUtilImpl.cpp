@@ -85,7 +85,7 @@ namespace auge
 	{
 		int wkbSize = sizeof(WKBMultiPoint) - sizeof(WKBPoint);
 		int numPoints = pMultiPoint->numPoints;
-		wkbSize  += sizeof(Point)*numPoints;
+		wkbSize  += sizeof(WKBPoint)*numPoints;
 		return wkbSize;
 	}
 

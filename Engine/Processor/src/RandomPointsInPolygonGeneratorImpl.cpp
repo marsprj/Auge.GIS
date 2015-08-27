@@ -298,6 +298,7 @@ namespace auge
 		WKBMultiPoint* pWKBMultiPoint = NULL;
 		size_t wkb_size = sizeof(WKBMultiPoint) + (count-1) * sizeof(WKBPoint);
 		pWKBMultiPoint = (WKBMultiPoint*)malloc(wkb_size);
+		memset(pWKBMultiPoint, 0, wkb_size);
 		pWKBMultiPoint->byteOrder = coDefaultByteOrder;
 		pWKBMultiPoint->wkbType = wkbMultiPoint;
 		pWKBMultiPoint->numPoints = count;
@@ -339,7 +340,7 @@ namespace auge
 			}
 		}
 
-		GMultiPoint* pPoints = (GMultiPoint*)(augeGetGeometryFactoryInstance()->CreateGeometryFromWKB((g_uchar*)pWKBMultiPoint, false));
+		GMultiPoint* pPoints = (GMultiPoint*)(augeGetGeometryFactoryInstance()->CreateGeometryFromWKB((g_uchar*)pWKBMultiPoint, true));
 		if(pPoints!=NULL)
 		{
 			GValue* pValue = NULL;
@@ -372,6 +373,7 @@ namespace auge
 		WKBMultiPoint* pWKBMultiPoint = NULL;
 		size_t wkb_size = sizeof(WKBMultiPoint) + (count-1) * sizeof(WKBPoint);
 		pWKBMultiPoint = (WKBMultiPoint*)malloc(wkb_size);
+		memset(pWKBMultiPoint, 0, wkb_size);
 		pWKBMultiPoint->byteOrder = coDefaultByteOrder;
 		pWKBMultiPoint->wkbType = wkbMultiPoint;
 		pWKBMultiPoint->numPoints = count;
