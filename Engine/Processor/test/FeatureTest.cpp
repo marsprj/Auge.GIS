@@ -22,8 +22,8 @@ void FeatureTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=UTF-8");
-	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=UTF-8");
+	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -329,7 +329,7 @@ void FeatureTest::GenerateRandomPointsInPolygon()
 	pProcessor->SetInputDataSource("db1");
 	pProcessor->SetInputFeatureClass("country");
 	pProcessor->SetOutputDataSource("db1");
-	pProcessor->SetOutputFeatureClass("random_points_country");
+	pProcessor->SetOutputFeatureClass("random_points_country_1");
 	pProcessor->SetCount(200);
 
 	RESULTCODE rc = pProcessor->Execute();

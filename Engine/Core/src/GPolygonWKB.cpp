@@ -215,7 +215,23 @@ namespace auge
 						xmax = g_max(pt0->x, pt1->x);
 						if(xmax > x)
 						{	// intersection point locates the right side of x
-							counter++;
+							double xx = 0.0;
+							double s1, s2;
+							double height = 0.0;
+							s1 = y - pt0->y;
+							s2 = pt1->y - y;
+							if(fabs(s1)<fabs(s2))
+							{
+								xx = (pt0->x-pt1->x) * ((y-pt1->y) / (pt0->y-pt1->y)) + pt1->x;
+							}
+							else
+							{
+								xx = (pt1->x-pt0->x) * (y-pt0->y) / (pt1->y-pt0->y) + pt0->x;
+							}
+							if(xx>x)
+							{
+								counter++;
+							}
 						}
 					}
 				}
