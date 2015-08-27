@@ -92,9 +92,9 @@ namespace auge
 [ HTTP Get ]
 -------------------------------------------------------------------------
 1)
-service=gps&version=1.0.0&request=GenerateRandomPointsInPolygon&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=cities_900913&count=100
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=GenerateRandomPointsInPolygon&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=cities_900913&count=100
-http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=GenerateRandomPointsInPolygon&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=cities_900913&count=100
+user=user1&service=gps&version=1.0.0&request=GenerateRandomPointsInPolygon&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=country_random_points_100&count=100
+http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=GenerateRandomPointsInPolygon&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=country_random_points_100&count=100
+http://123.57.207.198/ows/admin/mgr?service=gps&version=1.0.0&request=GenerateRandomPointsInPolygon&inputSourceName=test&inputTypeName=country&outputSourceName=test&outputTypeName=country_random_points_100&count=100
 
 service=gps&version=1.0.0&request=GenerateRandomPointsInPolygon&inputSourceName=test&inputTypeName=rivers&outputSourceName=test&outputTypeName=rivers_900913&count=100
 http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=GenerateRandomPointsInPolygon&inputSourceName=test&inputTypeName=rivers&outputSourceName=test&outputTypeName=rivers_900913&count=100

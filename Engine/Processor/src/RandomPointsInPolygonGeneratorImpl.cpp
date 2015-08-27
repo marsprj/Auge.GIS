@@ -339,7 +339,7 @@ namespace auge
 			}
 		}
 
-		Geometry* pPoints = Execute(pGeometry, m_count);
+		GMultiPoint* pPoints = (GMultiPoint*)(augeGetGeometryFactoryInstance()->CreateGeometryFromWKB((g_uchar*)pWKBMultiPoint, false));
 		if(pPoints!=NULL)
 		{
 			GValue* pValue = NULL;
