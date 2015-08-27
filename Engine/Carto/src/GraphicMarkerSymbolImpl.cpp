@@ -7,7 +7,7 @@ namespace auge
 	m_cairo(NULL),
 	m_icon(NULL),	
 	m_opacity(0.0f),
-	m_size(20.0f),
+	m_size(5.0f),
 	m_rotation(0.0f)
 	{
 
