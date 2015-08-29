@@ -2,6 +2,7 @@
 #include "AugeCore.h"
 #include "DataEngineImpl.h"
 #include "FeatureClassByd.h"
+#include "SQLBuilder.h"
 
 namespace auge
 {	
@@ -174,77 +175,16 @@ namespace auge
 			return NULL;
 		}
 
-		//GField* pField = pFields->GetGeometryField();
-		//if(pField==NULL)
-		//{
-		//	return NULL;
-		//}
+		if(!CreateSequence(name))
+		{
+			//return NULL;
+		}
+		if(!CreateTable(name, pFields))
+		{
+			return NULL;
+		}
 
-		//char shp_path[AUGE_PATH_MAX];
-		//char dbf_path[AUGE_PATH_MAX];
-		//auge_make_path(shp_path, NULL, m_path.c_str(), name, "shp");
-		//auge_make_path(dbf_path, NULL, m_path.c_str(), name, "dbf");
-
-		//SHPHandle pshpHandle = NULL;
-		//DBFHandle pdbfHandle = NULL;
-
-		//GeometryDef* pGeometryDef = pField->GetGeometryDef();
-		//g_uint shp_type = GetShpType(pGeometryDef->GeometryType());
-		//
-		//pshpHandle = ::SHPCreate(shp_path, shp_type);
-		//if(pshpHandle==NULL)
-		//{
-		//	return NULL;
-		//}
-		////pshpHandle->adBoundsMin[0] = 115.472881;
-		////pshpHandle->adBoundsMin[1] = 39.032912;
-		////pshpHandle->adBoundsMin[2] = 0;
-		////pshpHandle->adBoundsMin[3] = 0;
-		////pshpHandle->adBoundsMax[0] = 117.614216;
-		////pshpHandle->adBoundsMax[1] = 40.954599;
-		////pshpHandle->adBoundsMax[2] = 0;
-		////pshpHandle->adBoundsMax[3] = 0;
-
-		//pdbfHandle = ::DBFCreate(dbf_path);
-		//if(pdbfHandle==NULL)
-		//{
-		//	::SHPClose(pshpHandle);
-		//	return NULL;
-		//}
-
-		//int ret = 0;
-		//const char* fname = NULL;
-		//augeFieldType ftype;
-		//DBFFieldType  dbf_type;
-		//g_int nfield = pFields->Count();
-		//for(g_int i=0; i<nfield; i++)
-		//{
-		//	pField = pFields->GetField(i);
-		//	if(pField->GetType()==augeFieldTypeGeometry)
-		//	{
-		//		continue;
-		//	}
-		//	fname = pField->GetName();
-		//	if(!strcmp(fname, "gid"))
-		//	{
-		//		continue;
-		//	}
-
-		//	dbf_type = GetDbfType(pField->GetType());
-
-		//	if(dbf_type==FTDouble)
-		//		ret = ::DBFAddField(pdbfHandle, pField->GetName(), dbf_type, pField->GetLength(), pField->GetPrecision());
-		//	else
-		//		ret = ::DBFAddField(pdbfHandle, pField->GetName(), dbf_type, pField->GetLength(), 0);
-		//}
-		//::DBFFlush(pdbfHandle);
-
-		//FeatureClassByd* pFeatureClass = new FeatureClassByd();
-		//pFeatureClass->Create(name, this, pshpHandle, pdbfHandle);
-
-		//return pFeatureClass;
-
-		return NULL;
+		return OpenFeatureClass(name);
 	}
 
 	RESULTCODE WorkspaceByd::RemoveFeatureClass(const char* name)
@@ -260,5 +200,64 @@ namespace auge
 	EnumDataSet* WorkspaceByd::GetFeatureClasses()
 	{
 		return NULL;
+	}
+
+	RESULTCODE WorkspaceByd::ExecuteSQL(const char* sql)
+	{
+		if(sql==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		CPPIStatus status = CS_OK;
+		CPPIStatement* stmt = m_pbydConnction->CreateStatement();
+		status = stmt->ExecuteSQL(sql);
+
+		if(status!=CS_OK)
+		{
+			CPPIString msg = m_pbydConnction->GetErrorMessage()->GetErrorString();
+
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			m_pbydConnction->CloseStatement(stmt);
+			return AG_FAILURE;
+		}
+
+		status = m_pbydConnction->Commit();
+		if(status!=CS_OK)
+		{
+			CPPIString msg = m_pbydConnction->GetErrorMessage()->GetErrorString();
+
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			m_pbydConnction->CloseStatement(stmt);
+			return AG_FAILURE;
+		}
+		m_pbydConnction->CloseStatement(stmt);
+
+		return AG_SUCCESS;
+	}
+
+	bool WorkspaceByd::CreateSequence(const char* name)
+	{
+		std::string sql;
+		SQLBuilder::BuildCreateSequence(sql, name);
+
+		RESULTCODE rc = ExecuteSQL(sql.c_str());
+		return (rc==AG_SUCCESS);
+	}
+
+	bool WorkspaceByd::CreateTable(const char* name, GFields* pFields)
+	{
+		std::string sql;
+		SQLBuilder::BuildCreateTable(sql, name, pFields);
+
+		RESULTCODE rc = ExecuteSQL(sql.c_str());
+		return (rc==AG_SUCCESS);
 	}
 }

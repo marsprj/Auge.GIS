@@ -9,8 +9,8 @@
 class BydTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(BydTest);
-	CPPUNIT_TEST(ReadTest);
-//	CPPUNIT_TEST(QueryExent);
+//	CPPUNIT_TEST(ReadTest);
+	CPPUNIT_TEST(QueryExent);
 //	CPPUNIT_TEST(QueryBinaryComparision);
 //	CPPUNIT_TEST(QueryBetween);
 //	CPPUNIT_TEST(QueryBetween_2);

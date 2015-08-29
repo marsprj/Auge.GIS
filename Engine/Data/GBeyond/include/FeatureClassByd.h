@@ -14,6 +14,10 @@ namespace auge
 	
 	class FeatureClassByd : public FeatureClass
 	{
+		friend class FeatureByd;
+		friend class FeatureCursorByd;
+		friend class SQLBuilder;
+
 	public:
 		FeatureClassByd();
 		virtual ~FeatureClassByd();

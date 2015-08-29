@@ -8,8 +8,9 @@ CPPUNIT_TEST_SUITE_REGISTRATION(BydTest);
 
 void BydTest::setUp() 
 {
-	//const char* path = "SERVER=127.0.0.1;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
-	const char* path = "SERVER=192.168.111.151;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
+	const char* path = "SERVER=127.0.0.1;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
+	//const char* path = "SERVER=192.168.111.150;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
+	//const char* path = "SERVER=192.168.111.151;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
 
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
 	pLogger->Initialize();
@@ -38,6 +39,7 @@ void BydTest::ReadTest()
 {
 	auge::FeatureClass* pFeatureClass = NULL;
 	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	//pFeatureClass = m_pWorkspace->OpenFeatureClass("rivers");
 	//pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi");
 	//pFeatureClass = m_pWorkspace->OpenFeatureClass("高等院校");
 	CPPUNIT_ASSERT(pFeatureClass!=NULL);
@@ -48,15 +50,21 @@ void BydTest::ReadTest()
 	pCursor = pFeatureClass->Query();
 	CPPUNIT_ASSERT(pCursor!=NULL);
 
+	char str[AUGE_PATH_MAX];
+
 	int counter = 1;
 	g_uchar* wkb = NULL;
 	auge::Geometry	*pGeometry = NULL;
 	auge::Feature	*pFeature = NULL;
 	while((pFeature=pCursor->NextFeature())!=NULL)
 	{	
-		printf("\r%d", counter++);
+		//printf("\r%d", counter++);
+		//printf("[%d]\n", pFeature->GetFID());
+		sprintf(str, "%f", pFeature->GetFloat("cities_id"));
+		printf("[%d]:%s\n", pFeature->GetFID(), pFeature->GetString("name"));
 		//float val = pFeature->GetFloat("co");
 		pGeometry = pFeature->GetGeometry();
+		printf("%s\n", pGeometry->AsText());
 		//wkb = pGeometry->AsBinary();
 
 		//printf("[Name]:%s\n", pFeature->GetString("name"));
@@ -70,8 +78,6 @@ void BydTest::ReadTest()
 
 	AUGE_SAFE_RELEASE(pCursor);
 	AUGE_SAFE_RELEASE(pFeatureClass);
-
-	
 }
 
 void BydTest::QueryExent()

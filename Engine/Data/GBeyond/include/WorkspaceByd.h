@@ -12,6 +12,7 @@ namespace auge
 	class WorkspaceByd : public FeatureWorkspace
 	{
 		friend class FeatureClassByd;
+		friend class FeatureCursorByd;
 
 	public:
 		WorkspaceByd();
@@ -39,6 +40,12 @@ namespace auge
 		virtual	FeatureClass*	OpenFeatureClass(const char* name);
 		virtual FeatureClass*	CreateFeatureClass(const char* name, GFields* pFields);
 		virtual RESULTCODE		RemoveFeatureClass(const char* name);
+
+
+	private:
+		RESULTCODE	ExecuteSQL(const char* sql);
+		bool		CreateSequence(const char* name);
+		bool		CreateTable(const char* name, GFields* pFields);
 
 	private:
 		CPPIEnvironment*		m_pbydEnvironment;

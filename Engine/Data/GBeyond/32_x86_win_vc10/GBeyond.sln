@@ -10,6 +10,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "..\test\test.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GPostgres", "..\..\GPostgres\32_x86_win_vc10\GPostgres.vcxproj", "{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shp2byd", "..\shp2byd\shp2byd.vcxproj", "{96812420-A725-42C6-9FD0-74BE811B1CE7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{04DA4924-594B-4A93-801F-F260E486F28D} = {04DA4924-594B-4A93-801F-F260E486F28D}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -28,6 +33,10 @@ Global
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Debug|Win32.Build.0 = Debug|Win32
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Release|Win32.ActiveCfg = Release|Win32
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Release|Win32.Build.0 = Release|Win32
+		{96812420-A725-42C6-9FD0-74BE811B1CE7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{96812420-A725-42C6-9FD0-74BE811B1CE7}.Debug|Win32.Build.0 = Debug|Win32
+		{96812420-A725-42C6-9FD0-74BE811B1CE7}.Release|Win32.ActiveCfg = Release|Win32
+		{96812420-A725-42C6-9FD0-74BE811B1CE7}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

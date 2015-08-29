@@ -1,4 +1,5 @@
 #include "FeatureClassByd.h"
+#include "FeatureCursorByd.h"
 #include "WorkspaceByd.h"
 #include "AugeField.h"
 
@@ -23,7 +24,7 @@ namespace auge
 
 	const char*	FeatureClassByd::GetName()
 	{
-		return NULL;
+		return m_name.c_str();
 	}
 
 	augeDataSetType FeatureClassByd::GetType()
@@ -88,22 +89,31 @@ namespace auge
 
 	FeatureCursor* FeatureClassByd::Query(augeCursorType type/*=augeStaticCursor*/)
 	{
-		return NULL;
+		FeatureCursorByd* pCursor = new FeatureCursorByd();
+		pCursor->Create(this);
+
+		return pCursor;
 	}
 
 	FeatureCursor* FeatureClassByd::Query(GEnvelope& extent, augeCursorType type/*=augeStaticCursor*/)
 	{
-		return NULL;
+		FeatureCursorByd* pCursor = new FeatureCursorByd();
+		pCursor->Create(this, extent);
+		return pCursor;
 	}
 
 	FeatureCursor* FeatureClassByd::Query(GFilter* pFilter, augeCursorType type/*=augeStaticCursor*/)
 	{
-		return NULL;
+		FeatureCursorByd* pCursor = new FeatureCursorByd();
+		pCursor->Create(this, pFilter);
+		return pCursor;
 	}
 
 	FeatureCursor* FeatureClassByd::Query(GQuery* pQuery, augeCursorType type/*=augeStaticCursor*/)
 	{
-		return NULL;
+		FeatureCursorByd* pCursor = new FeatureCursorByd();
+		pCursor->Create(this, pQuery);
+		return pCursor;
 	}
 
 	EnumValue* FeatureClassByd::GetUniqueValue(const char* field, augeOrderType order/*=augeOrderAsc*/)
@@ -141,7 +151,10 @@ namespace auge
 		m_name = name;
 		m_pWorkspace = pWorkspace;
 
-		GetGeometryMeta();
+		if(!GetGeometryMeta())
+		{
+			return false;
+		}
 
 		return true;
 	}
@@ -176,6 +189,13 @@ namespace auge
 		}
 
 		CPPIStatus status = rst->Next();
+		if(status!=CS_OK)
+		{
+			stmt->CloseResultSet(rst);
+			conn->CloseStatement(stmt);
+
+			return false;
+		}
 		row = rst->GetRow();
 		if(row!=NULL)
 		{
