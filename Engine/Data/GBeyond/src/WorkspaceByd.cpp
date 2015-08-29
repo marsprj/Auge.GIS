@@ -1,7 +1,7 @@
 #include "WorkspaceByd.h"
 #include "AugeCore.h"
 #include "DataEngineImpl.h"
-//#include "FeatureClassShp.h"
+#include "FeatureClassByd.h"
 
 namespace auge
 {	
@@ -63,8 +63,56 @@ namespace auge
 
 	RESULTCODE WorkspaceByd::Open()
 	{
-		GError* pError = augeGetErrorInstance();
+		const char* szServer   = m_props.GetValue(AUGE_DB_SERVER);
+		const char* szInstance = m_props.GetValue(AUGE_DB_INSTANCE);
+		const char* szDatabase = m_props.GetValue(AUGE_DB_DATABASE);
+		const char* szUser     = m_props.GetValue(AUGE_DB_USER);
+		const char* szPassword = m_props.GetValue(AUGE_DB_PASSWORD);
 
+		if(szServer==NULL||szDatabase==NULL||szUser==NULL||szPassword==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		m_pbydEnvironment = CPPIEnvironment::CreateEnvironment();
+		if(m_pbydEnvironment==NULL)
+		{
+			const char* msg = "Create BeyonDB CPPI Access Environment Failed!";
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return AG_FAILURE;
+		}
+
+		m_pbydConnction = m_pbydEnvironment->CreateConnection(szServer,szInstance,szDatabase,szUser,szPassword);
+		if(m_pbydConnction==NULL)
+		{
+			CPPIString msg = m_pbydConnction->GetErrorMessage()->GetErrorString();
+			
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			CPPIEnvironment::TerminateEnvironment(m_pbydEnvironment);
+			m_pbydEnvironment = NULL;
+
+			return AG_FAILURE;
+		}
+
+		CPPIStatus status = m_pbydConnction->Connect();
+		if(status!=CS_OK)
+		{
+			CPPIString msg = m_pbydConnction->GetErrorMessage()->GetErrorString();
+
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			CPPIEnvironment::TerminateEnvironment(m_pbydEnvironment);
+			m_pbydEnvironment = NULL;
+
+			return AG_FAILURE;
+		}
 
 		return AG_SUCCESS;
 	}
@@ -80,7 +128,11 @@ namespace auge
 
 	bool WorkspaceByd::IsOpen()
 	{
-		return true;
+		if(m_pbydConnction==NULL)
+		{
+			return false;
+		}
+		return m_pbydConnction->IsOpen();
 	}
 
 	GConnection* WorkspaceByd::GetConnection()
@@ -100,21 +152,19 @@ namespace auge
 
 	FeatureClass* WorkspaceByd::OpenFeatureClass(const char* name)
 	{
-		//if(name==NULL)
-		//{
-		//	return NULL;
-		//}
+		if(name==NULL)
+		{
+			return NULL;
+		}
 
-		//FeatureClassShp* pFeatureClass = new FeatureClassShp();
-		//if(!pFeatureClass->Create(name, this))
-		//{
-		//	pFeatureClass->Release();
-		//	pFeatureClass = NULL;
-		//}
+		FeatureClassByd* pFeatureClass = new FeatureClassByd();
+		if(!pFeatureClass->Create(name, this))
+		{
+			pFeatureClass->Release();
+			pFeatureClass = NULL;
+		}
 
-		//return pFeatureClass;
-
-		return NULL;
+		return pFeatureClass;
 	}
 
 	FeatureClass* WorkspaceByd::CreateFeatureClass(const char* name, GFields* pFields)
@@ -189,7 +239,7 @@ namespace auge
 		//}
 		//::DBFFlush(pdbfHandle);
 
-		//FeatureClassShp* pFeatureClass = new FeatureClassShp();
+		//FeatureClassByd* pFeatureClass = new FeatureClassByd();
 		//pFeatureClass->Create(name, this, pshpHandle, pdbfHandle);
 
 		//return pFeatureClass;

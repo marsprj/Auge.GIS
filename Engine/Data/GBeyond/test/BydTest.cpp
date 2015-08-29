@@ -8,11 +8,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(BydTest);
 
 void BydTest::setUp() 
 {
-	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=GISDB;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gaode;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	//const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	//const char* path = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	//const char* path = "SERVER=127.0.0.1;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
+	const char* path = "SERVER=192.168.111.151;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
 
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
 	pLogger->Initialize();
@@ -40,10 +37,12 @@ void BydTest::tearDown()
 void BydTest::ReadTest()
 {
 	auge::FeatureClass* pFeatureClass = NULL;
-	//pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
-	pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi");
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	//pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi");
 	//pFeatureClass = m_pWorkspace->OpenFeatureClass("高等院校");
 	CPPUNIT_ASSERT(pFeatureClass!=NULL);
+
+	auge::GFields* pFields = pFeatureClass->GetFields();
 
 	auge::FeatureCursor* pCursor = NULL;
 	pCursor = pFeatureClass->Query();

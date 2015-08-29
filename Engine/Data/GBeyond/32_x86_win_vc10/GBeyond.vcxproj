@@ -84,10 +84,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\DataEngineImpl.h" />
+    <ClInclude Include="..\include\FeatureClassByd.h" />
     <ClInclude Include="..\include\WorkspaceByd.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DataEngineImpl.cpp" />
+    <ClCompile Include="..\src\FeatureClassByd.cpp" />
     <ClCompile Include="..\src\WorkspaceByd.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

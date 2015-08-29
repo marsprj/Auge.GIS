@@ -21,12 +21,18 @@
     <ClInclude Include="..\include\WorkspaceByd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\FeatureClassByd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DataEngineImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\WorkspaceByd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\FeatureClassByd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

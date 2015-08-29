@@ -2,7 +2,7 @@
 #include <cppunit/ui/text/TestRunner.h>
 #include <cppunit/TestResult.h>
 
-#pragma comment(lib, "GPostgresD.lib")
+#pragma comment(lib, "GBeyondD.lib")
 
 int main()
 {

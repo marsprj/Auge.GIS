@@ -6,11 +6,11 @@
 
 namespace auge
 {
-	class DataEnginePgs : public DataEngine
+	class DataEngineByd : public DataEngine
 	{
 	public:
-		DataEnginePgs();
-		virtual ~DataEnginePgs();
+		DataEngineByd();
+		virtual ~DataEngineByd();
 	public:
 		virtual const char*			GetID();
 		virtual const char*			GetDescription();

@@ -1,57 +1,58 @@
 #include "DataEngineImpl.h"
+#include "WorkspaceByd.h"
 
 namespace auge
 {
 	DataEngine* augeGetDataEngineInstance()
 	{
-		static DataEnginePgs g_bydEngine;
+		static DataEngineByd g_bydEngine;
 		return &g_bydEngine;
 	}
 
-	DataEnginePgs::DataEnginePgs():
+	DataEngineByd::DataEngineByd():
 	m_handler(NULL)
 	{
 		
 	}
 
-	DataEnginePgs::~DataEnginePgs()
+	DataEngineByd::~DataEngineByd()
 	{
 
 	}
 
-	const char*	DataEnginePgs::GetID()
+	const char*	DataEngineByd::GetID()
 	{
 		return "Beyond";
 	}
 
-	const char*	DataEnginePgs::GetDescription()
+	const char*	DataEngineByd::GetDescription()
 	{
 		return "Beyond Data Engine";
 	}
 
 
-	const char*	DataEnginePgs::GetLibraryPath()
+	const char*	DataEngineByd::GetLibraryPath()
 	{
 		return m_path.c_str();
 	}
 
-	void* DataEnginePgs::GetHandler()
+	void* DataEngineByd::GetHandler()
 	{
 		return m_handler;
 	}
 
-	void DataEnginePgs::SetHandler(void* handler)
+	void DataEngineByd::SetHandler(void* handler)
 	{
 		m_handler = handler;
 	}
 
-	GConnection* DataEnginePgs::CreateConnection()
+	GConnection* DataEngineByd::CreateConnection()
 	{
 		return NULL;//return (new ConnectionPgs());
 	}
 
-	Workspace* DataEnginePgs::CreateWorkspace()
+	Workspace* DataEngineByd::CreateWorkspace()
 	{
-		return NULL;//return (new WorkspacePgs());
+		return (new WorkspaceByd());
 	}
 }

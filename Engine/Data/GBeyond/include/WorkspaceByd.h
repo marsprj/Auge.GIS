@@ -11,7 +11,7 @@ namespace auge
 {
 	class WorkspaceByd : public FeatureWorkspace
 	{
-		friend class FeatureClassShp;
+		friend class FeatureClassByd;
 
 	public:
 		WorkspaceByd();

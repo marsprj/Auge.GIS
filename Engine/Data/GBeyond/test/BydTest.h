@@ -9,7 +9,7 @@
 class BydTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(BydTest);
-//	CPPUNIT_TEST(ReadTest);
+	CPPUNIT_TEST(ReadTest);
 //	CPPUNIT_TEST(QueryExent);
 //	CPPUNIT_TEST(QueryBinaryComparision);
 //	CPPUNIT_TEST(QueryBetween);
@@ -21,7 +21,7 @@ class BydTest : public CppUnit::TestFixture
 //	CPPUNIT_TEST(GetNullValue);
 //	CPPUNIT_TEST(GetAQI);
 //	CPPUNIT_TEST(GetAQIQuery);
-	CPPUNIT_TEST(RefreshFeatureClass);
+//	CPPUNIT_TEST(RefreshFeatureClass);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
