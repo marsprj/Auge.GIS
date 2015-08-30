@@ -204,7 +204,9 @@ namespace auge
 	{
 		Raster* poutRaster = NULL;
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
-		poutRaster = pRasterFactory->CreateRaster("", augePixelDouble, pinRaster->GetExtent(), pinRaster);
+		//virtual Raster*			CreateRaster(const char* name, augePixelType pixelType, g_uint bands, GEnvelope& extent, g_uint width, g_uint height, const char*  spatialRef) = 0;
+		//poutRaster = pRasterFactory->CreateRaster("", augePixelDouble, pinRaster->GetExtent(), pinRaster);
+		poutRaster = pRasterFactory->CreateRaster("", augePixelDouble, 1, pinRaster->GetExtent(), pinRaster->GetWidth(), pinRaster->GetHeight(), pinRaster->GetSpatialReference());
 		if(poutRaster==NULL)
 		{
 			return NULL;
@@ -337,9 +339,11 @@ namespace auge
 			ptr_0 += 2;
 			ptr_1 += 2;
 			ptr_2 += 2;
-			ptr  += 2;
-		
+			ptr  += 2;		
 		}
+
+		double p_0_0, p_0_1, p_0_2;
+		double p_1_0, p_1_1, p_1_2;
 		
 		poutBand->SetData(output);
 		free(output);

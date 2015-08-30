@@ -216,6 +216,58 @@ namespace auge
 		return poutRaster;
 	}
 
+	Raster* RasterFactoryImpl::CreateRaster(const char* name, augePixelType pixelType, g_uint bands, GEnvelope& extent, g_uint width, g_uint height, const char*  spatialRef)
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+		if(!extent.IsValid())
+		{
+			return NULL;
+		}
+		if(pixelType==augePixelUnknown)
+		{
+			return NULL;
+		}
+
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		g_uint r_width = width;
+		g_uint r_height= height;
+		GDALDataType g_pixelType =  (GDALDataType)pixelType;
+
+		// Create Dataset in memory
+		GDALDriver* pmemDriver  = NULL;
+		pmemDriver = GetGDALDriverManager()->GetDriverByName("MEM");
+		GDALDataset* pmemDataset = NULL;
+		pmemDataset = pmemDriver->Create("", r_width, r_height, bands, g_pixelType, NULL);
+		if(pmemDataset==NULL)
+		{
+			const char* msg = CPLGetLastErrorMsg();			
+			pError->SetError(msg);
+			pLogger->Error(msg,__FILE__,__LINE__);
+
+			return NULL;
+		}
+		// GeoTransform
+		double adfGeoTransform[6];
+		adfGeoTransform[0] = extent.m_xmin;							/* top left x */
+		adfGeoTransform[1] = extent.GetWidth() / r_width;			/* w-e pixel resolution */
+		adfGeoTransform[2] = 0;										/* 0 */
+		adfGeoTransform[3] = extent.m_ymax;							/* top left y */
+		adfGeoTransform[4] = 0;										/* 0 */
+		adfGeoTransform[5] =-extent.GetHeight() / r_height;			/* n-s pixel resolution (negative value) */
+		pmemDataset->SetGeoTransform(adfGeoTransform);
+		// spatial reference
+		pmemDataset->SetProjection(spatialRef);
+
+		RasterImpl* poutRaster = new RasterImpl();
+		poutRaster->Create(name, pmemDataset);
+		return poutRaster;
+	}
+
 	Raster*	RasterFactoryImpl::CreateRaster(const char* name, const char* alias, const char* format, const char* path, g_uint bands, g_int srid, g_uint width, g_uint height, double xmin, double ymin, double xmax, double ymax, const char* uuid)
 	{
 		RasterImpl* pRaster = new RasterImpl();

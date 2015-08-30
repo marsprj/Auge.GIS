@@ -682,13 +682,33 @@ namespace auge
 	/**
 	 * DemAspectProcessor
 	 *
-	 * DEMÆÂ¶È
+	 * DEMÆÂÏò
 	 */
 	class DemAspectProcessor : public GProcessor
 	{
 	protected:
 		DemAspectProcessor(){}
 		virtual ~DemAspectProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+	};
+
+	/**
+	 * DemHillshadeProcessor
+	 *
+	 * DEMÆÂÏò
+	 */
+	class DemHillshadeProcessor : public GProcessor
+	{
+	protected:
+		DemHillshadeProcessor(){}
+		virtual ~DemHillshadeProcessor(){}
 	public:
 		virtual void		SetInputDataSource(const char* sourceName) = 0;
 		virtual void		SetInputRaster(const char* rasterName) = 0;
@@ -807,6 +827,7 @@ namespace auge
 		// DEM
 		virtual DemSlopeProcessor*					CreateDemSlopeProcessor() = 0;
 		virtual DemAspectProcessor*					CreateDemAspectProcessor() = 0;
+		virtual DemHillshadeProcessor*				CreateDemHillshadePrcessor() = 0;
 	};
 	
 	extern "C"

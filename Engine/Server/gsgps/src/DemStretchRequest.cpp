@@ -1,42 +1,43 @@
-#include "DemAspectRequest.h"
+#include "DemStretchRequest.h"
 #include "AugeFilter.h"
 
 namespace auge
 {
-	std::string DemAspectRequest::DEFAULT_HOST   = "127.0.0.1";
-	std::string DemAspectRequest::DEFAULT_METHOD = "gps";
+	std::string DemStretchRequest::DEFAULT_HOST   = "127.0.0.1";
+	std::string DemStretchRequest::DEFAULT_METHOD = "gps";
 
-	DemAspectRequest::DemAspectRequest():
+	DemStretchRequest::DemStretchRequest():
 	m_version("1.0.0"),
 	m_mime_type("text/xml"),
 	m_encoding(AUGE_DEFAULT_ENCODING),
 	m_host(DEFAULT_HOST),
 	m_request_method(DEFAULT_METHOD)
 	{
-
+		m_start_color.Set(0,0,0,255);
+		m_start_color.Set(255,255,255,255);
 	}
 
-	DemAspectRequest::~DemAspectRequest()
+	DemStretchRequest::~DemStretchRequest()
 	{
 		
 	}
 
-	const char*	DemAspectRequest::GetEngine()
+	const char*	DemStretchRequest::GetEngine()
 	{
 		return "gps";
 	}
 
-	const char*	DemAspectRequest::GetVersion()
+	const char*	DemStretchRequest::GetVersion()
 	{
 		return m_version.c_str();
 	}
 
-	const char*	DemAspectRequest::GetRequest()
+	const char*	DemStretchRequest::GetRequest()
 	{
-		return "DemAspect";
+		return "DemStretch";
 	}
 
-	void DemAspectRequest::SetVersion(const char* value)
+	void DemStretchRequest::SetVersion(const char* value)
 	{
 		if(value==NULL)
 		{
@@ -45,12 +46,12 @@ namespace auge
 		m_version = value;
 	}
 
-	const char*	DemAspectRequest::GetMimeType()
+	const char*	DemStretchRequest::GetMimeType()
 	{
 		return m_mime_type.c_str();
 	}
 
-	bool DemAspectRequest::Create(rude::CGI& cgi)
+	bool DemStretchRequest::Create(rude::CGI& cgi)
 	{
 		const char* val = NULL;
 		SetVersion(cgi["version"]);
@@ -63,6 +64,9 @@ namespace auge
 		SetOutputRaster(cgi["outputRasterName"]);
 		SetOutputDataSource(cgi["outputSourceName"]);
 		SetOutputPath(cgi["outputPath"]);
+
+		//SetStartColor(cgi["startColor"]);
+		//SetEndColor(cgi["endColor"]);
 
 		return true;
 	}
@@ -80,7 +84,7 @@ namespace auge
   </Output>
 </RasterExtractByRectange>
 ************************************************************************/
-	bool DemAspectRequest::Create(XDocument* pxDoc)
+	bool DemStretchRequest::Create(XDocument* pxDoc)
 	{
 		XElement	*pxRoot = NULL;
 		XAttribute	*pxAttr = NULL;
@@ -139,12 +143,12 @@ namespace auge
 	}
 
 
-	const char*	DemAspectRequest::GetEncoding()
+	const char*	DemStretchRequest::GetEncoding()
 	{
 		return m_encoding.c_str();
 	}
 
-	void DemAspectRequest::SetUser(const char* user)
+	void DemStretchRequest::SetUser(const char* user)
 	{
 		if(user==NULL)
 		{
@@ -156,12 +160,12 @@ namespace auge
 		}
 	}
 
-	const char* DemAspectRequest::GetUser()
+	const char* DemStretchRequest::GetUser()
 	{
 		return m_user.c_str();
 	}
 
-	void DemAspectRequest::SetRequestMethod(const char* method)
+	void DemStretchRequest::SetRequestMethod(const char* method)
 	{
 		if(method==NULL)
 		{
@@ -177,7 +181,7 @@ namespace auge
 		}
 	}
 
-	void DemAspectRequest::SetHost(const char* host)
+	void DemStretchRequest::SetHost(const char* host)
 	{
 		if(host==NULL)
 		{
@@ -193,17 +197,17 @@ namespace auge
 		}
 	}
 
-	const char* DemAspectRequest::GetRequestMethod()
+	const char* DemStretchRequest::GetRequestMethod()
 	{
 		return m_request_method.c_str();
 	}
 
-	const char* DemAspectRequest::GetHost()
+	const char* DemStretchRequest::GetHost()
 	{
 		return m_host.c_str();
 	}
 
-	void DemAspectRequest::SetInputDataSource(const char* sourceName)
+	void DemStretchRequest::SetInputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -215,7 +219,7 @@ namespace auge
 		}
 	}
 
-	void DemAspectRequest::SetInputRaster(const char* rasterName)
+	void DemStretchRequest::SetInputRaster(const char* rasterName)
 	{
 		if(rasterName==NULL)
 		{
@@ -227,7 +231,7 @@ namespace auge
 		}
 	}
 
-	void DemAspectRequest::SetInputPath(const char* rasterPath)
+	void DemStretchRequest::SetInputPath(const char* rasterPath)
 	{
 		if(rasterPath==NULL)
 		{
@@ -246,7 +250,8 @@ namespace auge
 		}
 	}
 
-	void DemAspectRequest::SetOutputDataSource(const char* sourceName)
+
+	void DemStretchRequest::SetOutputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -258,7 +263,7 @@ namespace auge
 		}
 	}
 
-	void DemAspectRequest::SetOutputRaster(const char* rasterName)
+	void DemStretchRequest::SetOutputRaster(const char* rasterName)
 	{
 		if(rasterName==NULL)
 		{
@@ -270,7 +275,7 @@ namespace auge
 		}
 	}
 
-	void DemAspectRequest::SetOutputPath(const char* rasterPath)
+	void DemStretchRequest::SetOutputPath(const char* rasterPath)
 	{
 		if(rasterPath==NULL)
 		{
@@ -288,39 +293,38 @@ namespace auge
 			}
 		}
 	}
-
-	const char*	DemAspectRequest::GetInputDataSource()
+	
+	const char*	DemStretchRequest::GetInputDataSource()
 	{
 		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
 	}
 
-	const char*	DemAspectRequest::GetInputRaster()
+	const char*	DemStretchRequest::GetInputRaster()
 	{
 		return m_in_raster_name.empty() ? NULL : m_in_raster_name.c_str();
 	}
 
-	const char* DemAspectRequest::GetInputPath()
+	const char* DemStretchRequest::GetInputPath()
 	{
 		return m_in_raster_path.empty() ? NULL : m_in_raster_path.c_str();
 	}
 
-	const char*	DemAspectRequest::GetOutputDataSource()
+	const char*	DemStretchRequest::GetOutputDataSource()
 	{
 		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
 	}
 
-	const char*	DemAspectRequest::GetOutputRaster()
+	const char*	DemStretchRequest::GetOutputRaster()
 	{
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
 	}
 
-	const char* DemAspectRequest::GetOutputPath()
+	const char* DemStretchRequest::GetOutputPath()
 	{
 		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
 	}
 
-
-	void DemAspectRequest::SetOutputFormat(const char* format)
+	void DemStretchRequest::SetOutputFormat(const char* format)
 	{
 		if(format==NULL)
 		{
@@ -332,12 +336,70 @@ namespace auge
 		}
 	}
 
-	//const char* DemAspectRequest::GetOutputFormat()
+	void DemStretchRequest::SetStartColor(const char* value)
+	{
+		if(value==NULL)
+		{
+			return;
+		}
+		size_t size = strlen(value);
+		if(!size)
+		{
+			return;
+		}
+		if(value[0]!='#')
+		{
+			return;
+		}
+		if(size!=7)
+		{
+			return;
+		}
+		int r=0,g=0,b=0;
+		sscanf(value, "#%2x%2x%2x", &r,&g,&b);
+		m_start_color.Set(r,g,b,255);
+	}
+
+	void DemStretchRequest::SetEndColor(const char* value)
+	{
+		if(value==NULL)
+		{
+			return;
+		}
+		size_t size = strlen(value);
+		if(!size)
+		{
+			return;
+		}
+		if(value[0]!='#')
+		{
+			return;
+		}
+		if(size!=7)
+		{
+			return;
+		}
+		int r=0,g=0,b=0;
+		sscanf(value, "#%2x%2x%2x", &r,&g,&b);
+		m_end_color.Set(r,g,b,255);
+	}
+
+	//GColor&	DemStretchRequest::GetStartColor()
+	//{
+	//	return m_start_color;
+	//}
+
+	//GColor&	DemStretchRequest::GetEndColor()
+	//{
+	//	return m_end_color;
+	//}
+
+	//const char* DemStretchRequest::GetOutputFormat()
 	//{
 	//	return m_output_format.c_str();
 	//}
 	
-	void DemAspectRequest::Info()
+	void DemStretchRequest::Info()
 	{
 		GLogger* pLogger = augeGetLoggerInstance();
 		char str[AUGE_MSG_MAX];

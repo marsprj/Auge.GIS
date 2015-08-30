@@ -1,4 +1,4 @@
-#include "DemAspectProcessorImpl.h"
+#include "DemHillshadeProcessorImpl.h"
 #include "AugeData.h"
 #include "AugeRaster.h"
 #include "AugeUser.h"
@@ -7,19 +7,19 @@
 
 namespace auge
 {
-	DemAspectProcessorImpl::DemAspectProcessorImpl()
+	DemHillshadeProcessorImpl::DemHillshadeProcessorImpl()
 	{
 		m_user = 0;
 		m_in_raster_path = "/";
 		m_out_raster_path = "/";
 	}
 
-	DemAspectProcessorImpl::~DemAspectProcessorImpl()
+	DemHillshadeProcessorImpl::~DemHillshadeProcessorImpl()
 	{
 
 	}
 	
-	void DemAspectProcessorImpl::SetInputDataSource(const char* sourceName)
+	void DemHillshadeProcessorImpl::SetInputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -31,7 +31,7 @@ namespace auge
 		}
 	}
 
-	void DemAspectProcessorImpl::SetInputRaster(const char* rasterName)
+	void DemHillshadeProcessorImpl::SetInputRaster(const char* rasterName)
 	{
 		if(rasterName==NULL)
 		{
@@ -43,7 +43,7 @@ namespace auge
 		}
 	}
 
-	void DemAspectProcessorImpl::SetOutputDataSource(const char* sourceName)
+	void DemHillshadeProcessorImpl::SetOutputDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -55,7 +55,7 @@ namespace auge
 		}
 	}
 
-	void DemAspectProcessorImpl::SetOutputRaster(const char* rasterName)
+	void DemHillshadeProcessorImpl::SetOutputRaster(const char* rasterName)
 	{
 		if(rasterName==NULL)
 		{
@@ -67,27 +67,27 @@ namespace auge
 		}
 	}
 
-	const char*	DemAspectProcessorImpl::GetInputDataSource()
+	const char*	DemHillshadeProcessorImpl::GetInputDataSource()
 	{
 		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
 	}
 
-	const char*	DemAspectProcessorImpl::GetInputRaster()
+	const char*	DemHillshadeProcessorImpl::GetInputRaster()
 	{
 		return m_in_raster_name.empty() ? NULL : m_in_raster_name.c_str();
 	}
 
-	const char*	DemAspectProcessorImpl::GetOutputDataSource()
+	const char*	DemHillshadeProcessorImpl::GetOutputDataSource()
 	{
 		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
 	}
 
-	const char*	DemAspectProcessorImpl::GetOutputRaster()
+	const char*	DemHillshadeProcessorImpl::GetOutputRaster()
 	{
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
 	}
 
-	void DemAspectProcessorImpl::SetInputPath(const char* rasterPath)
+	void DemHillshadeProcessorImpl::SetInputPath(const char* rasterPath)
 	{
 		if(rasterPath==NULL)
 		{
@@ -99,7 +99,7 @@ namespace auge
 		}
 	}
 
-	void DemAspectProcessorImpl::SetOutputPath(const char* rasterPath)
+	void DemHillshadeProcessorImpl::SetOutputPath(const char* rasterPath)
 	{
 		if(rasterPath==NULL)
 		{
@@ -111,17 +111,17 @@ namespace auge
 		}
 	}
 
-	const char* DemAspectProcessorImpl::GetInputRasterPath()
+	const char* DemHillshadeProcessorImpl::GetInputRasterPath()
 	{
 		return m_in_raster_path.empty() ? NULL : m_in_raster_path.c_str();
 	}
 
-	const char* DemAspectProcessorImpl::GetOutputRasterPath()
+	const char* DemHillshadeProcessorImpl::GetOutputRasterPath()
 	{
 		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
 	}
 
-	RESULTCODE DemAspectProcessorImpl::Execute()
+	RESULTCODE DemHillshadeProcessorImpl::Execute()
 	{
 		const char* inSourceName = GetInputDataSource();
 		const char* inRasterName = GetInputRaster();
@@ -185,21 +185,21 @@ namespace auge
 		return rc;
 	}
 
-	void DemAspectProcessorImpl::Release()
+	void DemHillshadeProcessorImpl::Release()
 	{
 		delete this;
 	}
 
-	void DemAspectProcessorImpl::SetUser(g_uint user)
+	void DemHillshadeProcessorImpl::SetUser(g_uint user)
 	{
 		m_user = user;
 	}
 
-	Raster* DemAspectProcessorImpl::Aspect(Raster* pinRaster)
+	Raster* DemHillshadeProcessorImpl::Aspect(Raster* pinRaster)
 	{
 		Raster* poutRaster = NULL;
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
-		poutRaster = pRasterFactory->CreateRaster("", augePixelDouble, 1, pinRaster->GetExtent(), pinRaster->GetWidth(), pinRaster->GetHeight(), pinRaster->GetSpatialReference());
+		poutRaster = pRasterFactory->CreateRaster("", pinRaster->GetExtent(), pinRaster);
 		if(poutRaster==NULL)
 		{
 			return NULL;
@@ -250,7 +250,7 @@ namespace auge
 		return poutRaster;
 	}
 
-	RESULTCODE DemAspectProcessorImpl::Aspect_Byte(RasterBand* pinBand, RasterBand* poutBand)
+	RESULTCODE DemHillshadeProcessorImpl::Aspect_Byte(RasterBand* pinBand, RasterBand* poutBand)
 	{
 		g_uint width = pinBand->GetWidth();
 		g_uint height= pinBand->GetHeight();
@@ -267,11 +267,11 @@ namespace auge
 		double reslution_y = pinBand->GetResolution_Y();
 
 		g_int64 size = width*height*sizeof(g_byte);
-		double* output = (double*)malloc(size*sizeof(double));
-		memset(output, 0, size*sizeof(double));
+		g_byte* output = (g_byte*)malloc(size);
+		memset(output, 0, size);
 
 		g_int sum = 0;
-		double* ptr = output + width + 1;
+		g_byte* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
@@ -294,7 +294,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE DemAspectProcessorImpl::Aspect_Short(RasterBand* pinBand, RasterBand* poutBand)
+	RESULTCODE DemHillshadeProcessorImpl::Aspect_Short(RasterBand* pinBand, RasterBand* poutBand)
 	{
 		g_uint width = pinBand->GetWidth();
 		g_uint height= pinBand->GetHeight();
@@ -304,51 +304,47 @@ namespace auge
 		short* ptr_0 = input + 1; 
 		short* ptr_1 = ptr_0 + width;
 		short* ptr_2 = ptr_1 + width;
-		short  v_min,v_max;
+		//short  v_min,v_max;
 		double slope_x, slope_y;
 		double aspect;
 		double radian;
-		double reslution_x = fabs(pinBand->GetResolution_X());
-		double reslution_y = fabs(pinBand->GetResolution_Y());
-		
-		double a1 = atan(1.0)*AUGE_RADIAN_TO_DEGREE;
-		double a2 = atan(-1.0)*AUGE_RADIAN_TO_DEGREE;
+		double reslution_x = pinBand->GetResolution_X();
+		double reslution_y = pinBand->GetResolution_Y();
 
 		g_int64 size = width*height*sizeof(short);
-		double* output = (double*)malloc(size*sizeof(double));
-		memset(output, 0, size*sizeof(double));
-
+		short* output = (short*)malloc(size);
+		memset(output, 0, size);
+		
 		g_int sum = 0;
-		double* ptr = output + width + 1;
+		short* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
 			{
-				//slope_x = (ptr_1[-1] - ptr_1[1]) / (2 * reslution_x);
-				//slope_y = (ptr_2[ 0] - ptr_0[0]) / (2 * reslution_y);
-
 				slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
 				slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
 
-				aspect = atan(slope_y/slope_x)*AUGE_RADIAN_TO_DEGREE;
-				if(slope_x>0)
+				if(fabs(slope_x)<EPSLN||fabs(slope_y)<EPSLN)
 				{
-					aspect += 270.0;
+					aspect = 0;
 				}
 				else
 				{
-					aspect += 90.0;
+					aspect =atan2(slope_y, -slope_x) / AUGE_RADIAN_TO_DEGREE; 
+					if(aspect<0)
+					{
+						//aspect += 360.0;
+					}
 				}
-				aspect = 360.0 - aspect;
 				*ptr = aspect;
 			}
 			ptr_0 += 2;
 			ptr_1 += 2;
 			ptr_2 += 2;
 			ptr  += 2;
-
+		
 		}
-
+		
 		poutBand->SetData(output);
 		free(output);
 
@@ -356,65 +352,7 @@ namespace auge
 	}
 
 
-	//RESULTCODE DemAspectProcessorImpl::Aspect_Short(RasterBand* pinBand, RasterBand* poutBand)
-	//{
-	//	g_uint width = pinBand->GetWidth();
-	//	g_uint height= pinBand->GetHeight();
-
-	//	short  v_h=0, v_v=0;
-	//	short* input = (short*)pinBand->GetData();
-	//	short* ptr_0 = input + 1; 
-	//	short* ptr_1 = ptr_0 + width;
-	//	short* ptr_2 = ptr_1 + width;
-	//	short  v_min,v_max;
-	//	double slope_x, slope_y;
-	//	double aspect;
-	//	double radian;
-	//	double reslution_x = pinBand->GetResolution_X();
-	//	double reslution_y = pinBand->GetResolution_Y();
-
-	//	g_int64 size = width*height*sizeof(short);
-	//	short* output = (short*)malloc(size);
-	//	memset(output, 0, size);
-	//	
-	//	g_int sum = 0;
-	//	short* ptr = output + width + 1;
-	//	for(g_uint i=1; i<height-1; i++)
-	//	{	
-	//		for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
-	//		{
-	//			slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
-	//			slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
-
-	//			if(fabs(slope_x)<EPSLN||fabs(slope_y)<EPSLN)
-	//			{
-	//				aspect = 0;
-	//			}
-	//			else
-	//			{
-	//				aspect =atan2(slope_y, -slope_x) / AUGE_RADIAN_TO_DEGREE; 
-	//				if(aspect<0)
-	//				{
-	//					//aspect += 360.0;
-	//				}
-	//			}
-	//			*ptr = aspect;
-	//		}
-	//		ptr_0 += 2;
-	//		ptr_1 += 2;
-	//		ptr_2 += 2;
-	//		ptr  += 2;
-	//	
-	//	}
-	//	
-	//	poutBand->SetData(output);
-	//	free(output);
-
-	//	return AG_SUCCESS;
-	//}
-
-
-	RESULTCODE DemAspectProcessorImpl::Aspect_Double(RasterBand* pinBand, RasterBand* poutBand)
+	RESULTCODE DemHillshadeProcessorImpl::Aspect_Double(RasterBand* pinBand, RasterBand* poutBand)
 	{
 		g_uint width = pinBand->GetWidth();
 		g_uint height= pinBand->GetHeight();
@@ -424,7 +362,7 @@ namespace auge
 		double* ptr_0 = input + 1; 
 		double* ptr_1 = ptr_0 + width;
 		double* ptr_2 = ptr_1 + width;
-		double  v_min,v_max;
+		//double  v_min,v_max;
 		double slope_x, slope_y;
 		double value;
 		double reslution_x = pinBand->GetResolution_X();

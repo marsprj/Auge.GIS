@@ -60,6 +60,7 @@ namespace auge
 		// DEM
 		virtual DemSlopeProcessor*					CreateDemSlopeProcessor();
 		virtual DemAspectProcessor*					CreateDemAspectProcessor();
+		virtual DemHillshadeProcessor*				CreateDemHillshadePrcessor();
 		
 	};
 }

@@ -23,6 +23,7 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(PenEffect);
 	//CPPUNIT_TEST(DEMSlope);
 	//CPPUNIT_TEST(DEMAspect);
+
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();

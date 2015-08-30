@@ -134,21 +134,24 @@ namespace auge
 			pxNode->SetAttribute("name",fname,NULL);
 
 			const char* fpath = pFolder->GetLocalPath();
+			if(!g_access(fpath,4))
+			{
 #ifdef WIN32
-			struct _stat fstat;
-			_stat(fpath, &fstat);
+				struct _stat fstat;
+				_stat(fpath, &fstat);
 #else
-			struct stat fstat;
-			stat(fpath, &fstat);
+				struct stat fstat;
+				stat(fpath, &fstat);
 #endif
-			//last access time
-			strftime(str,AUGE_NAME_MAX,"%Y-%m-%d %H:%M:%S", localtime((const time_t *)&(fstat.st_atime)));
-			pxNode->SetAttribute("access_time",str,NULL);
-			//pxNode->SetAttribute("access_time",ctime((const time_t *)&(f->fstat.st_atime)),NULL);
-			// last modified time
-			strftime(str,AUGE_NAME_MAX,"%Y-%m-%d %H:%M:%S", localtime((const time_t *)&(fstat.st_mtime)));
-			pxNode->SetAttribute("last_modified_time",str,NULL);
-			//pxNode->SetAttribute("last_modified_time",ctime((const time_t *)&(f->fstat.st_mtime)),NULL);
+				//last access time
+				strftime(str,AUGE_NAME_MAX,"%Y-%m-%d %H:%M:%S", localtime((const time_t *)&(fstat.st_atime)));
+				pxNode->SetAttribute("access_time",str,NULL);
+				//pxNode->SetAttribute("access_time",ctime((const time_t *)&(f->fstat.st_atime)),NULL);
+				// last modified time
+				strftime(str,AUGE_NAME_MAX,"%Y-%m-%d %H:%M:%S", localtime((const time_t *)&(fstat.st_mtime)));
+				pxNode->SetAttribute("last_modified_time",str,NULL);
+				//pxNode->SetAttribute("last_modified_time",ctime((const time_t *)&(f->fstat.st_mtime)),NULL);
+			}
 		}
 	}
 
