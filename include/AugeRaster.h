@@ -141,6 +141,7 @@ namespace auge
 	{
 		AUGE_RASTER_API RasterIO*		augeGetRasterIOInstance();
 		AUGE_RASTER_API	RasterFactory*	augeGetRasterFactoryInstance();
+		AUGE_RASTER_API g_uint			augeGetPixelSize(augePixelType type);
 	}
 }
 

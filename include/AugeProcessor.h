@@ -697,12 +697,13 @@ namespace auge
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
 	};
 
 	/**
 	 * DemHillshadeProcessor
 	 *
-	 * DEM坡向
+	 * DEM山体阴影
 	 */
 	class DemHillshadeProcessor : public GProcessor
 	{
@@ -717,6 +718,10 @@ namespace auge
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual void		SetAzimuth(float azimuth) = 0;		//太阳方位角
+		virtual void		SetZenith(float zenith) = 0;		//太阳高度角
+		virtual void		SetZFactor(float zscale) = 0;		//Z比例因子
 	};
 
 	//------------------------------------------------------------------------
@@ -827,7 +832,7 @@ namespace auge
 		// DEM
 		virtual DemSlopeProcessor*					CreateDemSlopeProcessor() = 0;
 		virtual DemAspectProcessor*					CreateDemAspectProcessor() = 0;
-		virtual DemHillshadeProcessor*				CreateDemHillshadePrcessor() = 0;
+		virtual DemHillshadeProcessor*				CreateDemHillshadeProcessor() = 0;
 	};
 	
 	extern "C"

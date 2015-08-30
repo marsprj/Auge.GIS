@@ -198,7 +198,7 @@ namespace auge
 		return (new DemAspectProcessorImpl());
 	}
 
-	DemHillshadeProcessor* GProcessorFactoryImpl::CreateDemHillshadePrcessor()
+	DemHillshadeProcessor* GProcessorFactoryImpl::CreateDemHillshadeProcessor()
 	{
 		return (new DemHillshadeProcessorImpl());
 	}

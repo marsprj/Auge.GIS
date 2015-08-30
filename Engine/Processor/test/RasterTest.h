@@ -17,12 +17,13 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(Subtract);
 	//CPPUNIT_TEST(PixelBlend);
 	//CPPUNIT_TEST(HistgramEqualization);
-	CPPUNIT_TEST(Threshold);
+	//CPPUNIT_TEST(Threshold);
 
 	//CPPUNIT_TEST(SepiaTone);
 	//CPPUNIT_TEST(PenEffect);
 	//CPPUNIT_TEST(DEMSlope);
 	//CPPUNIT_TEST(DEMAspect);
+	CPPUNIT_TEST(DEMHillShade);
 
 	CPPUNIT_TEST_SUITE_END();
 public:
@@ -47,6 +48,7 @@ private:
 
 	void	DEMSlope();
 	void	DEMAspect();
+	void	DEMHillShade();
 
 private:
 	auge::GConnection	*m_pConnection;

@@ -262,6 +262,7 @@ namespace auge
 		g_byte* ptr_2 = ptr_1 + width;
 		g_byte  v_min,v_max;
 		double slope_x, slope_y;
+		double aspect;
 		double value;
 		double reslution_x = pinBand->GetResolution_X();
 		double reslution_y = pinBand->GetResolution_Y();
@@ -279,8 +280,17 @@ namespace auge
 				slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
 				slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
 
-				value = sqrt(pow(slope_x,2.0) + pow(slope_y,2.0));
-				*ptr  = atan(value) * AUGE_RADIAN_TO_DEGREE;				
+				aspect = atan(slope_y/slope_x)*AUGE_RADIAN_TO_DEGREE;
+				if(slope_x>0)
+				{
+					aspect += 270.0;
+				}
+				else
+				{
+					aspect += 90.0;
+				}
+				aspect = 360.0 - aspect;
+				*ptr = aspect;
 			}
 			ptr_0 += 2;
 			ptr_1 += 2;
@@ -426,6 +436,7 @@ namespace auge
 		double* ptr_2 = ptr_1 + width;
 		double  v_min,v_max;
 		double slope_x, slope_y;
+		double aspect;
 		double value;
 		double reslution_x = pinBand->GetResolution_X();
 		double reslution_y = pinBand->GetResolution_Y();
@@ -442,9 +453,18 @@ namespace auge
 			{
 				slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
 				slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
-				
-				value = sqrt(pow(slope_x,2) + pow(slope_y, 2));
-				*ptr  = atan(value) * AUGE_RADIAN_TO_DEGREE;
+
+				aspect = atan(slope_y/slope_x)*AUGE_RADIAN_TO_DEGREE;
+				if(slope_x>0)
+				{
+					aspect += 270.0;
+				}
+				else
+				{
+					aspect += 90.0;
+				}
+				aspect = 360.0 - aspect;
+				*ptr = aspect;
 			}
 			ptr_0 += 2;
 			ptr_1 += 2;

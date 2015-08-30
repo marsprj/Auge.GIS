@@ -12,6 +12,9 @@ namespace auge
 		m_user = 0;
 		m_in_raster_path = "/";
 		m_out_raster_path = "/";
+		m_azimuth= 0.0f;
+		m_zenith = 45.0f * AUGE_DEGREE_TO_RADIAN;
+		m_zfactor = 1.0f;
 	}
 
 	DemHillshadeProcessorImpl::~DemHillshadeProcessorImpl()
@@ -121,6 +124,21 @@ namespace auge
 		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
 	}
 
+	void DemHillshadeProcessorImpl::SetAzimuth(float azimuth)
+	{
+		m_azimuth = azimuth * AUGE_DEGREE_TO_RADIAN;
+	}
+
+	void DemHillshadeProcessorImpl::SetZenith(float zenith)
+	{
+		m_zenith = zenith * AUGE_DEGREE_TO_RADIAN;
+	}
+
+	void DemHillshadeProcessorImpl::SetZFactor(float zscale)
+	{
+		m_zfactor = zscale;
+	}
+
 	RESULTCODE DemHillshadeProcessorImpl::Execute()
 	{
 		const char* inSourceName = GetInputDataSource();
@@ -163,8 +181,7 @@ namespace auge
 		}
 		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
 
-		
-		poutRaster = Aspect(pinRaster);
+		poutRaster = Hillshade(pinRaster);
 
 		if(poutRaster!=NULL)
 		{
@@ -195,11 +212,11 @@ namespace auge
 		m_user = user;
 	}
 
-	Raster* DemHillshadeProcessorImpl::Aspect(Raster* pinRaster)
+	Raster* DemHillshadeProcessorImpl::Hillshade(Raster* pinRaster)
 	{
 		Raster* poutRaster = NULL;
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
-		poutRaster = pRasterFactory->CreateRaster("", pinRaster->GetExtent(), pinRaster);
+		poutRaster = pRasterFactory->CreateRaster("", augePixelByte, 1, pinRaster->GetExtent(), pinRaster->GetWidth(), pinRaster->GetHeight(), pinRaster->GetSpatialReference());		
 		if(poutRaster==NULL)
 		{
 			return NULL;
@@ -219,11 +236,11 @@ namespace auge
 			switch(type)
 			{
 			case augePixelByte:
-				rc = Aspect_Byte(pinBand, poutBand);
+				rc = Hillshade_Byte(pinBand, poutBand);
 				break;
 			case augePixelUInt16:
 			case augePixelInt16:
-				Aspect_Short(pinBand, poutBand);
+				rc = Hillshade_Short(pinBand, poutBand);
 				break;
 			case augePixelUInt32:
 			case augePixelInt32:
@@ -231,7 +248,7 @@ namespace auge
 			case augePixelFloat32:
 				break;
 			case augePixelDouble:
-				Aspect_Double(pinBand, poutBand);
+				rc = Hillshade_Double(pinBand, poutBand);
 				break;
 			}
 
@@ -250,7 +267,7 @@ namespace auge
 		return poutRaster;
 	}
 
-	RESULTCODE DemHillshadeProcessorImpl::Aspect_Byte(RasterBand* pinBand, RasterBand* poutBand)
+	RESULTCODE DemHillshadeProcessorImpl::Hillshade_Byte(RasterBand* pinBand, RasterBand* poutBand)
 	{
 		g_uint width = pinBand->GetWidth();
 		g_uint height= pinBand->GetHeight();
@@ -261,26 +278,52 @@ namespace auge
 		g_byte* ptr_1 = ptr_0 + width;
 		g_byte* ptr_2 = ptr_1 + width;
 		g_byte  v_min,v_max;
-		double slope_x, slope_y;
-		double value;
-		double reslution_x = pinBand->GetResolution_X();
-		double reslution_y = pinBand->GetResolution_Y();
+		float slope_x, slope_y,slope;
+		float aspect;
+		float shade;
+		float azimuth_sin;
+		float azimuth_cos;
+		float azimuth_cos_x_zscale;
+		float zenith_cos;
+		float zenith_sin;
+		float value;
+		float reslution_x = pinBand->GetResolution_X();
+		float reslution_y = pinBand->GetResolution_Y();
 
-		g_int64 size = width*height*sizeof(g_byte);
-		g_byte* output = (g_byte*)malloc(size);
+		g_int64 size = width*height*sizeof(float);
+		float* output = (float*)malloc(size*sizeof(float));
 		memset(output, 0, size);
 
+		zenith_cos = cos(m_zenith);
+		zenith_sin = sin(m_zenith);
+
 		g_int sum = 0;
-		g_byte* ptr = output + width + 1;
+		float* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
 			{
-				slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
+				slope_x = ((ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1]) - (ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1])) / (8 * reslution_x);
 				slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
 
-				value = sqrt(pow(slope_x,2.0) + pow(slope_y,2.0));
-				*ptr  = atan(value) * AUGE_RADIAN_TO_DEGREE;				
+				// slope
+				slope = atan(m_zfactor * sqrt(pow(slope_x,2.0f) + pow(slope_y,2.0f)));
+
+				// aspect
+				aspect = atan2(slope_y, -slope_x);
+				if(aspect<0)
+				{
+					aspect += TWO_PI;
+				}
+
+				//arcgis 10
+				//Hillshade = 255.0 * ((cos(Zenith) * cos(Slope)) + (sin(Zenith) * sin(Slope) * cos(Azimuth - Aspect)))			
+				shade = 255.0f * ((zenith_cos * cos(slope)) + (zenith_sin * sin(slope) * cos(m_azimuth-aspect)));
+				if(shade<0)
+				{
+					shade = 0.0f;
+				}
+				*ptr = shade;
 			}
 			ptr_0 += 2;
 			ptr_1 += 2;
@@ -294,7 +337,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE DemHillshadeProcessorImpl::Aspect_Short(RasterBand* pinBand, RasterBand* poutBand)
+	RESULTCODE DemHillshadeProcessorImpl::Hillshade_Short(RasterBand* pinBand, RasterBand* poutBand)
 	{
 		g_uint width = pinBand->GetWidth();
 		g_uint height= pinBand->GetHeight();
@@ -305,38 +348,50 @@ namespace auge
 		short* ptr_1 = ptr_0 + width;
 		short* ptr_2 = ptr_1 + width;
 		//short  v_min,v_max;
-		double slope_x, slope_y;
-		double aspect;
-		double radian;
-		double reslution_x = pinBand->GetResolution_X();
-		double reslution_y = pinBand->GetResolution_Y();
+		float slope_x, slope_y,slope;
+		float aspect;
+		float shade;
+		float zenith_cos;
+		float zenith_sin;
+		float zscale_2;			//square of zscale
+		float reslution_x = pinBand->GetResolution_X();
+		float reslution_y = pinBand->GetResolution_Y();
 
-		g_int64 size = width*height*sizeof(short);
-		short* output = (short*)malloc(size);
+		g_int64 size = width*height*sizeof(g_byte);
+		g_byte* output = (g_byte*)malloc(size*sizeof(g_byte));
 		memset(output, 0, size);
-		
+
+
+		zenith_cos = cos(m_zenith);
+		zenith_sin = sin(m_zenith);
+				
 		g_int sum = 0;
-		short* ptr = output + width + 1;
+		g_byte* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
 			{
-				slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
+				slope_x = ((ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1]) - (ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1])) / (8 * reslution_x);
 				slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
 
-				if(fabs(slope_x)<EPSLN||fabs(slope_y)<EPSLN)
+				// slope
+				slope = atan(m_zfactor * sqrt(pow(slope_x,2.0f) + pow(slope_y,2.0f)));
+
+				// aspect
+				aspect = atan2(slope_y, -slope_x);
+				if(aspect<0)
 				{
-					aspect = 0;
+					aspect += TWO_PI;
 				}
-				else
+
+				//arcgis 10
+				//Hillshade = 255.0 * ((cos(Zenith) * cos(Slope)) + (sin(Zenith) * sin(Slope) * cos(Azimuth - Aspect)))			
+				shade = 255.0f * ((zenith_cos * cos(slope)) + (zenith_sin * sin(slope) * cos(m_azimuth-aspect)));
+				if(shade<0)
 				{
-					aspect =atan2(slope_y, -slope_x) / AUGE_RADIAN_TO_DEGREE; 
-					if(aspect<0)
-					{
-						//aspect += 360.0;
-					}
+					shade = 0.0f;
 				}
-				*ptr = aspect;
+				*ptr = shade;
 			}
 			ptr_0 += 2;
 			ptr_1 += 2;
@@ -352,37 +407,59 @@ namespace auge
 	}
 
 
-	RESULTCODE DemHillshadeProcessorImpl::Aspect_Double(RasterBand* pinBand, RasterBand* poutBand)
+	RESULTCODE DemHillshadeProcessorImpl::Hillshade_Double(RasterBand* pinBand, RasterBand* poutBand)
 	{
 		g_uint width = pinBand->GetWidth();
 		g_uint height= pinBand->GetHeight();
 
-		double  v_h=0, v_v=0;
-		double* input = (double*)pinBand->GetData();
-		double* ptr_0 = input + 1; 
-		double* ptr_1 = ptr_0 + width;
-		double* ptr_2 = ptr_1 + width;
-		//double  v_min,v_max;
-		double slope_x, slope_y;
-		double value;
-		double reslution_x = pinBand->GetResolution_X();
-		double reslution_y = pinBand->GetResolution_Y();
+		float  v_h=0, v_v=0;
+		float* input = (float*)pinBand->GetData();
+		float* ptr_0 = input + 1; 
+		float* ptr_1 = ptr_0 + width;
+		float* ptr_2 = ptr_1 + width;
+		float slope_x, slope_y,slope;
+		float aspect;
+		float shade;
+		float zenith_cos;
+		float zenith_sin;
+		float value;
+		float reslution_x = pinBand->GetResolution_X();
+		float reslution_y = pinBand->GetResolution_Y();
 
-		g_int64 size = width*height*sizeof(double);
-		double* output = (double*)malloc(size);
+		g_int64 size = width*height*sizeof(float);
+		float* output = (float*)malloc(size);
 		memset(output, 0, size);
 
+		zenith_cos = cos(m_zenith);
+		zenith_sin = sin(m_zenith);
+
 		g_int sum = 0;
-		double* ptr = output + width + 1;
+		float* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
 			{
-				slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
+				slope_x = ((ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1]) - (ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1])) / (8 * reslution_x);
 				slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
-				
-				value = sqrt(pow(slope_x,2) + pow(slope_y, 2));
-				*ptr  = atan(value) * AUGE_RADIAN_TO_DEGREE;
+
+				// slope
+				slope = atan(m_zfactor * sqrt(pow(slope_x,2.0f) + pow(slope_y,2.0f)));
+
+				// aspect
+				aspect = atan2(slope_y, -slope_x);
+				if(aspect<0)
+				{
+					aspect += TWO_PI;
+				}
+
+				//arcgis 10
+				//Hillshade = 255.0 * ((cos(Zenith) * cos(Slope)) + (sin(Zenith) * sin(Slope) * cos(Azimuth - Aspect)))			
+				shade = 255.0f * ((zenith_cos * cos(slope)) + (zenith_sin * sin(slope) * cos(m_azimuth-aspect)));
+				if(shade<0)
+				{
+					shade = 0.0f;
+				}
+				*ptr = shade;
 			}
 			ptr_0 += 2;
 			ptr_1 += 2;

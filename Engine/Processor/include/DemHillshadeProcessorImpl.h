@@ -24,6 +24,10 @@ namespace auge
 		virtual void		SetOutputRaster(const char* rasterName);
 		virtual void		SetOutputPath(const char* rasterPath);
 
+		virtual void		SetAzimuth(float azimuth);		//太阳方位角
+		virtual void		SetZenith(float zenith);		//太阳高度角
+		virtual void		SetZFactor(float zscale);		//Z比例因子
+
 		virtual RESULTCODE	Execute();
 		virtual void		Release();
 
@@ -37,10 +41,10 @@ namespace auge
 		const char*			GetOutputRasterPath();
 
 	private:
-		Raster*				Aspect(Raster* pinRaster);
-		RESULTCODE			Aspect_Byte(RasterBand* pinBand, RasterBand* poutBand);
-		RESULTCODE			Aspect_Short(RasterBand* pinBand, RasterBand* poutBand);
-		RESULTCODE			Aspect_Double(RasterBand* pinBand, RasterBand* poutBand);
+		Raster*				Hillshade(Raster* pinRaster);
+		RESULTCODE			Hillshade_Byte(RasterBand* pinBand, RasterBand* poutBand);
+		RESULTCODE			Hillshade_Short(RasterBand* pinBand, RasterBand* poutBand);
+		RESULTCODE			Hillshade_Double(RasterBand* pinBand, RasterBand* poutBand);
 
 	private:
 		std::string	m_in_source_name;
@@ -50,6 +54,10 @@ namespace auge
 		std::string	m_out_source_name;
 		std::string	m_out_raster_name;
 		std::string m_out_raster_path;
+
+		float		m_azimuth;
+		float		m_zenith;
+		float		m_zfactor;
 
 		g_uint				m_user;
 	};

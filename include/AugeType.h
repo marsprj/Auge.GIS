@@ -59,6 +59,7 @@ typedef unsigned long int  g_uint64;
 #endif
 
 #define AUGE_RADIAN_TO_DEGREE	57.295779513082323
+#define AUGE_DEGREE_TO_RADIAN	0.0174532925199433
 
 #ifndef AUGE_VIRTUAL_NAME
 #	define AUGE_VIRTUAL_NAME	"ows"

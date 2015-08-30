@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
 
 void RasterTest::setUp() 
 {
@@ -446,6 +446,35 @@ void RasterTest::DEMAspect()
 	pProcessor->SetOutputDataSource("rsdb2");
 	pProcessor->SetOutputRaster("srtm_58_05_aspect.tif");
 	pProcessor->SetOutputPath("/s2/s_1_2");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[Ê±¼ä]:%dºÁÃë\n", te-ts);
+}
+
+void RasterTest::DEMHillShade()
+{
+	DWORD ts = GetTickCount();
+
+	auge::DemHillshadeProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateDemHillshadePrcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("rsdb2");
+	pProcessor->SetInputRaster("ASTGTM2_N29E082_dem.tif");
+	pProcessor->SetInputPath("/dem");
+
+	pProcessor->SetOutputDataSource("rsdb2");
+	pProcessor->SetOutputRaster("n39_hillshade_6.tif");
+	pProcessor->SetOutputPath("/dem_result");
+
+	pProcessor->SetAzimuth(45);
+	pProcessor->SetZenith(45);
+	pProcessor->SetZFactor(5.0);
 
 	RESULTCODE rc = pProcessor->Execute();
 

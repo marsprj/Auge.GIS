@@ -468,4 +468,24 @@ namespace auge
 		}
 		return "Byte";
 	}
+
+	g_uint augeGetPixelSize(augePixelType type)
+	{
+		switch(type)
+		{
+		case augePixelByte:
+			return sizeof(g_byte);
+		case augePixelUInt16:
+		case augePixelInt16:
+			return sizeof(g_int16);
+		case augePixelUInt32:
+		case augePixelInt32:
+			return 4;
+		case augePixelFloat32:
+			return 4;
+		case augePixelDouble:
+			return 8;
+		}
+		return 0;
+	}
 }
