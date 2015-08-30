@@ -62,6 +62,10 @@ libgsgps_la_SOURCES=\
 		DemSlopeRequest.cpp \
 		DemAspectHandler.cpp \
 		DemAspectRequest.cpp \
+		DemStretchHandler.cpp \
+		DemHillshadeRequest.cpp \
+		DemHillshadeHandler.cpp \
+		DemStretchRequest.cpp \
 		ConvexHullHandler.cpp \
 		ConvexHullRequest.cpp \
 		ConvexHullResponse.cpp \

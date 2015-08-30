@@ -49,5 +49,6 @@ libgprocessor_la_SOURCES=\
 		RasterSepiaToneEffecProcessorImpl.cpp \
 		RasterPenEffectProcessorImpl.cpp \
 		DemAspectProcessorImpl.cpp \
-		DemSlopeProcessorImpl.cpp
+		DemSlopeProcessorImpl.cpp \
+		DemHillshadeProcessorImpl.cpp
 
