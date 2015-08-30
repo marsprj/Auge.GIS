@@ -461,7 +461,7 @@ void RasterTest::DEMHillShade()
 
 	auge::DemHillshadeProcessor* pProcessor = NULL;
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
-	pProcessor = pFactory->CreateDemHillshadePrcessor();
+	pProcessor = pFactory->CreateDemHillshadeProcessor();
 
 	pProcessor->SetUser(2);
 	pProcessor->SetInputDataSource("rsdb2");

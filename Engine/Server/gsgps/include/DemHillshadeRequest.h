@@ -37,7 +37,7 @@ namespace auge
 
 		void		SetAzimuth(const char* azimuth);	//太阳方位角
 		void		SetZenith(const char* zenith);		//太阳高度角
-		void		SetZFactor(const char& zscale);		//Z比例因子
+		void		SetZFactor(const char* zscale);		//Z比例因子
 
 		GEnvelope&	GetRectangle();
 				

@@ -311,7 +311,7 @@ namespace auge
 		}
 	}
 
-	void DemHillshadeRequest::SetZFactor(const char& zscale)
+	void DemHillshadeRequest::SetZFactor(const char* zscale)
 	{
 		if(zscale!=NULL)
 		{
