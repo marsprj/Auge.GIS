@@ -368,6 +368,30 @@ namespace auge
 	//------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------
+	// Interpolation Processor Begin
+	//------------------------------------------------------------------------
+	class IDWProcessor : GProcessor
+	{
+	protected:
+		IDWProcessor(){}
+		virtual ~IDWProcessor(){}
+	public:
+		virtual	void		SetInputDataSource(const char* sourceName) = 0;
+		virtual	void		SetInputFeatureClass(const char* className) = 0;
+
+		virtual	void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual void		SetZField(const char* fname) = 0;
+		virtual void		SetExtent(GEnvelope& extent) = 0;
+		virtual void		SetCellSize(float cellSize) = 0;
+	};
+	//------------------------------------------------------------------------
+	// Interpolation Processor End
+	//------------------------------------------------------------------------
+
+	//------------------------------------------------------------------------
 	// Raster Processor Begin
 	//------------------------------------------------------------------------
 	class RasterExtractByRectangleProcessor : public GProcessor

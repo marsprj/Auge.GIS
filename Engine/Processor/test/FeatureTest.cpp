@@ -119,7 +119,7 @@ void FeatureTest::FeatureExportTest()
 	DWORD ts = GetTickCount();
 
 	const char* shp_path = "g:\\temp\\aqi";
-	const char* shp_name = "aqi_ranking_2015_02_05_07";
+	const char* shp_name = "aqi_ranking_2015_02_04_11";
 	const char* source_name = "160_ourgis";
 
 	auge::GProcessorFactory* factory = auge::augeGetGeoProcessorFactoryInstance();

@@ -91,6 +91,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\FeatureImportProcessorImpl.cpp" />
     <ClCompile Include="..\src\FeatureProjectProcessorImpl.cpp" />
     <ClCompile Include="..\src\FileSytemTileStoreGeneratorImpl.cpp" />
+    <ClCompile Include="..\src\IDWProcessorImpl.cpp" />
     <ClCompile Include="..\src\Kmean.cpp" />
     <ClCompile Include="..\src\KmeanProcessorImpl.cpp" />
     <ClCompile Include="..\src\LineToPointsProcessorImpl.cpp" />
@@ -127,6 +128,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\FeatureImportProcessorImpl.h" />
     <ClInclude Include="..\include\FeatureProjectProcessorImpl.h" />
     <ClInclude Include="..\include\FileSytemTileStoreGeneratorImpl.h" />
+    <ClInclude Include="..\include\IDWProcessorImpl.h" />
     <ClInclude Include="..\include\Kmean.h" />
     <ClInclude Include="..\include\KmeanProcessorImpl.h" />
     <ClInclude Include="..\include\LineToPointsProcessorImpl.h" />

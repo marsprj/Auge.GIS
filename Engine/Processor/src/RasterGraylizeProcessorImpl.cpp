@@ -84,6 +84,7 @@ namespace auge
 	{
 		return m_out_raster_name.empty() ? NULL : m_out_raster_name.c_str();
 	}
+
 	void RasterGraylizeProcessorImpl::SetInputPath(const char* rasterPath)
 	{
 		if(rasterPath==NULL)
