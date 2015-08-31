@@ -299,7 +299,10 @@ namespace auge
 	{
 		if(azimuth!=NULL)
 		{
-			m_azimuth_rad = atof(azimuth);
+			if(strlen(azimuth)>0)
+			{
+				m_azimuth_rad = atof(azimuth);
+			}
 		}
 	}
 
@@ -307,15 +310,21 @@ namespace auge
 	{
 		if(zenith!=NULL)
 		{
-			m_zenith_rad = atof(zenith);
+			if(strlen(zenith)>0)
+			{
+				m_zenith_rad = atof(zenith);
+			}
 		}
 	}
 
-	void DemHillshadeRequest::SetZFactor(const char* zscale)
+	void DemHillshadeRequest::SetZFactor(const char* zfactor)
 	{
-		if(zscale!=NULL)
+		if(zfactor!=NULL)
 		{
-			m_zfactor = atof(zscale);
+			if(strlen(zfactor)>0)
+			{
+				m_zfactor = atof(zfactor);
+			}
 		}
 	}
 
