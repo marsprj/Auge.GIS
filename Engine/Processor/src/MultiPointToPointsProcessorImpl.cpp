@@ -151,8 +151,12 @@ namespace auge
 			return AG_FAILURE;
 		}
 		augeGeometryType type = pField->GetGeometryDef()->GeometryType();
-		if(type!=augeGTLineString||type!=augeGTMultiLineString)
+		if(type!=augeGTMultiPoint)
 		{
+			const char* msg = "输入图层必须是[多点]类型"
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
 			pinFeatureClass->Release();
 			poutWorkspace->Release();
 			return AG_FAILURE;
