@@ -46,7 +46,7 @@ namespace auge
 		std::string		m_local_path;
 
 		WorkspacePgs*	m_pWorkspace;
-		RasterDatasetImpl m_raster_dataset;
+		RasterDatasetImpl* m_pRasterDataset;
 	};
 }
 

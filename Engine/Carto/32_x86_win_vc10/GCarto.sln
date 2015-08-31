@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCarto", "GCarto.vcxproj", "{B6F892A7-59B5-48D6-A97C-8BC432B49E92}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698} = {5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "..\test\test.vcxproj", "{634F6CF5-056B-4A46-9E52-335F7C33E9AF}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -11,10 +14,15 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GShape", "..\..\Data\GShape\32_x86_win_vc10\GShape.vcxproj", "{C17AA319-6571-48F3-BFD6-111B3B0445C5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GPostgres", "..\..\Data\GPostgres\32_x86_win_vc10\GPostgres.vcxproj", "{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}"
+	ProjectSection(ProjectDependencies) = postProject
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547} = {57E6CDAA-E9D2-4CA1-9542-70CA0081C547}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCore", "..\..\Core\32_x86_win_vc10\GCore.vcxproj", "{175ED294-86C6-45A1-9E7A-770AE765EB23}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsims", "..\..\Server\gsims\32_x86_win_vc10\gsims.vcxproj", "{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GRaster", "..\..\Raster\32_x86_win_vc10\GRaster.vcxproj", "{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +54,10 @@ Global
 		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Debug|Win32.Build.0 = Debug|Win32
 		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Release|Win32.ActiveCfg = Release|Win32
 		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}.Release|Win32.Build.0 = Release|Win32
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}.Debug|Win32.ActiveCfg = Debug|Win32
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}.Debug|Win32.Build.0 = Debug|Win32
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}.Release|Win32.ActiveCfg = Release|Win32
+		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

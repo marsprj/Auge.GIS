@@ -9,11 +9,13 @@ namespace auge
 		m_name = "/";
 		m_path = "/";
 		m_pWorkspace = NULL;
+		m_pRasterDataset = new RasterDatasetImpl();
 	}
 
 	RasterFolderImpl::~RasterFolderImpl()
 	{
 		m_pWorkspace = NULL;
+		m_pRasterDataset->Release();
 	}
 
 
@@ -198,7 +200,7 @@ namespace auge
 
 	bool RasterFolderImpl::IsEmpty()
 	{
-		if(!m_raster_dataset.IsEmpty())
+		if(!m_pRasterDataset->IsEmpty())
 		{
 			return false;
 		}
@@ -222,7 +224,7 @@ namespace auge
 
 	RasterDataset* RasterFolderImpl::GetRasterDataset()
 	{
-		return &m_raster_dataset;
+		return m_pRasterDataset;
 	}
 	
 	void RasterFolderImpl::Release()
@@ -246,7 +248,7 @@ namespace auge
 		auge_make_path(local_path, NULL, m_pWorkspace->GetRepository(), path+1, NULL);
 		m_local_path = local_path;
 
-		m_raster_dataset.Create(name, this, m_pWorkspace);
+		m_pRasterDataset->Create(name, this, m_pWorkspace);
 	}
 
 	g_int RasterFolderImpl::RegisterFolder(const char* name, const char* alias, const char* path)

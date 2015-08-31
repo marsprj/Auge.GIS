@@ -564,6 +564,9 @@ namespace auge
 
 		RasterFolderImpl *pFolder = new RasterFolderImpl();
 		pFolder->Create(id, name, alias, path, this);
+
+		pResult->Release();
+
 		return pFolder;
 	}
 

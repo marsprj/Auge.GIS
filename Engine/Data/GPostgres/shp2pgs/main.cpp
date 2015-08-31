@@ -104,11 +104,11 @@ int main(int argc, char** argv)
 	pshpEngine = pDataEngineManager->GetEngine("Shape");
 	ppgsEngine = pDataEngineManager->GetEngine("Postgres");
 
-	auge::FeatureWorksapce* pshpWorkspace = NULL;
-	auge::FeatureWorksapce* ppgsWorkspace = NULL;
+	auge::FeatureWorkspace* pshpWorkspace = NULL;
+	auge::FeatureWorkspace* ppgsWorkspace = NULL;
 
-	pshpWorkspace = dynamic_cast<auge::FeatureWorksapce*>(pshpEngine->CreateWorkspace());
-	ppgsWorkspace = dynamic_cast<auge::FeatureWorksapce*>(ppgsEngine->CreateWorkspace());
+	pshpWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pshpEngine->CreateWorkspace());
+	ppgsWorkspace = dynamic_cast<auge::FeatureWorkspace*>(ppgsEngine->CreateWorkspace());
 
 	pshpWorkspace->SetConnectionString(shp_constr);
 	ppgsWorkspace->SetConnectionString(pgs_constr);

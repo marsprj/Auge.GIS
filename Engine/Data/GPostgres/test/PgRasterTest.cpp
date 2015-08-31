@@ -3,7 +3,7 @@
 #include "AugeData.h"
 #include "AugeRaster.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(PgRasterTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(PgRasterTest);
 
 void PgRasterTest::setUp() 
 {
@@ -138,39 +138,18 @@ void PgRasterTest::ReadRaster()
 {
 	auge::Raster* pRaster = NULL;
 	auge::RasterDataset* pRasterDataset = NULL;
-	
-	//pRasterDataset = m_pWorkspace->OpenRasterDataset();
-	//pFeatureClass = m_pWorkspace->OpenFeatureClass("高等院校");
-	//CPPUNIT_ASSERT(pFeatureClass!=NULL);
+	auge::RasterFolder* pRasterFolder = NULL;
 
-	//auge::FeatureCursor* pCursor = NULL;
-	//pCursor = pFeatureClass->Query();
-	//CPPUNIT_ASSERT(pCursor!=NULL);
+	int i=0; 
+	while(true)
+	{
+		printf("\r%d", i++);
+		pRasterFolder = m_pWorkspace->GetFolder("/dem");
+		pRaster = pRasterFolder->GetRasterDataset()->GetRaster("ASTGTM2_N29E082_dem.tif");
 
-	//int counter = 1;
-	//g_uchar* wkb = NULL;
-	//auge::Geometry	*pGeometry = NULL;
-	//auge::Feature	*pFeature = NULL;
-	//while((pFeature=pCursor->NextFeature())!=NULL)
-	//{	
-	//	printf("\r%d", counter++);
-	//	//float val = pFeature->GetFloat("co");
-	//	pGeometry = pFeature->GetGeometry();
-	//	//wkb = pGeometry->AsBinary();
-
-	//	//printf("[Name]:%s\n", pFeature->GetString("name"));
-	//	//printf("[%d]:%s\n", counter++, pFeature->GetString("name"));
-	//	//auge::WKBPoint* pWKBPoint = (auge::WKBPoint*)wkb;
-	//	//printf("[%d]:%f,%f\n", pFeature->GetFID(),pWKBPoint->point.x, pWKBPoint->point.y);
-
-	//	pFeature->Release();
-	//}
-	//printf("\n");
-
-	//AUGE_SAFE_RELEASE(pCursor);
-	//AUGE_SAFE_RELEASE(pFeatureClass);
-
-	
+		pRaster->Release();
+		pRasterFolder->Release();
+	}
 }
 
 void PgRasterTest::GetRasterByPath()

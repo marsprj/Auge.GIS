@@ -40,6 +40,7 @@ namespace auge
 		//virtual const char*		GetPath();
 
 		virtual Raster*			GetRaster();
+		virtual void			Release();
 
 	public:
 		void	Create(const char* name, RasterFolderImpl* pFolder, WorkspacePgs* pWorkspace);

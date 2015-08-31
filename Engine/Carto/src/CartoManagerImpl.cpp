@@ -469,6 +469,7 @@ namespace auge
 			ptr = strtok(NULL,",");
 		}
 		free(str);
+		pResult->Release();
 
 		return AG_SUCCESS;
 	}
@@ -1067,6 +1068,8 @@ namespace auge
 		pRLayer->SetVisiable(visible);
 		pRLayer->SetMinScale(min_scale);
 		pRLayer->SetMaxScale(max_scale);
+
+		pRasterFolder->Release();
 
 		return pRLayer;
 	}
@@ -2016,8 +2019,6 @@ namespace auge
 		LoadLayers(pMap);
 
 		return pMap;
-
-		//return LoadMap(mid);
 	}
 
 	Map* CartoManagerImpl::CreateMap(g_uint user_id, const char* name)

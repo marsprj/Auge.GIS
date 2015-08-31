@@ -16,6 +16,7 @@ namespace auge
 
 	RasterImpl::~RasterImpl()
 	{
+		Cleanup();
 		if(m_poDataset!=NULL)
 		{
 			GDALClose(m_poDataset);
@@ -425,7 +426,10 @@ namespace auge
 		for(iter=m_bands.begin(); iter!=m_bands.end(); iter++)
 		{
 			pBand = (*iter);
-			pBand->Release();
+			if(pBand!=NULL)
+			{
+				pBand->Release();
+			}
 		}
 		m_bands.clear();
 	}

@@ -438,4 +438,12 @@ namespace auge
 		return (count>0);
 	}
 
+	void RasterDatasetImpl::Release()
+	{
+		if(ReleaseRef()<=0)
+		{
+			delete this;
+		}
+	}
+
 }

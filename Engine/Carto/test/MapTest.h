@@ -9,7 +9,7 @@
 class MapTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(MapTest);
-	//CPPUNIT_TEST(DrawMap);
+	CPPUNIT_TEST(DrawMap);
 	//CPPUNIT_TEST(Create_Map_Point_Label);
 
 	//CPPUNIT_TEST(Draw_Map_Point_Label);
@@ -35,7 +35,7 @@ class MapTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(DrawLayerStar);
 	//CPPUNIT_TEST(DrawLayerRailway);
 
-	CPPUNIT_TEST(AddRasterLayer);
+	//CPPUNIT_TEST(AddRasterLayer);
 
 	
 	CPPUNIT_TEST_SUITE_END();

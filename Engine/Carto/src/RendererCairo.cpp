@@ -1133,6 +1133,8 @@ namespace auge
 		cairo_surface_destroy(raster_surface);
 		cairo_restore(m_cairo);
 
+		free(r_data);
+
 		return true;
 	}
 

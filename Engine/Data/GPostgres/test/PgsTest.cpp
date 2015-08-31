@@ -4,7 +4,7 @@
 
 #include "AugeTile.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
 
 void PgsTest::setUp() 
 {
