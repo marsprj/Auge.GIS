@@ -234,7 +234,7 @@ namespace auge
 
 				poutGeometryDef = poutField->GetGeometryDef();
 				poutGeometryDef_2 = poutGeometryDef->GetGeometryDef_2();
-				poutGeometryDef_2->SetGeometryType(augeGTMultiPoint);
+				poutGeometryDef_2->SetGeometryType(augeGTPoint);
 				poutGeometryDef_2->SetDimension(pGeometryDef->GetDimension());				
 				pGeometryDef->GetExtent(extent);
 				poutGeometryDef_2->SetExtent(extent);
@@ -273,6 +273,7 @@ namespace auge
 				switch(pGeometry->GeometryType())
 				{
 				case augeGTMultiPoint:
+					ProcessMultiPoint(pFeature, poutFeatureClass, cmd);
 					break;
 				}
 			}
