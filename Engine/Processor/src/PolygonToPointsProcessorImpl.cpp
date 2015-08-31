@@ -151,7 +151,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 		augeGeometryType type = pField->GetGeometryDef()->GeometryType();
-		if(type!=augeGTLineString&&type!=augeGTMultiLineString)
+		if(type!=augeGTPolygon&&type!=augeGTMultiPolygon)
 		{
 			pinFeatureClass->Release();
 			poutWorkspace->Release();
