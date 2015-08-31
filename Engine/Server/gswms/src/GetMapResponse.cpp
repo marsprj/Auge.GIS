@@ -65,9 +65,17 @@ namespace auge
 
 	void GetMapResponse::MoveToThumbnail(const char* img_path)
 	{
-		const char* thumbnail_path = NULL;
+		char img_name[AUGE_NAME_MAX];
+		char img_ext[AUGE_EXT_MAX];
+		memset(img_name, 0, AUGE_NAME_MAX);
+		memset(img_ext, 0, AUGE_EXT_MAX);
+		auge_split_path(img_path, NULL, NULL, img_name, img_ext);
+
 		WebContext* pWebContext = augeGetWebContextInstance();
-		thumbnail_path = pWebContext->GetThumbnailPath();
+		char thumbnail_path[AUGE_PATH_MAX];
+		memset(thumbnail_path, 0, AUGE_PATH_MAX);
+		auge_make_path(thumbnail_path, NULL, pWebContext->GetThumbnailPath(), img_name, img_ext);
+		
 		auge_move(img_path, thumbnail_path);
 	}
 }
