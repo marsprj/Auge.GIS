@@ -153,7 +153,7 @@ namespace auge
 		augeGeometryType type = pField->GetGeometryDef()->GeometryType();
 		if(type!=augeGTMultiPoint)
 		{
-			const char* msg = "输入图层必须是[多点]类型"
+			const char* msg = "输入图层必须是[多点]类型";
 			pError->SetError(msg);
 			pLogger->Error(msg, __FILE__, __LINE__);
 
