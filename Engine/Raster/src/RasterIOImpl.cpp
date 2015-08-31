@@ -42,7 +42,11 @@ namespace auge
 		auge_make_path(full_name, NULL, NULL, name, ext);
 		
 		RasterImpl* pRaster = new RasterImpl();
-		pRaster->Create(full_name, path);
+		if(!pRaster->Create(full_name, path))
+		{
+			pRaster->Release();
+			return NULL;
+		}
 		return pRaster;
 	}
 
