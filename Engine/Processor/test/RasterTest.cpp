@@ -469,10 +469,10 @@ void RasterTest::DEMHillShade()
 	pProcessor->SetInputPath("/dem");
 
 	pProcessor->SetOutputDataSource("rsdb2");
-	pProcessor->SetOutputRaster("n39_hillshade_6.tif");
+	pProcessor->SetOutputRaster("n39_hillshade_7.tif");
 	pProcessor->SetOutputPath("/dem_result");
 
-	pProcessor->SetAzimuth(45);
+	pProcessor->SetAzimuth(135);
 	pProcessor->SetZenith(45);
 	pProcessor->SetZFactor(5.0);
 

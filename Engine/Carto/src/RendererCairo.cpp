@@ -1065,19 +1065,7 @@ namespace auge
 	{
 		bool ret = true;
 		const char* format = pRaster->GetFormat();
-		if(g_stricmp(format, "png")==0)
-		{
-			ret = DrawPNG(pRaster, pTransformation);
-		}
-		else
-		{
 
-		}
-		return ret;
-	}
-
-	bool RendererCairo::DrawPNG(Raster* pRaster, Transformation* pTransformation)
-	{
 		GEnvelope& raster_extent = pRaster->GetExtent();
 		GEnvelope& viewer_extent = pTransformation->GetViewer();
 
@@ -1101,10 +1089,19 @@ namespace auge
 
 		g_uint r_stride = r_w * g_cairo_bands;
 		g_uint r_data_size = r_stride * r_h;
-		unsigned char* r_data = (unsigned char*)calloc(r_data_size, sizeof(unsigned char));
+		g_byte* r_data = (g_byte*)calloc(r_data_size, sizeof(g_byte));
 
-		ReadRasterSubArea(pRaster, r_data, r_xmin, r_ymin, r_w, r_h);
-
+		augePixelType pixelType = pRaster->GetPixelType();
+		switch(pixelType)
+		{
+		case augePixelByte:
+			ReadRasterSubArea_Byte(pRaster, r_data, r_xmin, r_ymin, r_w, r_h);
+			break;
+		case augePixelInt16:
+		case augePixelUInt16:
+			ReadRasterSubArea_Short(pRaster, r_data, r_xmin, r_ymin, r_w, r_h);
+		}
+		
 		cairo_surface_t *raster_surface = NULL;	
 		raster_surface = cairo_image_surface_create_for_data(r_data,
 			CAIRO_FORMAT_ARGB32,//(cairo_format_t)pRaster->GetPixelType(),
@@ -1164,7 +1161,7 @@ namespace auge
 
 	//	g_uint r_stride = r_w * g_cairo_bands;
 	//	g_uint r_data_size = r_stride * r_h;
-	//	unsigned char* r_data = (unsigned char*)calloc(r_data_size, sizeof(unsigned char));
+	//	g_byte* r_data = (g_byte*)calloc(r_data_size, sizeof(g_byte));
 
 	//	ReadRasterSubArea(pRaster, r_data, r_xmin, r_ymin, r_w, r_h);
 
@@ -1235,7 +1232,7 @@ namespace auge
 	//	return true;
 	//}
 
-	bool RendererCairo::ReadRasterSubArea(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height)
+	bool RendererCairo::ReadRasterSubArea_Byte(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height)
 	{
 		bool ret = false;
 		g_uint nBands = pRaster->GetBandCount();
@@ -1243,78 +1240,154 @@ namespace auge
 		switch(nBands)
 		{
 		case 1:
+			ret = ReadRasterSubAreaBand_Byte_1(pRaster, pdata, x, y, width, height);
 			break;
 		case 2:
 			break;
 		case 3:
-			ret = ReadRasterSubAreaBand_3(pRaster, pdata, x, y, width, height);
+			ret = ReadRasterSubAreaBand_Byte_3(pRaster, pdata, x, y, width, height);
 			break;
 		case 4:
-			ret = ReadRasterSubAreaBand_4(pRaster, pdata, x, y, width, height);
+			ret = ReadRasterSubAreaBand_Byte_4(pRaster, pdata, x, y, width, height);
 			break;
 		}
 
 		return ret;
 	}
 
-	bool RendererCairo::ReadRasterSubAreaBand_3(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height)
+	bool RendererCairo::ReadRasterSubAreaBand_Byte_1(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height)
 	{
 		g_uint stride = m_width * g_cairo_bands * sizeof(char);
 
 		auge::RasterBand* pBand = NULL;
 		// red
 		pBand = pRaster->GetBand(0);
-		unsigned char* pb = (unsigned char*)pBand->GetData(x, y);
-		CopyMatrix(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
-		// green
-		pBand = pRaster->GetBand(1);
-		pb = (unsigned char*)pBand->GetData(x, y);
-		CopyMatrix(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+1, width, height, g_cairo_bands);
-		// blue
-		pBand = pRaster->GetBand(2);
-		pb = (unsigned char*)pBand->GetData(x, y);
-		CopyMatrix(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
+		g_byte* pb = (g_byte*)pBand->GetData(x, y);
+		CopyMatrix_Byte(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
+		CopyMatrix_Byte(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+1, width, height, g_cairo_bands);
+		CopyMatrix_Byte(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
 		// alpha
 		SetMatrix(pdata+3, width, height, g_cairo_bands, 255);
 
 		return true;
 	}
 
-	bool RendererCairo::ReadRasterSubAreaBand_4(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height)
+	bool RendererCairo::ReadRasterSubAreaBand_Byte_3(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height)
 	{
 		g_uint stride = m_width * g_cairo_bands * sizeof(char);
 
 		auge::RasterBand* pBand = NULL;
 		// red
 		pBand = pRaster->GetBand(0);
-		unsigned char* pb = (unsigned char*)pBand->GetData(x, y);
-		CopyMatrix(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
+		g_byte* pb = (g_byte*)pBand->GetData(x, y);
+		CopyMatrix_Byte(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
 		// green
 		pBand = pRaster->GetBand(1);
-		pb = (unsigned char*)pBand->GetData(x, y);
-		CopyMatrix(pb,pRaster->GetWidth(), pRaster->GetHeight(),  pdata+1, width, height, g_cairo_bands);
+		pb = (g_byte*)pBand->GetData(x, y);
+		CopyMatrix_Byte(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+1, width, height, g_cairo_bands);
 		// blue
 		pBand = pRaster->GetBand(2);
-		pb = (unsigned char*)pBand->GetData(x, y);
-		CopyMatrix(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
+		pb = (g_byte*)pBand->GetData(x, y);
+		CopyMatrix_Byte(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
+		// alpha
+		SetMatrix(pdata+3, width, height, g_cairo_bands, 255);
+
+		return true;
+	}
+
+	bool RendererCairo::ReadRasterSubAreaBand_Byte_4(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height)
+	{
+		g_uint stride = m_width * g_cairo_bands * sizeof(char);
+
+		auge::RasterBand* pBand = NULL;
+		// red
+		pBand = pRaster->GetBand(0);
+		g_byte* pb = (g_byte*)pBand->GetData(x, y);
+		CopyMatrix_Byte(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
+		// green
+		pBand = pRaster->GetBand(1);
+		pb = (g_byte*)pBand->GetData(x, y);
+		CopyMatrix_Byte(pb,pRaster->GetWidth(), pRaster->GetHeight(),  pdata+1, width, height, g_cairo_bands);
+		// blue
+		pBand = pRaster->GetBand(2);
+		pb = (g_byte*)pBand->GetData(x, y);
+		CopyMatrix_Byte(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
 		// alpha
 		pBand = pRaster->GetBand(3);
-		pb = (unsigned char*)pBand->GetData(x, y);
-		CopyMatrix(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+3, width, height, g_cairo_bands);
+		pb = (g_byte*)pBand->GetData(x, y);
+		CopyMatrix_Byte(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+3, width, height, g_cairo_bands);
 		// alpha
 		//SetMatrix(pdata+3, width, height, g_cairo_bands, 255);
 
 		return true;
 	}
 
-	void RendererCairo::CopyMatrix(unsigned char* src, int src_width, int src_height, unsigned char* obj, int obj_width, int obj_height, int obj_step)
+	bool RendererCairo::ReadRasterSubArea_Short(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height)
 	{
-		unsigned char* sp = src;
-		unsigned char* op = obj;
+		bool ret = false;
+		g_uint nBands = pRaster->GetBandCount();
+
+		switch(nBands)
+		{
+		case 1:
+			ret = ReadRasterSubAreaBand_Short_1(pRaster, pdata, x, y, width, height);
+			break;
+		case 2:
+			break;
+		case 3:
+			ret = ReadRasterSubAreaBand_Byte_3(pRaster, pdata, x, y, width, height);
+			break;
+		}
+
+		return ret;
+	}
+
+	bool RendererCairo::ReadRasterSubAreaBand_Short_1(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height)
+	{
+		g_uint stride = m_width * g_cairo_bands * sizeof(char);
+
+		auge::RasterBand* pBand = NULL;
+		// red
+		pBand = pRaster->GetBand(0);
+		g_int16* pb = (g_int16*)pBand->GetData(x, y);
+		CopyMatrix_Short(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
+		CopyMatrix_Short(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+1, width, height, g_cairo_bands);
+		CopyMatrix_Short(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
+		// alpha
+		SetMatrix(pdata+3, width, height, g_cairo_bands, 255);
+
+		return true;
+	}
+
+	bool RendererCairo::ReadRasterSubAreaBand_Short_3(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height)
+	{
+		g_uint stride = m_width * g_cairo_bands * sizeof(char);
+
+		auge::RasterBand* pBand = NULL;
+		// red
+		pBand = pRaster->GetBand(0);
+		g_int16* pb = (g_int16*)pBand->GetData(x, y);
+		CopyMatrix_Short(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
+		pBand = pRaster->GetBand(1);
+		pb = (g_int16*)pBand->GetData(x, y);
+		CopyMatrix_Short(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+1, width, height, g_cairo_bands);
+		pBand = pRaster->GetBand(2);
+		pb = (g_int16*)pBand->GetData(x, y);
+		CopyMatrix_Short(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
+		// alpha
+		SetMatrix(pdata+3, width, height, g_cairo_bands, 255);
+
+		return true;
+	}
+
+	void RendererCairo::CopyMatrix_Byte(g_byte* src, int src_width, int src_height, g_byte* obj, int obj_width, int obj_height, int obj_step)
+	{
+		g_byte* sp = src;
+		g_byte* op = obj;
 		int i,j;
 		for(i=0; i<obj_height; i++)
 		{
-			unsigned char* ptr = sp;
+			g_byte* ptr = sp;
 			for(j=0; j<obj_width; j++,op+=obj_step)
 			{
 				*op = *(ptr++);
@@ -1323,9 +1396,26 @@ namespace auge
 		}
 	}
 
-	void RendererCairo::SetMatrix(unsigned char* obj, int width, int height, int stride, unsigned char value)
+	void RendererCairo::CopyMatrix_Short(g_int16* src, int src_width, int src_height, g_byte* obj, int obj_width, int obj_height, int obj_step)
 	{
-		unsigned char* op = obj;
+		g_int16* sp = src;
+		g_byte* op = obj;
+		int i,j;
+		for(i=0; i<obj_height; i++)
+		{
+			g_int16* ptr = sp;
+			for(j=0; j<obj_width; j++,op+=obj_step)
+			{
+				//*op = *(ptr++);
+				*op = auge_pixel_value_normalize_short(*(ptr++));
+			}
+			sp += src_width;
+		}
+	}
+
+	void RendererCairo::SetMatrix(g_byte* obj, int width, int height, int stride, g_byte value)
+	{
+		g_byte* op = obj;
 		for(int i=0; i<height; i++)
 		{
 			for(int j=0; j<width; j++,op+=stride)

@@ -814,4 +814,9 @@ namespace auge
 		return max_value * (rand()/(double)(RAND_MAX));
 	}
 
+	g_byte auge_pixel_value_normalize_short(g_int16 value)
+	{
+		return (AUGE_BYTE_MAX * ((float)value) / (float)AUGE_SHORT_MAX);
+	}
+
 }

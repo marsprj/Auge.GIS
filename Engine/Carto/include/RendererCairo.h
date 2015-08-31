@@ -77,18 +77,22 @@ namespace auge
 		void	DrawGeometryPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation);
 		void	DrawGraphicPoint(WKBPoint	*pWKBPoint,	PointSymbolizer* pSymbolizer, Transformation* pTransformation);
 
-		bool	ReadRasterSubArea(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height);
-		bool	ReadRasterSubAreaBand_3(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height);
-		bool	ReadRasterSubAreaBand_4(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height);
-
-		void	CopyMatrix(unsigned char* src, int src_width, int src_height, unsigned char* obj, int obj_width, int obj_height, int obj_step);
+		bool	ReadRasterSubArea_Byte(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height);
+		bool	ReadRasterSubAreaBand_Byte_1(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height);
+		bool	ReadRasterSubAreaBand_Byte_3(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height);
+		bool	ReadRasterSubAreaBand_Byte_4(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height);
+		void	CopyMatrix_Byte(unsigned char* src, int src_width, int src_height, unsigned char* obj, int obj_width, int obj_height, int obj_step);
 		void	SetMatrix(unsigned char* obj, int width, int height, int stride, unsigned char value);
+
+		bool	ReadRasterSubArea_Short(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height);
+		bool	ReadRasterSubAreaBand_Short_1(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height);
+		bool	ReadRasterSubAreaBand_Short_3(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height);
+		void	CopyMatrix_Short(g_int16* src, int src_width, int src_height, unsigned char* obj, int obj_width, int obj_height, int obj_step);
+		
 
 		// DrawLine
 		void	DrawRailway(WKBLineString *pWKBLineString, Transformation* pTransformation);
 		void	DrawRailway(WKBMultiLineString *pWKBMultiLineString, Transformation* pTransformation);
-
-		bool	DrawPNG(Raster* pRaster, Transformation* pTransformation);		
 
 	private:
 		cairo_surface_t	*m_cairo_surface;

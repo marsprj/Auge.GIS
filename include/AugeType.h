@@ -47,6 +47,14 @@ typedef unsigned long int  g_uint64;
 #define FLOAT_MAX           (+3.402823E+38f)
 #endif
 
+#define	AUGE_BYTE_MAX		255
+#define AUGE_SHORT_MIN		(-32768)
+#define AUGE_SHORT_MAX      32767
+#define AUGE_USHORT_MAX     0xffff
+#define AUGE_INT_MIN		(-2147483647 - 1)
+#define AUGE_INT_MAX		2147483647
+#define AUGE_UINT_MAX		0xffffffff
+
 #ifndef AUGE_INT_MIN
 #define AUGE_INT_MIN		(-16384)
 #define AUGE_INT_MAX        (+16384)
