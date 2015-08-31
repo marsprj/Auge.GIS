@@ -174,6 +174,11 @@ namespace auge
 		return m_cache_protocol_path.c_str();
 	}
 
+	const char*	WebContextImpl::GetThumbnailPath()
+	{
+		return m_cache_thumbnail_path.c_str();
+	}
+
 	const char* WebContextImpl::GetUploadPath()
 	{
 		return m_upload_path.c_str();
@@ -297,6 +302,7 @@ namespace auge
 			auge_mkdir(cache_home);
 		}
 
+		// protocol cache path
 		char cache_protocol[AUGE_PATH_MAX];
 		auge_make_path(cache_protocol, NULL, cache_home, "protocol", NULL);
 		if(g_access(cache_protocol, 4))
@@ -305,6 +311,7 @@ namespace auge
 		}
 		m_cache_protocol_path = cache_protocol;
 
+		// map cache path
 		char cache_map[AUGE_PATH_MAX];
 		auge_make_path(cache_map, NULL, cache_home, "map", NULL);
 		if(g_access(cache_map, 4))
@@ -312,6 +319,15 @@ namespace auge
 			auge_mkdir(cache_map);
 		}
 		m_cache_map_path = cache_map;
+
+		// thumbnail cache
+		char cache_thumbnail[AUGE_PATH_MAX];
+		auge_make_path(cache_thumbnail, NULL, cache_home, "thumbnail", NULL);
+		if(g_access(cache_thumbnail, 4))
+		{
+			auge_mkdir(cache_thumbnail);
+		}
+		m_cache_thumbnail_path = cache_thumbnail;
 
 		// Upload Path
 		char upload_path[AUGE_PATH_MAX];

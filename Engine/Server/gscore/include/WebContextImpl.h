@@ -20,6 +20,7 @@ namespace auge
 		virtual const char*		GetCachePath();
 		virtual const char*		GetCacheMapPath();
 		virtual const char*		GetCacheProtocolPath();
+		virtual const char*		GetThumbnailPath();
 		virtual const char*		GetUploadPath();
 		virtual const char*		GetUserRoot();
 		virtual RESULTCODE		GetUserPath(const char* user, char* user_path, g_uint size);
@@ -56,6 +57,7 @@ namespace auge
 		std::string m_cache_path;
 		std::string m_cache_map_path;
 		std::string m_cache_protocol_path;
+		std::string m_cache_thumbnail_path;
 		std::string m_upload_path;
 		std::string m_user_root;
 

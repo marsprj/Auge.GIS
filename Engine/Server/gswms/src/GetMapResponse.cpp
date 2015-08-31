@@ -53,6 +53,8 @@ namespace auge
 
 		fclose(fp);
 
+		MoveToThumbnail(m_path.c_str());
+
 		return AG_SUCCESS;
 	}
 
@@ -61,4 +63,11 @@ namespace auge
 		m_path = path;
 	}
 
+	void GetMapResponse::MoveToThumbnail(const char* img_path)
+	{
+		const char* thumbnail_path = NULL;
+		WebContext* pWebContext = augeGetWebContextInstance();
+		thumbnail_path = pWebContext->GetThumbnailPath();
+		auge_move(img_path, thumbnail_path);
+	}
 }

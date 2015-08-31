@@ -69,6 +69,7 @@ namespace auge
 		virtual const char*		GetCachePath() = 0;
 		virtual const char*		GetCacheMapPath() = 0;
 		virtual const char*		GetCacheProtocolPath() = 0;
+		virtual const char*		GetThumbnailPath() = 0;
 		virtual const char*		GetUploadPath() = 0;
 		virtual const char*		GetUserRoot() = 0;
 		virtual RESULTCODE		GetUserPath(const char* user, char* user_path, g_uint size) = 0;

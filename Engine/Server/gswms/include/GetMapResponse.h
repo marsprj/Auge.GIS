@@ -20,6 +20,9 @@ namespace auge
 		void	SetPath(const char* path);
 
 	private:
+		void	MoveToThumbnail(const char* img_path);
+
+	private:
 		GetMapRequest*	m_pRequest;
 		std::string		m_path;
 	};
