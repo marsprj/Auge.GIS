@@ -1063,6 +1063,21 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	bool RendererCairo::DrawRaster(Raster* pRaster, Transformation* pTransformation)
 	{
+		bool ret = true;
+		const char* format = pRaster->GetFormat();
+		if(g_stricmp(format, "png")==0)
+		{
+			ret = DrawPNG(pRaster, pTransformation);
+		}
+		else
+		{
+
+		}
+		return ret;
+	}
+
+	bool RendererCairo::DrawPNG(Raster* pRaster, Transformation* pTransformation)
+	{
 		GEnvelope& raster_extent = pRaster->GetExtent();
 		GEnvelope& viewer_extent = pTransformation->GetViewer();
 
@@ -1092,10 +1107,10 @@ namespace auge
 
 		cairo_surface_t *raster_surface = NULL;	
 		raster_surface = cairo_image_surface_create_for_data(r_data,
-									CAIRO_FORMAT_ARGB32,//(cairo_format_t)pRaster->GetPixelType(),
-									r_w,
-									r_h,
-									r_stride);
+			CAIRO_FORMAT_ARGB32,//(cairo_format_t)pRaster->GetPixelType(),
+			r_w,
+			r_h,
+			r_stride);
 
 		int s_x0=0, s_y0=0;
 		int s_x1=0, s_y1=0;
@@ -1110,7 +1125,7 @@ namespace auge
 		double cairo_scale_y = (double)s_h/(double)r_h;
 		//double cairo_scale_x = 1.0f;
 		//double cairo_scale_y = 1.0f;
-		
+
 		cairo_save(m_cairo);
 		cairo_translate(m_cairo, o_x, o_y);
 		cairo_scale  (m_cairo, cairo_scale_x, cairo_scale_y);
@@ -1123,6 +1138,69 @@ namespace auge
 
 		return true;
 	}
+
+	//bool RendererCairo::DrawRaster(Raster* pRaster, Transformation* pTransformation)
+	//{
+	//	GEnvelope& raster_extent = pRaster->GetExtent();
+	//	GEnvelope& viewer_extent = pTransformation->GetViewer();
+
+	//	if(!raster_extent.Intersects(viewer_extent))
+	//	{
+	//		return false;
+	//	}
+
+	//	GEnvelope visible_extent = raster_extent.Intersect(viewer_extent);
+	//	if(!visible_extent.IsValid())
+	//	{
+	//		return false;
+	//	}
+
+	//	g_int r_xmin=0, r_ymin=0, r_xmax=0, r_ymax=0;
+	//	pRaster->GetRasterPosition(visible_extent.m_xmin, visible_extent.m_ymax, r_xmin, r_ymin);
+	//	pRaster->GetRasterPosition(visible_extent.m_xmax, visible_extent.m_ymin, r_xmax, r_ymax);
+
+	//	g_uint r_w = r_xmax - r_xmin;
+	//	g_uint r_h= r_ymax - r_ymin;
+
+	//	g_uint r_stride = r_w * g_cairo_bands;
+	//	g_uint r_data_size = r_stride * r_h;
+	//	unsigned char* r_data = (unsigned char*)calloc(r_data_size, sizeof(unsigned char));
+
+	//	ReadRasterSubArea(pRaster, r_data, r_xmin, r_ymin, r_w, r_h);
+
+	//	cairo_surface_t *raster_surface = NULL;	
+	//	raster_surface = cairo_image_surface_create_for_data(r_data,
+	//								CAIRO_FORMAT_ARGB32,//(cairo_format_t)pRaster->GetPixelType(),
+	//								r_w,
+	//								r_h,
+	//								r_stride);
+
+	//	int s_x0=0, s_y0=0;
+	//	int s_x1=0, s_y1=0;
+	//	GEnvelope& extent = pRaster->GetExtent();
+	//	pTransformation->ToScreenPoint(visible_extent.m_xmin, visible_extent.m_ymin, s_x0, s_y0);
+	//	pTransformation->ToScreenPoint(visible_extent.m_xmax, visible_extent.m_ymax, s_x1, s_y1);
+	//	int s_w = abs(s_x1 - s_x0);
+	//	int s_h = abs(s_y1 - s_y0);
+	//	int o_x = g_min(s_x0, s_x1);
+	//	int o_y = g_min(s_y0, s_y1);
+	//	double cairo_scale_x = (double)s_w/(double)r_w;
+	//	double cairo_scale_y = (double)s_h/(double)r_h;
+	//	//double cairo_scale_x = 1.0f;
+	//	//double cairo_scale_y = 1.0f;
+	//	
+	//	cairo_save(m_cairo);
+	//	cairo_translate(m_cairo, o_x, o_y);
+	//	cairo_scale  (m_cairo, cairo_scale_x, cairo_scale_y);
+	//	cairo_set_source_surface(m_cairo, raster_surface, 0,0);
+
+	//	cairo_paint(m_cairo);
+	//	cairo_surface_flush(m_cairo_surface);
+	//	cairo_surface_destroy(raster_surface);
+	//	cairo_restore(m_cairo);
+
+	//	return true;
+	//}
 
 	//bool RendererCairo::DrawRaster(Raster* pRaster, Transformation* pTransformation)
 	//{

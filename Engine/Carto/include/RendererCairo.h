@@ -88,6 +88,8 @@ namespace auge
 		void	DrawRailway(WKBLineString *pWKBLineString, Transformation* pTransformation);
 		void	DrawRailway(WKBMultiLineString *pWKBMultiLineString, Transformation* pTransformation);
 
+		bool	DrawPNG(Raster* pRaster, Transformation* pTransformation);		
+
 	private:
 		cairo_surface_t	*m_cairo_surface;
 		cairo_t			*m_cairo;
