@@ -88,11 +88,13 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\EnumServiceImpl.cpp" />
+    <ClCompile Include="..\src\JobManagerImpl.cpp" />
     <ClCompile Include="..\src\ServiceImpl.cpp" />
     <ClCompile Include="..\src\ServiceManagerImpl.cpp" />
     <ClCompile Include="..\src\WebEngineManagerImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\JobManagerImpl.h" />
     <ClInclude Include="..\include\EnumServiceImpl.h" />
     <ClInclude Include="..\include\ServiceImpl.h" />
     <ClInclude Include="..\include\ServiceManagerImpl.h" />

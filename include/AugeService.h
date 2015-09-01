@@ -99,10 +99,50 @@ namespace auge
 		virtual void			Unload() = 0;
 	};
 
+	class Job : public GObject
+	{
+	protected:
+		Job(){}
+		virtual ~Job(){}
+	public:
+		virtual const char* GetUUID() = 0;
+
+		virtual const char* GetUser() = 0;
+		virtual const char* GetClient() = 0;
+		virtual const char* GetServer() = 0;
+
+		virtual const char*	GetOperation() = 0;	
+		virtual const char*	GetParams() = 0;		
+		virtual bool		GetStartTime(TIME_STRU& time) = 0;
+		virtual bool		GetEndTime(TIME_STRU& time) = 0;
+		virtual	bool		IsFinished() = 0;
+	};
+
+	class EnumJob
+	{
+	protected:
+		EnumJob(){}
+		virtual ~EnumJob(){}
+	};
+
+	class JobManager
+	{
+	protected:
+		JobManager(){}
+		virtual ~JobManager(){}
+	public:
+		virtual	Job*			AddJob(const char* user, const char* operation, const char* params, const char* client, const char* server) = 0;
+		virtual RESULTCODE		GetJob(const char* uuid) = 0;
+		virtual RESULTCODE		SetEndTime(const char* uuid) = 0;
+
+		virtual RESULTCODE		Initialize(GConnection* pConnection) = 0;
+	};
+
 	extern "C"
 	{
 		AUGE_SERVICE_API ServiceManager*		augeGetServiceManagerInstance();
 		AUGE_SERVICE_API WebEngineManager*		augeGetWebEngineManagerInstance();
+		AUGE_SERVICE_API JobManager*			augeGetJobManagerInstance();
 	}
 }
 
