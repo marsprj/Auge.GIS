@@ -4,17 +4,21 @@
 #include "AugeXML.h"
 #include "AugeWebCore.h"
 #include "AugeProcessor.h"
+#include "AugeUser.h"
 
 namespace auge
 {
 	DemHillshadeHandler::DemHillshadeHandler()
 	{
-
+		m_pJob = NULL;
 	}
 
 	DemHillshadeHandler::~DemHillshadeHandler()
 	{
-
+		if(m_pJob!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pJob);
+		}
 	}
 
 	const char*	DemHillshadeHandler::GetName()
@@ -93,6 +97,8 @@ namespace auge
 
 	WebResponse* DemHillshadeHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		DemHillshadeRequest* pRequest = static_cast<DemHillshadeRequest*>(pWebRequest);
 
 		const char* input_source_name = pRequest->GetInputDataSource();
@@ -132,6 +138,33 @@ namespace auge
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
 
+		End();
+
 		return pSusResponse;
+	}
+
+	void DemHillshadeHandler::Begin(User* pUser)
+	{
+		JobManager* pJobmanager = augeGetJobManagerInstance();
+		WebContext* pWebContext = augeGetWebContextInstance();
+
+		if(m_pJob!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pJob);
+		}
+		const char* client = "";
+		const char* server = pWebContext->GetServer();
+		const char* operation= GetName();
+		const char* params = "";
+		m_pJob = pJobmanager->AddJob(pUser->GetID(), operation, params, client, server);
+	}
+
+	void DemHillshadeHandler::End()
+	{
+		JobManager* pJobmanager = augeGetJobManagerInstance();
+		if(m_pJob!=NULL)
+		{
+			pJobmanager->SetEndTime(m_pJob->GetUUID());
+		}
 	}
 }

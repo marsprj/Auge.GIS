@@ -31,6 +31,7 @@ namespace auge
 	m_pCartoManager(NULL),
 	m_pServiceManager(NULL),
 	m_pUserManager(NULL),
+	m_pJobManager(NULL),
 	m_pError(augeGetErrorInstance())
 	{
 
@@ -553,9 +554,10 @@ namespace auge
 		OpenServerBase();		
 		LoadServerConfig();
 
-		LoadUserManager();
+		LoadUserManager();		
 
 		LoadConnectionPool();
+		LoadJobManager();
 		LoadCartoPool();
 		LoadServicePool();
 
@@ -652,6 +654,19 @@ namespace auge
 		return rc;
 	}
 
+	RESULTCODE GServer::LoadJobManager()
+	{
+		m_pLogger->Info("    Load Job Manager");
+		m_pJobManager = augeGetJobManagerInstance();
+		RESULTCODE rc = m_pJobManager->Initialize(m_pConnection);
+		if(rc!=AG_SUCCESS)
+		{
+			m_pLogger->Error(m_pError->GetLastError(), __FILE__, __LINE__);
+		}
+
+		return rc;
+	}
+
 	RESULTCODE GServer::LoadCartoPool()
 	{
 		m_pLogger->Info("    Load Carto Pool");
@@ -699,6 +714,11 @@ namespace auge
 			m_pCartoManager->Cleanup();
 		}
 
+		if(m_pJobManager!=NULL)
+		{
+			m_pJobManager->Unload();
+		}
+
 		m_pLogger->Info("Shutdown Connection Pool");
 		if(m_pConnManager!=NULL)
 		{
@@ -722,7 +742,7 @@ namespace auge
 		{
 			m_pDataEngineManager->Unload();
 		}
-
+				
 		m_pLogger->Info("===========================================================");
 	}
 

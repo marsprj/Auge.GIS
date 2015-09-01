@@ -14,6 +14,7 @@ namespace auge
 	class FeatureProjectRequest;
 	class FeatureProjectResponse;
 	class FeatureClass;
+	class Job;
 
 	class FeatureProjectHandler : public WebHandler
 	{
@@ -29,6 +30,13 @@ namespace auge
 
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
+
+	protected:
+		void	Begin(User* pUser);
+		void	End();
+
+	private:
+		Job*	m_pJob;
 	};
 }
 

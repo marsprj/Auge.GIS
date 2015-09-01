@@ -1,7 +1,7 @@
 #ifndef __AUGE_JOB_IMPL_H__
 #define __AUGE_JOB_IMPL_H__
 
-#include "AugeService.h"
+#include "AugeWebCore.h"
 #include <string>
 
 namespace auge
@@ -20,9 +20,20 @@ namespace auge
 
 		virtual const char*	GetOperation();	
 		virtual const char*	GetParams();		
-		virtual bool		GetStartTime(TIME_STRU& time);
-		virtual bool		GetEndTime(TIME_STRU& time);
+		virtual bool		GetStartTime(TIME_STRU& start);
+		virtual bool		GetEndTime(TIME_STRU& end);
 		virtual	bool		IsFinished();
+
+	public:
+		void SetUUID(const char* uuid);
+		void SetUser(const char* user);
+		void SetClient(const char* client);
+		void SetServer(const char* server);
+
+		void SetOperation(const char* operation);	
+		void SetParams(const char* params);		
+		void SetStartTime(TIME_STRU& start);
+		void SetEndTime(TIME_STRU& end);
 
 	private:
 		std::string		m_user; 

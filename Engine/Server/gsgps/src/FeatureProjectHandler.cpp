@@ -10,12 +10,15 @@ namespace auge
 {
 	FeatureProjectHandler::FeatureProjectHandler()
 	{
-
+		m_pJob = NULL;
 	}
 
 	FeatureProjectHandler::~FeatureProjectHandler()
 	{
-
+		if(m_pJob!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pJob);
+		}
 	}
 
 	const char*	FeatureProjectHandler::GetName()
@@ -140,5 +143,30 @@ namespace auge
 		pSusResponse->SetRequest(pRequest->GetRequest());
 
 		return pSusResponse;
+	}
+
+	void FeatureProjectHandler::Begin(User* pUser)
+	{
+		JobManager* pJobmanager = augeGetJobManagerInstance();
+		WebContext* pWebContext = augeGetWebContextInstance();
+		
+		if(m_pJob!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pJob);
+		}
+		const char* client = "";
+		const char* server = pWebContext->GetServer();
+		const char* operation= GetName();
+		const char* params = "";
+		m_pJob = pJobmanager->AddJob(pUser->GetID(), operation, params, client, server);
+	}
+
+	void FeatureProjectHandler::End()
+	{
+		JobManager* pJobmanager = augeGetJobManagerInstance();
+		if(m_pJob!=NULL)
+		{
+			pJobmanager->SetEndTime(m_pJob->GetUUID());
+		}
 	}
 }

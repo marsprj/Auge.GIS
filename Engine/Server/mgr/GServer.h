@@ -51,6 +51,7 @@ namespace auge
 
 		RESULTCODE	LoadUserManager();
 
+		RESULTCODE	LoadJobManager();
 		RESULTCODE	LoadServerConfig();
 		RESULTCODE	OpenServerBase();
 		
@@ -79,6 +80,7 @@ namespace auge
 		ConnectionManager	*m_pConnManager;
 		CartoManager		*m_pCartoManager;
 		ServiceManager		*m_pServiceManager;
+		JobManager			*m_pJobManager;
 
 		UserManager			*m_pUserManager;
 

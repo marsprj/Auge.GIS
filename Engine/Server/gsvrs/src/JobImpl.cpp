@@ -1,34 +1,59 @@
-#include "JobManagerImpl.h"
+#include "JobImpl.h"
 
 namespace auge
 {
-	JobManagerImpl::JobManagerImpl()
+	JobImpl::JobImpl()
 	{
 
 	}
 
-	JobManagerImpl::~JobManagerImpl()
+	JobImpl::~JobImpl()
 	{
 
 	}
 
-	Job* JobManagerImpl::AddJob(const char* user, const char* operation, const char* params, const char* client, const char* server)
+	const char* JobImpl::GetUUID()
 	{
-		return NULL;
+		return m_uuid.c_str();
 	}
 
-	RESULTCODE JobManagerImpl::GetJob(const char* uuid)
+	const char* JobImpl::GetUser()
 	{
-		return AG_SUCCESS;
+		return m_user.c_str();
 	}
 
-	RESULTCODE JobManagerImpl::SetEndTime(const char* uuid)
+	const char* JobImpl::GetClient()
 	{
-		return AG_SUCCESS;
+		return m_client.c_str();
 	}
 
-	RESULTCODE JobManagerImpl::Initialize(GConnection* pConnection)
+	const char* JobImpl::GetServer()
 	{
-		return AG_SUCCESS;
+		return m_server.c_str();
+	}
+
+	const char*	JobImpl::GetOperation()
+	{
+		return m_operation.c_str();
+	}
+
+	const char*	JobImpl::GetParams()
+	{
+		return m_params.c_str();
+	}
+
+	bool JobImpl::GetStartTime(TIME_STRU& time)
+	{
+		return true;
+	}
+
+	bool JobImpl::GetEndTime(TIME_STRU& time)
+	{
+		return true;
+	}
+
+	bool JobImpl::IsFinished()
+	{
+		return true;
 	}
 }
