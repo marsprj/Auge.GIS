@@ -8,7 +8,7 @@ namespace auge
 	}
 
 	JobImpl::~JobImpl()
-	{
+	{ 
 
 	}
 

@@ -8,7 +8,7 @@ namespace auge
 {
 	class JobImpl : public Job
 	{
-	public:
+	public: 
 		JobImpl();
 		virtual ~JobImpl();
 	public:

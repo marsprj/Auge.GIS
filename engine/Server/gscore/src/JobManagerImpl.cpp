@@ -11,8 +11,8 @@ namespace auge
 		static JobManagerImpl g_jobManager;
 		return &g_jobManager;
 	}
-
-	JobManagerImpl::JobManagerImpl()
+	
+	JobManagerImpl::JobManagerImpl() 
 	{
 		m_pConnection = NULL;
 	}
