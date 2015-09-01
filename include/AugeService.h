@@ -99,7 +99,6 @@ namespace auge
 		virtual void			Unload() = 0;
 	};
 
-
 	extern "C"
 	{
 		AUGE_SERVICE_API ServiceManager*		augeGetServiceManagerInstance();

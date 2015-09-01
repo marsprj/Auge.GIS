@@ -10,15 +10,12 @@ namespace auge
 {
 	DemHillshadeHandler::DemHillshadeHandler()
 	{
-		m_pJob = NULL;
+		
 	}
 
 	DemHillshadeHandler::~DemHillshadeHandler()
 	{
-		if(m_pJob!=NULL)
-		{
-			AUGE_SAFE_RELEASE(m_pJob);
-		}
+		
 	}
 
 	const char*	DemHillshadeHandler::GetName()
@@ -141,30 +138,5 @@ namespace auge
 		End();
 
 		return pSusResponse;
-	}
-
-	void DemHillshadeHandler::Begin(User* pUser)
-	{
-		JobManager* pJobmanager = augeGetJobManagerInstance();
-		WebContext* pWebContext = augeGetWebContextInstance();
-
-		if(m_pJob!=NULL)
-		{
-			AUGE_SAFE_RELEASE(m_pJob);
-		}
-		const char* client = "";
-		const char* server = pWebContext->GetServer();
-		const char* operation= GetName();
-		const char* params = "";
-		m_pJob = pJobmanager->AddJob(pUser->GetID(), operation, params, client, server);
-	}
-
-	void DemHillshadeHandler::End()
-	{
-		JobManager* pJobmanager = augeGetJobManagerInstance();
-		if(m_pJob!=NULL)
-		{
-			pJobmanager->SetEndTime(m_pJob->GetUUID());
-		}
 	}
 }

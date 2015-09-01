@@ -558,6 +558,41 @@ namespace auge
 #endif
 	}
 
+	void auge_get_time_struct(TIME_STRU* time_stru)
+	{
+#ifdef WIN32
+		SYSTEMTIME now;
+		GetSystemTime(&now);
+		time_stru->usYear = now.wYear;
+		time_stru->usMonth = now.wMonth;
+		time_stru->usDay = now.wDay;
+		time_stru->usHour = now.wHour;
+		time_stru->usMinute = now.wMinute;
+		time_stru->usSecond = now.wSecond;
+		time_stru->usMilliseconds = now.wMilliseconds;
+#else
+		time_t now;
+		time(&now);
+		struct tm* t_tm;   
+		t_tm = localtime(&now);
+
+		struct timeval tv;  
+		struct timezone tz;  
+		gettimeofday(&tv, &tz);  
+
+		time_stru->usYear = t_tm->tm_year;
+		time_stru->usMonth = t_tm->tm_mon;
+		time_stru->usDay = t_tm->tm_mday;
+		time_stru->usHour = t_tm->tm_hour;
+		time_stru->usMinute = t_tm->tm_min;
+		time_stru->usSecond = t_tm->tm_sec;
+		time_stru->usMilliseconds = tv.tv_usec;
+
+
+
+#endif
+	}
+
 	void auge_get_sys_time_as_string(char* sztime, size_t size)
 	{
 #ifdef WIN32

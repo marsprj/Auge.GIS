@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "GProcessHandler.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
@@ -16,7 +17,7 @@ namespace auge
 	class FeatureClass;
 	class Job;
 
-	class FeatureProjectHandler : public WebHandler
+	class FeatureProjectHandler : public GProcessHandler
 	{
 	public:
 		FeatureProjectHandler();

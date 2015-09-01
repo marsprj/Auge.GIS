@@ -84,6 +84,8 @@ namespace auge
 
 	WebResponse* GetLengthHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		WebResponse* pWebResponse = NULL;
 		GetLengthRequest* pRequest = static_cast<GetLengthRequest*>(pWebRequest);
 
@@ -111,6 +113,8 @@ namespace auge
 		{
 			pWebResponse = Execute_2_Datasource(pinFeatureClass, pRequest, pWebContext, pUser);
 		}
+
+		End();
 
 		return pWebResponse;
 	}

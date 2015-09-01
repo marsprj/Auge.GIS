@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "GProcessHandler.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
@@ -14,7 +15,7 @@ namespace auge
 	class WebContext;
 	class DemHillshadeRequest;
 
-	class DemHillshadeHandler : public WebHandler
+	class DemHillshadeHandler : public GProcessHandler
 	{
 	public:
 		DemHillshadeHandler();
@@ -28,13 +29,6 @@ namespace auge
 
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
-
-	protected:
-		void	Begin(User* pUser);
-		void	End();
-
-	private:
-		Job*	m_pJob;
 	};
 }
 

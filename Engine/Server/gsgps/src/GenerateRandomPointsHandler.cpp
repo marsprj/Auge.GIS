@@ -94,6 +94,8 @@ namespace auge
 
 	WebResponse* GenerateRandomPointsHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		GenerateRandomPointsRequest* pRequest = static_cast<GenerateRandomPointsRequest*>(pWebRequest);
 
 		const char* output_source_name= pRequest->GetOutputSourceName();
@@ -128,6 +130,8 @@ namespace auge
 
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
+
+		End();
 
 		return pSusResponse;
 	}

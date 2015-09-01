@@ -94,6 +94,8 @@ namespace auge
 
 	WebResponse* KMeanHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		KMeanRequest* pRequest = static_cast<KMeanRequest*>(pWebRequest);
 
 		const char* input_source_name = pRequest->GetInputDataSource();
@@ -136,6 +138,8 @@ namespace auge
 		}
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
+
+		End();
 
 		return pSusResponse;
 	}

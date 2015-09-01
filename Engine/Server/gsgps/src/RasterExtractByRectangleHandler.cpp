@@ -95,6 +95,8 @@ namespace auge
 
 	WebResponse* RasterExtractByRectangleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		RasterExtractByRectangleRequest* pRequest = static_cast<RasterExtractByRectangleRequest*>(pWebRequest);
 
 		const char* input_source_name  = pRequest->GetInputDataSource();
@@ -141,6 +143,8 @@ namespace auge
 		}
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
+
+		End();
 
 		return pSusResponse;
 	}

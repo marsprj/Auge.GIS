@@ -94,6 +94,8 @@ namespace auge
 
 	WebResponse* RasterEdgeDetectHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		RasterEdgeDetectRequest* pRequest = static_cast<RasterEdgeDetectRequest*>(pWebRequest);
 
 		const char* input_source_name  = pRequest->GetInputDataSource();
@@ -129,6 +131,8 @@ namespace auge
 		}
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
+
+		End();
 
 		return pSusResponse;
 	}

@@ -67,6 +67,8 @@ namespace auge
 		GError* pError = augeGetErrorInstance();
 		GLogger* pLogger = augeGetLoggerInstance();
 
+		Begin(pUser);
+
 		GetSpatialReferenceRequest* pRequest = static_cast<GetSpatialReferenceRequest*>(pWebRequest);
 
 		sqlite3* psqlite3 = OpenBase();
@@ -93,6 +95,8 @@ namespace auge
 		GetSpatialReferenceResponse* pResponse = new GetSpatialReferenceResponse(pRequest);
 		pResponse->SetSqlite(pstmt);
 		pResponse->SetWebContenxt(pWebContext);
+
+		End();
 
 		return pResponse;
 	}

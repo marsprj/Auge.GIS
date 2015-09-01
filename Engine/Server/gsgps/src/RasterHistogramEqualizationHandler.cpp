@@ -94,6 +94,8 @@ namespace auge
 
 	WebResponse* RasterHistogramEqualizationHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		RasterHistogramEqualizationRequest* pRequest = static_cast<RasterHistogramEqualizationRequest*>(pWebRequest);
 
 		const char* input_source_name  = pRequest->GetInputDataSource();
@@ -129,6 +131,8 @@ namespace auge
 		}
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
+
+		End();
 
 		return pSusResponse;
 	}

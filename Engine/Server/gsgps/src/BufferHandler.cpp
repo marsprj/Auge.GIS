@@ -86,6 +86,8 @@ namespace auge
 
 	WebResponse* BufferHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		WebResponse* pWebResponse = NULL;
 		BufferRequest* pRequest = static_cast<BufferRequest*>(pWebRequest);
 
@@ -113,6 +115,8 @@ namespace auge
 		{
 			pWebResponse = Execute_2_Datasource(pinFeatureClass, pRequest, pWebContext, pUser);
 		}
+
+		End();
 
 		return pWebResponse;
 	}

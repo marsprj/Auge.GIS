@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "GProcessHandler.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
@@ -13,7 +14,7 @@ namespace auge
 	class WebContext;
 	class RasterThresholdRequest;
 
-	class RasterThresholdHandler : public WebHandler
+	class RasterThresholdHandler : public GProcessHandler
 	{
 	public:
 		RasterThresholdHandler();

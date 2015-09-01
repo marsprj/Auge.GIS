@@ -94,6 +94,8 @@ namespace auge
 
 	WebResponse* DemStretchHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		DemStretchRequest* pRequest = static_cast<DemStretchRequest*>(pWebRequest);
 
 		const char* input_source_name  = pRequest->GetInputDataSource();
@@ -138,6 +140,8 @@ namespace auge
 		}
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
+
+		End();
 
 		return pSusResponse;
 	}

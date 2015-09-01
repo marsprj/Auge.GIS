@@ -94,6 +94,8 @@ namespace auge
 
 	WebResponse* LineToPointsHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		LineToPointsRequest* pRequest = static_cast<LineToPointsRequest*>(pWebRequest);
 
 		const char* input_source_name = pRequest->GetInputSourceName();
@@ -126,6 +128,8 @@ namespace auge
 
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
+
+		End();
 
 		return pSusResponse;
 	}

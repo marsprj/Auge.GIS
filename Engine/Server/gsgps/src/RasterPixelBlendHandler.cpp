@@ -94,6 +94,8 @@ namespace auge
 
 	WebResponse* RasterPixelBlendHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		RasterPixelBlendRequest* pRequest = static_cast<RasterPixelBlendRequest*>(pWebRequest);
 
 		const char* input_source_name_1 = pRequest->GetInputDataSource_1();
@@ -136,6 +138,8 @@ namespace auge
 		}
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
+
+		End();
 
 		return pSusResponse;
 	}

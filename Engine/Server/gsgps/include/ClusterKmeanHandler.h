@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "GProcessHandler.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
@@ -13,7 +14,7 @@ namespace auge
 	class WebContext;
 	class KMeanRequest;
 
-	class KMeanHandler : public WebHandler
+	class KMeanHandler : public GProcessHandler
 	{
 	public:
 		KMeanHandler();

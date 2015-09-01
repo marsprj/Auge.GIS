@@ -94,6 +94,8 @@ namespace auge
 
 	WebResponse* GenerateRandomPointsInPolygonHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		GenerateRandomPointsInPolygonRequest* pRequest = static_cast<GenerateRandomPointsInPolygonRequest*>(pWebRequest);
 
 		const char* input_source_name = pRequest->GetInputSourceName();
@@ -129,6 +131,8 @@ namespace auge
 
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
+
+		End();
 
 		return pSusResponse;
 	}

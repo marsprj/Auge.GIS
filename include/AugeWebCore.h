@@ -22,6 +22,13 @@ namespace auge
 		augeHttpPost
 	}augeHttpMethodType;
 
+	typedef enum
+	{
+		augeStateRunning	= 0,
+		augeStateFinished	= 1,
+		augeStateCanceled	= 2
+	}augeProcssState;
+
 	class GConnection;
 
 	class WebSuccessResponse : public WebResponse
@@ -120,6 +127,8 @@ namespace auge
 	protected:
 		EnumJob(){}
 		virtual ~EnumJob(){}
+	public:
+		virtual Job*		Next() = 0;
 	};
 
 	class JobManager
@@ -130,8 +139,10 @@ namespace auge
 	public:
 		virtual	Job*			AddJob(g_uint user, const char* operation, const char* params, const char* client, const char* server) = 0;
 		virtual	Job*			AddJob(const char* user, const char* operation, const char* params, const char* client, const char* server) = 0;
-		virtual RESULTCODE		GetJob(const char* uuid) = 0;
 		virtual RESULTCODE		SetEndTime(const char* uuid) = 0;
+
+		virtual Job*			GetJob(const char* uuid) = 0;
+		virtual EnumJob*		GetJob(User* pUser, augeProcssState state ,g_int maxJobs=20, g_uint offset=0) = 0;
 
 		virtual RESULTCODE		Initialize(GConnection* pConnection) = 0;
 		virtual RESULTCODE		Unload() = 0;

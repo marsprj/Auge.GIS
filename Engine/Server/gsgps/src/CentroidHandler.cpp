@@ -66,6 +66,8 @@ namespace auge
 
 	WebResponse* CentroidHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		WebResponse* pWebResponse = NULL;
 		CentroidRequest* pRequest = static_cast<CentroidRequest*>(pWebRequest);
 
@@ -93,6 +95,8 @@ namespace auge
 		{
 			pWebResponse = Execute_2_Datasource(pinFeatureClass, pRequest, pWebContext, pUser);
 		}
+
+		End();
 
 		return pWebResponse;
 	}

@@ -86,6 +86,8 @@ namespace auge
 
 	WebResponse* ConvexHullHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		WebResponse* pWebResponse = NULL;
 		ConvexHullRequest* pRequest = static_cast<ConvexHullRequest*>(pWebRequest);
 
@@ -113,6 +115,8 @@ namespace auge
 		{
 			pWebResponse = Execute_2_Datasource(pinFeatureClass, pRequest, pWebContext, pUser);
 		}
+
+		End();
 
 		return pWebResponse;
 	}

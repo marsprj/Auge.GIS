@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "GProcessHandler.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
@@ -13,7 +14,7 @@ namespace auge
 	class WebContext;
 	class RasterSmoothRequest;
 
-	class RasterSmoothHandler : public WebHandler
+	class RasterSmoothHandler : public GProcessHandler
 	{
 	public:
 		RasterSmoothHandler();

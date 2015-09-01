@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "GProcessHandler.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
@@ -15,7 +16,7 @@ namespace auge
 	class GenerateRandomPointsInPolygonResponse;
 	class FeatureClass;
 
-	class GenerateRandomPointsInPolygonHandler : public WebHandler
+	class GenerateRandomPointsInPolygonHandler : public GProcessHandler
 	{
 	public:
 		GenerateRandomPointsInPolygonHandler();

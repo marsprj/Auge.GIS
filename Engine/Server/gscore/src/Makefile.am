@@ -16,4 +16,5 @@ libgscore_la_SOURCES=\
 		WebSuccessResponseImpl.cpp \ 
 		JobManagerImpl.cpp \
 		JobImpl.cpp \
+		EnumJobImpl.cpp \
 		WebWriterImpl.cpp

@@ -63,6 +63,8 @@ namespace auge
 
 	WebResponse* BuildPyramidHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		WebResponse* pWebResponse = NULL;
 		BuildPyramidRequest* pRequest = static_cast<BuildPyramidRequest*>(pWebRequest);
 
@@ -161,6 +163,8 @@ namespace auge
 		
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pWebRequest->GetRequest());
+
+		End();
 
 		return pSusResponse;
 

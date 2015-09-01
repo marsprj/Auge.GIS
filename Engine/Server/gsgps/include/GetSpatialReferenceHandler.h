@@ -3,6 +3,7 @@
 
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
+#include "GProcessHandler.h"
 #include <rude/cgi.h>
 
 #include "sqlite3.h"
@@ -11,7 +12,7 @@ namespace auge
 {
 	class GetSpatialReferenceRequest;
 
-	class GetSpatialReferenceHandler : public WebHandler
+	class GetSpatialReferenceHandler : public GProcessHandler
 	{
 	public:
 		GetSpatialReferenceHandler();

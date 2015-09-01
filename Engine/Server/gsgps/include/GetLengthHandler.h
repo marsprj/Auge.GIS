@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "GProcessHandler.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
@@ -16,7 +17,7 @@ namespace auge
 	class FeatureClass;
 	class FeatureWorkspace;
 
-	class GetLengthHandler : public WebHandler
+	class GetLengthHandler : public GProcessHandler
 	{
 	public:
 		GetLengthHandler();

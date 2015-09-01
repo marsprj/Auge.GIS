@@ -93,6 +93,8 @@ namespace auge
 
 	WebResponse* DemSlopeHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		DemSlopeRequest* pRequest = static_cast<DemSlopeRequest*>(pWebRequest);
 
 		const char* input_source_name = pRequest->GetInputDataSource();
@@ -127,6 +129,8 @@ namespace auge
 		}
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
+
+		End();
 
 		return pSusResponse;
 	}

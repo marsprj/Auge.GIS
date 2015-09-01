@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "GProcessHandler.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
@@ -13,7 +14,7 @@ namespace auge
 	class WebContext;
 	class RasterHistogramEqualizationRequest;
 
-	class RasterHistogramEqualizationHandler : public WebHandler
+	class RasterHistogramEqualizationHandler : public GProcessHandler
 	{
 	public:
 		RasterHistogramEqualizationHandler();

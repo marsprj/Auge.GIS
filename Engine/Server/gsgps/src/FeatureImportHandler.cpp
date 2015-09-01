@@ -86,6 +86,8 @@ namespace auge
 	/// <returns></returns>
 	WebResponse* FeatureImportHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		GError* pError = augeGetErrorInstance();
 		GLogger* pLogger = augeGetLoggerInstance();
 		RESULTCODE rc = AG_SUCCESS;
@@ -139,6 +141,9 @@ namespace auge
 		{
 			pWebResponse = ImportShapeFile(shp_path, shp_name, source_name, type_name);
 		}
+
+		End();
+
 		return pWebResponse;
 	}
 

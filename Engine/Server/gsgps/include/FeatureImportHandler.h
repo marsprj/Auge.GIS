@@ -4,6 +4,7 @@
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
+#include "GProcessHandler.h"
 #include <string>
 #include <vector>
 #include <rude/cgi.h>
@@ -14,7 +15,7 @@ namespace auge
 	class FeatureImportRequest;
 	class FeatureClass;
 
-	class FeatureImportHandler : public WebHandler
+	class FeatureImportHandler : public GProcessHandler
 	{
 	public:
 		FeatureImportHandler();

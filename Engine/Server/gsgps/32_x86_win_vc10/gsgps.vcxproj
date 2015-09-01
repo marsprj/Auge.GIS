@@ -128,6 +128,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetSpatialReferenceRequest.cpp" />
     <ClCompile Include="..\src\GetSpatialReferenceResponse.cpp" />
     <ClCompile Include="..\src\GProcessEngine.cpp" />
+    <ClCompile Include="..\src\GProcessHandler.cpp" />
     <ClCompile Include="..\src\LineToPointsHandler.cpp" />
     <ClCompile Include="..\src\LineToPointsRequest.cpp" />
     <ClCompile Include="..\src\MultiPointToPointsHandler.cpp" />
@@ -210,6 +211,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetSpatialReferenceRequest.h" />
     <ClInclude Include="..\include\GetSpatialReferenceResponse.h" />
     <ClInclude Include="..\include\GProcessEngine.h" />
+    <ClInclude Include="..\include\GProcessHandler.h" />
     <ClInclude Include="..\include\LineToPointsHandler.h" />
     <ClInclude Include="..\include\LineToPointsRequest.h" />
     <ClInclude Include="..\include\MultiPointToPointsHandler.h" />

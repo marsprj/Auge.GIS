@@ -97,6 +97,8 @@ namespace auge
 
 	WebResponse* FeatureProjectHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
+		Begin(pUser);
+
 		FeatureProjectRequest* pRequest = static_cast<FeatureProjectRequest*>(pWebRequest);
 
 		const char* input_source_name = pRequest->GetInputSourceName();
@@ -141,6 +143,8 @@ namespace auge
 
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
+
+		End();
 
 		return pSusResponse;
 	}
