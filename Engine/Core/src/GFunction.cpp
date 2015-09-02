@@ -829,7 +829,7 @@ namespace auge
 				//map_width is degree
 				double map_width_cm = PI * AUGE_EARTH_RADIUS * (map_width / 1.8);
 				double pixel_width_cm = pixel_width * AUGE_PIXEL_WIDTH;
-				map_scale = map_width_cm / pixel_width_cm;
+				map_scale = map_width_cm / pixel_width_cm / 100000;
 			}
 			break;
 		case 900913:	//web mercator

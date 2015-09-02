@@ -34,6 +34,8 @@
 #include "GetSymbolHandler.h"
 #include "GetSymbolIconHandler.h"
 
+#include "GetMapScaleHandler.h"
+
 #include "AugeCore.h"
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
@@ -84,6 +86,8 @@ namespace auge
 
 		m_handlers.push_back(new GetSymbolHandler());
 		m_handlers.push_back(new GetSymbolIconHandler());
+
+		m_handlers.push_back(new GetMapScaleHandler());
 	}
 
 	WEngine::~WEngine()

@@ -11,6 +11,14 @@ namespace auge
 
 	class IDWProcessorImpl : public IDWProcessor
 	{
+	private:
+		typedef struct  
+		{
+			float x;
+			float y;
+			float z;
+			float w;
+		}idw_vertex_t;
 	public:
 		IDWProcessorImpl();
 		virtual ~IDWProcessorImpl();

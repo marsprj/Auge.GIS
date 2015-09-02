@@ -71,5 +71,8 @@ libgsims_la_SOURCES=\
 		    GetColorMapRequest.cpp \
 		    UpdateMapLayerOrderHandler.cpp \
 		    UpdateMapLayerOrderRequest.cpp \
+		    GetMapScaleHandler.cpp \
+		    GetMapScaleRequest.cpp \
+		    GetMapScaleResponse.cpp \
 		    WEngine.cpp
 

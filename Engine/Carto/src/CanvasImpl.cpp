@@ -42,6 +42,7 @@ namespace auge
 			return;
 		}
 
+		const char* lname = NULL;
 		Layer* pLayer = NULL;
 		g_uint count = pMap->GetLayerCount();
 		for(g_int i=count-1; i>=0; i--)
@@ -49,6 +50,7 @@ namespace auge
 			pLayer = pMap->GetLayer(i);
 			if(pLayer!=NULL)
 			{
+				lname = pLayer->GetName();
 				if(pLayer->IsVisiable())
 				{
 					DrawLayer(pLayer);
