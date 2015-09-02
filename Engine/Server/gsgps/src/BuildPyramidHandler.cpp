@@ -126,6 +126,7 @@ namespace auge
 			pLogger->Error(msg,__FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();			
 			pExpResponse->SetMessage(msg);
+			pWebResponse = pExpResponse;
 			return pWebResponse;
 		}
 
