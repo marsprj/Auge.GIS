@@ -31,6 +31,9 @@ namespace auge
 		// Cluster 
 		virtual KMeansProcessor*			CreateKMeansProcessor();
 
+		// Grid
+		virtual GridPointGenerator*			CreateGridPointGenerator();
+
 		// projection
 		virtual FeatureProjectProcessor*	CreateFeatureProjectProcessor();
 

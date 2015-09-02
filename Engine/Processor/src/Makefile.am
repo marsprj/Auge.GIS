@@ -50,5 +50,6 @@ libgprocessor_la_SOURCES=\
 		RasterPenEffectProcessorImpl.cpp \
 		DemAspectProcessorImpl.cpp \
 		DemSlopeProcessorImpl.cpp \
-		DemHillshadeProcessorImpl.cpp
+		DemHillshadeProcessorImpl.cpp \
+		GridPointGeneratorImpl.cpp
 

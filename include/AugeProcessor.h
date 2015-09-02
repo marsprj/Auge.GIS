@@ -749,7 +749,27 @@ namespace auge
 	};
 
 	//------------------------------------------------------------------------
-	// Raster Processor Begin
+	// Raster Processor End
+	//------------------------------------------------------------------------
+
+	//------------------------------------------------------------------------
+	// Grid Processor Begin
+	//------------------------------------------------------------------------
+	class GridPointGenerator : public GProcessor
+	{
+	protected:
+		GridPointGenerator(){}
+		virtual ~GridPointGenerator(){}
+	public:
+		virtual	void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual	void		SetOutputFeatureClass(const char* className) = 0;
+		virtual void		SetOutputSRID(g_uint srid) = 0;
+
+		virtual void		SetExtent(GEnvelope& extent) = 0;
+		virtual void		SetCellSize(float cellSize) = 0;
+	};
+	//------------------------------------------------------------------------
+	// Grid Processor Begin
 	//------------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -826,6 +846,9 @@ namespace auge
 
 		// Cluster 
 		virtual KMeansProcessor*			CreateKMeansProcessor() = 0;
+
+		// Grid
+		virtual GridPointGenerator*			CreateGridPointGenerator() = 0;
 
 		// projection
 		virtual FeatureProjectProcessor*	CreateFeatureProjectProcessor() = 0;

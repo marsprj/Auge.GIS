@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(FeatureTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(FeatureTest);
 
 void FeatureTest::setUp() 
 {
@@ -22,8 +22,8 @@ void FeatureTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=UTF-8");
-	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=UTF-8");
+	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -331,6 +331,30 @@ void FeatureTest::GenerateRandomPointsInPolygon()
 	pProcessor->SetOutputDataSource("db1");
 	pProcessor->SetOutputFeatureClass("random_points_country_1");
 	pProcessor->SetCount(200);
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[Ê±¼ä]:%dºÁÃë\n", te-ts);
+}
+
+void FeatureTest::GnerateGridPoint()
+{
+	DWORD ts = GetTickCount();
+
+	auge::GEnvelope exetent(-180,-90,180,90);
+	auge::GridPointGenerator* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateGridPointGenerator();
+	
+	pProcessor->SetUser(2);
+	pProcessor->SetOutputDataSource("db1");
+	pProcessor->SetOutputFeatureClass("grid_points_1");
+	pProcessor->SetOutputSRID(4326);
+	pProcessor->SetCellSize(5.0);
+	pProcessor->SetExtent(exetent);
 
 	RESULTCODE rc = pProcessor->Execute();
 

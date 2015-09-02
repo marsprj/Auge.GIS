@@ -8,7 +8,7 @@ class FeatureTest : public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(FeatureTest);
 	//CPPUNIT_TEST(FeatureImportTest);
-	CPPUNIT_TEST(FeatureExportTest);
+	//CPPUNIT_TEST(FeatureExportTest);
 	//CPPUNIT_TEST(CsvImportTest);
 
 	//CPPUNIT_TEST(ProjectTest);
@@ -17,6 +17,8 @@ class FeatureTest : public CppUnit::TestFixture
 
 	//CPPUNIT_TEST(GenerateRandomPoints);
 	//CPPUNIT_TEST(GenerateRandomPointsInPolygon);
+
+	CPPUNIT_TEST(GnerateGridPoint);
 
 	CPPUNIT_TEST_SUITE_END();
 public:
@@ -36,6 +38,8 @@ private:
 
 	void	GenerateRandomPoints();
 	void	GenerateRandomPointsInPolygon();
+
+	void	GnerateGridPoint();
 private:
 	auge::GConnection* m_pConnection;
 };

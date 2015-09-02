@@ -36,6 +36,8 @@
 #include "PolygonToPointsProcessorImpl.h"
 #include "PolygonToLineProcessorImpl.h"
 
+#include "GridPointGeneratorImpl.h"
+
 #ifndef WIN32
 #include "ArchiveProcessorImpl.h"
 #endif
@@ -211,5 +213,10 @@ namespace auge
 	RandomPointsInPolygonGenerator* GProcessorFactoryImpl::CreateRandomPointsInPolygonGenerator()
 	{
 		return (new RandomPointsInPolygonGeneratorImpl());
+	}
+
+	GridPointGenerator*	GProcessorFactoryImpl::CreateGridPointGenerator()
+	{
+		return (new GridPointGeneratorImpl());
 	}
 }
