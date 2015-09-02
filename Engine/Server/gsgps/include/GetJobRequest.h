@@ -32,6 +32,7 @@ namespace auge
 		augeProcssState	GetState();
 		g_uint			GetMaxJobs();
 		g_uint			GetOffset();
+		const char*		GetUUID();
 
 	public:
 		bool		Create(rude::CGI& cgi);
@@ -41,11 +42,13 @@ namespace auge
 		void		SetState(const char* state);
 		void		SetMaxJobs(const char* maxJobs);
 		void		SetOffset(const char* offset);
+		void		SetUUID(const char* uuid);
 		
 	private:
 		std::string m_version;
 		std::string m_mime_type;
 		std::string m_user;
+		std::string m_uuid;
 		augeProcssState m_state;
 		g_uint		m_maxJobs;
 		g_uint		m_offset;

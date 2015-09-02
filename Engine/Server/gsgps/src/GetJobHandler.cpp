@@ -83,8 +83,8 @@ namespace auge
 		g_uint offset = pRequest->GetOffset();
 
 		JobManager* pJobManager = augeGetJobManagerInstance();
-		//const char* name = pRequest->GetName();
-		//if(name==NULL)
+		const char* uuid = pRequest->GetUUID();
+		if(uuid==NULL)
 		{
 			EnumJob* pEnumJobs = pJobManager->GetJob(pUser, state, maxJobs, offset);
 			GetJobResponse* pResponse = new GetJobResponse(pRequest);
@@ -92,24 +92,24 @@ namespace auge
 			pResponse->SetWebContext(pWebContext);
 			pWebResponse = pResponse;
 		}
-		//else
-		//{
-		//	Map* pMap = pCartoManager->LoadMap(pUser->GetID(), name);
-		//	if(pMap==NULL)
-		//	{
-		//		GError* pError = augeGetErrorInstance();
-		//		WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-		//		pExpResponse->SetMessage(pError->GetLastError());
-		//		pWebResponse = pExpResponse;
-		//	}
-		//	else
-		//	{
-		//		GetJobResponse* pResponse = new GetJobResponse(pRequest);
-		//		pResponse->SetMap(pMap);
-		//		pResponse->SetWebContext(pWebContext);
-		//		pWebResponse = pResponse;;
-		//	}
-		//}
+		else
+		{
+			Job* pJob = pJobManager->GetJob(uuid);
+			if(pJob==NULL)
+			{
+				GError* pError = augeGetErrorInstance();
+				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+				pExpResponse->SetMessage(pError->GetLastError());
+				pWebResponse = pExpResponse;
+			}
+			else
+			{
+				GetJobResponse* pResponse = new GetJobResponse(pRequest);
+				pResponse->SetJob(pJob);
+				pResponse->SetWebContext(pWebContext);
+				pWebResponse = pResponse;;
+			}
+		}
 				
 		return pWebResponse;
 	}

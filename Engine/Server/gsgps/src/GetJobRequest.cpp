@@ -21,6 +21,7 @@ namespace auge
 		SetState(cgi["state"]);
 		SetMaxJobs(cgi["maxJobs"]);
 		SetOffset(cgi["offset"]);
+		SetUUID(cgi["uuid"]);
 		return true;
 	}
 
@@ -153,5 +154,18 @@ namespace auge
 	g_uint GetJobRequest::GetOffset()
 	{
 		return m_offset;
+	}
+
+	void GetJobRequest::SetUUID(const char* uuid)
+	{
+		if(uuid!=NULL)
+		{
+			m_uuid = uuid;
+		}
+	}
+
+	const char* GetJobRequest::GetUUID()
+	{
+		return m_uuid.empty() ? NULL : m_uuid.c_str();
 	}
 }

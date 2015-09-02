@@ -79,120 +79,18 @@ namespace auge
 
 	void GetJobResponse::WriteJob(XDocument* pxDoc)
 	{
-	//	Job* pJob = m_pJob;
-	//	XElement  *pxNode = NULL;
-	//	XElement  *pxRoot = NULL;
-	//	char str[AUGE_MSG_MAX];
+		GLogger* pLogger = augeGetLoggerInstance();
 
-	//	pxRoot = pxDoc->CreateRootNode("Job_Capabilities", NULL, NULL);
-	//	pxRoot->SetNamespaceDeclaration("http://www.opengis.net/wms",NULL);
-	//	pxRoot->SetNamespaceDeclaration("http://www.w3.org/1999/xlink","xlink");
-	//	pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
-	//	pxRoot->SetAttribute("version", "1.0.0", NULL);
+		Job* pJob = NULL;
+		JobManager* pJobManager = augeGetJobManagerInstance();
 
-	//	g_sprintf(str,"%d",pJob->GetID());
-	//	XElement* pxID = pxRoot->AddChild("ID", NULL);
-	//	pxID->SetChildText(str);
-	//	XElement* pxName = pxRoot->AddChild("Name", NULL);
-	//	pxName->SetChildText(pJob->GetName());
-	//	// SRID
-	//	g_sprintf(str, "%d", pJob->GetSRID());
-	//	pxNode = pxRoot->AddChild("Srid");
-	//	pxNode->AddChildText(str);
+		XElement	*pxNode = NULL;
 
-	//	// Extent
-	//	//AddBoundingBoxNode(pxJob, pJob->GetExtent());		
-	//	AddLayerBoundingNode(pxRoot, pJob->GetExtent(), pJob->GetSRID());
-	//	AddViewerNode(pxRoot, pJob->GetViewer(), pJob->GetSRID());
-
-	//	// WMS_Capabilities-->Capability
-	//	XElement* pxCapability = pxRoot->AddChild("Capability", NULL);
-	//	// WMS_Capabilities-->Capability-->Layer
-	//	XElement* pxLayer = pxCapability->AddChild("Layer", NULL);
-	//	pxNode = pxLayer->AddChild("Name", NULL);
-	//	pxNode->AddChildText("Group");
-	//	pxNode = pxLayer->AddChild("Abstract", NULL);
-	//	pxNode->AddChildText("Group");
-	//	pxNode = pxLayer->AddChild("Type", NULL);
-	//	pxNode->AddChildText("Group");
-	//	// WMS_Capabilities-->Capability-->Layer-->CRS
-	//	pxNode = pxLayer->AddChild("CRS", NULL);
-	//	pxNode->AddChildText("EPSG:4326");
-	//	// WMS_Capabilities-->Capability-->Layer-->EX_GeographicBoundingBox
-	//	GEnvelope extent = pJob->GetExtent();
-	//	if(!extent.IsValid())
-	//	{
-	//		extent.Set(-180.f,-90.0f,180.0f,90.0f);
-	//	}
-	//	AddLayerGeographicBoundingNode(pxLayer, extent);
-	//	AddLayerBoundingNode(pxLayer, extent, pJob->GetSRID());
-
-	//	// WMS_Capabilities-->Capability-->Layer-->Layer
-	//	Layer* pLayer = NULL;
-	//	g_uint lc = pJob->GetLayerCount();
-	//	for(g_uint i=0; i<lc; i++)
-	//	{ 
-	//		pLayer = pJob->GetLayer(i);
-	//		if(pLayer!=NULL)
-	//		{
-	//			const char* lname = pLayer->GetName();
-	//			XElement* pxLayer_2 = pxLayer->AddChild("Layer", NULL);				
-	//			pxLayer_2->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
-	//			pxLayer_2->SetAttribute("visible", pLayer->IsVisiable()?"1":"0", NULL);
-	//			g_sprintf(str,"%d",pLayer->GetID());
-	//			pxLayer_2->SetAttribute("id", str,NULL);
-	//			pxNode = pxLayer_2->AddChild("Name",NULL);
-	//			pxNode->SetChildText(lname);
-	//			pxNode = pxLayer_2->AddChild("Title",NULL);
-	//			pxNode->SetChildText(lname);
-	//			pxNode = pxLayer_2->AddChild("Abstract",NULL);
-	//			g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
-	//			pxNode = pxLayer_2->AddChild("CRS",NULL);
-	//			
-	//			switch(pLayer->GetType())
-	//			{
-	//			case augeLayerFeature:
-	//				{
-	//					XElement* pxLayerType = pxLayer_2->AddChild("Type");
-	//					pxLayerType->AddChildText("Feature");
-
-	//					FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-	//					AddLayerGeomTypeNode(pxLayer_2, pFeatureLayer);
-	//					Style* pStyle = pFeatureLayer->GetStyle();
-	//					if(pStyle!=NULL)
-	//					{
-	//						AddStyleNode(pxLayer_2, pStyle);
-	//					}
-	//				}
-	//				break;
-	//			case augeLayerRaster:
-	//				{
-	//					XElement* pxLayerType = pxLayer_2->AddChild("Type");
-	//					pxLayerType->AddChildText("Raster");
-
-	//					RasterLayer* pRasterLayer = static_cast<RasterLayer*>(pLayer);
-	//				}
-	//				break;
-	//			case augeLayerQuadServer:
-	//				{
-	//					XElement* pxLayerType = pxLayer_2->AddChild("Type");
-	//					pxLayerType->AddChildText("QuadServer");
-
-	//					QuadServerLayer* pQuadServerLayer = static_cast<QuadServerLayer*>(pLayer);
-	//					AddWebURLNode(pxLayer_2, pQuadServerLayer->GetURL());
-	//				}
-	//				break;
-	//			}
-	//			extent = pLayer->GetExtent();
-	//			if(!extent.IsValid())
-	//			{
-	//				extent.Set(-180.f,-90.0f,180.0f,90.0f);
-	//			}
-	//			AddLayerGeographicBoundingNode(pxLayer_2, extent);
-	//			AddLayerBoundingNode(pxLayer_2, extent, pJob->GetSRID());
-
-	//		}
-	//	}
+		XElement	*pxRoot = pxDoc->CreateRootNode("Jobs", NULL, NULL);
+		if(m_pJob!=NULL)
+		{
+			AddJobNode(pxRoot, m_pJob);
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////
