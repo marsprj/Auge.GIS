@@ -118,6 +118,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetAreaHandler.cpp" />
     <ClCompile Include="..\src\GetAreaRequest.cpp" />
     <ClCompile Include="..\src\GetAreaResponse.cpp" />
+    <ClCompile Include="..\src\GetJobHandler.cpp" />
+    <ClCompile Include="..\src\GetJobRequest.cpp" />
+    <ClCompile Include="..\src\GetJobResponse.cpp" />
     <ClCompile Include="..\src\GetLengthHandler.cpp" />
     <ClCompile Include="..\src\GetLengthRequest.cpp" />
     <ClCompile Include="..\src\GetLengthResponse.cpp" />
@@ -201,6 +204,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetAreaHandler.h" />
     <ClInclude Include="..\include\GetAreaRequest.h" />
     <ClInclude Include="..\include\GetAreaResponse.h" />
+    <ClInclude Include="..\include\GetJobHandler.h" />
+    <ClInclude Include="..\include\GetJobRequest.h" />
+    <ClInclude Include="..\include\GetJobResponse.h" />
     <ClInclude Include="..\include\GetLengthHandler.h" />
     <ClInclude Include="..\include\GetLengthRequest.h" />
     <ClInclude Include="..\include\GetLengthResponse.h" />

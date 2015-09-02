@@ -13,6 +13,8 @@ namespace auge
 		virtual ~EnumJobImpl();
 	public:
 		virtual Job*		Next();
+		virtual void		Reset();
+		virtual void		Release();
 
 	public:
 		void	Add(Job* pJob);

@@ -20,9 +20,10 @@ namespace auge
 
 		virtual const char*	GetOperation();	
 		virtual const char*	GetParams();		
-		virtual bool		GetStartTime(TIME_STRU& start);
-		virtual bool		GetEndTime(TIME_STRU& end);
+		virtual bool		GetStartTime(TIME_STRU* start);
+		virtual bool		GetEndTime(TIME_STRU* end);
 		virtual	bool		IsFinished();
+		virtual augeProcssState GetState();
 
 	public:
 		void SetUUID(const char* uuid);
@@ -32,8 +33,9 @@ namespace auge
 
 		void SetOperation(const char* operation);	
 		void SetParams(const char* params);		
-		void SetStartTime(TIME_STRU& start);
-		void SetEndTime(TIME_STRU& end);
+		void SetStartTime(TIME_STRU* start);
+		void SetEndTime(TIME_STRU* end);
+		void SetState(g_uint state);
 
 	private:
 		std::string		m_user; 
@@ -44,6 +46,7 @@ namespace auge
 		std::string		m_params;
 		TIME_STRU		m_start;
 		TIME_STRU		m_end;
+		augeProcssState m_state;
 	};
 }
 

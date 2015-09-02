@@ -26,7 +26,8 @@ namespace auge
 	{
 		augeStateRunning	= 0,
 		augeStateFinished	= 1,
-		augeStateCanceled	= 2
+		augeStateCanceled	= 2,
+		augeStateUnknown	= 3
 	}augeProcssState;
 
 	class GConnection;
@@ -117,9 +118,10 @@ namespace auge
 
 		virtual const char*	GetOperation() = 0;	
 		virtual const char*	GetParams() = 0;		
-		virtual bool		GetStartTime(TIME_STRU& time) = 0;
-		virtual bool		GetEndTime(TIME_STRU& time) = 0;
+		virtual bool		GetStartTime(TIME_STRU* time) = 0;
+		virtual bool		GetEndTime(TIME_STRU* time) = 0;
 		virtual	bool		IsFinished() = 0;
+		virtual augeProcssState GetState() = 0;
 	};
 
 	class EnumJob
@@ -129,6 +131,8 @@ namespace auge
 		virtual ~EnumJob(){}
 	public:
 		virtual Job*		Next() = 0;
+		virtual void		Reset() = 0;
+		virtual void		Release() = 0; 
 	};
 
 	class JobManager

@@ -42,13 +42,21 @@ namespace auge
 		return m_params.c_str();
 	}
 
-	bool JobImpl::GetStartTime(TIME_STRU& start)
+	bool JobImpl::GetStartTime(TIME_STRU* start)
 	{
+		if(start!=NULL)
+		{
+			memcpy(start, &m_start, sizeof(TIME_STRU));
+		}
 		return true;
 	}
 
-	bool JobImpl::GetEndTime(TIME_STRU& end)
+	bool JobImpl::GetEndTime(TIME_STRU* end)
 	{
+		if(end!=NULL)
+		{
+			memcpy(end, &m_end, sizeof(TIME_STRU));
+		}
 		return true;
 	}
 
@@ -111,14 +119,29 @@ namespace auge
 		m_params = params;
 	}
 
-	void JobImpl::SetStartTime(TIME_STRU& start)
+	void JobImpl::SetStartTime(TIME_STRU* start)
 	{
-
+		if(start!=NULL)
+		{
+			memcpy(&m_start, start, sizeof(TIME_STRU));
+		}
 	}
 
-	void JobImpl::SetEndTime(TIME_STRU& end)
+	void JobImpl::SetEndTime(TIME_STRU* end)
 	{
-
+		if(end!=NULL)
+		{
+			memcpy(&m_end, end, sizeof(TIME_STRU));
+		}
 	}
 
+	augeProcssState JobImpl::GetState()
+	{
+		return m_state;
+	}
+
+	void JobImpl::SetState(g_uint state)
+	{
+		m_state = (augeProcssState)state;
+	}
 }

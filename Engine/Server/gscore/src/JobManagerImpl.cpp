@@ -37,13 +37,19 @@ namespace auge
 		auge_get_time_struct(&start_time);
 		char time_str[AUGE_NAME_MAX];
 		memset(time_str, 0, AUGE_NAME_MAX);
-		g_snprintf(time_str,AUGE_NAME_MAX,"%d-%02d-%02d %02d:%02d:%02d.%03d",start_time.usYear,
-																		start_time.usMonth,
-																		start_time.usDay,
-																		start_time.usHour,
-																		start_time.usMinute,
-																		start_time.usSecond,
-																		start_time.usMilliseconds);
+		//g_snprintf(time_str,AUGE_NAME_MAX,"%d-%02d-%02d %02d:%02d:%02d.%03d",start_time.usYear,
+		//																start_time.usMonth,
+		//																start_time.usDay,
+		//																start_time.usHour,
+		//																start_time.usMinute,
+		//																start_time.usSecond,
+		//																start_time.usMilliseconds);
+		g_snprintf(time_str,AUGE_NAME_MAX,"%d-%02d-%02d %02d:%02d:%02d",start_time.usYear,
+			start_time.usMonth,
+			start_time.usDay,
+			start_time.usHour,
+			start_time.usMinute,
+			start_time.usSecond);
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
@@ -159,14 +165,20 @@ namespace auge
 		pJob->SetParams(params);
 		pJob->SetClient(client);
 		pJob->SetServer(server);
+		pJob->SetState(state);
 
 		memset(&tim,0, sizeof(TIME_STRU));
-		sscanf(start,"%d-%2d-%2d %2d:%2d:%2d.%3d",&(tim.usYear),&(tim.usMonth),&(tim.usDay),&(tim.usHour),&(tim.usMinute),&(tim.usSecond),&(tim.usMilliseconds));
-		pJob->SetStartTime(tim);
+		sscanf(start,"%d-%2d-%2d %2d:%2d:%2d",&(tim.usYear),&(tim.usMonth),&(tim.usDay),&(tim.usHour),&(tim.usMinute),&(tim.usSecond));
+		//memset(&tim,0, sizeof(TIME_STRU));
+		//sscanf(start,"%d-%2d-%2d %2d:%2d:%2d.%d",&(tim.usYear),&(tim.usMonth),&(tim.usDay),&(tim.usHour),&(tim.usMinute),&(tim.usSecond),&(tim.usMilliseconds));
+		pJob->SetStartTime(&tim);
 
 		memset(&tim,0, sizeof(TIME_STRU));
-		sscanf(end,"%d-%2d-%2d %2d:%2d:%2d.%3d",&(tim.usYear),&(tim.usMonth),&(tim.usDay),&(tim.usHour),&(tim.usMinute),&(tim.usSecond),&(tim.usMilliseconds));
-		pJob->SetEndTime(tim);
+		sscanf(end,"%d-%2d-%2d %2d:%2d:%2d",&(tim.usYear),&(tim.usMonth),&(tim.usDay),&(tim.usHour),&(tim.usMinute),&(tim.usSecond));
+		//memset(&tim,0, sizeof(TIME_STRU));
+		//sscanf(end,"%d-%2d-%2d %2d:%2d:%2d.%d",&(tim.usYear),&(tim.usMonth),&(tim.usDay),&(tim.usHour),&(tim.usMinute),&(tim.usSecond),&(tim.usMilliseconds));
+		//sscanf(end,"%d-%2d-%2d %2d:%2d:%2d.%3d",&(tim.usYear),&(tim.usMonth),&(tim.usDay),&(tim.usHour),&(tim.usMinute),&(tim.usSecond),&(tim.usMilliseconds));
+		pJob->SetEndTime(&tim);
 
 		return pJob;
 	}
@@ -179,13 +191,20 @@ namespace auge
 		auge_get_time_struct(&start_time);
 		char time_str[AUGE_NAME_MAX];
 		memset(time_str, 0, AUGE_NAME_MAX);
-		g_snprintf(time_str,AUGE_NAME_MAX,"%d-%02d-%02d %02d:%02d:%02d.%03d",start_time.usYear,
+		//g_snprintf(time_str,AUGE_NAME_MAX,"%d-%02d-%02d %02d:%02d:%02d.%03d",start_time.usYear,
+		//	start_time.usMonth,
+		//	start_time.usDay,
+		//	start_time.usHour,
+		//	start_time.usMinute,
+		//	start_time.usSecond,
+		//	start_time.usMilliseconds);
+
+		g_snprintf(time_str,AUGE_NAME_MAX,"%d-%02d-%02d %02d:%02d:%02d",start_time.usYear,
 			start_time.usMonth,
 			start_time.usDay,
 			start_time.usHour,
 			start_time.usMinute,
-			start_time.usSecond,
-			start_time.usMilliseconds);
+			start_time.usSecond);
 		
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);

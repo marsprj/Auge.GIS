@@ -12,6 +12,11 @@ namespace auge
 		Cleanup();
 	}
 
+	void EnumJobImpl::Reset()
+	{
+		m_iter = m_jobs.begin();
+	}
+
 	Job* EnumJobImpl::Next()
 	{
 		if(m_iter==m_jobs.end())
@@ -42,5 +47,10 @@ namespace auge
 			}
 		}
 		m_jobs.clear();
+	}
+
+	void EnumJobImpl::Release()
+	{
+		delete this;
 	}
 }
