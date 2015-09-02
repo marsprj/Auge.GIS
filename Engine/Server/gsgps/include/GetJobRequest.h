@@ -63,6 +63,6 @@ namespace auge
 [ HTTP Get ]
 -------------------------------------------------------------------------
 user=user1&service=gps&version=1.0.0&request=GetJob&state=Running&maxJobs=20&offset=0
-http://127.0.0.1:8088/ows/user1/mgr?service=gps&version=1.0.0&request=GetJob&name=world
+http://192.168.111.152:8088/ows/user1/mgr?service=gps&version=1.0.0&request=GetJob&state=Running&maxJobs=20&offset=0
 
 ************************************************************************/
