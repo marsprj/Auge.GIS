@@ -43,6 +43,7 @@
 #include "DemAspectHandler.h"
 #include "DemStretchHandler.h"
 #include "DemHillshadeHandler.h"
+#include "DelaunayHandler.h"
 
 #include "ClusterKmeanHandler.h"
 
@@ -100,6 +101,7 @@ namespace auge
 		m_dem_handlers.push_back(new DemAspectHandler());
 		m_dem_handlers.push_back(new DemStretchHandler());
 		m_dem_handlers.push_back(new DemHillshadeHandler());
+		m_dem_handlers.push_back(new DelaunayHandler());
 
 		m_cluster_handlers.push_back(new KMeanHandler());
 
