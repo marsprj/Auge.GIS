@@ -93,6 +93,8 @@ libgsgps_la_SOURCES=\
 		GetSpatialReferenceCountHandler.cpp \
 		GetSpatialReferenceCountRequest.cpp \
 		GetSpatialReferenceCountResponse.cpp \
+		DelaunayHandler.cpp \
+		DelaunayRequest.cpp \
 		GetJobHandler.cpp \
 		GetJobRequest.cpp \
 		GetJobResponse.cpp \
