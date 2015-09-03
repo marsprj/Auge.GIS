@@ -84,6 +84,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\CsvImportProcessorImpl.cpp" />
+    <ClCompile Include="..\src\Delaunay.cpp" />
     <ClCompile Include="..\src\DelaunayProcessorImpl.cpp" />
     <ClCompile Include="..\src\DemAspectProcessorImpl.cpp" />
     <ClCompile Include="..\src\DemHillshadeProcessorImpl.cpp" />
@@ -124,6 +125,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   <ItemGroup>
     <ClInclude Include="..\..\..\include\AugeProcessor.h" />
     <ClInclude Include="..\include\CsvImportProcessorImpl.h" />
+    <ClInclude Include="..\include\Delaunay.h" />
     <ClInclude Include="..\include\DelaunayProcessorImpl.h" />
     <ClInclude Include="..\include\DemAspectProcessorImpl.h" />
     <ClInclude Include="..\include\DemHillshadeProcessorImpl.h" />

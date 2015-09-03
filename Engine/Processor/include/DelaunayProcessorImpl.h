@@ -3,6 +3,7 @@
 
 #include "AugeProcessor.h"
 #include "AugeGeometry.h"
+#include "Delaunay.h"
 
 namespace auge
 {
@@ -61,16 +62,17 @@ namespace auge
 		
 	private:
 		bool				LoadVertex(FeatureClass* pinFeatureClass);
+		bool				LoadVertex(FeatureClass* pinFeatureClass, delaunay_vertext_t** vertexes, g_uint& vertex_count);
 		bool				Triangulate();
 		void				ComputeExtent(double& xmin, double& ymin, double& xmax, double& ymax);
 		void				GenerateSuperTriangle(double cx, double cy, double size);
 		bool				CircumCircle(double xp,double yp, double x1,double y1,double x2,double y2,double x3,double y3, double *xc,double *yc,double *rsqr);
 		bool				FindEdge(g_int v1, g_int v2);
 
-		bool				WriteEdges(const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid);
+		bool				WriteEdges(Delaunay& delaunay, const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid);
 		FeatureClass*		CreateEdgeFeatureClass(const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid);
 
-		bool				WriteTriangles(const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid);
+		bool				WriteTriangles(Delaunay& delaunay, const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid);
 		FeatureClass*		CreateTriangleFeatureClass(const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid);
 		
 	private:

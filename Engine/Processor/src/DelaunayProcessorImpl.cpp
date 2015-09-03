@@ -1,11 +1,12 @@
 #include "DelaunayProcessorImpl.h"
-#include "Kmean.h"
 
 #include "AugeData.h"
 #include "AugeCore.h"
 #include "AugeFeature.h"
 #include "AugeField.h"
 #include "AugeUser.h"
+
+#include "Delaunay.h"
 
 #include <fstream>
 
@@ -236,17 +237,28 @@ namespace auge
 		//	return AG_FAILURE;
 		//}
 
-		if(!LoadVertex(pinFeatureClass))
+		//if(!LoadVertex(pinFeatureClass))
+		//{
+		//	pinFeatureClass->Release();
+		//	poutWorkspace->Release();
+		//	return AG_FAILURE;
+		//}
+
+		g_uint vertex_count = 0;
+		delaunay_vertext_t* vertexes = NULL;
+		if(!LoadVertex(pinFeatureClass, &vertexes, vertex_count))
 		{
 			pinFeatureClass->Release();
 			poutWorkspace->Release();
 			return AG_FAILURE;
 		}
 
-		Triangulate();
+		Delaunay delaunay;
+		delaunay.SetVertex(vertexes, vertex_count);
+		delaunay.Triangulate();
 
-		//WriteTriangles(className_out, poutWorkspace, srid);
-		WriteEdges(className_out, poutWorkspace, srid);
+		WriteTriangles(delaunay, className_out, poutWorkspace, srid);
+		WriteEdges(delaunay, className_out, poutWorkspace, srid);
 
 		pinFeatureClass->Release();
 		poutWorkspace->Release();
@@ -281,14 +293,10 @@ namespace auge
 			m_vertexes = NULL;
 		}
 		m_vertex_count = pinFeatureClass->GetCount();
-		m_vertexes = (d_vertext_t*)malloc((m_vertex_count+3) * sizeof(d_vertext_t));
-		if(m_vertexes==NULL)
-		{
-			return false;
-		}
-		memset(m_vertexes, 0, (m_vertex_count+3) * sizeof(d_vertext_t));
-		d_vertext_t* ptr = m_vertexes;
-		
+		delaunay_vertext_t* vertexes = (delaunay_vertext_t*)malloc((m_vertex_count+3) * sizeof(delaunay_vertext_t));		
+		memset(vertexes, 0, (m_vertex_count+3) * sizeof(delaunay_vertext_t));
+		delaunay_vertext_t* ptr = vertexes;
+
 		pField = pinFeatureClass->GetField(m_in_z_field.c_str());
 		if(pField!=NULL)
 		{
@@ -326,10 +334,11 @@ namespace auge
 						break;
 					}
 				}
-				
+
 				WKBPoint* pWKBPoint = (WKBPoint*)pGeometry->AsBinary();
 				ptr->x = pWKBPoint->point.x;
 				ptr->y = pWKBPoint->point.y;
+				ptr->id = pFeature->GetFID();
 
 				ptr++;
 				m_vertex_count++;
@@ -342,6 +351,8 @@ namespace auge
 
 		return (m_vertex_count>0);
 	}
+
+	
 
 	bool DelaunayProcessorImpl::Triangulate()
 	{
@@ -704,7 +715,7 @@ namespace auge
 		return ptriFeatureCass;
 	}
 
-	bool DelaunayProcessorImpl::WriteTriangles(const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid)
+	bool DelaunayProcessorImpl::WriteTriangles(Delaunay& delaunay, const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid)
 	{
 		FeatureClass* ptriFeatureClass = NULL;
 		ptriFeatureClass = CreateTriangleFeatureClass(outClassName, poutWorkspace, srid);
@@ -712,6 +723,10 @@ namespace auge
 		{
 			return false;
 		}
+
+		g_uint count = delaunay.GetTriangleCount();
+		delaunay_triangle_t* triangles = delaunay.GetTriangle();
+		delaunay_vertext_t*  vertexes = delaunay.GetVertex();
 
 		size_t wkbSize = sizeof(WKBPolygon) + sizeof(auge::Point) * 3;
 		WKBPolygon* pWKBPolygon = NULL;
@@ -731,21 +746,21 @@ namespace auge
 		FeatureInsertCommand* cmd = ptriFeatureClass->CreateInsertCommand();
 
 		g_uint v1, v2, v3;
-		for(g_uint i=0; i<m_triangle_count; i++)
+		for(g_uint i=0; i<count; i++)
 		//for(g_uint i=0; i<6; i++)
 		{
-			v1 = m_triangles[i].v1;
-			v2 = m_triangles[i].v2;
-			v3 = m_triangles[i].v3;
+			v1 = triangles[i].v1;
+			v2 = triangles[i].v2;
+			v3 = triangles[i].v3;
 
-			ptr[0].x = m_vertexes[v1].x;
-			ptr[0].y = m_vertexes[v1].y;
-			ptr[1].x = m_vertexes[v2].x;
-			ptr[1].y = m_vertexes[v2].y;
-			ptr[2].x = m_vertexes[v3].x;
-			ptr[2].y = m_vertexes[v3].y;
-			ptr[3].x = m_vertexes[v1].x;
-			ptr[3].y = m_vertexes[v1].y;
+			ptr[0].x = vertexes[v1].x;
+			ptr[0].y = vertexes[v1].y;
+			ptr[1].x = vertexes[v2].x;
+			ptr[1].y = vertexes[v2].y;
+			ptr[2].x = vertexes[v3].x;
+			ptr[2].y = vertexes[v3].y;
+			ptr[3].x = vertexes[v1].x;
+			ptr[3].y = vertexes[v1].y;
 
 			pGeometry = pGeometryFactory->CreateGeometryFromWKB((g_byte*)pWKBPolygon, true);
 			pGeoValue = new GValue(pGeometry);
@@ -791,7 +806,7 @@ namespace auge
 		return ptriFeatureCass;
 	}
 
-	bool DelaunayProcessorImpl::WriteEdges(const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid)
+	bool DelaunayProcessorImpl::WriteEdges(Delaunay& delaunay, const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid)
 	{
 		FeatureClass* ptriFeatureClass = NULL;
 		ptriFeatureClass = CreateEdgeFeatureClass(outClassName, poutWorkspace, srid);
@@ -799,6 +814,10 @@ namespace auge
 		{
 			return false;
 		}
+
+		g_uint count = delaunay.GetEdgeCount();
+		delaunay_edge_t* edges = delaunay.GetEdge();
+		delaunay_vertext_t*  vertexes = delaunay.GetVertex();
 
 		size_t wkbSize = sizeof(WKBLineString) + sizeof(auge::Point);
 		WKBLineString* pWKBLineString = NULL;
@@ -817,15 +836,15 @@ namespace auge
 		FeatureInsertCommand* cmd = ptriFeatureClass->CreateInsertCommand();
 
 		g_int v1, v2;
-		for(g_uint i=0; i<m_edge_count; i++)
+		for(g_uint i=0; i<count; i++)
 		{
-			v1 = m_edges[i].v1;
-			v2 = m_edges[i].v2;
+			v1 = edges[i].v1;
+			v2 = edges[i].v2;
 
-			ptr[0].x = m_vertexes[v1].x;
-			ptr[0].y = m_vertexes[v1].y;
-			ptr[1].x = m_vertexes[v2].x;
-			ptr[1].y = m_vertexes[v2].y;
+			ptr[0].x = vertexes[v1].x;
+			ptr[0].y = vertexes[v1].y;
+			ptr[1].x = vertexes[v2].x;
+			ptr[1].y = vertexes[v2].y;
 
 			pGeometry = pGeometryFactory->CreateGeometryFromWKB((g_byte*)pWKBLineString, true);
 			pGeoValue = new GValue(pGeometry);
@@ -838,5 +857,82 @@ namespace auge
 		free(pWKBLineString);
 
 		return true;
+	}
+
+	bool DelaunayProcessorImpl::LoadVertex(FeatureClass* pinFeatureClass, delaunay_vertext_t** vertexes, g_uint& vertex_count)
+	{
+		double zvalue = 0.0f;
+		GField* pField = NULL;
+		Geometry* pGeometry = NULL;
+		Feature* pFeature = NULL;
+		FeatureCursor* pCursor = NULL;
+		GQuery* pQuery = NULL;
+		FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
+		augeFieldType ftype = augeFieldTypeNone;
+
+		vertex_count = pinFeatureClass->GetCount();
+		if(vertex_count==0)
+		{
+			return false;
+		}
+
+		*vertexes = (delaunay_vertext_t*)malloc((vertex_count+3) * sizeof(delaunay_vertext_t));		
+		//delaunay_vertext_t* ptsss = (delaunay_vertext_t*)malloc((vertex_count+3) * sizeof(delaunay_vertext_t));	
+		memset(*vertexes, 0, (vertex_count+3) * sizeof(delaunay_vertext_t));
+		delaunay_vertext_t* ptr = *vertexes;
+
+		pField = pinFeatureClass->GetField(m_in_z_field.c_str());
+		if(pField!=NULL)
+		{
+			ftype = pField->GetType();
+		}
+
+		vertex_count = 0;
+		pQuery = pFilterFactory->CreateQuery();
+		if(pField!=NULL)
+		{
+			pQuery->AddSubField(m_in_z_field.c_str());
+		}
+		pQuery->AddSubField(pinFeatureClass->GetFields()->GetGeometryField()->GetName());
+		pCursor = pinFeatureClass->Query(pQuery);
+		while((pFeature=pCursor->NextFeature())!=NULL)
+		{
+			pGeometry = pFeature->GetGeometry();
+			if(pGeometry!=NULL)
+			{
+				if(pField!=NULL)
+				{
+					switch(ftype)
+					{
+					case augeFieldTypeShort:
+						ptr->z = pFeature->GetShort(m_in_z_field.c_str());
+						break;
+					case augeFieldTypeInt:
+						ptr->z = pFeature->GetInt(m_in_z_field.c_str());
+						break;
+					case augeFieldTypeFloat:
+						ptr->z = pFeature->GetFloat(m_in_z_field.c_str());
+						break;
+					case augeFieldTypeDouble:
+						ptr->z = pFeature->GetDouble(m_in_z_field.c_str());
+						break;
+					}
+				}
+
+				WKBPoint* pWKBPoint = (WKBPoint*)pGeometry->AsBinary();
+				ptr->x = pWKBPoint->point.x;
+				ptr->y = pWKBPoint->point.y;
+				ptr->id = pFeature->GetFID();
+
+				ptr++;
+				vertex_count++;
+			}
+
+			pFeature->Release();
+		}
+		pCursor->Release();
+		pQuery->Release();
+
+		return (vertex_count>0);
 	}
 }
