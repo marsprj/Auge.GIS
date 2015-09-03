@@ -51,5 +51,9 @@ libgprocessor_la_SOURCES=\
 		DemAspectProcessorImpl.cpp \
 		DemSlopeProcessorImpl.cpp \
 		DemHillshadeProcessorImpl.cpp \
-		GridPointGeneratorImpl.cpp
+		GridPointGeneratorImpl.cpp \
+		Delaunay.cpp \
+		DelaunayProcessorImpl.cpp \
+		IDWProcessorImpl.cpp \
+		FeatureIDWProcessorImpl.cpp
 

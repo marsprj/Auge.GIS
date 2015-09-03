@@ -61,14 +61,7 @@ namespace auge
 		const char*			GetOutputZField();
 		
 	private:
-		bool				LoadVertex(FeatureClass* pinFeatureClass);
 		bool				LoadVertex(FeatureClass* pinFeatureClass, delaunay_vertext_t** vertexes, g_uint& vertex_count);
-		bool				Triangulate();
-		void				ComputeExtent(double& xmin, double& ymin, double& xmax, double& ymax);
-		void				GenerateSuperTriangle(double cx, double cy, double size);
-		bool				CircumCircle(double xp,double yp, double x1,double y1,double x2,double y2,double x3,double y3, double *xc,double *yc,double *rsqr);
-		bool				FindEdge(g_int v1, g_int v2);
-
 		bool				WriteEdges(Delaunay& delaunay, const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid);
 		FeatureClass*		CreateEdgeFeatureClass(const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid);
 
@@ -83,17 +76,7 @@ namespace auge
 		std::string	m_out_source_name;
 		std::string	m_out_class_name;
 		std::string m_out_z_field;
-
-		g_uint			m_vertex_count;
-		d_vertext_t*	m_vertexes;
-
-		g_uint			m_edge_count;
-		d_edge_t*		m_edges;
-
-		g_uint			m_triangle_count;
-		d_triangle_t*	m_triangles;
-
-
+		
 		g_uint		m_user;
 	};
 

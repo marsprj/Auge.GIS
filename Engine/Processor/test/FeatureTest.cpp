@@ -405,7 +405,7 @@ void FeatureTest::Delaunay()
 	pProcessor->SetUser(2);
 	pProcessor->SetInputDataSource("db1");
 	pProcessor->SetInputFeatureClass("random_points_100");
-	//pProcessor->SetInputZField("aqi");
+	pProcessor->SetInputZField("aqi");
 
 	pProcessor->SetOutputDataSource("test");
 	pProcessor->SetOutputFeatureClass("delaunay_100");
@@ -431,7 +431,7 @@ void FeatureTest::Delaunay_AQI()
 	pProcessor->SetUser(2);
 	pProcessor->SetInputDataSource("aqi");
 	pProcessor->SetInputFeatureClass("aqi_ranking_2015_02_04_11");
-	//pProcessor->SetInputZField("aqi");
+	pProcessor->SetInputZField("aqi");
 
 	pProcessor->SetOutputDataSource("test");
 	pProcessor->SetOutputFeatureClass("delaunay_aqi");
