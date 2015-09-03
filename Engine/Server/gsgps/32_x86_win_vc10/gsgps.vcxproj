@@ -99,6 +99,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\ConvexHullHandler.cpp" />
     <ClCompile Include="..\src\ConvexHullRequest.cpp" />
     <ClCompile Include="..\src\ConvexHullResponse.cpp" />
+    <ClCompile Include="..\src\DelaunayHandler.cpp" />
+    <ClCompile Include="..\src\DelaunayRequest.cpp" />
     <ClCompile Include="..\src\DemAspectHandler.cpp" />
     <ClCompile Include="..\src\DemAspectRequest.cpp" />
     <ClCompile Include="..\src\DemHillshadeHandler.cpp" />
@@ -185,6 +187,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\ConvexHullHandler.h" />
     <ClInclude Include="..\include\ConvexHullRequest.h" />
     <ClInclude Include="..\include\ConvexHullResponse.h" />
+    <ClInclude Include="..\include\DelaunayHandler.h" />
+    <ClInclude Include="..\include\DelaunayRequest.h" />
     <ClInclude Include="..\include\DemAspectHandler.h" />
     <ClInclude Include="..\include\DemAspectRequest.h" />
     <ClInclude Include="..\include\DemHillshadeHandler.h" />
