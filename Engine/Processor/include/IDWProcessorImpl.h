@@ -54,6 +54,7 @@ namespace auge
 
 	private:
 		Raster*				Interpolate(FeatureClass* pinFeatureClass);
+		bool				GenerateGrid();
 		
 	private:
 		std::string	m_in_source_name;
@@ -68,6 +69,11 @@ namespace auge
 		float		m_cell_size;
 
 		g_uint		m_user;
+
+		g_uint		m_rows;
+		g_uint		m_cols;
+		g_uint		m_vertex_count;
+		idw_vertex_t* m_vertexes;
 	};
 
 }

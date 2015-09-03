@@ -14,11 +14,20 @@ namespace auge
 		m_user = 0;
 		m_cell_size = 0.0f;
 		m_z_field.clear();
+
+		m_rows = 0;
+		m_cols = 0;
+		m_vertex_count = 0;
+		m_vertexes = NULL;
 	}
 
 	IDWProcessorImpl::~IDWProcessorImpl()
 	{
-
+		if(m_vertexes!=NULL)
+		{
+			free(m_vertexes);
+			m_vertexes = NULL;
+		}
 	}
 
 	void IDWProcessorImpl::SetInputDataSource(const char* sourceName)
@@ -195,6 +204,10 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
+		if(!m_extent.IsValid())
+		{
+			return AG_FAILURE;
+		}
 
 		FeatureClass		*pinFeatureClass = NULL;
 		FeatureClass		*poutFeatureClass= NULL;
@@ -267,6 +280,16 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		if(!GenerateGrid())
+		{
+			pinFeatureClass->Release();
+			pinFeatureClass->Release();
+			poutRaster->Release();
+			pRasterFolder->Release();
+			poutWorkspace->Release();
+			return AG_FAILURE;
+		}
+
 		poutRaster = Interpolate(pinFeatureClass);
 		if(poutRaster!=NULL)
 		{
@@ -293,8 +316,56 @@ namespace auge
 
 	Raster* IDWProcessorImpl::Interpolate(FeatureClass* pinFeatureClass)
 	{
+		
+
 		Raster* pRaster = NULL;
 
 		return pRaster;
+	}
+
+	bool IDWProcessorImpl::GenerateGrid()
+	{
+		m_rows = ceil(m_extent.GetHeight()/ m_cell_size);
+		m_cols = ceil(m_extent.GetWidth() / m_cell_size);
+		m_vertex_count = m_rows * m_cols;
+
+		if(m_vertexes!=NULL)
+		{
+			free(m_vertexes);
+			m_vertexes = NULL;
+		}
+		m_vertexes = (idw_vertex_t*)malloc(m_vertex_count * sizeof(idw_vertex_t));
+		if(m_vertexes==NULL)
+		{
+			return false;
+		}
+		memset(m_vertexes, 0, m_vertex_count * sizeof(idw_vertex_t));
+
+		idw_vertex_t* ptr = m_vertexes;
+
+		double cx,cy;
+		cx = (m_extent.m_xmin + m_extent.m_xmax) / 2.0;
+		cy = (m_extent.m_ymin + m_extent.m_ymax) / 2.0;
+
+		double width = m_rows * m_cell_size;
+		double height= m_rows * m_cell_size;
+
+		double xmin = cx - width / 2.0;
+		double ymin = cy - height/ 2.0;
+		double x, y = ymin;
+		for(g_uint i=0; i<=m_rows; i++)
+		{
+			x = xmin;
+			for(g_uint j=0; j<=m_cols; j++, ptr++)
+			{
+				ptr->x = x;
+				ptr->y = y;
+		
+				x+=m_cell_size;
+			}
+			y+=m_cell_size;
+		}
+
+		return true;
 	}
 }

@@ -33,7 +33,7 @@ typedef unsigned long int  g_uint64;
 #define HALF_PI				(PI*0.5)
 //#define MAXLONG				2147483647
 #define DBLLONG				4.61168601e18
-#define EPSLN				1.0e-6
+#define AUGE_EPSILON		1.0e-6
 #define S2R					4.848136811095359e-6
 
 #define D2R					(PI/ 180.0f)
@@ -72,6 +72,9 @@ typedef unsigned long int  g_uint64;
 #ifndef AUGE_VIRTUAL_NAME
 #	define AUGE_VIRTUAL_NAME	"ows"
 #endif
+
+#define AUGE_TRUE			1
+#define AUGE_FALSE			0
 
 #define	AUGE_PATH_MAX		1024
 #define	AUGE_NAME_MAX		256

@@ -37,6 +37,10 @@ namespace auge
 		// projection
 		virtual FeatureProjectProcessor*	CreateFeatureProjectProcessor();
 
+		// Interplate
+		virtual FeatureIDWProcessor*		CreateFeatureIDWProcessor();
+		virtual DelaunayProcessor*			CreateDelaunayProcessor();
+
 		// Raster
 		virtual RasterGraylizeProcessor*			CreateRasterGraylizeProcessor();
 		virtual RasterReverseProcessor*				CreateRasterReverseProcessor();

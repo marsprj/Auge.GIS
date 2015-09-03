@@ -370,7 +370,7 @@ namespace auge
 	//------------------------------------------------------------------------
 	// Interpolation Processor Begin
 	//------------------------------------------------------------------------
-	class IDWProcessor : GProcessor
+	class IDWProcessor : public GProcessor
 	{
 	protected:
 		IDWProcessor(){}
@@ -387,6 +387,39 @@ namespace auge
 		virtual void		SetExtent(GEnvelope& extent) = 0;
 		virtual void		SetCellSize(float cellSize) = 0;
 	};
+
+	class FeatureIDWProcessor : public GProcessor
+	{
+	protected:
+		FeatureIDWProcessor(){}
+		virtual ~FeatureIDWProcessor(){}
+	public:
+		virtual	void		SetInputDataSource(const char* sourceName) = 0;
+		virtual	void		SetInputFeatureClass(const char* className) = 0;
+		virtual void		SetInputZField(const char* fname) = 0;
+
+		virtual	void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual	void		SetOutputFeatureClass(const char* className) = 0;
+		virtual void		SetOutputZField(const char* fname) = 0;
+
+		virtual void		SetExtent(GEnvelope& extent) = 0;
+		virtual void		SetCellSize(double cellSize) = 0;
+	};
+
+	class DelaunayProcessor : public GProcessor
+	{
+	protected:
+		DelaunayProcessor(){}
+		virtual ~DelaunayProcessor(){}
+	public:
+		virtual	void		SetInputDataSource(const char* sourceName) = 0;
+		virtual	void		SetInputFeatureClass(const char* className) = 0;
+		virtual void		SetInputZField(const char* fname) = 0;
+
+		virtual	void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual	void		SetOutputFeatureClass(const char* className) = 0;
+	};
+
 	//------------------------------------------------------------------------
 	// Interpolation Processor End
 	//------------------------------------------------------------------------
@@ -852,6 +885,10 @@ namespace auge
 
 		// projection
 		virtual FeatureProjectProcessor*	CreateFeatureProjectProcessor() = 0;
+
+		// Inteplate
+		virtual FeatureIDWProcessor*		CreateFeatureIDWProcessor() = 0;
+		virtual DelaunayProcessor*			CreateDelaunayProcessor() = 0;
 
 		// Raster
 		virtual RasterGraylizeProcessor*			CreateRasterGraylizeProcessor() = 0;

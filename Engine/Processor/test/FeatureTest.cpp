@@ -291,15 +291,16 @@ void FeatureTest::GenerateRandomPoints()
 	DWORD ts = GetTickCount();
 
 	auge::GEnvelope exetent(-180,-90,180,90);
+	//auge::GEnvelope exetent(0,0,100,100);
 	auge::RandomPointsGenerator* pProcessor = NULL;
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pProcessor = pFactory->CreateRandomPointsGenerator();
 
 	pProcessor->SetUser(2);
 	pProcessor->SetOutputDataSource("db1");
-	pProcessor->SetOutputFeatureClass("random_points_5000");	
+	pProcessor->SetOutputFeatureClass("random_points_100");	
 	pProcessor->SetExtent(exetent);
-	pProcessor->SetCount(5000);
+	pProcessor->SetCount(100);
 
 	RESULTCODE rc = pProcessor->Execute();
 
@@ -355,6 +356,86 @@ void FeatureTest::GnerateGridPoint()
 	pProcessor->SetOutputSRID(4326);
 	pProcessor->SetCellSize(5.0);
 	pProcessor->SetExtent(exetent);
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
+
+void FeatureTest::IDWFeature()
+{
+	DWORD ts = GetTickCount();
+
+	auge::GEnvelope exetent(75.985855,18.234043,131.152161,51.930751);
+	auge::FeatureIDWProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateFeatureIDWProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("aqi");
+	pProcessor->SetInputFeatureClass("aqi_ranking_2015_02_04_11");
+	pProcessor->SetInputZField("aqi");
+
+	pProcessor->SetOutputDataSource("db1");
+	pProcessor->SetOutputFeatureClass("aqi_grid_0_5");
+	pProcessor->SetOutputZField("aqi");
+	pProcessor->SetCellSize(0.5);
+	pProcessor->SetExtent(exetent);
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
+
+void FeatureTest::Delaunay()
+{
+	DWORD ts = GetTickCount();
+
+	auge::GEnvelope exetent(75.985855,18.234043,131.152161,51.930751);
+	auge::DelaunayProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateDelaunayProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("db1");
+	pProcessor->SetInputFeatureClass("random_points_100");
+	//pProcessor->SetInputZField("aqi");
+
+	pProcessor->SetOutputDataSource("test");
+	pProcessor->SetOutputFeatureClass("delaunay_100");
+	//pProcessor->SetOutputZField("aqi");
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
+
+void FeatureTest::Delaunay_AQI()
+{
+	DWORD ts = GetTickCount();
+
+	auge::GEnvelope exetent(75.985855,18.234043,131.152161,51.930751);
+	auge::DelaunayProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateDelaunayProcessor();
+
+	pProcessor->SetUser(2);
+	pProcessor->SetInputDataSource("aqi");
+	pProcessor->SetInputFeatureClass("aqi_ranking_2015_02_04_11");
+	//pProcessor->SetInputZField("aqi");
+
+	pProcessor->SetOutputDataSource("test");
+	pProcessor->SetOutputFeatureClass("delaunay_aqi");
+	//pProcessor->SetOutputZField("aqi");
 
 	RESULTCODE rc = pProcessor->Execute();
 

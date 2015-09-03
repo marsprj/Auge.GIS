@@ -84,10 +84,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\CsvImportProcessorImpl.cpp" />
+    <ClCompile Include="..\src\DelaunayProcessorImpl.cpp" />
     <ClCompile Include="..\src\DemAspectProcessorImpl.cpp" />
     <ClCompile Include="..\src\DemHillshadeProcessorImpl.cpp" />
     <ClCompile Include="..\src\DemSlopeProcessorImpl.cpp" />
     <ClCompile Include="..\src\FeatureExportProcessorImpl.cpp" />
+    <ClCompile Include="..\src\FeatureIDWProcessorImpl.cpp" />
     <ClCompile Include="..\src\FeatureImportProcessorImpl.cpp" />
     <ClCompile Include="..\src\FeatureProjectProcessorImpl.cpp" />
     <ClCompile Include="..\src\FileSytemTileStoreGeneratorImpl.cpp" />
@@ -122,10 +124,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   <ItemGroup>
     <ClInclude Include="..\..\..\include\AugeProcessor.h" />
     <ClInclude Include="..\include\CsvImportProcessorImpl.h" />
+    <ClInclude Include="..\include\DelaunayProcessorImpl.h" />
     <ClInclude Include="..\include\DemAspectProcessorImpl.h" />
     <ClInclude Include="..\include\DemHillshadeProcessorImpl.h" />
     <ClInclude Include="..\include\DemSlopeProcessorImpl.h" />
     <ClInclude Include="..\include\FeatureExportProcessorImpl.h" />
+    <ClInclude Include="..\include\FeatureIDWProcessorImpl.h" />
     <ClInclude Include="..\include\FeatureImportProcessorImpl.h" />
     <ClInclude Include="..\include\FeatureProjectProcessorImpl.h" />
     <ClInclude Include="..\include\FileSytemTileStoreGeneratorImpl.h" />

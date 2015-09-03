@@ -38,6 +38,9 @@
 
 #include "GridPointGeneratorImpl.h"
 
+#include "FeatureIDWProcessorImpl.h"
+#include "DelaunayProcessorImpl.h"
+
 #ifndef WIN32
 #include "ArchiveProcessorImpl.h"
 #endif
@@ -218,5 +221,15 @@ namespace auge
 	GridPointGenerator*	GProcessorFactoryImpl::CreateGridPointGenerator()
 	{
 		return (new GridPointGeneratorImpl());
+	}
+
+	FeatureIDWProcessor* GProcessorFactoryImpl::CreateFeatureIDWProcessor()
+	{
+		return (new FeatureIDWProcessorImpl());
+	}
+
+	DelaunayProcessor* GProcessorFactoryImpl::CreateDelaunayProcessor()
+	{
+		return (new DelaunayProcessorImpl());
 	}
 }

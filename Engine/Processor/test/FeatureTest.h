@@ -18,7 +18,10 @@ class FeatureTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(GenerateRandomPoints);
 	//CPPUNIT_TEST(GenerateRandomPointsInPolygon);
 
-	CPPUNIT_TEST(GnerateGridPoint);
+	//CPPUNIT_TEST(GnerateGridPoint);
+	//CPPUNIT_TEST(IDWFeature);
+	//CPPUNIT_TEST(Delaunay);
+	CPPUNIT_TEST(Delaunay_AQI);
 
 	CPPUNIT_TEST_SUITE_END();
 public:
@@ -40,6 +43,10 @@ private:
 	void	GenerateRandomPointsInPolygon();
 
 	void	GnerateGridPoint();
+
+	void	IDWFeature();
+	void	Delaunay();
+	void	Delaunay_AQI();
 private:
 	auge::GConnection* m_pConnection;
 };
