@@ -245,7 +245,8 @@ namespace auge
 
 		Triangulate();
 
-		WriteTriangles(className_out, poutWorkspace, srid);
+		//WriteTriangles(className_out, poutWorkspace, srid);
+		WriteEdges(className_out, poutWorkspace, srid);
 
 		pinFeatureClass->Release();
 		poutWorkspace->Release();
@@ -528,6 +529,40 @@ namespace auge
 			}
 		}
 
+		// Generate Edge List
+		g_uint count = 0;
+		count = m_triangle_count * 3;
+		m_edges = (d_edge_t*)malloc(count*sizeof(d_edge_t));
+		memset(m_edges, 0, count*sizeof(d_edge_t));
+
+		ptri = m_triangles;
+		for(i=0; i<m_triangle_count; i++, ptri++)
+		{
+			//if(m_edge_count>=count)
+			//{
+			//	count += m_triangle_count;
+			//	m_edges = (d_edge_t*)realloc(m_edges, count*sizeof(d_edge_t));
+			//}
+			if(!FindEdge(ptri->v1, ptri->v2))
+			{
+				m_edges[m_edge_count].v1 = ptri->v1;
+				m_edges[m_edge_count].v2 = ptri->v2;
+				m_edge_count++;
+			}
+			if(!FindEdge(ptri->v2, ptri->v3))
+			{
+				m_edges[m_edge_count].v1 = ptri->v2;
+				m_edges[m_edge_count].v2 = ptri->v3;
+				m_edge_count++;
+			}
+			if(!FindEdge(ptri->v3, ptri->v1))
+			{
+				m_edges[m_edge_count].v1 = ptri->v3;
+				m_edges[m_edge_count].v2 = ptri->v1;
+				m_edge_count++;
+			}
+		}
+
 		return true;
 	}
 
@@ -618,6 +653,24 @@ namespace auge
 		//return((drsqr <= *rsqr) ? TRUE : FALSE);
 		// Proposed by Chuck Morris
 		return((drsqr - *rsqr) <= AUGE_EPSILON);
+	}
+
+	bool DelaunayProcessorImpl::FindEdge(g_int v1, g_int v2)
+	{
+		d_edge_t* ptr = m_edges;
+		for(g_uint i=0; i<m_edge_count; i++,ptr++)
+		{
+			if((ptr->v1==v1)&&(ptr->v2==v2))
+			{
+				return true;
+			}
+			if((ptr->v1==v2)&&(ptr->v2==v1))
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	FeatureClass* DelaunayProcessorImpl::CreateTriangleFeatureClass(const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid)
@@ -741,7 +794,7 @@ namespace auge
 	bool DelaunayProcessorImpl::WriteEdges(const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid)
 	{
 		FeatureClass* ptriFeatureClass = NULL;
-		ptriFeatureClass = CreateTriangleFeatureClass(outClassName, poutWorkspace, srid);
+		ptriFeatureClass = CreateEdgeFeatureClass(outClassName, poutWorkspace, srid);
 		if(ptriFeatureClass==NULL)
 		{
 			return false;
@@ -763,28 +816,23 @@ namespace auge
 		Feature* pFeature = ptriFeatureClass->NewFeature();
 		FeatureInsertCommand* cmd = ptriFeatureClass->CreateInsertCommand();
 
-		g_uint v1, v2, v3;
-		//for(g_uint i=0; i<m_triangle_count; i++)
-		//{
-		//	v1 = m_triangles[i].v1;
-		//	v2 = m_triangles[i].v2;
-		//	v3 = m_triangles[i].v3;
+		g_int v1, v2;
+		for(g_uint i=0; i<m_edge_count; i++)
+		{
+			v1 = m_edges[i].v1;
+			v2 = m_edges[i].v2;
 
-		//	ptr[0].x = m_vertexes[v1].x;
-		//	ptr[0].y = m_vertexes[v1].y;
-		//	ptr[1].x = m_vertexes[v2].x;
-		//	ptr[1].y = m_vertexes[v2].y;
-		//	ptr[2].x = m_vertexes[v3].x;
-		//	ptr[2].y = m_vertexes[v3].y;
-		//	ptr[3].x = m_vertexes[v1].x;
-		//	ptr[3].y = m_vertexes[v1].y;
+			ptr[0].x = m_vertexes[v1].x;
+			ptr[0].y = m_vertexes[v1].y;
+			ptr[1].x = m_vertexes[v2].x;
+			ptr[1].y = m_vertexes[v2].y;
 
-		//	pGeometry = pGeometryFactory->CreateGeometryFromWKB((g_byte*)pWKBPolygon, true);
-		//	pGeoValue = new GValue(pGeometry);
-		//	pFeature->SetValue(AUGE_DEFAULT_GEOM_FIELD, pGeoValue);
+			pGeometry = pGeometryFactory->CreateGeometryFromWKB((g_byte*)pWKBLineString, true);
+			pGeoValue = new GValue(pGeometry);
+			pFeature->SetValue(AUGE_DEFAULT_GEOM_FIELD, pGeoValue);
 
-		//	cmd->Insert(pFeature);
-		//}
+			cmd->Insert(pFeature);
+		}
 		pFeature->Release();
 		cmd->Release();
 		free(pWKBLineString);
