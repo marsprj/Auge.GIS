@@ -448,6 +448,7 @@ namespace auge
 		virtual ~Symbol(){}
 	public:
 		virtual const char*			GetName() = 0;
+		//virtual const char*			GetAlias() = 0;
 		virtual const char*			GetIcon() = 0;
 		virtual augeSymbolizerType	GetType() = 0;
 		virtual bool				IsGraphic() = 0;
