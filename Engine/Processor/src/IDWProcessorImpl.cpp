@@ -1,11 +1,12 @@
 #include "IDWProcessorImpl.h"
-#include "Kmean.h"
 
 #include "AugeData.h"
 #include "AugeCore.h"
 #include "AugeFeature.h"
 #include "AugeField.h"
 #include "AugeUser.h"
+
+#include <math.h>
 
 namespace auge
 {
