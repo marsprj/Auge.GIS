@@ -10,6 +10,7 @@
 #include "EnumColorMapImpl.h"
 #include "ColorMapImpl.h"
 #include "FeatureStyleImpl.h"
+#include "FeatureLayerImpl.h"
 
 namespace auge
 {
@@ -955,37 +956,41 @@ namespace auge
 	{
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
 
-		FeatureWorkspace* pWorkspace = NULL;
-		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+		//FeatureWorkspace* pWorkspace = NULL;
+		//ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
-		pWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspaceById(source_id));
-		if(pWorkspace==NULL)
-		{
-			return NULL;
-		}
-		FeatureClass* pFeatureClass = NULL;
-		pFeatureClass = pWorkspace->OpenFeatureClass(f_name);
-		if(pFeatureClass==NULL)
-		{
-			return NULL;
-		}
+		//pWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspaceById(source_id));
+		//if(pWorkspace==NULL)
+		//{
+		//	return NULL;
+		//}
+		//FeatureClass* pFeatureClass = NULL;
+		//pFeatureClass = pWorkspace->OpenFeatureClass(f_name);
+		//if(pFeatureClass==NULL)
+		//{
+		//	return NULL;
+		//}
 
-		FeatureLayer* pFLayer = pCartoFactory->CreateFeatureLayer();
+		FeatureLayerImpl* pFLayer = (FeatureLayerImpl*)(pCartoFactory->CreateFeatureLayer());
 		if(pFLayer==NULL)
 		{
-			pFeatureClass->Release();
+			//pFeatureClass->Release();
 			return NULL;
 		}
 		pFLayer->SetName(name);
 		pFLayer->SetID(id);
 		pFLayer->SetVersion(version);
 		pFLayer->SetVisiable(visible);
-		pFLayer->SetFeatureClass(pFeatureClass);
 		pFLayer->SetMinScale(min_scale);
 		pFLayer->SetMaxScale(max_scale);
+		pFLayer->SetStyleID(style_id);
 
-		Style* pStyle = GetStyle(style_id, pFeatureClass);
-		pFLayer->SetStyle(pStyle);
+		//pFLayer->SetFeatureClass(pFeatureClass);
+		pFLayer->SetFeatureSource(source_id);
+		pFLayer->SetFeatureClassName(f_name);
+
+		//Style* pStyle = GetStyle(style_id, pFeatureClass);
+		//pFLayer->SetStyle(pStyle);
 
 		return pFLayer;
 	}

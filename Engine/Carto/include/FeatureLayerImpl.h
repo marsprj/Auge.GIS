@@ -37,10 +37,16 @@ namespace auge
 		virtual	double			GetMaxScale();
 		virtual	void			SetMaxScale(double scale);
 
+		virtual void			SetStyleID(g_int style_id);
+
 		virtual RESULTCODE		SetStyle(Style* pStyle);
 		virtual Style*			GetStyle();
 
 		virtual void			Release();
+
+	public:
+		void			SetFeatureSource(g_uint source_id);
+		void			SetFeatureClassName(const char* className);
 
 	private:
 		std::string		m_name;
@@ -49,11 +55,14 @@ namespace auge
 		bool			m_queryable;
 		bool			m_visiable;
 		Style*			m_pStyle;
+		g_uint			m_style_id;
 
 		double			m_min_scale;
 		double			m_max_scale;
 
 		FeatureClass*	m_pFeatureClass;
+		g_uint			m_source_id;
+		std::string		m_class_name;
 	};
 }
 

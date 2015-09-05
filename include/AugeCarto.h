@@ -115,6 +115,7 @@ namespace auge
 
 		virtual RESULTCODE		SetStyle(Style* pStyle) = 0;
 		virtual Style*			GetStyle() = 0;
+		virtual void			SetStyleID(g_int style_id) = 0;
 	};
 
 	class GraphicLayer : public Layer
