@@ -7,6 +7,7 @@ namespace auge
 		m_queryable = true;
 		m_visiable = true;
 		m_pStyle = NULL;
+		m_style_id = -1;
 		m_pFeatureClass = NULL;
 		m_srid = AUGE_DEFAULT_SRID;
 		m_min_scale = -1.0;
@@ -74,8 +75,24 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	//FeatureClass* FeatureLayerImpl::GetFeatureClass()
+	//{
+	//	return m_pFeatureClass;
+	//}
+
 	FeatureClass* FeatureLayerImpl::GetFeatureClass()
 	{
+		if(m_pFeatureClass==NULL)
+		{
+			FeatureWorkspace* pWorkspace = NULL;
+			ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
+
+			pWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspaceById(m_source_id));
+			if(pWorkspace!=NULL)
+			{	
+				m_pFeatureClass = pWorkspace->OpenFeatureClass(m_class_name.c_str());
+			}
+		}
 		return m_pFeatureClass;
 	}
 	
@@ -118,6 +135,11 @@ namespace auge
 		m_visiable = flag;
 	}
 
+	void FeatureLayerImpl::SetStyleID(g_int style_id)
+	{
+		m_style_id = style_id;
+	}
+
 	RESULTCODE FeatureLayerImpl::SetStyle(Style* pStyle)
 	{
 		if(m_pStyle!=NULL)
@@ -130,6 +152,18 @@ namespace auge
 
 	Style* FeatureLayerImpl::GetStyle()
 	{
+		if(m_pStyle==NULL)
+		{
+			if(m_style_id>0)
+			{
+				FeatureClass* pFeatureClass = GetFeatureClass();
+				if(pFeatureClass!=NULL)
+				{
+					CartoManager* pCartoManager = augeGetCartoManagerInstance();
+					m_pStyle = pCartoManager->GetStyle(m_style_id, pFeatureClass);
+				}
+			}
+		}
 		return m_pStyle;
 	}
 
@@ -151,5 +185,15 @@ namespace auge
 	void FeatureLayerImpl::SetMaxScale(double scale)
 	{
 		m_max_scale = scale;
+	}
+
+	void FeatureLayerImpl::SetFeatureSource(g_uint source_id)
+	{
+		m_source_id = source_id;
+	}
+
+	void FeatureLayerImpl::SetFeatureClassName(const char* className)
+	{
+		m_class_name = className;
 	}
 }

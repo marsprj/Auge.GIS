@@ -13,7 +13,7 @@ libgscore_la_SOURCES=\
 		WebContextImpl.cpp \
 		WebEngineImpl.cpp \
 		WebExceptionResponseImpl.cpp \
-		WebSuccessResponseImpl.cpp \ 
+		WebSuccessResponseImpl.cpp \
 		JobManagerImpl.cpp \
 		JobImpl.cpp \
 		EnumJobImpl.cpp \
