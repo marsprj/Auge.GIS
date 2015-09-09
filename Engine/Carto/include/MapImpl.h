@@ -49,7 +49,7 @@ namespace auge
 		std::string m_uri;
 		std::string m_uuid;
 		std::string m_thumbnail;
-		GEnvelope	m_exent;
+		GEnvelope	m_extent;
 		GEnvelope	m_viewer;
 		g_int		m_srid;
 		//std::map<std::string, Layer*> m_layers;

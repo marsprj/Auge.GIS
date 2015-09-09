@@ -156,7 +156,7 @@ namespace auge
 	{
 		if(!m_layers.size())
 		{
-			return m_exent;
+			return m_extent;
 		}
 		
 		//std::map<std::string, Layer*>::iterator iter = m_layers.begin();
@@ -168,14 +168,21 @@ namespace auge
 		//	m_exent.Union(extent);
 		//}
 		std::vector<Layer*>::iterator iter = m_layers.begin();
-		m_exent = (*iter)->GetExtent();
+		m_extent = (*iter)->GetExtent();
 		for(iter++;iter!=m_layers.end(); iter++)
 		{
 			Layer* pLayer = *iter;
 			GEnvelope& extent = pLayer->GetExtent();
-			m_exent.Union(extent);
+			if(m_extent.IsValid())
+			{
+				m_extent.Union(extent);
+			}
+			else
+			{
+				m_extent = extent;
+			}
 		}
-		return m_exent;
+		return m_extent;
 	}
 
 	g_int MapImpl::GetSRID()
@@ -185,7 +192,7 @@ namespace auge
 
 	void MapImpl::SetExtent(double xmin, double ymin, double xmax, double ymax)
 	{
-		m_exent.Set(xmin,ymin,xmax,ymax);
+		m_extent.Set(xmin,ymin,xmax,ymax);
 	}
 
 	GEnvelope& MapImpl::GetViewer()
