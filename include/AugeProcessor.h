@@ -22,6 +22,7 @@ namespace auge
 	class Raster;
 	class Geometry;
 	class GMultiPoint;
+	class GFilter;
 	class User;
 
 	typedef enum augeEdgeDetector
@@ -695,6 +696,30 @@ namespace auge
 		virtual void		Release() = 0;
 	};
 
+	class RasterClipProcessor  : public GProcessor
+	{
+	protected:
+		RasterClipProcessor(){}
+		virtual ~RasterClipProcessor(){}
+	public:
+		virtual void		SetUser(g_uint user) = 0;
+
+		virtual void		SetInputRasterSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
+
+		virtual	void		SetInputFeatureSource(const char* sourceName) = 0;
+		virtual	void		SetInputFeatureClass(const char* className) = 0;
+		virtual void		SetInputFilter(GFilter* pFilter) = 0;
+
+		virtual void		SetOutpuRasteraSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual RESULTCODE	Execute() = 0;
+		virtual void		Release() = 0;
+	};
+
 	class RasterFormatConvertToJPEGProcessor : public GProcessor
 	{
 	protected:
@@ -781,6 +806,86 @@ namespace auge
 		virtual void		SetZFactor(float zscale) = 0;		//Z比例因子
 	};
 
+	/**
+	 * DemReliefAmplitue
+	 *
+	 * 地形起伏度
+	 */
+	class DemReliefAmplitue : public GProcessor
+	{
+	protected:
+		DemReliefAmplitue(){}
+		virtual ~DemReliefAmplitue(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+	};
+
+	/**
+	 * DemEarthSurfaceIncision
+	 *
+	 * 地表切割深度
+	 */
+	class DemEarthSurfaceIncision : public GProcessor
+	{
+	protected:
+		DemEarthSurfaceIncision(){}
+		virtual ~DemEarthSurfaceIncision(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+	};
+
+	/**
+	 * DemRoughness
+	 *
+	 * 地表粗糙度
+	 */
+	class DemRoughness : public GProcessor
+	{
+	protected:
+		DemRoughness(){}
+		virtual ~DemRoughness(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+	};
+
+	/**
+	 * 	DemVarainceCofficientniEelvation
+	 *
+	 * 地形高程变异系数
+	 */
+	class DemVarainceCofficientniEelvation : public GProcessor
+	{
+	protected:
+		DemVarainceCofficientniEelvation(){}
+		virtual ~DemVarainceCofficientniEelvation(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+	};
+
 	//------------------------------------------------------------------------
 	// Raster Processor End
 	//------------------------------------------------------------------------
@@ -841,6 +946,22 @@ namespace auge
 
 		virtual void		SetK(g_uint k) = 0;
 
+		virtual	void		SetInputDataSource(const char* sourceName) = 0;
+		virtual	void		SetInputFeatureClass(const char* className) = 0;
+
+		virtual	void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual	void		SetOutputFeatureClass(const char* className) = 0;
+
+		virtual RESULTCODE	Execute() = 0;
+		virtual void		Release() = 0;
+	};
+
+	class DBScanProcessor : public GProcessor
+	{
+	protected:
+		DBScanProcessor(){}
+		virtual ~DBScanProcessor(){}
+	public:
 		virtual	void		SetInputDataSource(const char* sourceName) = 0;
 		virtual	void		SetInputFeatureClass(const char* className) = 0;
 
