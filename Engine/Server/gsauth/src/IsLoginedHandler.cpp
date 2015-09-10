@@ -62,40 +62,34 @@ namespace auge
 
 	WebResponse* IsLoginHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{	
+		GLogger* pLogger = augeGetLoggerInstance();
 		IsLoginRequest* pRequest = static_cast<IsLoginRequest*>(pWebRequest);
 		const char* name = pRequest->GetName();
+		if(name==NULL)
+		{
+			const char* msg = "Parameter [Name] is NULL";
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return pExpResponse;
+		}
 
 		UserManager* pUserManager = augeGetUserManagerInstance();
+		bool logined = pUserManager->IsLogined(name);
+		if(!logined)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "User [%s] is not logined", name);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return pExpResponse;
+		}
 
-		WebResponse* pWebResponse = NULL;
-		//if((name==NULL)||strlen(name)==0)
-		//{
-		//	EnumUser* pUsers = pUserManager->IsLogins();
-		//	IsLoginResponse* pResponse = new IsLoginResponse(pRequest);
-		//	pResponse->SetUsers(pUsers);
-		//	pWebResponse = pResponse;
-		//}
-		//else
-		//{
-		//	User *pUser = pUserManager->IsLogin(name);
-		//	if(pUser==NULL)
-		//	{
-		//		char msg[AUGE_MSG_MAX];
-		//		g_sprintf(msg, "User [%s] does not exist.", name);
-		//		WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-		//		pExpResponse->SetMessage(msg);
-		//		pWebResponse = pExpResponse;
-		//	}
-		//	else
-		//	{
-		//		IsLoginResponse* pResponse = new IsLoginResponse(pRequest);
-		//		pResponse->SetUser(pUser);
-		//		pWebResponse = pResponse;
-		//	}
+		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
+		pSusResponse->SetRequest(pRequest->GetRequest());
 
-		//}
-
-		return pWebResponse;
+		return pSusResponse;
 	}
 
 	WebResponse* IsLoginHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)

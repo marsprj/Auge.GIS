@@ -26,7 +26,7 @@ namespace auge
 
 	public:
 		const char*	GetName();
-		const char* GetPassord();
+		const char* GetPassword();
 
 	public:
 		void		SetName(const char* name);

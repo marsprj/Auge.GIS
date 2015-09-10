@@ -22,11 +22,12 @@ namespace auge
 		virtual Role*			GetRole();
 
 		virtual bool			IsAuthenticated();
+		virtual bool			IsLogined();
 
 		virtual void			Release();
 
 	public:
-		bool	Create(int gid, const char* name, const char* alias, const char* passwd, const char* email);
+		bool	Create(int gid, const char* name, const char* alias, const char* passwd, const char* email, g_int logined);
 		void	SetName(const char* name);
 		void	SetAlias(const char* alias);
 		void	SetPasswd(const char* passwd);
@@ -39,6 +40,7 @@ namespace auge
 		std::string m_passwd;
 		std::string m_email;
 		Role*		m_pRole;
+		bool		m_logined;
 	};
 }
 

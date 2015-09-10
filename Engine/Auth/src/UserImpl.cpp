@@ -53,13 +53,14 @@ namespace auge
 		}
 	}
 
-	bool UserImpl::Create(int gid, const char* name, const char* alias, const char* passwd, const char* email)
+	bool UserImpl::Create(int gid, const char* name, const char* alias, const char* passwd, const char* email, g_int logined)
 	{
 		SetID(gid);
 		SetName(name);
 		SetAlias(alias);
 		SetPasswd(passwd);
 		SetEmail(email);
+		m_logined = logined;
 		return true;
 	}
 
@@ -120,4 +121,8 @@ namespace auge
 		m_pRole = pRole;
 	}
 
+	bool UserImpl::IsLogined()
+	{
+		return m_logined;
+	}
 }

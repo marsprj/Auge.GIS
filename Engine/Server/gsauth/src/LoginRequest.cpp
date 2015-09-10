@@ -85,4 +85,9 @@ namespace auge
 			m_password.clear();
 		}
 	}
+
+	const char* LoginRequest::GetPassword()
+	{
+		return m_password.empty() ? NULL : m_password.c_str();
+	}
 }

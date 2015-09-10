@@ -18,6 +18,14 @@ namespace auge
 		virtual RESULTCODE		RemoveUser(const char* name);
 		virtual User*			GetUser(const char* name);
 		virtual EnumUser*		GetUsers();
+		virtual g_uint			GetUserCount();
+
+		virtual EnumUser*		GetLoginedUsers();
+		virtual g_uint			GetLoginedUserCount();
+
+		virtual RESULTCODE		Login(const char* name, const char* passwd);
+		virtual RESULTCODE		Logout(const char* name);
+		virtual bool			IsLogined(const char* name);
 
 		virtual Role*			GetRole(const char* name);
 		virtual EnumRole*		GetRoles();

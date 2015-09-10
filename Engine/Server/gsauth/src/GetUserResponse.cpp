@@ -62,7 +62,7 @@ namespace auge
 			pxElement->SetChildText(pUser->GetName());
 			
 			pxElement = pxUser->AddChild("Alias");
-			pxElement->SetChildText(pUser->GetAlias());
+			pxElement->SetChildText(pUser->GetAlias(), true);
 
 			pxElement = pxUser->AddChild("Email");
 			pxElement->SetChildText(pUser->GetEmail());
@@ -97,7 +97,7 @@ namespace auge
 		pxElement->SetChildText(pUser->GetName());
 
 		pxElement = pxUser->AddChild("Alias");
-		pxElement->SetChildText(pUser->GetAlias());
+		pxElement->SetChildText(pUser->GetAlias(), true);
 
 		pxElement = pxUser->AddChild("Email");
 		pxElement->SetChildText(pUser->GetEmail());

@@ -76,7 +76,7 @@ namespace auge
 		pResult->Release();
 
 		UserImpl* pUserImpl = new UserImpl();
-		pUserImpl->Create(gid, name, alias, password, email);
+		pUserImpl->Create(gid, name, alias, password, email,0);
 		pUserImpl->SetRole(pRole);
 
 		return pUserImpl;
@@ -110,7 +110,7 @@ namespace auge
 			return NULL;
 		}
 		char sql[AUGE_SQL_MAX];
-		g_sprintf(sql, "select u.gid,u.name,u.alias,u.passwd,u.email,u.role, r.name,r.alias from g_user u, g_role r where u.role=r.gid and u.name='%s'",name);
+		g_sprintf(sql, "select u.gid,u.name,u.alias,u.passwd,u.email,u.role, u.status,r.name,r.alias from g_user u, g_role r where u.role=r.gid and u.name='%s'",name);
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -128,15 +128,16 @@ namespace auge
 		const char* u_alias = pResult->GetString(0,2);
 		const char* u_passwd = pResult->GetString(0,3);
 		const char* u_email = pResult->GetString(0,4);
+		g_int logined = pResult->GetInt(0, 5);
 
-		int r_gid = pResult->GetInt(0,5);
+		int r_gid = pResult->GetInt(0,6);
 		const char* r_name = pResult->GetString(0,7);
-		const char* r_alias = pResult->GetString(0,7);
+		const char* r_alias = pResult->GetString(0,8);
 
 		RoleImpl* pRole = new RoleImpl();
 		pRole->Create(r_gid, r_name,r_alias);
 		UserImpl* pUser = new UserImpl();
-		pUser->Create(u_gid, u_name, u_alias, u_passwd, u_email);
+		pUser->Create(u_gid, u_name, u_alias, u_passwd, u_email, logined);
 		pUser->SetRole(pRole);
 
 		pResult->Release();
@@ -146,7 +147,7 @@ namespace auge
 
 	EnumUser* UserManagerImpl::GetUsers()
 	{
-		const char* sql ="select u.gid,u.name,u.alias,u.passwd,u.email,u.role, r.name,r.alias from g_user u, g_role r where u.role=r.gid";
+		const char* sql ="select u.gid,u.name,u.alias,u.passwd,u.email,u.role, u.status, r.name,r.alias from g_user u, g_role r where u.role=r.gid";
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -162,15 +163,16 @@ namespace auge
 			const char* u_alias = pResult->GetString(i,2);
 			const char* u_passwd = pResult->GetString(i,3);
 			const char* u_email = pResult->GetString(i,4);
+			int u_logined = pResult->GetInt(i,5);
 
-			int r_gid = pResult->GetInt(i,5);
-			const char* r_name = pResult->GetString(i,6);
-			const char* r_alias = pResult->GetString(i,7);
+			int r_gid = pResult->GetInt(i,6);
+			const char* r_name = pResult->GetString(i,7);
+			const char* r_alias = pResult->GetString(i,8);
 
 			RoleImpl* pRole = new RoleImpl();
 			pRole->Create(r_gid, r_name,r_alias);
 			UserImpl* pUser = new UserImpl();
-			pUser->Create(u_gid, u_name, u_alias, u_passwd, u_email);
+			pUser->Create(u_gid, u_name, u_alias, u_passwd, u_email, u_logined);
 			pUser->SetRole(pRole);
 
 			pUsers->Add(pUser);
@@ -178,6 +180,131 @@ namespace auge
 		pResult->Release();
 
 		return pUsers;
+	}
+
+	g_uint UserManagerImpl::GetUserCount()
+	{
+		const char* sql = "select count(*) from from g_user";
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+		g_uint count = pResult->GetInt(0, 0);
+		pResult->Release();
+
+		return count;
+	}
+
+	EnumUser* UserManagerImpl::GetLoginedUsers()
+	{
+		const char* sql ="select u.gid,u.name,u.alias,u.passwd,u.email,u.role,u.status, r.name,r.alias from g_user u, g_role r where u.role=r.gid and status=1";
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+
+		EnumUserImpl* pUsers = new EnumUserImpl();
+		int count = pResult->GetCount();
+		for(int i=0; i<count; i++)
+		{
+			int u_gid = pResult->GetInt(i,0);
+			const char* u_name = pResult->GetString(i,1);
+			const char* u_alias = pResult->GetString(i,2);
+			const char* u_passwd = pResult->GetString(i,3);
+			const char* u_email = pResult->GetString(i,4);
+			int logined = pResult->GetInt(i, 5);
+
+			int r_gid = pResult->GetInt(i,6);
+			const char* r_name = pResult->GetString(i,7);
+			const char* r_alias = pResult->GetString(i,8);
+
+			RoleImpl* pRole = new RoleImpl();
+			pRole->Create(r_gid, r_name,r_alias);
+			UserImpl* pUser = new UserImpl();
+			pUser->Create(u_gid, u_name, u_alias, u_passwd, u_email, logined);
+			pUser->SetRole(pRole);
+
+			pUsers->Add(pUser);
+		}
+		pResult->Release();
+
+		return pUsers;
+	}
+
+	g_uint UserManagerImpl::GetLoginedUserCount()
+	{
+		const char* sql = "select count(*) from from g_user where status=1";
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+		g_uint count = pResult->GetInt(0, 0);
+		pResult->Release();
+
+		return count;
+	}
+
+	RESULTCODE UserManagerImpl::Login(const char* name, const char* passwd)
+	{
+		if(name==NULL||passwd==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		char sql[AUGE_SQL_MAX];
+		g_sprintf(sql, "select count(*) from g_user where name='%s' and passwd='%s'", name, passwd);
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return AG_FAILURE;
+		}
+		g_uint count = pResult->GetInt(0, 0);
+		pResult->Release();
+		if(count==0)
+		{
+			return AG_FAILURE;
+		}
+
+		// Set status to login
+		g_sprintf(sql, "update g_user set status=1 where name='%s'", name);
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	bool UserManagerImpl::IsLogined(const char* name)
+	{
+		if(name==NULL)
+		{
+			return false;
+		}
+
+		User* pUser = GetUser(name);
+		if(pUser==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "User [%s] does not exist.", name);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return false;
+		}
+		bool logined = pUser->IsLogined();
+		pUser->Release();
+		return logined;
+	}
+
+	RESULTCODE UserManagerImpl::Logout(const char* name)
+	{
+		if(name==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		char sql[AUGE_SQL_MAX];
+		// Set status to login
+		g_sprintf(sql, "update g_user set status=0 where name='%s'", name);
+		return m_pConnection->ExecuteSQL(sql);
 	}
 
 	Role* UserManagerImpl::GetRole(const char* name)
@@ -294,7 +421,7 @@ namespace auge
 
 	RESULTCODE UserManagerImpl::CreateUserTable()
 	{
-		const char* sql = "CREATE TABLE g_user( gid serial NOT NULL, name character varying(32) NOT NULL, alias character varying(32) NOT NULL, passwd character varying(16), email character varying, role integer, CONSTRAINT user_pk PRIMARY KEY (gid), CONSTRAINT user_fk FOREIGN KEY (role) REFERENCES g_role (gid) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION)";
+		const char* sql = "CREATE TABLE g_user( gid serial NOT NULL, name character varying(32) NOT NULL, alias character varying(32) NOT NULL, passwd character varying(16), email character varying, role integer, status integer DEFAULT 0, CONSTRAINT user_pk PRIMARY KEY (gid), CONSTRAINT user_fk FOREIGN KEY (role) REFERENCES g_role (gid) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION)";
 		return m_pConnection->ExecuteSQL(sql);
 	}
 

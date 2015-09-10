@@ -62,40 +62,33 @@ namespace auge
 
 	WebResponse* LogoutHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{	
+
+		GLogger* pLogger = augeGetLoggerInstance();
 		LogoutRequest* pRequest = static_cast<LogoutRequest*>(pWebRequest);
 		const char* name = pRequest->GetName();
 
+		if(name==NULL)
+		{
+			const char* msg = "Parameter [Name] is NULL";
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return pExpResponse;
+		}
+
 		UserManager* pUserManager = augeGetUserManagerInstance();
+		RESULTCODE rc = pUserManager->Logout(name);
+		if(rc!=AG_SUCCESS)
+		{
+			GError* pError = augeGetErrorInstance();
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			return pExpResponse;
+		}
 
-		WebResponse* pWebResponse = NULL;
-		//if((name==NULL)||strlen(name)==0)
-		//{
-		//	EnumUser* pUsers = pUserManager->Logouts();
-		//	LogoutResponse* pResponse = new LogoutResponse(pRequest);
-		//	pResponse->SetUsers(pUsers);
-		//	pWebResponse = pResponse;
-		//}
-		//else
-		//{
-		//	User *pUser = pUserManager->Logout(name);
-		//	if(pUser==NULL)
-		//	{
-		//		char msg[AUGE_MSG_MAX];
-		//		g_sprintf(msg, "User [%s] does not exist.", name);
-		//		WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-		//		pExpResponse->SetMessage(msg);
-		//		pWebResponse = pExpResponse;
-		//	}
-		//	else
-		//	{
-		//		LogoutResponse* pResponse = new LogoutResponse(pRequest);
-		//		pResponse->SetUser(pUser);
-		//		pWebResponse = pResponse;
-		//	}
-
-		//}
-
-		return pWebResponse;
+		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
+		pSusResponse->SetRequest(pRequest->GetRequest());
+		return pSusResponse;
 	}
 
 	WebResponse* LogoutHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)

@@ -63,6 +63,7 @@ namespace auge
 		virtual Role*			GetRole() = 0;
 
 		virtual bool			IsAuthenticated() = 0;
+		virtual bool			IsLogined() = 0;
 
 		virtual void			Release() = 0;
 	};
@@ -101,6 +102,14 @@ namespace auge
 		virtual RESULTCODE		RemoveUser(const char* name) = 0;
 		virtual User*			GetUser(const char* name) = 0;
 		virtual EnumUser*		GetUsers() = 0;
+		virtual g_uint			GetUserCount() = 0;
+
+		virtual EnumUser*		GetLoginedUsers() = 0;
+		virtual g_uint			GetLoginedUserCount() = 0;
+
+		virtual RESULTCODE		Login(const char* name, const char* passwd) = 0;
+		virtual RESULTCODE		Logout(const char* name) = 0;
+		virtual bool			IsLogined(const char* name) = 0;
 
 		virtual Role*			GetRole(const char* name) = 0;
 		virtual EnumRole*		GetRoles() = 0;
