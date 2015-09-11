@@ -254,7 +254,7 @@ namespace auge
 
 	const char* FeatureProjectRequest::GetOutputSourceName()
 	{
-		return m_out_source_name.empty() ? NULL : m_in_source_name.c_str();
+		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
 	}
 
 	void FeatureProjectRequest::SetOutputSourceName(const char* sourceName)

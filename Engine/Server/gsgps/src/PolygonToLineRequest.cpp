@@ -246,7 +246,7 @@ namespace auge
 
 	const char* PolygonToLineRequest::GetOutputSourceName()
 	{
-		return m_out_source_name.empty() ? NULL : m_in_source_name.c_str();
+		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
 	}
 
 	void PolygonToLineRequest::SetOutputSourceName(const char* sourceName)

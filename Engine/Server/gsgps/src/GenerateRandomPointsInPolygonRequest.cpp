@@ -248,7 +248,7 @@ namespace auge
 
 	const char* GenerateRandomPointsInPolygonRequest::GetOutputSourceName()
 	{
-		return m_out_source_name.empty() ? NULL : m_in_source_name.c_str();
+		return m_out_source_name.empty() ? NULL : m_out_source_name.c_str();
 	}
 
 	void GenerateRandomPointsInPolygonRequest::SetOutputSourceName(const char* sourceName)
