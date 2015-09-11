@@ -64,6 +64,8 @@ namespace auge
 		SetOutputDataSource(cgi["outputSourceName"]);
 		SetOutputPath(cgi["outputPath"]);
 
+		SetOperator(cgi["operator"]);
+
 		return true;
 	}
 
@@ -289,6 +291,38 @@ namespace auge
 		}
 	}
 
+	void RasterSmoothRequest::SetOperator(const char* oper)
+	{
+		if(oper==NULL)
+		{
+			m_opertaor = augeSmoothGauss;
+		}
+		else
+		{
+			if(g_stricmp(oper, "Gauss")==0)
+			{
+				m_opertaor = augeSmoothGauss;
+			}
+			else if(g_stricmp(oper, "Mean")==0)
+			{
+				m_opertaor = augeSmoothMean;
+			}
+			else if(g_stricmp(oper, "Median")==0)
+			{
+				m_opertaor = augeSmoothMedian;
+			}
+			else if(g_stricmp(oper, "Bilateral")==0)
+			{
+				m_opertaor = augeSmoothBilateral;
+			}
+		}
+	}
+
+	augeRasterSmoother RasterSmoothRequest::GetOperator()
+	{
+		return m_opertaor;
+	}
+
 	const char*	RasterSmoothRequest::GetInputDataSource()
 	{
 		return m_in_source_name.empty() ? NULL : m_in_source_name.c_str();
@@ -352,7 +386,5 @@ namespace auge
 		value = GetVersion();
 		g_sprintf(str,"\t%s:%s", "Version", (value==NULL)?"":value);
 		pLogger->Debug(str);
-
 	}
-
 }

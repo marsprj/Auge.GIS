@@ -5,6 +5,7 @@
 #include "AugeWebEngine.h"
 #include "AugeGeometry.h"
 #include "AugeXML.h"
+#include "AugeProcessor.h"
 #include <string>
 #include <rude/cgi.h>
 
@@ -34,6 +35,8 @@ namespace auge
 		const char*	GetOutputDataSource();
 		const char*	GetOutputRaster();
 		const char* GetOutputPath();
+		augeRasterSmoother GetOperator();
+
 		GEnvelope&	GetRectangle();
 				
 	public:
@@ -55,6 +58,8 @@ namespace auge
 		void		SetOutputDataSource(const char* sourceName);
 		void		SetOutputRaster(const char* rasterName);
 		void		SetOutputPath(const char* rasterPath);
+
+		void		SetOperator(const char* oper);
 		
 		void		Info();
 
@@ -75,6 +80,8 @@ namespace auge
 		std::string	m_out_source_name;
 		std::string	m_out_raster_name;
 		std::string m_out_raster_path;
+
+		augeRasterSmoother m_opertaor;
 		//////////////////////////////////////////////////////////////////////////
 
 		XDocument	*m_pxDoc;
@@ -93,7 +100,9 @@ namespace auge
 [ HTTP Get ]
 -------------------------------------------------------------------------
 1)
-service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb2&rasterName=Koala_smooth.jpg&Path=/
+service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb2&rasterName=Koala_smooth.jpg&Path=/&Operator=Gauss	//高斯平滑
+service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb2&rasterName=Koala_smooth.jpg&Path=/&Operator=Mean	//均值平滑
+service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb2&rasterName=Koala_smooth.jpg&Path=/&Operator=Median	//中值平滑
 http://182.92.114.80:8088/ows/user1/mgr?service=rds&version=1.0.0&request=GetRaster&sourceName=rsdb2&rasterName=Koala_smooth.jpg&Path=/
 
 ************************************************************************/

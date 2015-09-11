@@ -482,6 +482,7 @@ namespace auge
 		GField	*pField  = NULL;
 		GFields	*pFields = pFeatureClass->GetFields();
 		g_uint count = pFields->Count();
+		augeFieldType ftype = augeFieldTypeNone;
 
 		// schema-->complexType-->complexContent-->extentsion-->sequence-->element
 		XElement* pxElement = NULL;
@@ -495,8 +496,9 @@ namespace auge
 			pxElement->SetAttribute("nillable",pField->IsNullable()?"true":"false", NULL);
 			pxElement->SetAttribute("minOccurs","0", NULL);
 			pxElement->SetAttribute("maxOccurs","1", NULL);
-
-			if(pField->GetType()==augeFieldTypeGeometry)
+			
+			ftype = pField->GetType();
+			if(ftype==augeFieldTypeGeometry)
 			{
 				augeGeometryType gtype = pField->GetGeometryDef()->GeometryType();
 				const char* sss = GetOgcGeometryType(gtype);
@@ -509,6 +511,11 @@ namespace auge
 				pxElement->SetAttribute("type",str, NULL);
 			}
 
+			if(ftype==augeFieldTypeString)
+			{
+				g_sprintf(str,"%d",pField->GetLength());
+				pxElement->SetAttribute("length",str, NULL);
+			}
 		}
 
 		// schema-->element
