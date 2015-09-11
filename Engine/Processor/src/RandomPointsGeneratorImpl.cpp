@@ -54,7 +54,7 @@ namespace auge
 
 	const char*	RandomPointsGeneratorImpl::GetOutputFatureClass()
 	{
-		return m_out_source_name.empty() ? NULL : m_out_class_name.c_str();
+		return m_out_class_name.empty() ? NULL : m_out_class_name.c_str();
 	}
 
 	void RandomPointsGeneratorImpl::SetSRID(g_uint srid)
