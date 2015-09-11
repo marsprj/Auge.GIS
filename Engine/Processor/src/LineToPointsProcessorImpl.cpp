@@ -260,8 +260,10 @@ namespace auge
 
 		FeatureInsertCommand* cmd = poutFeatureClass->CreateInsertCommand();
 
+		g_uint index=0; 
 		while((pFeature=pCursor->NextFeature())!=NULL)
 		{
+			index++;
 			pGeometry = pFeature->GetGeometry();
 			if( pGeometry != NULL )
 			{
@@ -329,10 +331,10 @@ namespace auge
 				{
 					g_uint numPoints = 0;					
 					WKBLineString* pWKBLineString = (WKBLineString*)pGeometry->AsBinary();
-					WKBPoint* pt = NULL;					
+					auge::Point* pt = NULL;					
 
 					numPoints = pWKBLineString->numPoints;
-					pt = (WKBPoint*)(&(pWKBLineString->points[0]));
+					pt = (auge::Point*)(&(pWKBLineString->points[0]));
 					for(g_uint i=0; i<numPoints; i++,pt++)
 					{
 						pGeoPoint = pGeometryFactory->CreateGeometryFromWKB((g_byte*)pt, true);
