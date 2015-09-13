@@ -40,15 +40,23 @@ namespace auge
 		const char*			GetOutputFatureClass();
 
 		FeatureClass*		CreateOutputFeatureClass(const char* className, g_uint srid, FeatureWorkspace* pWorkspace, FeatureClass* pinFeatureClass);
-		RESULTCODE			Project(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass);
+		RESULTCODE			Project_To_WGS84(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass);
+		RESULTCODE			Project_From_WGS84(FeatureClass* pinFeatureClass, FeatureClass* poutFeatureClass);
 
 	private:
-		RESULTCODE			Project(WKBPoint* pWKBPoint, projPJ i_pj, projPJ o_pj);
-		RESULTCODE			Project(WKBMultiPoint* pWKBMultiPoint, projPJ i_pj, projPJ o_pj);
-		RESULTCODE			Project(WKBLineString* pWKBLineString, projPJ i_pj, projPJ o_pj);
-		RESULTCODE			Project(WKBMultiLineString* pWKBMultiLineString, projPJ i_pj, projPJ o_pj);
-		RESULTCODE			Project(WKBPolygon* pWKBPolygon, projPJ i_pj, projPJ o_pj);
-		RESULTCODE			Project(WKBMultiPolygon* pWKBMultiPolygon, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project_To_WGS84(WKBPoint* pWKBPoint, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project_To_WGS84(WKBMultiPoint* pWKBMultiPoint, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project_To_WGS84(WKBLineString* pWKBLineString, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project_To_WGS84(WKBMultiLineString* pWKBMultiLineString, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project_To_WGS84(WKBPolygon* pWKBPolygon, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project_To_WGS84(WKBMultiPolygon* pWKBMultiPolygon, projPJ i_pj, projPJ o_pj);
+
+		RESULTCODE			Project_From_WGS84(WKBPoint* pWKBPoint, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project_From_WGS84(WKBMultiPoint* pWKBMultiPoint, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project_From_WGS84(WKBLineString* pWKBLineString, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project_From_WGS84(WKBMultiLineString* pWKBMultiLineString, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project_From_WGS84(WKBPolygon* pWKBPolygon, projPJ i_pj, projPJ o_pj);
+		RESULTCODE			Project_From_WGS84(WKBMultiPolygon* pWKBMultiPolygon, projPJ i_pj, projPJ o_pj);
 
 	private:
 		std::string	m_in_source_name;

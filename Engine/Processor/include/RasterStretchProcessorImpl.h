@@ -7,6 +7,8 @@
 
 namespace auge
 {
+	class RasterBand;
+
 	class RasterStretchProcessorImpl : public RasterStretchProcessor
 	{
 	public:
@@ -42,7 +44,25 @@ namespace auge
 		GColor&				GetEndColor();
 
 	private:
-		bool				Stretch(Raster* pinRaster, Raster* poutRaster);
+		Raster*				Stretch(Raster* pinRaster);
+		Raster*				Stretch_Byte(Raster* pinRaster);
+		Raster*				Stretch_Byte_1(Raster* pinRaster);
+		Raster*				Stretch_Byte_n(Raster* pinRaster);
+
+		Raster*				Stretch_Short(Raster* pinRaster);
+		Raster*				Stretch_Short_1(Raster* pinRaster);
+		Raster*				Stretch_Short_n(Raster* pinRaster);
+
+
+
+		//bool				Stretch(Raster* pinRaster, Raster* poutRaster);
+		bool				Stretch_Byte(Raster* pinRaster, Raster* poutRaster);
+		bool				Stretch_Byte_1(Raster* pinRaster, Raster* poutRaster);
+		bool				Stretch_Byte_n(Raster* pinRaster, Raster* poutRaster);
+		bool				Stretch_Band_Byte(RasterBand* pinBand, RasterBand* poutBand);
+
+		bool				Stretch_Short(Raster* pinRaster, Raster* poutRaster);
+		bool				Stretch_Band_Short(RasterBand* pinBand, RasterBand* poutBand);
 
 	private:
 		std::string	m_in_source_name;

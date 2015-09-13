@@ -48,6 +48,8 @@ typedef unsigned long int  g_uint64;
 #endif
 
 #define	AUGE_BYTE_MAX		255
+#define	AUGE_BYTE_MIN		-255
+
 #define AUGE_SHORT_MIN		(-32768)
 #define AUGE_SHORT_MAX      32767
 #define AUGE_USHORT_MAX     0xffff
@@ -118,6 +120,9 @@ typedef unsigned long int  g_uint64;
 #define AUGE_DEFAULT_ENCODING	"GBK"
 #define AUGE_DEFAULT_SRID		4326
 #define AUGE_DEFAULT_GEOM_FIELD "shape"
+
+#define AUGE_SRID_WGS84			4326
+#define AUGE_SRID_WEBMERCATOR	900913
 
 #define AUGE_ENCODING_GBK	"GBK"
 #define AUGE_ENCODING_UTF8	"UTF-8"

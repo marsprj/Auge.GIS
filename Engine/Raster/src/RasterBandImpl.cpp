@@ -167,6 +167,23 @@ namespace auge
 		return true;
 	}
 
+	bool RasterBandImpl::GetMinMaxValue(g_byte& minv, g_byte& maxv)
+	{
+		g_byte *idata = (g_byte*)GetData();
+
+		int count = m_pRaster->GetWidth() * m_pRaster->GetHeight();
+		g_byte v_min = AUGE_BYTE_MAX;
+		g_byte v_max = AUGE_BYTE_MIN;
+		for(int i=0; i<count; i++)
+		{
+			short value = idata[i];			
+			v_min = v_min < value ? v_min : value;
+			v_max = v_max > value ? v_max : value;
+		}
+		minv = v_min;
+		maxv = v_max;
+		return true;
+	}
 
 	bool RasterBandImpl::GetMinMaxValue(short& minv, short& maxv)
 	{

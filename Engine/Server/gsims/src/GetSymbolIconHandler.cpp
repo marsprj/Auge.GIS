@@ -104,7 +104,7 @@ namespace auge
 			else
 				pSymbol = pSymbolManager->CreateLineSymbol(name);
 		}
-		else if(g_stricmp(type, "Region")==0)
+		else if(g_stricmp(type, "Fill")==0)
 		{
 			if(name==NULL)
 				pSymbols = pSymbolManager->GetFillSymbols();

@@ -223,12 +223,13 @@ void FeatureTest::ProjectTest()
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pProcessor = pFactory->CreateFeatureProjectProcessor();
 
+	pProcessor->SetUser(2);
 	pProcessor->SetInputDataSource("test");
-	pProcessor->SetInputFeatureClass("cities");
+	pProcessor->SetInputFeatureClass("cities_900913");
 
 	pProcessor->SetOutputDataSource("test");
-	pProcessor->SetOutputFeatureClass("cities_900913");
-	pProcessor->SetOutputSRID(900913);
+	pProcessor->SetOutputFeatureClass("cities_4326");
+	pProcessor->SetOutputSRID(4326);
 	
 	RESULTCODE rc = pProcessor->Execute();
 

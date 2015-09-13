@@ -82,11 +82,12 @@ void RasterTest::Stretch()
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pProcessor = pFactory->CreateRasterStretchProcessor();
 
-	pProcessor->SetInputDataSource("rsdb");
-	pProcessor->SetInputRaster("srtm_58_05.tif");
+	pProcessor->SetInputDataSource("rsdb2");
+	pProcessor->SetInputPath("/dem");
+	pProcessor->SetInputRaster("ASTGTM2_N29E082_dem.tif");
 
 	pProcessor->SetOutputDataSource("rsdb2");
-	pProcessor->SetOutputRaster("srtm_58_05.jpg");
+	pProcessor->SetOutputRaster("ASTGTM2_N29E082_dem_stretch.jpg");
 	//pProcessor->SetOutputPath("/ds1");
 
 	//auge::GColor start_color(0,255,0,255);

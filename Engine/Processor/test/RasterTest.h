@@ -8,7 +8,7 @@ class RasterTest : public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(RasterTest);
 	//CPPUNIT_TEST(ExtractByRectangle);
-	//CPPUNIT_TEST(Stretch);
+	CPPUNIT_TEST(Stretch);
 	//CPPUNIT_TEST(EdgeDetorSobol);
 	//CPPUNIT_TEST(Graylize);
 	//CPPUNIT_TEST(ToJPG);
@@ -23,7 +23,7 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(PenEffect);
 	//CPPUNIT_TEST(DEMSlope);
 	//CPPUNIT_TEST(DEMAspect);
-	CPPUNIT_TEST(DEMHillShade);
+	//CPPUNIT_TEST(DEMHillShade);
 
 	CPPUNIT_TEST_SUITE_END();
 public:

@@ -11,7 +11,7 @@ class FeatureTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(FeatureExportTest);
 	//CPPUNIT_TEST(CsvImportTest);
 
-	//CPPUNIT_TEST(ProjectTest);
+	CPPUNIT_TEST(ProjectTest);
 	//CPPUNIT_TEST(LineToPoints);
 	//CPPUNIT_TEST(PolygonToLine);
 
@@ -21,7 +21,7 @@ class FeatureTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(GnerateGridPoint);
 	//CPPUNIT_TEST(IDWFeature);
 	//CPPUNIT_TEST(Delaunay);
-	CPPUNIT_TEST(Delaunay_AQI);
+	//CPPUNIT_TEST(Delaunay_AQI);
 
 	CPPUNIT_TEST_SUITE_END();
 public:

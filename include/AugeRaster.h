@@ -101,6 +101,7 @@ namespace auge
 
 		virtual bool			SetData(void* data) = 0;
 
+		virtual bool			GetMinMaxValue(g_byte& minv, g_byte& maxv) = 0;
 		virtual bool			GetMinMaxValue(short& minv, short& maxv) = 0;
 		virtual bool			GetMinMaxValue(int& minv, int& maxv) = 0;
 		virtual bool			GetMinMaxValue(double& minv, double& maxv) = 0;
