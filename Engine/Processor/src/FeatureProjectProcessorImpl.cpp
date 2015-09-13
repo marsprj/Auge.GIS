@@ -240,6 +240,7 @@ namespace auge
 		Geometry *pGeometry = NULL;
 		Feature	 *pFeature = NULL;
 		FeatureCursor* pCursor = pinFeatureClass->Query();
+		RESULTCODE rc = AG_FAILURE;
 
 		FeatureInsertCommand* cmd = poutFeatureClass->CreateInsertCommand();
 		
@@ -253,28 +254,30 @@ namespace auge
 				switch(pGeometry->GeometryType())
 				{
 				case augeGTPoint:
-					Project((WKBPoint*)wkb, i_pj, o_pj);
+					rc = Project((WKBPoint*)wkb, i_pj, o_pj);
 					break;
 				case augeGTMultiPoint:
-					Project((WKBMultiPoint*)wkb, i_pj, o_pj);
+					rc = Project((WKBMultiPoint*)wkb, i_pj, o_pj);
 					break;
 				case augeGTLineString:
-					Project((WKBLineString*)wkb, i_pj, o_pj);
+					rc = Project((WKBLineString*)wkb, i_pj, o_pj);
 					break;
 				case augeGTMultiLineString:
-					Project((WKBMultiLineString*)wkb, i_pj, o_pj);
+					rc = Project((WKBMultiLineString*)wkb, i_pj, o_pj);
 					break;
 				case augeGTPolygon:
-					Project((WKBPolygon*)wkb, i_pj, o_pj);
+					rc = Project((WKBPolygon*)wkb, i_pj, o_pj);
 					break;
 				case augeGTMultiPolygon:
-					Project((WKBMultiPolygon*)wkb, i_pj, o_pj);
+					rc = Project((WKBMultiPolygon*)wkb, i_pj, o_pj);
 					break;
 				}
 			}
 
-			cmd->Insert(pFeature);
-
+			if(rc==AG_SUCCESS)
+			{
+				cmd->Insert(pFeature);
+			}
 			pFeature->Release();
 		}
 
