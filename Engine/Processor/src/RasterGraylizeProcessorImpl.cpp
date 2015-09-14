@@ -237,10 +237,9 @@ namespace auge
 		pgBand->SetData(r);
 		pbBand->SetData(r);
 
-		free(r);
-		free(g);
-		free(b);
-
+		//free(r);
+		//free(g);
+		//free(b);
 
 		return true;
 	}
