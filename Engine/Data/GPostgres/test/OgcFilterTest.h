@@ -24,7 +24,8 @@ class OgcFilterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(ReadSpatialAttribute);
 
 	//CPPUNIT_TEST(WithinFilteTest);
-	CPPUNIT_TEST(DWithinFilteTest);
+	//CPPUNIT_TEST(DWithinFilteTest);
+	CPPUNIT_TEST(IntersectsFilterTest);
 	
 	CPPUNIT_TEST_SUITE_END();
 public:
@@ -47,6 +48,7 @@ private:
 
 	void WithinFilteTest();
 	void DWithinFilteTest();
+	void IntersectsFilterTest();
 
 private:
 	auge::FeatureWorkspace* m_pWorkspace;

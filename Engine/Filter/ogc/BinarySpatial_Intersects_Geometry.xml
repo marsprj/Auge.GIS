@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+	<ogc:Intersects>
+		<ogc:PropertyName>shape</ogc:PropertyName>
+		 <gml:LineString xmlns:gml="http://www.opengis.net/gml">
+			<gml:coordinates>-180,0 180,0</gml:coordinates>
+		</gml:LineString>
+	</ogc:Intersects>
+</ogc:Filter>

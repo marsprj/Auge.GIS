@@ -3,7 +3,7 @@
 #include "AugeData.h"
 #include "AugeRaster.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(PgRasterTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(PgRasterTest);
 
 void PgRasterTest::setUp() 
 {

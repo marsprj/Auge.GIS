@@ -841,44 +841,28 @@ namespace auge
 		switch(oper)
 		{
 		case augeSpBBox:
-			{
-				rc = BuildBBoxFilter(sql, pFeatureClass, static_cast<BBoxFilter*>(pFilter));
-			}
+			rc = BuildBBoxFilter(sql, pFeatureClass, static_cast<BBoxFilter*>(pFilter));
 			break;
 		case augeSpIntersects:
-			{
-
-			}
+			rc = BuildIntersectsFilter(sql, pFeatureClass, static_cast<BinarySpatialFilter*>(pFilter));
 			break;
 		case augeSpDWithin:
-			{
-				rc = BuildDWithinFilter(sql, pFeatureClass, static_cast<DistanceBufferFilter*>(pFilter));
-			}
+			rc = BuildDWithinFilter(sql, pFeatureClass, static_cast<DistanceBufferFilter*>(pFilter));
 			break;
 		case augeSpEquals:
-			{
-
-			}
+			rc = BuildEqualsFilter(sql, pFeatureClass, static_cast<BinarySpatialFilter*>(pFilter));
 			break;
 		case augeSpDisjoint:
-			{
-
-			}
+			rc = BuildDisjointFilter(sql, pFeatureClass, static_cast<BinarySpatialFilter*>(pFilter));
 			break;
 		case augeSpTouchs:
-			{
-
-			}
+			rc = BuildTouchesFilter(sql, pFeatureClass, static_cast<BinarySpatialFilter*>(pFilter));
 			break;
 		case augeSpCrosses:
-			{
-
-			}
+			rc = BuildCrossFilter(sql, pFeatureClass, static_cast<BinarySpatialFilter*>(pFilter));
 			break;
 		case augeSpWithin:
-			{
-				rc = BuildWithinFilter(sql, pFeatureClass, static_cast<BinarySpatialFilter*>(pFilter));
-			}
+			rc = BuildWithinFilter(sql, pFeatureClass, static_cast<BinarySpatialFilter*>(pFilter));
 			break;
 		case augeSpByond:
 			{
@@ -886,14 +870,10 @@ namespace auge
 			}
 			break;
 		case augeSpContains:
-			{
-
-			}
+			rc = BuildContainsFilter(sql, pFeatureClass, static_cast<BinarySpatialFilter*>(pFilter));
 			break;
 		case augeSpOverlaps:
-			{
-
-			}
+			rc = BuildOverlapsFilter(sql, pFeatureClass, static_cast<BinarySpatialFilter*>(pFilter));
 			break;
 		}
 
@@ -985,6 +965,237 @@ namespace auge
 		g_snprintf(srid, AUGE_NAME_MAX,"%d",pField->GetGeometryDef()->GetSRID());
 
 		sql = "st_within(";
+		sql.append("st_geomfromtext(upper('");
+		sql.append(wkt);
+		sql.append("'),");
+		sql.append(srid);
+		sql.append("),");
+		sql.append(geo_field);
+		sql.append(")");
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE SQLBuilder::BuildIntersectsFilter(std::string& sql,FeatureClassPgs* pFeatureClass, BinarySpatialFilter* pFilter)
+	{
+		RESULTCODE rc = AG_SUCCESS;
+		Geometry* pGeometry = pFilter->GetGeometry();
+		if(pGeometry==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pField==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* geo_field = pField->GetName();
+		const char* wkt = pGeometry->AsText(true);
+
+		char srid[AUGE_NAME_MAX] = {0};
+		g_snprintf(srid, AUGE_NAME_MAX,"%d",pField->GetGeometryDef()->GetSRID());
+
+		sql = "ST_Intersects(";
+		sql.append("st_geomfromtext(upper('");
+		sql.append(wkt);
+		sql.append("'),");
+		sql.append(srid);
+		sql.append("),");
+		sql.append(geo_field);
+		sql.append(")");
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE SQLBuilder::BuildEqualsFilter(std::string& sql,FeatureClassPgs* pFeatureClass, BinarySpatialFilter* pFilter)
+	{
+		RESULTCODE rc = AG_SUCCESS;
+		Geometry* pGeometry = pFilter->GetGeometry();
+		if(pGeometry==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pField==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* geo_field = pField->GetName();
+		const char* wkt = pGeometry->AsText(true);
+
+		char srid[AUGE_NAME_MAX] = {0};
+		g_snprintf(srid, AUGE_NAME_MAX,"%d",pField->GetGeometryDef()->GetSRID());
+
+		sql = "ST_Equals(";
+		sql.append("st_geomfromtext(upper('");
+		sql.append(wkt);
+		sql.append("'),");
+		sql.append(srid);
+		sql.append("),");
+		sql.append(geo_field);
+		sql.append(")");
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE SQLBuilder::BuildDisjointFilter(std::string& sql,FeatureClassPgs* pFeatureClass, BinarySpatialFilter* pFilter)
+	{
+		RESULTCODE rc = AG_SUCCESS;
+		Geometry* pGeometry = pFilter->GetGeometry();
+		if(pGeometry==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pField==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* geo_field = pField->GetName();
+		const char* wkt = pGeometry->AsText(true);
+
+		char srid[AUGE_NAME_MAX] = {0};
+		g_snprintf(srid, AUGE_NAME_MAX,"%d",pField->GetGeometryDef()->GetSRID());
+
+		sql = "ST_Disjoint(";
+		sql.append("st_geomfromtext(upper('");
+		sql.append(wkt);
+		sql.append("'),");
+		sql.append(srid);
+		sql.append("),");
+		sql.append(geo_field);
+		sql.append(")");
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE SQLBuilder::BuildCrossFilter(std::string& sql,FeatureClassPgs* pFeatureClass, BinarySpatialFilter* pFilter)
+	{
+		RESULTCODE rc = AG_SUCCESS;
+		Geometry* pGeometry = pFilter->GetGeometry();
+		if(pGeometry==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pField==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* geo_field = pField->GetName();
+		const char* wkt = pGeometry->AsText(true);
+
+		char srid[AUGE_NAME_MAX] = {0};
+		g_snprintf(srid, AUGE_NAME_MAX,"%d",pField->GetGeometryDef()->GetSRID());
+
+		sql = "ST_Crosses(";
+		sql.append("st_geomfromtext(upper('");
+		sql.append(wkt);
+		sql.append("'),");
+		sql.append(srid);
+		sql.append("),");
+		sql.append(geo_field);
+		sql.append(")");
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE SQLBuilder::BuildContainsFilter(std::string& sql,FeatureClassPgs* pFeatureClass, BinarySpatialFilter* pFilter)
+	{
+		RESULTCODE rc = AG_SUCCESS;
+		Geometry* pGeometry = pFilter->GetGeometry();
+		if(pGeometry==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pField==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* geo_field = pField->GetName();
+		const char* wkt = pGeometry->AsText(true);
+
+		char srid[AUGE_NAME_MAX] = {0};
+		g_snprintf(srid, AUGE_NAME_MAX,"%d",pField->GetGeometryDef()->GetSRID());
+
+		sql = "ST_Contains (";
+		sql.append("st_geomfromtext(upper('");
+		sql.append(wkt);
+		sql.append("'),");
+		sql.append(srid);
+		sql.append("),");
+		sql.append(geo_field);
+		sql.append(")");
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE SQLBuilder::BuildTouchesFilter(std::string& sql,FeatureClassPgs* pFeatureClass, BinarySpatialFilter* pFilter)
+	{
+		RESULTCODE rc = AG_SUCCESS;
+		Geometry* pGeometry = pFilter->GetGeometry();
+		if(pGeometry==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pField==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* geo_field = pField->GetName();
+		const char* wkt = pGeometry->AsText(true);
+
+		char srid[AUGE_NAME_MAX] = {0};
+		g_snprintf(srid, AUGE_NAME_MAX,"%d",pField->GetGeometryDef()->GetSRID());
+
+		sql = "ST_Contains(";
+		sql.append("st_geomfromtext(upper('");
+		sql.append(wkt);
+		sql.append("'),");
+		sql.append(srid);
+		sql.append("),");
+		sql.append(geo_field);
+		sql.append(")");
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE SQLBuilder::BuildOverlapsFilter(std::string& sql,FeatureClassPgs* pFeatureClass, BinarySpatialFilter* pFilter)
+	{
+		RESULTCODE rc = AG_SUCCESS;
+		Geometry* pGeometry = pFilter->GetGeometry();
+		if(pGeometry==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pField==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* geo_field = pField->GetName();
+		const char* wkt = pGeometry->AsText(true);
+
+		char srid[AUGE_NAME_MAX] = {0};
+		g_snprintf(srid, AUGE_NAME_MAX,"%d",pField->GetGeometryDef()->GetSRID());
+
+		sql = "ST_Overlaps(";
 		sql.append("st_geomfromtext(upper('");
 		sql.append(wkt);
 		sql.append("'),");
