@@ -9,7 +9,9 @@
 #include "RasterFolderImpl.h"
 
 namespace auge
-{	
+{
+#define AUGE_WRITABLE_DB_SERVER	"192.168.111.160"
+
 	WorkspacePgs::WorkspacePgs():
 	m_schema("public")
 	{
@@ -63,37 +65,37 @@ namespace auge
 		else
 			m_raster_repository = repository;
 
-		return m_pgConnection.SetConnectionString(conn_string);
+		return m_pgConnection_r.SetConnectionString(conn_string);
 	}
 	
 	const char*	WorkspacePgs::GetConnectionString()
 	{
-		return m_pgConnection.GetConnectionString();
+		return m_pgConnection_r.GetConnectionString();
 	}
 	
 	RESULTCODE WorkspacePgs::Open()
 	{	
-		if(m_pgConnection.IsOpen())
+		if(m_pgConnection_r.IsOpen())
 		{
 			return AG_SUCCESS;
 		}
-		RESULTCODE rc = m_pgConnection.Open();
+		RESULTCODE rc = m_pgConnection_r.Open();
 		if(rc!=AG_SUCCESS)
 		{
 			return rc;
 		}
 
-		if(!m_pgConnection.HasTable(g_feature_catalog_table.c_str()))
+		if(!m_pgConnection_r.HasTable(g_feature_catalog_table.c_str()))
 		{
 			CreateFeatureCatalogTable();
 		}
 		
-		if(!m_pgConnection.HasTable(g_raster_folder_table.c_str()))
+		if(!m_pgConnection_r.HasTable(g_raster_folder_table.c_str()))
 		{
 			CreateRasterFolderTable();
 		}
 
-		if(!m_pgConnection.HasTable(g_raster_table.c_str()))
+		if(!m_pgConnection_r.HasTable(g_raster_table.c_str()))
 		{
 			CreateRasterTable();
 		}
@@ -108,26 +110,27 @@ namespace auge
 
 	void WorkspacePgs::Close()
 	{
-		m_pgConnection.Close();
+		m_pgConnection_r.Close();
+		m_pgConnection_w.Close();
 
-                char msg[AUGE_MSG_MAX];
-                g_sprintf(msg, "Wokspace [%d] is closed.", m_name.c_str());
-                augeGetLoggerInstance()->Info(msg, __FILE__, __LINE__);
+		char msg[AUGE_MSG_MAX];
+		g_sprintf(msg, "Wokspace [%d] is closed.", m_name.c_str());
+		augeGetLoggerInstance()->Info(msg, __FILE__, __LINE__);
 	}
 
 	bool WorkspacePgs::IsOpen()
 	{
-		return m_pgConnection.IsOpen();
+		return m_pgConnection_r.IsOpen();
 	}
 
 	GConnection* WorkspacePgs::GetConnection()
 	{
-		return &m_pgConnection;
+		return &m_pgConnection_r;
 	}
 
 	FeatureClass* WorkspacePgs::OpenFeatureClass(const char* name)
 	{
-		if((name==NULL)||(!m_pgConnection.IsOpen()))
+		if((name==NULL)||(!m_pgConnection_r.IsOpen()))
 		{
 			return NULL;
 		}
@@ -228,7 +231,7 @@ namespace auge
 	{
 		const char* sql = "select f_table_name from geometry_columns order by f_table_name";
 
-		PGresult* pgResult = m_pgConnection.PgExecute(sql);
+		PGresult* pgResult = m_pgConnection_r.PgExecute(sql);
 		if(pgResult==NULL)
 		{
 			return NULL;
@@ -262,7 +265,7 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, "select tablename from pg_tables where schemaname='%s' order by tablename",m_schema.c_str());
 
-		PGresult* pgResult = m_pgConnection.PgExecute(sql);
+		PGresult* pgResult = m_pgConnection_r.PgExecute(sql);
 		if(pgResult!=NULL)
 		{	
 			const char* tname = NULL;
@@ -319,19 +322,54 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
 		char sql[AUGE_SQL_MAX] = {0};
 		g_sprintf(sql, "delete from g_raster where name='%s' and path='%s'",name, path);
-		return m_pgConnection.ExecuteSQL(sql);
+
+		return pgConnection->ExecuteSQL(sql);
 	}
 	//////////////////////////////////////////////////////////////////////////
 	// 
 	//////////////////////////////////////////////////////////////////////////
 
+	ConnectionPgs* WorkspacePgs::GetConnectionW()
+	{
+		if(m_pgConnection_w.IsOpen())
+		{
+			return &m_pgConnection_w;
+		}
+
+		char constr[AUGE_PATH_MAX];
+		memset(constr, 0, AUGE_PATH_MAX);		
+		g_snprintf(constr, AUGE_PATH_MAX, "server=%s;instance=5432;database=%s;user=postgres;password=qwer1234;encoding=GBK",
+											AUGE_WRITABLE_DB_SERVER,
+											m_pgConnection_r.m_props.GetValue(AUGE_DB_DATABASE));
+		m_pgConnection_w.SetConnectionString(constr);
+		RESULTCODE rc = m_pgConnection_w.Open();
+		if(rc!=AG_SUCCESS)
+		{
+			return NULL;
+		}
+		return &m_pgConnection_w;
+	}
+
 	RESULTCODE WorkspacePgs::CreateTable(const char* name, GFields* pFields)
 	{
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
 		std::string sql;
 		SQLBuilder::BuildCreateTable(sql, name, pFields);
-		return m_pgConnection.ExecuteSQL(sql.c_str());
+
+		return pgConnection->ExecuteSQL(sql.c_str());
 	}
 
 	RESULTCODE WorkspacePgs::RemoveTable(const char* name)
@@ -340,11 +378,17 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
+
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
 		char sql[AUGE_SQL_MAX] = {0};
 		g_snprintf(sql, AUGE_SQL_MAX, "drop table %s",name);
-		return m_pgConnection.ExecuteSQL(sql);
+		return pgConnection->ExecuteSQL(sql);
 	}
-
 
 	bool WorkspacePgs::UnRegisterLayer(long lid)
 	{
@@ -437,6 +481,12 @@ namespace auge
 
 	RESULTCODE WorkspacePgs::AddGeometryColumn(const char* name, GField* pField)
 	{
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
 		GeometryDef* pGeometryDef = pField->GetGeometryDef();
 		if(pGeometryDef==NULL)
 		{
@@ -460,11 +510,17 @@ namespace auge
 									  srid,
 									  gtype,
 									  dimen);
-		return m_pgConnection.ExecuteSQL(sql);
+		return pgConnection->ExecuteSQL(sql);
 	}
 
 	RESULTCODE WorkspacePgs::RegiseterGeometryColumn(const char* name, GField* pField)
 	{
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
 		GeometryDef* pGeometryDef = pField->GetGeometryDef();
 		if(pGeometryDef==NULL)
 		{
@@ -483,23 +539,28 @@ namespace auge
 																	 srid,\
 																	 type),\
 																	 ('%s','%s','%s','%s',%d,%d,'%s')",
-																	 m_pgConnection.GetDatabase(),
+																	 m_pgConnection_r.GetDatabase(),
 																	 m_schema.c_str(),
 																	 name,
 																	 pField->GetName(),
 																	 2,
 																	 pGeometryDef->GetSRID(),
 																	 pGeometryFactory->Encode(pGeometryDef->GeometryType()));
-		return m_pgConnection.ExecuteSQL(sql);
-
-		return AG_SUCCESS;
+		return pgConnection->ExecuteSQL(sql);
 	}
 
 	RESULTCODE WorkspacePgs::UnRegiseterGeometryColumn(const char* name)
 	{
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
 		char sql[AUGE_SQL_MAX] = {0};
 		g_snprintf(sql, AUGE_SQL_MAX, "delete from geometry_columns where f_table_name='%s' and f_table_schema='%s'",name,m_schema.c_str());
-		return m_pgConnection.ExecuteSQL(sql);
+
+		return pgConnection->ExecuteSQL(sql);
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -543,7 +604,7 @@ namespace auge
 		memset(sql, 0, AUGE_PATH_MAX);		
 		g_snprintf(sql, AUGE_PATH_MAX, format, g_raster_folder_table.c_str(), path_2);
 
-		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
+		GResultSet* pResult = m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return NULL;
@@ -578,7 +639,7 @@ namespace auge
 		memset(sql, 0, AUGE_PATH_MAX);		
 		g_snprintf(sql, AUGE_PATH_MAX, format, g_raster_folder_table.c_str(), id);
 
-		GResultSet* pResult = m_pgConnection.ExecuteQuery(sql);
+		GResultSet* pResult = m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return NULL;
@@ -613,6 +674,12 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
 		RasterFolder* pFolder = GetFolder(path);
 		if(pFolder==NULL)
 		{
@@ -640,7 +707,7 @@ namespace auge
 		memset(sql, 0, AUGE_PATH_MAX);		
 		g_snprintf(sql, AUGE_PATH_MAX, format, g_raster_folder_table.c_str(), path);
 
-		m_pgConnection.ExecuteSQL(sql);
+		pgConnection->ExecuteSQL(sql);
 		
 		auge_rmdir(pFolder->GetLocalPath());
 
@@ -854,7 +921,11 @@ namespace auge
 
 	RESULTCODE WorkspacePgs::AddRaster(Raster* pRaster)
 	{
-
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
 		if(pRaster==NULL)
 		{
 			return AG_FAILURE;
@@ -903,20 +974,32 @@ namespace auge
 												extent.m_xmax,
 												extent.m_ymax,
 												uuid);
-		return m_pgConnection.ExecuteSQL(sql);
+		return pgConnection->ExecuteSQL(sql);
 	}
 	
 	RESULTCODE WorkspacePgs::RemoveMetaInfo(const char* name)
 	{
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
 		const char* format = "delete from %s where name='%s'";
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, g_feature_catalog_table.c_str(), name);
-		return m_pgConnection.ExecuteSQL(sql);
+		return pgConnection->ExecuteSQL(sql);
 	}
 
 	RESULTCODE WorkspacePgs::CreateRasterTable()
 	{
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
 		char sql[AUGE_SQL_MAX];
 		const char* format = "CREATE TABLE %s(" \
 			"	gid serial NOT NULL," \
@@ -940,11 +1023,17 @@ namespace auge
 			"	CONSTRAINT g_raster_name_uk UNIQUE (name, format)" \
 			")";
 		g_sprintf(sql, format, g_raster_table.c_str());
-		return m_pgConnection.ExecuteSQL(sql);
+		return pgConnection->ExecuteSQL(sql);
 	}
 
 	RESULTCODE WorkspacePgs::CreateRasterFolderTable()
 	{
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
 		char sql[AUGE_SQL_MAX];
 		const char* format = "CREATE TABLE %s(" \
 			"	gid serial NOT NULL," \
@@ -955,11 +1044,17 @@ namespace auge
 			"	CONSTRAINT g_raster_folder_pk PRIMARY KEY (gid)" \
 			")";
 		g_sprintf(sql, format, g_raster_folder_table.c_str());
-		return m_pgConnection.ExecuteSQL(sql);
+		return pgConnection->ExecuteSQL(sql);
 	}
 
 	RESULTCODE WorkspacePgs::CreateFeatureCatalogTable()
 	{
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
 		char sql[AUGE_SQL_MAX];
 		const char* format = "	CREATE TABLE %s" \
 			"	(" \
@@ -976,7 +1071,7 @@ namespace auge
 			"	  CONSTRAINT g_feature_catalog_name_uk UNIQUE (name)" \
 			"	)";
 		g_sprintf(sql, format, g_feature_catalog_table.c_str());
-		return m_pgConnection.ExecuteSQL(sql);
+		return pgConnection->ExecuteSQL(sql);
 	}
 	//////////////////////////////////////////////////////////////////////////
 	// Raster End

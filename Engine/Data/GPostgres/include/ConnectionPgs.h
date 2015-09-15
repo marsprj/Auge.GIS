@@ -9,6 +9,7 @@ namespace auge
 {
 	class ConnectionPgs : public GConnection
 	{
+		friend class WorkspacePgs;
 	public:
 		ConnectionPgs();
 		virtual ~ConnectionPgs();

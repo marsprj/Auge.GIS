@@ -87,7 +87,7 @@ namespace auge
 	{
 		std::string sql;
 		SQLBuilder::BuildCount(sql, extent, this);
-		PGresult* pgResult =  m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		PGresult* pgResult =  m_pWorkspace->m_pgConnection_r.PgExecute(sql.c_str());
 		g_uint count = atoi(PQgetvalue(pgResult,0,0));
 		PQclear(pgResult);
 
@@ -98,7 +98,7 @@ namespace auge
 	{
 		std::string sql;
 		SQLBuilder::BuildCount(sql, pFilter, this);
-		PGresult* pgResult =  m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		PGresult* pgResult =  m_pWorkspace->m_pgConnection_r.PgExecute(sql.c_str());
 		g_uint count = atoi(PQgetvalue(pgResult,0,0));
 		PQclear(pgResult);
 
@@ -122,7 +122,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		const char* field_type = m_pWorkspace->m_pgConnection.GetFieldType(type);
+		const char* field_type = m_pWorkspace->m_pgConnection_r.GetFieldType(type);
 		if(field_type==NULL)
 		{
 			return NULL;
@@ -141,7 +141,7 @@ namespace auge
 			g_snprintf(sql, AUGE_SQL_MAX, "alter table %s add column %s %s", GetName(), name, field_type);
 		}
 	
-		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+		return m_pWorkspace->m_pgConnection_r.ExecuteSQL(sql);
 	}
 
 	RESULTCODE FeatureClassPgs::RemoveField(const char* name)
@@ -154,7 +154,7 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, "ALTER TABLE %s DROP COLUMN %s", GetName(), name);
 		
-		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+		return m_pWorkspace->m_pgConnection_r.ExecuteSQL(sql);
 	}
 
 	bool FeatureClassPgs::Create(const char* name, WorkspacePgs* pWorkspace)
@@ -261,7 +261,7 @@ namespace auge
 				SQLBuilder::BuildQuery(sql,this);
 
 				PGresult* pgResult = NULL;
-				pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+				pgResult = m_pWorkspace->m_pgConnection_r.PgExecute(sql.c_str());
 				if(pgResult==NULL)
 				{
 					return NULL;
@@ -328,7 +328,7 @@ namespace auge
 				SQLBuilder::BuildQuery(sql,extent,this);
 
 				PGresult* pgResult = NULL;
-				pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+				pgResult = m_pWorkspace->m_pgConnection_r.PgExecute(sql.c_str());
 				if(pgResult==NULL)
 				{
 					return NULL;
@@ -374,7 +374,7 @@ namespace auge
 				SQLBuilder::BuildQuery(sql,pFilter,this);
 
 				PGresult* pgResult = NULL;
-				pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+				pgResult = m_pWorkspace->m_pgConnection_r.PgExecute(sql.c_str());
 				if(pgResult==NULL)
 				{
 					return NULL;
@@ -420,7 +420,7 @@ namespace auge
 				SQLBuilder::BuildQuery(sql,pQuery,this);
 
 				PGresult* pgResult = NULL;
-				pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+				pgResult = m_pWorkspace->m_pgConnection_r.PgExecute(sql.c_str());
 				if(pgResult==NULL)
 				{
 					return NULL;
@@ -479,7 +479,7 @@ namespace auge
 		std::string sql;
 		SQLBuilder::BuildDeleteFeature(sql, pFilter, this);
 		PGresult* pgResult = NULL;
-		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		pgResult = m_pWorkspace->m_pgConnection_r.PgExecute(sql.c_str());
 		if(pgResult==NULL)
 		{
 			return AG_FAILURE;
@@ -504,7 +504,7 @@ namespace auge
 		g_snprintf(sql, AUGE_SQL_MAX, "select * from %s limit 0", m_name.c_str());
 
 		PGresult* pgResult = NULL;
-		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql);
+		pgResult = m_pWorkspace->m_pgConnection_r.PgExecute(sql);
 		if(pgResult==NULL)
 		{
 			return false;
@@ -547,7 +547,7 @@ namespace auge
 		}
 		else
 		{
-			type = m_pWorkspace->m_pgConnection.GetFieldType(pgType);
+			type = m_pWorkspace->m_pgConnection_r.GetFieldType(pgType);
 			if(type==augeFieldTypeNone)
 			{
 				return NULL;
@@ -596,7 +596,7 @@ namespace auge
 		g_snprintf(sql, AUGE_SQL_MAX, "select * from geometry_columns where f_table_name='%s' and f_table_schema='%s'",m_name.c_str(),m_schema.c_str());
 
 		PGresult* pgResult = NULL;
-		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql);
+		pgResult = m_pWorkspace->m_pgConnection_r.PgExecute(sql);
 		if(pgResult==NULL)
 		{
 			return false;
@@ -665,7 +665,7 @@ namespace auge
 		std::string sql;
 		SQLBuilder::BuildGetUniqueValueSQL(sql, field, this, order);
 
-		GResultSet*  pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql.c_str());
+		GResultSet*  pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql.c_str());
 		if(pResult==NULL)
 		{
 			return NULL;
@@ -719,7 +719,7 @@ namespace auge
 		std::string sql;
 		SQLBuilder::BuildGetMinMaxValueSQL(sql, field, this);
 
-		GResultSet*  pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql.c_str());
+		GResultSet*  pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql.c_str());
 		if(pResult==NULL)
 		{
 			return NULL;
@@ -777,7 +777,7 @@ namespace auge
 		std::string sql;
 		SQLBuilder::BuildCount(sql, this);
 
-		PGresult* pgResult =  m_pWorkspace->m_pgConnection.PgExecute(sql.c_str());
+		PGresult* pgResult =  m_pWorkspace->m_pgConnection_r.PgExecute(sql.c_str());
 		g_uint count = atoi(PQgetvalue(pgResult,0,0));
 		PQclear(pgResult);
 
@@ -790,7 +790,7 @@ namespace auge
 		g_snprintf(sql, AUGE_SQL_MAX, "select st_extent(%s) from %s", m_geom_filed_name.c_str(), m_name.c_str());
 
 		PGresult* pgResult = NULL;
-		pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql);
+		pgResult = m_pWorkspace->m_pgConnection_r.PgExecute(sql);
 		if(PQresultStatus(pgResult)==PGRES_TUPLES_OK)
 		{
 			const char* value = PQgetvalue(pgResult, 0, 0);
@@ -804,7 +804,7 @@ namespace auge
 	{
 		char sql[AUGE_SQL_MAX];
 		g_snprintf(sql, AUGE_SQL_MAX, "select count(*) from %s where name = '%s'", m_pWorkspace->g_feature_catalog_table.c_str(), m_name.c_str());
-		GResultSet* pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql);
+		GResultSet* pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return false;
@@ -852,8 +852,13 @@ namespace auge
 				uuid);
 		}
 		
+		GConnection* pgConnection = m_pWorkspace->GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
 
-		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+		return pgConnection->ExecuteSQL(sql);
 	}
 
 	RESULTCODE FeatureClassPgs::RemoveMetaInfo()
@@ -862,7 +867,14 @@ namespace auge
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), GetName());
-		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+
+		GConnection* pgConnection = m_pWorkspace->GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		return pgConnection->ExecuteSQL(sql);
 	}
 
 	RESULTCODE FeatureClassPgs::UpdateMetaInfo()
@@ -882,7 +894,13 @@ namespace auge
 			extent.m_xmax,
 			extent.m_ymax);
 
-		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+		GConnection* pgConnection = m_pWorkspace->GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		return pgConnection->ExecuteSQL(sql);
 	}
 
 	RESULTCODE FeatureClassPgs::GetMetaInfo()
@@ -892,7 +910,7 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), m_name.c_str());
 
-		GResultSet* pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql);
+		GResultSet* pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return AG_FAILURE;

@@ -7,11 +7,11 @@
 class FeatureTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(FeatureTest);
-	//CPPUNIT_TEST(FeatureImportTest);
+	CPPUNIT_TEST(FeatureImportTest);
 	//CPPUNIT_TEST(FeatureExportTest);
 	//CPPUNIT_TEST(CsvImportTest);
 
-	CPPUNIT_TEST(ProjectTest);
+	//CPPUNIT_TEST(ProjectTest);
 	//CPPUNIT_TEST(LineToPoints);
 	//CPPUNIT_TEST(PolygonToLine);
 

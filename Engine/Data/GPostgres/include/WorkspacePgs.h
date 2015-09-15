@@ -99,8 +99,12 @@ namespace auge
 		RESULTCODE				CreateRasterFolderTable();
 
 		RESULTCODE				RemoveMetaInfo(const char* name);
+
+		ConnectionPgs*			GetConnectionW();
 	private:
-		ConnectionPgs	m_pgConnection;
+		ConnectionPgs	m_pgConnection_r;
+		ConnectionPgs	m_pgConnection_w;
+
 		std::string		m_name;
 		std::string		m_schema;
 

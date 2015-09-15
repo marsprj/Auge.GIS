@@ -42,7 +42,7 @@ namespace auge
 		memset(sql, 0, AUGE_PATH_MAX);		
 		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), GetID());
 
-		GResultSet* pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql);
+		GResultSet* pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return false;
@@ -82,7 +82,7 @@ namespace auge
 		memset(sql, 0, AUGE_PATH_MAX);		
 		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), name, GetID());
 
-		GResultSet* pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql);
+		GResultSet* pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return false;
@@ -164,7 +164,14 @@ namespace auge
 		memset(sql, 0, AUGE_PATH_MAX);		
 		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), name, GetID());
 
-		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+		GConnection* pgConnection = m_pWorkspace->GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		//return m_pWorkspace->m_pgConnection_r.ExecuteSQL(sql);
+		return pgConnection->ExecuteSQL(sql);
 	}
 
 	RESULTCODE RasterFolderImpl::RenameFolder(const char* name)
@@ -186,7 +193,7 @@ namespace auge
 		memset(sql, 0, AUGE_PATH_MAX);		
 		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), name, GetID());
 
-		GResultSet* pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql);
+		GResultSet* pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return false;
@@ -210,7 +217,7 @@ namespace auge
 		const char* format = "select count(*) from %s where parent=%d";
 		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), GetID());
 
-		GResultSet* pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql);
+		GResultSet* pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return false;
@@ -258,7 +265,12 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), name, alias, path, GetID());
 
-		GResultSet* pResult = m_pWorkspace->m_pgConnection.ExecuteQuery(sql);
+		GConnection* pgConnection = m_pWorkspace->GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return -1;
+		}
+		GResultSet* pResult = pgConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return NULL;

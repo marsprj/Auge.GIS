@@ -59,7 +59,7 @@ namespace auge
 		char sql[AUGE_SQL_MAX] = {0};
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWoskspace->g_raster_table.c_str(), m_pFolder->GetID());
 
-		GResultSet* pResult = m_pWoskspace->m_pgConnection.ExecuteQuery(sql);
+		GResultSet* pResult = m_pWoskspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return NULL;
@@ -117,7 +117,7 @@ namespace auge
 		char sql[AUGE_SQL_MAX] = {0};
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWoskspace->g_raster_table.c_str(), name, m_pFolder->GetID());
 
-		GResultSet* pResult = m_pWoskspace->m_pgConnection.ExecuteQuery(sql);
+		GResultSet* pResult = m_pWoskspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return NULL;
@@ -290,7 +290,7 @@ namespace auge
 										extent.m_xmax,
 										extent.m_ymax,
 										uuid);
-		return m_pWoskspace->m_pgConnection.ExecuteSQL(sql);
+		return m_pWoskspace->m_pgConnection_r.ExecuteSQL(sql);
 	}
 
 	RESULTCODE RasterDatasetImpl::AddRaster(const char* name, const char* file_path)
@@ -357,7 +357,7 @@ namespace auge
 			uuid);
 		pinRaster->Release();
 		
-		RESULTCODE rc = m_pWoskspace->m_pgConnection.ExecuteSQL(sql);
+		RESULTCODE rc = m_pWoskspace->m_pgConnection_r.ExecuteSQL(sql);
 		if(rc==AG_SUCCESS)
 		{
 			auge_move(file_path, raster_local_path);
@@ -379,7 +379,7 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWoskspace->g_raster_table.c_str(), name, m_pFolder->GetID());
 
-		RESULTCODE rc = m_pWoskspace->m_pgConnection.ExecuteSQL(sql);
+		RESULTCODE rc = m_pWoskspace->m_pgConnection_r.ExecuteSQL(sql);
 		if(rc==AG_FAILURE)
 		{
 			return rc;
@@ -405,7 +405,7 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWoskspace->g_raster_table.c_str(), m_pFolder->GetID());
 
-		GResultSet* pResult = m_pWoskspace->m_pgConnection.ExecuteQuery(sql);
+		GResultSet* pResult = m_pWoskspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return false;
@@ -428,7 +428,7 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWoskspace->g_raster_table.c_str(), name, m_pFolder->GetID());
 
-		GResultSet* pResult = m_pWoskspace->m_pgConnection.ExecuteQuery(sql);
+		GResultSet* pResult = m_pWoskspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return false;

@@ -1,7 +1,7 @@
 #include "Transfer.h"
 #include "AugeFeature.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(TransferTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(TransferTest);
 
 void TransferTest::setUp() 
 {
@@ -16,7 +16,8 @@ void TransferTest::setUp()
 	pEngineManager->Load();
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pwsPGS = dynamic_cast<auge::FeatureWorkspace*>(pEngine->CreateWorkspace());
-	m_pwsPGS->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pwsPGS->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pwsPGS->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pwsPGS->Open();
 
 	pEngine = pEngineManager->GetEngine("Shape");

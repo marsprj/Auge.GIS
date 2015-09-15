@@ -29,7 +29,7 @@ namespace auge
 			m_pgResult = NULL;
 		}
 		
-		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection;
+		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection_r;
 
 		pgConnection.EndTransaction();
 
@@ -105,7 +105,7 @@ namespace auge
 		m_pFeatureClass = pFeatureClass;
 		m_pFeatureClass->AddRef();
 		m_pWorkspace = pFeatureClass->m_pWorkspace;
-		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection;
+		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection_r;
 		
 		GFields	*pFields = m_pFeatureClass->GetFields();
 		GField	*pField = pFields->GetGeometryField();
@@ -142,7 +142,7 @@ namespace auge
 		m_pFeatureClass->AddRef();
 
 		m_pWorkspace = pFeatureClass->m_pWorkspace;
-		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection;
+		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection_r;
 
 		GFields	*pFields = m_pFeatureClass->GetFields();
 		GField	*pField = pFields->GetGeometryField();
@@ -178,7 +178,7 @@ namespace auge
 		m_pFeatureClass = pFeatureClass;
 		m_pFeatureClass->AddRef();
 		m_pWorkspace = pFeatureClass->m_pWorkspace;
-		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection;
+		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection_r;
 
 		GFields	*pFields = m_pFeatureClass->GetFields();
 		GField	*pField = pFields->GetGeometryField();
@@ -214,7 +214,7 @@ namespace auge
 		m_class_name = pFeatureClass->GetName();
 		//m_pFeatureClass = pFeatureClass;
 		m_pWorkspace = pFeatureClass->m_pWorkspace;
-		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection;
+		ConnectionPgs& pgConnection = m_pWorkspace->m_pgConnection_r;
 		
 		RESULTCODE rc = AG_SUCCESS;
 		rc = pgConnection.StartTransaction();
@@ -246,7 +246,7 @@ namespace auge
 		std::string sql;
 		SQLBuilder::BuildQueryCursor(sql, m_cursor_name, m_pFeatureClass);
 
-		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql.c_str());
+		return m_pWorkspace->m_pgConnection_r.ExecuteSQL(sql.c_str());
 	}
 
 	RESULTCODE FeatureCursorStatic::OpenCursor(GEnvelope& extent)
@@ -261,7 +261,7 @@ namespace auge
 		std::string sql;
 		SQLBuilder::BuildQueryCursor(sql, m_cursor_name, extent, m_pFeatureClass);
 
-		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql.c_str());
+		return m_pWorkspace->m_pgConnection_r.ExecuteSQL(sql.c_str());
 	}
 
 	RESULTCODE FeatureCursorStatic::OpenCursor(GFilter* pFilter)
@@ -276,7 +276,7 @@ namespace auge
 		std::string sql;
 		SQLBuilder::BuildQueryCursor(sql, m_cursor_name, pFilter, m_pFeatureClass);
 
-		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql.c_str());
+		return m_pWorkspace->m_pgConnection_r.ExecuteSQL(sql.c_str());
 	}
 
 	RESULTCODE FeatureCursorStatic::OpenCursor(GQuery*  pQuery, FeatureClassPgs* pFeatureClass)
@@ -291,7 +291,7 @@ namespace auge
 		std::string sql;
 		SQLBuilder::BuildQueryCursor(sql, m_cursor_name, pQuery, pFeatureClass);
 
-		return m_pWorkspace->m_pgConnection.ExecuteSQL(sql.c_str());
+		return m_pWorkspace->m_pgConnection_r.ExecuteSQL(sql.c_str());
 	}
 
 	void FeatureCursorStatic::CloseCursor()
@@ -299,7 +299,7 @@ namespace auge
 		PGresult* pgResult;
 		char sql[AUGE_PATH_MAX];
 		sprintf(sql, "CLOSE %s", m_cursor_name);
-		m_pWorkspace->m_pgConnection.ExecuteSQL(sql);
+		m_pWorkspace->m_pgConnection_r.ExecuteSQL(sql);
 	}
 
 	void FeatureCursorStatic::ClearResult()
@@ -323,7 +323,7 @@ namespace auge
 		//从数据库获取数据
 		char sql[AUGE_PATH_MAX];
 		sprintf(sql, "FETCH %d IN %s", m_fetch_count, m_cursor_name);
-		m_pgResult = m_pWorkspace->m_pgConnection.PgExecute(sql);
+		m_pgResult = m_pWorkspace->m_pgConnection_r.PgExecute(sql);
 		int status = PQresultStatus(m_pgResult);
 		if ( status != PGRES_TUPLES_OK)
 		{

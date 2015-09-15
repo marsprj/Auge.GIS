@@ -91,7 +91,7 @@ namespace auge
 		const char* fname= PQfname(pgResult, col);
 
 		augeFieldType type = augeFieldTypeNone;
-		type = m_pWorkspace->m_pgConnection.GetFieldType(pgType);
+		type = m_pWorkspace->m_pgConnection_r.GetFieldType(pgType);
 		if(type==augeFieldTypeNone)
 		{
 			return NULL;

@@ -8,7 +8,7 @@ namespace auge
 	FeatureInsertCommandPgs::FeatureInsertCommandPgs(FeatureClassPgs* pFeatureClass)
 	{
 		m_pFeatureClass = pFeatureClass;
-		m_pgConnection = &(m_pFeatureClass->m_pWorkspace->m_pgConnection);
+		m_pgConnection = m_pFeatureClass->m_pWorkspace->GetConnectionW();
 	}
 
 	FeatureInsertCommandPgs::~FeatureInsertCommandPgs()
