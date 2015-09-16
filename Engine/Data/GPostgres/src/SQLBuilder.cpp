@@ -1611,6 +1611,158 @@ namespace auge
 		sql.append(")");
 	}
 
+	void SQLBuilder::BuildUpdateFeature(std::string& sql, EnumString* pFieldNames, EnumValue* pValues, GFilter* pFilter, FeatureClassPgs* pFeatureClass)
+	{
+		GField	*pField = NULL;
+		GFields	*pFields= pFeatureClass->GetFields();
+		GValue	*pValue = NULL;
+		const char* cname = NULL;
+		const char* fname = NULL;
+		g_uint srid = pFeatureClass->GetSRID();
+		augeFieldType ftype = augeFieldTypeNone;
+		augeGeometryType geomtype = augeGTNull;
+		char str[AUGE_BUFFER_MAX];
+		bool first = true;
+
+		sql = "update ";
+		sql.append(pFeatureClass->GetName());
+		sql.append(" set ");
+
+		pFieldNames->Reset();
+		pValues->Reset();
+		while((fname=pFieldNames->Next())!=NULL)
+		{
+			pField = pFields->GetField(fname);
+			if(pField==NULL)
+			{
+				break;
+			}
+			pValue = pValues->Next();
+			if(pValue==NULL)
+			{
+				break;
+			}
+
+			if(first)
+			{
+				first = false;
+			}
+			else
+			{
+				sql.append(",");
+			}
+
+			sql.append(fname);	
+			sql.append("=");
+
+			ftype = pField->GetType();
+			switch(ftype)
+			{					 
+			case augeFieldTypeShort:
+				{
+					g_snprintf(str, AUGE_BUFFER_MAX,"%d",pValue->GetShort());
+					sql.append(str);
+				}
+				break;
+			case augeFieldTypeInt:
+				{
+					g_snprintf(str, AUGE_BUFFER_MAX,"%d",pValue->GetInt());
+					sql.append(str);
+				}
+				break;
+			case augeFieldTypeLong:
+				{
+					g_snprintf(str, AUGE_BUFFER_MAX,"%d",pValue->GetLong());
+					sql.append(str);
+				}
+				break;
+			case augeFieldTypeInt64:
+				{
+					g_snprintf(str, AUGE_BUFFER_MAX,"%d",pValue->GetInt64());
+					sql.append(str);
+				}
+				break;
+			case augeFieldTypeFloat:
+				{
+					g_snprintf(str, AUGE_BUFFER_MAX,"%f",pValue->GetFloat());
+					sql.append(str);
+				}
+				break;
+			case augeFieldTypeDouble:
+				{
+					g_snprintf(str, AUGE_BUFFER_MAX,"%f",pValue->GetDouble());
+					sql.append(str);
+				}
+				break;
+			case augeFieldTypeChar:			 
+				{
+					g_snprintf(str, AUGE_BUFFER_MAX,"'%c'",pValue->GetChar());
+					sql.append(str);
+				}
+				break;
+			case augeFieldTypeString:
+				{
+					auge_normalize_single_quote(str, AUGE_MSG_MAX, pValue->GetString());
+					sql.append("'");
+					sql.append(str);
+					sql.append("'");
+				}
+				break;
+			case augeFieldTypeTime:	
+				{
+
+				}
+				break;
+			case augeFieldTypeBool:			 
+				{
+
+				}
+				break;
+			case augeFieldTypeBLOB:			 
+				{
+
+				}
+				break;
+			case augeFieldTypeGeometry:
+				{
+					Geometry *pGeometry = pValue->GetGeometry();
+					if(pGeometry!=NULL)
+					{
+						const char* wkt = NULL;
+						if((geomtype==augeGTMultiPoint) || (geomtype==augeGTMultiLineString) || (geomtype==augeGTMultiPolygon))
+						{
+							wkt = pGeometry->AsText(true);
+						}
+						else
+						{
+							wkt = pGeometry->AsText();
+						}
+						if(wkt!=NULL)
+						{
+							g_snprintf(str, AUGE_BUFFER_MAX,"%d",srid);
+
+							sql.append("st_geomfromtext(");
+							sql.append("'");
+							sql.append(wkt);
+							sql.append("',");
+							sql.append(str);
+							sql.append(")");
+						}
+					}
+				}
+				break;
+			}//switch
+		}
+
+		if(pFilter!=NULL)
+		{
+			sql.append(" where ");
+			std::string where = "";
+			BuildFilter(where, pFeatureClass, pFilter);
+			sql.append(where);
+		}
+	}
+
 	//void SQLBuilder::BuildInsertFeature(std::string& sql, const char* className, Feature* pFeature, g_uint srid)
 	//{
 	//	std::string fields = "";

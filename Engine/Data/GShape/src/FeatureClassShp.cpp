@@ -326,6 +326,11 @@ namespace auge
 		return (new FeatureInsertCommandShp(this));
 	}
 
+	RESULTCODE FeatureClassShp::UpdateFeature(EnumString* pFieldNames, EnumValue* pValues, GFilter* pFilter)
+	{
+		return AG_FAILURE;
+	}
+
 	RESULTCODE FeatureClassShp::RemoveFeature(GFilter* pFilter)
 	{
 		return AG_FAILURE;

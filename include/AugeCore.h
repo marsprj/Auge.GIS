@@ -275,6 +275,26 @@ namespace auge
 		VARIANT_STRU  m_Variant;
 	};
 
+	class AUGE_API EnumString
+	{
+	public:
+		EnumString();
+		virtual ~EnumString();
+	public:
+		virtual void		Reset();
+		virtual	const char*	Next();
+		virtual void		Release();
+
+	public:
+		void	Add(const char* sz);
+	private:
+		void	Cleanup();
+
+	private:
+		std::vector<std::string> m_strs;
+		std::vector<std::string>::iterator m_iter;
+	};
+
 	class AUGE_API EnumValue
 	{
 	public:

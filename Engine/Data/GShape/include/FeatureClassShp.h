@@ -45,6 +45,7 @@ namespace auge
 		virtual EnumValue*			GetUniqueValue(const char* filed, augeOrderType order=augeOrderAsc);
 		virtual EnumValue*			GetMinMaxValue(const char* field);
 
+		virtual RESULTCODE			UpdateFeature(EnumString* pFieldNames, EnumValue* pValues, GFilter* pFilter);
 		virtual RESULTCODE			RemoveFeature(GFilter* pFilter);
 
 		virtual FeatureInsertCommand* CreateInsertCommand();

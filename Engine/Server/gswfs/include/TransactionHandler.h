@@ -49,6 +49,7 @@ namespace auge
 		g_uint			Update(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorkspace* pWorkspace);
 		g_uint			Delete(XNodeSet* pxNodeSet, WebContext* pWebContext, FeatureWorkspace* pWorkspace);
 		bool			Insert(XNode* pxInsert, WebContext* pWebContext, FeatureWorkspace* pWorkspace);
+		g_int			Update(XNode* pxUpdate, WebContext* pWebContext, FeatureWorkspace* pWorkspace);
 		g_int			Delete(XNode* pxDelete, WebContext* pWebContext, FeatureWorkspace* pWorkspace);
 
 		GValue*			CreateValue(XNode* pxNode, GField* pField);

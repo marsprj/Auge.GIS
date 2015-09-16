@@ -100,6 +100,7 @@ namespace auge
 			char msg[AUGE_MSG_MAX];
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			g_sprintf(msg, "No Map is attached");
+			pLogger->Error(msg, __FILE__, __LINE__);
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
@@ -111,6 +112,7 @@ namespace auge
 			char msg[AUGE_MSG_MAX];
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			g_sprintf(msg, "Cannot load map [%s]", mapName);
+			pLogger->Error(msg, __FILE__, __LINE__);
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
@@ -122,8 +124,10 @@ namespace auge
 		pxDoc = pRequest->GetXmlDoc();
 		if(pxDoc==NULL)
 		{
+			const char* msg = "transaction xml parse error";
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage("transaction xml parse error");
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
 			return pExpResponse;
 		}
 
@@ -544,10 +548,11 @@ namespace auge
 		pxNodeSet->Reset();
 		while((pxNode=pxNodeSet->Next()))
 		{
-			//if(Insert(pxNode, pWebContext, pMap))
-			//{
-			//	count++;
-			//}
+			RESULTCODE rc = Update(pxNode, pWebContext, pWorkspace);
+			if(rc==0)
+				count++;
+			else if(rc>0)
+				count += rc;
 		}
 		return count;
 	}
@@ -653,5 +658,179 @@ namespace auge
 		AUGE_SAFE_RELEASE(pFeatureClass);
 
 		return !rc;
+	}
+
+	g_int TransactionHandler::Update(XNode* pxUpdate, WebContext* pWebContext, FeatureWorkspace* pWorkspace)
+	{
+		int count = 0;
+
+		XAttribute* pxAttr = ((XElement*)pxUpdate)->GetAttribute("name");
+		if(pxAttr==NULL)
+		{
+			return 0;
+		}
+		const char* name = pxAttr->GetValue();
+		GField	*pField  = NULL;
+		GFields	*pFields = NULL;
+		FeatureClass* pFeatureClass = NULL;
+		pFeatureClass = pWorkspace->OpenFeatureClass(name);
+		if(pFeatureClass==NULL)
+		{
+			return 0;
+		}
+
+		GFilter* pFilter = NULL;
+		XNode* pxFilter = pxUpdate->GetFirstChild("Filter");
+		if(pxFilter!=NULL)
+		{
+			FilterFactory *factory = augeGetFilterFactoryInstance();
+			FilterReader  *reader  = factory->CreateFilerReader(pFeatureClass->GetFields());
+			pFilter = reader->Read((XElement*)pxFilter);
+		}
+
+		XNodeSet* pxPropertySet = NULL;
+		pxPropertySet = pxUpdate->GetChildren("Property");
+		if(pxPropertySet==NULL)
+		{
+			if(pFilter!=NULL)
+			{
+				pFilter->Release();
+				pFilter = NULL;
+			}
+			pFeatureClass->Release();
+			return AG_FAILURE;
+		}
+
+		const char* str= NULL;
+		const char* fname = NULL;
+		augeFieldType ftype = augeFieldTypeNone;
+
+		GValue* pValue = NULL;
+		EnumString* pFieldNames = new EnumString();
+		EnumValue*  pValues = new EnumValue();
+
+		XNode* pxName = NULL;
+		XNode* pxValue = NULL;
+		XNode* pxProp = NULL;
+		pxPropertySet->Reset();
+		while((pxProp = pxPropertySet->Next())!=NULL)
+		{
+			pxName = pxProp->GetFirstChild("Name");
+			pxValue= pxProp->GetFirstChild("Value");
+			fname = pxName->GetContent();
+
+			pField = pFeatureClass->GetField(fname);
+			if(pField==NULL)
+			{
+				continue;
+			}
+
+			ftype = pField->GetType();
+			switch(ftype)
+			{					 
+			case augeFieldTypeShort:
+				{
+					str = pxValue->GetContent();
+					pValue = new GValue((short)atoi(str));
+				}
+				break;
+			case augeFieldTypeInt:
+				{
+					str = pxValue->GetContent();
+					pValue = new GValue((int)atoi(str));
+				}
+				break;
+			case augeFieldTypeLong:
+				{
+					str = pxValue->GetContent();
+					pValue = new GValue((long)atoi(str));
+				}
+				break;
+			case augeFieldTypeInt64:
+				{
+					str = pxValue->GetContent();
+					pValue = new GValue((int64)atoi(str));
+				}
+				break;
+			case augeFieldTypeFloat:
+				{
+					str = pxValue->GetContent();
+					pValue = new GValue((float)atof(str));
+				}
+				break;
+			case augeFieldTypeDouble:
+				{
+					str = pxValue->GetContent();
+					pValue = new GValue((double)atof(str));
+				}
+				break;
+			case augeFieldTypeChar:			 
+				{
+					str = pxValue->GetContent();
+					pValue = new GValue(str[0]);
+				}
+				break;
+			case augeFieldTypeString:
+				{
+					pValue = new GValue(pxValue->GetContent());
+				}
+				break;
+			case augeFieldTypeTime:	
+				{
+
+				}
+				break;
+			case augeFieldTypeBool:			 
+				{
+
+				}
+				break;
+			case augeFieldTypeBLOB:			 
+				{
+
+				}
+				break;
+			case augeFieldTypeGeometry:
+				{
+					/*Geometry *pGeometry = pFeature->GetGeometry();
+					if(pGeometry!=NULL)
+					{
+						const char* wkt = pGeometry->AsText(true);
+						if(wkt!=NULL)
+						{
+							g_snprintf(str, AUGE_BUFFER_MAX,"%d",srid);
+
+							fields.append(fname);
+							values.append("st_geomfromtext(");
+							values.append("'");
+							values.append(wkt);
+							values.append("',");
+							values.append(str);
+							values.append(")");
+						}
+					}*/
+				}
+				break;
+			}
+
+			if(pValue!=NULL)
+			{
+				pFieldNames->Add(fname);
+				pValues->Add(pValue);
+			}
+		}
+		count = pFeatureClass->UpdateFeature(pFieldNames, pValues, pFilter);
+		
+		pxPropertySet->Release();
+		pFieldNames->Release();
+		pValues->Release();
+		if(pFilter!=NULL)
+		{
+			pFilter->Release();
+			pFilter = NULL;
+		}
+		pFeatureClass->Release();
+
+		return AG_SUCCESS;
 	}
 }

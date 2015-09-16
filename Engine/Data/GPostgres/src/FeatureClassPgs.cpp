@@ -473,23 +473,36 @@ namespace auge
 		return NULL;
 	}
 
-	RESULTCODE FeatureClassPgs::RemoveFeature(GFilter* pFilter)
+	RESULTCODE FeatureClassPgs::UpdateFeature(EnumString* pFieldNames, EnumValue* pValues, GFilter* pFilter)
 	{
-		RESULTCODE rc = AG_FAILURE;
-		std::string sql;
-		SQLBuilder::BuildDeleteFeature(sql, pFilter, this);
-		PGresult* pgResult = NULL;
-		pgResult = m_pWorkspace->m_pgConnection_r.PgExecute(sql.c_str());
-		if(pgResult==NULL)
+		if(pFieldNames==NULL||pValues==NULL)
 		{
 			return AG_FAILURE;
 		}
-		if(PQresultStatus(pgResult)!=PGRES_COMMAND_OK)
+
+		GConnection* pConnection = m_pWorkspace->GetConnectionW();
+		if(pConnection==NULL)
 		{
-			rc = AG_FAILURE;
+			return AG_FAILURE;
 		}
-		PQclear(pgResult);
-		return AG_SUCCESS;
+
+		std::string sql;
+		SQLBuilder::BuildUpdateFeature(sql, pFieldNames, pValues, pFilter, this);
+		return pConnection->ExecuteSQL(sql.c_str());
+	}
+
+	RESULTCODE FeatureClassPgs::RemoveFeature(GFilter* pFilter)
+	{
+		GConnection* pConnection = m_pWorkspace->GetConnectionW();
+		if(pConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		RESULTCODE rc = AG_FAILURE;
+		std::string sql;
+		SQLBuilder::BuildDeleteFeature(sql, pFilter, this);
+		return pConnection->ExecuteSQL(sql.c_str());
 	}
 
 	Feature* FeatureClassPgs::NewFeature()

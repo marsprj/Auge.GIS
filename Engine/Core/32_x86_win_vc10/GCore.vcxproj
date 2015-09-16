@@ -121,6 +121,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\WKTWriter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\EnumStringImpl.cpp" />
     <ClCompile Include="..\src\EnumValueImpl.cpp" />
     <ClCompile Include="..\src\FieldFactoryImpl.cpp" />
     <ClCompile Include="..\src\GColor.cpp" />

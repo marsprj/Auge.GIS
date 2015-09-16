@@ -71,6 +71,7 @@ namespace auge
 		
 
 		static void BuildInsertFeature(std::string& sql, const char* className, Feature* pFeature, g_uint srid, augeGeometryType geomtype);
+		static void BuildUpdateFeature(std::string& sql, EnumString* pFieldNames, EnumValue* pValues, GFilter* pFilter, FeatureClassPgs* pFeatureClass);
 		static void BuildDeleteFeature(std::string& sql, GFilter* pFilter, FeatureClassPgs* pFeatureClass);
 
 		static const char* GetPgFieldType(augeFieldType type);
