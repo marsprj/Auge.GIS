@@ -216,6 +216,10 @@ namespace auge
 		XNodeSet* pxNodeSet = pxLayers->GetChildren();
 
 		m_layer_count = pxNodeSet->Count();
+		if(m_layer_count==0)
+		{
+			return;
+		}
 		if(m_layers!=NULL)
 		{
 			free(m_layers);
