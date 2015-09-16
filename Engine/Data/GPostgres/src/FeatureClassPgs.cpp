@@ -125,7 +125,7 @@ namespace auge
 		const char* field_type = m_pWorkspace->m_pgConnection_r.GetFieldType(type);
 		if(field_type==NULL)
 		{
-			return NULL;
+			return AG_FAILURE;
 		}
 
 		//ALTER TABLE cities_900913 ADD COLUMN aaa double precision;
@@ -761,13 +761,14 @@ namespace auge
 	RESULTCODE FeatureClassPgs::Refresh()
 	{
 		RESULTCODE rc = AG_SUCCESS;
-		if(!HasMetaInfo())
+		bool has = HasMetaInfo();
+		if(has==true)
 		{
-			rc = AddMetaInfo();
+			rc = UpdateMetaInfo();
 		}
 		else
 		{
-			rc = UpdateMetaInfo();
+			rc = AddMetaInfo();
 		}
 		return rc;
 	}
@@ -811,7 +812,7 @@ namespace auge
 		}
 		int count = pResult->GetInt(0,0);
 		pResult->Release();
-		return count;
+		return (count>0);
 	}
 
 	RESULTCODE FeatureClassPgs::AddMetaInfo()
@@ -881,18 +882,21 @@ namespace auge
 	{
 		GEnvelope extent;
 		ComputeExtent(extent);
-		ComputeCount();
+		g_uint count = ComputeCount();
 
-		const char* format = "update %s set name='%s', alias='%s', count=%d, minx=%f, miny=%f, maxx=%f, maxy=%f";
+		const char* name = GetName();
+
+		const char* format = "update %s set alias='%s', count=%d, minx=%f, miny=%f, maxx=%f, maxy=%f where name='%s'";
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), 
-			GetName(),
-			GetName(),
+			name,
+			count,
 			extent.m_xmin,
 			extent.m_ymin,
 			extent.m_xmax,
-			extent.m_ymax);
+			extent.m_ymax,
+			name);
 
 		GConnection* pgConnection = m_pWorkspace->GetConnectionW();
 		if(pgConnection==NULL)
