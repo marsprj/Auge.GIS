@@ -108,9 +108,12 @@ namespace auge
 		Layer* pLayer = pMap->GetLayer(layerName);
 		if(pLayer==NULL)
 		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Map [%s] does not have layer [%s]", mapName, layerName);
 			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(pError->GetLastError());
+			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
 
