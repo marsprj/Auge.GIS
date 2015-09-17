@@ -81,6 +81,7 @@ namespace auge
 			const char* msg = "Parameter [MapName] is NULL";
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
+			pWebResponse = pExpResponse;
 			return pWebResponse;
 		}
 		if(sourceName==NULL)
@@ -88,6 +89,7 @@ namespace auge
 			const char* msg = "Parameter [SourceName] is NULL";
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
+			pWebResponse = pExpResponse;
 			return pWebResponse;
 		}
 		if(tileStoreName==NULL)
@@ -95,6 +97,7 @@ namespace auge
 			const char* msg = "Parameter [TileStoreName] is NULL";
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
+			pWebResponse = pExpResponse;
 			return pWebResponse;
 		}
 		if((start_level<=0)||(end_level<=0)||(start_level>end_level))
@@ -102,6 +105,7 @@ namespace auge
 			const char* msg = "Start or End Level Error";
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
+			pWebResponse = pExpResponse;
 			return pWebResponse;
 		}
 
@@ -115,6 +119,7 @@ namespace auge
 			pLogger->Error(msg,__FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
+			pWebResponse = pExpResponse;
 			return pWebResponse;
 		}
 
@@ -139,6 +144,7 @@ namespace auge
 			g_sprintf(msg, "Cannot Load Map [%s]", mapName);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
+			pWebResponse = pExpResponse;
 			return pWebResponse;
 		}
 
