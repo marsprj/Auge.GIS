@@ -497,12 +497,16 @@ namespace auge
 		}
 		else
 		{
-			Fill* pFill = ReadFill(pxNode);
-			pSymbol->SetFill(pFill);
-			if(pFill!=NULL)
+			if(!pSymbol->IsGraphic())
 			{
-				pSymbol->SetOpacity(pFill->GetColor().GetAlphaF());
+				Fill* pFill = ReadFill(pxNode);
+				pSymbol->SetFill(pFill);
+				if(pFill!=NULL)
+				{
+					pSymbol->SetOpacity(pFill->GetColor().GetAlphaF());
+				}
 			}
+			
 		}
 
 		//pxNodeSet = pxSymbolizerNode->GetChildren();
