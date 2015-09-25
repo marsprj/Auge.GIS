@@ -60,7 +60,7 @@ namespace auge
 /************************************************************************
 [ HTTP Get ]
 service=was&version=1.0.0&request=CreateUser&name=user1&alias=user1&password=qwer1234&email=user@mapcloud.org&role=normal
-http://127.0.0.1:8088/ows/mgr?service=was&version=1.0.0&request=CreateUser&name=user1&alias=user1&password=qwer1234&email=user@mapcloud.org&role=normal
+http://127.0.0.1:8088/ows/admin/mgr?service=was&version=1.0.0&request=CreateUser&name=user1&alias=user1&password=qwer1234&email=user@mapcloud.org&role=normal
 
 [ HTTP Post ]
 -------------------------------------------------------------------------
