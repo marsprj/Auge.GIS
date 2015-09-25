@@ -10,7 +10,8 @@
 
 namespace auge
 {
-#define AUGE_WRITABLE_DB_SERVER	"192.168.111.160"
+	#define AUGE_WRITABLE_DB_SERVER	"192.168.111.160"
+	//#define AUGE_WRITABLE_DB_SERVER	"127.0.0.1"
 
 	WorkspacePgs::WorkspacePgs():
 	m_schema("public")

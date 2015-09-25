@@ -334,6 +334,9 @@ namespace auge
 		}
 		pFeature->Release();
 		cmd->Release();
+		ptriFeatureClass->Refresh();
+		ptriFeatureClass->Release();
+
 		free(pWKBPolygon);
 
 		return true;
@@ -418,6 +421,9 @@ namespace auge
 		}
 		pFeature->Release();
 		cmd->Release();
+		ptriFeatureClass->Refresh();
+		ptriFeatureClass->Release();
+
 		free(pWKBLineString);
 
 		return true;
