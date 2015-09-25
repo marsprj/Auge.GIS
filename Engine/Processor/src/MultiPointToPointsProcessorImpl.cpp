@@ -196,6 +196,11 @@ namespace auge
 		poutFatureClass = poutWorkspace->OpenFeatureClass(className);
 		if(poutFatureClass!=NULL)
 		{
+			GError* pError = augeGetErrorInstance();
+			char msg[AUGE_MSG_MAX];
+			memset(msg, 0, AUGE_MSG_MAX);
+			g_sprintf(msg, "outputType [%s] already exists", className);
+			pError->SetError(msg);
 			return NULL;
 		}
 

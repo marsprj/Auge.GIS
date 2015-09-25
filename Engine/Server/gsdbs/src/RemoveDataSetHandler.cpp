@@ -99,7 +99,7 @@ namespace auge
 			GLogger* pLogger = augeGetLoggerInstance();
 			pLogger->Error(msg, __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage("Parameter [sourceName] is NULL");
+			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
 		pDataSet->Release();

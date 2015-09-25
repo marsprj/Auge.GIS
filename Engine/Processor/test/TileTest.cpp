@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(TileTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(TileTest);
 
 void TileTest::setUp() 
 {
@@ -196,30 +196,30 @@ void TileTest::BuildTileStorePGIS_Mongo()
 	auge::DataEngineManager* pEngineManager = auge::augeGetDataEngineManagerInstance();
 	auge::DataEngine* pEngine = pEngineManager->GetEngine("TileMGO");	
 	auge::TileWorkspace* pWorkspace = dynamic_cast<auge::TileWorkspace*>(pEngine->CreateWorkspace());
-	const char* constr = "SERVER=127.0.0.1;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
-	//const char* constr = "SERVER=192.168.111.160;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
+	//const char* constr = "SERVER=127.0.0.1;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
+	const char* constr = "SERVER=192.168.111.160;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
 	pWorkspace->SetConnectionString(constr);
 	pWorkspace->Open();
 
-	auge::EnumTileStore* pTileStores = NULL;
-	pTileStores = pWorkspace->GetTileStores();
-	pTileStores->Release();
+	//auge::EnumTileStore* pTileStores = NULL;
+	//pTileStores = pWorkspace->GetTileStores();
+	//pTileStores->Release();
 	
 	auge::Map* pMap = NULL;
 	auge::CartoManager* pCartoManager = auge::augeGetCartoManagerInstance();
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
-	//pMap = pCartoManager->LoadMap("world");
+	pMap = pCartoManager->LoadMap(2, "world");
 	auge::Canvas* pCanvas = NULL;//pCartoFactory->CreateCanvas2D(256,256);
 
 	char t_path[AUGE_PATH_MAX] = {0};
-	pWorkspace->CreateTileStore("google",auge::augeTileGoogleCRS84Quad,1,5,pMap->GetExtent());
-	auge::TileStore *pTileStore = pWorkspace->OpenTileStore("google");
+	pWorkspace->CreateTileStore("world",auge::augeTileGoogleCRS84Quad,1,9,pMap->GetExtent());
+	auge::TileStore *pTileStore = pWorkspace->OpenTileStore("world");
 	auge::GEnvelope viewer = pTileStore->GetExtent();
 	//pCanvas->SetViewer(viewer);
 	//pCanvas->Draw(pMap);
 
-	DWORD ts = GetTickCount(); 
+	DWORD ts = GetTickCount();
 
 	auge::MapTileStoreGenerator* pProcessor = NULL;
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();

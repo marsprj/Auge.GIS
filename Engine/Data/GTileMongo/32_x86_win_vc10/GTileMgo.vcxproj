@@ -40,7 +40,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)D</TargetName>
-    <IncludePath>..\include;%AUGE_GIS_HOME%/include;E:\Research\Auge.GIS\Engine\Data\GTileMongo\mongo-c-driver\include\libbson-1.0;E:\Research\Auge.GIS\Engine\Data\GTileMongo\mongo-c-driver\include\libmongoc-1.0;$(IncludePath)</IncludePath>
+    <IncludePath>..\include;%AUGE_GIS_HOME%/include;F:\Research\Auge.GIS\Engine\Data\GTileMongo\mongo-c-driver\include\libbson-1.0;F:\Research\Auge.GIS\Engine\Data\GTileMongo\mongo-c-driver\include\libmongoc-1.0;$(IncludePath)</IncludePath>
     <LibraryPath>%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;..\mongo-c-driver\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
