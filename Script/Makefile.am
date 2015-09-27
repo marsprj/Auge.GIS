@@ -1,3 +1,3 @@
 AUTOMAKE_OPTION=foreign
-datadir=$(prefix)/bin
+datadir=$(prefix)/htdocs/uploader
 data_DATA=fileupload.php
