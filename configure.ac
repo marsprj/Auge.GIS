@@ -130,6 +130,11 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Server/testcgi/Makefile
 		 Script/Makefile
 		 Conf/Makefile
+		 Resource/Makefile
+		 Resource/symbol/Makefile
+		 Resource/symbol/graphic/Makefile
+		 Resource/symbol/graphic/marker/Makefile
+		 Resource/symbol/graphic/fill/Makefile
                  Makefile
                  include/Makefile])
 AC_OUTPUT

@@ -392,179 +392,243 @@ namespace auge
 
 	void SymbolManagerImpl::LoadGraphicMarkerSymbols(EnumSymbolImpl* pSymbols, const char* graphic_base)
 	{
-		size_t len = 0;
-		char graphic_name[AUGE_NAME_MAX];
-		char graphic_path[AUGE_PATH_MAX];
+		const char* sql = "select gid,name,alias from g_symbol where type=0";
+
 		char file_path[AUGE_PATH_MAX];
+		char graphic_path[AUGE_PATH_MAX];
 		GraphicMarkerSymbolImpl* pMarker = NULL;
-
-#ifdef WIN32
-		HANDLE hFind = NULL;
-		WIN32_FIND_DATAA wfd;
-
-		char filter[AUGE_PATH_MAX];
-		char graphic_filter[AUGE_PATH_MAX];
-		auge_make_path(graphic_filter,NULL, graphic_base,"*","png");
-		auge_make_path(filter,NULL,m_path.c_str(), graphic_filter,NULL);
-				
-		hFind = ::FindFirstFile(filter, &wfd);
-		if(hFind == INVALID_HANDLE_VALUE)
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult!=NULL)
 		{
-			::FindClose(hFind);
-		}
-
-		while(::FindNextFile(hFind, &wfd)==TRUE)
-		{
-			len = strlen(wfd.cFileName);
-			if(len>4)
+			g_uint count = pResult->GetCount();
+			for(g_uint i=0; i<count; i++)
 			{
-				memset(graphic_name, 0, AUGE_NAME_MAX);
-				memset(graphic_path, 0, AUGE_PATH_MAX);
-				memset(file_path, 0, AUGE_PATH_MAX);
+				const char* name = pResult->GetString(i, 1);
+				const char* alias= pResult->GetString(i, 2);
 
-				strncpy(graphic_name, wfd.cFileName, len-4);
-				auge_make_path(graphic_path, NULL, graphic_base, wfd.cFileName, NULL);
-				auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
+				auge_make_path(graphic_path, NULL, graphic_base,alias,"png");
+				auge_make_path(file_path, NULL, m_path.c_str(), graphic_path,NULL);
 
 				pMarker = new GraphicMarkerSymbolImpl();	
-				pMarker->SetName(graphic_name);
+				pMarker->SetName(name);
 				pMarker->SetPath(graphic_path);
 				pMarker->SetFilePath(file_path);
 
 				pSymbols->Add(pMarker);
 			}
+
+			pResult->Release();
 		}
-		::FindClose(hFind);
-#else
-		char local_path[AUGE_NAME_MAX];
-		memset(local_path, 0, AUGE_NAME_MAX);
-		auge_make_path(local_path,NULL,m_path.c_str(), graphic_base, NULL);
-
-		DIR *dp = opendir(local_path);
-		if(dp!=NULL)
-		{
-			struct dirent* dirp = NULL;
-			while((dirp = readdir(dp))!=NULL)
-			{	
-//				if(dirp->d_type=='\b')
-				{
-					len = strlen(dirp->d_name); 
-					if(len>4)
-					{
-						if(g_strnicmp(dirp->d_name+len-4, ".png", 4)==0)
-						{
-							memset(graphic_name, 0, AUGE_NAME_MAX);
-							memset(graphic_path, 0, AUGE_PATH_MAX);
-							memset(file_path, 0, AUGE_PATH_MAX);
-
-							strncpy(graphic_name, dirp->d_name, len-4);
-
-							auge_make_path(graphic_path, NULL, graphic_base, dirp->d_name, NULL);
-							auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
-
-							pMarker = new GraphicMarkerSymbolImpl();	
-							pMarker->SetName(graphic_name);
-							pMarker->SetPath(graphic_path);
-							pMarker->SetFilePath(file_path);
-
-							pSymbols->Add(pMarker);
-						}
-					}
-				}
-			}
-			closedir(dp);
-		}
-#endif
-
 	}
+
+//	void SymbolManagerImpl::LoadGraphicMarkerSymbols(EnumSymbolImpl* pSymbols, const char* graphic_base)
+//	{
+//		size_t len = 0;
+//		char graphic_name[AUGE_NAME_MAX];
+//		char graphic_path[AUGE_PATH_MAX];
+//		char file_path[AUGE_PATH_MAX];
+//		GraphicMarkerSymbolImpl* pMarker = NULL;
+//
+//#ifdef WIN32
+//		HANDLE hFind = NULL;
+//		WIN32_FIND_DATAA wfd;
+//
+//		char filter[AUGE_PATH_MAX];
+//		char graphic_filter[AUGE_PATH_MAX];
+//		auge_make_path(graphic_filter,NULL, graphic_base,"*","png");
+//		auge_make_path(filter,NULL,m_path.c_str(), graphic_filter,NULL);
+//				
+//		hFind = ::FindFirstFile(filter, &wfd);
+//		if(hFind == INVALID_HANDLE_VALUE)
+//		{
+//			::FindClose(hFind);
+//		}
+//
+//		while(::FindNextFile(hFind, &wfd)==TRUE)
+//		{
+//			len = strlen(wfd.cFileName);
+//			if(len>4)
+//			{
+//				memset(graphic_name, 0, AUGE_NAME_MAX);
+//				memset(graphic_path, 0, AUGE_PATH_MAX);
+//				memset(file_path, 0, AUGE_PATH_MAX);
+//
+//				strncpy(graphic_name, wfd.cFileName, len-4);
+//				auge_make_path(graphic_path, NULL, graphic_base, wfd.cFileName, NULL);
+//				auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
+//
+//				pMarker = new GraphicMarkerSymbolImpl();	
+//				pMarker->SetName(graphic_name);
+//				pMarker->SetPath(graphic_path);
+//				pMarker->SetFilePath(file_path);
+//
+//				pSymbols->Add(pMarker);
+//			}
+//		}
+//		::FindClose(hFind);
+//#else
+//		char local_path[AUGE_NAME_MAX];
+//		memset(local_path, 0, AUGE_NAME_MAX);
+//		auge_make_path(local_path,NULL,m_path.c_str(), graphic_base, NULL);
+//
+//		DIR *dp = opendir(local_path);
+//		if(dp!=NULL)
+//		{
+//			struct dirent* dirp = NULL;
+//			while((dirp = readdir(dp))!=NULL)
+//			{	
+////				if(dirp->d_type=='\b')
+//				{
+//					len = strlen(dirp->d_name); 
+//					if(len>4)
+//					{
+//						if(g_strnicmp(dirp->d_name+len-4, ".png", 4)==0)
+//						{
+//							memset(graphic_name, 0, AUGE_NAME_MAX);
+//							memset(graphic_path, 0, AUGE_PATH_MAX);
+//							memset(file_path, 0, AUGE_PATH_MAX);
+//
+//							strncpy(graphic_name, dirp->d_name, len-4);
+//
+//							auge_make_path(graphic_path, NULL, graphic_base, dirp->d_name, NULL);
+//							auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
+//
+//							pMarker = new GraphicMarkerSymbolImpl();	
+//							pMarker->SetName(graphic_name);
+//							pMarker->SetPath(graphic_path);
+//							pMarker->SetFilePath(file_path);
+//
+//							pSymbols->Add(pMarker);
+//						}
+//					}
+//				}
+//			}
+//			closedir(dp);
+//		}
+//#endif
+//
+//	}
 
 	void SymbolManagerImpl::LoadGraphicFillSymbols(EnumSymbolImpl* pSymbols, const char* graphic_base)
 	{
-		size_t len = 0;
-		char graphic_name[AUGE_NAME_MAX];
-		char graphic_path[AUGE_PATH_MAX];
+		const char* sql = "select gid,name,alias from g_symbol where type=2";
+
 		char file_path[AUGE_PATH_MAX];
-		GraphicFillSymbolImpl* pSymbol = NULL;
-
-#ifdef WIN32
-		HANDLE hFind = NULL;
-		WIN32_FIND_DATAA wfd;
-
-		char filter[AUGE_PATH_MAX];
-		char graphic_filter[AUGE_PATH_MAX];
-		auge_make_path(graphic_filter,NULL, graphic_base,"*","png");
-		auge_make_path(filter,NULL,m_path.c_str(), graphic_filter,NULL);
-
-		hFind = ::FindFirstFile(filter, &wfd);
-		if(hFind == INVALID_HANDLE_VALUE)
+		char graphic_path[AUGE_PATH_MAX];
+		GraphicMarkerSymbolImpl* pMarker = NULL;
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult!=NULL)
 		{
-			::FindClose(hFind);
-		}
-
-		while(::FindNextFile(hFind, &wfd)==TRUE)
-		{
-			len = strlen(wfd.cFileName);
-			if(len>4)
+			g_uint count = pResult->GetCount();
+			for(g_uint i=0; i<count; i++)
 			{
-				memset(graphic_name, 0, AUGE_NAME_MAX);
-				memset(graphic_path, 0, AUGE_PATH_MAX);
-				memset(file_path, 0, AUGE_PATH_MAX);
+				const char* name = pResult->GetString(i, 1);
+				const char* alias= pResult->GetString(i, 2);
 
-				strncpy(graphic_name, wfd.cFileName, len-4);
-				auge_make_path(graphic_path, NULL, graphic_base, wfd.cFileName, NULL);
-				auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
+				auge_make_path(graphic_path, NULL, graphic_base,alias,"png");
+				auge_make_path(file_path, NULL, m_path.c_str(), graphic_path,NULL);
 
-				pSymbol = new GraphicFillSymbolImpl();	
-				pSymbol->SetName(graphic_name);
-				pSymbol->SetPath(graphic_path);
-				pSymbol->SetFilePath(file_path);
+				pMarker = new GraphicMarkerSymbolImpl();	
+				pMarker->SetName(name);
+				pMarker->SetPath(graphic_path);
+				pMarker->SetFilePath(file_path);
 
-				pSymbols->Add(pSymbol);
+				pSymbols->Add(pMarker);
 			}
+
+			pResult->Release();
 		}
-		::FindClose(hFind);
-#else
-		char local_path[AUGE_NAME_MAX];
-		memset(local_path, 0, AUGE_NAME_MAX);
-		auge_make_path(local_path,NULL,m_path.c_str(), graphic_base, NULL);
-
-		DIR *dp = opendir(local_path);
-		if(dp!=NULL)
-		{
-			struct dirent* dirp = NULL;
-			while((dirp = readdir(dp))!=NULL)
-			{	
-				//				if(dirp->d_type=='\b')
-				{
-					len = strlen(dirp->d_name); 
-					if(len>4)
-					{
-						if(g_strnicmp(dirp->d_name+len-4, ".png", 4)==0)
-						{
-							memset(graphic_name, 0, AUGE_NAME_MAX);
-							memset(graphic_path, 0, AUGE_PATH_MAX);
-							memset(file_path, 0, AUGE_PATH_MAX);
-
-							strncpy(graphic_name, dirp->d_name, len-4);
-
-							auge_make_path(graphic_path, NULL, graphic_base, dirp->d_name, NULL);
-							auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
-
-							pSymbol = new GraphicFillSymbolImpl();	
-							pSymbol->SetName(graphic_name);
-							pSymbol->SetPath(graphic_path);
-							pSymbol->SetFilePath(file_path);
-
-							pSymbols->Add(pSymbol);
-						}
-					}
-				}
-			}
-			closedir(dp);
-		}
-#endif
-
 	}
+
+//	void SymbolManagerImpl::LoadGraphicFillSymbols(EnumSymbolImpl* pSymbols, const char* graphic_base)
+//	{
+//		size_t len = 0;
+//		char graphic_name[AUGE_NAME_MAX];
+//		char graphic_path[AUGE_PATH_MAX];
+//		char file_path[AUGE_PATH_MAX];
+//		GraphicFillSymbolImpl* pSymbol = NULL;
+//
+//#ifdef WIN32
+//		HANDLE hFind = NULL;
+//		WIN32_FIND_DATAA wfd;
+//
+//		char filter[AUGE_PATH_MAX];
+//		char graphic_filter[AUGE_PATH_MAX];
+//		auge_make_path(graphic_filter,NULL, graphic_base,"*","png");
+//		auge_make_path(filter,NULL,m_path.c_str(), graphic_filter,NULL);
+//
+//		hFind = ::FindFirstFile(filter, &wfd);
+//		if(hFind == INVALID_HANDLE_VALUE)
+//		{
+//			::FindClose(hFind);
+//		}
+//
+//		while(::FindNextFile(hFind, &wfd)==TRUE)
+//		{
+//			len = strlen(wfd.cFileName);
+//			if(len>4)
+//			{
+//				memset(graphic_name, 0, AUGE_NAME_MAX);
+//				memset(graphic_path, 0, AUGE_PATH_MAX);
+//				memset(file_path, 0, AUGE_PATH_MAX);
+//
+//				strncpy(graphic_name, wfd.cFileName, len-4);
+//				auge_make_path(graphic_path, NULL, graphic_base, wfd.cFileName, NULL);
+//				auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
+//
+//				pSymbol = new GraphicFillSymbolImpl();	
+//				pSymbol->SetName(graphic_name);
+//				pSymbol->SetPath(graphic_path);
+//				pSymbol->SetFilePath(file_path);
+//
+//				pSymbols->Add(pSymbol);
+//			}
+//		}
+//		::FindClose(hFind);
+//#else
+//		char local_path[AUGE_NAME_MAX];
+//		memset(local_path, 0, AUGE_NAME_MAX);
+//		auge_make_path(local_path,NULL,m_path.c_str(), graphic_base, NULL);
+//
+//		DIR *dp = opendir(local_path);
+//		if(dp!=NULL)
+//		{
+//			struct dirent* dirp = NULL;
+//			while((dirp = readdir(dp))!=NULL)
+//			{	
+//				//				if(dirp->d_type=='\b')
+//				{
+//					len = strlen(dirp->d_name); 
+//					if(len>4)
+//					{
+//						if(g_strnicmp(dirp->d_name+len-4, ".png", 4)==0)
+//						{
+//							memset(graphic_name, 0, AUGE_NAME_MAX);
+//							memset(graphic_path, 0, AUGE_PATH_MAX);
+//							memset(file_path, 0, AUGE_PATH_MAX);
+//
+//							strncpy(graphic_name, dirp->d_name, len-4);
+//
+//							auge_make_path(graphic_path, NULL, graphic_base, dirp->d_name, NULL);
+//							auge_make_path(file_path, NULL, m_path.c_str(), graphic_path, NULL);
+//
+//							pSymbol = new GraphicFillSymbolImpl();	
+//							pSymbol->SetName(graphic_name);
+//							pSymbol->SetPath(graphic_path);
+//							pSymbol->SetFilePath(file_path);
+//
+//							pSymbols->Add(pSymbol);
+//						}
+//					}
+//				}
+//			}
+//			closedir(dp);
+//		}
+//#endif
+//
+//	}
 
 
 	void auge_make_symbol_icon_path(const char* icon_name, char* icon_path, size_t size)
@@ -616,7 +680,29 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 
 		g_snprintf(sql, AUGE_SQL_MAX, format, name, uuid);
-		return m_pConnection->ExecuteSQL(sql);
+		RESULTCODE rc = m_pConnection->ExecuteSQL(sql);
+		if(rc!=AG_SUCCESS)
+		{
+			return rc;
+		}
+
+		char graphic_base[AUGE_PATH_MAX];
+		memset(graphic_base, 0, AUGE_PATH_MAX);
+		auge_make_path(graphic_base, NULL, m_path.c_str(), "graphic", NULL);
+		auge_mkdir(graphic_base);
+
+		char graphic_marker_base[AUGE_PATH_MAX];
+		memset(graphic_marker_base, 0, AUGE_PATH_MAX);
+		auge_make_path(graphic_marker_base, NULL, graphic_base, "marker", NULL);
+		auge_mkdir(graphic_marker_base);
+
+		char graphic_path[AUGE_PATH_MAX];
+		memset(graphic_path, 0, AUGE_PATH_MAX);
+		auge_make_path(graphic_path, NULL, graphic_marker_base, uuid, "png");
+		
+		auge_rename(path, graphic_path);
+
+		return AG_SUCCESS;
 	}
 
 	RESULTCODE SymbolManagerImpl::AddFillSymbol(const char* name, const char* path)
@@ -631,7 +717,29 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 
 		g_snprintf(sql, AUGE_SQL_MAX, format, name, uuid);
-		return m_pConnection->ExecuteSQL(sql);
+		RESULTCODE rc = m_pConnection->ExecuteSQL(sql);
+		if(rc!=AG_SUCCESS)
+		{
+			return rc;
+		}
+
+		char graphic_base[AUGE_PATH_MAX];
+		memset(graphic_base, 0, AUGE_PATH_MAX);
+		auge_make_path(graphic_base, NULL, m_path.c_str(), "graphic", NULL);
+		auge_mkdir(graphic_base);
+
+		char graphic_marker_base[AUGE_PATH_MAX];
+		memset(graphic_marker_base, 0, AUGE_PATH_MAX);
+		auge_make_path(graphic_marker_base, NULL, graphic_base, "fill", NULL);
+		auge_mkdir(graphic_marker_base);
+
+		char graphic_path[AUGE_PATH_MAX];
+		memset(graphic_path, 0, AUGE_PATH_MAX);
+		auge_make_path(graphic_path, NULL, graphic_marker_base, uuid, "png");
+
+		auge_rename(path, graphic_path);
+
+		return AG_SUCCESS;
 	}
 
 	RESULTCODE SymbolManagerImpl::CreateSymbolTable()

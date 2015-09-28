@@ -13,7 +13,7 @@ namespace auge
 	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.160"
 	#define AUGE_WRITABLE_DB_SERVER	"192.168.111.159"
 	//#define AUGE_WRITABLE_DB_SERVER	"127.0.0.1"
-
+	
 	WorkspacePgs::WorkspacePgs():
 	m_schema("public")
 	{
@@ -233,15 +233,15 @@ namespace auge
 	{
 		const char* sql = "select f_table_name from geometry_columns order by f_table_name";
 
+		EnumDataSetImpl *pEnum = new EnumDataSetImpl();
 		PGresult* pgResult = m_pgConnection_r.PgExecute(sql);
 		if(pgResult==NULL)
 		{
-			return NULL;
+			return pEnum;
 		}
 
 		const char* className = NULL;
 		FeatureClass* pFeatureClass = NULL;	
-		EnumDataSetImpl *pEnum = new EnumDataSetImpl();
 
 		int nTuples = PQntuples(pgResult);
 		for(int i=0;i<nTuples; i++)

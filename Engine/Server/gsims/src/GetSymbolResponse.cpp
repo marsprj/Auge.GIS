@@ -116,7 +116,7 @@ namespace auge
 	{
 		XElement *pxSymbol  = pxParent->AddChild("Symbol", NULL);
 		XElement *pxName = pxSymbol->AddChild("Name");
-		pxName->AddChildText(pSymbol->GetName());
+		pxName->AddChildText(pSymbol->GetName(), true);
 		
 		const char* icon_name = pSymbol->GetIcon();
 		//icon_name = pSymbol->GetIcon();
