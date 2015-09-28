@@ -516,7 +516,7 @@ namespace auge
 
 		char file_path[AUGE_PATH_MAX];
 		char graphic_path[AUGE_PATH_MAX];
-		GraphicMarkerSymbolImpl* pMarker = NULL;
+		GraphicFillSymbolImpl* pFillSymbol = NULL;
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult!=NULL)
@@ -530,12 +530,12 @@ namespace auge
 				auge_make_path(graphic_path, NULL, graphic_base,alias,"png");
 				auge_make_path(file_path, NULL, m_path.c_str(), graphic_path,NULL);
 
-				pMarker = new GraphicMarkerSymbolImpl();	
-				pMarker->SetName(name);
-				pMarker->SetPath(graphic_path);
-				pMarker->SetFilePath(file_path);
+				pFillSymbol = new GraphicFillSymbolImpl();	
+				pFillSymbol->SetName(name);
+				pFillSymbol->SetPath(graphic_path);
+				pFillSymbol->SetFilePath(file_path);
 
-				pSymbols->Add(pMarker);
+				pSymbols->Add(pFillSymbol);
 			}
 
 			pResult->Release();

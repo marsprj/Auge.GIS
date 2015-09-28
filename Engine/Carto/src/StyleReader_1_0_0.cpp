@@ -461,91 +461,53 @@ namespace auge
 		const char	*nodeName = NULL;
 		PolygonSymbolizer *pSymbolizer = new PolygonSymbolizerImpl();
 
-		SimpleFillSymbol* pSymbol = NULL;
 		SymbolManager* pSymbolManager = augeGetSymbolManagerInstance();
 
 		// Create 
 		pxNode = pxSymbolizerNode->GetFirstChild(AUGE_SLD_WELLKNOWN_NAME);
 		if(pxNode==NULL)
 		{
+			SimpleFillSymbol* pSymbol = NULL;
 			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->CreateFillSymbol(augeFillSimple));
+			// AUGE_SLD_STROKE
+			pxNode = pxSymbolizerNode->GetFirstChild(AUGE_SLD_STROKE);
+			if(pxNode==NULL)
+			{
+				pSymbol->SetStroke(NULL);
+			}
+			else
+			{
+				Stroke* pStroke = ReadStroke(pxNode);
+				pSymbol->SetStroke(pStroke);
+			}
+
+			// AUGE_SLD_FILL
+			if(!pSymbol->IsGraphic())
+			{
+				pxNode = pxSymbolizerNode->GetFirstChild(AUGE_SLD_FILL);
+				if(pxNode==NULL)
+				{
+					pSymbol->SetFill(NULL);
+				}
+				else
+				{	
+					Fill* pFill = ReadFill(pxNode);
+					pSymbol->SetFill(pFill);
+					if(pFill!=NULL)
+					{
+						pSymbol->SetOpacity(pFill->GetColor().GetAlphaF());
+					}
+				}
+			}
+			pSymbolizer->SetSymbol(pSymbol);
 		}
 		else
 		{
 			const char* wellName = pxNode->GetContent();
-			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->GetFillSymbol(wellName));
+			GraphicFillSymbol* pSymbol = NULL;
+			pSymbol = static_cast<GraphicFillSymbol*>(pSymbolManager->GetFillSymbol(wellName));
+			pSymbolizer->SetSymbol(pSymbol);
 		}
-		pSymbolizer->SetSymbol(pSymbol);
-
-		// AUGE_SLD_STROKE
-		pxNode = pxSymbolizerNode->GetFirstChild(AUGE_SLD_STROKE);
-		if(pxNode==NULL)
-		{
-			pSymbol->SetStroke(NULL);
-		}
-		else
-		{
-			Stroke* pStroke = ReadStroke(pxNode);
-			pSymbol->SetStroke(pStroke);
-		}
-
-		// AUGE_SLD_FILL
-		pxNode = pxSymbolizerNode->GetFirstChild(AUGE_SLD_FILL);
-		if(pxNode==NULL)
-		{
-			pSymbol->SetFill(NULL);
-		}
-		else
-		{
-			if(!pSymbol->IsGraphic())
-			{
-				Fill* pFill = ReadFill(pxNode);
-				pSymbol->SetFill(pFill);
-				if(pFill!=NULL)
-				{
-					pSymbol->SetOpacity(pFill->GetColor().GetAlphaF());
-				}
-			}
-			
-		}
-
-		//pxNodeSet = pxSymbolizerNode->GetChildren();
-		//if(pxNodeSet==NULL)
-		//{
-		//	return NULL;
-		//}
-		//pxNodeSet->Reset();
-		//while(!pxNodeSet->IsEOF())
-		//{
-		//	pxNode = pxNodeSet->Next();
-		//	if(pxNode!=NULL)
-		//	{
-		//		nodeName = pxNode->GetName();
-		//		if(g_stricmp(nodeName, AUGE_SLD_FILL)==0)
-		//		{
-		//			if(!pSymbol->IsGraphic())
-		//			{
-		//				//ReadFill(pSymbolizer, pxNode);
-		//				Fill* pFill = ReadFill(pxNode);
-		//				if(pFill!=NULL)
-		//				{
-		//					pSymbol->SetFill(pFill);
-		//				}
-		//			}
-		//		}
-		//		else if(g_stricmp(nodeName, AUGE_SLD_STROKE)==0)
-		//		{
-		//			//ReadStroke(pSymbolizer, pxNode);
-		//			Stroke* pStroke = ReadStroke(pxNode);
-		//			pSymbol->SetStroke(pStroke);
-		//		}
-		//		else if(g_stricmp(nodeName, AUGE_SLD_GEOMETRY)==0)
-		//		{
-		//			ReadGeometry(pSymbolizer, pxNode);
-		//		}	
-		//	}
-		//}
-		//pxNodeSet->Release();
 
 		return pSymbolizer;
 	}
