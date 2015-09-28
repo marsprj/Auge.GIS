@@ -9,6 +9,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "..\test\test.vcxproj", "{634F6CF5-056B-4A46-9E52-335F7C33E9AF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B27E9A32-8154-484F-B312-9532EA0469A0} = {B27E9A32-8154-484F-B312-9532EA0469A0}
+		{483450F0-61B4-49A8-BF5C-0358B6C38E25} = {483450F0-61B4-49A8-BF5C-0358B6C38E25}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDEngine", "..\..\Data\GDEngine\32_x86_win_vc10\GDEngine.vcxproj", "{07AF14F1-448D-4018-80BF-0298C9A7D022}"
@@ -27,6 +28,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswms", "..\..\Server\gswms\32_x86_win_vc10\gswms.vcxproj", "{C6045F1B-77E7-4716-84F1-E8E0B8A70290}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GShape", "..\..\Data\GShape\32_x86_win_vc10\GShape.vcxproj", "{C17AA319-6571-48F3-BFD6-111B3B0445C5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GTileMgo", "..\..\Data\GTileMongo\32_x86_win_vc10\GTileMgo.vcxproj", "{483450F0-61B4-49A8-BF5C-0358B6C38E25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +73,10 @@ Global
 		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Debug|Win32.Build.0 = Debug|Win32
 		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Release|Win32.ActiveCfg = Release|Win32
 		{C17AA319-6571-48F3-BFD6-111B3B0445C5}.Release|Win32.Build.0 = Release|Win32
+		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Debug|Win32.ActiveCfg = Debug|Win32
+		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Debug|Win32.Build.0 = Debug|Win32
+		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Release|Win32.ActiveCfg = Release|Win32
+		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -47,71 +47,71 @@ namespace auge
 		m_viewer = viewer;
 	}
 
-	RESULTCODE FileSystemTileStoreGeneratorImpl::Execute()
-	{
-		if(m_pMap==NULL)
-		{
-			return AG_FAILURE;
-		}
-		if(m_start_level<=0||m_end_level<=0)
-		{
-			return AG_FAILURE;
-		}
-		if(m_start_level>m_end_level)
-		{
-			return AG_FAILURE;
-		}
-		if(m_pTileStore==NULL)
-		{
-			return AG_FAILURE;
-		}
+	//RESULTCODE FileSystemTileStoreGeneratorImpl::Execute()
+	//{
+	//	if(m_pMap==NULL)
+	//	{
+	//		return AG_FAILURE;
+	//	}
+	//	if(m_start_level<=0||m_end_level<=0)
+	//	{
+	//		return AG_FAILURE;
+	//	}
+	//	if(m_start_level>m_end_level)
+	//	{
+	//		return AG_FAILURE;
+	//	}
+	//	if(m_pTileStore==NULL)
+	//	{
+	//		return AG_FAILURE;
+	//	}
 
-		g_uint counter = 0;
-		char t_path[AUGE_PATH_MAX] = {0};
-		Canvas* pCanvas = NULL;
-		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();		
-		GEnvelope viewer;
-		RESULTCODE rc = AG_FAILURE;
+	//	g_uint counter = 0;
+	//	char t_path[AUGE_PATH_MAX] = {0};
+	//	Canvas* pCanvas = NULL;
+	//	CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();		
+	//	GEnvelope viewer;
+	//	RESULTCODE rc = AG_FAILURE;
 
-		auge::GColor bgColor(255,255,255,255);		
-		for(g_uint l=m_start_level; l<=m_end_level; l++)
-		{
-			g_uint64 row_blocks = m_pTileStore->GetBlockRows(l);
-			g_uint64 col_blocks = m_pTileStore->GetBlockCols(l);
+	//	auge::GColor bgColor(255,255,255,255);		
+	//	for(g_uint l=m_start_level; l<=m_end_level; l++)
+	//	{
+	//		g_uint64 row_blocks = m_pTileStore->GetBlockRows(l);
+	//		g_uint64 col_blocks = m_pTileStore->GetBlockCols(l);
 
-			for(g_uint r=0; r<row_blocks; r++)
-			{
-				for(g_uint c=0; c<col_blocks; c++)
-				{
-					TileBlock* pBlock = m_pTileStore->GetBlock(l, r, c);
-					if(pBlock==NULL)
-					{
-						break;
-					}
+	//		for(g_uint r=0; r<row_blocks; r++)
+	//		{
+	//			for(g_uint c=0; c<col_blocks; c++)
+	//			{
+	//				TileBlock* pBlock = m_pTileStore->GetBlock(l, r, c);
+	//				if(pBlock==NULL)
+	//				{
+	//					break;
+	//				}
 
-					BuildBlock(pBlock);
+	//				BuildBlock(pBlock);
 
-					pBlock->Release();
-					//rc = m_pTileStore->GetTileExtent(viewer, l, r,c);
-					//if(rc==AG_SUCCESS)
-					//{
-					//	printf("\r[%d]:%d-%d-%d",counter++,l,r,c);
+	//				pBlock->Release();
+	//				//rc = m_pTileStore->GetTileExtent(viewer, l, r,c);
+	//				//if(rc==AG_SUCCESS)
+	//				//{
+	//				//	printf("\r[%d]:%d-%d-%d",counter++,l,r,c);
 
-					//	m_pTileStore->GetTilePath(t_path, AUGE_PATH_MAX, l, r, c);
+	//				//	m_pTileStore->GetTilePath(t_path, AUGE_PATH_MAX, l, r, c);
 
-					//	pCanvas = pCartoFactory->CreateCanvas2D(256,256);
-					//	pCanvas->SetViewer(viewer);
-					//	////pCanvas->DrawBackground(bgColor);
-					//	pCanvas->Draw(m_pMap);
-					//	pCanvas->Save(t_path);
-					//	pCanvas->Release();
-					//}
-				}
-			}
-		}
+	//				//	pCanvas = pCartoFactory->CreateCanvas2D(256,256);
+	//				//	pCanvas->SetViewer(viewer);
+	//				//	////pCanvas->DrawBackground(bgColor);
+	//				//	pCanvas->Draw(m_pMap);
+	//				//	pCanvas->Save(t_path);
+	//				//	pCanvas->Release();
+	//				//}
+	//			}
+	//		}
+	//	}
 
-		return counter;
-	}
+	//	return counter;
+	//}
 
 	RESULTCODE FileSystemTileStoreGeneratorImpl::BuildBlock(TileBlock* pBlock)
 	{
@@ -154,62 +154,62 @@ namespace auge
 		return AG_FAILURE;
 	}
 
-	//RESULTCODE FileSystemTileStoreGeneratorImpl::Execute()
-	//{
-	//	if(m_pMap==NULL)
-	//	{
-	//		return AG_FAILURE;
-	//	}
-	//	if(m_start_level<=0||m_end_level<=0)
-	//	{
-	//		return AG_FAILURE;
-	//	}
-	//	if(m_start_level>m_end_level)
-	//	{
-	//		return AG_FAILURE;
-	//	}
-	//	if(m_pTileStore==NULL)
-	//	{
-	//		return AG_FAILURE;
-	//	}
+	RESULTCODE FileSystemTileStoreGeneratorImpl::Execute()
+	{
+		if(m_pMap==NULL)
+		{
+			return AG_FAILURE;
+		}
+		if(m_start_level<=0||m_end_level<=0)
+		{
+			return AG_FAILURE;
+		}
+		if(m_start_level>m_end_level)
+		{
+			return AG_FAILURE;
+		}
+		if(m_pTileStore==NULL)
+		{
+			return AG_FAILURE;
+		}
 
-	//	g_uint counter = 0;
-	//	char t_path[AUGE_PATH_MAX] = {0};
-	//	Canvas* pCanvas = NULL;
-	//	CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();		
-	//	GEnvelope viewer;
-	//	RESULTCODE rc = AG_FAILURE;
+		g_uint counter = 0;
+		char t_path[AUGE_PATH_MAX] = {0};
+		Canvas* pCanvas = NULL;
+		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();		
+		GEnvelope viewer;
+		RESULTCODE rc = AG_FAILURE;
 
-	//	auge::GColor bgColor(255,255,255,255);		
-	//	for(g_uint l=m_start_level; l<=m_end_level; l++)
-	//	{
-	//		g_uint rows = m_pTileStore->GetRows(l);
-	//		g_uint cols = m_pTileStore->GetCols(l);
+		auge::GColor bgColor(255,255,255,255);		
+		for(g_uint l=m_start_level; l<=m_end_level; l++)
+		{
+			g_uint rows = m_pTileStore->GetRows(l);
+			g_uint cols = m_pTileStore->GetCols(l);
 
-	//		for(g_uint r=0; r<rows; r++)
-	//		{
-	//			for(g_uint c=0; c<cols; c++)
-	//			{
-	//				rc = m_pTileStore->GetTileExtent(viewer, l, r,c);
-	//				if(rc==AG_SUCCESS)
-	//				{
-	//					printf("\r[%d]:%d-%d-%d",counter++,l,r,c);
+			for(g_uint r=0; r<rows; r++)
+			{
+				for(g_uint c=0; c<cols; c++)
+				{
+					rc = m_pTileStore->GetTileExtent(viewer, l, r,c);
+					if(rc==AG_SUCCESS)
+					{
+						printf("\r[%d]:%d-%d-%d",counter++,l,r,c);
 
-	//					m_pTileStore->GetTilePath(t_path, AUGE_PATH_MAX, l, r, c);
+						m_pTileStore->GetTilePath(t_path, AUGE_PATH_MAX, l, r, c);
 
-	//					pCanvas = pCartoFactory->CreateCanvas2D(AUGE_TILE_SIZE,AUGE_TILE_SIZE);
-	//					pCanvas->SetViewer(viewer);
-	//					////pCanvas->DrawBackground(bgColor);
-	//					pCanvas->Draw(m_pMap);
-	//					pCanvas->Save(t_path);
-	//					pCanvas->Release();
-	//				}
-	//			}
-	//		}
-	//	}
+						pCanvas = pCartoFactory->CreateCanvas2D(AUGE_TILE_SIZE,AUGE_TILE_SIZE);
+						pCanvas->SetViewer(viewer);
+						////pCanvas->DrawBackground(bgColor);
+						pCanvas->Draw(m_pMap);
+						pCanvas->Save(t_path);
+						pCanvas->Release();
+					}
+				}
+			}
+		}
 
-	//	return counter;
-	//}
+		return counter;
+	}
 
 	void FileSystemTileStoreGeneratorImpl::SetUser(g_uint user)
 	{

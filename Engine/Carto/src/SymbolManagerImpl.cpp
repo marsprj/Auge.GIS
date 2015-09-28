@@ -43,10 +43,10 @@ namespace auge
 	SymbolManager* augeGetSymbolManagerInstance()
 	{
 		static SymbolManagerImpl g_symbolManger;		
-		if(!g_symbolManger.IsInitialized())
-		{
-			g_symbolManger.Initialize();
-		}
+		//if(!g_symbolManger.IsInitialized())
+		//{
+		//	g_symbolManger.Initialize();
+		//}
 		return &g_symbolManger;
 	}
 
@@ -55,6 +55,7 @@ namespace auge
 		m_marker_symbols = NULL;
 		m_line_symbols   = NULL;
 		m_fill_symbols = NULL;
+		m_pConnection = NULL;
 	}
 
 	SymbolManagerImpl::~SymbolManagerImpl()
@@ -78,8 +79,27 @@ namespace auge
 		return m_path.c_str();
 	}
 
-	void SymbolManagerImpl::Initialize()
+	RESULTCODE SymbolManagerImpl::Initialize(GConnection* pConnection)
 	{
+		if(pConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		if(!pConnection->IsOpen())
+		{
+			return AG_FAILURE;
+		}
+
+		m_pConnection = pConnection;
+		if(!m_pConnection->HasTable("g_symbol"))
+		{
+			if(!CreateSymbolTable())
+			{
+				return AG_FAILURE;
+			}
+		}
+
 		if(m_path.empty())
 		{
 			char c_dir[AUGE_PATH_MAX];
@@ -582,5 +602,50 @@ namespace auge
 
 		memset(graphic_marker_base_path, 0, size);
 		auge_make_path(graphic_marker_base_path, NULL, s_dir, "symbol/graphic/marker", NULL);
+	}
+
+	RESULTCODE SymbolManagerImpl::AddMarkerSymbol(const char* name, const char* path)
+	{
+		const char* format = "insert into g_symbol (name,alias,type,isgraphic) values('%s','%s',0, 1)";
+
+		char uuid[AUGE_PATH_MAX];
+		memset(uuid, 0, AUGE_PATH_MAX);
+		auge_generate_uuid(uuid,AUGE_PATH_MAX);
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+
+		g_snprintf(sql, AUGE_SQL_MAX, format, name, uuid);
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	RESULTCODE SymbolManagerImpl::AddFillSymbol(const char* name, const char* path)
+	{
+		const char* format = "insert into g_symbol (name,alias,type,isgraphic) values('%s','%s',2, 1)";
+
+		char uuid[AUGE_PATH_MAX];
+		memset(uuid, 0, AUGE_PATH_MAX);
+		auge_generate_uuid(uuid,AUGE_PATH_MAX);
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+
+		g_snprintf(sql, AUGE_SQL_MAX, format, name, uuid);
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	RESULTCODE SymbolManagerImpl::CreateSymbolTable()
+	{
+		const char* sql =   "CREATE TABLE g_symbol (" \
+							"	gid serial NOT NULL," \
+							"	name character varying(255)," \
+							"	alias character varying(255)," \
+							"	type integer," \
+							"	isgraphic integer DEFAULT 0"
+							")";
+
+		RESULTCODE rc = AG_SUCCESS;
+		rc = m_pConnection->ExecuteSQL(sql);
+		return (rc == AG_SUCCESS);
 	}
 }

@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(SymbolTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(SymbolTest);
 
 void SymbolTest::setUp() 
 {
@@ -28,6 +28,9 @@ void SymbolTest::setUp()
 	pCartoManager = auge::augeGetCartoManagerInstance();
 	pCartoManager->Initialize(m_pConnection);
 
+	auge::SymbolManager* pSymbolManager = NULL;
+	pSymbolManager = auge::augeGetSymbolManagerInstance();
+	pSymbolManager->Initialize(m_pConnection);
 }
 
 void SymbolTest::tearDown()
@@ -336,4 +339,15 @@ auge::Style* SymbolTest::LoadSLD(const char* path)
 	pStyle = reader->Read(path, NULL);
 
 	return pStyle;
+}
+
+void SymbolTest::SymbolMangerTest()
+{
+	
+}
+
+void SymbolTest::AddSymbolFillTest()
+{
+	auge::SymbolManager* pSymbolManager = auge::augeGetSymbolManagerInstance();
+	pSymbolManager->AddMarkerSymbol("民生银行", "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\symbol\\graphic\\marker\\民生银行.png");
 }

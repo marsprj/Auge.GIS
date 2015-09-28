@@ -2868,8 +2868,6 @@ namespace auge
 		RESULTCODE rc = AG_SUCCESS;
 		rc = m_pConnection->ExecuteSQL(sql);
 		return (rc == AG_SUCCESS);
-
-		return AG_SUCCESS;
 	}
 
 	RESULTCODE CartoManagerImpl::CreateStyleTable()

@@ -33,15 +33,15 @@ void TileTest::setUp()
 	pCartoManager = auge::augeGetCartoManagerInstance();
 	pCartoManager->Initialize(m_pConnection);
 
-	//const char* path = "DATABASE=G:\\temp\\quad";	
-	//pEngine = pEngineManager->GetEngine("TileFS");	
-	//m_pWorkspace = dynamic_cast<auge::TileWorkspace*>(pEngine->CreateWorkspace());
-	//m_pWorkspace->SetConnectionString(path);
-
-	pEngine = pEngineManager->GetEngine("TileMgo");	
+	const char* path = "DATABASE=G:\\temp\\quad";	
+	pEngine = pEngineManager->GetEngine("TileFS");	
 	m_pWorkspace = dynamic_cast<auge::TileWorkspace*>(pEngine->CreateWorkspace());
-	const char* constr = "SERVER=127.0.0.1;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
-	m_pWorkspace->SetConnectionString(constr);
+	m_pWorkspace->SetConnectionString(path);
+
+	//pEngine = pEngineManager->GetEngine("TileMgo");	
+	//m_pWorkspace = dynamic_cast<auge::TileWorkspace*>(pEngine->CreateWorkspace());
+	//const char* constr = "SERVER=127.0.0.1;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
+	//m_pWorkspace->SetConnectionString(constr);
 
 	rc = m_pWorkspace->Open();
 	CPPUNIT_ASSERT(rc==AG_SUCCESS);
@@ -156,7 +156,7 @@ void TileTest::BuildTileStorePGIS_FS()
 	auge::CartoManager* pCartoManager = auge::augeGetCartoManagerInstance();
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
-	//pMap = pCartoManager->LoadMap("world");
+	pMap = pCartoManager->LoadMap(2, "world");
 	auge::Canvas* pCanvas = NULL;//pCartoFactory->CreateCanvas2D(256,256);
 
 	char t_path[AUGE_PATH_MAX] = {0};
@@ -196,8 +196,8 @@ void TileTest::BuildTileStorePGIS_Mongo()
 	auge::DataEngineManager* pEngineManager = auge::augeGetDataEngineManagerInstance();
 	auge::DataEngine* pEngine = pEngineManager->GetEngine("TileMGO");	
 	auge::TileWorkspace* pWorkspace = dynamic_cast<auge::TileWorkspace*>(pEngine->CreateWorkspace());
-	//const char* constr = "SERVER=127.0.0.1;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
-	const char* constr = "SERVER=192.168.111.160;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
+	const char* constr = "SERVER=127.0.0.1;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
+	//const char* constr = "SERVER=192.168.111.160;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
 	pWorkspace->SetConnectionString(constr);
 	pWorkspace->Open();
 
@@ -227,7 +227,7 @@ void TileTest::BuildTileStorePGIS_Mongo()
 
 	pProcessor->SetMap(pMap);
 	pProcessor->SetTileStore(pTileStore);
-	pProcessor->SetStartLevel(8);
+	pProcessor->SetStartLevel(0);
 	pProcessor->SetEndLevel(9);
 	pProcessor->SetViewer(viewer);
 

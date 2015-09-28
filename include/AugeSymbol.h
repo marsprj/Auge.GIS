@@ -585,6 +585,9 @@ namespace auge
 		virtual EnumSymbol*		GetLineSymbols() = 0;
 		virtual EnumSymbol*		GetFillSymbols() = 0;
 
+		virtual RESULTCODE		AddMarkerSymbol(const char* name, const char* path) = 0;
+		virtual RESULTCODE		AddFillSymbol(const char* name, const char* path) = 0;
+
 		virtual SimpleMarkerSymbol*	CreateMarkerSymbol(augeMarkerType type) = 0;
 		virtual SimpleMarkerSymbol*	CreateMarkerSymbol(const char* name) = 0;
 
@@ -596,6 +599,7 @@ namespace auge
 		virtual FillSymbol*		GetFillSymbol(const char* name) = 0;
 
 		virtual const char*		GetPath() = 0;
+		virtual	RESULTCODE		Initialize(GConnection* pConnection) = 0;
 	};
 
 	extern "C"

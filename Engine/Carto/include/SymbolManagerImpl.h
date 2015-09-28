@@ -21,6 +21,9 @@ namespace auge
 		virtual EnumSymbol*		GetLineSymbols();
 		virtual EnumSymbol*		GetFillSymbols();
 
+		virtual RESULTCODE		AddMarkerSymbol(const char* name, const char* path);
+		virtual RESULTCODE		AddFillSymbol(const char* name, const char* path);
+
 		virtual SimpleMarkerSymbol*	CreateMarkerSymbol(augeMarkerType type);
 		virtual SimpleMarkerSymbol*	CreateMarkerSymbol(const char* name);
 
@@ -33,16 +36,19 @@ namespace auge
 
 		virtual const char*		GetPath();
 
+		virtual	RESULTCODE		Initialize(GConnection* pConnection);
 	public:
-		void			Initialize();
+		
 		bool			IsInitialized();
 
 	private:
 		void			LoadVectorMarkers();
 		void			LoadGraphicMarkerSymbols(EnumSymbolImpl* pSymbols, const char* graphic_base);
 		void			LoadGraphicFillSymbols(EnumSymbolImpl* pSymbols, const char* graphic_base);
+		RESULTCODE		CreateSymbolTable();
 
 	private:
+		GConnection*	m_pConnection;
 		EnumSymbolImpl*	m_marker_symbols;
 		EnumSymbolImpl*	m_line_symbols;
 		EnumSymbolImpl* m_fill_symbols;

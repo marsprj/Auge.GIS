@@ -12,7 +12,10 @@ class SymbolTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(DrawStar);
 	//CPPUNIT_TEST(DrawStars);
 	//CPPUNIT_TEST(DrawRailways);
-	CPPUNIT_TEST(DrawFillSymbol);
+	//CPPUNIT_TEST(DrawFillSymbol);
+	//CPPUNIT_TEST(SymbolMangerTest);
+
+	CPPUNIT_TEST(AddSymbolFillTest);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -24,6 +27,10 @@ private:
 
 	void		DrawRailways();
 	void		DrawFillSymbol();
+
+	void		SymbolMangerTest();
+
+	void		AddSymbolFillTest();
 
 	auge::Style* LoadSLD(const char* path);
 private:

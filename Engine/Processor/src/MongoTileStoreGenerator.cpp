@@ -53,7 +53,7 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
-		if(m_start_level<=0||m_end_level<=0)
+		if(m_start_level<0||m_end_level<=0)
 		{
 			return AG_FAILURE;
 		}
