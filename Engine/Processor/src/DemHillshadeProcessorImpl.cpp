@@ -373,6 +373,7 @@ namespace auge
 			{
 				slope_x = ((ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1]) - (ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1])) / (8 * reslution_x);
 				slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
+				printf("%f\t%f\n", slope_x, slope_y);
 
 				// slope
 				slope = atan(m_zfactor * sqrt(pow(slope_x,2.0f) + pow(slope_y,2.0f)));
@@ -392,6 +393,8 @@ namespace auge
 					shade = 0.0f;
 				}
 				*ptr = shade;
+			
+				printf("%f\n",slope);
 			}
 			ptr_0 += 2;
 			ptr_1 += 2;
