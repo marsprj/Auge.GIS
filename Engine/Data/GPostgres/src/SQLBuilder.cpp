@@ -325,7 +325,7 @@ namespace auge
 		//	extent.m_xmax,
 		//	extent.m_ymax);
 		//ST_Intersects(shape, st_geomfromtext('POLYGON((0 -90,0 90,180 90,180 -90,0 -90))',4326))
-		g_snprintf(where,AUGE_BUFFER_MAX," ST_Intersects(%s, st_geomfromtext('POLYGON((%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f))',%d))", pFeatureClass->m_geom_filed_name.c_str(),
+		g_snprintf(where,AUGE_BUFFER_MAX," where ST_Intersects(%s, st_geomfromtext('POLYGON((%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f))',%d))", pFeatureClass->m_geom_filed_name.c_str(),
 			extent.m_xmin, extent.m_ymin,
 			extent.m_xmin, extent.m_ymax,
 			extent.m_xmax, extent.m_ymax,
