@@ -314,7 +314,7 @@ namespace auge
 	RESULTCODE WorkspacePgs::RemoveDataSet(const char* name)
 	{
 		//return RemoveRasterRequest(name);
-		return NULL;
+		return AG_SUCCESS;
 	}
 
 	RESULTCODE WorkspacePgs::RemoveRaster(const char* name, const char* path)
