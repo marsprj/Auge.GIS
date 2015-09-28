@@ -711,7 +711,8 @@ namespace auge
 
 		char uuid[AUGE_PATH_MAX];
 		memset(uuid, 0, AUGE_PATH_MAX);
-		auge_generate_uuid(uuid,AUGE_PATH_MAX);
+		//auge_generate_uuid(uuid,AUGE_PATH_MAX);
+		strcpy(uuid,name);
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
