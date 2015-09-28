@@ -559,6 +559,7 @@ namespace auge
 
 		LoadConnectionPool();
 		LoadJobManager();
+		LoadSymbolManager();
 		LoadCartoPool();
 		LoadServicePool();
 
@@ -660,6 +661,19 @@ namespace auge
 		m_pLogger->Info("    Load Job Manager");
 		m_pJobManager = augeGetJobManagerInstance();
 		RESULTCODE rc = m_pJobManager->Initialize(m_pConnection);
+		if(rc!=AG_SUCCESS)
+		{
+			m_pLogger->Error(m_pError->GetLastError(), __FILE__, __LINE__);
+		}
+
+		return rc;
+	}
+
+	RESULTCODE GServer::LoadSymbolManager()
+	{
+		m_pLogger->Info("    Load Symbol Manager");
+		m_pSymbolManager = augeGetSymbolManagerInstance();
+		RESULTCODE rc = m_pSymbolManager->Initialize(m_pConnection);
 		if(rc!=AG_SUCCESS)
 		{
 			m_pLogger->Error(m_pError->GetLastError(), __FILE__, __LINE__);

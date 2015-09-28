@@ -16,6 +16,7 @@ namespace auge
 	class WebContext;
 	class GConnection;
 	class ConnectionManager; 
+	class SymbolManager;
 	class CartoManager;
 	class ServiceManager;
 	class UserManager;
@@ -56,6 +57,7 @@ namespace auge
 		RESULTCODE	OpenServerBase();
 		
 		RESULTCODE	LoadConnectionPool();
+		RESULTCODE	LoadSymbolManager();
 		RESULTCODE	LoadCartoPool();
 		RESULTCODE	LoadServicePool();
 
@@ -78,6 +80,7 @@ namespace auge
 
 		GConnection			*m_pConnection;
 		ConnectionManager	*m_pConnManager;
+		SymbolManager		*m_pSymbolManager;
 		CartoManager		*m_pCartoManager;
 		ServiceManager		*m_pServiceManager;
 		JobManager			*m_pJobManager;

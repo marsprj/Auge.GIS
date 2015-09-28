@@ -95,7 +95,8 @@ namespace auge
 			if(name==NULL)
 				pSymbols = pSymbolManager->GetMarkerSymbols();
 			else
-				pSymbol = pSymbolManager->CreateMarkerSymbol(name);
+				//pSymbol = pSymbolManager->CreateMarkerSymbol(name);
+				pSymbol = pSymbolManager->GetMarker(name);
 		}
 		else if(g_stricmp(type, "Line")==0)
 		{
@@ -109,7 +110,8 @@ namespace auge
 			if(name==NULL)
 				pSymbols = pSymbolManager->GetFillSymbols();
 			else
-				pSymbol = pSymbolManager->CreateFillSymbol(name);
+				//pSymbol = pSymbolManager->CreateFillSymbol(name);
+				pSymbol = pSymbolManager->GetFillSymbol(name);
 		}
 		else
 		{
@@ -130,7 +132,7 @@ namespace auge
 			{
 				char msg[AUGE_MSG_MAX];
 				memset(msg, 0, AUGE_MSG_MAX);
-				g_sprintf(msg, "Invalid Symbol Name [%ds]", name);
+				g_sprintf(msg, "Invalid Symbol Name [%s]", name);
 				pError->SetError(msg);
 				pLogger->Error(msg, __FILE__, __LINE__);
 				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
