@@ -200,6 +200,7 @@ namespace auge
 		//--------------------------------------------------------------------------
 		//virtual bool      AddPolygon(GPolygon* pPolygon) =0;
 		virtual	bool			Contain(double x, double y) = 0;
+		virtual double			Area() const = 0; // : Area
 	};
 
 	class AUGE_GEOMETRY_API GEnvelope

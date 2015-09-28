@@ -4,15 +4,15 @@
 
 #include "AugeTile.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
 
 void PgsTest::setUp() 
 {
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=GISDB;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gaode;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	//const char* path = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* path = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
 	pLogger->Initialize();
@@ -40,8 +40,9 @@ void PgsTest::tearDown()
 void PgsTest::ReadTest()
 {
 	auge::FeatureClass* pFeatureClass = NULL;
-	//pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
-	pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi");
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("country");
+	//pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi");
 	//pFeatureClass = m_pWorkspace->OpenFeatureClass("高等院校");
 	CPPUNIT_ASSERT(pFeatureClass!=NULL);
 
@@ -59,6 +60,23 @@ void PgsTest::ReadTest()
 		//float val = pFeature->GetFloat("co");
 		pGeometry = pFeature->GetGeometry();
 		//wkb = pGeometry->AsBinary();
+
+		double area = 0.0;
+		switch(pGeometry->GeometryType())
+		{
+		case auge::augeGTPolygon:
+			{
+				auge::GPolygon* pPolygon = (auge::GPolygon*)pGeometry;
+				area = pPolygon->Area();
+			}
+			break;
+		case auge::augeGTMultiPolygon:
+			{
+				auge::GMultiPolygon* pPolygon = (auge::GMultiPolygon*)pGeometry;
+				area = pPolygon->Area();
+			}
+			break;
+		}
 
 		//printf("[Name]:%s\n", pFeature->GetString("name"));
 		//printf("[%d]:%s\n", counter++, pFeature->GetString("name"));

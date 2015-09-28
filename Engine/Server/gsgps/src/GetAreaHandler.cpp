@@ -372,7 +372,7 @@ namespace auge
 										break;
 									case augeGTMultiPolygon:
 										{
-											GPolygon* pPolygon = (GPolygon*)pGeometry;
+											GMultiPolygon* pPolygon = (GMultiPolygon*)pGeometry;
 											area = pPolygon->Area();
 										}
 										break;
