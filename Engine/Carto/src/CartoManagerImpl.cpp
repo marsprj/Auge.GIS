@@ -1323,8 +1323,21 @@ namespace auge
 
 		Style* pStyle = NULL;
 		StyleReaderImpl reader;
-		pStyle = reader.Read(text, strlen(text), pFeatureClass);		
 
+		{
+			size_t text_len = strlen(text);
+			size_t buff_len = text_len << 1;
+			char* text_utf8 = (char*)malloc(buff_len);
+			memset(text_utf8, 0, buff_len);
+			auge_encoding_convert_2("GBK", "UTF-8", text, text_len, text_utf8, &buff_len);			
+
+			pStyle = reader.Read(text_utf8, strlen(text_utf8), pFeatureClass);		
+			free(text_utf8);
+		}
+		{
+			//pStyle = reader.Read(text, strlen(text), pFeatureClass);		
+		}
+		
 		if(pStyle!=NULL)
 		{
 			pStyle->SetID(id);
@@ -1375,7 +1388,22 @@ namespace auge
 
 		Style* pStyle = NULL;
 		StyleReaderImpl reader;
-		pStyle = reader.Read(text, strlen(text), pFeatureClass);
+
+		{
+			size_t text_len = strlen(text);
+			size_t buff_len = text_len << 1;
+			char* text_utf8 = (char*)malloc(buff_len);
+			memset(text_utf8, 0, buff_len);
+			auge_encoding_convert_2("GBK", "UTF-8", text, text_len, text_utf8, &buff_len);			
+
+			pStyle = reader.Read(text_utf8, strlen(text_utf8), pFeatureClass);		
+			free(text_utf8);
+		}
+		{	
+			//pStyle = reader.Read(text, strlen(text), pFeatureClass);
+		}
+		
+
 		pResult->Release();
 
 		if(pStyle!=NULL)

@@ -66,20 +66,19 @@ namespace auge
 		const char* name = pRequest->GetName();
 		const char* text = pRequest->GetStyle();
 
-#ifndef WIN32
+		pLogger->Debug(text, __FILE__, __LINE__);
+
 		size_t text_len = strlen(text);
 		size_t buff_len = text_len << 1;
 		char* text_gbk = (char*)malloc(buff_len);
 		memset(text_gbk, 0, buff_len);
 		auge_encoding_convert_2("UTF-8", "GBK", text, text_len, text_gbk, &buff_len);
+		pLogger->Debug(text_gbk, __FILE__, __LINE__);
 
 		pLogger->Info(text_gbk,__FILE__,__LINE__);
 		
 		RESULTCODE rc = pCartoManager->UpdateStyle(pUser->GetID(), name, text_gbk);
 		free(text_gbk);
-#else
-		RESULTCODE rc = pCartoManager->UpdateStyle(pUser->GetID(), name, text);
-#endif
 
 		if(rc!=AG_SUCCESS) 
 		{
