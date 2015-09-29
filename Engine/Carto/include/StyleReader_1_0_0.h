@@ -52,6 +52,9 @@ namespace auge
 		Fill*				ReadFill(XNode* pxFillNode);
 		ExternalGraphic*	ReadExternalGraphic(XNode*  pxGraphicNode);
 
+		FillSymbol*			ReadFillSymbol(XNode* pxSymbolizerNode);
+		FillSymbol*			ReadGraphicFillSymbol(XNode* pxSymbolizerNode);
+
 		//RESULTCODE			ReadLabel(TextSymbolizer *pSymbolizer, XNode *pxNodeLabel);
 
 	private:
