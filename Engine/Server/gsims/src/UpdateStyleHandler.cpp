@@ -57,7 +57,6 @@ namespace auge
 
 	WebResponse* UpdateStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-
 		UpdateStyleRequest* pRequest = static_cast<UpdateStyleRequest*>(pWebRequest);
 		WebResponse* pWebResponse = NULL;
 
@@ -67,6 +66,7 @@ namespace auge
 		const char* name = pRequest->GetName();
 		const char* text = pRequest->GetStyle();
 
+#ifndef WIN32
 		size_t text_len = strlen(text);
 		size_t buff_len = text_len << 1;
 		char* text_gbk = (char*)malloc(buff_len);
@@ -77,6 +77,9 @@ namespace auge
 		
 		RESULTCODE rc = pCartoManager->UpdateStyle(pUser->GetID(), name, text_gbk);
 		free(text_gbk);
+#else
+		RESULTCODE rc = pCartoManager->UpdateStyle(pUser->GetID(), name, text);
+#endif
 
 		if(rc!=AG_SUCCESS) 
 		{
