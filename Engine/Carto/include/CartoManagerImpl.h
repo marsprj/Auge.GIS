@@ -150,6 +150,7 @@ namespace auge
 		RESULTCODE				CreateStyleTable();
 		RESULTCODE				CreateColorMapTable();
 		RESULTCODE				InitColorMap();
+		RESULTCODE				InitStyle();
 
 	private:
 		GConnection	*m_pConnection;

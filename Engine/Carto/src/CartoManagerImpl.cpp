@@ -57,10 +57,7 @@ namespace auge
 			{
 				return AG_FAILURE;
 			}
-			else
-			{
-				//InitStyleTable();
-			}
+			InitStyle();
 		}
 		if(!m_pConnection->HasTable("g_layer"))
 		{
@@ -2915,6 +2912,13 @@ namespace auge
 			g_snprintf(sql, AUGE_SQL_MAX, format, color_map[i],color_map[i+1]);
 			m_pConnection->ExecuteSQL(sql);
 		}
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE CartoManagerImpl::InitStyle()
+	{
+		//CreateStyle(0, )
+
 		return AG_SUCCESS;
 	}
 
