@@ -25,4 +25,4 @@ ims_cgi_LDADD=	-lgcore \
 		-lrudecgi \
 		-lgsims
 
-ims_cgi_SOURCES=main.cpp GServer.cpp
+ims_cgi_SOURCES=ims.cpp GServer.cpp
