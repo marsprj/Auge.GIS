@@ -59,7 +59,6 @@ namespace auge
 
 	GFields* DataSetCsv::CreateFields()
 	{	
-		
 		std::ifstream is;
 		is.open(m_path.c_str());
 		if(!is.is_open())

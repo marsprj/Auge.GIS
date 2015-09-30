@@ -23,4 +23,7 @@ libgsufs_la_SOURCES=\
 		    ListRequest.cpp \
 		    ListResponse.cpp \
 		    ListHandler.cpp \
+		    DescribeCsvHandler.cpp \
+		    DescribeCsvRequest.cpp \
+		    DescribeCsvResponse.cpp \
 		    WFileSystemEngine.cpp

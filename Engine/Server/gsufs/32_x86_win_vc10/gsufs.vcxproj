@@ -85,6 +85,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   <ItemGroup>
     <ClCompile Include="..\src\CreateFolderHandler.cpp" />
     <ClCompile Include="..\src\CreateFolderRequest.cpp" />
+    <ClCompile Include="..\src\DescribeCsvHandler.cpp" />
+    <ClCompile Include="..\src\DescribeCsvRequest.cpp" />
+    <ClCompile Include="..\src\DescribeCsvResponse.cpp" />
     <ClCompile Include="..\src\ListHandler.cpp" />
     <ClCompile Include="..\src\ListRequest.cpp" />
     <ClCompile Include="..\src\ListResponse.cpp" />
@@ -99,6 +102,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   <ItemGroup>
     <ClInclude Include="..\include\CreateFolderHandler.h" />
     <ClInclude Include="..\include\CreateFolderRequest.h" />
+    <ClInclude Include="..\include\DescribeCsvHandler.h" />
+    <ClInclude Include="..\include\DescribeCsvRequest.h" />
+    <ClInclude Include="..\include\DescribeCsvResponse.h" />
     <ClInclude Include="..\include\ListHandler.h" />
     <ClInclude Include="..\include\ListRequest.h" />
     <ClInclude Include="..\include\ListResponse.h" />
