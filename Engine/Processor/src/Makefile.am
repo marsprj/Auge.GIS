@@ -55,5 +55,6 @@ libgprocessor_la_SOURCES=\
 		Delaunay.cpp \
 		DelaunayProcessorImpl.cpp \
 		IDWProcessorImpl.cpp \
+		RasterThumbnailProcessorImpl.cpp \
 		FeatureIDWProcessorImpl.cpp
 
