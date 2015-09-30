@@ -90,6 +90,7 @@ typedef unsigned long int  g_uint64;
 #define AUGE_ICON_SIZE		32
 #define AUGE_ICON_SCALE		0.7
 
+#define AUGE_THUMBNAIL_SIZE		256
 #define AUGE_THUMBNAIL_WIDTH	512
 #define AUGE_THUMBNAIL_HEIGHT	384
 

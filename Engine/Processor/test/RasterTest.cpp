@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
 
 void RasterTest::setUp() 
 {
@@ -20,8 +20,9 @@ void RasterTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=182.92.114.80;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -477,6 +478,29 @@ void RasterTest::DEMHillShade()
 	pProcessor->SetZenith(45);
 	pProcessor->SetZFactor(5.0);
 
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[Ê±¼ä]:%dºÁÃë\n", te-ts);
+}
+
+void RasterTest::Thumbnail()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterThumbnailProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterThumbnailProcessor();
+
+	pProcessor->SetInputRaster("G:\\Data\\aster_gdem\\ASTGTM2_N39E118_dem.tif");
+	//pProcessor->SetInputRaster("G:\\Data\\raster\\tif\\world.tif");
+	//pProcessor->SetInputRaster("G:\\temp\\aaa\\ASTGTM2_N29E082_dem_stretch.tif");
+	//pProcessor->SetInputRaster("G:\\temp\\aaa\\Jellyfish.jpg");
+	//pProcessor->SetInputRaster("G:\\temp\\aaa\\Koala.jpg");
+	pProcessor->SetOutputRaster("G:\\temp\\aaa\\Jellyfish_thumbnail.jpg");
+	
 	RESULTCODE rc = pProcessor->Execute();
 
 	pProcessor->Release();

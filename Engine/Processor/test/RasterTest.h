@@ -8,7 +8,7 @@ class RasterTest : public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(RasterTest);
 	//CPPUNIT_TEST(ExtractByRectangle);
-	CPPUNIT_TEST(Stretch);
+	//CPPUNIT_TEST(Stretch);
 	//CPPUNIT_TEST(EdgeDetorSobol);
 	//CPPUNIT_TEST(Graylize);
 	//CPPUNIT_TEST(ToJPG);
@@ -18,6 +18,7 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(PixelBlend);
 	//CPPUNIT_TEST(HistgramEqualization);
 	//CPPUNIT_TEST(Threshold);
+	CPPUNIT_TEST(Thumbnail);
 
 	//CPPUNIT_TEST(SepiaTone);
 	//CPPUNIT_TEST(PenEffect);
@@ -42,6 +43,7 @@ private:
 	void	PixelBlend();
 	void	HistgramEqualization();
 	void	Threshold();
+	void	Thumbnail();
 
 	void	SepiaTone();
 	void	PenEffect();
