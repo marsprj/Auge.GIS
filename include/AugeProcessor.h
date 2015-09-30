@@ -741,6 +741,18 @@ namespace auge
 		virtual void		SetBlue(g_uint i) = 0;
 	};
 
+	class RasterThumbnailProcessor : public GProcessor
+	{
+	protected:
+		RasterThumbnailProcessor(){}
+		virtual ~RasterThumbnailProcessor(){}
+	public:
+		virtual void		SetInputRaster(const char* rasterPath) = 0;
+		virtual void		SetOutputRaster(const char* rasterPath) = 0;
+		virtual RESULTCODE	Execute() = 0;
+		virtual void		Release() = 0;
+	};
+
 	/**
 	 * DemSlopeProcessor
 	 *
@@ -1014,6 +1026,7 @@ namespace auge
 		// Raster
 		virtual RasterGraylizeProcessor*			CreateRasterGraylizeProcessor() = 0;
 		virtual RasterReverseProcessor*				CreateRasterReverseProcessor() = 0;
+		virtual RasterThumbnailProcessor*			CreateRasterThumbnailProcessor() = 0;
 
 		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor() = 0;
 
