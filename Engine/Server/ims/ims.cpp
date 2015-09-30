@@ -1,6 +1,3 @@
-//#include <fcgi_stdio.h>
-//#include <fcgi_config.h>
-//#include <rude/cgi.h>
 
 #include "GServer.h"
 

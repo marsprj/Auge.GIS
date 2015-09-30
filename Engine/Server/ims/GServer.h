@@ -15,11 +15,20 @@ namespace auge
 	class WebEngineManager;
 	class WebContext;
 	class GConnection;
-	class ConnectionManager;
+	class ConnectionManager; 
+	class SymbolManager;
 	class CartoManager;
 	class ServiceManager;
+	class UserManager;
+	class WebRequest;
 	class WebResponse;
-	class Service;
+	class User;
+
+	//typedef enum
+	//{
+	//	augeHttpGet	= 0,
+	//	augeHttpPost
+	//}augeHttpMethodType;
 
 	class GServer
 	{
@@ -41,22 +50,27 @@ namespace auge
 		RESULTCODE	LoadDataEngine();
 		RESULTCODE	LoadServiceEngine();
 
+		RESULTCODE	LoadUserManager();
+
+		RESULTCODE	LoadJobManager();
 		RESULTCODE	LoadServerConfig();
 		RESULTCODE	OpenServerBase();
 		
 		RESULTCODE	LoadConnectionPool();
+		RESULTCODE	LoadSymbolManager();
 		RESULTCODE	LoadCartoPool();
 		RESULTCODE	LoadServicePool();
 
 	private:
-		WebResponse* DoGet(Service *pService, rude::CGI& cgi);
-		WebResponse* DoPost(Service *pService, rude::CGI& cgi);
+		WebResponse*	DoGet(rude::CGI& cgi, User* pUser);
+		WebResponse*	DoPost(rude::CGI& cgi, User* pUser);
+		//WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
 
 		augeHttpMethodType	GetMethod();
-		void                    WriteTime(g_ulong ts, g_ulong te);
 
-		void		DoGet_2(rude::CGI& cgi);
-		
+		void			WriteTime(g_ulong ts, g_ulong te);
+		void			DebugCGI(rude::CGI& cgi);
+
 	private:
 		GError				*m_pError;
 		GLogger				*m_pLogger;
@@ -66,8 +80,12 @@ namespace auge
 
 		GConnection			*m_pConnection;
 		ConnectionManager	*m_pConnManager;
+		SymbolManager		*m_pSymbolManager;
 		CartoManager		*m_pCartoManager;
 		ServiceManager		*m_pServiceManager;
+		JobManager			*m_pJobManager;
+
+		UserManager			*m_pUserManager;
 
 		int					m_counter;
 	};

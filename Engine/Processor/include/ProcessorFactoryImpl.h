@@ -44,6 +44,7 @@ namespace auge
 		// Raster
 		virtual RasterGraylizeProcessor*			CreateRasterGraylizeProcessor();
 		virtual RasterReverseProcessor*				CreateRasterReverseProcessor();
+		virtual RasterThumbnailProcessor*			CreateRasterThumbnailProcessor();
 
 		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor();
 

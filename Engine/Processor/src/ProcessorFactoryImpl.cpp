@@ -19,6 +19,7 @@
 #include "RasterSubtractProcessorImpl.h"
 #include "RasterPixelBlendProcessorImpl.h"
 
+#include "RasterThumbnailProcessorImpl.h"
 #include "RasterThresholdProcessorImpl.h"
 
 #include "RasterHistogramEqualizationProcessorImpl.h"
@@ -231,5 +232,10 @@ namespace auge
 	DelaunayProcessor* GProcessorFactoryImpl::CreateDelaunayProcessor()
 	{
 		return (new DelaunayProcessorImpl());
+	}
+
+	RasterThumbnailProcessor* GProcessorFactoryImpl::CreateRasterThumbnailProcessor()
+	{
+		return (new RasterThumbnailProcessorImpl());
 	}
 }
