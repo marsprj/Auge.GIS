@@ -490,15 +490,23 @@ namespace auge
 	FillSymbol* StyleReader_1_0_0::ReadFillSymbol(XNode* pxSymbolizerNode)
 	{
 		SimpleFillSymbol* pSymbol = NULL;
-		
+		SymbolManager* pSymbolManager = augeGetSymbolManagerInstance();
 		XNode* pxNode = pxSymbolizerNode->GetFirstChild(AUGE_SLD_WELLKNOWN_NAME);
 		if(pxNode==NULL)
 		{
-			return NULL;
+			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->CreateFillSymbol(augeFillSimple));
+		}
+		else
+		{	
+			const char* wellKnownName = pxNode->GetContent();
+			pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->GetFillSymbol(wellKnownName));
+			if(pSymbol==NULL)
+			{
+				pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->CreateFillSymbol(augeFillSimple));
+			}
 		}
 
-		SymbolManager* pSymbolManager = augeGetSymbolManagerInstance();
-		pSymbol = static_cast<SimpleFillSymbol*>(pSymbolManager->CreateFillSymbol(augeFillSimple));
+		
 		pxNode = pxSymbolizerNode->GetFirstChild(AUGE_SLD_STROKE);
 		if(pxNode==NULL)
 		{
