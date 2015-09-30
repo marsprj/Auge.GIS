@@ -117,114 +117,6 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
-	{
-		GetMapRequest* pRequest = static_cast<GetMapRequest*>(pWebRequest);
-
-		g_uint width  = pRequest->GetWidth();
-		g_uint height = pRequest->GetHeight();
-
-		Canvas* pCanvas = NULL;
-		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
-
-		pCanvas = pCartoFactory->CreateCanvas2D(width, height);
-
-		GColor& bgColor = pRequest->GetBgColor(); 
-		//GColor bgColor(255,0,0,255);
-		char temp[AUGE_NAME_MAX];
-		g_sprintf(temp, "[Alpha]:%d", bgColor.GetAlpha());
-		GLogger* pLogger = augeGetLoggerInstance();
-		pLogger->Info(temp, __FILE__, __LINE__);
-		pCanvas->DrawBackground(bgColor);
-
-		GEnvelope& extent = pRequest->GetExtent();
-		if(extent.IsValid())
-		{
-			pCanvas->SetViewer(extent);
-		}
-		else
-		{
-			GEnvelope& extent = pMap->GetExtent();
-			pCanvas->SetViewer(extent);
-		}
-
-		const char* lname = NULL;
-		const char* sname = NULL;
-
-		Layer* pLayer = NULL;
-		Style* pStyle = NULL;
-		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-
-		g_ulong ts, te;
-		char msg[AUGE_MSG_MAX];
-		ts = auge_get_time();
-
-		g_uint lc = pRequest->GetLayerCount();
-		for(g_int i=lc-1; i>=0; i--)
-		{
-			lname = pRequest->GetLayer(i);
-			sname = pRequest->GetStyle(i);
-
-			pLayer = pMap->GetLayer(lname);
-			if(pLayer!=NULL)
-			{
-				if(!strlen(sname))
-				{	//Default Style
-					//pCanvas->DrawLayer(pLayer);
-					switch(pLayer->GetType())
-					{
-					case augeLayerFeature:
-						{
-							FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-							pStyle = pFeatureLayer->GetStyle();
-						}
-						break;
-					}
-				}
-
-				ts = auge_get_time();
-				DrawNamedLayer(pCanvas, pLayer, sname);
-				te = auge_get_time();
-				g_sprintf(msg, "[DrawLayer:%s]:%ld ms", sname, te-ts);
-				pLogger->Debug(msg, __FILE__, __LINE__);
-			}
-		}
-		te = auge_get_time();
-		g_sprintf(msg, "[MapDraw]:%ld ms", te-ts);
-		pLogger->Debug(msg, __FILE__, __LINE__);
-
-		ts = auge_get_time();
-		pCanvas->Label();
-		te = auge_get_time();
-		g_sprintf(msg, "[MapLabel]:%ld ms", te-ts);
-		pLogger->Debug(msg, __FILE__, __LINE__);
-
-		char img_sfix[AUGE_EXT_MAX] = {0};
-		char img_name[AUGE_NAME_MAX] = {0};
-		char img_path[AUGE_PATH_MAX] = {0};
-		auge_get_image_suffix(pRequest->GetMimeType(), img_sfix, AUGE_EXT_MAX);
-		auge_generate_uuid(img_name, AUGE_NAME_MAX);
-		const char* cache_path = pWebContext->GetCacheMapPath();
-		auge_make_path(img_path, NULL, cache_path, img_name, img_sfix);
-
-		ts = auge_get_time();
-		pCanvas->Save(img_path);
-		te = auge_get_time();
-		g_sprintf(msg, "[MapSave]:%ld ms", te-ts);
-		pLogger->Debug(msg, __FILE__, __LINE__);
-
-		pCanvas->Release();
-		GetMapResponse* pMapResponse = new GetMapResponse(pRequest);
-		pMapResponse->SetPath(img_path);
-
-		char img_fname[AUGE_NAME_MAX];
-		memset(img_fname,0,AUGE_NAME_MAX);
-		auge_make_path(img_fname, NULL, NULL, img_name, img_sfix);
-		pCartoManager->SetMapThumbnail(-1, pMap->GetID(), img_fname);
-
-		return pMapResponse;
-	}
-
 	//WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
 	//{
 	//	GetMapRequest* pRequest = static_cast<GetMapRequest*>(pWebRequest);
@@ -234,7 +126,7 @@ namespace auge
 
 	//	Canvas* pCanvas = NULL;
 	//	CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
-	//
+
 	//	pCanvas = pCartoFactory->CreateCanvas2D(width, height);
 
 	//	GColor& bgColor = pRequest->GetBgColor(); 
@@ -277,18 +169,14 @@ namespace auge
 	//		if(pLayer!=NULL)
 	//		{
 	//			if(!strlen(sname))
-	//			{	// Default Style
+	//			{	//Default Style
 	//				//pCanvas->DrawLayer(pLayer);
 	//				switch(pLayer->GetType())
 	//				{
 	//				case augeLayerFeature:
 	//					{
 	//						FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-	//						Style* pStyle = pFeatureLayer->GetStyle();
-	//						if(pStyle!=NULL)
-	//						{
-	//							sname = pStyle->GetName();
-	//						}
+	//						pStyle = pFeatureLayer->GetStyle();
 	//					}
 	//					break;
 	//				}
@@ -336,6 +224,118 @@ namespace auge
 
 	//	return pMapResponse;
 	//}
+
+	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		GetMapRequest* pRequest = static_cast<GetMapRequest*>(pWebRequest);
+
+		g_uint width  = pRequest->GetWidth();
+		g_uint height = pRequest->GetHeight();
+
+		Canvas* pCanvas = NULL;
+		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
+	
+		pCanvas = pCartoFactory->CreateCanvas2D(width, height);
+
+		GColor& bgColor = pRequest->GetBgColor(); 
+		//GColor bgColor(255,0,0,255);
+		char temp[AUGE_NAME_MAX];
+		g_sprintf(temp, "[Alpha]:%d", bgColor.GetAlpha());
+		GLogger* pLogger = augeGetLoggerInstance();
+		pLogger->Info(temp, __FILE__, __LINE__);
+		pCanvas->DrawBackground(bgColor);
+
+		GEnvelope& extent = pRequest->GetExtent();
+		if(extent.IsValid())
+		{
+			pCanvas->SetViewer(extent);
+		}
+		else
+		{
+			GEnvelope& extent = pMap->GetExtent();
+			pCanvas->SetViewer(extent);
+		}
+
+		const char* lname = NULL;
+		const char* sname = NULL;
+
+		Layer* pLayer = NULL;
+		Style* pStyle = NULL;
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+
+		g_ulong ts, te;
+		char msg[AUGE_MSG_MAX];
+		ts = auge_get_time();
+
+		g_uint lc = pRequest->GetLayerCount();
+		for(g_int i=lc-1; i>=0; i--)
+		{
+			lname = pRequest->GetLayer(i);
+			sname = pRequest->GetStyle(i);
+
+			pLayer = pMap->GetLayer(lname);
+			if(pLayer!=NULL)
+			{
+				if(!strlen(sname))
+				{	// Default Style
+					//pCanvas->DrawLayer(pLayer);
+					switch(pLayer->GetType())
+					{
+					case augeLayerFeature:
+						{
+							FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+							Style* pStyle = pFeatureLayer->GetStyle();
+							if(pStyle!=NULL)
+							{
+								sname = pStyle->GetName();
+							}
+						}
+						break;
+					}
+				}
+
+				ts = auge_get_time();
+				DrawNamedLayer(pCanvas, pLayer, sname);
+				te = auge_get_time();
+				g_sprintf(msg, "[DrawLayer:%s]:%ld ms", sname, te-ts);
+				pLogger->Debug(msg, __FILE__, __LINE__);
+			}
+		}
+		te = auge_get_time();
+		g_sprintf(msg, "[MapDraw]:%ld ms", te-ts);
+		pLogger->Debug(msg, __FILE__, __LINE__);
+
+		ts = auge_get_time();
+		pCanvas->Label();
+		te = auge_get_time();
+		g_sprintf(msg, "[MapLabel]:%ld ms", te-ts);
+		pLogger->Debug(msg, __FILE__, __LINE__);
+
+		char img_sfix[AUGE_EXT_MAX] = {0};
+		char img_name[AUGE_NAME_MAX] = {0};
+		char img_path[AUGE_PATH_MAX] = {0};
+		auge_get_image_suffix(pRequest->GetMimeType(), img_sfix, AUGE_EXT_MAX);
+		auge_generate_uuid(img_name, AUGE_NAME_MAX);
+		const char* cache_path = pWebContext->GetCacheMapPath();
+		auge_make_path(img_path, NULL, cache_path, img_name, img_sfix);
+
+		ts = auge_get_time();
+		pCanvas->Save(img_path);
+		te = auge_get_time();
+		g_sprintf(msg, "[MapSave]:%ld ms", te-ts);
+		pLogger->Debug(msg, __FILE__, __LINE__);
+
+		pCanvas->Release();
+		GetMapResponse* pMapResponse = new GetMapResponse(pRequest);
+		pMapResponse->SetPath(img_path);
+
+		char img_fname[AUGE_NAME_MAX];
+		memset(img_fname,0,AUGE_NAME_MAX);
+		auge_make_path(img_fname, NULL, NULL, img_name, img_sfix);
+		pCartoManager->SetMapThumbnail(-1, pMap->GetID(), img_fname);
+
+		return pMapResponse;
+	}
 
 	void GetMapHandler::DrawNamedLayer(Canvas* pCanvas, Layer* pLayer, const char* style_name)
 	{
