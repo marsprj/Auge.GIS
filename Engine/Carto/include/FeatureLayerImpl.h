@@ -55,7 +55,7 @@ namespace auge
 		bool			m_queryable;
 		bool			m_visiable;
 		Style*			m_pStyle;
-		g_uint			m_style_id;
+		g_int			m_style_id;
 
 		double			m_min_scale;
 		double			m_max_scale;

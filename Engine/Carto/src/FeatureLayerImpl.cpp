@@ -1,4 +1,5 @@
 #include "FeatureLayerImpl.h"
+#include "AugeField.h"
 
 namespace auge
 {
@@ -166,6 +167,25 @@ namespace auge
 					CartoManager* pCartoManager = augeGetCartoManagerInstance();
 					m_pStyle = pCartoManager->GetStyle(m_style_id, pFeatureClass);
 				}
+			}
+			else
+			{
+				FeatureClass* pFeatureClass = GetFeatureClass();
+				if(pFeatureClass!=NULL)
+				{
+					GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+					if(pField!=NULL)
+					{
+						StyleFactory* pStyleFactory = augeGetStyleFactoryInstance();
+						m_pStyle = pStyleFactory->CreateFeatureStyle(pField->GetGeometryDef()->GeometryType());
+					}
+				}
+
+				GLogger* pLogger = augeGetLoggerInstance();
+				char msg[AUGE_MSG_MAX];
+				memset(msg, 0, AUGE_MSG_MAX);
+				g_snprintf(msg, AUGE_MSG_MAX, "Layer [%s] set random style", m_name.c_str());
+				pLogger->Info(msg, __FILE__, __LINE__);
 			}
 		}
 		return m_pStyle;

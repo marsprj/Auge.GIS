@@ -250,7 +250,7 @@ namespace auge
 		augeGeometryType geom_type = augeGTPoint;
 		auge::Geometry	*pGeometry = NULL;
 		auge::Feature	*pFeature = NULL;
-		while((pFeature=pCursor->NextFeature())!=NULL)
+		while((pFeature=pCursor->NextFeature())!=NULL) 
 		{	
 			fid = pFeature->GetFID();
 			pGeometry = pFeature->GetGeometry();

@@ -843,7 +843,7 @@ namespace auge
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
 
 		FeatureLayer* pFLayer = pCartoFactory->CreateFeatureLayer();
-		pFLayer->SetName(f_name);
+		pFLayer->SetName(name);
 
 		FeatureWorkspace* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
@@ -870,7 +870,7 @@ namespace auge
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
 
 		GraphicLayer* pGLayer = pCartoFactory->CreateGraphicLayer();
-		pGLayer->SetName(f_name);
+		pGLayer->SetName(name);
 
 		FeatureWorkspace* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
