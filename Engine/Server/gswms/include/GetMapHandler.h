@@ -16,6 +16,7 @@ namespace auge
 	class GetMapResponse;
 	class Canvas;
 	class Layer; 
+	class Style;
 
 	class GetMapHandler : public WebHandler
 	{
@@ -41,6 +42,7 @@ namespace auge
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
 
 	private:
+		void	DrawLayer(Canvas* pCanvas, Layer* pLayer, Style *pStyle);
 		void	DrawNamedLayer(Canvas* pCanvas, Layer* pLayer, const char* style_name);
 	};
 }
