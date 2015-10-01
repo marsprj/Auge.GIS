@@ -164,13 +164,36 @@ namespace auge
 
 	WebRequest* WMapEngine::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
-		WebRequest* pWebRequest = ParseRequest(cgi);
-		if(pWebRequest!=NULL)
+		const char* request = cgi["request"];
+		if(request==NULL)
 		{
-			WMapRequest* pWRequest = static_cast<WMapRequest*>(pWebRequest);
-			pWRequest->SetMapName(mapName);
+			const char* msg = "[Request] is NULL";
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return NULL;
 		}
-		return pWebRequest;
+		WebHandler* handler = GetHandler(request);
+		if(handler == NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "%s doesn't support request [%s]", GetType(), request);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
+			return NULL;
+		}
+		return handler->ParseRequest(cgi, mapName);
+		//WebRequest* pWebRequest = ParseRequest(cgi);
+		//if(pWebRequest!=NULL)
+		//{
+		//	WMapRequest* pWRequest = static_cast<WMapRequest*>(pWebRequest);
+		//	pWRequest->SetMapName(mapName);
+		//}
+		//return pWebRequest;
 	}
 
 	WebRequest*	WMapEngine::ParseRequest(XDocument* pxDoc, const char* mapName)

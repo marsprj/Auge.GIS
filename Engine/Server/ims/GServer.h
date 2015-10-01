@@ -22,6 +22,7 @@ namespace auge
 	class UserManager;
 	class WebRequest;
 	class WebResponse;
+	class Service;
 	class User;
 
 	//typedef enum
@@ -62,8 +63,8 @@ namespace auge
 		RESULTCODE	LoadServicePool();
 
 	private:
-		WebResponse*	DoGet(rude::CGI& cgi, User* pUser);
-		WebResponse*	DoPost(rude::CGI& cgi, User* pUser);
+		WebResponse*	DoGet(rude::CGI& cgi, User* pUser, Service* pService);
+		WebResponse*	DoPost(rude::CGI& cgi, User* pUser, Service* pService);
 		//WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
 
 		augeHttpMethodType	GetMethod();

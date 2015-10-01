@@ -83,27 +83,41 @@ namespace auge
 			}
 			else
 			{
-				if(!pUser->IsAuthenticated())
+				const char* serviceName = cgi["ServiceName"];
+				if(serviceName==NULL)
 				{
-					char msg[AUGE_MSG_MAX];
-					g_sprintf(msg, "User [%s] is not authenticated", user_name);
+					const char* msg = "Invalid Service Name";					
 					pLogger->Error(msg, __FILE__, __LINE__);
 					auge::WebExceptionResponse *pExpResponse = NULL;
-					pExpResponse = auge::augeCreateWebExceptionResponse(); 
+					pExpResponse = auge::augeCreateWebExceptionResponse();
 					pExpResponse->SetMessage(msg);
 					pWebResponse = pExpResponse;
 				}
 				else
-				{	
-					switch(GetMethod())
-					//switch(augeHttpPost)
+				{
+					Service* pService = m_pServiceManager->GetService(pUser->GetID(), serviceName);
+					if(pService==NULL)
 					{
-					case augeHttpGet:
-						pWebResponse = DoGet(cgi, pUser);
-						break;
-					case augeHttpPost:
-						pWebResponse = DoPost(cgi, pUser);
-						break;
+						char msg[AUGE_MSG_MAX];
+						g_sprintf(msg, "Service [%s] is not registered", serviceName);
+						pLogger->Error(msg, __FILE__, __LINE__);
+						auge::WebExceptionResponse *pExpResponse = NULL;
+						pExpResponse = auge::augeCreateWebExceptionResponse();
+						pExpResponse->SetMessage(msg);
+						pWebResponse = pExpResponse;
+					}
+					else
+					{
+						switch(GetMethod())
+							//switch(augeHttpPost)
+						{
+						case augeHttpGet:
+							pWebResponse = DoGet(cgi, pUser, pService);
+							break;
+						case augeHttpPost:
+							pWebResponse = DoPost(cgi, pUser, pService);
+							break;
+						}
 					}
 				}
 			}
@@ -125,7 +139,7 @@ namespace auge
 		}
 	}
 
-	WebResponse* GServer::DoGet(rude::CGI& cgi, User* pUser)
+	WebResponse* GServer::DoGet(rude::CGI& cgi, User* pUser, Service* pService)
 	{
 		const char	*szService = NULL;
 		WebEngine	*pWebEngine = NULL;
@@ -159,7 +173,8 @@ namespace auge
 			return pWebResponse;
 		}
 
-		pWebRequest = pWebEngine->ParseRequest(cgi);
+		const char* mapName = pService->GetMapName();
+		pWebRequest = pWebEngine->ParseRequest(cgi, mapName);
 		if(pWebRequest==NULL)
 		{
 			// wrong service engine
@@ -178,7 +193,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* GServer::DoPost(rude::CGI& cgi, User* pUser)
+	WebResponse* GServer::DoPost(rude::CGI& cgi, User* pUser, Service* pService)
 	{
 		const char	*service = NULL;
 		WebRequest	*pWebRequest = NULL;
@@ -202,7 +217,8 @@ namespace auge
 				pWebResponse = pExpResponse;
 				return pWebResponse;
 			}
-			pWebRequest = pWebEngine->ParseRequest(cgi);
+			const char* mapName = pService->GetMapName();
+			pWebRequest = pWebEngine->ParseRequest(cgi, mapName);
 			if(pWebRequest==NULL)
 			{
 				// wrong service engine
@@ -349,165 +365,6 @@ namespace auge
 
 		return pWebResponse;
 	}
-
-	//WebResponse* GServer::DoPost(rude::CGI& cgi)
-	//{
-	//	const char	*service = NULL;
-	//	WebRequest	*pWebRequest = NULL;
-	//	WebResponse	*pWebResponse = NULL;
-	//	WebEngine	*pWebEngine = NULL;
-
-	//	const char* mapName = cgi["mapName"];
-	//	const char* xml_string = cgi["xml"];
-	//	//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\"  mapName=\"world\" xmlns:topp=\"http://www.openplans.org/topp\"	xmlns:wfs=\"http://www.opengis.net/wfs\"	xmlns:ogc=\"http://www.opengis.net/ogc\"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"	xsi:schemaLocation=\"http://www.opengis.net/wfs	http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\">	<wfs:Query typeName=\"world:cities\">		<ogc:Filter>			<ogc:FeatureId fid=\"world.3\"/>		</ogc:Filter>	</wfs:Query></wfs:GetFeature>";
-	//	//const char* xml_string = "<wfs:Transaction service=\"WFS\" version=\"1.0.0\"  mapName=\"world\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:world=\"http://www.openplans.org/world\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-transaction.xsd http://www.openplans.org/cities  http://localhost:8080/geoserver/wfs/DescribeFeaturename?namename=world:cities\"><wfs:Insert><world:cities><world:the_geom><gml:Point srsName=\"http://www.opengis.net/gml/srs/epsg.xml#4326\"><gml:coordinates>33.086040496826172,68.963546752929687</gml:coordinates></gml:Point></world:the_geom><world:name>alley</world:name></world:cities></wfs:Insert><wfs:Update name=\"cities\"><wfs:Property><wfs:Name>name</wfs:Name><wfs:Value>xxxx</wfs:Value></wfs:Property><ogc:Filter><ogc:FeatureId fid=\"cities.1\"/></ogc:Filter></wfs:Update><wfs:Delete name=\"cities\"><ogc:Filter><ogc:PropertyIsEqualTo><ogc:PropertyName>gid</ogc:PropertyName><ogc:Literal>610</ogc:Literal></ogc:PropertyIsEqualTo></ogc:Filter></wfs:Delete></wfs:Transaction>";
-	//	//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\"  mapName=\"world\" xmlns:world=\"http://www.radi.ac.cn/world\"	xmlns:wfs=\"http://www.opengis.net/wfs\"	xmlns:ogc=\"http://www.opengis.net/ogc\"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"	xsi:schemaLocation=\"http://www.opengis.net/wfs	http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\">	<wfs:Query typeName=\"world:cities\">		<wfs:PropertyName>world:gid</wfs:PropertyName>		<wfs:PropertyName>world:name</wfs:PropertyName>		<wfs:PropertyName>world:the_geom</wfs:PropertyName>	</wfs:Query></wfs:GetFeature>";
-	//	//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.0.0\"  mapName=\"world\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\"  xmlns:world=\"undefined\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd\"><wfs:Query typeName=\"cities\"><ogc:Filter><ogc:BBOX><gml:Box><gml:coordinates>-180,-146.0625 180,146.0625</gml:coordinates></gml:Box></ogc:BBOX></ogc:Filter></wfs:Query></wfs:GetFeature>";
-	//	//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.0.0\"  mapName=\"world\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\"  xmlns:world=\"undefined\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd\"><wfs:Query typeName=\"cities\"><ogc:Filter><ogc:BBOX><gml:Box><gml:coordinates>-195.75,-141.9375 164.25,150.1875</gml:coordinates></gml:Box></ogc:BBOX></ogc:Filter></wfs:Query></wfs:GetFeature>";
-	//	/* CreateDataSet */
-	//	//const char* xml_string = "<CreateDataSet service=\"dbs\" version=\"1.0.0\" sourceName=\"db1\" dataSetName=\"table1\"><Fields><Field><Name>ID</Name><Type>Int</Type><DefaultValue>0</DefaultValue></Field><Field><Name>Name</Name><Type>String</Type><Length>32</Length><Nullable>true</Nullable><DefaultValue>china</DefaultValue></Field><Field><Name>shape</Name><Type>Geometry</Type><Nullable>true</Nullable><GeometryDef><Type>Point</Type><SRID>4326</SRID></GeometryDef></Field></Fields></CreateDataSet>";
-	//	m_pLogger->Trace("[Request]",__FILE__, __LINE__);
-	//	const char* ctype = getenv("CONTENT_TYPE");
-	//	if(ctype!=NULL)
-	//	{
-	//		m_pLogger->Trace(ctype,__FILE__, __LINE__);
-	//	}
-	//	
-	//	m_pLogger->Trace(xml_string,__FILE__, __LINE__);
-
-	//	XParser parser;
-	//	XDocument* pxDoc = parser.ParseMemory(xml_string);
-	//	if(pxDoc==NULL)
-	//	{	
-	//		const char* msg = "Bad xml document.";
-	//		GLogger* pLogger = augeGetLoggerInstance();
-	//		pLogger->Debug(msg, __FILE__, __LINE__);
-	//		pLogger->Debug(xml_string);
-	//		WebExceptionResponse *pExpResponse = NULL;
-	//		GError* pError = augeGetErrorInstance();
-	//		pExpResponse = auge::augeCreateWebExceptionResponse();
-	//		pError->SetError(msg);
-	//		pExpResponse->SetMessage(m_pError->GetLastError());
-	//		pWebResponse = pExpResponse;
-	//		return pWebResponse;
-	//	}
-
-	//	XElement* pxRoot = pxDoc->GetRootNode();
-	//	XAttribute* pxAttr = pxRoot->GetAttribute("service");
-	//	if(pxAttr==NULL)
-	//	{
-	//		pxDoc->Close();
-	//		pxDoc->Release();
-
-	//		const char* msg = "Parameter Service is not defined";
-	//		WebExceptionResponse *pExpResponse = NULL;
-	//		GError* pError = augeGetErrorInstance();
-	//		pExpResponse = auge::augeCreateWebExceptionResponse();
-	//		pError->SetError(msg);
-	//		pExpResponse->SetMessage(m_pError->GetLastError());
-	//		pWebResponse = pExpResponse;
-	//		return pWebResponse;
-	//	}
-
-	//	service = pxAttr->GetValue();
-	//	pWebEngine = m_pWebEngineManager->GetEngine(service);
-	//	if(pWebEngine==NULL)
-	//	{
-	//		// wrong service engine
-	//		auge::WebExceptionResponse *pExpResponse = NULL;
-	//		pExpResponse = auge::augeCreateWebExceptionResponse();
-	//		pExpResponse->SetMessage(m_pError->GetLastError());
-	//		pWebResponse = pExpResponse;
-	//		return pWebResponse;
-	//	}
-
-	//	auge::WebContext* pWebContext = auge::augeGetWebContextInstance();
-	//	pWebRequest = pWebEngine->ParseRequest(pxDoc,mapName);
-	//	if(pWebRequest==NULL)
-	//	{
-	//		pxDoc->Close();
-	//		pxDoc->Release();
-
-	//		// wrong service engine
-	//		auge::WebExceptionResponse *pExpResponse = NULL;
-	//		pExpResponse = auge::augeCreateWebExceptionResponse();
-	//		pExpResponse->SetMessage(m_pError->GetLastError());
-	//		pWebResponse = pExpResponse;
-	//		return pWebResponse;
-	//	}
-
-	//	pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, pUser);
-	//	pWebRequest->Release();
-
-	//	//pxDoc->Close();
-	//	//pxDoc->Release();
-
-	//	return pWebResponse;
-	//}
-
-	//WebResponse* GServer::DoPost(rude::CGI& cgi)
-	//{
-	//	const char	*szService = NULL;
-	//	WebEngine	*pWebEngine = NULL;
-	//	WebRequest	*pWebRequest = NULL;
-	//	WebResponse	*pWebResponse = NULL;
-
-	//	szService = cgi["service"];
-	//	pWebEngine = m_pWebEngineManager->GetEngine(szService);
-	//	if(pWebEngine==NULL)
-	//	{
-	//		// wrong service engine
-	//		auge::WebExceptionResponse *pExpResponse = NULL;
-	//		pExpResponse = auge::augeCreateWebExceptionResponse();
-	//		pExpResponse->SetMessage(m_pError->GetLastError());
-	//		pWebResponse = pExpResponse;
-	//		return pWebResponse;
-	//	}
-	//	
-	//	const char* conent_type = getenv("CONTENT_TYPE"); 
-	//	if(conent_type==NULL)
-	//	{
-	//		pWebRequest = pWebEngine->ParseRequest(cgi);
-	//	}
-	//	else
-	//	{
-	//		char msg[AUGE_MSG_MAX] = {0};
-	//		g_sprintf(msg, "[Conent-Type]:%s", conent_type);
-	//		GLogger *pLogger = augeGetLoggerInstance();
-	//		pLogger->Debug(msg, __FILE__, __LINE__);
-	//		if(!g_stricmp(conent_type,"text/xml"))
-	//		{
-	//			pWebRequest = pWebEngine->ParseRequest(cgi["xml"]);
-	//		}
-	//		else
-	//		{
-	//			pWebRequest = pWebEngine->ParseRequest(cgi);
-	//		}
-	//	}
-	//	
-	//	if(pWebRequest==NULL)
-	//	{
-	//		// wrong service engine
-	//		auge::WebExceptionResponse *pExpResponse = NULL;
-	//		pExpResponse = auge::augeCreateWebExceptionResponse();
-	//		pExpResponse->SetMessage(m_pError->GetLastError());
-	//		pWebResponse = pExpResponse;
-	//		return pWebResponse;
-	//	}
-
-	//	pWebResponse = pWebEngine->Execute(pWebRequest, pUser);
-	//	pWebRequest->Release();
-
-	//	return pWebResponse;
-	//}
-
-	//WebResponse* GServer::Execute(WebRequest* pWebRequest, User* pUser)
-	//{
-	//	WebEngine	*pWebEngine = NULL;
-
-	//	pWebEngine = augeGetWebEngineInstance();
-	//	return pWebEngine->Execute(pWebRequest, pUser);
-	//}
 
 	augeHttpMethodType GServer::GetMethod()
 	{

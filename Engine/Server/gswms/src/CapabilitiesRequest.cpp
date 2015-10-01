@@ -102,7 +102,6 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
 		SetMapName(cgi["mapName"]);
-		//SetServiceName(cgi["servicename"]);
 		return true;
 	}
 

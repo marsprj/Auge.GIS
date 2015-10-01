@@ -32,7 +32,7 @@ namespace auge
 		void		SetVersion(const char* value);
 		void		SetUser(const char* user);
 		void		SetMapName(const char* mapName);
-
+		
 		void		SetHost(const char* host);
 		void		SetRequestMethod(const char* method);
 
@@ -42,7 +42,6 @@ namespace auge
 		std::string m_mime_type;
 		std::string m_host;
 		std::string m_request_method;
-		//std::string m_service_name;
 		std::string m_map_name;
 		std::string m_encoding;
 

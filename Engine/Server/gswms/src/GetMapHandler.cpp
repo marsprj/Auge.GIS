@@ -44,7 +44,16 @@ namespace auge
 
 	WebRequest*	GetMapHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
-		return ParseRequest(cgi);
+		GetMapRequest* pRequest = new GetMapRequest();
+		if(!pRequest->Create(cgi))
+		{
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			pRequest->Release();
+			pRequest = NULL;
+		}
+		pRequest->SetMapName(mapName);
+		return pRequest;
 	}
 
 	WebRequest*	GetMapHandler::ParseRequest(XDocument* pxDoc, const char* mapName)

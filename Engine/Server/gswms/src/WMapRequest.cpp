@@ -145,5 +145,4 @@ namespace auge
 			m_host = host;
 		}
 	}
-
 }

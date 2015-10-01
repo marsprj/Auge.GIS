@@ -25,15 +25,18 @@ libgsims_la_SOURCES=\
 		    CreateServiceHandler.cpp \
 		    CreateServiceRequest.cpp \
 		    CreateServiceResponse.cpp \
-		    DescribeMapHandler.cpp \
+		    RemoveServiceHandler.cpp \
+		    RemoveServiceRequest.cpp \
+		    RemoveServiceResponse.cpp \
+		    DescribeServiceHandler.cpp \
+		    DescribeServiceRequest.cpp \
+		    DescribeServiceResponse.cpp \
+    		    DescribeMapHandler.cpp \
 		    DescribeMapRequest.cpp \
 		    DescribeMapResponse.cpp \
 		    DescribeLayerHandler.cpp \
 		    DescribeLayerRequest.cpp \
 		    DescribeLayerResponse.cpp \
-		    GetServiceHandler.cpp \
-		    GetServiceRequest.cpp \
-		    GetServiceResponse.cpp \
 		    GetStyleHandler.cpp \
 		    GetStyleRequest.cpp \
 		    GetStyleResponse.cpp \
@@ -44,12 +47,6 @@ libgsims_la_SOURCES=\
     		    UnRegisterLayerHandler.cpp \
 		    RemoveMapHandler.cpp \
 		    RemoveMapRequest.cpp \
-		    RemoveServiceHandler.cpp \
-		    RemoveServiceRequest.cpp \
-		    RemoveServiceResponse.cpp \
-		    DescribeServiceHandler.cpp \
-		    DescribeServiceRequest.cpp \
-		    DescribeServiceResponse.cpp \
 		    SetStyleHandler.cpp \
 		    SetStyleRequest.cpp \
 		    AddStyleHandler.cpp \

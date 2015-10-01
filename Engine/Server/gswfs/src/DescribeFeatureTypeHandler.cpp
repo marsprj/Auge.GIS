@@ -53,9 +53,10 @@ namespace auge
 			GLogger* pLogger = augeGetLoggerInstance();
 			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
 			pRequest->Release();
-			return NULL;
+			pRequest = NULL;
 		}
 		pRequest->SetMapName(mapName);
+		pRequest->Info();
 		return pRequest;
 	}
 

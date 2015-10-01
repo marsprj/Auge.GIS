@@ -47,13 +47,18 @@ namespace auge
 
 	WebRequest*	WFSCapabilitiesHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
-		WebRequest* pWebRequest = ParseRequest(cgi);
-		if(pWebRequest!=NULL)
+		WFSCapabilitiesRequest* pRequest = new WFSCapabilitiesRequest();
+		if(!pRequest->Create(cgi))
 		{
-			WFSCapabilitiesRequest* pRequest = static_cast<WFSCapabilitiesRequest*>(pWebRequest);
-			pRequest->SetMapName(mapName);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			pRequest->Release();
+			pRequest = NULL;
 		}
-		return pWebRequest;
+		pRequest->SetHost(getenv("HTTP_HOST"));
+		pRequest->SetRequestMethod(getenv("REQUEST_METHOD"));
+		pRequest->SetMapName(mapName);
+		return pRequest;
 	}
 
 	//WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi, WebContext* pWebContext/*=NULL*/, Map* pMap/*=NULL*/)

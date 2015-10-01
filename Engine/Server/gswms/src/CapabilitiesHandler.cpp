@@ -36,7 +36,7 @@ namespace auge
 		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
 		if(!pRequest->Create(cgi))
 		{ 
-			GLogger* pLogger = augeGetLoggerInstance();
+			GLogger* pLogger = augeGetLoggerInstance(); 
 			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
 			pRequest->Release();
 			pRequest = NULL;
@@ -48,13 +48,18 @@ namespace auge
 
 	WebRequest*	CapabilitiesHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
-		WebRequest* pWebRequest = ParseRequest(cgi);
-		if(pWebRequest!=NULL)
+		CapabilitiesRequest* pRequest = new CapabilitiesRequest();
+		if(!pRequest->Create(cgi))
 		{
-			CapabilitiesRequest* pWRequest = static_cast<CapabilitiesRequest*>(pWebRequest);
-			pWRequest->SetMapName(mapName);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
+			pRequest->Release();
+			pRequest = NULL;
 		}
-		return pWebRequest;
+		pRequest->SetHost(getenv("HTTP_HOST"));
+		pRequest->SetRequestMethod(getenv("REQUEST_METHOD"));
+		pRequest->SetMapName(mapName);
+		return pRequest;
 	}
 
 	WebRequest*	CapabilitiesHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
