@@ -17,7 +17,7 @@ namespace auge
 	bool RemoveServiceRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetName(cgi["name"]);
+		SetName(cgi["name"]);		
 		return true;
 	}
 
@@ -69,10 +69,6 @@ namespace auge
 		{
 			m_name.clear();
 		}
-		else if(strlen(name)==0)
-		{
-			m_name.clear();
-		}
 		else
 		{
 			m_name = name;
@@ -81,7 +77,6 @@ namespace auge
 
 	const char*	RemoveServiceRequest::GetName()
 	{
-		return m_name.c_str();
+		return m_name.empty() ? NULL : m_name.c_str();
 	}
-
 }

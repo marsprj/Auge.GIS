@@ -8,23 +8,25 @@ namespace auge
 {
 	class Map;
 	class Service;
-	class GetServiceRequest;
+	class DescribeServiceRequest;
 	class XElement;
 
-	class GetServiceResponse : public WebResponse
+	class DescribeServiceResponse : public WebResponse
 	{
 	public:
-		GetServiceResponse(GetServiceRequest* pRequest);
-		virtual ~GetServiceResponse();
+		DescribeServiceResponse(DescribeServiceRequest* pRequest);
+		virtual ~DescribeServiceResponse();
 	public:
 		virtual	RESULTCODE		Write(WebWriter* pWriter);
-		
+		void	SetUser(User* pUser);
+
 	private:
 		bool	AddServiceNode(XElement* pxParent, Service* pService);
 		bool	AddMapNode(XElement* pxService, Map* pMap);
-
+		
 	private:
-		GetServiceRequest *m_pRequest;	
+		User*	m_pUser;
+		DescribeServiceRequest *m_pRequest;	
 	};
 }
 

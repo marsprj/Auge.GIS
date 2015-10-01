@@ -24,12 +24,14 @@ namespace auge
 		virtual const char*		GetEncoding();
 
 		virtual const char*		GetName();
+		virtual const char*		GetMapName();
 		virtual const char*		GetURI();
 	public:
 		bool		Create(rude::CGI& cgi);
 
 		void		SetVersion(const char* value);
 		void		SetName(const char* name);
+		void		SetMapName(const char* mapName);
 		void		SetURI(const char* uri);
 		//bool		Create(GPropertySet& props);
 
@@ -37,6 +39,7 @@ namespace auge
 		std::string m_version;
 		std::string m_mime_type;
 		std::string m_name;
+		std::string m_map_name;
 		std::string m_uri;
 		std::string m_encoding;
 	};
@@ -48,9 +51,9 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-user=user1&service=ims&version=1.0.0&request=CreateService&name=world&uri=http://www.radi.ac.cn/world
-http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=CreateService&name=world&uri=http://www.radi.ac.cn/world
-http://192.168.111.160:8088/ows/user1/mgr?service=ims&version=1.0.0&request=CreateService&name=world&uri=http://www.radi.ac.cn/world
+user=user1&service=ims&version=1.0.0&request=CreateService&name=map1&mapName=world&&uri=http://www.radi.ac.cn/world
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=CreateService&name=world&mapName=world&uri=http://www.radi.ac.cn/world
+http://192.168.111.160:8088/ows/user1/mgr?service=ims&version=1.0.0&request=CreateService&name=world&mapName=world&uri=http://www.radi.ac.cn/world
 
 [ HTTP Post ]
 -------------------------------------------------------------------------

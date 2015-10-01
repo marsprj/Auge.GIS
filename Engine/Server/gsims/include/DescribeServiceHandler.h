@@ -10,11 +10,11 @@
 
 namespace auge
 {
-	class GetServiceHandler : public WebHandler
+	class DescribeServiceHandler : public WebHandler
 	{
 	public:
-		GetServiceHandler();
-		virtual ~GetServiceHandler();
+		DescribeServiceHandler();
+		virtual ~DescribeServiceHandler();
 	public:
 		virtual const char*		GetName();
 		virtual const char*		GetDescription();

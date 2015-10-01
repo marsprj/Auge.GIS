@@ -206,11 +206,11 @@ namespace auge
 		g_sprintf(msg, "[MapLabel]:%ld ms", te-ts);
 		pLogger->Debug(msg, __FILE__, __LINE__);
 
-		char img_sfix[AUGE_EXT_MAX] = {0};
-		char img_name[AUGE_NAME_MAX] = {0};
+		char img_sfix[AUGE_EXT_MAX] = {0};		
 		char img_path[AUGE_PATH_MAX] = {0};
+		const char* img_name = pMap->GetUUID();
 		auge_get_image_suffix(pRequest->GetMimeType(), img_sfix, AUGE_EXT_MAX);
-		auge_generate_uuid(img_name, AUGE_NAME_MAX);
+		//auge_generate_uuid(img_name, AUGE_NAME_MAX);
 		const char* cache_path = pWebContext->GetCacheMapPath();
 		auge_make_path(img_path, NULL, cache_path, img_name, img_sfix);
 

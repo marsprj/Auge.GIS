@@ -30,6 +30,7 @@ namespace auge
 
 		// Cluster 
 		virtual KMeansProcessor*			CreateKMeansProcessor();
+		virtual DBScanProcessor*			CreateDBScanProcessor();
 
 		// Grid
 		virtual GridPointGenerator*			CreateGridPointGenerator();

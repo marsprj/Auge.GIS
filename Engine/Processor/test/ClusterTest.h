@@ -7,7 +7,8 @@
 class ClusterTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(ClusterTest);
-	CPPUNIT_TEST(KMeanTest);
+	//CPPUNIT_TEST(KMeanTest);
+	CPPUNIT_TEST(DBScanTest);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -15,6 +16,7 @@ public:
 
 private:
 	void	KMeanTest();
+	void	DBScanTest();
 
 private:
 	auge::GConnection	*m_pConnection;

@@ -1,28 +1,36 @@
-#include "GetServiceRequest.h"
-#include "GetServiceResponse.h"
+#include "DescribeServiceRequest.h"
+#include "DescribeServiceResponse.h"
 #include "AugeService.h"
 #include "AugeXML.h"
 #include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
-	GetServiceResponse::GetServiceResponse(GetServiceRequest* pRequest)
+	DescribeServiceResponse::DescribeServiceResponse(DescribeServiceRequest* pRequest)
 	{
+		m_pUser = NULL;
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
 	}
 
-	GetServiceResponse::~GetServiceResponse()
+	DescribeServiceResponse::~DescribeServiceResponse()
 	{
 	}
 
-	RESULTCODE GetServiceResponse::Write(WebWriter* pWriter)
+	void DescribeServiceResponse::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
+	}
+
+	RESULTCODE DescribeServiceResponse::Write(WebWriter* pWriter)
 	{
 		if(pWriter==NULL)
 		{
 			return AG_FAILURE;
 		}
 
+		g_uint user_id = m_pUser->GetID();
 		GLogger* pLogger = augeGetLoggerInstance();
 
 		Service* pService = NULL;
@@ -39,7 +47,7 @@ namespace auge
 		const char* name = m_pRequest->GetName();
 		if(name==NULL)
 		{
-			pServices = pServiceManager->GetServices();
+			pServices = pServiceManager->GetServices(user_id);
 			pServices->Reset();
 
 			while((pService=pServices->Next())!=NULL)
@@ -54,7 +62,7 @@ namespace auge
 		}
 		else
 		{
-			pService = pServiceManager->GetService(name);
+			pService = pServiceManager->GetService(user_id, name);
 			if(pService!=NULL)
 			{
 				/*name = pService->GetName();
@@ -80,7 +88,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	bool GetServiceResponse::AddServiceNode(XElement* pxParent, Service* pService)
+	bool DescribeServiceResponse::AddServiceNode(XElement* pxParent, Service* pService)
 	{
 		const char* name = pService->GetName();
 		const char* uri  = pService->GetURI();
@@ -93,7 +101,7 @@ namespace auge
 		return true;
 	}
 
-	bool GetServiceResponse::AddMapNode(XElement* pxService, Map* pMap)
+	bool DescribeServiceResponse::AddMapNode(XElement* pxService, Map* pMap)
 	{
 		XElement* pxMap = pxService->AddChild("Map", NULL);
 		if(pMap!=NULL)

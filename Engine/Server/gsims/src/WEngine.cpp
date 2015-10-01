@@ -2,7 +2,7 @@
 #include "CapabilitiesHandler.h"
 #include "CreateServiceHandler.h"
 #include "RemoveServiceHandler.h"
-#include "GetServiceHandler.h"
+#include "DescribeServiceHandler.h"
 //#include "RegisterHandlerHandler.h"
 
 //#include "RegisterDataSourceHandler.h"
@@ -56,7 +56,7 @@ namespace auge
 		m_handlers.push_back(new CapabilitiesHandler());
 		m_handlers.push_back(new CreateServiceHandler());
 		m_handlers.push_back(new RemoveServiceHandler());
-		m_handlers.push_back(new GetServiceHandler());
+		m_handlers.push_back(new DescribeServiceHandler());
 
 		//m_handlers.push_back(new RegisterDataSourceHandler());
 		//m_handlers.push_back(new UnRegisterDataSourceHandler());

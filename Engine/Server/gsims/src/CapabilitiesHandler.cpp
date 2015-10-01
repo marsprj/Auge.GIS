@@ -58,11 +58,17 @@ namespace auge
 
 	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
-		return new CapabilitiesResponse(static_cast<CapabilitiesRequest*>(pWebRequest));
+		CapabilitiesResponse * pResponse = NULL;
+		pResponse = new CapabilitiesResponse(static_cast<CapabilitiesRequest*>(pWebRequest));
+		pResponse->SetUser(pUser);
+		return pResponse;
 	}
 
 	WebResponse* CapabilitiesHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		return new CapabilitiesResponse(static_cast<CapabilitiesRequest*>(pWebRequest));
+		CapabilitiesResponse * pResponse = NULL;
+		pResponse = new CapabilitiesResponse(static_cast<CapabilitiesRequest*>(pWebRequest));
+		pResponse->SetUser(pUser);
+		return pResponse;
 	}
 }

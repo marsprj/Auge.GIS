@@ -47,6 +47,9 @@ libgsims_la_SOURCES=\
 		    RemoveServiceHandler.cpp \
 		    RemoveServiceRequest.cpp \
 		    RemoveServiceResponse.cpp \
+		    DescribeServiceHandler.cpp \
+		    DescribeServiceRequest.cpp \
+		    DescribeServiceResponse.cpp \
 		    SetStyleHandler.cpp \
 		    SetStyleRequest.cpp \
 		    AddStyleHandler.cpp \

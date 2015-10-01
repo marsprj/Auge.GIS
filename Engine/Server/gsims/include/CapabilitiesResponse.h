@@ -6,6 +6,7 @@
 
 namespace auge
 {
+	class User;
 	class CapabilitiesRequest;
 
 	class CapabilitiesResponse : public WebResponse
@@ -18,8 +19,10 @@ namespace auge
 
 	public:
 		void	SetPath(const char* path);
+		void	SetUser(User* pUser);
 
 	private:
+		User*	m_pUser;
 		CapabilitiesRequest*	m_pRequest;
 		std::string				m_path;
 	};

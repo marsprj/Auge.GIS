@@ -23,14 +23,14 @@ namespace auge
 		virtual const char*		GetMimeType();
 		virtual const char*		GetEncoding();
 		
-
 		virtual const char*		GetName();
+		
 	public:
 		bool		Create(rude::CGI& cgi);
 
 		void		SetVersion(const char* value);
 		void		SetName(const char* name);
-
+		
 	private:
 		std::string m_version;
 		std::string m_mime_type;

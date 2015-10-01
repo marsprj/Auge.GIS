@@ -2,6 +2,7 @@
 #include "RemoveServiceRequest.h"
 #include "RemoveServiceResponse.h"
 #include "AugeService.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -56,9 +57,10 @@ namespace auge
 		ServiceManager* pServiceManager = NULL;		
 		RemoveServiceRequest* pRequest = static_cast<RemoveServiceRequest*>(pWebRequest);
 
+		g_uint user_id = pUser->GetID();
 		const char* name = pRequest->GetName();
 		pServiceManager = augeGetServiceManagerInstance();
-		pService = pServiceManager->GetService(name);
+		pService = pServiceManager->GetService(user_id, name);
 		if(pService==NULL)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -68,7 +70,7 @@ namespace auge
 			return pExpResponse;
 		}
 
-		RESULTCODE rc = pServiceManager->Unregister(name);
+		RESULTCODE rc = pServiceManager->Unregister(user_id, name);
 		if(rc!=AG_SUCCESS)
 		{
 			GError* pError = augeGetErrorInstance();

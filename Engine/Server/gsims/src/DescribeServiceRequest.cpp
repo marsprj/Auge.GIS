@@ -1,47 +1,47 @@
-#include "GetServiceRequest.h"
+#include "DescribeServiceRequest.h"
 
 namespace auge
 {
-	GetServiceRequest::GetServiceRequest()
+	DescribeServiceRequest::DescribeServiceRequest()
 	{
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
 		m_encoding = AUGE_DEFAULT_ENCODING;
 	}
 
-	GetServiceRequest::~GetServiceRequest()
+	DescribeServiceRequest::~DescribeServiceRequest()
 	{
 
 	}
 
-	bool GetServiceRequest::Create(rude::CGI& cgi)
+	bool DescribeServiceRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
 		SetName(cgi["name"]);
 		return true;
 	}
 
-	const char*	GetServiceRequest::GetEngine()
+	const char*	DescribeServiceRequest::GetEngine()
 	{
 		return "ims";
 	}
 
-	const char*	GetServiceRequest::GetVersion()
+	const char*	DescribeServiceRequest::GetVersion()
 	{
 		return m_version.c_str();
 	}
 
-	const char*	GetServiceRequest::GetRequest()
+	const char*	DescribeServiceRequest::GetRequest()
 	{
-		return "GetService";
+		return "DescribeService";
 	}
 
-	const char* GetServiceRequest::GetEncoding()
+	const char* DescribeServiceRequest::GetEncoding()
 	{
 		return m_encoding.c_str();
 	}
 
-	void GetServiceRequest::SetVersion(const char* value)
+	void DescribeServiceRequest::SetVersion(const char* value)
 	{
 		if(value==NULL)
 		{
@@ -50,12 +50,12 @@ namespace auge
 		m_version = value;
 	}
 
-	const char*	GetServiceRequest::GetMimeType()
+	const char*	DescribeServiceRequest::GetMimeType()
 	{
 		return m_mime_type.c_str();
 	}
 
-	//bool GetServiceRequest::Create(GPropertySet& props)
+	//bool DescribeServiceRequest::Create(GPropertySet& props)
 	//{
 	//	const char* val = NULL;
 	//	val = props.GetValue("version");
@@ -63,7 +63,7 @@ namespace auge
 	//	return true;
 	//}
 
-	void GetServiceRequest::SetName(const char* name)
+	void DescribeServiceRequest::SetName(const char* name)
 	{
 		if(name==NULL)
 		{
@@ -80,7 +80,7 @@ namespace auge
 		
 	}
 
-	const char*	GetServiceRequest::GetName()
+	const char*	DescribeServiceRequest::GetName()
 	{
 		if(m_name.empty())
 		{

@@ -18,6 +18,7 @@ namespace auge
 	{
 		SetVersion(cgi["version"]);
 		SetName(cgi["name"]);
+		SetMapName(cgi["mapName"]);
 		SetURI(cgi["uri"]);
 		return true;
 	}
@@ -79,6 +80,23 @@ namespace auge
 	const char*	CreateServiceRequest::GetName()
 	{
 		return m_name.c_str();
+	}
+
+	void CreateServiceRequest::SetMapName(const char* mapName)
+	{
+		if(mapName==NULL)
+		{
+			m_map_name.clear();
+		}
+		else
+		{
+			m_map_name = mapName;
+		}
+	}
+
+	const char* CreateServiceRequest::GetMapName()
+	{
+		return m_map_name.empty() ? NULL : m_map_name.c_str();
 	}
 
 	void CreateServiceRequest::SetURI(const char* uri)

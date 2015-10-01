@@ -99,6 +99,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\DescribeMapHandler.cpp" />
     <ClCompile Include="..\src\DescribeMapRequest.cpp" />
     <ClCompile Include="..\src\DescribeMapResponse.cpp" />
+    <ClCompile Include="..\src\DescribeServiceHandler.cpp" />
+    <ClCompile Include="..\src\DescribeServiceRequest.cpp" />
+    <ClCompile Include="..\src\DescribeServiceResponse.cpp" />
     <ClCompile Include="..\src\GetColorMapHandler.cpp" />
     <ClCompile Include="..\src\GetColorMapRequest.cpp" />
     <ClCompile Include="..\src\GetColorMapResponse.cpp" />
@@ -108,9 +111,6 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetMapScaleHandler.cpp" />
     <ClCompile Include="..\src\GetMapScaleRequest.cpp" />
     <ClCompile Include="..\src\GetMapScaleResponse.cpp" />
-    <ClCompile Include="..\src\GetServiceHandler.cpp" />
-    <ClCompile Include="..\src\GetServiceRequest.cpp" />
-    <ClCompile Include="..\src\GetServiceResponse.cpp" />
     <ClCompile Include="..\src\GetStyleHandler.cpp" />
     <ClCompile Include="..\src\GetStyleRequest.cpp" />
     <ClCompile Include="..\src\GetStyleResponse.cpp" />
@@ -161,6 +161,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\DescribeMapHandler.h" />
     <ClInclude Include="..\include\DescribeMapRequest.h" />
     <ClInclude Include="..\include\DescribeMapResponse.h" />
+    <ClInclude Include="..\include\DescribeServiceHandler.h" />
+    <ClInclude Include="..\include\DescribeServiceRequest.h" />
+    <ClInclude Include="..\include\DescribeServiceResponse.h" />
     <ClInclude Include="..\include\GetColorMapHandler.h" />
     <ClInclude Include="..\include\GetColorMapRequest.h" />
     <ClInclude Include="..\include\GetColorMapResponse.h" />
@@ -170,9 +173,6 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetMapScaleHandler.h" />
     <ClInclude Include="..\include\GetMapScaleRequest.h" />
     <ClInclude Include="..\include\GetMapScaleResponse.h" />
-    <ClInclude Include="..\include\GetServiceHandler.h" />
-    <ClInclude Include="..\include\GetServiceRequest.h" />
-    <ClInclude Include="..\include\GetServiceResponse.h" />
     <ClInclude Include="..\include\GetStyleHandler.h" />
     <ClInclude Include="..\include\GetStyleRequest.h" />
     <ClInclude Include="..\include\GetStyleResponse.h" />

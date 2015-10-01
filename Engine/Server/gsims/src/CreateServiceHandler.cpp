@@ -2,6 +2,8 @@
 #include "CreateServiceRequest.h"
 #include "CreateServiceResponse.h"
 #include "AugeService.h"
+#include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -55,11 +57,12 @@ namespace auge
 		Service* pService = NULL;
 		CreateServiceRequest* pRequest = static_cast<CreateServiceRequest*>(pWebRequest);
 
+		g_uint user_id = pUser->GetID();
 		const char* name = pRequest->GetName();
+		const char* mapName = pRequest->GetMapName();
 		const char* uri	 = pRequest->GetURI();
 		pServiceManager = augeGetServiceManagerInstance();
-		pService = pServiceManager->GetService(name);
-		if(pService!=NULL)
+		if(pServiceManager->Has(user_id, name))
 		{
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "%s already exists.", name);
@@ -68,7 +71,7 @@ namespace auge
 			return pExpResponse;
 		}
 
-		RESULTCODE rc = pServiceManager->Register(name,uri);
+		RESULTCODE rc = pServiceManager->Register(user_id,name,mapName,uri);
 		if(rc!=AG_SUCCESS)
 		{
 			GError* pError = augeGetErrorInstance();
@@ -76,7 +79,7 @@ namespace auge
 			pExpResponse->SetMessage(pError->GetLastError());
 			return pExpResponse;
 		}
-				
+
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest("CreateService");
 		return pSusResponse;

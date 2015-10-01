@@ -6,6 +6,7 @@
 #include "CsvImportProcessorImpl.h"
 
 #include "KmeanProcessorImpl.h"
+#include "DBScanProcessorImpl.h"
 #include "FeatureProjectProcessorImpl.h"
 #include "RandomPointsGeneratorImpl.h"
 #include "RandomPointsInPolygonGeneratorImpl.h"
@@ -119,9 +120,14 @@ namespace auge
 		return (new CsvImportProcessorImpl());
 	}
 
-	KMeansProcessor*	GProcessorFactoryImpl::CreateKMeansProcessor()
+	KMeansProcessor* GProcessorFactoryImpl::CreateKMeansProcessor()
 	{
 		return (new KMeansProcessorImpl());
+	}
+
+	DBScanProcessor* GProcessorFactoryImpl::CreateDBScanProcessor()
+	{
+		return (new DBScanProcessorImpl());
 	}
 
 	FeatureProjectProcessor* GProcessorFactoryImpl::CreateFeatureProjectProcessor()

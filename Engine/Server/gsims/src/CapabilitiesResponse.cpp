@@ -4,6 +4,7 @@
 #include "AugeService.h"
 #include "AugeCore.h"
 #include "AugeXML.h"
+#include "AugeUser.h"
 #include "WEngine.h"
 
 namespace auge
@@ -17,6 +18,11 @@ namespace auge
 	CapabilitiesResponse::~CapabilitiesResponse()
 	{
 
+	}
+
+	void CapabilitiesResponse::SetUser(User* pUser)
+	{
+		m_pUser = pUser;
 	}
 
 	RESULTCODE CapabilitiesResponse::Write(WebWriter* pWriter)
@@ -86,7 +92,7 @@ namespace auge
 		//pServices = pServiceManager->GetServices();
 		//pServices->Reset();
 		//pServices->Release();
-		pServices = pServiceManager->GetServices();
+		pServices = pServiceManager->GetServices(m_pUser->GetID());
 		pServices->Reset();
 
 		const char* name = NULL;

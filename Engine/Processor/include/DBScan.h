@@ -6,14 +6,39 @@
 
 namespace auge
 {
-	class DBScan
+	typedef struct dbscan_point_t
 	{
+		float	x;
+		float	y;
+		g_int	id;
+		g_byte	category;
+		g_byte	visited;
+		g_byte	included;
+		g_byte	noise;		
+	}dbscan_point_t;
+	
+	class DBScan
+	{	
 	public:
 		DBScan();
 		virtual ~DBScan();
 
 	public:
-		bool			Execute();
+		bool	SetPoints(g_uint count);
+		bool	SetPoint(g_uint i, double x, double y);
+		g_uint	GetPointCount();
+
+		bool	Execute(float eps, g_uint min_pts);
+
+	private:
+		g_uint	FindNeighbours(dbscan_point_t* ptr);
+
+	private:
+		float			m_eps;
+		g_uint			m_min_pts;
+
+		g_uint			m_point_count;
+		dbscan_point_t*	m_points;
 	};
 }
 

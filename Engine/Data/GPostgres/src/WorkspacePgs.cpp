@@ -133,8 +133,17 @@ namespace auge
 
 	FeatureClass* WorkspacePgs::OpenFeatureClass(const char* name)
 	{
-		if((name==NULL)||(!m_pgConnection_r.IsOpen()))
+		if(name==NULL)
 		{
+			return NULL;
+		}
+		if(!m_pgConnection_r.IsOpen())
+		{
+			const char* msg = "Cannot connect to database";
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
 			return NULL;
 		}
 

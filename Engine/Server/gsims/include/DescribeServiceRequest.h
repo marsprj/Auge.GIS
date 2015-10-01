@@ -10,11 +10,11 @@
 
 namespace auge
 {
-	class GetServiceRequest : public WebRequest
+	class DescribeServiceRequest : public WebRequest
 	{
 	public:
-		GetServiceRequest();
-		virtual ~GetServiceRequest();
+		DescribeServiceRequest();
+		virtual ~DescribeServiceRequest();
 
 	public:
 		virtual const char*		GetEngine();
@@ -44,6 +44,7 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-service=ims&version=1.0.0&request=GetService&name=world
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=DescribeService&name=world
+
 
 ************************************************************************/

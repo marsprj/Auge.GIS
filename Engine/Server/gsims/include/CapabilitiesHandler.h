@@ -29,6 +29,7 @@ namespace auge
 		//virtual WebRequest*		ParseRequest(XDocument* pxDoc, WebContext* pWebContext=NULL, Map* pMap=NULL);
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap);
+
 	};
 }
 

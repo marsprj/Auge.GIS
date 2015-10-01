@@ -83,12 +83,18 @@ namespace auge
 		return m_services.size();
 	}
 	
-	Service* ServiceManagerImpl::GetService(const char* szName)
+	Service* ServiceManagerImpl::GetService(g_uint user_id, const char* szName)
 	{
 		if(szName==NULL)
 		{
 			return NULL;
 		}
+
+		if(!Has(user_id, szName))
+		{
+			return NULL;
+		}
+
 		Service* pService = NULL;
 		std::vector<Service*>::iterator iter;
 		for(iter=m_services.begin(); iter!=m_services.end(); iter++)
@@ -99,7 +105,7 @@ namespace auge
 				return pService;
 			}
 		}
-		pService = LoadService(szName);
+		pService = LoadService(user_id,szName);
 		if(pService!=NULL)
 		{
 			m_services.push_back(pService);
@@ -107,7 +113,7 @@ namespace auge
 		return pService;
 	}
 
-	g_int ServiceManagerImpl::GetServiceID(const char* szName)
+	g_int ServiceManagerImpl::GetServiceID(g_uint user_id, const char* szName)
 	{
 		if(szName==NULL||m_pConnection==NULL)
 		{
@@ -119,7 +125,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX] = {0};
 		//g_sprintf(sql, "select s.gid, m.m_name, s.version, s.state from g_service s, g_map m where s.name='%s' and s.m_id=m.gid", szName);
-		g_sprintf(sql, "select gid from g_service where s_name='%s'", szName);
+		g_sprintf(sql, "select gid from g_service where s_name='%s' and user_id=%d", szName, user_id);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -146,7 +152,7 @@ namespace auge
 		return s_id;
 	}
 
-	EnumService* ServiceManagerImpl::GetServices()
+	EnumService* ServiceManagerImpl::GetServices(g_uint user_id)
 	{
 		EnumServiceImpl* pServices = new EnumServiceImpl();
 
@@ -155,7 +161,9 @@ namespace auge
 			g_uint count = 0;
 			const char* name = NULL;
 			GResultSet* pResult = NULL;
-			const char* sql = "select s_name from g_service order by gid";
+			char sql[AUGE_SQL_MAX];
+			memset(sql, 0, AUGE_SQL_MAX);
+			g_snprintf(sql, AUGE_SQL_MAX, "select s_name from g_service where user_id=%d order by gid", user_id);
 
 			pResult = m_pConnection->ExecuteQuery(sql);
 			
@@ -166,7 +174,7 @@ namespace auge
 				name = pResult->GetString(i,0);
 				if(name!=NULL)
 				{
-					pService = GetService(name);
+					pService = GetService(user_id, name);
 					if(pService!=NULL)
 					{
 						pServices->Add(pService);
@@ -174,13 +182,12 @@ namespace auge
 				}
 			}
 
-
 			AUGE_SAFE_RELEASE(pResult);
 		}
 		return pServices;
 	}
 
-	Service* ServiceManagerImpl::LoadService(const char* szName)
+	Service* ServiceManagerImpl::LoadService(g_uint user_id, const char* szName)
 	{
 		if(szName==NULL||m_pConnection==NULL)
 		{
@@ -192,7 +199,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX] = {0};
 		//g_sprintf(sql, "select s.gid, m.m_name, s.version, s.state from g_service s, g_map m where s.name='%s' and s.m_id=m.gid", szName);
-		g_sprintf(sql, "select gid, m_id, s_uri, version, state from g_service where s_name='%s'", szName);
+		g_sprintf(sql, "select gid, m_id, s_uri, version, state from g_service where s_name='%s' and user_id=%d", szName, user_id);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -246,7 +253,7 @@ namespace auge
 		return pService;
 	}
 
-	bool ServiceManagerImpl::Has(const char* szName)
+	bool ServiceManagerImpl::Has(g_uint user_id, const char* szName)
 	{
 		if(szName==NULL)
 		{
@@ -254,7 +261,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_sprintf(sql, "select count(*) from g_service where s_name='%s'", szName);
+		g_sprintf(sql, "select count(*) from g_service where s_name='%s' and user_id=%d", szName, user_id);
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -268,7 +275,7 @@ namespace auge
 		return count;
 	}
 
-	RESULTCODE ServiceManagerImpl::Register(const char* szName, const char* szURI)
+	RESULTCODE ServiceManagerImpl::Register(g_uint user_id, const char* szName, const char* szURI)
 	{
 		if(m_pConnection==NULL||szName==NULL||szURI==NULL)
 		{
@@ -276,11 +283,45 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_sprintf(sql, "insert into g_service (s_name, s_uri) values('%s','%s')", szName, szURI);
-		return (m_pConnection->ExecuteSQL(sql));
+		g_sprintf(sql, "insert into g_service (user_id, s_name, s_uri) values(%d,'%s','%s')", user_id, szName, szURI);
+		
+		return m_pConnection->ExecuteSQL(sql);
 	}
 
-	RESULTCODE ServiceManagerImpl::Unregister(const char* szName)
+	RESULTCODE ServiceManagerImpl::Register(g_uint user_id, const char* szName, const char* mapName, const char* szURI)
+	{
+		if(m_pConnection==NULL||szName==NULL||mapName==NULL||szURI==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		g_int map_id = pCartoManager->GetMapID(mapName);
+		if(map_id<0)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_snprintf(msg, AUGE_MSG_MAX, "Fail to get map [%s]", mapName);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
+			return AG_FAILURE;
+		}
+
+		char sql[AUGE_SQL_MAX] = {0};
+		g_sprintf(sql, "insert into g_service (user_id, s_name, s_uri) values(%d,'%s','%s') returning gid", user_id, szName, szURI);
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		g_int service_id = pResult->GetInt(0,0);
+		pResult->Release();
+
+		return RegisterMap(service_id, map_id);
+	}
+
+	RESULTCODE ServiceManagerImpl::Unregister(g_uint user_id, const char* szName)
 	{
 		if(m_pConnection==NULL||szName==NULL)
 		{
@@ -291,7 +332,7 @@ namespace auge
 		g_sprintf(sql, "delete from g_service where s_name='%s'", szName); 
 		RESULTCODE rc = m_pConnection->ExecuteSQL(sql);
 
-		Remove(szName);
+		Remove(user_id, szName);
 
 		return rc;
 	}
@@ -327,7 +368,7 @@ namespace auge
 		return (m_pConnection->ExecuteSQL(sql)==AG_SUCCESS);
 	}
 
-	RESULTCODE ServiceManagerImpl::Remove(const char* szName)
+	RESULTCODE ServiceManagerImpl::Remove(g_uint user_id, const char* szName)
 	{
 		if(szName==NULL)
 		{

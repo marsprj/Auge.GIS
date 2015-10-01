@@ -974,6 +974,8 @@ namespace auge
 		DBScanProcessor(){}
 		virtual ~DBScanProcessor(){}
 	public:
+		virtual void		SetEsplon(float esplon) = 0;
+		virtual void		SetMinPoints(g_uint minpts) = 0;
 		virtual	void		SetInputDataSource(const char* sourceName) = 0;
 		virtual	void		SetInputFeatureClass(const char* className) = 0;
 
@@ -1012,6 +1014,7 @@ namespace auge
 
 		// Cluster 
 		virtual KMeansProcessor*			CreateKMeansProcessor() = 0;
+		virtual DBScanProcessor*			CreateDBScanProcessor() = 0;
 
 		// Grid
 		virtual GridPointGenerator*			CreateGridPointGenerator() = 0;

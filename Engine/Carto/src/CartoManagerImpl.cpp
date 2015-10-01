@@ -117,6 +117,7 @@ namespace auge
 		double v_ymin = pResult->GetDouble(row,11);
 		double v_xmax = pResult->GetDouble(row,12);
 		double v_ymax = pResult->GetDouble(row,13);
+		const char* uuid = pResult->GetString(row, 14);
 
 		MapImpl* pMap = new MapImpl();
 		pMap->SetID(mid);
@@ -127,6 +128,7 @@ namespace auge
 		pMap->SetViewer(v_xmin, v_ymin,v_xmax,v_ymax);
 		pMap->SetSRID(srid);
 		pMap->SetThumbnail(thumbnail);
+		pMap->SetUUID(uuid);
 		return pMap;
 	}
 
@@ -138,7 +140,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy from g_map where gid=%d", mid);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy,m_uuid from g_map where gid=%d", mid);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -1862,24 +1864,6 @@ namespace auge
 		return pColorMap;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	//////////////////////////////////////////////////////////////////////////
 	// Map Operation With User Begin
 	//////////////////////////////////////////////////////////////////////////
@@ -1909,7 +1893,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy from g_map where m_name='%s' and user_id=%d", mapName, user_id);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy,m_uuid from g_map where m_name='%s' and user_id=%d", mapName, user_id);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -2057,8 +2041,13 @@ namespace auge
 		{
 			return NULL;
 		}
+
+		char uuid[AUGE_PATH_MAX];
+		memset(uuid, 0, AUGE_PATH_MAX);
+		auge_generate_uuid(uuid, AUGE_PATH_MAX);
+
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_map (m_name, user_id) values('%s',%d) returning gid", name, user_id);
+		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_map (m_name, user_id,m_uuid) values('%s',%d,'%s') returning gid", name, user_id, uuid);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -2083,8 +2072,12 @@ namespace auge
 		{
 			return NULL;
 		}
+		char uuid[AUGE_PATH_MAX];
+		memset(uuid, 0, AUGE_PATH_MAX);
+		auge_generate_uuid(uuid, AUGE_PATH_MAX);
+
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_map (m_name, minx, miny, maxx, maxy,srid,user_id) values('%s',%f,%f,%f,%f,%d,%d) returning gid", name, xmin, ymin, xmax, ymax,srid,user_id);
+		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_map (m_name, minx, miny, maxx, maxy,srid,user_id,m_uuid) values('%s',%f,%f,%f,%f,%d,%d,'%s') returning gid", name, xmin, ymin, xmax, ymax,srid,user_id, uuid);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);

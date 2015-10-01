@@ -69,3 +69,28 @@ void ClusterTest::KMeanTest()
 	DWORD te = GetTickCount();
 	printf("[时间]:%d毫秒\n", te-ts);
 }
+
+void ClusterTest::DBScanTest()
+{
+	DWORD ts = GetTickCount();
+
+	auge::DBScanProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateDBScanProcessor();
+
+	pProcessor->SetInputDataSource("test");
+	pProcessor->SetInputFeatureClass("cities");
+
+	pProcessor->SetOutputDataSource("test");
+	pProcessor->SetOutputFeatureClass("cities_cluster");
+
+	pProcessor->SetEsplon(5.0f);
+	pProcessor->SetMinPoints(5);
+
+	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}

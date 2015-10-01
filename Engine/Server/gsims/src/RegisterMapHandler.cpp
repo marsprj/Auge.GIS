@@ -3,6 +3,7 @@
 #include "AugeService.h"
 #include "AugeData.h"
 #include "AugeCarto.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -93,8 +94,9 @@ namespace auge
 			return pExpResponse;
 		}
 
+		g_uint user_id = pUser->GetID();
 		ServiceManager* pServiceManager = augeGetServiceManagerInstance();
-		int serviceID = pServiceManager->GetServiceID(serviceName);
+		int serviceID = pServiceManager->GetServiceID(user_id, serviceName);
 		if(serviceID<0)
 		{
 			char msg[AUGE_MSG_MAX];

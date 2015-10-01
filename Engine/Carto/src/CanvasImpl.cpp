@@ -103,6 +103,10 @@ namespace auge
 
 	void CanvasImpl::DrawLayer(Layer* pLayer, Style* pStyle)
 	{
+		if(pStyle==NULL)
+		{
+			return;
+		}
 		augeLayerType type = pLayer->GetType();
 		switch(type)
 		{
