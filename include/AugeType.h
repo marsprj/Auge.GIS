@@ -43,8 +43,8 @@ typedef unsigned long int  g_uint64;
 #define RAD2DEG(rad)		(rad*180.0/PI)
 
 #ifndef FLOAT_MIN
-#define FLOAT_MIN			(-3.402823E+38f)
-#define FLOAT_MAX           (+3.402823E+38f)
+#define AUGE_FLOAT_MIN			(-3.402823E+38f)
+#define AUGE_FLOAT_MAX           (+3.402823E+38f)
 #endif
 
 #define	AUGE_BYTE_MAX		255

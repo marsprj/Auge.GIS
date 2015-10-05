@@ -199,7 +199,8 @@ namespace auge
 	{
 		Raster* poutRaster = NULL;
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
-		poutRaster = pRasterFactory->CreateRaster("", augePixelDouble, 1, pinRaster->GetExtent(), pinRaster->GetWidth(), pinRaster->GetHeight(), pinRaster->GetSpatialReference());
+		//poutRaster = pRasterFactory->CreateRaster("", augePixelDouble, 1, pinRaster->GetExtent(), pinRaster->GetWidth(), pinRaster->GetHeight(), pinRaster->GetSpatialReference());
+		poutRaster = pRasterFactory->CreateRaster("", augePixelFloat32, 1, pinRaster->GetExtent(), pinRaster->GetWidth(), pinRaster->GetHeight(), pinRaster->GetSpatialReference());
 		if(poutRaster==NULL)
 		{
 			return NULL;
@@ -229,6 +230,7 @@ namespace auge
 			case augePixelInt32:
 				break;
 			case augePixelFloat32:
+				Aspect_Float(pinBand, poutBand);
 				break;
 			case augePixelDouble:
 				Aspect_Double(pinBand, poutBand);
@@ -261,18 +263,18 @@ namespace auge
 		g_byte* ptr_1 = ptr_0 + width;
 		g_byte* ptr_2 = ptr_1 + width;
 		g_byte  v_min,v_max;
-		double slope_x, slope_y;
-		double aspect;
-		double value;
-		double reslution_x = pinBand->GetResolution_X();
-		double reslution_y = pinBand->GetResolution_Y();
+		float slope_x, slope_y;
+		float aspect;
+		float value;
+		float reslution_x = pinBand->GetResolution_X();
+		float reslution_y = pinBand->GetResolution_Y();
 
 		g_int64 size = width*height*sizeof(g_byte);
-		double* output = (double*)malloc(size*sizeof(double));
-		memset(output, 0, size*sizeof(double));
+		float* output = (float*)malloc(size*sizeof(float));
+		memset(output, 0, size*sizeof(float));
 
 		g_int sum = 0;
-		double* ptr = output + width + 1;
+		float* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
@@ -315,21 +317,21 @@ namespace auge
 		short* ptr_1 = ptr_0 + width;
 		short* ptr_2 = ptr_1 + width;
 		short  v_min,v_max;
-		double slope_x, slope_y;
-		double aspect;
-		double radian;
-		double reslution_x = fabs(pinBand->GetResolution_X());
-		double reslution_y = fabs(pinBand->GetResolution_Y());
+		float slope_x, slope_y;
+		float aspect;
+		float radian;
+		float reslution_x = fabs(pinBand->GetResolution_X());
+		float reslution_y = fabs(pinBand->GetResolution_Y());
 		
-		double a1 = atan(1.0)*AUGE_RADIAN_TO_DEGREE;
-		double a2 = atan(-1.0)*AUGE_RADIAN_TO_DEGREE;
+		float a1 = atan(1.0)*AUGE_RADIAN_TO_DEGREE;
+		float a2 = atan(-1.0)*AUGE_RADIAN_TO_DEGREE;
 
 		g_int64 size = width*height*sizeof(short);
-		double* output = (double*)malloc(size*sizeof(double));
-		memset(output, 0, size*sizeof(double));
+		float* output = (float*)malloc(size*sizeof(float));
+		memset(output, 0, size*sizeof(float));
 
 		g_int sum = 0;
-		double* ptr = output + width + 1;
+		float* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
@@ -377,11 +379,11 @@ namespace auge
 	//	short* ptr_1 = ptr_0 + width;
 	//	short* ptr_2 = ptr_1 + width;
 	//	short  v_min,v_max;
-	//	double slope_x, slope_y;
-	//	double aspect;
-	//	double radian;
-	//	double reslution_x = pinBand->GetResolution_X();
-	//	double reslution_y = pinBand->GetResolution_Y();
+	//	float slope_x, slope_y;
+	//	float aspect;
+	//	float radian;
+	//	float reslution_x = pinBand->GetResolution_X();
+	//	float reslution_y = pinBand->GetResolution_Y();
 
 	//	g_int64 size = width*height*sizeof(short);
 	//	short* output = (short*)malloc(size);
@@ -423,30 +425,84 @@ namespace auge
 	//	return AG_SUCCESS;
 	//}
 
+	RESULTCODE DemAspectProcessorImpl::Aspect_Float(RasterBand* pinBand, RasterBand* poutBand)
+	{
+		g_uint width = pinBand->GetWidth();
+		g_uint height= pinBand->GetHeight();
+
+		float  v_h=0, v_v=0;
+		float* input = (float*)pinBand->GetData();
+		float* ptr_0 = input + 1; 
+		float* ptr_1 = ptr_0 + width;
+		float* ptr_2 = ptr_1 + width;
+		float  v_min,v_max;
+		float slope_x, slope_y;
+		float aspect;
+		float value;
+		float reslution_x = pinBand->GetResolution_X();
+		float reslution_y = pinBand->GetResolution_Y();
+
+		g_int64 size = width*height*sizeof(float);
+		float* output = (float*)malloc(size);
+		memset(output, 0, size);
+
+		g_int sum = 0;
+		float* ptr = output + width + 1;
+		for(g_uint i=1; i<height-1; i++)
+		{	
+			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
+			{
+				slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
+				slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
+
+				aspect = atan(slope_y/slope_x)*AUGE_RADIAN_TO_DEGREE;
+				if(slope_x>0)
+				{
+					aspect += 270.0;
+				}
+				else
+				{
+					aspect += 90.0;
+				}
+				aspect = 360.0 - aspect;
+				*ptr = aspect;
+			}
+			ptr_0 += 2;
+			ptr_1 += 2;
+			ptr_2 += 2;
+			ptr  += 2;
+		}
+
+		poutBand->SetData(output);
+		free(output);
+
+		return AG_SUCCESS;
+	}
+
 
 	RESULTCODE DemAspectProcessorImpl::Aspect_Double(RasterBand* pinBand, RasterBand* poutBand)
 	{
 		g_uint width = pinBand->GetWidth();
 		g_uint height= pinBand->GetHeight();
 
-		double  v_h=0, v_v=0;
+		float  v_h=0, v_v=0;
 		double* input = (double*)pinBand->GetData();
 		double* ptr_0 = input + 1; 
 		double* ptr_1 = ptr_0 + width;
 		double* ptr_2 = ptr_1 + width;
-		double  v_min,v_max;
-		double slope_x, slope_y;
-		double aspect;
-		double value;
+		float  v_min,v_max;
+		float slope_x, slope_y;
+		float aspect;
+		float value;
 		double reslution_x = pinBand->GetResolution_X();
 		double reslution_y = pinBand->GetResolution_Y();
 
-		g_int64 size = width*height*sizeof(double);
-		double* output = (double*)malloc(size);
+		g_int64 size = width*height*sizeof(float);
+		float* output = (float*)malloc(size);
 		memset(output, 0, size);
 
 		g_int sum = 0;
-		double* ptr = output + width + 1;
+		float* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)

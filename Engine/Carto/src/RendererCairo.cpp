@@ -1100,6 +1100,10 @@ namespace auge
 		case augePixelInt16:
 		case augePixelUInt16:
 			ReadRasterSubArea_Short(pRaster, r_data, r_xmin, r_ymin, r_w, r_h);
+			break;
+		case augePixelFloat32:
+			ReadRasterSubArea_Float(pRaster, r_data, r_xmin, r_ymin, r_w, r_h);
+			break;
 		}
 		
 		cairo_surface_t *raster_surface = NULL;	
@@ -1380,6 +1384,81 @@ namespace auge
 		SetMatrix(pdata+3, width, height, g_cairo_bands, 255);
 
 		return true;
+	}
+
+	bool RendererCairo::ReadRasterSubArea_Float(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height)
+	{
+		bool ret = false;
+		g_uint nBands = pRaster->GetBandCount();
+
+		switch(nBands)
+		{
+		case 1:
+			ret = ReadRasterSubAreaBand_Float_1(pRaster, pdata, x, y, width, height);
+			break;
+		case 2:
+			break;
+		case 3:
+			ret = ReadRasterSubAreaBand_Byte_3(pRaster, pdata, x, y, width, height);
+			break;
+		}
+
+		return ret;
+	}
+
+	bool RendererCairo::ReadRasterSubAreaBand_Float_1(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height)
+	{
+		g_uint stride = m_width * g_cairo_bands * sizeof(char);
+
+		auge::RasterBand* pBand = NULL;
+		// red
+		pBand = pRaster->GetBand(0);
+		g_int16* pb = (g_int16*)pBand->GetData(x, y);
+		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
+		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+1, width, height, g_cairo_bands);
+		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
+		// alpha
+		SetMatrix(pdata+3, width, height, g_cairo_bands, 255);
+
+		return true;
+	}
+
+	bool RendererCairo::ReadRasterSubAreaBand_Float_3(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height)
+	{
+		g_uint stride = m_width * g_cairo_bands * sizeof(char);
+
+		auge::RasterBand* pBand = NULL;
+		// red
+		pBand = pRaster->GetBand(0);
+		g_int16* pb = (g_int16*)pBand->GetData(x, y);
+		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
+		pBand = pRaster->GetBand(1);
+		pb = (g_int16*)pBand->GetData(x, y);
+		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+1, width, height, g_cairo_bands);
+		pBand = pRaster->GetBand(2);
+		pb = (g_int16*)pBand->GetData(x, y);
+		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
+		// alpha
+		SetMatrix(pdata+3, width, height, g_cairo_bands, 255);
+
+		return true;
+	}
+
+	void RendererCairo::CopyMatrix_Float(g_int16* src, int src_width, int src_height, g_byte* obj, int obj_width, int obj_height, int obj_step)
+	{
+		g_int16* sp = src;
+		g_byte* op = obj;
+		int i,j;
+		for(i=0; i<obj_height; i++)
+		{
+			g_int16* ptr = sp;
+			for(j=0; j<obj_width; j++,op+=obj_step)
+			{
+				//*op = *(ptr++);
+				*op = auge_pixel_value_normalize_float(*(ptr++));
+			}
+			sp += src_width;
+		}
 	}
 
 	void RendererCairo::CopyMatrix_Byte(g_byte* src, int src_width, int src_height, g_byte* obj, int obj_width, int obj_height, int obj_step)

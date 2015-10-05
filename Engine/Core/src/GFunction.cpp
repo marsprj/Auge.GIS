@@ -854,4 +854,9 @@ namespace auge
 		return (AUGE_BYTE_MAX * ((float)value) / (float)AUGE_SHORT_MAX);
 	}
 
+	g_byte auge_pixel_value_normalize_float(float value)
+	{
+		return (AUGE_BYTE_MAX * value / AUGE_FLOAT_MAX);
+	}
+
 }

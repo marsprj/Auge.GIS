@@ -88,6 +88,11 @@ namespace auge
 		bool	ReadRasterSubAreaBand_Short_1(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height);
 		bool	ReadRasterSubAreaBand_Short_3(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height);
 		void	CopyMatrix_Short(g_int16* src, int src_width, int src_height, unsigned char* obj, int obj_width, int obj_height, int obj_step);
+
+		bool	ReadRasterSubArea_Float(Raster* pRaster, unsigned char* pdata, int x, int y, int width, int height);
+		bool	ReadRasterSubAreaBand_Float_1(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height);
+		bool	ReadRasterSubAreaBand_Float_3(Raster* pRaster, g_byte* pdata, int x, int y, int width, int height);
+		void	CopyMatrix_Float(g_int16* src, int src_width, int src_height, unsigned char* obj, int obj_width, int obj_height, int obj_step);
 		
 
 		// DrawLine

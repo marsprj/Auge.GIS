@@ -206,7 +206,8 @@ namespace auge
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
 		//virtual Raster*			CreateRaster(const char* name, augePixelType pixelType, g_uint bands, GEnvelope& extent, g_uint width, g_uint height, const char*  spatialRef) = 0;
 		//poutRaster = pRasterFactory->CreateRaster("", augePixelDouble, pinRaster->GetExtent(), pinRaster);
-		poutRaster = pRasterFactory->CreateRaster("", augePixelDouble, 1, pinRaster->GetExtent(), pinRaster->GetWidth(), pinRaster->GetHeight(), pinRaster->GetSpatialReference());
+		//poutRaster = pRasterFactory->CreateRaster("", augePixelDouble, 1, pinRaster->GetExtent(), pinRaster->GetWidth(), pinRaster->GetHeight(), pinRaster->GetSpatialReference());
+		poutRaster = pRasterFactory->CreateRaster("", augePixelFloat32, 1, pinRaster->GetExtent(), pinRaster->GetWidth(), pinRaster->GetHeight(), pinRaster->GetSpatialReference());
 		if(poutRaster==NULL)
 		{
 			return NULL;
@@ -268,17 +269,17 @@ namespace auge
 		g_byte* ptr_1 = ptr_0 + width;
 		g_byte* ptr_2 = ptr_1 + width;
 		g_byte  v_min,v_max;
-		double slope_x, slope_y;
-		double value;
-		double reslution_x = pinBand->GetResolution_X();
-		double reslution_y = pinBand->GetResolution_Y();
+		float slope_x, slope_y;
+		float value;
+		float reslution_x = pinBand->GetResolution_X();
+		float reslution_y = pinBand->GetResolution_Y();
 
 		g_int64 size = ((g_int64)width) * ((g_int64)height) * poutBand->GetPixelSize();
-		double* output = (double*)malloc(size);
+		float* output = (float*)malloc(size);
 		memset(output, 0, size);
 
 		g_int sum = 0;
-		double* ptr = output + width + 1;
+		float* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
@@ -286,7 +287,7 @@ namespace auge
 				slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
 				slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
 
-				value = sqrt(pow(slope_x,2.0) + pow(slope_y,2.0));
+				value = sqrt(pow(slope_x,2.0f) + pow(slope_y,2.0f));
 				*ptr  = atan(value) * AUGE_RADIAN_TO_DEGREE;				
 			}
 			ptr_0 += 2;
@@ -312,18 +313,18 @@ namespace auge
 		short* ptr_1 = ptr_0 + width;
 		short* ptr_2 = ptr_1 + width;
 		short  v_min,v_max;
-		double slope_x, slope_y;
-		double value;
-		double radian;
-		double reslution_x = pinBand->GetResolution_X();
-		double reslution_y = pinBand->GetResolution_Y();
+		float slope_x, slope_y;
+		float value;
+		float radian;
+		float reslution_x = pinBand->GetResolution_X();
+		float reslution_y = pinBand->GetResolution_Y();
 		
 		g_int64 size = ((g_int64)width) * ((g_int64)height) * poutBand->GetPixelSize();
-		double* output = (double*)malloc(size);
+		float* output = (float*)malloc(size);
 		memset(output, 0, size);
 		
 		g_int sum = 0;
-		double* ptr = output + width + 1;
+		float* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
@@ -342,8 +343,8 @@ namespace auge
 			ptr  += 2;		
 		}
 
-		double p_0_0, p_0_1, p_0_2;
-		double p_1_0, p_1_1, p_1_2;
+		float p_0_0, p_0_1, p_0_2;
+		float p_1_0, p_1_1, p_1_2;
 		
 		poutBand->SetData(output);
 		free(output);
@@ -351,29 +352,72 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	RESULTCODE DemSlopeProcessorImpl::Slope_Float(RasterBand* pinBand, RasterBand* poutBand)
+	{
+		g_uint width = pinBand->GetWidth();
+		g_uint height= pinBand->GetHeight();
+
+		float  v_h=0, v_v=0;
+		float* input = (float*)pinBand->GetData();
+		float* ptr_0 = input + 1; 
+		float* ptr_1 = ptr_0 + width;
+		float* ptr_2 = ptr_1 + width;
+		float  v_min,v_max;
+		float slope_x, slope_y;
+		float value;
+		float reslution_x = pinBand->GetResolution_X();
+		float reslution_y = pinBand->GetResolution_Y();
+
+		g_int64 size = width*height*sizeof(float);
+		float* output = (float*)malloc(size);
+		memset(output, 0, size);
+
+		g_int sum = 0;
+		float* ptr = output + width + 1;
+		for(g_uint i=1; i<height-1; i++)
+		{	
+			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
+			{
+				slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
+				slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
+
+				value = sqrt(pow(slope_x,2) + pow(slope_y, 2));
+				*ptr  = atan(value) * AUGE_RADIAN_TO_DEGREE;
+			}
+			ptr_0 += 2;
+			ptr_1 += 2;
+			ptr_2 += 2;
+			ptr  += 2;
+		}
+
+		poutBand->SetData(output);
+		free(output);
+
+		return AG_SUCCESS;
+	}
 
 	RESULTCODE DemSlopeProcessorImpl::Slope_Double(RasterBand* pinBand, RasterBand* poutBand)
 	{
 		g_uint width = pinBand->GetWidth();
 		g_uint height= pinBand->GetHeight();
 
-		double  v_h=0, v_v=0;
+		float  v_h=0, v_v=0;
 		double* input = (double*)pinBand->GetData();
 		double* ptr_0 = input + 1; 
 		double* ptr_1 = ptr_0 + width;
 		double* ptr_2 = ptr_1 + width;
 		double  v_min,v_max;
-		double slope_x, slope_y;
-		double value;
+		float slope_x, slope_y;
+		float value;
 		double reslution_x = pinBand->GetResolution_X();
 		double reslution_y = pinBand->GetResolution_Y();
 
-		g_int64 size = width*height*sizeof(double);
-		double* output = (double*)malloc(size);
+		g_int64 size = width*height*sizeof(float);
+		float* output = (float*)malloc(size);
 		memset(output, 0, size);
 
 		g_int sum = 0;
-		double* ptr = output + width + 1;
+		float* ptr = output + width + 1;
 		for(g_uint i=1; i<height-1; i++)
 		{	
 			for(g_uint j=1; j<width-1; j++,ptr_0++,ptr_1++,ptr_2++,ptr++)
@@ -381,7 +425,7 @@ namespace auge
 				slope_x = ((ptr_2[-1] + 2*ptr_1[-1] + ptr_0[-1]) - (ptr_2[ 1] + 2*ptr_1[ 1] + ptr_0[ 1])) / (8 * reslution_x);
 				slope_y = ((ptr_2[ 1] + 2*ptr_2[ 0] + ptr_2[-1]) - (ptr_0[ 1] + 2*ptr_0[ 0] + ptr_0[-1])) / (8 * reslution_y);
 				
-				value = sqrt(pow(slope_x,2) + pow(slope_y, 2));
+				value = sqrt(pow(slope_x,2.0f) + pow(slope_y, 2.0f));
 				*ptr  = atan(value) * AUGE_RADIAN_TO_DEGREE;
 			}
 			ptr_0 += 2;

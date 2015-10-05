@@ -396,6 +396,7 @@ namespace auge
 		AUGE_API double		auge_get_map_sacle(g_uint srid, double map_width, g_uint pixel_width);
 
 		AUGE_API g_byte		auge_pixel_value_normalize_short(g_int16 value);
+		AUGE_API g_byte		auge_pixel_value_normalize_float(float value);
 
 		AUGE_API const char*	auge_encoding_convert(const char* from, const char* to, const char* instr, size_t instrlen);
 		AUGE_API size_t	auge_encoding_convert_2(const char* from, const char* to, const char* instr, size_t instrlen, char* outstr, size_t* outlen);

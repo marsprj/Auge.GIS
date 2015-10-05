@@ -40,6 +40,7 @@ namespace auge
 		Raster*				Aspect(Raster* pinRaster);
 		RESULTCODE			Aspect_Byte(RasterBand* pinBand, RasterBand* poutBand);
 		RESULTCODE			Aspect_Short(RasterBand* pinBand, RasterBand* poutBand);
+		RESULTCODE			Aspect_Float(RasterBand* pinBand, RasterBand* poutBand);
 		RESULTCODE			Aspect_Double(RasterBand* pinBand, RasterBand* poutBand);
 
 	private:

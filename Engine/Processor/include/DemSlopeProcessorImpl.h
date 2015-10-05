@@ -40,6 +40,7 @@ namespace auge
 		Raster*				Slope(Raster* pinRaster);
 		RESULTCODE			Slope_Byte(RasterBand* pinBand, RasterBand* poutBand);
 		RESULTCODE			Slope_Short(RasterBand* pinBand, RasterBand* poutBand);
+		RESULTCODE			Slope_Float(RasterBand* pinBand, RasterBand* poutBand);
 		RESULTCODE			Slope_Double(RasterBand* pinBand, RasterBand* poutBand);
 
 	private:
