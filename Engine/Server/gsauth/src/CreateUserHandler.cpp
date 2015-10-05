@@ -61,6 +61,40 @@ namespace auge
 
 	WebResponse* CreateUserHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
+		//CreateUserRequest* pRequest = static_cast<CreateUserRequest*>(pWebRequest);
+		//const char* name = pRequest->GetName();
+		//const char* alias = pRequest->GetAlias();
+		//const char* passwd = pRequest->GetPassword();
+		//const char* email = pRequest->GetEmail();
+		//const char* role = pRequest->GetRole();
+
+		//UserManager* pUserManager = augeGetUserManagerInstance();
+		//User* pnewUser = pUserManager->CreateUser(name, alias, passwd, email, role);
+
+		//WebResponse* pWebResponse = NULL;
+		//if(!pnewUser)
+		//{
+		//	GError* pError = augeGetErrorInstance();
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse(); 
+		//	pExpResponse->SetMessage(pError->GetLastError());
+		//	pWebResponse = pExpResponse;
+		//	return pWebResponse;
+		//}
+
+
+
+		//WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
+		//pSusResponse->SetRequest(pRequest->GetRequest());
+		//pWebResponse = pSusResponse;
+		//pnewUser->Release();
+
+		//return pWebResponse;
+
+		return NULL;
+	}
+
+	WebResponse* CreateUserHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
+	{
 		CreateUserRequest* pRequest = static_cast<CreateUserRequest*>(pWebRequest);
 		const char* name = pRequest->GetName();
 		const char* alias = pRequest->GetAlias();
@@ -78,20 +112,34 @@ namespace auge
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse(); 
 			pExpResponse->SetMessage(pError->GetLastError());
 			pWebResponse = pExpResponse;
+			return pWebResponse;
 		}
-		else
+
+		RESULTCODE rc = CreateUserFolder(pnewUser->GetName(), pWebContext->GetUserRoot());
+		if(rc!=AG_SUCCESS)
 		{
-			WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
-			pSusResponse->SetRequest(pRequest->GetRequest());
-			pWebResponse = pSusResponse;
-			pnewUser->Release();
+			GError* pError = augeGetErrorInstance();
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse(); 
+			pExpResponse->SetMessage(pError->GetLastError());
+			pWebResponse = pExpResponse;
+			return pWebResponse;
 		}
+
+		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
+		pSusResponse->SetRequest(pRequest->GetRequest());
+		pWebResponse = pSusResponse;
+		pnewUser->Release();
 
 		return pWebResponse;
 	}
 
-	WebResponse* CreateUserHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
+	RESULTCODE CreateUserHandler::CreateUserFolder(const char* name, const char* root)
 	{
-		return Execute(pWebRequest, pUser);	
+		char user_folder[AUGE_PATH_MAX];
+		memset(user_folder, 0, AUGE_PATH_MAX);
+		auge_make_path(user_folder, NULL, root, name, NULL);
+		auge_mkdir(user_folder);
+
+		return AG_SUCCESS;
 	}
 }

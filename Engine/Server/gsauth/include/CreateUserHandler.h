@@ -24,6 +24,9 @@ namespace auge
 
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
+
+	private:
+		RESULTCODE	CreateUserFolder(const char* name, const char* root);
 	};
 }
 
