@@ -459,6 +459,112 @@ namespace auge
 		return poutRaster;
 	}
 
+
+	Raster*	RasterStretchProcessorImpl::Stretch_Float(Raster* pinRaster)
+	{
+		Raster* poutRaster = NULL;
+		g_uint nbands = pinRaster->GetBandCount();
+		switch(nbands)
+		{
+		case 1:
+			poutRaster = Stretch_Float_1(pinRaster);
+			break;
+			//case 3:
+			//	break;
+		default:
+			poutRaster = Stretch_Float_n(pinRaster);
+		}
+		return poutRaster;
+	}
+
+	Raster*	RasterStretchProcessorImpl::Stretch_Float_1(Raster* pinRaster)
+	{
+		Raster* poutRaster = NULL;
+		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
+		const char* raster_name = GetOutputRaster();
+
+		poutRaster = pRasterFactory->CreateRaster(raster_name, pinRaster->GetExtent(), pinRaster);
+		if(poutRaster==NULL)
+		{
+			return NULL;
+		}
+
+		RasterBand* pinBand = NULL;
+		RasterBand* poutBand = NULL;
+		g_uint nband = poutRaster->GetBandCount();
+		size_t pixel_count = poutRaster->GetWidth() * poutRaster->GetHeight();
+		float* i_data = NULL;
+		//float* ptr = NULL;
+		float v_min=0, v_max=0, value, value_span;
+		float  scale = 1.0f;
+
+		for(g_uint i=0; i<nband; i++)
+			//for(g_uint i=1; i<nband; i++)
+		{
+			pinBand = pinRaster->GetBand(i);
+			poutBand= poutRaster->GetBand(i);
+			i_data = (float*)pinBand->GetData();
+
+			pinBand->GetMinMaxValue(v_min, v_max);
+			value_span = v_max - v_min;
+
+			float* ptr=i_data;
+			for(g_uint i=0; i<pixel_count; i++, ptr++)
+			{
+				value = *ptr;
+				scale = ((float)value - (float)v_min) / (float)value_span;
+				*ptr = scale * AUGE_FLOAT_MAX;
+			}
+			poutBand->SetData(i_data);
+		}
+
+		return poutRaster;
+	}
+
+	Raster* RasterStretchProcessorImpl::Stretch_Float_n(Raster* pinRaster)
+	{
+		Raster* poutRaster = NULL;
+		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
+		const char* raster_name = GetOutputRaster();
+
+		poutRaster = pRasterFactory->CreateRaster(raster_name, pinRaster->GetExtent(), pinRaster);
+		if(poutRaster==NULL)
+		{
+			return NULL;
+		}
+
+		RasterBand* pinBand = NULL;
+		RasterBand* poutBand = NULL;
+		g_uint nband = poutRaster->GetBandCount();
+		size_t pixel_count = poutRaster->GetWidth() * poutRaster->GetHeight();
+		float* i_data = NULL;
+		//float* ptr = NULL;
+		float v_min=0, v_max=0, value, value_span;
+		float  scale = 1.0f;
+
+		for(g_uint i=0; i<nband; i++)
+			//for(g_uint i=1; i<nband; i++)
+		{
+			pinBand = pinRaster->GetBand(i);
+			poutBand= poutRaster->GetBand(i);
+			i_data = (float*)pinBand->GetData();
+
+			pinBand->GetMinMaxValue(v_min, v_max);
+			value_span = v_max - v_min;
+
+			float* ptr=i_data;
+			for(g_uint i=0; i<pixel_count; i++, ptr++)
+			{
+				value = *ptr;
+				scale = ((float)value - (float)v_min) / (float)value_span;
+				*ptr = scale * AUGE_FLOAT_MAX;
+			}
+			poutBand->SetData(i_data);
+		}
+
+		return poutRaster;
+	}
+
 	void RasterStretchProcessorImpl::Release()
 	{
 		delete this;
@@ -482,6 +588,7 @@ namespace auge
 		case augePixelInt32:
 			break;
 		case augePixelFloat32:
+			poutRaster = Stretch_Float(pinRaster);
 			break;
 		case augePixelDouble:
 			break;

@@ -53,7 +53,9 @@ namespace auge
 		Raster*				Stretch_Short_1(Raster* pinRaster);
 		Raster*				Stretch_Short_n(Raster* pinRaster);
 
-
+		Raster*				Stretch_Float(Raster* pinRaster);
+		Raster*				Stretch_Float_1(Raster* pinRaster);
+		Raster*				Stretch_Float_n(Raster* pinRaster);
 
 		//bool				Stretch(Raster* pinRaster, Raster* poutRaster);
 		bool				Stretch_Byte(Raster* pinRaster, Raster* poutRaster);
