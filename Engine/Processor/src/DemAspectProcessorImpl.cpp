@@ -317,14 +317,14 @@ namespace auge
 		short* ptr_1 = ptr_0 + width;
 		short* ptr_2 = ptr_1 + width;
 		short  v_min,v_max;
-		float slope_x, slope_y;
-		float aspect;
-		float radian;
-		float reslution_x = fabs(pinBand->GetResolution_X());
-		float reslution_y = fabs(pinBand->GetResolution_Y());
+		double slope_x, slope_y;
+		double aspect;
+		double radian;
+		double reslution_x = fabs(pinBand->GetResolution_X());
+		double reslution_y = fabs(pinBand->GetResolution_Y());
 		
-		float a1 = atan(1.0)*AUGE_RADIAN_TO_DEGREE;
-		float a2 = atan(-1.0)*AUGE_RADIAN_TO_DEGREE;
+		double a1 = atan(1.0)*AUGE_RADIAN_TO_DEGREE;
+		double a2 = atan(-1.0)*AUGE_RADIAN_TO_DEGREE;
 
 		g_int64 size = width*height*sizeof(short);
 		float* output = (float*)malloc(size*sizeof(float));
@@ -352,7 +352,7 @@ namespace auge
 					aspect += 90.0;
 				}
 				aspect = 360.0 - aspect;
-				*ptr = aspect;
+				*ptr = (float)aspect;
 			}
 			ptr_0 += 2;
 			ptr_1 += 2;
