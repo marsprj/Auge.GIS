@@ -102,22 +102,20 @@ namespace auge
 	}
 
 	void CanvasImpl::DrawLayer(Layer* pLayer, Style* pStyle)
-	{
-		if(pStyle==NULL)
-		{
-			return;
-		}
+	{	
 		augeLayerType type = pLayer->GetType();
 		switch(type)
 		{
 		case augeLayerFeature:
 			{
-				FeatureLayer* pFLayer = static_cast<FeatureLayer*>(pLayer);
-				if(pStyle->GetType()==augeStyleFeature)
+				if(pStyle!=NULL)
 				{
-					DrawLayer(pFLayer,static_cast<FeatureStyle*>(pStyle));
-				}
-				
+					FeatureLayer* pFLayer = static_cast<FeatureLayer*>(pLayer);
+					if(pStyle->GetType()==augeStyleFeature)
+					{
+						DrawLayer(pFLayer,static_cast<FeatureStyle*>(pStyle));
+					}
+				}				
 			}
 			break;
 		case augeLayerRaster:
