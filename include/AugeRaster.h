@@ -104,6 +104,7 @@ namespace auge
 		virtual bool			GetMinMaxValue(g_byte& minv, g_byte& maxv) = 0;
 		virtual bool			GetMinMaxValue(short& minv, short& maxv) = 0;
 		virtual bool			GetMinMaxValue(int& minv, int& maxv) = 0;
+		virtual bool			GetMinMaxValue(float& minv, float& maxv) = 0; 
 		virtual bool			GetMinMaxValue(double& minv, double& maxv) = 0;
 
 		virtual RESULTCODE		Read(void* buffer, g_uint x, g_uint y, g_int width, g_uint height) = 0;
