@@ -33,6 +33,8 @@ libgprocessor_la_SOURCES=\
 		RandomPointsInPolygonGeneratorImpl.cpp \
 		KmeanProcessorImpl.cpp \
 		Kmean.cpp \
+		DBScanProcessorImpl.cpp \
+		DBScan.cpp \
 		SrsBase.cpp \
 		sqlite3.c \
 		RasterExtractByRectangleProcessorImpl.cpp \
