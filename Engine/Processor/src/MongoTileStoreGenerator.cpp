@@ -67,6 +67,7 @@ namespace auge
 		}
 
 		g_uint counter = 0;
+		char str[AUGE_MSG_MAX];
 		char t_uuid[AUGE_PATH_MAX] = {0};
 		char t_path[AUGE_PATH_MAX] = {0};
 		char t_cwd[AUGE_PATH_MAX] = {0};
@@ -74,6 +75,7 @@ namespace auge
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();		
 		GEnvelope viewer;
 		RESULTCODE rc = AG_FAILURE;
+		GLogger* pLogger = augeGetLoggerInstance();
 
 		auge_get_cwd(t_cwd, AUGE_PATH_MAX);
 		auge_generate_uuid(t_uuid, AUGE_PATH_MAX);
@@ -92,7 +94,9 @@ namespace auge
 					rc = m_pTileStore->GetTileExtent(viewer, l, r,c);
 					if(rc==AG_SUCCESS)
 					{
-						printf("\r[%d]:%d-%d-%d",counter++,l,r,c);
+						//printf("\r[%d]:%d-%d-%d",counter++,l,r,c);
+						sprintf(str,"[%d]:%d-%d-%d",counter++,l,r,c);
+						pLogger->Info(str, __FILE__, __LINE__);
 
 						pCanvas = pCartoFactory->CreateCanvas2D(256,256);
 						pCanvas->SetViewer(viewer);
