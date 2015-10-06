@@ -184,12 +184,12 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		g_uint band_count = pinRaster->GetBandCount();
-		if(band_count<3||band_count>4)
-		{
-			pinFolder->Release();
-			return AG_FAILURE;
-		}
+		//g_uint band_count = pinRaster->GetBandCount();
+		//if(band_count<3||band_count>4)
+		//{
+		//	pinFolder->Release();
+		//	return AG_FAILURE;
+		//}
 
 
 		if(!HistogramEqualize(pinRaster))
