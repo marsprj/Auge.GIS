@@ -433,6 +433,29 @@ void RasterTest::DEMSlope()
 	printf("[时间]:%d毫秒\n", te-ts);
 }
 
+void RasterTest::DEMSlope_2()
+{
+	DWORD ts = GetTickCount();
+
+	auge::DemSlopeProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateDemSlopeProcessor();
+
+	auge::RasterIO* pRasterIO = auge::augeGetRasterIOInstance();
+	auge::Raster* pinRaster = NULL;
+	auge::Raster* poutRaster= NULL;
+
+	pinRaster = pRasterIO->Read("E:/Research/Auge.GIS/Dist/32_x86_win_vc10/binD/user/user1/rds/dem/ASTGTM2_N29E082_dem.tif");
+
+	poutRaster = pProcessor->Slope(pinRaster);
+	poutRaster->Save("E:/Research/Auge.GIS/Dist/32_x86_win_vc10/binD/user/user1/rds/dem/xz_slope.tif");
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
+
 void RasterTest::DEMAspect()
 {
 	DWORD ts = GetTickCount();
@@ -450,6 +473,30 @@ void RasterTest::DEMAspect()
 	pProcessor->SetOutputPath("/s2/s_1_2");
 
 	RESULTCODE rc = pProcessor->Execute();
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
+
+
+void RasterTest::DEMAspect_2()
+{
+	DWORD ts = GetTickCount();
+
+	auge::DemAspectProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateDemAspectProcessor();
+
+	auge::RasterIO* pRasterIO = auge::augeGetRasterIOInstance();
+	auge::Raster* pinRaster = NULL;
+	auge::Raster* poutRaster= NULL;
+
+	pinRaster = pRasterIO->Read("E:/Research/Auge.GIS/Dist/32_x86_win_vc10/binD/user/user1/rds/dem/ASTGTM2_N29E082_dem.tif");
+
+	poutRaster = pProcessor->Aspect(pinRaster);
+	poutRaster->Save("E:/Research/Auge.GIS/Dist/32_x86_win_vc10/binD/user/user1/rds/dem/xz_aspect.tif");
 
 	pProcessor->Release();
 

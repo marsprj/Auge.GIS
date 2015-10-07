@@ -18,12 +18,14 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(PixelBlend);
 	//CPPUNIT_TEST(HistgramEqualization);
 	//CPPUNIT_TEST(Threshold);
-	CPPUNIT_TEST(Thumbnail);
+	//CPPUNIT_TEST(Thumbnail);
 
 	//CPPUNIT_TEST(SepiaTone);
 	//CPPUNIT_TEST(PenEffect);
 	//CPPUNIT_TEST(DEMSlope);
+	CPPUNIT_TEST(DEMSlope_2);
 	//CPPUNIT_TEST(DEMAspect);
+	CPPUNIT_TEST(DEMAspect_2);
 	//CPPUNIT_TEST(DEMHillShade);
 
 	CPPUNIT_TEST_SUITE_END();
@@ -49,7 +51,9 @@ private:
 	void	PenEffect();
 
 	void	DEMSlope();
+	void	DEMSlope_2();
 	void	DEMAspect();
+	void	DEMAspect_2();
 	void	DEMHillShade();
 
 private:

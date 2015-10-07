@@ -25,6 +25,7 @@ namespace auge
 		virtual void		SetOutputPath(const char* rasterPath);
 
 		virtual RESULTCODE	Execute();
+		virtual Raster*		Aspect(Raster* pinRaster);
 		virtual void		Release();
 
 	private:
@@ -37,7 +38,6 @@ namespace auge
 		const char*			GetOutputRasterPath();
 
 	private:
-		Raster*				Aspect(Raster* pinRaster);
 		RESULTCODE			Aspect_Byte(RasterBand* pinBand, RasterBand* poutBand);
 		RESULTCODE			Aspect_Short(RasterBand* pinBand, RasterBand* poutBand);
 		RESULTCODE			Aspect_Float(RasterBand* pinBand, RasterBand* poutBand);

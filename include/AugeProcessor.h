@@ -771,6 +771,8 @@ namespace auge
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual Raster*		Slope(Raster* pinRaster) = 0;
 	};
 
 	/**
@@ -791,6 +793,8 @@ namespace auge
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual Raster*		Aspect(Raster* pinRaster) = 0;
 
 	};
 
