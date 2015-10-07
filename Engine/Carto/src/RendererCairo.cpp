@@ -1,5 +1,6 @@
 #include "RendererCairo.h"
 #include "AugeRaster.h"
+#include <math.h>
 
 namespace auge
 {
