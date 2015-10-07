@@ -342,7 +342,7 @@ namespace auge
 			value_span = v_max - v_min;
 
 			g_byte* ptr=i_data;
-			for(g_uint i=0; i<pixel_count; i++, ptr++)
+			for(g_uint j=0; j<pixel_count; j++, ptr++)
 			{
 				value = *ptr;
 				scale = ((float)value - (float)v_min) / (float)value_span;
@@ -403,7 +403,7 @@ namespace auge
 			value_span = v_max - v_min;
 
 			short* ptr=i_data;
-			for(g_uint i=0; i<pixel_count; i++, ptr++)
+			for(g_uint j=0; j<pixel_count; j++, ptr++)
 			{
 				value = *ptr;
 				scale = ((float)value - (float)v_min) / (float)value_span;
@@ -447,7 +447,7 @@ namespace auge
 			value_span = v_max - v_min;
 
 			short* ptr=i_data;
-			for(g_uint i=0; i<pixel_count; i++, ptr++)
+			for(g_uint j=0; j<pixel_count; j++, ptr++)
 			{
 				value = *ptr;
 				scale = ((float)value - (float)v_min) / (float)value_span;
@@ -483,7 +483,7 @@ namespace auge
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
 		const char* raster_name = GetOutputRaster();
 
-		poutRaster = pRasterFactory->CreateRaster(raster_name, pinRaster->GetExtent(), pinRaster);
+		poutRaster = pRasterFactory->CreateRaster("", pinRaster->GetExtent(), pinRaster);
 		if(poutRaster==NULL)
 		{
 			return NULL;
@@ -509,7 +509,7 @@ namespace auge
 			value_span = v_max - v_min;
 
 			float* ptr=i_data;
-			for(g_uint i=0; i<pixel_count; i++, ptr++)
+			for(g_uint j=0; j<pixel_count; j++, ptr++)
 			{
 				value = *ptr;
 				scale = ((float)value - (float)v_min) / (float)value_span;
@@ -553,7 +553,7 @@ namespace auge
 			value_span = v_max - v_min;
 
 			float* ptr=i_data;
-			for(g_uint i=0; i<pixel_count; i++, ptr++)
+			for(g_uint j=0; j<pixel_count; j++, ptr++)
 			{
 				value = *ptr;
 				scale = ((float)value - (float)v_min) / (float)value_span;

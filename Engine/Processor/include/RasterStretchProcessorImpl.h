@@ -29,6 +29,7 @@ namespace auge
 		virtual	void		SetEndColor(GColor color);
 
 		virtual RESULTCODE	Execute();
+		virtual Raster*		Stretch(Raster* pinRaster);
 		virtual void		Release();
 
 	private:
@@ -44,7 +45,7 @@ namespace auge
 		GColor&				GetEndColor();
 
 	private:
-		Raster*				Stretch(Raster* pinRaster);
+		
 		Raster*				Stretch_Byte(Raster* pinRaster);
 		Raster*				Stretch_Byte_1(Raster* pinRaster);
 		Raster*				Stretch_Byte_n(Raster* pinRaster);

@@ -533,6 +533,29 @@ void RasterTest::DEMHillShade()
 	printf("[时间]:%d毫秒\n", te-ts);
 }
 
+void RasterTest::DEMStretch()
+{
+	DWORD ts = GetTickCount();
+
+	auge::RasterStretchProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateRasterStretchProcessor();
+
+	auge::RasterIO* pRasterIO = auge::augeGetRasterIOInstance();
+	auge::Raster* pinRaster = NULL;
+	auge::Raster* poutRaster= NULL;
+
+	pinRaster = pRasterIO->Read("E:/Research/Auge.GIS/Dist/32_x86_win_vc10/binD/user/user1/rds/dem/xz_aspect.tif");
+
+	poutRaster = pProcessor->Stretch(pinRaster);
+	poutRaster->Save("E:/Research/Auge.GIS/Dist/32_x86_win_vc10/binD/user/user1/rds/dem/xz_stretched.tif");
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[时间]:%d毫秒\n", te-ts);
+}
+
 void RasterTest::Thumbnail()
 {
 	DWORD ts = GetTickCount();

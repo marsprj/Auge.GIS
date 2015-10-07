@@ -459,6 +459,7 @@ namespace auge
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 		virtual void		SetOutputPath(const char* rasterPath) = 0;
 
+		virtual Raster*		Stretch(Raster* pinRaster) = 0;
 		virtual	void		SetStartColor(GColor color) = 0;
 		virtual	void		SetEndColor(GColor color) = 0;
 	};
