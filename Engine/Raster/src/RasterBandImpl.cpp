@@ -213,7 +213,7 @@ namespace auge
 		for(int i=0; i<count; i++)
 		{
 			v_min = v_min < idata[i] ? v_min : idata[i];
-			v_max = v_max > idata[i] ? v_min : idata[i];
+			v_max = v_max > idata[i] ? v_max : idata[i];
 		}
 		minv = v_min;
 		maxv = v_max;
@@ -226,11 +226,11 @@ namespace auge
 
 		int count = m_pRaster->GetWidth() * m_pRaster->GetHeight();
 		float v_min = AUGE_FLOAT_MAX;
-		float v_max = AUGE_FLOAT_MAX;
+		float v_max = AUGE_FLOAT_MIN;
 		for(int i=0; i<count; i++)
 		{
 			v_min = v_min < idata[i] ? v_min : idata[i];
-			v_max = v_max > idata[i] ? v_min : idata[i];
+			v_max = v_max > idata[i] ? v_max : idata[i];
 		}
 		minv = v_min;
 		maxv = v_max;
@@ -247,7 +247,7 @@ namespace auge
 		for(int i=0; i<count; i++)
 		{
 			v_min = v_min < idata[i] ? v_min : idata[i];
-			v_max = v_max > idata[i] ? v_min : idata[i];
+			v_max = v_max > idata[i] ? v_max : idata[i];
 		}
 		minv = v_min;
 		maxv = v_max;

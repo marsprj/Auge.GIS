@@ -7,7 +7,7 @@
 
 #pragma comment(lib, "GPostgresD.lib")
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(CanvasTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(CanvasTest);
 
 void CanvasTest::setUp() 
 {
@@ -457,8 +457,29 @@ void CanvasTest::ReadColor()
 
 }
 
-void DrawRasterLayer()
-{
+void CanvasTest::DrawRasterLayer()
+{	
+	auge::CartoFactory* pCartoFactory = NULL;
+	pCartoFactory = auge::augeGetCartoFactoryInstance();
+	auge::Map* pMap = pCartoFactory->CreateMap();
+	auge::RasterLayer* pRasterLayer = NULL;
+	pRasterLayer = pCartoFactory->CreateRasterLayer();
 
+	auge::RasterIO* pRasterIO = auge::augeGetRasterIOInstance();
+	auge::Raster* pRaster = pRasterIO->Read("C:\\Users\\renyc\\Desktop\\bk\\xz_aspect_11.tif");
+
+	pRasterLayer->SetName("aa");
+	pRasterLayer->SetRaster(pRaster);
+
+	auge::Canvas* pCanvas = NULL;
+	auge::GEnvelope& viewer = pRaster->GetExtent();
+	pCanvas = pCartoFactory->CreateCanvas2D(600, 600);
+	pCanvas->SetViewer(viewer);
+
+	pCanvas->DrawLayer(pRasterLayer);
+
+	pCanvas->Save("C:\\Users\\renyc\\Desktop\\bk\\map.png");
+
+	
 }
 

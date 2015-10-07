@@ -1410,13 +1410,15 @@ namespace auge
 	{
 		g_uint stride = m_width * g_cairo_bands * sizeof(char);
 
+		float v_min=0.0f, v_max=0.0f;
 		auge::RasterBand* pBand = NULL;
 		// red
 		pBand = pRaster->GetBand(0);
-		g_int16* pb = (g_int16*)pBand->GetData(x, y);
-		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
-		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+1, width, height, g_cairo_bands);
-		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
+		float* pb = (float*)pBand->GetData(x, y);
+		pBand->GetMinMaxValue(v_min,v_max);
+		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, v_min, v_max, g_cairo_bands);
+		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+1, width, height, v_min, v_max, g_cairo_bands);
+		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, v_min, v_max, g_cairo_bands);
 		// alpha
 		SetMatrix(pdata+3, width, height, g_cairo_bands, 255);
 
@@ -1427,35 +1429,49 @@ namespace auge
 	{
 		g_uint stride = m_width * g_cairo_bands * sizeof(char);
 
+		float v_min=0.0f, v_max=0.0f;
 		auge::RasterBand* pBand = NULL;
 		// red
 		pBand = pRaster->GetBand(0);
-		g_int16* pb = (g_int16*)pBand->GetData(x, y);
-		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, g_cairo_bands);
+		float* pb = (float*)pBand->GetData(x, y);
+		pBand->GetMinMaxValue(v_min,v_max);
+		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+2, width, height, v_min, v_max, g_cairo_bands);
+
 		pBand = pRaster->GetBand(1);
-		pb = (g_int16*)pBand->GetData(x, y);
-		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+1, width, height, g_cairo_bands);
+		pb = (float*)pBand->GetData(x, y);
+		pBand->GetMinMaxValue(v_min,v_max);
+		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+1, width, height, v_min, v_max, g_cairo_bands);
 		pBand = pRaster->GetBand(2);
-		pb = (g_int16*)pBand->GetData(x, y);
-		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, g_cairo_bands);
+
+		pb = (float*)pBand->GetData(x, y);
+		pBand->GetMinMaxValue(v_min,v_max);
+		CopyMatrix_Float(pb, pRaster->GetWidth(), pRaster->GetHeight(), pdata+0, width, height, v_min, v_max, g_cairo_bands);
 		// alpha
 		SetMatrix(pdata+3, width, height, g_cairo_bands, 255);
 
 		return true;
 	}
 
-	void RendererCairo::CopyMatrix_Float(g_int16* src, int src_width, int src_height, g_byte* obj, int obj_width, int obj_height, int obj_step)
+	void RendererCairo::CopyMatrix_Float(float* src, int src_width, int src_height, g_byte* obj, int obj_width, int obj_height, float vmin, float vmax,int obj_step)
 	{
-		g_int16* sp = src;
+		float span = vmax - vmin;
+		if(fabs(span)<AUGE_EPSILON)
+		{
+			return;
+		}
+		float* sp = src;
+		float val = 0.0f;
 		g_byte* op = obj;
 		int i,j;
 		for(i=0; i<obj_height; i++)
 		{
-			g_int16* ptr = sp;
+			float* ptr = sp;
 			for(j=0; j<obj_width; j++,op+=obj_step)
 			{
+				//val = AUGE_BYTE_MAX * (*ptr) / AUGE_FLOAT_MAX;
 				//*op = *(ptr++);
-				*op = auge_pixel_value_normalize_float(*(ptr++));
+				//*op = auge_pixel_value_normalize_float(*(ptr++));
+				*op = (g_byte)(AUGE_BYTE_MAX * ((*ptr++)-vmin) / span);
 			}
 			sp += src_width;
 		}
