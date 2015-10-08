@@ -206,7 +206,7 @@ void FeatureTest::CsvImportTest()
 	auge::GProcessorFactory* pProcessorFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pcsvImporter = pProcessorFactory->CreateCsvImportProcessor();
 
-	pcsvImporter->SetCvsPath("G:\\temp\\60人口.csv");
+	pcsvImporter->SetCsvPath("G:\\temp\\60人口.csv");
 	pcsvImporter->SetDataSource("db1");
 	pcsvImporter->SetDatasetName(className);
 

@@ -17,7 +17,7 @@ namespace auge
 
 	}
 
-	void CsvImportProcessorImpl::SetCvsPath(const char* path)
+	void CsvImportProcessorImpl::SetCsvPath(const char* path)
 	{
 		if(path==NULL)
 		{

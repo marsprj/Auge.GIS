@@ -30,6 +30,8 @@ libgsgps_la_SOURCES=\
 		ThreadManager.cpp \
 		TileUpdateHandler.cpp \
 		TileUpdateRequest.cpp \
+		CsvImportHandler.cpp \
+		CsvImportRequest.cpp \
 		FeatureImportRequest.cpp \
 		FeatureImportHandler.cpp \
 		FeatureProjectHandler.cpp \

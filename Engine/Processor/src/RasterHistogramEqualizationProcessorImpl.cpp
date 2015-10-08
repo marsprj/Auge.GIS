@@ -164,6 +164,7 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
+
 		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 
 		Raster* pinRaster = NULL;
@@ -180,6 +181,14 @@ namespace auge
 		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
 		if(pinRaster==NULL)
 		{
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
+
+		augePixelType pixelType = pinRaster->GetPixelType();
+		if(pixelType != augePixelByte)
+		{
+			pinFolder->Release();
 			pinFolder->Release();
 			return AG_FAILURE;
 		}

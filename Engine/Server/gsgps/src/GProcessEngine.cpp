@@ -18,6 +18,7 @@
 #include "BuildPyramidHandler.h"
 #include "FeatureImportHandler.h"
 #include "FeatureProjectHandler.h"
+#include "CsvImportHandler.h"
 
 #include "MultiPointToPointsHandler.h"
 #include "LineToPointsHandler.h"
@@ -83,6 +84,7 @@ namespace auge
 
 		m_feature_handlers.push_back(new FeatureImportHandler());
 		m_feature_handlers.push_back(new FeatureProjectHandler());
+		m_feature_handlers.push_back(new CsvImportHandler());
 
 		m_raster_handlers.push_back(new RasterEdgeDetectHandler());
 		m_raster_handlers.push_back(new RasterExtractByRectangleHandler());

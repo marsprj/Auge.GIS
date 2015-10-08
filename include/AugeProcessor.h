@@ -79,7 +79,7 @@ namespace auge
 		CsvImportProcessor(){}
 		virtual ~CsvImportProcessor(){}
 	public:
-		virtual	void		SetCvsPath(const char* path) = 0;
+		virtual	void		SetCsvPath(const char* path) = 0;
 		virtual void		SetDataSource(const char* sourceName) = 0;
 		virtual void		SetDatasetName(const char* datasetName) = 0;
 	};

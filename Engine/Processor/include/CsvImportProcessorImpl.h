@@ -19,7 +19,7 @@ namespace auge
 	public:
 		virtual void		SetUser(g_uint user);
 
-		virtual	void		SetCvsPath(const char* path);
+		virtual	void		SetCsvPath(const char* path);
 		virtual void		SetDataSource(const char* sourceName);
 		virtual void		SetDatasetName(const char* datasetName);
 		virtual RESULTCODE	Execute();
