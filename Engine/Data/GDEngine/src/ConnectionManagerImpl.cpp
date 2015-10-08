@@ -187,7 +187,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_sprintf(sql, "select gid,name,engine,uri,version,state,d_uri from g_data_source where type=%d", (int)type);
+		g_sprintf(sql, "select gid,name,engine,uri,version,state,d_uri,user_id from g_data_source where type=%d", (int)type);
 		GResultSet* pResultSet = NULL;
 		pResultSet = m_pConnection->ExecuteQuery(sql);
 		if(pResultSet!=NULL)
@@ -200,6 +200,7 @@ namespace auge
 			const char* uri = NULL;
 			const char* stat= NULL;
 			const char* d_uri = NULL;
+			g_int user_id = -1;
 			g_uint count = pResultSet->GetCount();
 			for(g_uint i=0; i<count; i++)
 			{
@@ -210,10 +211,12 @@ namespace auge
 				version=pResultSet->GetInt(i,4);
 				stat= pResultSet->GetString(i,5);
 				d_uri = pResultSet->GetString(i,6);
+				user_id  = pResultSet->GetInt(i, 7);
 
 				pWorkspace = NewWorkspace(gid,name, engn, uri,version);
 				if(pWorkspace!=NULL)
 				{
+					pWorkspace->SetUser(user_id);
 					pWorkspaces->Add(pWorkspace);
 				}
 			}
@@ -352,7 +355,7 @@ namespace auge
 		}
 		else
 		{
-			const char* sql = "select gid,name,engine,uri,version,state,d_uri from g_data_source";
+			const char* sql = "select gid,name,engine,uri,version,state,d_uri,user_id from g_data_source";
 			GResultSet* pResultSet = NULL;
 			pResultSet = m_pConnection->ExecuteQuery(sql);
 			if(pResultSet!=NULL)
@@ -365,6 +368,7 @@ namespace auge
 				const char* stat= NULL;
 				int version = -1;
 				const char* d_uri = NULL;
+				g_int user_id=-1;
 				g_uint count = pResultSet->GetCount();
 				for(g_uint i=0; i<count; i++)
 				{
@@ -375,10 +379,12 @@ namespace auge
 					version = pResultSet->GetInt(i,4);
 					stat= pResultSet->GetString(i,5);
 					d_uri = pResultSet->GetString(i,6);
+					user_id = pResultSet->GetInt(i,7);
 
 					pWorkspace = NewWorkspace(gid, name, engn, uri,version);
 					if(pWorkspace!=NULL)
 					{
+						pWorkspace->SetUser(user_id);
 						pWorkspace->SetID(gid);
 						m_connections.push_back(pWorkspace);
 					}
@@ -486,8 +492,9 @@ namespace auge
 				{
 					Workspace* pnewWorkspace = LoadWorkspace(user_id, name);
 					pWorkspace->Close();
-					pWorkspace->Release();
+					pWorkspace->Release();					
 					pWorkspace = pnewWorkspace;
+					pnewWorkspace->SetUser(user_id);
 					*iter = pnewWorkspace;
 				}
 				if(pWorkspace!=NULL)
@@ -496,6 +503,7 @@ namespace auge
 					{
 						pWorkspace->Open();
 						pWorkspace->AddRef();
+						pWorkspace->SetUser(user_id);
 					}
 				}
 				return pWorkspace;
@@ -542,6 +550,7 @@ namespace auge
 				pWorkspace = NewWorkspace(gid,name, engn, uri,version);
 				if(pWorkspace!=NULL)
 				{
+					pWorkspace->SetUser(user_id);
 					pWorkspaces->Add(pWorkspace);
 				}
 			}
@@ -573,7 +582,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		sprintf(sql, "select gid,name,engine,uri,version,state,d_uri from g_data_source where user_id=%d and type=%d", user_id, (int)type);		
+		sprintf(sql, "select gid,name,engine,uri,version,state,d_uri,user_id from g_data_source where user_id=%d and type=%d", user_id, (int)type);		
 		GResultSet* pResultSet = NULL;
 		pResultSet = m_pConnection->ExecuteQuery(sql);
 		if(pResultSet!=NULL)
@@ -586,6 +595,7 @@ namespace auge
 			const char* uri = NULL;
 			const char* stat= NULL;
 			const char* d_uri = NULL;
+			g_int user_id = -1;
 			g_uint count = pResultSet->GetCount();
 			for(g_uint i=0; i<count; i++)
 			{
@@ -596,6 +606,7 @@ namespace auge
 				version=pResultSet->GetInt(i,4);
 				stat= pResultSet->GetString(i,5);
 				d_uri = pResultSet->GetString(i,6);
+				user_id = pResultSet->GetInt(i,7);
 
 				pWorkspace = NewWorkspace(gid,name, engn, uri,version);
 				if(pWorkspace!=NULL)
@@ -784,6 +795,7 @@ namespace auge
 			pWorkspace->Release();
 			return  NULL;
 		}
+		pWorkspace->SetUser(user_id);
 
 		return pWorkspace;
 
@@ -828,6 +840,7 @@ namespace auge
 		const char* d_uri = pResultSet->GetString(0,6);
 
 		pWorkspace = NewWorkspace(gid, name, engn, uri,version);
+		pWorkspace->SetUser(user_id);
 		pResultSet->Release();
 
 		return pWorkspace;
