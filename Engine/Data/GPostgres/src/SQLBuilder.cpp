@@ -84,7 +84,8 @@ namespace auge
 
 		sql.append(" from ");
 		//sql.append("\"");
-		sql.append(pFeatureClass->GetName());
+		//sql.append(pFeatureClass->GetName());
+		sql.append(pFeatureClass->GetAlias());
 		//sql.append("\"");
 	}
 
@@ -123,7 +124,8 @@ namespace auge
 			}
 		}
 		sql.append(" from ");
-		sql.append(pFeatureClass->GetName());
+		//sql.append(pFeatureClass->GetName());
+		sql.append(pFeatureClass->GetAlias());
 
 		char where[AUGE_BUFFER_MAX];
 		//g_snprintf(where,AUGE_BUFFER_MAX," where (%s && 'BOX3D(%.7f %.7f,%.7f %.7f)'::box3d)", pFeatureClass->m_geom_filed_name.c_str(),
@@ -180,7 +182,8 @@ namespace auge
 		}
 		sql.append(" from ");
 		//sql.append("\"");
-		sql.append(pFeatureClass->GetName());
+		//sql.append(pFeatureClass->GetName());
+		sql.append(pFeatureClass->GetAlias());
 		//sql.append("\"");
 
 		if(pFilter!=NULL)
@@ -214,7 +217,8 @@ namespace auge
 		sql.append(fields);
 		sql.append(" from ");
 		//sql.append("\"");
-		sql.append(pFeatureClass->GetName());
+		//sql.append(pFeatureClass->GetName());
+		sql.append(pFeatureClass->GetAlias());
 		//sql.append("\"");
 
 		if(pFilter!=NULL)
@@ -309,14 +313,16 @@ namespace auge
 	{
 		sql = "select count(*)";
 		sql.append(" from ");
-		sql.append(pFeatureClass->GetName());
+		//sql.append(pFeatureClass->GetName());
+		sql.append(pFeatureClass->GetAlias());
 	}
 
 	void SQLBuilder::BuildCount(std::string& sql, GEnvelope& extent, FeatureClassPgs* pFeatureClass)
 	{
 		sql = "select count(*)";
 		sql.append(" from ");
-		sql.append(pFeatureClass->GetName());
+		//sql.append(pFeatureClass->GetName());
+		sql.append(pFeatureClass->GetAlias());
 
 		char where[AUGE_BUFFER_MAX];
 		//g_snprintf(where,AUGE_BUFFER_MAX," where (%s && 'BOX3D(%.7f %.7f,%.7f %.7f)'::box3d)", pFeatureClass->m_geom_filed_name.c_str(),
@@ -340,7 +346,8 @@ namespace auge
 	{
 		sql = "select count(*)";
 		sql.append(" from ");
-		sql.append(pFeatureClass->GetName());
+		//sql.append(pFeatureClass->GetName());
+		sql.append(pFeatureClass->GetAlias());
 
 		if(pFilter!=NULL)
 		{
@@ -1465,7 +1472,8 @@ namespace auge
 	{
 		sql = "delete ";		
 		sql.append(" from ");
-		sql.append(pFeatureClass->GetName());
+		//sql.append(pFeatureClass->GetName());
+		sql.append(pFeatureClass->GetAlias());
 
 		if(pFilter!=NULL)
 		{
@@ -1650,7 +1658,8 @@ namespace auge
 		bool first = true;
 
 		sql = "update ";
-		sql.append(pFeatureClass->GetName());
+		//sql.append(pFeatureClass->GetName());
+		sql.append(pFeatureClass->GetAlias());
 		sql.append(" set ");
 
 		pFieldNames->Reset();
@@ -1976,7 +1985,8 @@ namespace auge
 		sql.append(" as ");
 		sql.append(field_name);
 		sql.append(" from ");
-		sql.append(pFeatureClass->GetName());
+		//sql.append(pFeatureClass->GetName());
+		sql.append(pFeatureClass->GetAlias());
 		sql.append(" order by ");
 		sql.append(field_name);
 		sql.append(order==augeOrderAsc?" asc":" desc");
@@ -1990,7 +2000,8 @@ namespace auge
 		sql.append("), max(");
 		sql.append(field_name);
 		sql.append(") from ");
-		sql.append(pFeatureClass->GetName());
+		//sql.append(pFeatureClass->GetName());
+		sql.append(pFeatureClass->GetAlias());
 		return AG_SUCCESS;
 	}
 }

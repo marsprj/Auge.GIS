@@ -146,6 +146,10 @@ namespace auge
 	{	
 		FeatureClass* pFeatureClass = NULL;
 		pFeatureClass = pLayer->GetFeatureClass();
+		if(pFeatureClass==NULL)
+		{
+			return;
+		}
 
 		GFilter* pFilter = CreateViewFilter(pRule->GetFilter(), pFeatureClass);
 

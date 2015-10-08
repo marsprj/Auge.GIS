@@ -7,7 +7,7 @@ namespace auge
 {	
 	WorkspaceShp::WorkspaceShp()
 	{
-
+		m_user = -1;
 	}
 
 	WorkspaceShp::~WorkspaceShp()
@@ -18,6 +18,16 @@ namespace auge
 	DataEngine*	WorkspaceShp::GetEngine()
 	{
 		return augeGetDataEngineInstance();
+	}
+
+	void WorkspaceShp::SetUser(g_uint user)
+	{
+		m_user = user;
+	}
+
+	g_int WorkspaceShp::GetUser()
+	{
+		return m_user;
 	}
 
 	const char* WorkspaceShp::GetName()

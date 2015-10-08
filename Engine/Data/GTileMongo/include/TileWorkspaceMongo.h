@@ -21,6 +21,9 @@ namespace auge
 		//========================================================================
 		// Base Class
 		//========================================================================
+		virtual void			SetUser(g_uint user);
+		virtual g_int			GetUser();
+
 		virtual const char*		GetName();
 		virtual void			SetName(const char* name);
 
@@ -61,6 +64,8 @@ namespace auge
 		std::string			m_database;
 		std::string			m_connstring;
 		GPropertySet		m_props;
+
+		g_int				m_user;
 	};
 
 }

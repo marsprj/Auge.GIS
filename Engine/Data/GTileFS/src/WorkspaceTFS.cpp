@@ -9,6 +9,7 @@ namespace auge
 {
 	TileWorkspaceFS::TileWorkspaceFS()
 	{
+		m_user = -1;
 		m_pTileStore = NULL;
 
 		//m_tile_type = augeTileGoogleCRS84Quad;
@@ -22,6 +23,16 @@ namespace auge
 	TileWorkspaceFS::~TileWorkspaceFS()
 	{
 
+	}
+
+	void TileWorkspaceFS::SetUser(g_uint user)
+	{
+		m_user = user;
+	}
+
+	g_int TileWorkspaceFS::GetUser()
+	{
+		return m_user;
 	}
 
 	const char*	TileWorkspaceFS::GetName()

@@ -30,6 +30,9 @@ namespace auge
 		virtual	DataEngine*		GetEngine();
 
 	public:
+		virtual void			SetUser(g_uint user);
+		virtual g_int			GetUser();
+
 		virtual	RESULTCODE		SetConnectionString(const char* conn_string);
 		virtual const char*		GetConnectionString();
 
@@ -98,7 +101,9 @@ namespace auge
 		RESULTCODE				CreateRasterTable();
 		RESULTCODE				CreateRasterFolderTable();
 
+		RESULTCODE				AddMetaInfo(const char* name);
 		RESULTCODE				RemoveMetaInfo(const char* name);
+		RESULTCODE				UpdateDatasetAlias(g_int fid, const char* table_name);
 
 		ConnectionPgs*			GetConnectionW();
 	private:
@@ -114,6 +119,8 @@ namespace auge
 		std::string		g_feature_catalog_table;
 
 		RasterFolderImpl	m_raster_root_folder;
+
+		g_int			m_user;
 	};
 }
 

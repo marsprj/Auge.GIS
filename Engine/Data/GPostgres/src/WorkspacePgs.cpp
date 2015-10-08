@@ -21,6 +21,7 @@ namespace auge
 		g_feature_catalog_table = "g_feature_catalog";
 		g_raster_table  = "g_raster";
 		g_raster_folder_table = "g_raster_folder";
+		m_user = -1;
 
 
 //#ifdef WIN32
@@ -37,6 +38,16 @@ namespace auge
 	DataEngine*	WorkspacePgs::GetEngine()
 	{
 		return augeGetDataEngineInstance();
+	}
+
+	void WorkspacePgs::SetUser(g_uint user)
+	{
+		m_user = user;
+	}
+
+	g_int WorkspacePgs::GetUser()
+	{
+		return m_user;
 	}
 
 	const char* WorkspacePgs::GetName()
@@ -200,8 +211,22 @@ namespace auge
 			return NULL;
 		}
 
+		g_int fid = AddMetaInfo(name);
+		if(fid<=0)
+		{
+			return NULL;
+		}
+
 		RESULTCODE rc = AG_FAILURE;
-		rc = CreateTable(name, pFields);
+		char table_name[AUGE_NAME_MAX];
+		g_sprintf(table_name, "f_%d", fid);
+		rc = UpdateDatasetAlias(fid, table_name);
+		if(rc!=AG_SUCCESS)
+		{
+			return NULL;
+		}
+		
+		rc = CreateTable(table_name, pFields);
 		if(rc!=AG_SUCCESS)
 		{
 			return NULL;
@@ -209,15 +234,22 @@ namespace auge
 		GField* pField = pFields->GetGeometryField();
 		if(pField!=NULL)
 		{
-			rc = AddGeometryColumn(name, pField);
+			rc = AddGeometryColumn(table_name, pField);
 			if(rc!=AG_SUCCESS)
 			{
-				RemoveTable(name);
+				RemoveTable(table_name);
 				return NULL;
 			}
 		}
 
-		return OpenFeatureClass(name);
+		FeatureClassPgs* pFeatureClass = static_cast<FeatureClassPgs*>(OpenFeatureClass(name));
+		if(pFeatureClass==NULL)
+		{
+			return NULL;
+		}
+		//pFeatureClass->UpdateAlias(table_name);
+
+		return pFeatureClass;
 	}
 
 	RESULTCODE WorkspacePgs::RemoveFeatureClass(const char* name)
@@ -988,6 +1020,45 @@ namespace auge
 												uuid);
 		return pgConnection->ExecuteSQL(sql);
 	}
+
+	RESULTCODE WorkspacePgs::AddMetaInfo(const char* name)
+	{
+		char uuid[AUGE_PATH_MAX];
+		memset(uuid, 0, AUGE_PATH_MAX);
+		auge_generate_uuid(uuid, AUGE_PATH_MAX);
+
+		const char* format = "insert into %s (name, uuid, user_id) values('%s','%s',%d) returning gid";
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, format, g_feature_catalog_table.c_str(), name, uuid,m_user);
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		GResultSet* pResult = pgConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return AG_FAILURE;
+		}
+		g_uint gid = pResult->GetInt(0,0);
+		pResult->Release();
+		return gid;
+	}
+
+	RESULTCODE WorkspacePgs::UpdateDatasetAlias(g_int fid, const char* table_name)
+	{
+		if(table_name==NULL)
+		{
+			return AG_FAILURE;
+		}
+		const char* format = "update %s set alias='%s' where gid=%d";
+		char sql[AUGE_SQL_MAX];
+		g_snprintf(sql, AUGE_SQL_MAX, format, g_feature_catalog_table.c_str(), table_name, fid);
+
+		return GetConnectionW()->ExecuteSQL(sql);
+	}
 	
 	RESULTCODE WorkspacePgs::RemoveMetaInfo(const char* name)
 	{
@@ -1079,8 +1150,9 @@ namespace auge
 			"	  maxx double precision," \
 			"	  maxy double precision," \
 			"	  uuid character varying(128)," \
+			"	  user_id integer DEFAULT (-1)," \
 			"	  CONSTRAINT g_feature_catalog_pk PRIMARY KEY (gid)," \
-			"	  CONSTRAINT g_feature_catalog_name_uk UNIQUE (name)" \
+			/*"	  CONSTRAINT g_feature_catalog_name_uk UNIQUE (name)" \*/
 			"	)";
 		g_sprintf(sql, format, g_feature_catalog_table.c_str());
 		return pgConnection->ExecuteSQL(sql);

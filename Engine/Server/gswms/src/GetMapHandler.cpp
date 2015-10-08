@@ -217,9 +217,10 @@ namespace auge
 
 		char img_sfix[AUGE_EXT_MAX] = {0};		
 		char img_path[AUGE_PATH_MAX] = {0};
-		const char* img_name = pMap->GetUUID();
+		char img_name[AUGE_NAME_MAX] = {0};
+		//const char* img_name = pMap->GetUUID();
 		auge_get_image_suffix(pRequest->GetMimeType(), img_sfix, AUGE_EXT_MAX);
-		//auge_generate_uuid(img_name, AUGE_NAME_MAX);
+		auge_generate_uuid(img_name, AUGE_NAME_MAX);
 		const char* cache_path = pWebContext->GetCacheMapPath();
 		auge_make_path(img_path, NULL, cache_path, img_name, img_sfix);
 
@@ -235,7 +236,7 @@ namespace auge
 
 		char img_fname[AUGE_NAME_MAX];
 		memset(img_fname,0,AUGE_NAME_MAX);
-		auge_make_path(img_fname, NULL, NULL, img_name, img_sfix);
+		auge_make_path(img_fname, NULL, NULL, pMap->GetUUID(), img_sfix);
 		pCartoManager->SetMapThumbnail(-1, pMap->GetID(), img_fname);
 
 		return pMapResponse;

@@ -16,6 +16,9 @@ namespace auge
 		//========================================================================
 		// Base Class
 		//========================================================================
+		virtual void			SetUser(g_uint user);
+		virtual g_int			GetUser();
+
 		virtual const char*		GetName();
 		virtual void			SetName(const char* name);
 
@@ -60,6 +63,7 @@ namespace auge
 		const char*		GetPath();
 
 	private:
+		g_int			m_user;
 		std::string		m_name;
 		std::string		m_path;
 		std::string		m_connstring;

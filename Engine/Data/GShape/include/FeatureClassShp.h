@@ -22,6 +22,7 @@ namespace auge
 	public:
 		virtual augeDataSetType		GetType();
 		virtual const char*			GetName();
+		virtual const char*			GetAlias();
 		virtual g_uint				GetSRID();
 		virtual GEnvelope&			GetExtent();
 		virtual const char*			GetUUID();

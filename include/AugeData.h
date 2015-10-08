@@ -107,6 +107,8 @@ namespace auge
 		virtual RESULTCODE		RemoveDataSet(const char* name) = 0;
 
 		virtual	DataEngine*		GetEngine() = 0;
+
+		virtual void			SetUser(g_uint user) = 0;
 	};
 
 	class EnumWorkspace

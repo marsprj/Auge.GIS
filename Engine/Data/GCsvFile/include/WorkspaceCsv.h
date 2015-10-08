@@ -14,6 +14,8 @@ namespace auge
 		WorkspaceCsv();
 		virtual ~WorkspaceCsv();
 	public:
+		virtual void			SetUser(g_uint user);
+		virtual g_int			GetUser();
 		virtual const char*		GetName();
 		virtual void			SetName(const char* name);
 		virtual	DataEngine*		GetEngine();
@@ -41,6 +43,7 @@ namespace auge
 		std::string	m_connstring;
 		std::string	m_path;
 		std::string m_name;
+		g_int		m_user;
 	};
 }
 

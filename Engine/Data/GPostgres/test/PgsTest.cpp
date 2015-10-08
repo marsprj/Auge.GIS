@@ -41,7 +41,7 @@ void PgsTest::ReadTest()
 {
 	auge::FeatureClass* pFeatureClass = NULL;
 	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
-	pFeatureClass = m_pWorkspace->OpenFeatureClass("country");
+	//pFeatureClass = m_pWorkspace->OpenFeatureClass("country");
 	//pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi");
 	//pFeatureClass = m_pWorkspace->OpenFeatureClass("高等院校");
 	CPPUNIT_ASSERT(pFeatureClass!=NULL);

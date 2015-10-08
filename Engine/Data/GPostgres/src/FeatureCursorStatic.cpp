@@ -240,7 +240,8 @@ namespace auge
 		memset(now, 0, AUGE_NAME_MAX);
 		auge_get_sys_time_as_string(now, AUGE_PATH_MAX);
 		memset(m_cursor_name, 0, AUGE_NAME_MAX);
-		g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetName(), now);
+		//g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetName(), now);
+		g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetAlias(), now);
 		//auge_generate_uuid(m_cursor_name, AUGE_NAME_MAX);
 
 		std::string sql;
@@ -255,7 +256,8 @@ namespace auge
 		memset(now, 0, AUGE_NAME_MAX);
 		auge_get_sys_time_as_string(now, AUGE_PATH_MAX);
 		memset(m_cursor_name, 0, AUGE_NAME_MAX);
-		g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetName(), now);
+		//g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetName(), now);
+		g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetAlias(), now);
 		//auge_generate_uuid(m_cursor_name, AUGE_NAME_MAX);
 
 		std::string sql;
@@ -270,7 +272,8 @@ namespace auge
 		memset(now, 0, AUGE_NAME_MAX);
 		auge_get_sys_time_as_string(now, AUGE_PATH_MAX);
 		memset(m_cursor_name, 0, AUGE_NAME_MAX);
-		g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetName(), now);
+		//g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetName(), now);
+		g_sprintf(m_cursor_name, "%s_%s", m_pFeatureClass->GetAlias(), now);
 		//auge_generate_uuid(m_cursor_name, AUGE_NAME_MAX);
 
 		std::string sql;
@@ -285,7 +288,8 @@ namespace auge
 		memset(now, 0, AUGE_NAME_MAX);
 		auge_get_sys_time_as_string(now, AUGE_PATH_MAX);
 		memset(m_cursor_name, 0, AUGE_NAME_MAX);
-		g_sprintf(m_cursor_name, "%s_%s", pFeatureClass->GetName(), now);
+		//g_sprintf(m_cursor_name, "%s_%s", pFeatureClass->GetName(), now);
+		g_sprintf(m_cursor_name, "%s_%s", pFeatureClass->GetAlias(), now);
 		//auge_generate_uuid(m_cursor_name, AUGE_NAME_MAX);
 
 		std::string sql;

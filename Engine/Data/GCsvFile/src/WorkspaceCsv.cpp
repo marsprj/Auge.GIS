@@ -33,6 +33,16 @@ namespace auge
 		}
 		m_name = name;
 	}
+
+	void WorkspaceCsv::SetUser(g_uint user)
+	{
+		m_user = user;
+	}
+
+	g_int WorkspaceCsv::GetUser()
+	{
+		return m_user;
+	}
 	
 	RESULTCODE WorkspaceCsv::SetConnectionString(const char* conn_string)
 	{

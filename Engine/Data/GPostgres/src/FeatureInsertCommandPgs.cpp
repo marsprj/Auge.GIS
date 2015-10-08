@@ -36,7 +36,8 @@ namespace auge
 		}
 
 		std::string sql;
-		SQLBuilder::BuildInsertFeature(sql, m_pFeatureClass->GetName(), pFeature, m_pFeatureClass->GetSRID(), type);
+		//SQLBuilder::BuildInsertFeature(sql, m_pFeatureClass->GetName(), pFeature, m_pFeatureClass->GetSRID(), type);
+		SQLBuilder::BuildInsertFeature(sql, m_pFeatureClass->GetAlias(), pFeature, m_pFeatureClass->GetSRID(), type);
 		return m_pgConnection->ExecuteSQL(sql.c_str());
 	}
 

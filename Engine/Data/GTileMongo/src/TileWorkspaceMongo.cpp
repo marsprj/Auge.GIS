@@ -18,6 +18,7 @@ namespace auge
 		m_mongo = NULL;
 		m_mongo_db = NULL;
 		m_mongo_meta = NULL;
+		m_user = -1;
 
 		//m_tile_type = augeTileGoogleCRS84Quad;
 		//m_start_level = 1;
@@ -30,6 +31,16 @@ namespace auge
 	TileWorkspaceMongo::~TileWorkspaceMongo()
 	{
 		Close();
+	}
+
+	void TileWorkspaceMongo::SetUser(g_uint user)
+	{
+		m_user = user;
+	}
+
+	g_int TileWorkspaceMongo::GetUser()
+	{
+		return m_user;
 	}
 
 	const char*	TileWorkspaceMongo::GetName()

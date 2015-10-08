@@ -23,6 +23,7 @@ namespace auge
 	public:
 		virtual augeDataSetType		GetType();
 		virtual const char*			GetName();
+		virtual const char*			GetAlias();
 		virtual g_uint				GetSRID();
 		virtual GEnvelope&			GetExtent();
 		virtual const char*			GetUUID();
@@ -65,13 +66,14 @@ namespace auge
 		bool		GetGeometryInfo();
 
 		RESULTCODE	RemoveMetaInfo();
+		RESULTCODE	UpdateAlias(const char* alias);
 
 	private:
 		g_uint		ComputeCount();
 		RESULTCODE	ComputeExtent(GEnvelope& extent);
 
 		bool		HasMetaInfo();
-		RESULTCODE	GetMetaInfo();
+		bool		GetMetaInfo();
 		RESULTCODE	AddMetaInfo();
 		RESULTCODE	UpdateMetaInfo();
 

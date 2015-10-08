@@ -20,6 +20,9 @@ namespace auge
 		virtual	DataEngine*		GetEngine();
 
 	public:
+		virtual void			SetUser(g_uint user);
+		virtual g_int			GetUser();
+
 		/* DATABASE=d:\\data\\world */
 		virtual	RESULTCODE		SetConnectionString(const char* conn_string);
 		virtual const char*		GetConnectionString();
@@ -46,6 +49,8 @@ namespace auge
 		std::string	m_connstring;
 		std::string	m_path;
 		std::string m_name;
+
+		g_int	m_user;
 	};
 }
 
