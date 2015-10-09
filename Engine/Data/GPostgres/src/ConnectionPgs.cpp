@@ -163,7 +163,6 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-
 	void ConnectionPgs::Release()
 	{
 		if(!ReleaseRef())

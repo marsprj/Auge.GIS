@@ -1,5 +1,6 @@
 #include "FeatureClassByd.h"
 #include "FeatureCursorByd.h"
+#include "FeatureInsertCommandByd.h"
 #include "WorkspaceByd.h"
 #include "AugeField.h"
 
@@ -23,6 +24,11 @@ namespace auge
 	}
 
 	const char*	FeatureClassByd::GetName()
+	{
+		return m_name.c_str();
+	}
+
+	const char*	FeatureClassByd::GetAlias()
 	{
 		return m_name.c_str();
 	}
@@ -91,6 +97,7 @@ namespace auge
 	{
 		FeatureCursorByd* pCursor = new FeatureCursorByd();
 		pCursor->Create(this);
+		this->AddRef();
 
 		return pCursor;
 	}
@@ -99,6 +106,7 @@ namespace auge
 	{
 		FeatureCursorByd* pCursor = new FeatureCursorByd();
 		pCursor->Create(this, extent);
+		this->AddRef();
 		return pCursor;
 	}
 
@@ -106,6 +114,7 @@ namespace auge
 	{
 		FeatureCursorByd* pCursor = new FeatureCursorByd();
 		pCursor->Create(this, pFilter);
+		this->AddRef();
 		return pCursor;
 	}
 
@@ -113,6 +122,7 @@ namespace auge
 	{
 		FeatureCursorByd* pCursor = new FeatureCursorByd();
 		pCursor->Create(this, pQuery);
+		this->AddRef();
 		return pCursor;
 	}
 
@@ -126,6 +136,11 @@ namespace auge
 		return NULL;
 	}
 
+	RESULTCODE FeatureClassByd::UpdateFeature(EnumString* pFieldNames, EnumValue* pValues, GFilter* pFilter)
+	{
+		return AG_SUCCESS;
+	}
+
 	RESULTCODE FeatureClassByd::RemoveFeature(GFilter* pFilter)
 	{
 		return AG_SUCCESS;
@@ -133,7 +148,7 @@ namespace auge
 
 	FeatureInsertCommand* FeatureClassByd::CreateInsertCommand()
 	{
-		return NULL;
+		return (new FeatureInsertCommandByd(this));
 	}
 
 	Feature* FeatureClassByd::NewFeature()
@@ -151,9 +166,19 @@ namespace auge
 		m_name = name;
 		m_pWorkspace = pWorkspace;
 
-		if(!GetGeometryMeta())
+		GetGeometryMeta();
+		//if(!GetGeometryMeta())
+		//{
+		//	return false;
+		//}
+
+		if(m_pFields==NULL)
 		{
-			return false;
+			m_pFields = CreateFields();
+			if(m_pFields==NULL)
+			{
+				return false;
+			}
 		}
 
 		return true;
@@ -326,10 +351,11 @@ namespace auge
 				pField_2->SetType(augeFieldTypeDouble);
 				break;
 			case CPPI_LBYTE_TYPE:
-				pField_2->SetType(augeFieldTypeBLOB);
-				break;
+				//pField_2->SetType(augeFieldTypeBLOB);
+				//break;
 			case CPPI_GEOMETRY_TYPE:
 				pField_2->SetType(augeFieldTypeGeometry);
+				m_geom_field = fname;
 				break;
 			}
 		}		
@@ -359,5 +385,10 @@ namespace auge
 			break;
 		}
 		return augeGTNull;
+	}
+
+	RESULTCODE FeatureClassByd::BuildSpatialIndex()
+	{
+		return AG_SUCCESS;
 	}
 }

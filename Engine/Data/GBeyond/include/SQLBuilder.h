@@ -10,6 +10,7 @@ namespace auge
 	class GField;
 	class GFields;
 	class GFilter;
+	class Feature;
 	class FeatureClass;
 	class FeatureClassByd;
 
@@ -25,6 +26,8 @@ namespace auge
 
 		static void BuildFields(std::string& fields, FeatureClassByd* pFeatureClass);
 		static void BuildFields(std::string& fields, GQuery* pQuery, FeatureClassByd* pFeatureClass);
+
+		static void BuildInsertFeature(std::string& sql, FeatureClassByd* pFeatureClass, Feature* pFeature);
 
 		static RESULTCODE BuildFilter(std::string& sql, FeatureClassByd* pFeatureClass, GEnvelope& extent);
 		static RESULTCODE BuildFilter(std::string& sql, FeatureClassByd* pFeatureClass, GFilter* pFilter);

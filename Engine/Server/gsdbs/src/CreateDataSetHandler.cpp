@@ -138,7 +138,6 @@ namespace auge
 
 	WebResponse* CreateDataSetHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
-		//return Execute(pWebRequest, pUser);
-		return NULL;
+		return Execute(pWebRequest, pUser);
 	}
 }

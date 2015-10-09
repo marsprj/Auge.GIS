@@ -16,6 +16,7 @@ namespace auge
 	{
 		friend class FeatureByd;
 		friend class FeatureCursorByd;
+		friend class FeatureInsertCommandByd;
 		friend class SQLBuilder;
 
 	public:
@@ -23,6 +24,7 @@ namespace auge
 		virtual ~FeatureClassByd();
 	public:
 		virtual const char*			GetName();
+		virtual const char*			GetAlias();
 		virtual augeDataSetType		GetType();
 		virtual g_uint				GetSRID();
 		virtual GEnvelope&			GetExtent();
@@ -45,7 +47,10 @@ namespace auge
 		virtual EnumValue*			GetUniqueValue(const char* field, augeOrderType order=augeOrderAsc);
 		virtual EnumValue*			GetMinMaxValue(const char* field);
 
+		virtual RESULTCODE			UpdateFeature(EnumString* pFieldNames, EnumValue* pValues, GFilter* pFilter);
 		virtual RESULTCODE			RemoveFeature(GFilter* pFilter);
+
+		virtual RESULTCODE			BuildSpatialIndex();
 
 		virtual FeatureInsertCommand* CreateInsertCommand();
 

@@ -65,12 +65,5 @@ namespace auge
 -------------------------------------------------------------------------
 1)
 user=user1&service=gps&version=1.0.0&request=CsvImport&sourceName=db1&typeName=people_age_60&csvpath=/&csvname=60_people.csv&srid=4326
-
-user=user1&service=gps&version=1.0.0&request=CsvImport&sourceName=db1&typeName=cities_xx&csvpath=/ddd&csvname=cities&srid=4326
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=CsvImport&sourceName=db1&typeName=bbb&csvpath=D:/GeoBeans/data/world&csvname=cities&srid=4326
-
-
-service=gps&version=1.0.0&request=CsvImport&sourceName=db1&typeName=aaaa&csvname=cities.zip&srid=4326
-http://127.0.0.1:8088/ows/admin/mgr?service=gps&version=1.0.0&request=CsvImport&sourceName=db1&typeName=aaaa&csvname=cities.zip&srid=4326
-
+http://192.168.111.152:8088/ows/user1/mgr?service=gps&version=1.0.0&request=CsvImport&sourceName=db1&typeName=people_age_60&csvpath=/&csvname=60_people.csv&srid=4326
 ************************************************************************/

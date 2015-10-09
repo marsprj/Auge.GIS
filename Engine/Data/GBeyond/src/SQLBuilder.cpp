@@ -1215,4 +1215,185 @@ namespace auge
 
 		return AG_SUCCESS;
 	}
+
+	void SQLBuilder::BuildInsertFeature(std::string& sql, FeatureClassByd* pFeatureClass, Feature* pFeature)
+	{
+		if (pFeatureClass == NULL || pFeature == NULL)
+		{
+			return;
+		}
+
+		char str[AUGE_BUFFER_MAX];
+		const char* fname = NULL;
+		const char* className = pFeatureClass->GetName();
+		GFields* pFields = NULL;
+		GField* pField = NULL;
+		GValue* pValue = NULL;
+		augeFieldType ftype;
+		bool first = true;
+		std::string fields = "";
+		std::string values = "";
+		
+		if (className != NULL)
+		{
+			pFields = pFeatureClass->GetFields();
+			int nFields = pFields->Count();
+			for (int i = 0; i < nFields; ++i)
+			{
+				pField = pFields->GetField(i);
+				if (pField == NULL)
+				{
+					continue;
+				}
+				fname = pField->GetName();
+				if (strcmp(fname,"fid") == 0)
+				{
+					continue;
+				}
+				pValue = pFeature->GetValue(fname);
+				if(pValue==NULL)
+				{
+					continue;
+				}
+				
+				if(first)
+				{
+					first = false;
+				}
+				else
+				{
+					fields.append(",");
+					values.append(",");
+				}
+
+				ftype = pField->GetType();
+				switch(ftype)
+				{					 
+				case augeFieldTypeShort:
+					{
+						g_snprintf(str, AUGE_BUFFER_MAX,"%d",pValue->GetShort());
+						fields.append(fname);
+						values.append(str);
+					}
+					break;
+				case augeFieldTypeInt:
+					{
+						g_snprintf(str, AUGE_BUFFER_MAX,"%d",pValue->GetInt());
+						fields.append(fname);
+						values.append(str);
+					}
+					break;
+				case augeFieldTypeLong:
+					{
+						g_snprintf(str, AUGE_BUFFER_MAX,"%d",pValue->GetLong());
+						fields.append(fname);
+						values.append(str);
+					}
+					break;
+				case augeFieldTypeInt64:
+					{
+						g_snprintf(str, AUGE_BUFFER_MAX,"%d",pValue->GetInt64());
+						fields.append(fname);
+						values.append(str);
+					}
+					break;
+				case augeFieldTypeFloat:
+					{
+						g_snprintf(str, AUGE_BUFFER_MAX,"%f",pValue->GetFloat());
+						fields.append(fname);
+						values.append(str);
+					}
+					break;
+				case augeFieldTypeDouble:
+					{
+						g_snprintf(str, AUGE_BUFFER_MAX,"%f",pValue->GetDouble());
+						fields.append(fname);
+						values.append(str);
+					}
+					break;
+				case augeFieldTypeChar:			 
+					{
+						g_snprintf(str, AUGE_BUFFER_MAX,"'%c'",pValue->GetChar());
+						fields.append(fname);
+						values.append(str);
+					}
+					break;
+				case augeFieldTypeString:
+					{
+						const char* val = pValue->GetString();
+						if(val!=NULL)
+						{
+							auge_normalize_single_quote(str, AUGE_MSG_MAX, val);
+							fields.append(fname);
+							values.append("'");
+							values.append(str);
+							values.append("'");
+						}
+					}
+					break;
+				case augeFieldTypeTime:	
+					{
+						fields.append(pField->GetName());
+
+						TIME_STRU* pTimeStru = pValue->GetTime();
+						if(pTimeStru==NULL)
+						{
+							values.append("1900-01-01 00:00:00'");
+						}
+						else
+						{
+							if(pTimeStru->usYear==0)
+								pTimeStru->usYear = 1;
+							if(pTimeStru->usMonth==0)
+								pTimeStru->usMonth=1;
+							if(pTimeStru->usDay==0)
+								pTimeStru->usDay=1;
+							sprintf(str, "'%d-%d-%d %d:%d:%d'", pTimeStru->usYear, pTimeStru->usMonth, pTimeStru->usDay, 
+								pTimeStru->usHour, pTimeStru->usMinute, pTimeStru->usSecond);
+							values.append(str);
+						}
+					}
+					break;
+				case augeFieldTypeBool:			 
+					{
+						fields.append(pField->GetName());
+						values.append(pValue->GetBool() ? "true" : "false");
+					}
+					break;
+				case augeFieldTypeBLOB:			 
+					{
+
+					}
+					break;
+				case  augeFieldTypeGeometry:
+					{
+						Geometry *pGeometry = pValue->GetGeometry();
+						if(pGeometry!=NULL)
+						{
+							const char* wkt = pGeometry->AsText();
+							if(wkt!=NULL)
+							{
+								fields.append(pField->GetName());
+
+								values.append("ST_GeomFromText(");
+								values.append("'");
+								values.append(wkt);
+								values.append("'");
+								values.append(")");
+							}
+						}
+					}
+					break;
+				}
+				pValue->Release();
+			}
+		}
+		sql= "insert into ";
+		sql.append(className);
+		sql.append("(");
+		sql.append(fields);
+		sql.append(") values(");
+		sql.append(values);
+		sql.append(")");
+	}
 }

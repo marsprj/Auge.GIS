@@ -235,11 +235,12 @@ namespace auge
 			return NULL;
 		}
 		CPPIDataItem* pbydItem = m_pbydRow->GetItem(i);
-		//CPPIDataType type = pbydItem->GetDataType();
+		int length = pbydItem->GetLength();
+		CPPIDataType type = pbydItem->GetDataType();
 		//CPPIString val = pbydItem->GetAsString();
 		//CPPISizeType length = val.length();
 		//CPPISizeType size = val.size();
-		//const char* str = pbydItem->GetAsString().c_str();
+		const char* str = pbydItem->GetAsString().c_str();
 		//str = (const char*)pbydItem->GetAsUString().c_str();
 		return pbydItem->GetAsString().c_str();
 	}
@@ -316,6 +317,8 @@ namespace auge
 			return NULL;
 		}
 		CPPIUInt2 item = m_pbydFields->FindField(name);
+		CPPIField* f = m_pbydFields->GetField(item);
+		CPPIDataType type = f->GetType();
 		return GetInt(item);
 	}
 

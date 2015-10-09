@@ -509,6 +509,11 @@ namespace auge
 				return pWorkspace;
 			}
 		}
+
+		char msg[AUGE_MSG_MAX];
+		g_snprintf(msg, AUGE_MSG_MAX, "数据源[%s]不存在", name);
+		GError* pError = augeGetErrorInstance();
+		pError->SetError(msg);
 		return NULL;
 	}
 

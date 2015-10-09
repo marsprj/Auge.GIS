@@ -50,6 +50,8 @@ namespace auge
 		virtual RESULTCODE			UpdateFeature(EnumString* pFieldNames, EnumValue* pValues, GFilter* pFilter);
 		virtual RESULTCODE			RemoveFeature(GFilter* pFilter);
 
+		virtual RESULTCODE			BuildSpatialIndex();
+
 		virtual FeatureInsertCommand* CreateInsertCommand();
 
 		virtual Feature*			NewFeature();

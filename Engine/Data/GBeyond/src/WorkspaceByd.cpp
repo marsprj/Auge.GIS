@@ -8,6 +8,7 @@ namespace auge
 {	
 	WorkspaceByd::WorkspaceByd()
 	{
+		m_user = -1;
 		m_pbydEnvironment = NULL;
 		m_pbydConnction = NULL;
 	}
@@ -39,6 +40,16 @@ namespace auge
 			m_name.clear();
 		}
 		m_name = name;
+	}
+
+	void WorkspaceByd::SetUser(g_uint user)
+	{
+		m_user = user;
+	}
+
+	g_int WorkspaceByd::GetUser()
+	{
+		return m_user;
 	}
 	
 	RESULTCODE WorkspaceByd::SetConnectionString(const char* conn_string)

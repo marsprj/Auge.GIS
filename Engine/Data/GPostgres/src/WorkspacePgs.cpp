@@ -11,9 +11,9 @@
 namespace auge
 {
 	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.160"
-	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.159"
+	#define AUGE_WRITABLE_DB_SERVER	"192.168.111.159"
 	//#define AUGE_WRITABLE_DB_SERVER	"127.0.0.1"
-	#define AUGE_WRITABLE_DB_SERVER	"182.92.114.80"
+	//#define AUGE_WRITABLE_DB_SERVER	"182.92.114.80"
 	
 	WorkspacePgs::WorkspacePgs():
 	m_schema("public")
@@ -273,7 +273,8 @@ namespace auge
 
 	EnumDataSet* WorkspacePgs::GetFeatureClasses()
 	{
-		const char* sql = "select f_table_name from geometry_columns order by f_table_name";
+		char sql[AUGE_SQL_MAX];
+		g_snprintf(sql, AUGE_SQL_MAX, "select name from g_feature_catalog where user_id=%d order by name", GetUser());
 
 		EnumDataSetImpl *pEnum = new EnumDataSetImpl();
 		PGresult* pgResult = m_pgConnection_r.PgExecute(sql);
@@ -301,52 +302,88 @@ namespace auge
 		return pEnum;
 	}
 
+
+	//EnumDataSet* WorkspacePgs::GetFeatureClasses()
+	//{
+	//	const char* sql = "select f_table_name from geometry_columns order by f_table_name";
+
+	//	EnumDataSetImpl *pEnum = new EnumDataSetImpl();
+	//	PGresult* pgResult = m_pgConnection_r.PgExecute(sql);
+	//	if(pgResult==NULL)
+	//	{
+	//		return pEnum;
+	//	}
+
+	//	const char* className = NULL;
+	//	FeatureClass* pFeatureClass = NULL;	
+
+	//	int nTuples = PQntuples(pgResult);
+	//	for(int i=0;i<nTuples; i++)
+	//	{
+	//		className = PQgetvalue(pgResult, i, 0);
+	//		pFeatureClass = OpenFeatureClass(className);
+	//		if(pFeatureClass!=NULL)
+	//		{
+	//			pEnum->Add(pFeatureClass);
+	//		}
+	//	}
+
+	//	PQclear(pgResult);
+
+	//	return pEnum;
+	//}
+
 	EnumDataSet* WorkspacePgs::GetDataSets()
 	{
-		EnumDataSetImpl* pEnumDataset = (EnumDataSetImpl*)(GetFeatureClasses());
-
-		char sql[AUGE_SQL_MAX];
-		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, "select tablename from pg_tables where schemaname='%s' order by tablename",m_schema.c_str());
-
-		PGresult* pgResult = m_pgConnection_r.PgExecute(sql);
-		if(pgResult!=NULL)
-		{	
-			const char* tname = NULL;
-			DataSet* pDataset = NULL;
-			g_uint count = PQntuples(pgResult);
-			for(g_uint i=0; i<count; i++)
-			{
-				tname = PQgetvalue(pgResult,i,0);
-				if((g_stricmp(tname,"spatial_ref_sys")==0)||(g_stricmp(tname,"g_raster")==0))
-				{
-					continue;
-				}
-
-				bool found = false;
-				
-				pEnumDataset->Reset();
-				while((pDataset=pEnumDataset->Next())!=NULL)
-				{
-					if(g_stricmp(tname,pDataset->GetName())==0)
-					{
-						found = true;
-						break;
-					}
-				}
-				if(!found)
-				{
-					AttributeDataSetPgs* pattrDataset = new AttributeDataSetPgs();
-					pattrDataset->Create(tname, this, pgResult);
-					pEnumDataset->Add(pattrDataset);
-				}
-			}
-			
-			PQclear(pgResult);
-		}
-
-		return pEnumDataset;
+		return GetFeatureClasses();
 	}
+	
+	//EnumDataSet* WorkspacePgs::GetDataSets()
+	//{
+	//	EnumDataSetImpl* pEnumDataset = (EnumDataSetImpl*)(GetFeatureClasses());
+
+	//	char sql[AUGE_SQL_MAX];
+	//	memset(sql, 0, AUGE_SQL_MAX);
+	//	g_snprintf(sql, AUGE_SQL_MAX, "select tablename from pg_tables where schemaname='%s' order by tablename",m_schema.c_str());
+
+	//	PGresult* pgResult = m_pgConnection_r.PgExecute(sql);
+	//	if(pgResult!=NULL)
+	//	{	
+	//		const char* tname = NULL;
+	//		DataSet* pDataset = NULL;
+	//		g_uint count = PQntuples(pgResult);
+	//		for(g_uint i=0; i<count; i++)
+	//		{
+	//			tname = PQgetvalue(pgResult,i,0);
+	//			if((g_stricmp(tname,"spatial_ref_sys")==0)||(g_stricmp(tname,"g_raster")==0))
+	//			{
+	//				continue;
+	//			}
+
+	//			bool found = false;
+	//			
+	//			pEnumDataset->Reset();
+	//			while((pDataset=pEnumDataset->Next())!=NULL)
+	//			{
+	//				if(g_stricmp(tname,pDataset->GetName())==0)
+	//				{
+	//					found = true;
+	//					break;
+	//				}
+	//			}
+	//			if(!found)
+	//			{
+	//				AttributeDataSetPgs* pattrDataset = new AttributeDataSetPgs();
+	//				pattrDataset->Create(tname, this, pgResult);
+	//				pEnumDataset->Add(pattrDataset);
+	//			}
+	//		}
+	//		
+	//		PQclear(pgResult);
+	//	}
+
+	//	return pEnumDataset;
+	//}
 
 	DataSet* WorkspacePgs::OpenDataSet(const char* name)
 	{

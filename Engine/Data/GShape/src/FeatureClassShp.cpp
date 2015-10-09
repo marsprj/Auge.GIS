@@ -360,4 +360,9 @@ namespace auge
 	{
 		return AG_SUCCESS;
 	}
+
+	RESULTCODE FeatureClassShp::BuildSpatialIndex()
+	{
+		return AG_SUCCESS;
+	}
 }

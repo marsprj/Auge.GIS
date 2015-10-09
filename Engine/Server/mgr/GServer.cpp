@@ -67,8 +67,8 @@ namespace auge
 
 			g_ulong ts = auge_get_time();
 
-			const char* user_name = cgi["user"];
-			//const char* user_name = "user1";
+			//const char* user_name = cgi["user"];
+			const char* user_name = "user1";
 
 			User* pUser = m_pUserManager->GetUser(user_name);
 			if(pUser==NULL)
@@ -243,6 +243,7 @@ namespace auge
 				//const char* xml_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><wfs:GetFeature xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" service=\"WFS\" version=\"1.0.0\" outputFormat=\"GML2\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\" sourceName=\"test2\"><wfs:Query typeName=\"gc_aqi\"><wfs:PropertyName>aqi</wfs:PropertyName><ogc:Filter><ogc:PropertyIsEqualTo><ogc:PropertyName>time_point</ogc:PropertyName><ogc:Literal>2014-05-19 08:00:00</ogc:Literal></ogc:PropertyIsEqualTo></ogc:Filter></wfs:Query></wfs:GetFeature>";
 				//const char* xml_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><wfs:GetFeature xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" service=\"WFS\" version=\"1.0.0\" outputFormat=\"GML2\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\" sourceName=\"test2\"><wfs:Query typeName=\"gc_aqi\"><wfs:PropertyName>pm2_5</wfs:PropertyName><wfs:PropertyName>pos</wfs:PropertyName><wfs:PropertyName>position_name</wfs:PropertyName><ogc:Filter><ogc:And><ogc:PropertyIsEqualTo><ogc:PropertyName>time_point</ogc:PropertyName><ogc:Literal>2014-05-19 08:00:00</ogc:Literal></ogc:PropertyIsEqualTo><ogc:BBOX><ogc:PropertyName>pos</ogc:PropertyName><gml:Envelope xmlns:gml=\"http://www.opengis.net/gml\"><gml:lowerCorner>0.0 0.0</gml:lowerCorner><gml:upperCorner>180.0 90.0</gml:upperCorner></gml:Envelope></ogc:BBOX></ogc:And></ogc:Filter></wfs:Query></wfs:GetFeature>";
 				//const char* xml_string = "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\" mapName=\"map2\" xmlns:world=\"www.world.ac.cn\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\"><wfs:Query typeName=\"country\">	<Filter>		<Within>			<PropertyName>shape</PropertyName> <gml:Point><gml:coordinates xmlns:gml=\"http://www.opengis.net/gml\" decimal=\".\" cs=\",\" ts=\" \">7.913751714677634,28.96000514403292</gml:coordinates></gml:Point>		</Within>	</Filter></wfs:Query></wfs:GetFeature>";
+				//const char* xml_string = "<?xml version=\"1.0\" encoding=\"GBK\"?><CreateDataSet 	service=\"dbs\" 	version=\"1.0.0\" 	sourceName=\"ceshi\" 	dataSetName=\"60_people\"><Fields><Field><Name>地区</Name><Type>string</Type><Length>8</Length></Field><Field><Name>合计</Name><Type>int</Type></Field><Field><Name>健康</Name><Type>int</Type></Field><Field><Name>基本健康</Name><Type>int</Type></Field><Field><Name>不健康生活能自理</Name><Type>int</Type></Field><Field><Name>生活不能自理</Name><Type>int</Type></Field></Fields></CreateDataSet>";
 				//m_pLogger->Trace("[Request]",__FILE__, __LINE__);
 				m_pLogger->Trace(xml_string,__FILE__, __LINE__);
 

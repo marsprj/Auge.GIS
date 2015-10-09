@@ -13,11 +13,14 @@ namespace auge
 	{
 		friend class FeatureClassByd;
 		friend class FeatureCursorByd;
+		friend class FeatureInsertCommandByd;
 
 	public:
 		WorkspaceByd();
 		virtual ~WorkspaceByd();
 	public:
+		virtual void			SetUser(g_uint user);
+		virtual g_int			GetUser();
 		virtual const char*		GetName();
 		virtual void			SetName(const char* name);
 		virtual	DataEngine*		GetEngine();
@@ -42,8 +45,9 @@ namespace auge
 		virtual RESULTCODE		RemoveFeatureClass(const char* name);
 
 
-	private:
+	public:
 		RESULTCODE	ExecuteSQL(const char* sql);
+	private:
 		bool		CreateSequence(const char* name);
 		bool		CreateTable(const char* name, GFields* pFields);
 
@@ -54,6 +58,8 @@ namespace auge
 		std::string		m_name;
 		std::string		m_connstring;
 		GPropertySet	m_props;
+
+		g_int			m_user;
 	};
 }
 

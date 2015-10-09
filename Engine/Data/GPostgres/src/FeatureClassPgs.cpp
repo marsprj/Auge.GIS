@@ -974,4 +974,9 @@ namespace auge
 
 		return m_pWorkspace->GetConnectionW()->ExecuteSQL(sql);
 	}
+
+	RESULTCODE FeatureClassPgs::BuildSpatialIndex()
+	{
+		return AG_SUCCESS;
+	}
 }
