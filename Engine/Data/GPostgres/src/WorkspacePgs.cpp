@@ -259,8 +259,15 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		FeatureClass* pFeatureClass = OpenFeatureClass(name);
+		if(pFeatureClass==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* alias = pFeatureClass->GetAlias();
 		RESULTCODE rc = AG_SUCCESS;
-		rc = RemoveTable(name);
+		rc = RemoveTable(alias);
 		if(rc!=AG_SUCCESS)
 		{
 			return AG_SUCCESS;
@@ -268,13 +275,14 @@ namespace auge
 
 		RemoveMetaInfo(name);
 
-		return UnRegiseterGeometryColumn(name);
+		return UnRegiseterGeometryColumn(alias);
 	}
 
 	EnumDataSet* WorkspacePgs::GetFeatureClasses()
 	{
 		char sql[AUGE_SQL_MAX];
 		g_snprintf(sql, AUGE_SQL_MAX, "select name from g_feature_catalog where user_id=%d order by name", GetUser());
+		//	const char* sql = "select f_table_name from geometry_columns order by f_table_name";
 
 		EnumDataSetImpl *pEnum = new EnumDataSetImpl();
 		PGresult* pgResult = m_pgConnection_r.PgExecute(sql);
@@ -305,7 +313,7 @@ namespace auge
 
 	//EnumDataSet* WorkspacePgs::GetFeatureClasses()
 	//{
-	//	const char* sql = "select f_table_name from geometry_columns order by f_table_name";
+	
 
 	//	EnumDataSetImpl *pEnum = new EnumDataSetImpl();
 	//	PGresult* pgResult = m_pgConnection_r.PgExecute(sql);
@@ -1105,10 +1113,10 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		const char* format = "delete from %s where name='%s'";
+		const char* format = "delete from %s where name='%s' and user_id=%d";
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, format, g_feature_catalog_table.c_str(), name);
+		g_snprintf(sql, AUGE_SQL_MAX, format, g_feature_catalog_table.c_str(), name, m_user);
 		return pgConnection->ExecuteSQL(sql);
 	}
 
