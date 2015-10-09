@@ -85,7 +85,13 @@ namespace auge
 
 	g_uint FeatureClassByd::GetCount(GEnvelope& extent)
 	{
-		return 0;
+		std::string sql;
+		SQLBuilder::BuildCount(sql, extent, this);
+		PGresult* pgResult =  m_pWorkspace->m_pgConnection_r.PgExecute(sql.c_str());
+		g_uint count = atoi(PQgetvalue(pgResult,0,0));
+		PQclear(pgResult);
+
+		return count;
 	}
 
 	g_uint FeatureClassByd::GetCount(GFilter* pFilter)

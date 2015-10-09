@@ -80,6 +80,7 @@ namespace auge
 		pFields = pFieldFactory->CreateFields();
 
 		char* str = strdup(headers.c_str());
+		auge_str_trim_last_r_n(str);
 		char* ptr = strtok(str, ",");
 		while(ptr!=NULL)
 		{

@@ -221,6 +221,23 @@ namespace auge
 		}
 	}
 
+	void auge_str_trim_last_r_n(char* str)
+	{
+		if(str==NULL)
+		{
+			return;
+		}
+		size_t len = strlen(str);
+		if(len==0)
+		{
+			return;
+		}
+		if((str[len-1]=='\r') || (str[len-1]=='\n'))
+		{
+			str[len-1] = '0';
+		}
+	}
+
 	void auge_normalize_single_quote(char* output, size_t size, const char* input)
 	{
 		memset(output, 0 , size);

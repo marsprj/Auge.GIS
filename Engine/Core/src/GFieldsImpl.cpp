@@ -53,8 +53,8 @@ namespace auge
 			pagField = (*iter);
 			if(pagField)
 			{
-				const char* szFieldNanme = pagField->GetName();
-				if(g_stricmp(szName, szFieldNanme)==0)
+				const char* szFieldName = pagField->GetName();
+				if(g_stricmp(szName, szFieldName)==0)
 				{
 					return nIndex;
 				}

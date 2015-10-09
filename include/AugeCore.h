@@ -367,6 +367,7 @@ namespace auge
 		AUGE_API g_int		auge_find_last_char(const char *str, char ch);
 		AUGE_API void		auge_str_upper(char* str);
 		AUGE_API void		auge_str_lower(char* str);
+		AUGE_API void		auge_str_trim_last_r_n(char* str);
 		AUGE_API void		auge_normalize_single_quote(char* output, size_t size, const char* input);
 
 		AUGE_API void		auge_generate_uuid(char* uuid, size_t size);

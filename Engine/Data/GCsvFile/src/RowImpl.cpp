@@ -132,6 +132,7 @@ namespace auge
 	{
 		m_pDataset = pDataset;
 		m_line = strdup(line);
+		auge_str_trim_last_r_n(m_line);
 
 		GFields* pFields = pDataset->GetFields();
 		m_field_count = pFields->Count();

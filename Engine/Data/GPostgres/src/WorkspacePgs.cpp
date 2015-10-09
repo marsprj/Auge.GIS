@@ -116,7 +116,7 @@ namespace auge
 		m_raster_root_folder.Create(0, "/", "/", "/", this);
 
 		char msg[AUGE_MSG_MAX];
-		g_sprintf(msg, "Wokspace [%d] is opened.", m_name.c_str());
+		g_sprintf(msg, "Wokspace [%s] is opened.", m_name.c_str());
 		augeGetLoggerInstance()->Info(msg, __FILE__, __LINE__);
 
 		return rc;
@@ -128,7 +128,7 @@ namespace auge
 		m_pgConnection_w.Close();
 
 		char msg[AUGE_MSG_MAX];
-		g_sprintf(msg, "Wokspace [%d] is closed.", m_name.c_str());
+		g_sprintf(msg, "Wokspace [%s] is closed.", m_name.c_str());
 		augeGetLoggerInstance()->Info(msg, __FILE__, __LINE__);
 	}
 
