@@ -206,7 +206,6 @@ namespace auge
 		if(conent_type==NULL)
 		{
 			szService = cgi["service"];
-			szService = "wfs";
 			pWebEngine = m_pWebEngineManager->GetEngine(szService);
 			if(pWebEngine==NULL)
 			{
