@@ -112,7 +112,7 @@ namespace auge
 			return pExpResponse;
 		}
 		
-		if(!strcmp(pdbUser->GetPassword(), pswd));
+		if(strcmp(pdbUser->GetPassword(), pswd));
 		{
 			const char* msg = "ÃÜÂë´íÎó";
 			GError* pError = augeGetErrorInstance();
