@@ -452,3 +452,10 @@ void BydTest::RefreshFeatureClass()
 	}
 	pFeatureClasses->Release();
 }
+
+void BydTest::GetCount()
+{
+	auge::FeatureClass* pFeatureClass = m_pWorkspace->OpenFeatureClass("cities_3");
+	g_uint count = pFeatureClass->GetCount();
+	printf("%d",count);
+}

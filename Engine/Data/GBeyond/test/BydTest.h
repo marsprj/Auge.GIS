@@ -22,6 +22,7 @@ class BydTest : public CppUnit::TestFixture
 //	CPPUNIT_TEST(GetAQI);
 //	CPPUNIT_TEST(GetAQIQuery);
 //	CPPUNIT_TEST(RefreshFeatureClass);
+	CPPUNIT_TEST(GetCount);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -46,6 +47,8 @@ private:
 	void GetAQIQuery();
 
 	void RefreshFeatureClass();
+
+	void GetCount();
 
 private:
 	auge::FeatureWorkspace* m_pWorkspace;

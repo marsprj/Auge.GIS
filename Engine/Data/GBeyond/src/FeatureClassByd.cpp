@@ -2,6 +2,7 @@
 #include "FeatureCursorByd.h"
 #include "FeatureInsertCommandByd.h"
 #include "WorkspaceByd.h"
+#include "SQLBuilder.h"
 #include "AugeField.h"
 
 namespace auge
@@ -80,18 +81,67 @@ namespace auge
 
 	g_uint FeatureClassByd::GetCount()
 	{
-		return 0;
+		std::string sql;
+		SQLBuilder::BuildCount(sql, this);
+		
+		CPPIRow* row = NULL;
+		CPPIDataItem* item = NULL;
+		CPPIResultSet* rst = NULL;
+		CPPIStatement* stmt = NULL;
+		CPPIConnection* conn = m_pWorkspace->m_pbydConnction;
+		CPPIEnvironment* env = m_pWorkspace->m_pbydEnvironment;
+
+		stmt = m_pWorkspace->m_pbydConnction->CreateStatement();
+		rst = stmt->ExecuteQuery(CATEXT(sql));
+		if(rst==NULL)
+		{
+			GError* pError = augeGetErrorInstance();
+			GLogger* pLogger = augeGetLoggerInstance();
+
+			CPPIString msg = env->GetErrorMessage()->GetErrorString();
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			conn->CloseStatement(stmt);
+
+			return 0;
+		}
+
+		CPPIStatus status = rst->Next();
+		if(status!=CS_OK)
+		{
+			stmt->CloseResultSet(rst);
+			conn->CloseStatement(stmt);
+
+			return 0;
+		}
+		row = rst->GetRow();
+		if(row==NULL)
+		{
+			stmt->CloseResultSet(rst);
+			conn->CloseStatement(stmt);
+			return 0;
+		}
+
+		CPPIUInt2 ii = 0;
+		CPPIDataType type = row->GetField(ii)->GetType();
+		g_uint count = row->GetItem(0)->GetAsInt8();
+		stmt->CloseResultSet(rst);
+		conn->CloseStatement(stmt);
+
+		return count;
 	}
 
 	g_uint FeatureClassByd::GetCount(GEnvelope& extent)
 	{
-		std::string sql;
-		SQLBuilder::BuildCount(sql, extent, this);
-		PGresult* pgResult =  m_pWorkspace->m_pgConnection_r.PgExecute(sql.c_str());
-		g_uint count = atoi(PQgetvalue(pgResult,0,0));
-		PQclear(pgResult);
+		//std::string sql;
+		//SQLBuilder::BuildCount(sql, extent, this);
+		//PGresult* pgResult =  m_pWorkspace->m_pgConnection_r.PgExecute(sql.c_str());
+		//g_uint count = atoi(PQgetvalue(pgResult,0,0));
+		//PQclear(pgResult);
 
-		return count;
+		//return count;
+		return 0;
 	}
 
 	g_uint FeatureClassByd::GetCount(GFilter* pFilter)

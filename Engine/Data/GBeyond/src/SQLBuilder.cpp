@@ -1396,4 +1396,11 @@ namespace auge
 		sql.append(values);
 		sql.append(")");
 	}
+
+	void SQLBuilder::BuildCount(std::string& sql, FeatureClassByd* pFeatureClass)
+	{
+		sql = "select count(*)";
+		sql.append(" from ");
+		sql.append(pFeatureClass->GetName());
+	}
 }

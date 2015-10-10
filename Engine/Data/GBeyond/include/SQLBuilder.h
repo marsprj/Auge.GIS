@@ -29,6 +29,8 @@ namespace auge
 
 		static void BuildInsertFeature(std::string& sql, FeatureClassByd* pFeatureClass, Feature* pFeature);
 
+		static void BuildCount(std::string& sql, FeatureClassByd* pFeatureClass);
+
 		static RESULTCODE BuildFilter(std::string& sql, FeatureClassByd* pFeatureClass, GEnvelope& extent);
 		static RESULTCODE BuildFilter(std::string& sql, FeatureClassByd* pFeatureClass, GFilter* pFilter);
 		static RESULTCODE BuildIDFilter(std::string& sql,FeatureClassByd* pFeatureClass, IDFilter* pFilter);
