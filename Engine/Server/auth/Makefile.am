@@ -12,8 +12,7 @@ auth_cgi_LDFLAGS= \
 		-L$(top_srcdir)/Engine/Carto/src \
 		-L$(top_srcdir)/Engine/Server/gscore/src \
 		-L$(top_srcdir)/Engine/Server/gsvrs/src \
-		-L$(top_srcdir)/Engine/Server/gsauth/src
-
+		-L$(top_srcdir)/Engine/Server/gsims/src
 	
 auth_cgi_LDADD=	-lgcore \
 		-lgauth \
@@ -23,6 +22,6 @@ auth_cgi_LDADD=	-lgcore \
 		-lgsvrs \
 		-lfcgi \
 		-lrudecgi \
-		-lgsauth
+		-lgsims
 
 auth_cgi_SOURCES=main.cpp GServer.cpp
