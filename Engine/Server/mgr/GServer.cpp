@@ -67,8 +67,8 @@ namespace auge
 
 			g_ulong ts = auge_get_time();
 
-			//const char* user_name = cgi["user"];
-			const char* user_name = "user1";
+			const char* user_name = cgi["user"];
+			//const char* user_name = "user1";
 
 			User* pUser = m_pUserManager->GetUser(user_name);
 			if(pUser==NULL)
