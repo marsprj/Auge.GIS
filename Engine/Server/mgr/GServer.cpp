@@ -67,8 +67,8 @@ namespace auge
 
 			g_ulong ts = auge_get_time();
 
-			//const char* user_name = cgi["user"];
-			const char* user_name = "user1";
+			const char* user_name = cgi["user"];
+			//const char* user_name = "user1";
 
 			User* pUser = m_pUserManager->GetUser(user_name);
 			if(pUser==NULL)
@@ -191,7 +191,6 @@ namespace auge
 		if(conent_type==NULL)
 		{
 			szService = cgi["service"];
-			szService = "wfs";
 			pWebEngine = m_pWebEngineManager->GetEngine(szService);
 			if(pWebEngine==NULL)
 			{

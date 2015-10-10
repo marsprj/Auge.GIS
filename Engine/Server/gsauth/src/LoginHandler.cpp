@@ -84,16 +84,47 @@ namespace auge
 			return pExpResponse;
 		}
 
+		User* pdbUser = NULL;
 		UserManager* pUserManager = augeGetUserManagerInstance();
-		RESULTCODE rc = pUserManager->Login(name, pswd);
-		if(rc!=AG_SUCCESS)
+		pdbUser = pUserManager->GetUser(name);
+		if(pdbUser==NULL)
 		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "用户[%s]不存在", name);
 			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(pError->GetLastError());
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return pExpResponse;
+		}
+
+		if(pdbUser->GetPassword()==NULL)
+		{	
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "用户[%s]密码错误", name);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			pdbUser->Release();
 			return pExpResponse;
 		}
 		
+		if(strcmp(pdbUser->GetPassword(), pswd))
+		{
+			const char* msg = "密码错误";
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			pdbUser->Release();
+			return pExpResponse;
+		}
+		
+		pdbUser->Release();
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
 		return pSusResponse;

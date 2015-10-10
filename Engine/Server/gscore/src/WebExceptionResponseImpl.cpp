@@ -1,4 +1,5 @@
 #include "WebExceptionResponseImpl.h"
+#include "AugeCore.h"
 #include <stdio.h>
 
 namespace auge
@@ -39,8 +40,10 @@ namespace auge
 		char msg[AUGE_MSG_LONG_MAX] = {0};
 		g_sprintf(msg, "<ows:ExceptionReport xmlns:ows=\"http://www.opengis.net/ows\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0.0\" xsi:schemaLocation=\"http://www.opengis.net/ows http://ourgis.digitalearth.cn:80/geoserver/schemas/ows/1.0.0/owsExceptionReport.xsd\"><ows:Exception exceptionCode=\"InvalidParameterValue\" locator=\"service\"><ows:ExceptionText>%s</ows:ExceptionText></ows:Exception></ows:ExceptionReport>", m_message);
 
+		const char* msg_utf8 = auge_encoding_convert("GBK", "UTF-8", msg, strlen(msg));
+
 		pWriter->WriteHead("text/xml");
-		pWriter->Write((g_uchar*)msg, strlen(msg));
+		pWriter->Write((g_uchar*)msg_utf8, strlen(msg_utf8));
 		pWriter->WriteTail();
 		return AG_SUCCESS;
 	}

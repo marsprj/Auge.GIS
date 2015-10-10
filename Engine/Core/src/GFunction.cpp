@@ -234,7 +234,7 @@ namespace auge
 		}
 		if((str[len-1]=='\r') || (str[len-1]=='\n'))
 		{
-			str[len-1] = '0';
+			str[len-1] = 0;
 		}
 	}
 

@@ -28,10 +28,7 @@ namespace auge
 	m_pWebContext(NULL),
 	m_pConnection(NULL),
 	m_pConnManager(NULL),
-	m_pCartoManager(NULL),
-	m_pServiceManager(NULL),
 	m_pUserManager(NULL),
-	m_pJobManager(NULL),
 	m_pError(augeGetErrorInstance())
 	{
 
@@ -57,69 +54,20 @@ namespace auge
 			AUGE_RUDE_CGI;
 			cgi.setCaseSensitive(false);
 
-//			printf("Content-type: text/html\r\n"
-//				"\r\n" 
-//				"%d",m_counter++);
-
 			pLogger->Info("--------------------------------------------------------");
+			g_ulong ts = auge_get_time();
 
 			WebResponse* pWebResponse = NULL;
 
-			g_ulong ts = auge_get_time();
-
-			const char* user_name = cgi["user"];
-			//const char* user_name = "user1";
-
-			User* pUser = m_pUserManager->GetUser(user_name);
-			if(pUser==NULL)
+			switch(GetMethod())
+				//switch(augeHttpPost)
 			{
-				char msg[AUGE_MSG_MAX];
-				g_sprintf(msg, "User [%s] is not registered", user_name);
-				pLogger->Error(msg, __FILE__, __LINE__);
-				auge::WebExceptionResponse *pExpResponse = NULL;
-				pExpResponse = auge::augeCreateWebExceptionResponse();
-				pExpResponse->SetMessage(msg);
-				pWebResponse = pExpResponse;
-			}
-			else
-			{
-				const char* serviceName = cgi["ServiceName"];
-				if(serviceName==NULL)
-				{
-					const char* msg = "Invalid Service Name";					
-					pLogger->Error(msg, __FILE__, __LINE__);
-					auge::WebExceptionResponse *pExpResponse = NULL;
-					pExpResponse = auge::augeCreateWebExceptionResponse();
-					pExpResponse->SetMessage(msg);
-					pWebResponse = pExpResponse;
-				}
-				else
-				{
-					Service* pService = m_pServiceManager->GetService(pUser->GetID(), serviceName);
-					if(pService==NULL)
-					{
-						char msg[AUGE_MSG_MAX];
-						g_sprintf(msg, "Service [%s] is not registered", serviceName);
-						pLogger->Error(msg, __FILE__, __LINE__);
-						auge::WebExceptionResponse *pExpResponse = NULL;
-						pExpResponse = auge::augeCreateWebExceptionResponse();
-						pExpResponse->SetMessage(msg);
-						pWebResponse = pExpResponse;
-					}
-					else
-					{
-						switch(GetMethod())
-							//switch(augeHttpPost)
-						{
-						case augeHttpGet:
-							pWebResponse = DoGet(cgi, pUser, pService);
-							break;
-						case augeHttpPost:
-							pWebResponse = DoPost(cgi, pUser, pService);
-							break;
-						}
-					}
-				}
+			case augeHttpGet:
+				pWebResponse = DoGet(cgi);
+				break;
+			case augeHttpPost:
+				pWebResponse = DoPost(cgi);
+				break;
 			}
 
 			g_ulong ts_w = auge_get_time();		
@@ -139,7 +87,7 @@ namespace auge
 		}
 	}
 
-	WebResponse* GServer::DoGet(rude::CGI& cgi, User* pUser, Service* pService)
+	WebResponse* GServer::DoGet(rude::CGI& cgi)
 	{
 		const char	*szService = NULL;
 		WebEngine	*pWebEngine = NULL;
@@ -152,7 +100,8 @@ namespace auge
 			augeGetLoggerInstance()->Debug(query_string, __FILE__, __LINE__);
 		}
 
-		szService = cgi["service"];
+		//szService = cgi["service"];
+		szService = "was";
 		pWebEngine = m_pWebEngineManager->GetEngine(szService);
 		if(pWebEngine==NULL)
 		{
@@ -173,8 +122,7 @@ namespace auge
 			return pWebResponse;
 		}
 
-		const char* mapName = pService->GetMapName();
-		pWebRequest = pWebEngine->ParseRequest(cgi, mapName);
+		pWebRequest = pWebEngine->ParseRequest(cgi);
 		if(pWebRequest==NULL)
 		{
 			// wrong service engine
@@ -186,14 +134,13 @@ namespace auge
 		}
 
 		auge::WebContext* pWebContext = auge::augeGetWebContextInstance();
-		pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, pUser);
-		//pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, pUser);
+		pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, NULL);
 		pWebRequest->Release();
 		
 		return pWebResponse;
 	}
 
-	WebResponse* GServer::DoPost(rude::CGI& cgi, User* pUser, Service* pService)
+	WebResponse* GServer::DoPost(rude::CGI& cgi)
 	{
 		const char	*service = NULL;
 		WebRequest	*pWebRequest = NULL;
@@ -205,7 +152,7 @@ namespace auge
 		const char* conent_type = getenv("CONTENT_TYPE"); 
 		if(conent_type==NULL)
 		{
-			szService = cgi["service"];
+			szService = "was";//cgi["service"];
 			pWebEngine = m_pWebEngineManager->GetEngine(szService);
 			if(pWebEngine==NULL)
 			{
@@ -216,8 +163,8 @@ namespace auge
 				pWebResponse = pExpResponse;
 				return pWebResponse;
 			}
-			const char* mapName = pService->GetMapName();
-			pWebRequest = pWebEngine->ParseRequest(cgi, mapName);
+
+			pWebRequest = pWebEngine->ParseRequest(cgi, NULL);
 			if(pWebRequest==NULL)
 			{
 				// wrong service engine
@@ -356,7 +303,7 @@ namespace auge
 			}
 		}
 
-		pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, pUser);
+		pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, NULL);
 		pWebRequest->Release();
 
 		//pxDoc->Close();
@@ -414,10 +361,6 @@ namespace auge
 		LoadUserManager();		
 
 		LoadConnectionPool();
-		LoadJobManager();
-		LoadSymbolManager();
-		LoadCartoPool();
-		LoadServicePool();
 
 		m_pLogger->Info("-----------------------------------------------------------");
 		m_pLogger->Info("Internet Map Server Started.");
@@ -512,57 +455,6 @@ namespace auge
 		return rc;
 	}
 
-	RESULTCODE GServer::LoadJobManager()
-	{
-		m_pLogger->Info("    Load Job Manager");
-		m_pJobManager = augeGetJobManagerInstance();
-		RESULTCODE rc = m_pJobManager->Initialize(m_pConnection);
-		if(rc!=AG_SUCCESS)
-		{
-			m_pLogger->Error(m_pError->GetLastError(), __FILE__, __LINE__);
-		}
-
-		return rc;
-	}
-
-	RESULTCODE GServer::LoadSymbolManager()
-	{
-		m_pLogger->Info("    Load Symbol Manager");
-		m_pSymbolManager = augeGetSymbolManagerInstance();
-		RESULTCODE rc = m_pSymbolManager->Initialize(m_pConnection);
-		if(rc!=AG_SUCCESS)
-		{
-			m_pLogger->Error(m_pError->GetLastError(), __FILE__, __LINE__);
-		}
-
-		return rc;
-	}
-
-	RESULTCODE GServer::LoadCartoPool()
-	{
-		m_pLogger->Info("    Load Carto Pool");
-		m_pCartoManager = auge::augeGetCartoManagerInstance();
-		RESULTCODE rc = m_pCartoManager->Initialize(m_pConnection);
-		if(rc!=AG_SUCCESS)
-		{
-			m_pLogger->Error(m_pError->GetLastError(), __FILE__, __LINE__);
-		}
-
-		return rc;
-	}
-
-	RESULTCODE GServer::LoadServicePool()
-	{
-		m_pLogger->Info("    Load Service Pool");
-		m_pServiceManager = auge::augeGetServiceManagerInstance();
-		RESULTCODE rc = m_pServiceManager->Initialize(m_pConnection);
-		if(rc!=AG_SUCCESS)
-		{
-			m_pLogger->Error(m_pError->GetLastError(), __FILE__, __LINE__);
-		}
-		return rc;
-	}
-
 	RESULTCODE GServer::LoadUserManager()
 	{
 		m_pUserManager = augeGetUserManagerInstance();
@@ -577,19 +469,7 @@ namespace auge
 	{
 		m_pLogger->Info("-----------------------------------------------------------");
 		m_pLogger->Info("Shutdowning Internet Map Server");
-
-		m_pLogger->Info("Shutdown Service Pool");
-		m_pLogger->Info("Shutdown Carto Pool");
-		if(m_pCartoManager!=NULL)
-		{
-			m_pCartoManager->Cleanup();
-		}
-
-		if(m_pJobManager!=NULL)
-		{
-			m_pJobManager->Unload();
-		}
-
+		
 		m_pLogger->Info("Shutdown Connection Pool");
 		if(m_pConnManager!=NULL)
 		{
