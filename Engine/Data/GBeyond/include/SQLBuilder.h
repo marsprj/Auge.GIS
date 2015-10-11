@@ -49,6 +49,13 @@ namespace auge
 
 		static RESULTCODE BuildBBoxFilter(std::string& sql,FeatureClassByd* pFeatureClass, BBoxFilter* pFilter);
 		static RESULTCODE BuildWithinFilter(std::string& sql,FeatureClassByd* pFeatureClass, BinarySpatialFilter* pFilter);
+		static RESULTCODE BuildIntersectsFilter(std::string& sql,FeatureClassByd* pFeatureClass, BinarySpatialFilter* pFilter);
+		static RESULTCODE BuildDisjointFilter(std::string& sql,FeatureClassByd* pFeatureClass, BinarySpatialFilter* pFilter);
+		static RESULTCODE BuildCrossFilter(std::string& sql,FeatureClassByd* pFeatureClass, BinarySpatialFilter* pFilter);
+		static RESULTCODE BuildTouchesFilter(std::string& sql,FeatureClassByd* pFeatureClass, BinarySpatialFilter* pFilter);
+		static RESULTCODE BuildEqualsFilter(std::string& sql,FeatureClassByd* pFeatureClass, BinarySpatialFilter* pFilter);
+		static RESULTCODE BuildContainsFilter(std::string& sql,FeatureClassByd* pFeatureClass, BinarySpatialFilter* pFilter);
+		static RESULTCODE BuildOverlapsFilter(std::string& sql,FeatureClassByd* pFeatureClass, BinarySpatialFilter* pFilter);
 		static RESULTCODE BuildDWithinFilter(std::string& sql,FeatureClassByd* pFeatureClass, DistanceBufferFilter* pFilter);
 
 		static RESULTCODE BuildExpression(std::string &sql, FeatureClassByd* pFeatureClass, Expression* pExpression);
