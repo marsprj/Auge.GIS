@@ -84,19 +84,23 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\DataEngineImpl.h" />
+    <ClInclude Include="..\include\EnumDataSetImpl.h" />
     <ClInclude Include="..\include\FeatureByd.h" />
     <ClInclude Include="..\include\FeatureClassByd.h" />
     <ClInclude Include="..\include\FeatureCursorByd.h" />
     <ClInclude Include="..\include\FeatureInsertCommandByd.h" />
+    <ClInclude Include="..\include\FeatureObj.h" />
     <ClInclude Include="..\include\SQLBuilder.h" />
     <ClInclude Include="..\include\WorkspaceByd.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DataEngineImpl.cpp" />
+    <ClCompile Include="..\src\EnumDataSetImpl.cpp" />
     <ClCompile Include="..\src\FeatureByd.cpp" />
     <ClCompile Include="..\src\FeatureClassByd.cpp" />
     <ClCompile Include="..\src\FeatureCursorByd.cpp" />
     <ClCompile Include="..\src\FeatureInsertCommandByd.cpp" />
+    <ClCompile Include="..\src\FeatureObj.cpp" />
     <ClCompile Include="..\src\SQLBuilder.cpp" />
     <ClCompile Include="..\src\WorkspaceByd.cpp" />
   </ItemGroup>

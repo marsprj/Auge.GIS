@@ -132,7 +132,7 @@ int main(int argc, char** argv)
 		pshpFeatureClass = pshpWorkspace->OpenFeatureClass(shpName);
 		pFields = pshpFeatureClass->GetFields();
 
-		pbydWorkspace->RemoveFeatureClass(className);
+		//pbydWorkspace->RemoveFeatureClass(className);
 		pbydFeatureClass = pbydWorkspace->OpenFeatureClass(className);
 		if(pbydFeatureClass==NULL)
 		{
@@ -154,6 +154,7 @@ int main(int argc, char** argv)
 		cmd->Commit();
 		cmd->Release();
 
+		pbydFeatureClass->BuildSpatialIndex();
 		pbydFeatureClass->Release();
 
 		printf("\n");

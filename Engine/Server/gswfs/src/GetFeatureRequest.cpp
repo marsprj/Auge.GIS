@@ -195,8 +195,8 @@ namespace auge
 	{
 		if(m_pQuery==NULL)
 		{
-			switch(GetMethod())
-			//switch(augeHttpPost)
+			//switch(GetMethod())
+			switch(augeHttpPost)
 			{
 			case augeHttpGet:
 				m_pQuery = ParseKvpQuery(pFeatureClass);

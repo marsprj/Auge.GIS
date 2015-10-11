@@ -139,6 +139,7 @@ namespace auge
 
 			pRow->Release();
 		}
+		cmd->Commit();
 		cmd->Release();
 		pCursor->Release();		
 

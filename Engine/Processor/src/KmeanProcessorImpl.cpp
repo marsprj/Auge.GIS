@@ -279,6 +279,7 @@ namespace auge
 		}
 		pFeature->Release();
 		
+		cmd->Commit();
 		cmd->Release();
 		pFeatureClass->Refresh();
 		pFeatureClass->Release();
@@ -339,7 +340,7 @@ namespace auge
 
 		FeatureInsertCommand* cmd = pFeatureClass->CreateInsertCommand();
 
-		g_uint cluster = 0;
+		g_uint cluster = 0; 
 		double x=0, y=0;
 		g_uint count = kmean->GetPointCount();
 		for(g_uint i=0; i<count; i++)
@@ -353,6 +354,7 @@ namespace auge
 		}
 		pFeature->Release();
 
+		cmd->Commit();
 		cmd->Release();
 		pFeatureClass->Refresh();
 		pFeatureClass->Release();

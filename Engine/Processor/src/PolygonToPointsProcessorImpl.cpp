@@ -286,6 +286,9 @@ namespace auge
 		}
 		pCursor->Release();
 
+		cmd->Commit();
+		cmd->Release();
+
 		return AG_SUCCESS;
 	}
 

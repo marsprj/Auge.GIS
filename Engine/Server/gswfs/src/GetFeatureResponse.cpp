@@ -106,8 +106,10 @@ namespace auge
 			g_uint		fcount = pFields->Count();
 			const char	*fname = NULL;	
 
+			g_int counter = 0;
 			while((pFeature=m_pCursor->NextFeature())!=NULL)
 			{
+				counter++;
 				// FeatureCollection-->featureMember
 				pxMember = pxRoot->AddChild("featureMember","gml"); 
 				// FeatureCollection-->feature

@@ -368,6 +368,7 @@ namespace auge
 								}
 							}
 
+							cmd->Commit();
 							//poutFeature->Release();
 							poutFeatureClass->Refresh();
 

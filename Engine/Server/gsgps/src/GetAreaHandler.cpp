@@ -385,10 +385,12 @@ namespace auge
 								pFeature->Release();
 							}
 
+							cmd->Commit();
+							cmd->Release();
+
 							poutFeature->Release();
 							poutFeatureClass->Refresh();
 
-							cmd->Release();
 							pCursor->Release();
 							poutFeatureClass->Release();
 							pFeatureWorkspace->Release();

@@ -380,7 +380,7 @@ namespace auge
 							Feature* poutFeature = NULL;
 							FeatureInsertCommand* cmd = poutFeatureClass->CreateInsertCommand();
 
-							g_uint counter=0,feature_count;
+							g_uint counter=0,feature_count=0;
 							char str[AUGE_MSG_MAX];
 							GLogger* pLogger = augeGetLoggerInstance();
 							pLogger->Info("ConvexHull Begin");
@@ -415,13 +415,15 @@ namespace auge
 								pFeature->Release();
 							}
 
-							g_sprintf(str,"ConvexHull : %s", feature_count+counter);
+							g_sprintf(str,"ConvexHull : %d", feature_count+counter);
 							pLogger->Info(str, __FILE__, __LINE__);
 							pLogger->Info("ConvexHull End");
 
+							cmd->Commit();
+							cmd->Release();
+
 							poutFeatureClass->Refresh();
 
-							cmd->Release();
 							pCursor->Release();
 							poutFeatureClass->Release();
 							pFeatureWorkspace->Release();

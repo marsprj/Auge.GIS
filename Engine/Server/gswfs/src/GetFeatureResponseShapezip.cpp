@@ -132,6 +132,7 @@ namespace auge
 			cmd->Insert(pFeature);
 			pFeature->Release();
 		}
+		cmd->Commit();
 		cmd->Release();
 		pshpFeatureClass->Release();
 		pshpWorkspace->Release();

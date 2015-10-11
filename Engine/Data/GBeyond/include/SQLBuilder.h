@@ -30,6 +30,7 @@ namespace auge
 		static void BuildInsertFeature(std::string& sql, FeatureClassByd* pFeatureClass, Feature* pFeature);
 
 		static void BuildCount(std::string& sql, FeatureClassByd* pFeatureClass);
+		static void BuildGetDatasetNames(std::string& sql, const char* owner);
 
 		static RESULTCODE BuildFilter(std::string& sql, FeatureClassByd* pFeatureClass, GEnvelope& extent);
 		static RESULTCODE BuildFilter(std::string& sql, FeatureClassByd* pFeatureClass, GFilter* pFilter);
@@ -58,7 +59,12 @@ namespace auge
 
 		static RESULTCODE BuildCreateSequence(std::string& sql, const char* name);
 		static RESULTCODE BuildCreateTable(std::string& sql, const char* name, GFields* pFields);
+		static RESULTCODE BuildDropTable(std::string& sql, const char* name);
 		static RESULTCODE BuildFieldSQL(std::string& sql, GField* pField);
+
+		static RESULTCODE BuildCreateSpatialIndex(std::string& sql,const char* className,const char* fieldName, GEnvelope& extent);
+		static RESULTCODE BuildRegisterGeometryColumn(char* sql, size_t size, const char* className, GField* pField);
+		static RESULTCODE BuildUnRegisterGeometryColumn(char* sql, size_t size, const char* className, const char* fieldName);
 		
 	};
 

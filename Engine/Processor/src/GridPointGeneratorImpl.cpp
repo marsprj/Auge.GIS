@@ -214,6 +214,7 @@ namespace auge
 			y+=m_cell_size;
 		}
 		pnFeature->Release();
+		cmd->Commit();
 		cmd->Release();
 
 		return AG_SUCCESS;

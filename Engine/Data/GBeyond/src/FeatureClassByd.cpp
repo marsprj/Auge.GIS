@@ -1,6 +1,7 @@
 #include "FeatureClassByd.h"
 #include "FeatureCursorByd.h"
 #include "FeatureInsertCommandByd.h"
+#include "FeatureObj.h"
 #include "WorkspaceByd.h"
 #include "SQLBuilder.h"
 #include "AugeField.h"
@@ -46,12 +47,20 @@ namespace auge
 
 	GEnvelope& FeatureClassByd::GetExtent()
 	{
+		m_extent.Set(-180.0, -90.0,180.0,90.0);
 		return m_extent;
 	}
 
 	const char*	FeatureClassByd::GetUUID()
 	{
-		return NULL;
+		if(m_uuid.empty())
+		{
+			char uuid[AUGE_PATH_MAX];
+			memset(uuid, 0, AUGE_PATH_MAX);
+			auge_generate_uuid(uuid, AUGE_PATH_MAX);
+			m_uuid = uuid;
+		}
+		return m_uuid.c_str();
 	}
 
 	GFields* FeatureClassByd::GetFields()
@@ -66,7 +75,16 @@ namespace auge
 
 	GField*	FeatureClassByd::GetField(const char* name)
 	{
-		return NULL;
+		if(name==NULL)
+		{
+			return NULL;
+		}
+		GFields* pFields = GetFields();
+		if(pFields==NULL)
+		{
+			return NULL;
+		}
+		return pFields->GetField(name);
 	}
 
 	RESULTCODE FeatureClassByd::AddField(const char* name, augeFieldType type, g_uint width/*=32*/)
@@ -178,7 +196,6 @@ namespace auge
 	{
 		FeatureCursorByd* pCursor = new FeatureCursorByd();
 		pCursor->Create(this, pQuery);
-		this->AddRef();
 		return pCursor;
 	}
 
@@ -209,7 +226,7 @@ namespace auge
 
 	Feature* FeatureClassByd::NewFeature()
 	{
-		return NULL;
+		return (new FeatureObj(this));
 	}
 
 	RESULTCODE FeatureClassByd::Refresh()
@@ -218,6 +235,29 @@ namespace auge
 	}
 
 	bool FeatureClassByd::Create(const char* name, WorkspaceByd* pWorkspace)
+	{
+		m_name = name;
+		m_pWorkspace = pWorkspace;
+
+		GetGeometryMeta();
+		//if(!GetGeometryMeta())
+		//{
+		//	return false;
+		//}
+
+		if(m_pFields==NULL)
+		{
+			m_pFields = CreateFields();
+			if(m_pFields==NULL)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	bool FeatureClassByd::Create(const char* name, WorkspaceByd* pWorkspace, CPPIResultSet* pResultSet)
 	{
 		m_name = name;
 		m_pWorkspace = pWorkspace;
@@ -254,6 +294,10 @@ namespace auge
 		CPPIEnvironment* env = m_pWorkspace->m_pbydEnvironment;
 
 		stmt = m_pWorkspace->m_pbydConnction->CreateStatement();
+		if(stmt==NULL)
+		{
+			return false;
+		}
 		rst = stmt->ExecuteQuery(CATEXT(sql));
 		if(rst==NULL)
 		{
@@ -359,6 +403,31 @@ namespace auge
 		return pFields;
 	}
 
+	GFields* FeatureClassByd::CreateFields(CPPIResultSet* pResultSet)
+	{
+		GField* pField = NULL;
+		GFields* pFields = NULL;
+		FieldFactory* pFieldFactory = augeGetFieldFactoryInstance();
+		pFields = pFieldFactory->CreateFields();
+
+		CPPIField  *pbydField  = NULL;
+		CPPIFields *pbydFields = pResultSet->GetFields();
+		if(pbydFields!=NULL)
+		{
+			CPPIUInt2 count = pbydFields->GetCount();
+			for(CPPIUInt2 i=0; i<count; i++)
+			{
+				pbydField = pbydFields->GetField(i);
+				pField = CreateField(pbydField);
+				if(pField!=NULL)
+				{
+					pFields->Add(pField);
+				}
+			}
+		}
+		return pFields;
+	}
+
 	GField*	FeatureClassByd::CreateField(CPPIField* pbydField)
 	{
 		GField* pField = NULL;
@@ -445,6 +514,17 @@ namespace auge
 
 	RESULTCODE FeatureClassByd::BuildSpatialIndex()
 	{
-		return AG_SUCCESS;
+		GEnvelope& extent = GetExtent();
+		GFields* pFields = GetFields();
+		GField* pField = pFields->GetGeometryField();
+		if(pField==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		std::string sql;
+		SQLBuilder::BuildCreateSpatialIndex(sql, GetName(), pField->GetName(), extent);
+
+		return m_pWorkspace->ExecuteSQL(sql.c_str());
 	}
 }

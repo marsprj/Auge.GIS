@@ -59,7 +59,9 @@ namespace auge
 
 	public:
 		bool		Create(const char* name, WorkspaceByd* pWorkspace);
+		bool		Create(const char* name, WorkspaceByd* pWorkspace, CPPIResultSet* pResultSet);
 		GFields*	CreateFields();
+		GFields*	CreateFields(CPPIResultSet* pResultSet);
 		GField*		CreateField(CPPIField* pbydField);
 		bool		GetGeometryMeta();
 
@@ -69,6 +71,7 @@ namespace auge
 		std::string m_name;
 		std::string m_geom_field;
 		std::string m_srs_name;		
+		std::string m_uuid;
 		g_uint		m_srid;
 		g_uint		m_dimension;
 		GEnvelope	m_extent;

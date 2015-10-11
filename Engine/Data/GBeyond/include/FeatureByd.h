@@ -56,6 +56,11 @@ namespace auge
 	private:
 		Geometry*	CreateGeometry();
 
+		void		InitStrings();
+		void		CleanupStrings();
+		const char*	GetStringValue(g_uint i);
+		void		SetStringValue(g_uint i, char* value);
+
 	private:
 		FeatureClassByd*	m_pFeatureClass;
 		CPPIResultSet*		m_pbydResultSet;
@@ -65,6 +70,7 @@ namespace auge
 
 		g_int				m_fid;
 		Geometry*			m_pGeometry;
+		char**				m_strs;
 	};
 }
 

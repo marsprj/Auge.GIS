@@ -1,6 +1,8 @@
 #include "WorkspaceByd.h"
 #include "AugeCore.h"
+#include "AugeField.h"
 #include "DataEngineImpl.h"
+#include "EnumDataSetImpl.h"
 #include "FeatureClassByd.h"
 #include "SQLBuilder.h"
 
@@ -88,6 +90,8 @@ namespace auge
 
 		GError* pError = augeGetErrorInstance();
 		GLogger* pLogger = augeGetLoggerInstance();
+
+		pLogger->Info("Open BeyonDB Connection....",__FILE__, __LINE__);
 
 		m_pbydEnvironment = CPPIEnvironment::CreateEnvironment();
 		if(m_pbydEnvironment==NULL)
@@ -194,12 +198,34 @@ namespace auge
 		{
 			return NULL;
 		}
+		GField* pField = pFields->GetGeometryField();
+		if(!RegisterGeometryColumn(name, pField))
+		{
+			DropTable(name);
+			return NULL;
+		}
 
 		return OpenFeatureClass(name);
 	}
 
 	RESULTCODE WorkspaceByd::RemoveFeatureClass(const char* name)
 	{
+		FeatureClass* pFeatureClass = OpenFeatureClass(name);
+		if(pFeatureClass==NULL)
+		{
+			return AG_SUCCESS;
+		}
+
+		GField* pGeomField = pFeatureClass->GetFields()->GetGeometryField();
+
+		DropTable(name);
+		if(pGeomField!=NULL)
+		{
+			UnRegisterGeometryColumn(name, pGeomField->GetName());
+		}
+
+		pFeatureClass->Release();
+
 		return AG_SUCCESS;
 	}
 
@@ -210,7 +236,28 @@ namespace auge
 
 	EnumDataSet* WorkspaceByd::GetFeatureClasses()
 	{
-		return NULL;
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		FeatureClass* pFeatureClass = NULL;
+		EnumDataSetImpl* pDatasets = new EnumDataSetImpl();
+
+		const char* name = NULL;
+		std::vector<std::string> names;
+		std::vector<std::string>::iterator iter;
+
+		GetDatasetNames(names);
+		for(iter=names.begin(); iter!=names.end(); iter++)
+		{
+			name = (*iter).c_str();
+			pFeatureClass = OpenFeatureClass(name);
+			if(pFeatureClass!=NULL)
+			{
+				pDatasets->Add(pFeatureClass);
+			}
+		}
+
+		return pDatasets;
 	}
 
 	RESULTCODE WorkspaceByd::ExecuteSQL(const char* sql)
@@ -269,6 +316,84 @@ namespace auge
 		SQLBuilder::BuildCreateTable(sql, name, pFields);
 
 		RESULTCODE rc = ExecuteSQL(sql.c_str());
+		return (rc==AG_SUCCESS);
+	}
+
+	bool WorkspaceByd::DropTable(const char *name)
+	{
+		std::string sql;
+		SQLBuilder::BuildDropTable(sql, name);
+
+		RESULTCODE rc = ExecuteSQL(sql.c_str());
+		return (rc==AG_SUCCESS);
+	}
+
+	void WorkspaceByd::GetDatasetNames(std::vector<std::string>& names)
+	{
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		std::string sql;
+		const char* user = m_props.GetValue(AUGE_DB_USER);
+		SQLBuilder::BuildGetDatasetNames(sql, user);
+
+		const char* fname = NULL;
+		CPPIInt2 field = 0;
+		
+		CPPIRow* row = NULL;
+		CPPIDataItem* item = NULL;
+		CPPIResultSet* rest = NULL;
+		CPPIStatement* stmt = m_pbydConnction->CreateStatement();
+
+		rest = stmt->ExecuteQuery(sql.c_str());
+		if(rest==NULL)
+		{
+			CPPIString msg = m_pbydConnction->GetErrorMessage()->GetErrorString();
+
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			m_pbydConnction->CloseStatement(stmt);
+		}
+		else
+		{
+			FeatureClass* pFeatureClass = NULL;
+			while(rest->Next()==CS_OK)
+			{
+				row = rest->GetRow();
+				item = row->GetItem(field);
+				if(item!=NULL)
+				{
+					//CPPIString str = ;
+					//CPPIDataType type = item->GetDataType();
+					//const char* fname = str.c_str();
+					//CPPISizeType len = str.length();
+					//CPPISizeType size = str.size();
+
+					std::string sfname = item->GetAsString().Trim();
+					names.push_back(sfname);
+				}
+				
+			}
+
+			stmt->CloseResultSet(rest);
+			m_pbydConnction->CloseStatement(stmt);
+		}
+	}
+
+	bool WorkspaceByd::RegisterGeometryColumn(const char* className, GField* pField)
+	{
+		char sql[AUGE_SQL_MAX];
+		SQLBuilder::BuildRegisterGeometryColumn(sql, AUGE_SQL_MAX, className, pField);
+		RESULTCODE rc = ExecuteSQL(sql);
+		return (rc==AG_SUCCESS);
+	}
+
+	bool WorkspaceByd::UnRegisterGeometryColumn(const char* className, const char* fieldName)
+	{
+		char sql[AUGE_SQL_MAX];
+		SQLBuilder::BuildUnRegisterGeometryColumn(sql, AUGE_SQL_MAX, className, fieldName);
+		RESULTCODE rc = ExecuteSQL(sql);
 		return (rc==AG_SUCCESS);
 	}
 }

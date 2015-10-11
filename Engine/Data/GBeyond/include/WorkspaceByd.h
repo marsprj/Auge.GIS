@@ -4,11 +4,14 @@
 #include <cppi.h>
 #include <string.h>
 #include <string>
+#include <vector>
 
 #include "AugeFeature.h"
 
 namespace auge
 {
+	class GField;
+
 	class WorkspaceByd : public FeatureWorkspace
 	{
 		friend class FeatureClassByd;
@@ -50,6 +53,11 @@ namespace auge
 	private:
 		bool		CreateSequence(const char* name);
 		bool		CreateTable(const char* name, GFields* pFields);
+		bool		DropTable(const char *name);
+		void		GetDatasetNames(std::vector<std::string>& names);
+
+		bool		RegisterGeometryColumn(const char* className, GField* pField);
+		bool		UnRegisterGeometryColumn(const char* className, const char* fieldName);
 
 	private:
 		CPPIEnvironment*		m_pbydEnvironment;

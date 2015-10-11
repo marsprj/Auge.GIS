@@ -293,7 +293,6 @@ namespace auge
 			}
 			pFeature->Release();
 		}
-
 		pCursor->Release();
 
 		return AG_SUCCESS;
@@ -589,6 +588,8 @@ namespace auge
 			pFeature->Release();
 		}
 
+		cmd->Commit();
+		cmd->Release();
 		pCursor->Release();
 
 		return AG_SUCCESS;

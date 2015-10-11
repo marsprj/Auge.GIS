@@ -333,6 +333,7 @@ namespace auge
 			cmd->Insert(pFeature);
 		}
 		pFeature->Release();
+		cmd->Commit();
 		cmd->Release();
 		ptriFeatureClass->Refresh();
 		ptriFeatureClass->Release();
@@ -420,6 +421,7 @@ namespace auge
 			cmd->Insert(pFeature);
 		}
 		pFeature->Release();
+		cmd->Commit();
 		cmd->Release();
 		ptriFeatureClass->Refresh();
 		ptriFeatureClass->Release();

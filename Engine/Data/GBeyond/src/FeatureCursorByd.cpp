@@ -3,6 +3,7 @@
 #include "FeatureByd.h"
 #include "WorkspaceByd.h"
 #include "SQLBuilder.h"
+#include "AugeField.h"
 
 namespace auge
 {
@@ -29,7 +30,7 @@ namespace auge
 		if (m_pStatment != NULL)
 		{
 			m_pConnection->CloseStatement(m_pStatment);
-			m_pStatment == NULL;
+			m_pStatment = NULL;
 		}
 		if (m_pConnection != NULL)
 		{
@@ -57,7 +58,7 @@ namespace auge
 
 	FeatureClass* FeatureCursorByd::GetFeatureClass()
 	{
-		return NULL;
+		return m_pFeatureClass;
 	}
 
 	bool FeatureCursorByd::Create(FeatureClassByd* pFeatureClass)
@@ -138,11 +139,14 @@ namespace auge
 
 	bool FeatureCursorByd::Create(FeatureClassByd* pFeatureClass, GQuery* pQuery)
 	{
-		m_pFeatureClass = pFeatureClass;
-		m_pConnection = m_pFeatureClass->m_pWorkspace->m_pbydConnction;
+		//m_pFeatureClass = pFeatureClass;
+		m_pConnection = pFeatureClass->m_pWorkspace->m_pbydConnction;
+		m_pFeatureClass = CreateFeatureClass(pFeatureClass, pQuery);
 
 		GError* pError = augeGetErrorInstance();
 		GLogger* pLogger = augeGetLoggerInstance();
+
+		GFields* pFields = pFeatureClass->GetFields();
 
 		std::string sql;
 		SQLBuilder::BuildQuery(sql, pFeatureClass, pQuery);
@@ -170,7 +174,6 @@ namespace auge
 			m_pStatment = NULL;
 			return false;
 		}
-
 		return true;
 	}
 	
@@ -211,4 +214,70 @@ namespace auge
 
 		return true;
 	}
+
+	FeatureClassByd* FeatureCursorByd::CreateFeatureClass(FeatureClassByd* pFeatureClass, GQuery* pQuery)
+	{
+		FeatureClassByd* pnewFeatureClass = new FeatureClassByd();
+		pnewFeatureClass->m_name = pFeatureClass->GetName();
+		pnewFeatureClass->m_pWorkspace = pFeatureClass->m_pWorkspace;
+
+		GField*  pField = NULL;
+		GFields* pFields = pFeatureClass->GetFields();
+		GFields* pnewFields = pnewFeatureClass->GetFields();
+		const char* fname = NULL;
+
+		g_int nField = pQuery->GetSubFieldCount();
+		for(g_int i=0; i<nField; i++)
+		{
+			fname = pQuery->GetSubField(i);
+			pField = pFields->GetField(fname);
+			if(pField!=NULL)
+			{
+				pnewFields->Add(pField);
+				pField->AddRef();
+			}
+		}
+		if(pnewFields->FindField(fname)<0)
+		{
+			pField = pFields->GetField("fid");
+			if(pField!=NULL)
+			{
+				pnewFields->Add(pField);
+				pField->AddRef();
+			}
+		}
+
+		return pnewFeatureClass;
+	}
+
+	FeatureClassByd* FeatureCursorByd::CreateFeatureClass(FeatureClassByd* pFeatureClass, CPPIResultSet* pResultSet)
+	{
+		FeatureClassByd* pnewFeatureClass = new FeatureClassByd();
+		pnewFeatureClass->Create(pFeatureClass->GetName(), pFeatureClass->m_pWorkspace, m_pResultSet);
+		
+		GField* pgeoField = NULL;
+		GField* pnewField = NULL;
+
+		pgeoField = pFeatureClass->GetFields()->GetGeometryField();
+		if(pgeoField!=NULL)
+		{
+			pnewField = pnewFeatureClass->GetFields()->GetGeometryField();
+			if(pnewField!=NULL)
+			{
+				GeometryDef* pgeoGeometryDef = pgeoField->GetGeometryDef();
+				GeometryDef* pnewGeometryDef = pnewField->GetGeometryDef();
+				GeometryDef_2* pnewGeometryDef_2 = pnewGeometryDef->GetGeometryDef_2();
+				pnewGeometryDef_2->SetDefault(true);
+				pnewGeometryDef_2->SetDimension(pgeoGeometryDef->GetDimension());				
+				pnewGeometryDef_2->SetGeometryType(pgeoGeometryDef->GeometryType());
+				pnewGeometryDef_2->SetSRID(pgeoGeometryDef->GetSRID());
+				GEnvelope extent;
+				pgeoGeometryDef->GetExtent(extent);
+				pnewGeometryDef_2->SetExtent(extent);
+			}
+		}
+
+		return pnewFeatureClass;
+	}
+
 }

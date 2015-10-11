@@ -195,7 +195,8 @@ namespace auge
 		g_uint srid = pFeatureClass->GetSRID();
 		if(srid>0)
 		{
-			const char* format = "st_within(%s,ST_GeomFromText('POLYGON((%f %f,%f %f,%f %f,%f %f,%f %f))',%d))=True";
+			//const char* format = "st_within(%s,ST_GeomFromText('POLYGON((%f %f,%f %f,%f %f,%f %f,%f %f))',%d))=True";
+			const char* format = "st_intersects(%s,ST_GeomFromText('POLYGON((%f %f,%f %f,%f %f,%f %f,%f %f))',%d))=True";
 			g_snprintf(szsql, AUGE_SQL_MAX, format, pFeatureClass->m_geom_field.c_str(), 
 				xmin,ymin,
 				xmin,ymax,
@@ -206,7 +207,7 @@ namespace auge
 		}
 		else
 		{
-			const char* format = "st_within(%s,ST_GeomFromText('POLYGON((%f %f,%f %f,%f %f,%f %f,%f %f))'))=True";
+			const char* format = "st_intersects(%s,ST_GeomFromText('POLYGON((%f %f,%f %f,%f %f,%f %f,%f %f))'))=True";
 			g_snprintf(szsql, AUGE_SQL_MAX, format, pFeatureClass->m_geom_field.c_str(), 
 				xmin,ymin,
 				xmin,ymax,
@@ -258,7 +259,7 @@ namespace auge
 		//const char* oper = pFactory->AsString(pFilter->GetOperator());
 		bool first = true;
 
-		sql.append("gid in (");
+		sql.append("fid in (");
 		for(g_uint i=0; i<count; i++)
 		{
 			g_sprintf(sid,"%d",pFilter->GetID(i));
@@ -687,55 +688,12 @@ namespace auge
 
 		return rc;
 	}
-
+	
 	RESULTCODE SQLBuilder::BuildBBoxFilter(std::string& sql,FeatureClassByd* pFeatureClass, BBoxFilter* pFilter)
 	{
 		GEnvelope extent;
 		pFilter->GetExtent(extent);
-		char where[AUGE_BUFFER_MAX];
-		//g_snprintf(where,AUGE_BUFFER_MAX," (%s && 'BOX3D(%.7f %.7f,%.7f %.7f)'::box3d)", pFeatureClass->m_geom_filed_name.c_str(),
-		//	extent.m_m_xmin,
-		//	extent.m_m_ymin,
-		//	extent.m_m_xmax,
-		//	extent.m_m_ymax);
-
-		sql.append(where);
-
-		//Expression *pPropertyName = NULL;
-		//std::string strFieldName;
-		//RESULTCODE rc = AG_FAILURE;
-
-		//GEnvelope& extent = pFilter->GetExtent(extent);
-		//Expression *pPropertyName = pFilter->GetPropertyName();
-		//if(pPropertyName==NULL)
-		//{
-		//	 		//Field* pField = pTable->GetFeatureClassInfo()->GetDefaultGeometryField();
-		//	 		//if(pField==NULL)
-		//	 		//{
-		//	 		//	return AG_FAILURE;
-		//	 		//}
-		//	 		//strFieldName = pField->GetName();
-		//}
-		//else
-		//{
-		//	rc = BuildExpression(strFieldName, pTable, pPropertyName);
-		//	if(rc!=AG_SUCCESS)
-		//	{
-		//		return AG_FAILURE;
-		//	}
-		//}
-
-		//char szWhereClause[AUGE_PATH_MAX];
-		//ag_snprintf(szWhereClause, AUGE_PATH_MAX, " (%s%s%s && 'BOX3D(%f %f,%f %f)'::box3d)", 
-		//	GEOPGS_DOUBLE_QUTOES, strFieldName.c_str(), GEOPGS_DOUBLE_QUTOES, 
-		//	extent.m_xmin, 
-		//	extent.m_ymin, 
-		//	extent.m_xmax, 
-		//	extent.m_ymax);
-
-		//strWhere = szWhereClause;
-
-		return AG_SUCCESS;
+		return BuildFilter(sql, pFeatureClass, extent);
 	}
 
 	/*
@@ -1071,7 +1029,7 @@ namespace auge
 			fname = pQuery->GetSubField(i);
 			if(!hasid)
 			{
-				if(strcmp(fname,"gid")==0)
+				if(strcmp(fname,"fid")==0)
 				{
 					hasid = true;
 				}
@@ -1101,11 +1059,11 @@ namespace auge
 		{
 			if(fields.empty())
 			{
-				fields = "gid";
+				fields = "fid";
 			}
 			else
 			{
-				fields.append(",gid");
+				fields.append(",fid");
 			}
 		}
 	}
@@ -1161,6 +1119,13 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	RESULTCODE SQLBuilder::BuildDropTable(std::string& sql, const char* name)
+	{
+		sql = "drop table ";
+		sql.append(name);
+		return AG_SUCCESS;
+	}
+
 	RESULTCODE SQLBuilder::BuildFieldSQL(std::string& sql, GField* pField)
 	{
 		sql.empty();
@@ -1209,9 +1174,9 @@ namespace auge
 			break;
 		}
 
-		sql += fname;
-		sql += " ";
-		sql += szType;
+		sql.append(fname);
+		sql.append(" ");
+		sql.append(szType);
 
 		return AG_SUCCESS;
 	}
@@ -1402,5 +1367,94 @@ namespace auge
 		sql = "select count(*)";
 		sql.append(" from ");
 		sql.append(pFeatureClass->GetName());
+	}
+
+	/************************************************************************/
+	/* create index spi_new_table_2 on new_table_2(geometry) with structure = rtree, 
+	range = ((-180,-90), (180,90));                                         */
+	/************************************************************************/
+	RESULTCODE SQLBuilder::BuildCreateSpatialIndex(std::string& sql,const char* className,const char* fieldName, GEnvelope& extent)
+	{
+		if (className == NULL || fieldName == NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		char str[AUGE_MSG_MAX];
+		memset(str, 0, AUGE_MSG_MAX);
+		g_snprintf(str, AUGE_MSG_MAX, "((%f,%f),(%f,%f))", extent.m_xmin, extent.m_ymin, extent.m_xmax, extent.m_ymax);
+
+		sql = "create index spi_";
+		sql.append(className);
+		sql.append(" on ");
+		sql.append(className);
+		sql.append("(");
+		sql.append(fieldName);
+		sql.append(")");
+		sql.append(" with structure = rtree,range=");
+		sql.append(str);
+
+		return AG_SUCCESS;
+
+	}
+
+	void SQLBuilder::BuildGetDatasetNames(std::string& sql, const char* owner)
+	{
+		sql = "select table_name from iitables where table_owner='";
+		sql.append(owner);
+		sql.append("' order by table_name");
+	}
+
+	RESULTCODE SQLBuilder::BuildRegisterGeometryColumn(char* sql, size_t size, const char* className, GField* pField)
+	{
+		GeometryDef* pGeometryDef = pField->GetGeometryDef();
+		if(pGeometryDef==NULL)
+		{
+			return AG_FAILURE;
+		}
+		
+		const char* fname = pField->GetName();
+		augeGeometryType gType = pGeometryDef->GeometryType();
+		g_int dtype = 1;
+		g_int dimen = pGeometryDef->GetDimension();
+		g_int srid  = pGeometryDef->GetSRID();
+		GEnvelope extent;
+		pGeometryDef->GetExtent(extent);
+		double zmin=0.0,zmax=0.0,mmin=0.0,mmax=0.0;
+		if(!extent.IsValid())
+		{
+			extent.Set(0.0, 0.0, 0.0, 0.0);
+		}
+
+		memset(sql, 0, size);
+		//g_snprintf(sql, size, "EXECUTE PROCEDURE ST_REG_GEOM_COLUMN(schema=NULL, tablename='%s', geoColumn='%s', gtype=%d, dimension=%d, dtype=%d, srid=%d, xmin=%f, xmax=%f, ymin=%f, ymax=%f, zmin=%f, zmax=%f, mmin=%f, mmax=%f)",
+		//	className,
+		//	fname,
+		//	gType,
+		//	dimen,
+		//	dtype,
+		//	srid,
+		//	extent.m_xmin, extent.m_xmax,
+		//	extent.m_ymin, extent.m_ymax,
+		//	zmin, zmax,
+		//	mmin, mmax);
+		g_snprintf(sql, size, "EXECUTE PROCEDURE ST_REG_GEOM_COLUMN(schema=NULL, tablename='%s', geoColumn='%s', gtype=%d, dimension=%d, dtype=%d, srid=%d)",
+			className,
+			fname,
+			gType,
+			dimen,
+			dtype,
+			srid);
+		printf("%s\n", sql);
+		//g_snprintf(sql, size, EXECUTE PROCEDURE ST_REG_GEOM_COLUMN(schema=NULL, tablename='cities_3', geoColumn='shape', gtype=1, dimension=2, dtype=1, srid=4326))
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE SQLBuilder::BuildUnRegisterGeometryColumn(char* sql, size_t size, const char* className, const char* fieldName)
+	{
+		memset(sql, 0, size);
+		g_snprintf(sql, size, "EXECUTE PROCEDURE ST_UNREG_GEOM_COLUMN(schema=NULL,tablename='%s',geoColumn='%s')", className, fieldName);
+		return AG_SUCCESS;
 	}
 }

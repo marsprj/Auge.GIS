@@ -13,6 +13,7 @@ namespace auge
 		m_pbydRow = NULL;
 		m_pbydFields = NULL;
 		m_pGeometry = NULL;
+		m_strs = NULL;
 	}
 
 	FeatureByd::~FeatureByd()
@@ -21,6 +22,7 @@ namespace auge
 		{
 			AUGE_SAFE_RELEASE(m_pGeometry);
 		}
+		CleanupStrings();
 	}
 
 	FeatureClass* FeatureByd::GetFeatureClass() const
@@ -234,15 +236,29 @@ namespace auge
 		{
 			return NULL;
 		}
+
+		FeatureByd* pThis = (FeatureByd*)this;
+		const char* v = pThis->GetStringValue(i);
+		if(v!=NULL)
+		{
+			return v;
+		}
+
 		CPPIDataItem* pbydItem = m_pbydRow->GetItem(i);
-		int length = pbydItem->GetLength();
-		CPPIDataType type = pbydItem->GetDataType();
-		//CPPIString val = pbydItem->GetAsString();
-		//CPPISizeType length = val.length();
-		//CPPISizeType size = val.size();
-		const char* str = pbydItem->GetAsString().c_str();
-		//str = (const char*)pbydItem->GetAsUString().c_str();
-		return pbydItem->GetAsString().c_str();
+		if(pbydItem==NULL)
+		{
+			return NULL;
+		}
+		CPPIString str = pbydItem->GetAsString();
+		v = str.c_str();
+		if(v==NULL)
+		{
+			return NULL;
+		}
+		char* dv = strdup(v);
+		pThis->SetStringValue(i, dv);
+
+		return dv;
 	}
 
 	TIME_STRU* FeatureByd::GetTime(g_uint i) const
@@ -429,7 +445,7 @@ namespace auge
 			}
 			m_fid = pbydItem->GetAsInt4();
 		}
-
+		InitStrings();
 		return true;
 	}
 
@@ -442,7 +458,7 @@ namespace auge
 		CPPIFields* pbydFields = NULL;
 		pbydFields = m_pbydResultSet->GetFields();
 		item = pbydFields->FindField(geom_field);
-		if(item==0)
+		if(item<0)
 		{
 			return NULL;
 		}
@@ -471,5 +487,52 @@ namespace auge
 		pGeometry = pGeometryFactory->CreateGeometryFromWKB((g_uchar*)pBytes);
 
 		return pGeometry;
+	}
+
+	void FeatureByd::InitStrings()
+	{
+		g_uint nField = m_pbydFields->GetCount();
+		m_strs = (char**)malloc(sizeof(char*)*m_field_count);
+		memset(m_strs, 0, sizeof(char*)*m_field_count);
+	}
+
+	void FeatureByd::CleanupStrings()
+	{
+		if(m_strs==NULL)
+		{
+			return;
+		}
+		for(g_uint i=0; i<m_field_count; i++)
+		{
+			if(m_strs[i]!=NULL)
+			{
+				free(m_strs[i]);
+				m_strs[i] = NULL;
+			}
+		}
+		free(m_strs);
+	}
+
+	const char*	FeatureByd::GetStringValue(g_uint i)
+	{
+		if(i>=m_field_count)
+		{
+			return NULL;
+		}
+		return m_strs[i];
+	}
+
+	void FeatureByd::SetStringValue(g_uint i, char* value)
+	{
+		if(i>=m_field_count)
+		{
+			return;
+		}
+		char* v = m_strs[i];
+		if(v!=NULL)
+		{
+			free(v);
+		}
+		m_strs[i] = value;
 	}
 }

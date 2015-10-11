@@ -38,6 +38,7 @@ namespace auge
 
 	RESULTCODE FeatureInsertCommandByd::Commit()
 	{
+		m_pFeatureClass->BuildSpatialIndex();
 		return AG_SUCCESS;
 	}
 }

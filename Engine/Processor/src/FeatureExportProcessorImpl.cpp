@@ -200,9 +200,10 @@ namespace auge
 			cmd->Insert(pFeature);
 			pFeature->Release();
 		}
+		cmd->Commit();
+		cmd->Release();
 
 		pshpFeatureClass->Refresh();
-		cmd->Release();
 		pshpFeatureClass->Release();
 		pshpWorkspace->Close();
 		pshpWorkspace->Release();

@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDEngine", "Engine\Data\GDEngine\32_x86_win_vc10\GDEngine.vcxproj", "{07AF14F1-448D-4018-80BF-0298C9A7D022}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C17AA319-6571-48F3-BFD6-111B3B0445C5} = {C17AA319-6571-48F3-BFD6-111B3B0445C5}
+		{04DA4924-594B-4A93-801F-F260E486F28D} = {04DA4924-594B-4A93-801F-F260E486F28D}
 		{57E6CDAA-E9D2-4CA1-9542-70CA0081C547} = {57E6CDAA-E9D2-4CA1-9542-70CA0081C547}
 		{075E99AE-8CDC-452A-BDD8-3E789ED20A7A} = {075E99AE-8CDC-452A-BDD8-3E789ED20A7A}
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698} = {5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}
@@ -100,6 +101,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsufs", "Engine\Server\gsufs\32_x86_win_vc10\gsufs.vcxproj", "{BC26607E-6440-4F4E-9CD1-E9A7695F293B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gspoi", "Engine\Server\gspoi\32_x86_win_vc10\gspoi.vcxproj", "{47DA87BD-34AC-41AC-B78E-9B85203F01FE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GBeyond", "Engine\Data\GBeyond\32_x86_win_vc10\GBeyond.vcxproj", "{04DA4924-594B-4A93-801F-F260E486F28D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -211,6 +214,10 @@ Global
 		{47DA87BD-34AC-41AC-B78E-9B85203F01FE}.Debug|Win32.Build.0 = Debug|Win32
 		{47DA87BD-34AC-41AC-B78E-9B85203F01FE}.Release|Win32.ActiveCfg = Release|Win32
 		{47DA87BD-34AC-41AC-B78E-9B85203F01FE}.Release|Win32.Build.0 = Release|Win32
+		{04DA4924-594B-4A93-801F-F260E486F28D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{04DA4924-594B-4A93-801F-F260E486F28D}.Debug|Win32.Build.0 = Debug|Win32
+		{04DA4924-594B-4A93-801F-F260E486F28D}.Release|Win32.ActiveCfg = Release|Win32
+		{04DA4924-594B-4A93-801F-F260E486F28D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

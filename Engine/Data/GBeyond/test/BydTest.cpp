@@ -63,7 +63,8 @@ void BydTest::ReadTest()
 		//printf("[%d]\n", pFeature->GetFID());
 		//sprintf(str, "%f", pFeature->GetFloat("cities_id"));
 		sprintf(str, "%d", pFeature->GetInt("cities_id"));
-		printf("[%d]:%s\n", pFeature->GetFID(), pFeature->GetString("name"));
+		//printf("[%d]:%s\n", pFeature->GetFID(), pFeature->GetString("name"));
+		printf("[%d]:%s\n", pFeature->GetFID(), pFeature->GetString("country"));
 		//float val = pFeature->GetFloat("co");
 		pGeometry = pFeature->GetGeometry();
 		printf("%s\n", pGeometry->AsText());

@@ -203,7 +203,7 @@ namespace auge
 			cmd->Insert(pFeature);
 			pFeature->Release();
 		}
-
+		cmd->Commit();
 		long te = auge_get_time();
 
 		char msg[AUGE_MSG_MAX];
@@ -211,8 +211,9 @@ namespace auge
 		g_sprintf(msg, "[%s] import Finished, using\t%ld\ts", shp_name, (te-ts)/1000);
 		pLogger->Info(msg, __FILE__, __LINE__);
 
-		pdbFeatureClass->Refresh();
+		cmd->Commit();
 		cmd->Release();
+		pdbFeatureClass->Refresh();
 		pdbFeatureClass->Release();
 
 		pshpCursor->Release();

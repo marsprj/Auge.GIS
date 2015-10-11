@@ -25,6 +25,10 @@ namespace auge
 		bool	Create(FeatureClassByd* pFeatureClass, GEnvelope& extent);
 
 	private:
+		FeatureClassByd* CreateFeatureClass(FeatureClassByd* pFeatureClass, CPPIResultSet* pResultSet);
+		FeatureClassByd* CreateFeatureClass(FeatureClassByd* pFeatureClass, GQuery* pQuery);
+
+	private:
 		FeatureClassByd*	m_pFeatureClass;
 		CPPIConnection*		m_pConnection;
 		CPPIResultSet*		m_pResultSet;

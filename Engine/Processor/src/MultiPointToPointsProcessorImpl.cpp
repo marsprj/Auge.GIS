@@ -288,6 +288,9 @@ namespace auge
 		pnewFeature->Release();
 		pCursor->Release();
 
+		cmd->Commit();
+		cmd->Release();
+
 		return AG_SUCCESS;
 	}
 
