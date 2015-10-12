@@ -7,9 +7,10 @@ AM_CPPFLAGS=-I../include \
 
 libgsvrs_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
+		-L$(top_srcdir)/Engine/Carto/src \
 		-L$(top_srcdir)/Engine/Server/gscore/src
 
-libgsvrs_la_LIBADD=-lgcore -lgscore
+libgsvrs_la_LIBADD=-lgcore -lgscore -lgcarto
 
 libgsvrs_la_SOURCES=\
 		EnumServiceImpl.cpp \
