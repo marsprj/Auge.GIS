@@ -159,6 +159,7 @@ namespace auge
 					pWorkspaces->Add(pWorkspace);
 				}
 			}
+			pResultSet->Release();
 		}
 		return pWorkspaces;
 	}

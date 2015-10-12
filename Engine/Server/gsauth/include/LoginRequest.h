@@ -49,8 +49,8 @@ namespace auge
 
 /************************************************************************
 [ HTTP Get ]
-service=wus&version=1.0.0&request=Login&name=user2&password=qwer1234
-http://127.0.0.1:8088/ows/mgr?service=wus&version=1.0.0&request=Login&name=user2&password=qwer1234
+service=was&version=1.0.0&request=Login&name=user2&password=qwer1234
+http://127.0.0.1:8088/ows/mgr?service=was&version=1.0.0&request=Login&name=user2&password=qwer1234
 
 http://127.0.0.1:8088/ows/auth?request=Login&name=user2&password=qwer1234
 

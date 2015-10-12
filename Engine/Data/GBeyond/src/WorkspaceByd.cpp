@@ -124,6 +124,9 @@ namespace auge
 			pError->SetError(msg);
 			pLogger->Error(msg, __FILE__, __LINE__);
 
+			m_pbydEnvironment->CloseConnection(m_pbydConnction);
+			m_pbydConnction = NULL;
+
 			CPPIEnvironment::TerminateEnvironment(m_pbydEnvironment);
 			m_pbydEnvironment = NULL;
 
@@ -137,8 +140,11 @@ namespace auge
 	{
 		if(m_pbydConnction!=NULL)
 		{
-			m_pbydEnvironment->CloseConnection(m_pbydConnction);
-			m_pbydConnction = NULL;
+			if(m_pbydEnvironment!=NULL)
+			{
+				m_pbydEnvironment->CloseConnection(m_pbydConnction);
+				m_pbydConnction = NULL;
+			}
 		}
 	}
 
@@ -168,6 +174,10 @@ namespace auge
 
 	FeatureClass* WorkspaceByd::OpenFeatureClass(const char* name)
 	{
+		if(!IsOpen())
+		{
+			return NULL;
+		}
 		if(name==NULL)
 		{
 			return NULL;
@@ -185,6 +195,10 @@ namespace auge
 
 	FeatureClass* WorkspaceByd::CreateFeatureClass(const char* name, GFields* pFields)
 	{
+		if(!IsOpen())
+		{
+			return NULL;
+		}
 		if(name==NULL||pFields==NULL)
 		{
 			return NULL;
@@ -236,6 +250,11 @@ namespace auge
 
 	EnumDataSet* WorkspaceByd::GetFeatureClasses()
 	{
+		if(!IsOpen())
+		{
+			return NULL;
+		}
+
 		GError* pError = augeGetErrorInstance();
 		GLogger* pLogger = augeGetLoggerInstance();
 
@@ -262,6 +281,10 @@ namespace auge
 
 	RESULTCODE WorkspaceByd::ExecuteSQL(const char* sql)
 	{
+		if(!IsOpen())
+		{
+			return AG_FAILURE;
+		}
 		if(sql==NULL)
 		{
 			return AG_FAILURE;
@@ -303,6 +326,11 @@ namespace auge
 
 	bool WorkspaceByd::CreateSequence(const char* name)
 	{
+		if(!IsOpen())
+		{
+			return NULL;
+		}
+
 		std::string sql;
 		SQLBuilder::BuildCreateSequence(sql, name);
 
@@ -312,6 +340,11 @@ namespace auge
 
 	bool WorkspaceByd::CreateTable(const char* name, GFields* pFields)
 	{
+		if(!IsOpen())
+		{
+			return false;
+		}
+
 		std::string sql;
 		SQLBuilder::BuildCreateTable(sql, name, pFields);
 
@@ -330,6 +363,10 @@ namespace auge
 
 	void WorkspaceByd::GetDatasetNames(std::vector<std::string>& names)
 	{
+		if(m_pbydConnction==NULL)
+		{
+			return;
+		}
 		GError* pError = augeGetErrorInstance();
 		GLogger* pLogger = augeGetLoggerInstance();
 

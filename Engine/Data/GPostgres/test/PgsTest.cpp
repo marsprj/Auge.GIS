@@ -23,7 +23,7 @@ void PgsTest::setUp()
 	
 	m_pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pDataEngine->CreateWorkspace());
 	m_pWorkspace->SetConnectionString(path);
-
+	
 	rc = m_pWorkspace->Open();
 	CPPUNIT_ASSERT(rc==AG_SUCCESS);
 

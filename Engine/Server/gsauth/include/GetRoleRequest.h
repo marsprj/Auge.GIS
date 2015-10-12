@@ -46,8 +46,8 @@ namespace auge
 
 /************************************************************************
 [ HTTP Get ]
-service=wus&version=1.0.0&request=GetRole&name=user2
-http://127.0.0.1:8088/ows/mgr?service=wus&version=1.0.0&request=GetRole&name=user2
+service=was&version=1.0.0&request=GetRole&name=user2
+http://127.0.0.1:8088/ows/mgr?service=was&version=1.0.0&request=GetRole&name=user2
 
 
 ************************************************************************/

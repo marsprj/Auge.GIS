@@ -40,7 +40,7 @@ namespace auge
 
 	const char*	LogoutRequest::GetEngine()
 	{
-		return "wus";
+		return "was";
 	}
 
 	const char* LogoutRequest::GetEncoding()

@@ -40,7 +40,7 @@ namespace auge
 
 	const char*	GetRoleRequest::GetEngine()
 	{
-		return "wus";
+		return "was";
 	}
 
 	const char* GetRoleRequest::GetEncoding()

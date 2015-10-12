@@ -40,7 +40,7 @@ namespace auge
 
 	const char*	RemoveUserRequest::GetEngine()
 	{
-		return "wus";
+		return "was";
 	}
 
 	const char* RemoveUserRequest::GetEncoding()

@@ -41,7 +41,7 @@ namespace auge
 
 	const char*	LoginRequest::GetEngine()
 	{
-		return "wus";
+		return "was";
 	}
 
 	const char* LoginRequest::GetEncoding()

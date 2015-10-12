@@ -21,6 +21,9 @@ libgsauth_la_SOURCES=\
 		GetUserHandler.cpp \
 		GetUserRequest.cpp \
 		GetUserResponse.cpp \
+		GetCatalogHandler.cpp \
+		GetCatalogResponse.cpp \
+		GetCatalogRequest.cpp \
 		RemoveUserHandler.cpp \
 		RemoveUserRequest.cpp \
 		LoginHandler.cpp \

@@ -44,7 +44,7 @@ namespace auge
 
 	const char*	CreateUserRequest::GetEngine()
 	{
-		return "wus";
+		return "was";
 	}
 
 	const char*	CreateUserRequest::GetName()

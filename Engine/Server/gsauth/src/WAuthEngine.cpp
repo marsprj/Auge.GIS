@@ -7,6 +7,7 @@
 #include "RemoveUserHandler.h"
 #include "GetUserHandler.h"
 #include "GetRoleHandler.h"
+#include "GetCatalogHandler.h"
 
 #include "LoginHandler.h"
 #include "LogoutHandler.h"
@@ -31,6 +32,8 @@ namespace auge
 		m_handlers.push_back(new LoginHandler());
 		m_handlers.push_back(new LogoutHandler());
 		m_handlers.push_back(new IsLoginHandler());
+
+		m_handlers.push_back(new GetCatalogHandler());
 	}
 
 	WAuthEngine::~WAuthEngine()
