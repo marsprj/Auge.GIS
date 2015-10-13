@@ -93,6 +93,13 @@ namespace auge
 			{	
 				m_pFeatureClass = pWorkspace->OpenFeatureClass(m_class_name.c_str());
 			}
+			else
+			{
+				char msg[AUGE_MSG_MAX];
+				g_snprintf(msg, AUGE_MSG_MAX, "Source [%d] does not exist.");
+				augeGetErrorInstance()->SetError(msg);
+				augeGetLoggerInstance()->Error(msg, __FILE__, __LINE__);
+			}
 		}
 		return m_pFeatureClass;
 	}

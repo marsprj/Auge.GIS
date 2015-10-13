@@ -62,14 +62,15 @@ namespace auge
 
 	WebResponse* CreateDataSetHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
+		GLogger* pLogger = augeGetLoggerInstance();
+
 		CreateDataSetRequest* pRequest = static_cast<CreateDataSetRequest*>(pWebRequest);
 		const char* sourceName = pRequest->GetSourceName();
 		const char* dataSetName= pRequest->GetDataSetName();
 
 		if(sourceName==NULL)
 		{
-			const char* msg = "Parameter [SourceName] is not defined";
-			GLogger* pLogger = augeGetLoggerInstance();
+			const char* msg = "Parameter [SourceName] is not defined";			
 			pLogger->Error("[Request] is NULL", __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
@@ -122,6 +123,7 @@ namespace auge
 			return pExpResponse;
 		}
 
+		pLogger->Info("Create Dataset ....", __FILE__, __LINE__);
 		FeatureClass* pNewClass = pWorkspace->CreateFeatureClass(dataSetName, pFields);
 		if(pNewClass==NULL)
 		{

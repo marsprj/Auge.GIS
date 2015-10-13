@@ -24,7 +24,7 @@ namespace auge
 
 	const char*	CsvImportHandler::GetDescription()
 	{
-		return "矢量数据导入";
+		return "CSV数据导入";
 	}
 
 	WebRequest*	CsvImportHandler::ParseRequest(rude::CGI& cgi)

@@ -207,19 +207,31 @@ namespace auge
 			return NULL;
 		}
 
-		FieldFactory* pFieldFactory = augeGetFieldFactoryInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+		FieldFactory* pFieldFactory = augeGetFieldFactoryInstance(); 
 		GField* pField = pFieldFactory->CreateField();
 		GField_2 *pField_2 = dynamic_cast<GField_2*>(pField);
 
 		XNode *pxNode = NULL;
-		pxNodeSet->Reset();
+		pxNodeSet->Reset(); 
 		while((pxNode=pxNodeSet->Next())!=NULL)
 		{
 			XElement* pxElement = static_cast<XElement*>(pxNode);
 			const char* name = pxElement->GetName();
 			if(g_stricmp(name, "Name")==0)
 			{
-				pField_2->SetName(pxNode->GetContent());
+				const char* name= pxNode->GetContent();
+				pLogger->Info(name, __FILE__, __LINE__);
+				const char* fff = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, name, strlen(name));
+				if(fff==NULL)
+				{
+					pLogger->Error("error", __FILE__, __LINE__);
+				}
+				else
+				{
+					pLogger->Info(auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, name, strlen(name)), __FILE__, __LINE__);
+				}
+				pField_2->SetName(auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, name, strlen(name)));
 			}
 			else if(g_stricmp(name, "Type")==0)
 			{
