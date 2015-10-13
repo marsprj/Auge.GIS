@@ -221,18 +221,8 @@ namespace auge
 			if(g_stricmp(name, "Name")==0)
 			{
 				const char* name= pxNode->GetContent();
-				pLogger->Info(name, __FILE__, __LINE__);
-				const char* fff = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, name, strlen(name));
-				if(fff==NULL)
-				{
-					pLogger->Error("error", __FILE__, __LINE__);
-				}
-				else
-				{
-					pLogger->Info(auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, name, strlen(name)), __FILE__, __LINE__);
-				}
-				pField_2->SetName(auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, name, strlen(name)));
-			}
+				pField_2->SetName(name);
+			} 
 			else if(g_stricmp(name, "Type")==0)
 			{
 				augeFieldType type = pFieldFactory->Decode(pxNode->GetContent());
