@@ -201,13 +201,25 @@ namespace auge
 	//}
 
 	FeatureClass* WorkspacePgs::CreateFeatureClass(const char* name, GFields* pFields)
-	{
+	{	
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
 		if(name==NULL||pFields==NULL)
 		{
 			return NULL;
 		}
 		if(pFields->Count()==0)
 		{
+			return NULL;
+		}
+		pLogger->Info(name, __FILE__, __LINE__);
+		if(isdigit(name[0])!=0)
+		{
+			const char* msg = "The 1st character of dataset should not be a number";
+			
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
 			return NULL;
 		}
 
