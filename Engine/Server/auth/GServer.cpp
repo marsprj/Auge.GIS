@@ -1,7 +1,6 @@
 #include "GServer.h"
 #include "AugeCore.h"
 #include "AugeXML.h"
-#include "AugeCarto.h"
 #include "AugeData.h"
 #include "AugeService.h"
 #include "AugeWebCore.h"

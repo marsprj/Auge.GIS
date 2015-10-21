@@ -22,8 +22,6 @@ namespace auge
 		g_raster_table  = "g_raster";
 		g_raster_folder_table = "g_raster_folder";
 		m_user = -1;
-
-
 //#ifdef WIN32
 //		m_raster_repository = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\upload";
 //#else

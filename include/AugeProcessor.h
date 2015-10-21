@@ -84,6 +84,19 @@ namespace auge
 		virtual void		SetDatasetName(const char* datasetName) = 0;
 	};
 
+	class XYImportProcessor : public GProcessor
+	{
+	protected:
+		XYImportProcessor(){}
+		virtual ~XYImportProcessor(){}
+	public:
+		virtual	void		SetXYPath(const char* path) = 0;
+		virtual void		SetDataSource(const char* sourceName) = 0;
+		virtual void		SetDatasetName(const char* datasetName) = 0;
+		virtual void		SetX(const char* fname) = 0;
+		virtual void		SetY(const char* fname) = 0;
+	};
+
 	class MapTileStoreGenerator : public GProcessor
 	{
 	protected:
@@ -1010,6 +1023,7 @@ namespace auge
 		virtual RandomPointsInPolygonGenerator* CreateRandomPointsInPolygonGenerator() = 0;
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor() = 0;
+		//virtual XYImportProcessor*			CreateXYImportProcessor() = 0;
 
 		// Geometry
 		virtual MultiPointToPointsProcessor* CreateMultiPointToPointsProcessor() = 0;

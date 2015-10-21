@@ -180,6 +180,20 @@ namespace auge
 		GFields* pFields = pshpFeatureClass->GetFields();
 
 		FeatureClass* pdbFeatureClass = NULL;
+		pdbFeatureClass = pdbWorkspace->OpenFeatureClass(type_name);
+		if(pdbFeatureClass!=NULL)
+		{
+			pdbFeatureClass->Release();
+			pshpFeatureClass->Release();
+			pshpWorkspace->Release();
+
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "FeatureClass [%s]ÒÑ¾­´æÔÚ", type_name);
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return AG_FAILURE;
+		}
+
 		pdbFeatureClass = pdbWorkspace->CreateFeatureClass(type_name, pFields);
 		if(pdbFeatureClass==NULL)
 		{
