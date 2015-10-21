@@ -54,6 +54,11 @@ namespace auge
 			if(pagField)
 			{
 				const char* szFieldName = pagField->GetName();
+
+				char str[AUGE_MSG_MAX];
+				g_sprintf(str, "%s : %s", szName, szFieldName);
+				augeGetLoggerInstance()->Fatal(str, __FILE__, __LINE__);
+
 				if(g_stricmp(szName, szFieldName)==0)
 				{
 					return nIndex;

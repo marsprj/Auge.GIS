@@ -69,7 +69,7 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		CreateFolderRequest* pRequest = static_cast<CreateFolderRequest*>(pWebRequest);
 
-		const char* root_path = pWebContext->GetUploadPath();
+		const char* root_path = pWebContext->GetUserRoot();
 		const char* rqut_path = pRequest->GetPath();
 		if(rqut_path==NULL)
 		{
