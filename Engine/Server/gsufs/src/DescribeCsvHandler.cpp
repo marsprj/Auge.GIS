@@ -7,6 +7,8 @@
 
 namespace auge
 {
+	extern bool make_user_path(char* user_path, size_t size, const char* root_path, const char* user_name);
+
 	DescribeCsvHandler::DescribeCsvHandler()
 	{
 
@@ -79,6 +81,8 @@ namespace auge
 		GLogger	*pLogger = augeGetLoggerInstance();
 
 		DescribeCsvRequest* pRequest = static_cast<DescribeCsvRequest*>(pWebRequest);
+		
+		const char* root_path = pWebContext->GetUserRoot();
 		const char* csv_path = pRequest->GetPath();
 
 		if(csv_path==NULL)
@@ -91,10 +95,14 @@ namespace auge
 			return pExpResponse;
 		}
 
+		char user_path[AUGE_PATH_MAX];
+		memset(user_path,0,AUGE_PATH_MAX);
+		make_user_path(user_path, AUGE_PATH_MAX, root_path, pUser->GetName());
+
 		// build csv local path
 		char csv_local_path[AUGE_PATH_MAX];
 		memset(csv_local_path, 0, AUGE_PATH_MAX);
-		auge_make_path(csv_local_path,  NULL, pWebContext->GetUploadPath(), csv_path+1, NULL);
+		auge_make_path(csv_local_path,  NULL, user_path, csv_path+1, NULL);
 		if(g_access(csv_local_path,4))
 		{
 			char msg[AUGE_MSG_MAX];
