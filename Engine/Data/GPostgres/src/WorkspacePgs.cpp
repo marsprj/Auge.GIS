@@ -11,8 +11,8 @@
 namespace auge
 {
 	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.160"
-	#define AUGE_WRITABLE_DB_SERVER	"192.168.111.159"
-	//#define AUGE_WRITABLE_DB_SERVER	"127.0.0.1"
+	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.159"
+	#define AUGE_WRITABLE_DB_SERVER	"127.0.0.1"
 	//#define AUGE_WRITABLE_DB_SERVER	"182.92.114.80"
 	
 	WorkspacePgs::WorkspacePgs():
@@ -111,7 +111,7 @@ namespace auge
 		{
 			CreateRasterTable();
 		}
-		m_raster_root_folder.Create(0, "/", "/", "/", this);
+		m_raster_root_folder.Create(0, "/", "/", "/", this, m_user);
 
 		char msg[AUGE_MSG_MAX];
 		g_sprintf(msg, "Wokspace [%s] is opened.", m_name.c_str());
@@ -697,11 +697,11 @@ namespace auge
 			path_2[len-1]='\0';
 		}
 
-		const char* format = "select gid,name,alias,path,parent from %s where path='%s'";
+		const char* format = "select gid,name,alias,path,parent from %s where path='%s' and user_id=%d";
 
 		char sql[AUGE_PATH_MAX];
 		memset(sql, 0, AUGE_PATH_MAX);		
-		g_snprintf(sql, AUGE_PATH_MAX, format, g_raster_folder_table.c_str(), path_2);
+		g_snprintf(sql, AUGE_PATH_MAX, format, g_raster_folder_table.c_str(), path_2, m_user);
 
 		GResultSet* pResult = m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -723,7 +723,7 @@ namespace auge
 		g_uint parent = pResult->GetInt(0, 4);
 
 		RasterFolderImpl *pFolder = new RasterFolderImpl();
-		pFolder->Create(id, name, alias, path, this);
+		pFolder->Create(id, name, alias, path, this, m_user);
 
 		pResult->Release();
 
@@ -757,7 +757,7 @@ namespace auge
 		g_uint parent = pResult->GetInt(0, 4);
 
 		RasterFolderImpl *pFolder = new RasterFolderImpl();
-		pFolder->Create(id, name, alias, path, this);
+		pFolder->Create(id, name, alias, path, this, m_user);
 		return pFolder;
 	}
 
@@ -1179,6 +1179,7 @@ namespace auge
 			"	alias character varying(32)," \
 			"	path character varying(256)," \
 			"	parent integer," \
+			"	user_id integer DEFAULT (-1)," \
 			"	CONSTRAINT g_raster_folder_pk PRIMARY KEY (gid)" \
 			")";
 		g_sprintf(sql, format, g_raster_folder_table.c_str());

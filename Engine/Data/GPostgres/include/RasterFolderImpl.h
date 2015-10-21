@@ -34,7 +34,7 @@ namespace auge
 
 	public:
 		
-		void			Create(g_uint id, const char* name, const char* alias, const char* path, WorkspacePgs* pWorkspace);
+		void			Create(g_uint id, const char* name, const char* alias, const char* path, WorkspacePgs* pWorkspace, g_int user_id);
 
 	private:
 		g_int			RegisterFolder(const char* name, const char* alias, const char* path);
@@ -44,6 +44,7 @@ namespace auge
 		std::string		m_alias;
 		std::string		m_path;
 		std::string		m_local_path;
+		g_int			m_user;
 
 		WorkspacePgs*	m_pWorkspace;
 		RasterDatasetImpl* m_pRasterDataset;

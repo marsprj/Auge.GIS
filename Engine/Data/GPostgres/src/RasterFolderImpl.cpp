@@ -6,6 +6,7 @@ namespace auge
 {
 	RasterFolderImpl::RasterFolderImpl()
 	{
+		m_user = -1;
 		m_name = "/";
 		m_path = "/";
 		m_pWorkspace = NULL;
@@ -36,11 +37,11 @@ namespace auge
 
 	EnumRasterFolder* RasterFolderImpl::GetFolders()
 	{
-		const char* format = "select gid,name,alias,path,parent from %s where parent=%d";
+		const char* format = "select gid,name,alias,path,parent from %s where parent=%d and user_id=%d";
 
 		char sql[AUGE_PATH_MAX];
 		memset(sql, 0, AUGE_PATH_MAX);		
-		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), GetID());
+		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), GetID(), m_user);
 
 		GResultSet* pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -60,7 +61,7 @@ namespace auge
 			g_uint parent = pResult->GetInt(i, 4);
 
 			RasterFolderImpl *pFolder = new RasterFolderImpl();
-			pFolder->Create(id, name, alias, path, m_pWorkspace);
+			pFolder->Create(id, name, alias, path, m_pWorkspace, m_user);
 			pFolders->Add(pFolder);
 		}
 		
@@ -76,11 +77,11 @@ namespace auge
 			return NULL;
 		}
 
-		const char* format = "select gid,name,alias,path,parent from %s where name='%s' and parent=%d";
+		const char* format = "select gid,name,alias,path,parent from %s where name='%s' and parent=%d and user_id";
 
 		char sql[AUGE_PATH_MAX];
 		memset(sql, 0, AUGE_PATH_MAX);		
-		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), name, GetID());
+		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), name, GetID(), m_user);
 
 		GResultSet* pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -102,7 +103,7 @@ namespace auge
 		g_uint parent = pResult->GetInt(0, 4);
 
 		RasterFolderImpl *pFolder = new RasterFolderImpl();
-		pFolder->Create(id, name, alias, path, m_pWorkspace);
+		pFolder->Create(id, name, alias, path, m_pWorkspace, m_user);
 		pResult->Release();
 
 		return pFolder;
@@ -136,7 +137,7 @@ namespace auge
 		auge_mkdir(local_folder_path);
 
 		RasterFolderImpl* pFolder = new RasterFolderImpl();
-		pFolder->Create(id, name, name, folder_path, m_pWorkspace);
+		pFolder->Create(id, name, name, folder_path, m_pWorkspace, m_user);
 		return pFolder;
 	}
 
@@ -158,11 +159,11 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		const char* format = "delete from %s where name='%s' and parent=%d";
+		const char* format = "delete from %s where name='%s' and parent=%d and user_id=%d";
 
 		char sql[AUGE_PATH_MAX];
 		memset(sql, 0, AUGE_PATH_MAX);		
-		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), name, GetID());
+		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), name, GetID(), m_user);
 
 		GConnection* pgConnection = m_pWorkspace->GetConnectionW();
 		if(pgConnection==NULL)
@@ -187,11 +188,11 @@ namespace auge
 			return false;
 		}
 
-		const char* format = "select count(*) from %s where name='%s' and parent=%d";
+		const char* format = "select count(*) from %s where name='%s' and parent=%d and user_id=%d";
 
 		char sql[AUGE_PATH_MAX];
 		memset(sql, 0, AUGE_PATH_MAX);		
-		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), name, GetID());
+		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), name, GetID(),m_user);
 
 		GResultSet* pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -214,8 +215,8 @@ namespace auge
 
 		char sql[AUGE_PATH_MAX];
 		memset(sql, 0, AUGE_PATH_MAX);
-		const char* format = "select count(*) from %s where parent=%d";
-		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), GetID());
+		const char* format = "select count(*) from %s where parent=%d and user_id=%d";
+		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), GetID(), m_user);
 
 		GResultSet* pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -242,9 +243,10 @@ namespace auge
 		}
 	}
 
-	void RasterFolderImpl::Create(g_uint id, const char* name, const char* alias, const char* path, WorkspacePgs* pWorkspace)
+	void RasterFolderImpl::Create(g_uint id, const char* name, const char* alias, const char* path, WorkspacePgs* pWorkspace, g_int user_id)
 	{
 		m_id = id;
+		m_user = user_id;
 		m_name = name;
 		m_alias = alias==NULL ? name : alias;
 		m_path = path;
@@ -260,10 +262,10 @@ namespace auge
 
 	g_int RasterFolderImpl::RegisterFolder(const char* name, const char* alias, const char* path)
 	{
-		const char* format = "insert into %s (name,alias,path,parent) values('%s','%s','%s',%d) returning gid";
+		const char* format = "insert into %s (name,alias,path,parent,user_id) values('%s','%s','%s',%d,%d) returning gid";
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), name, alias, path, GetID());
+		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), name, alias, path, GetID(),m_user);
 
 		GConnection* pgConnection = m_pWorkspace->GetConnectionW();
 		if(pgConnection==NULL)
