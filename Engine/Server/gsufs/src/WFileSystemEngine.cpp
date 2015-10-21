@@ -288,7 +288,7 @@ namespace auge
 		{
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Request %s is not supported", request);
-			GLogger* pLogger = augeGetLoggerInstance();
+			GLogger* pLogger = augeGetLoggerInstance(); 
 			pLogger->Error(msg, __FILE__, __LINE__);
 			WebExceptionResponse* pExpResopnse = augeCreateWebExceptionResponse();
 			pExpResopnse->SetMessage(msg);
@@ -306,6 +306,20 @@ namespace auge
 		if(g_access(user_name, 4))
 		{
 			return auge_mkdir(user_path);
+		}
+		return true;
+	}
+
+	bool make_user_file_path(char* user_file_path, size_t size, const char* root_path, const char* user_name)
+	{
+		char file_path[AUGE_PATH_MAX];
+		memset(file_path, 0, AUGE_PATH_MAX);
+		auge_make_path(file_path, NULL, root_path, user_name, NULL);
+
+		auge_make_path(user_file_path, NULL, file_path, "upload", NULL);
+		if(g_access(user_name, 4))
+		{
+			return auge_mkdir(user_file_path);
 		}
 		return true;
 	}

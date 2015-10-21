@@ -7,7 +7,8 @@
 
 namespace auge
 {
-	extern bool make_user_path(char* user_path, size_t size, const char* root_path, const char* user_name);
+	//extern bool make_user_path(char* user_path, size_t size, const char* root_path, const char* user_name);
+	extern bool make_user_file_path(char* user_path, size_t size, const char* root_path, const char* user_name);
 
 	DescribeCsvHandler::DescribeCsvHandler()
 	{
@@ -97,7 +98,7 @@ namespace auge
 
 		char user_path[AUGE_PATH_MAX];
 		memset(user_path,0,AUGE_PATH_MAX);
-		make_user_path(user_path, AUGE_PATH_MAX, root_path, pUser->GetName());
+		make_user_file_path(user_path, AUGE_PATH_MAX, root_path, pUser->GetName());
 
 		// build csv local path
 		char csv_local_path[AUGE_PATH_MAX];
