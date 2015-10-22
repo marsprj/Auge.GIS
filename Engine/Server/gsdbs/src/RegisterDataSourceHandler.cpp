@@ -87,13 +87,14 @@ namespace auge
 			char user_path[AUGE_PATH_MAX];
 			memset(user_path, 0, AUGE_PATH_MAX);
 #ifdef WIN32
+			auge_make_path(user_path, cwd, "user", pUser->GetName(), NULL);
+#else
 			char home_path[AUGE_PATH_MAX];
 			memset(home_path, 0, AUGE_PATH_MAX); 
 			auge_get_parent_dir(cwd, home_path, AUGE_PATH_MAX);
-			auge_make_path(user_path, home_path, "user", pUser->GetName(), NULL);
-#else
+
 			char root_path[AUGE_PATH_MAX];			
-			auge_make_path(root_path, NULL, cwd, "user", NULL);
+			auge_make_path(root_path, NULL, home_path, "user", NULL);
 			auge_make_path(user_path, NULL, root_path, pUser->GetName(), NULL);
 #endif
 			char rds_path[AUGE_PATH_MAX];
