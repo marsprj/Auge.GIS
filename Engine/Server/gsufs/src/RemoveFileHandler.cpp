@@ -79,7 +79,7 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			pLogger->Error(msg,__FILE__,__LINE__);
 
-			return pExpResponse;
+			return pExpResponse; 
 		}
 
 		char user_path[AUGE_PATH_MAX];
