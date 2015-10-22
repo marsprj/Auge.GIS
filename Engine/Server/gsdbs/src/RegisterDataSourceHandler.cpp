@@ -94,6 +94,7 @@ namespace auge
 #else
 			auge_make_path(user_path, cwd, "user", pUser->GetName(), NULL);
 #endif
+			auge_make_path(user_path, cwd, "user", pUser->GetName(), NULL);
 			char rds_path[AUGE_PATH_MAX];
 			memset(rds_path, 0, AUGE_PATH_MAX);
 			auge_make_path(rds_path, NULL, user_path, "rds", NULL);
