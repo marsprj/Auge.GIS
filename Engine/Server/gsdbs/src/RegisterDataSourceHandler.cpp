@@ -92,9 +92,10 @@ namespace auge
 			auge_get_parent_dir(cwd, home_path, AUGE_PATH_MAX);
 			auge_make_path(user_path, home_path, "user", pUser->GetName(), NULL);
 #else
-			auge_make_path(user_path, cwd, "user", pUser->GetName(), NULL);
+			char root_path[AUGE_PATH_MAX];			
+			auge_make_path(root_path, NULL, cwd, "user", NULL);
+			auge_make_path(user_path, NULL, root_path, pUser->GetName(), NULL);
 #endif
-			auge_make_path(user_path, cwd, "user", pUser->GetName(), NULL);
 			char rds_path[AUGE_PATH_MAX];
 			memset(rds_path, 0, AUGE_PATH_MAX);
 			auge_make_path(rds_path, NULL, user_path, "rds", NULL);
