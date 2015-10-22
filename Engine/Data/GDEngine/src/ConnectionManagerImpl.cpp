@@ -809,8 +809,9 @@ namespace auge
 
 	RESULTCODE ConnectionManagerImpl::SaveWorkspace(g_uint user_id, const char* name, const char* engine, const char* uri, augeWorkspaceType type)
 	{
-		char sql[AUGE_NAME_MAX];
-		g_snprintf(sql, AUGE_NAME_MAX, "insert into g_data_source (name, engine, uri, user_id, type) values('%s','%s','%s', %d, %d)", name, engine, uri, user_id, (int)type);
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_data_source (name, engine, uri, user_id, type) values('%s','%s','%s', %d, %d)", name, engine, uri, user_id, (int)type);
 		return m_pConnection->ExecuteSQL(sql);
 	}
 
@@ -845,9 +846,9 @@ namespace auge
 		const char* stat= pResultSet->GetString(0,5);
 		const char* d_uri = pResultSet->GetString(0,6);
 
-		pWorkspace = NewWorkspace(gid, name, engn, uri,version);
-		pWorkspace->SetUser(user_id);
+		pWorkspace = NewWorkspace(gid, name, engn, uri,version);		
 		pResultSet->Release();
+		pWorkspace->SetUser(user_id);
 
 		return pWorkspace;
 	}

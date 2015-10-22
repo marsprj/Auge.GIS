@@ -100,6 +100,16 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
+		if(!pWorkspace->IsOpen())
+		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "Cannot Connect to DataSource [%s]", sourceName);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
 
 		pRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
 

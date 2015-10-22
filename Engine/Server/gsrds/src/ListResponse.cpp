@@ -95,9 +95,15 @@ namespace auge
 	{
 		EnumRaster* pRasters = NULL;
 		EnumRasterFolder* pFolders = NULL;
+		RasterDataset* pRasterDataset = NULL;
 
 		pFolders = m_pFolder->GetFolders();
-		pRasters = m_pFolder->GetRasterDataset()->GetRasters();
+		//pRasters = m_pFolder->GetRasterDataset()->GetRasters();
+		pRasterDataset = m_pFolder->GetRasterDataset();
+		if(pRasterDataset!=NULL)
+		{
+			pRasters  = pRasterDataset->GetRasters();
+		}
 		
 		XElement  *pxNode = NULL;
 		XElement  *pxRoot = NULL;
@@ -157,6 +163,10 @@ namespace auge
 
 	void ListResponse::WriteRasters(XElement* pxFiles, EnumRaster* pRasters)
 	{
+		if(pRasters==NULL)
+		{
+			return;
+		}
 		char str[AUGE_NAME_MAX];
 
 		const char* fname = NULL;
