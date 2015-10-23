@@ -77,6 +77,7 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Data/GDEngine/src/Makefile
                  Engine/Data/GPostgres/Makefile
                  Engine/Data/GPostgres/src/Makefile
+                 Engine/Data/GPostgres/pgs2pgs/Makefile
                  Engine/Data/GPostgres/test/Makefile
                  Engine/Data/GShape/Makefile
                  Engine/Data/GShape/src/Makefile

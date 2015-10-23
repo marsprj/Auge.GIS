@@ -8,6 +8,7 @@ namespace auge
 {
 	class Map;
 	class Service;
+	class FeatureLayer;
 	class DescribeServiceRequest;
 	class XElement;
 
@@ -21,8 +22,12 @@ namespace auge
 		void	SetUser(User* pUser);
 
 	private:
-		bool	AddServiceNode(XElement* pxParent, Service* pService);
+		bool	AddServiceNode(XElement* pxService, Service* pService);
 		bool	AddMapNode(XElement* pxService, Map* pMap);
+		void	DescribeMap(XElement* pxService, Map* pMap);
+		void	AddLayerGeographicBoundingNode(XElement* pxParent, GEnvelope& extent);
+		void	AddLayerBoundingNode(XElement* pxParent, GEnvelope& extent, int srid);
+		void	AddLayerGeomTypeNode(XElement* pxLayer, FeatureLayer* pFeatureLayer);
 		
 	private:
 		User*	m_pUser;

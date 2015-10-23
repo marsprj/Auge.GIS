@@ -46,6 +46,7 @@ namespace auge
 [ HTTP Get ]
 -------------------------------------------------------------------------
 service=ims&version=1.0.0&request=RemoveService&name=world
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RemoveService&name=world
 
 [ HTTP Post ]
 -------------------------------------------------------------------------

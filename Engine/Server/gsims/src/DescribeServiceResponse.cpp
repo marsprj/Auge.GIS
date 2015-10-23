@@ -1,6 +1,7 @@
 #include "DescribeServiceRequest.h"
 #include "DescribeServiceResponse.h"
 #include "AugeService.h"
+#include "AugeField.h"
 #include "AugeXML.h"
 #include "AugeCarto.h"
 #include "AugeUser.h"
@@ -39,37 +40,33 @@ namespace auge
 
 		XElement	*pxNode = NULL;
 		XDocument	*pxDoc = new XDocument();
-		XElement	*pxRoot = pxDoc->CreateRootNode("IMS_Services", NULL, NULL);
-
-		XElement	*pxServices = NULL;
-		XElement	*pxService  = NULL;
-
+		
 		const char* name = m_pRequest->GetName();
 		if(name==NULL)
 		{
+			XElement	*pxRoot = pxDoc->CreateRootNode("IMS_Services", NULL, NULL);			
+			XElement	*pxServices = NULL;
+			XElement	*pxService = NULL;
+
 			pServices = pServiceManager->GetServices(user_id);
 			pServices->Reset();
 
 			while((pService=pServices->Next())!=NULL)
-			{
-				/*name = pService->GetName();
+			{	
 				pxService = pxRoot->AddChild("Service", NULL);
-				pxService->SetAttribute("name", name, NULL);*/
-
-				AddServiceNode(pxRoot, pService);
+				AddServiceNode(pxService, pService);
 			}
 			pServices->Release();
 		}
 		else
 		{
+			
+
 			pService = pServiceManager->GetService(user_id, name);
 			if(pService!=NULL)
 			{
-				/*name = pService->GetName();
-				pxService = pxRoot->AddChild("Service", NULL);
-				pxService->SetAttribute("name", name, NULL);*/
-
-				AddServiceNode(pxRoot, pService);
+				XElement *pxService = pxDoc->CreateRootNode("Service", NULL, NULL);
+				AddServiceNode(pxService, pService);
 			}
 		}
 
@@ -88,15 +85,20 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	bool DescribeServiceResponse::AddServiceNode(XElement* pxParent, Service* pService)
+	bool DescribeServiceResponse::AddServiceNode(XElement* pxService, Service* pService)
 	{
+		//const char* name = pService->GetName();
+		//const char* uri  = pService->GetURI();
+		//XElement* pxService = pxParent->AddChild("Service", NULL);
+		//pxService->SetAttribute("name", name, NULL);
+		//pxService->SetAttribute("uri", uri, NULL);
+
 		const char* name = pService->GetName();
-		const char* uri  = pService->GetURI();
-		XElement* pxService = pxParent->AddChild("Service", NULL);
-		pxService->SetAttribute("name", name, NULL);
-		pxService->SetAttribute("uri", uri, NULL);
+		XElement* pxNode = pxService->AddChild("Name");
+		pxNode->SetChildText(name);
 
 		AddMapNode(pxService, pService->GetMap());
+		DescribeMap(pxService, pService->GetMap());
 
 		return true;
 	}
@@ -107,8 +109,158 @@ namespace auge
 		if(pMap!=NULL)
 		{
 			const char* name = pMap->GetName();
-			pxMap->SetAttribute("name", name, NULL);
+			//pxMap->SetAttribute("name", name, NULL);
+			pxMap->SetChildText(name, true);
 		}
 		return true;
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	// DescribeMap
+	//////////////////////////////////////////////////////////////////////////
+	void DescribeServiceResponse::DescribeMap(XElement* pxService, Map* pMap)
+	{
+		XElement  *pxNode = NULL;
+		XElement  *pxRoot = NULL;
+		char str[AUGE_MSG_MAX];
+		
+		//pxNode = pxService->AddChild("Name", NULL);
+		//pxNode->AddChildText();
+		//// WMS_Capabilities-->Capability-->Layer-->CRS
+		//pxNode = pxService->AddChild("CRS", NULL);
+		//pxNode->AddChildText("EPSG:4326");
+		//// WMS_Capabilities-->Capability-->Layer-->EX_GeographicBoundingBox
+		//GEnvelope extent = pMap->GetExtent();
+		//if(!extent.IsValid())
+		//{
+		//	extent.Set(-180.f,-90.0f,180.0f,90.0f);
+		//}
+		//AddLayerGeographicBoundingNode(pxService, extent);
+		//AddLayerBoundingNode(pxService, extent, pMap->GetSRID());
+		
+		// WMS_Capabilities-->Layers
+		XElement* pxLayers = pxService->AddChild("Layers", NULL);
+
+		// WMS_Capabilities-->Capability-->Layer-->Layer
+		Layer* pLayer = NULL;
+		g_uint lc = pMap->GetLayerCount();
+		for(g_uint i=0; i<lc; i++)
+		{ 
+			pLayer = pMap->GetLayer(i);
+			if(pLayer!=NULL)
+			{
+				const char* lname = pLayer->GetName();
+				XElement* pxLayer_2 = pxLayers->AddChild("Layer", NULL);				
+				pxLayer_2->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
+				pxLayer_2->SetAttribute("visible", pLayer->IsVisiable()?"1":"0", NULL);
+				g_sprintf(str,"%d",pLayer->GetID());
+				pxLayer_2->SetAttribute("id", str,NULL);
+				pxNode = pxLayer_2->AddChild("Name",NULL);
+				pxNode->SetChildText(lname);
+				g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
+				pxNode = pxLayer_2->AddChild("CRS",NULL);
+				pxNode->SetChildText(str);
+
+				switch(pLayer->GetType())
+				{
+				case augeLayerFeature:
+					{
+						XElement* pxLayerType = pxLayer_2->AddChild("Type");
+						pxLayerType->AddChildText("Feature");
+
+						FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+						AddLayerGeomTypeNode(pxLayer_2, pFeatureLayer);
+					}
+					break;
+				case augeLayerRaster:
+					{
+						XElement* pxLayerType = pxLayer_2->AddChild("Type");
+						pxLayerType->AddChildText("Raster");
+
+						RasterLayer* pRasterLayer = static_cast<RasterLayer*>(pLayer);
+					}
+					break;
+				//case augeLayerQuadServer:
+				//	{
+				//		XElement* pxLayerType = pxLayer_2->AddChild("Type");
+				//		pxLayerType->AddChildText("QuadServer");
+
+				//		QuadServerLayer* pQuadServerLayer = static_cast<QuadServerLayer*>(pLayer);
+				//		AddWebURLNode(pxLayer_2, pQuadServerLayer->GetURL());
+				//	}
+				//	break;
+				}
+				GEnvelope& extent = pLayer->GetExtent();
+				if(!extent.IsValid())
+				{
+					extent.Set(-180.f,-90.0f,180.0f,90.0f);
+				}
+				AddLayerGeographicBoundingNode(pxLayer_2, extent);
+				AddLayerBoundingNode(pxLayer_2, extent, pMap->GetSRID());
+
+			}
+		}
+	}
+
+	void DescribeServiceResponse::AddLayerGeographicBoundingNode(XElement* pxParent, GEnvelope& extent)
+	{
+		XElement* pxNode = NULL;
+		XElement* pxGeoBounding = NULL;
+		char str[AUGE_NAME_MAX];
+
+		pxGeoBounding = pxParent->AddChild("EX_GeographicBoundingBox", NULL);
+		g_sprintf(str, "%.6f", extent.m_xmin);
+		pxNode = pxGeoBounding->AddChild("westBoundLongitude");
+		pxNode->SetChildText(str);
+		g_sprintf(str, "%.6f", extent.m_xmax);
+		pxNode = pxGeoBounding->AddChild("eastBoundLongitude");
+		pxNode->SetChildText(str);
+		g_sprintf(str, "%.6f", extent.m_ymin);
+		pxNode = pxGeoBounding->AddChild("southBoundLatitude");
+		pxNode->SetChildText(str);
+		g_sprintf(str, "%.6f", extent.m_ymax);
+		pxNode = pxGeoBounding->AddChild("northBoundLatitude");
+		pxNode->SetChildText(str);
+	}
+
+	void DescribeServiceResponse::AddLayerBoundingNode(XElement* pxParent, GEnvelope& extent, int srid)
+	{
+		XElement* pxNode = NULL;
+		XElement* pxBounding = NULL;
+		char str[AUGE_NAME_MAX];
+
+		pxBounding = pxParent->AddChild("BoundingBox", NULL);
+		g_sprintf(str, "CRS:%d", srid);
+		pxBounding->SetAttribute("CRS", str,NULL);
+
+		if(!extent.IsValid())
+		{
+			return;
+		}
+
+		g_sprintf(str, "%.6f", extent.m_xmin);
+		pxBounding->SetAttribute("minx", str,NULL);
+		g_sprintf(str, "%.6f", extent.m_xmax);
+		pxBounding->SetAttribute("maxx", str,NULL);
+		g_sprintf(str, "%.6f", extent.m_ymin);
+		pxBounding->SetAttribute("miny", str,NULL);		
+		g_sprintf(str, "%.6f", extent.m_ymax);
+		pxBounding->SetAttribute("maxy", str,NULL);
+	}
+
+	void DescribeServiceResponse::AddLayerGeomTypeNode(XElement* pxLayer, FeatureLayer* pFeatureLayer)
+	{
+		XElement* pxGeomType = pxLayer->AddChild("GeometryType", NULL);
+		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
+		if(pFeatureClass!=NULL)
+		{
+			GField* pField = pFeatureClass->GetFields()->GetGeometryField();
+			if(pField!=NULL)
+			{
+				GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+				const char* type = pGeometryFactory->Encode(pField->GetGeometryDef()->GeometryType());
+				pxGeomType->AddChildText(type);
+			}
+		}
 	}
 }

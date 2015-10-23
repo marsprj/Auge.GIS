@@ -375,15 +375,22 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		const char* name = NULL;
 		Service* pService = NULL;
 		std::vector<Service*>::iterator iter;
 		for(iter=m_services.begin(); iter!=m_services.end(); iter++)
 		{
 			pService = *iter;
-			if(!strcmp(pService->GetName(), szName))
+			if(pService!=NULL)
 			{
-				m_services.erase(iter);
+				name = pService->GetName();
+				if(!strcmp(name, szName))
+				{
+					m_services.erase(iter);
+					break;
+				}
 			}
+			
 		}
 
 		return AG_SUCCESS;
