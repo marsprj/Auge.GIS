@@ -58,18 +58,21 @@ namespace auge
 
 	bool GPointWKB::Create(g_uchar *wkb, bool attach)
 	{
-		if(attach)
-		{
-			m_pWKBPoint = (WKBPoint*)wkb;
-		}
-		else
-		{
-			m_pWKBPoint = (WKBPoint*)auge_malloc(sizeof(WKBPoint), 1);
-			memcpy(m_pWKBPoint, wkb, sizeof(WKBPoint));
-		}
-		
+		m_pWKBPoint = (WKBPoint*)wkb;
 		m_attach = attach;
 		return true;
+		//if(attach)
+		//{
+		//	m_pWKBPoint = (WKBPoint*)wkb;
+		//}
+		//else
+		//{
+		//	m_pWKBPoint = (WKBPoint*)auge_malloc(sizeof(WKBPoint), 1);
+		//	memcpy(m_pWKBPoint, wkb, sizeof(WKBPoint));
+		//}
+		//
+		//m_attach = attach;
+		//return true;
 		//if(attach)
 		//{
 		//	m_pWKBPoint = (WKBPoint*)wkb;
