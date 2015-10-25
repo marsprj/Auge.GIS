@@ -12,6 +12,8 @@
 #include "LoginHandler.h"
 #include "LogoutHandler.h"
 #include "IsLoginedHandler.h"
+#include "GetLoginCountHandler.h"
+#include "GetOnlineUserHandler.h"
 
 namespace auge
 {
@@ -32,6 +34,8 @@ namespace auge
 		m_handlers.push_back(new LoginHandler());
 		m_handlers.push_back(new LogoutHandler());
 		m_handlers.push_back(new IsLoginHandler());
+		m_handlers.push_back(new GetLoginCountHandler());
+		m_handlers.push_back(new GetOnlineUserHandler());
 
 		m_handlers.push_back(new GetCatalogHandler());
 	}

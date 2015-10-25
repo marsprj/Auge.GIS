@@ -20,7 +20,7 @@ namespace auge
 		virtual EnumUser*		GetUsers();
 		virtual g_uint			GetUserCount();
 
-		virtual EnumUser*		GetLoginedUsers();
+		virtual EnumUser*		GetLoginedUsers(g_uint count=0, g_uint offset=0);
 		virtual g_uint			GetLoginedUserCount();
 
 		virtual RESULTCODE		Login(const char* name, const char* passwd);
@@ -35,6 +35,7 @@ namespace auge
 		RESULTCODE InitRoleTable();
 		RESULTCODE CreateUserTable();
 		RESULTCODE InitUserTable();
+		RESULTCODE CeateLoginTable();
 
 	private:
 		GConnection	*m_pConnection;

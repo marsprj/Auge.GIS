@@ -8,8 +8,8 @@ int main(int argc, char** argv)
 	const char* shpName = argv[1];
 	const char* className = shpName;
 
-	const char* pgs_constr = "SERVER=172.32.72.2;INSTANCE=5432;DATABASE=base;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* shp_constr = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=base;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* pgs_constr = "SERVER=192.168.111.161;INSTANCE=5432;DATABASE=base;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* shp_constr = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=base;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	
 	RESULTCODE rc = AG_SUCCESS;
 	auge::DataEngine* pshpEngine = NULL;

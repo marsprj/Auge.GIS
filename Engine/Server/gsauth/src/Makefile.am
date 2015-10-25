@@ -32,5 +32,8 @@ libgsauth_la_SOURCES=\
 		LogoutRequest.cpp \
 		IsLoginedHandler.cpp \
 		IsLoginedRequest.cpp \
+		GetLoginCountHandler.cpp \
+		GetLoginCountRequest.cpp \
+		GetLoginCountResponse.cpp \
 		WAuthEngine.cpp 
 

@@ -111,20 +111,29 @@ namespace auge
 			pdbUser->Release();
 			return pExpResponse;
 		}
+		pdbUser->Release();
 		
-		if(strcmp(pdbUser->GetPassword(), pswd))
+		//if(strcmp(pdbUser->GetPassword(), pswd))
+		//{
+		//	const char* msg = "ÃÜÂë´íÎó";
+		//	GError* pError = augeGetErrorInstance();
+		//	pError->SetError(msg);
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	pExpResponse->SetMessage(msg);
+		//	pLogger->Error(msg, __FILE__, __LINE__);
+		//	pdbUser->Release();
+		//	return pExpResponse;
+		//}
+		RESULTCODE rc = pUserManager->Login(name, pswd);
+		if(rc!=AG_SUCCESS)
 		{
-			const char* msg = "ÃÜÂë´íÎó";
 			GError* pError = augeGetErrorInstance();
-			pError->SetError(msg);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(msg);
-			pLogger->Error(msg, __FILE__, __LINE__);
-			pdbUser->Release();
+			pExpResponse->SetMessage(pError->GetLastError());
+			pLogger->Error(pError->GetLastError(), __FILE__, __LINE__);
 			return pExpResponse;
 		}
-		
-		pdbUser->Release();
+
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
 		return pSusResponse;

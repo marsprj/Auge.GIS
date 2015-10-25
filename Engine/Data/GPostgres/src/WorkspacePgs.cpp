@@ -11,8 +11,9 @@
 namespace auge
 {
 	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.160"
-	#define AUGE_WRITABLE_DB_SERVER	"192.168.111.159"
-	//#define AUGE_WRITABLE_DB_SERVER	"127.0.0.1"
+	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.161"
+	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.159"
+	#define AUGE_WRITABLE_DB_SERVER	"127.0.0.1"
 	//#define AUGE_WRITABLE_DB_SERVER	"172.32.72.2"
 	//#define AUGE_WRITABLE_DB_SERVER	"182.92.114.80"
 	
@@ -98,17 +99,27 @@ namespace auge
 			return rc;
 		}
 
-		if(!m_pgConnection_r.HasTable(g_feature_catalog_table.c_str()))
+		ConnectionPgs*	pgConnection_w = GetConnectionW();
+		if(pgConnection_w==NULL)
+		{
+			return AG_FAILURE;
+		}
+		if(!pgConnection_w->IsOpen())
+		{
+			return AG_FAILURE;
+		}
+
+		if(!pgConnection_w->HasTable(g_feature_catalog_table.c_str()))
 		{
 			CreateFeatureCatalogTable();
 		}
 		
-		if(!m_pgConnection_r.HasTable(g_raster_folder_table.c_str()))
+		if(!pgConnection_w->HasTable(g_raster_folder_table.c_str()))
 		{
 			CreateRasterFolderTable();
 		}
 
-		if(!m_pgConnection_r.HasTable(g_raster_table.c_str()))
+		if(!pgConnection_w->HasTable(g_raster_table.c_str()))
 		{
 			CreateRasterTable();
 		}
@@ -1208,7 +1219,7 @@ namespace auge
 			"	  maxy double precision," \
 			"	  uuid character varying(128)," \
 			"	  user_id integer DEFAULT (-1)," \
-			"	  CONSTRAINT g_feature_catalog_pk PRIMARY KEY (gid)," \
+			"	  CONSTRAINT g_feature_catalog_pk PRIMARY KEY (gid)" \
 			/*"	  CONSTRAINT g_feature_catalog_name_uk UNIQUE (name)" \*/
 			"	)";
 		g_sprintf(sql, format, g_feature_catalog_table.c_str());

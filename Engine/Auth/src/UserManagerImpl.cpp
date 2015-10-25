@@ -4,6 +4,7 @@
 #include "RoleImpl.h"
 #include "UserImpl.h"
 #include "AugeData.h"
+#include "AugeType.h"
 
 namespace auge
 {
@@ -184,7 +185,7 @@ namespace auge
 
 	g_uint UserManagerImpl::GetUserCount()
 	{
-		const char* sql = "select count(*) from from g_user";
+		const char* sql = "select count(*) from g_user";
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -196,9 +197,22 @@ namespace auge
 		return count;
 	}
 
-	EnumUser* UserManagerImpl::GetLoginedUsers()
+	EnumUser* UserManagerImpl::GetLoginedUsers(g_uint count/*=0*/, g_uint offset/*=0*/)
 	{
-		const char* sql ="select u.gid,u.name,u.alias,u.passwd,u.email,u.role,u.status, r.name,r.alias from g_user u, g_role r where u.role=r.gid and status=1";
+		char sql[AUGE_SQL_MAX];
+		if(count==0)
+		{
+			//const char* sql ="select u.gid,u.name,u.alias,u.passwd,u.email,u.role,u.status, r.name,r.alias from g_user u, g_role r where u.role=r.gid and status=1";
+			const char* format ="select u.gid,u.name,u.alias,u.passwd,u.email,u.role,u.status, r.name,r.alias from g_user u, g_role r where u.role=r.gid and status=1 and ((now() - login_time) <  '1 day 00:30:00'::interval) offset %d";
+			g_snprintf(sql, AUGE_SQL_MAX, format, offset);
+		}
+		else
+		{
+			const char* format ="select u.gid,u.name,u.alias,u.passwd,u.email,u.role,u.status, r.name,r.alias from g_user u, g_role r where u.role=r.gid and status=1 and ((now() - login_time) <  '1 day 00:30:00'::interval) limit %d offset %d";
+			g_snprintf(sql, AUGE_SQL_MAX, format, count, offset);
+		}
+		
+
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -206,8 +220,8 @@ namespace auge
 		}
 
 		EnumUserImpl* pUsers = new EnumUserImpl();
-		int count = pResult->GetCount();
-		for(int i=0; i<count; i++)
+		int users = pResult->GetCount();
+		for(int i=0; i<users; i++)
 		{
 			int u_gid = pResult->GetInt(i,0);
 			const char* u_name = pResult->GetString(i,1);
@@ -235,7 +249,8 @@ namespace auge
 
 	g_uint UserManagerImpl::GetLoginedUserCount()
 	{
-		const char* sql = "select count(*) from from g_user where status=1";
+		//const char* sql = "select count(*) from g_user where status=1";
+		const char* sql = "select count(*) from g_user where status=1 and ((now() - login_time) <  '1 day 00:30:00'::interval)";
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -269,7 +284,14 @@ namespace auge
 		}
 
 		// Set status to login
-		g_sprintf(sql, "update g_user set status=1 where name='%s'", name);
+		/*TIME_STRU time_stru;
+		memset(&time_stru, 0, sizeof(TIME_STRU));
+		auge_get_time_struct(&time_stru);
+		char str[AUGE_NAME_MAX];
+		memset(str, 0, AUGE_NAME_MAX);
+		g_snprintf(str, AUGE_NAME_MAX, "%d-%02d-%02d %02d:%02d:%02d", time_stru.usYear, time_stru.usMonth, time_stru.usDay, time_stru.usHour, time_stru.usMinute, time_stru.usSecond);
+		g_sprintf(sql, "update g_user set status=1,login_time='%s' where name='%s'", str, name);*/
+		g_sprintf(sql, "update g_user set status=1,login_time=now() where name='%s'", name);
 		return m_pConnection->ExecuteSQL(sql);
 	}
 
@@ -398,6 +420,8 @@ namespace auge
 			}
 		}
 
+		CeateLoginTable();
+
 		return AG_SUCCESS;
 	}
 
@@ -422,6 +446,12 @@ namespace auge
 	RESULTCODE UserManagerImpl::CreateUserTable()
 	{
 		const char* sql = "CREATE TABLE g_user( gid serial NOT NULL, name character varying(32) NOT NULL, alias character varying(32) NOT NULL, passwd character varying(16), email character varying, role integer, status integer DEFAULT 0, CONSTRAINT user_pk PRIMARY KEY (gid), CONSTRAINT user_fk FOREIGN KEY (role) REFERENCES g_role (gid) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION)";
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	RESULTCODE UserManagerImpl::CeateLoginTable()
+	{
+		const char* sql = "CREATE TABLE g_login (gid serial NOT NULL,  user_name character varying(32), login_time time without time zone)";
 		return m_pConnection->ExecuteSQL(sql);
 	}
 

@@ -28,6 +28,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GProcessor", "..\..\..\Processor\32_x86_win_vc10\GProcessor.vcxproj", "{B27E9A32-8154-484F-B312-9532EA0469A0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pgs2pgs", "..\pgs2pgs\pgs2pgs.vcxproj", "{83FCCCE7-A0A7-403D-BD68-A66E3F897E19}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698} = {5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -104,7 +104,7 @@ namespace auge
 		virtual EnumUser*		GetUsers() = 0;
 		virtual g_uint			GetUserCount() = 0;
 
-		virtual EnumUser*		GetLoginedUsers() = 0;
+		virtual EnumUser*		GetLoginedUsers(g_uint count=0, g_uint offset=0) = 0;
 		virtual g_uint			GetLoginedUserCount() = 0;
 
 		virtual RESULTCODE		Login(const char* name, const char* passwd) = 0;

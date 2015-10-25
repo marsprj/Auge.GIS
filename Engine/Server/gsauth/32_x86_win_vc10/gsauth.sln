@@ -20,6 +20,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsdbs", "..\..\gsdbs\32_x86
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCarto", "..\..\..\Carto\32_x86_win_vc10\GCarto.vcxproj", "{B6F892A7-59B5-48D6-A97C-8BC432B49E92}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GAuth", "..\..\..\Auth\32_x86_win_vc10\GAuth.vcxproj", "{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -58,6 +60,10 @@ Global
 		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Debug|Win32.Build.0 = Debug|Win32
 		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Release|Win32.ActiveCfg = Release|Win32
 		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Release|Win32.Build.0 = Release|Win32
+		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Debug|Win32.Build.0 = Debug|Win32
+		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Release|Win32.ActiveCfg = Release|Win32
+		{BC7BD1C7-5C79-489B-AC0E-9271CF2E23ED}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
