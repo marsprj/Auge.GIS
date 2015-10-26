@@ -35,5 +35,8 @@ libgsauth_la_SOURCES=\
 		GetLoginCountHandler.cpp \
 		GetLoginCountRequest.cpp \
 		GetLoginCountResponse.cpp \
+		GetOnlineUserHandler.cpp \
+		GetOnlineUserRequest.cpp \
+		GetOnlineUserResponse.cpp \
 		WAuthEngine.cpp 
 
