@@ -420,7 +420,7 @@ namespace auge
 			}
 		}
 
-		CeateLoginTable();
+		//CeateLoginTable();
 
 		return AG_SUCCESS;
 	}
