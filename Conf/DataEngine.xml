@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Engines>
+	<Engine description="PostgreSQL Data Engine" path="" id="Postgres"/>
+	<Engine description="Shape file Data Engine" path="" id="Shape"/>
+	<Engine description="Tile Storage Engine" path="" id="TileFS"/>
+	<Engine description="Mongo Tile Storage Engine" path="" id="TileMgo"/>
+	<Engine description="CSV File Engine" path="" id="CsvFile"/>
+</Engines>
