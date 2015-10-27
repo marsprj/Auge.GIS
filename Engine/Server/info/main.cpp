@@ -30,7 +30,7 @@ int main()
 		print_cgi_variable("SERVER_NAME");
 		print_cgi_variable("SERVER_SOFTWARE");
 		print_cgi_variable("GATEWAY_INTERFACE");
-		print_cgi_variable("SERVER_PROTOCOL");
+		print_cgi_variable("SERVER_PROTOCOL"); 
 		print_cgi_variable("SERVER_PORT");
 		print_cgi_variable("REQUEST_METHOD");
 		print_cgi_variable("HTTP_COOKIE");
@@ -47,7 +47,15 @@ int main()
 		print_cgi_variable("REMOTE_IDENT");
 		print_cgi_variable("CONTENT_TYPE");
 		print_cgi_variable("CONTENT_LENGTH");
-
+		print_cgi_variable("HTTP_CLIENT_IP");
+		print_cgi_variable("HTTP_X_FORWARDED_FOR");
+		print_cgi_variable("HTTP_X_FORWARDED");
+		print_cgi_variable("HTTP_X_CLUSTER_CLIENT_IP");
+		print_cgi_variable("HTTP_FORWARDED_FOR");
+		print_cgi_variable("HTTP_FORWARDED");
+		print_cgi_variable("HTTP_VIA");
+		
+		
 		printf("\r\n\r\n");
 
 		cgi.finish();

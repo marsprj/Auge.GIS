@@ -282,6 +282,12 @@ namespace auge
 		return (val==NULL) ? "" : val;
 	}
 
+	const char* WebContextImpl::GetHttpClient()
+	{
+		const char* val = getenv("HTTP_X_FORWARDED_FOR");
+		return (val==NULL) ? "127.0.0.1" : val;
+	}
+
 	void WebContextImpl::InitializeCache()
 	{
 		//char path[AUGE_PATH_MAX] = {0};
@@ -381,5 +387,17 @@ namespace auge
 		 }
 
 		 return auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, value, strlen(value));
+	 }
+
+	 RESULTCODE	WebContextImpl::RecordUserRequest(const char* user_name, const char* user_request, const char* request_service, const char* http_request)
+	 {
+		 const char* http_method = GetRequestMethod();
+		 const char* http_client = GetHttpClient();
+		 const char* format = "insert into g_user_request (user_name,user_request,request_service, request_time,http_method,http_client,http_request) values('%s','%s','%s',now(),'%s','%s','%s')";
+
+		 char sql[AUGE_SQL_MAX];
+		 memset(sql, 0, AUGE_SQL_MAX);
+		 g_snprintf(sql, AUGE_SQL_MAX, format, user_name, user_request, request_service, http_method, http_client, http_request);
+		 return m_pConnection->ExecuteSQL(sql);
 	 }
 }

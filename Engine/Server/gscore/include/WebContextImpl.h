@@ -32,6 +32,7 @@ namespace auge
 		virtual const char*		GetScrpitName();
 		virtual const char*		GetServerSoftware();
 		virtual const char*		GetHttpUserAgent();
+		virtual const char*		GetHttpClient();
 		virtual const char*		GetRequestMethod();
 		virtual const char*		GetQueryString();
 
@@ -39,6 +40,8 @@ namespace auge
 
 		virtual bool			IsIE();
 		virtual	const char*		ParameterEncoding(const char* value);
+
+		virtual RESULTCODE		RecordUserRequest(const char* user_name, const char* user_request, const char* request_service, const char* http_request);
 
 	public:
 		virtual	RESULTCODE		Initialize(const char* config_path=NULL);		

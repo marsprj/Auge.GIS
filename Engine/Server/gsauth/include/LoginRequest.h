@@ -27,10 +27,12 @@ namespace auge
 	public:
 		const char*	GetName();
 		const char* GetPassword();
+		const char* GetRemoteAddress();
 
 	public:
 		void		SetName(const char* name);
 		void		SetPassword(const char* password);
+		void		SetRemoteAddress();
 
 	public:
 		bool		Create(rude::CGI& cgi);
@@ -42,6 +44,7 @@ namespace auge
 		
 		std::string m_name;
 		std::string m_password;
+		std::string m_remote_address;
 	};
 }
 

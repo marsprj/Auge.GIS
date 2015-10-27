@@ -10,6 +10,7 @@ namespace auge
 {
 	#define AUGE_USER_TABLE	"g_user"
 	#define AUGE_ROLE_TABLE	"g_role"
+	#define AUGE_USER_LOGIN_TABLE "g_user_login"
 	
 	UserManager* augeGetUserManagerInstance()
 	{
@@ -283,16 +284,40 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		// Set status to login
-		/*TIME_STRU time_stru;
-		memset(&time_stru, 0, sizeof(TIME_STRU));
-		auge_get_time_struct(&time_stru);
-		char str[AUGE_NAME_MAX];
-		memset(str, 0, AUGE_NAME_MAX);
-		g_snprintf(str, AUGE_NAME_MAX, "%d-%02d-%02d %02d:%02d:%02d", time_stru.usYear, time_stru.usMonth, time_stru.usDay, time_stru.usHour, time_stru.usMinute, time_stru.usSecond);
-		g_sprintf(sql, "update g_user set status=1,login_time='%s' where name='%s'", str, name);*/
 		g_sprintf(sql, "update g_user set status=1,login_time=now() where name='%s'", name);
 		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	RESULTCODE UserManagerImpl::Login(const char* name, const char* passwd, const char* remote_address)
+	{
+		if(name==NULL||passwd==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		char sql[AUGE_SQL_MAX];
+		g_sprintf(sql, "select count(*) from g_user where name='%s' and passwd='%s'", name, passwd);
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return AG_FAILURE;
+		}
+		g_uint count = pResult->GetInt(0, 0);
+		pResult->Release();
+		if(count==0)
+		{
+			return AG_FAILURE;
+		}
+
+		g_sprintf(sql, "update g_user set status=1,login_time=now() where name='%s'", name);
+		RESULTCODE rc = m_pConnection->ExecuteSQL(sql);
+		if(rc!=AG_SUCCESS)
+		{
+			return rc;
+		}
+
+		g_sprintf(sql, "insert into g_user_login (user_name, login_time, remote_address) values('%s',now(),'%s')", name, remote_address);
+		return m_pConnection->ExecuteSQL(sql);;
 	}
 
 	bool UserManagerImpl::IsLogined(const char* name)
@@ -420,7 +445,15 @@ namespace auge
 			}
 		}
 
-		CeateLoginTable();
+		if(!m_pConnection->HasTable(AUGE_USER_LOGIN_TABLE))
+		{
+			rc = CeateLoginTable();
+			if(rc!=AG_SUCCESS)
+			{
+				return AG_FAILURE;
+			}
+		}
+		
 
 		return AG_SUCCESS;
 	}
@@ -451,7 +484,7 @@ namespace auge
 
 	RESULTCODE UserManagerImpl::CeateLoginTable()
 	{
-		const char* sql = "CREATE TABLE g_login (gid serial NOT NULL,  user_name character varying(32), login_time time without time zone)";
+		const char* sql = "CREATE TABLE g_user_login (gid serial NOT NULL,  user_name character varying(32), login_time time without time zone, remote_address character varying(128))";
 		return m_pConnection->ExecuteSQL(sql);
 	}
 

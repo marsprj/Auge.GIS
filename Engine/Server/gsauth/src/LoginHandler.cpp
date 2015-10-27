@@ -66,6 +66,7 @@ namespace auge
 		LoginRequest* pRequest = static_cast<LoginRequest*>(pWebRequest);
 		const char* name = pRequest->GetName();
 		const char* pswd = pRequest->GetPassword();
+		const char* remote = pRequest->GetRemoteAddress();
 
 		if(name==NULL)
 		{
@@ -124,7 +125,7 @@ namespace auge
 		//	pdbUser->Release();
 		//	return pExpResponse;
 		//}
-		RESULTCODE rc = pUserManager->Login(name, pswd);
+		RESULTCODE rc = pUserManager->Login(name, pswd, remote);
 		if(rc!=AG_SUCCESS)
 		{
 			GError* pError = augeGetErrorInstance();

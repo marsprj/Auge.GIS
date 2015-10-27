@@ -87,6 +87,7 @@ namespace auge
 		virtual const char*		GetScrpitName() = 0;
 		virtual const char*		GetServerSoftware() = 0;
 		virtual const char*		GetHttpUserAgent() = 0;
+		virtual const char*		GetHttpClient() = 0;
 		virtual const char*		GetRequestMethod() = 0;
 		virtual const char*		GetQueryString() = 0;
 
@@ -94,6 +95,8 @@ namespace auge
 
 		virtual bool			IsIE() = 0;
 		virtual	const char*		ParameterEncoding(const char* value) = 0;
+
+		virtual RESULTCODE		RecordUserRequest(const char* user_name, const char* user_request, const char* request_service, const char* http_request) = 0;
 
 	public:
 		virtual GConnection*	GetConnection() = 0;

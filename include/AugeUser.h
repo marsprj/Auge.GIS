@@ -108,6 +108,7 @@ namespace auge
 		virtual g_uint			GetLoginedUserCount() = 0;
 
 		virtual RESULTCODE		Login(const char* name, const char* passwd) = 0;
+		virtual RESULTCODE		Login(const char* name, const char* passwd, const char* remote_address) = 0;
 		virtual RESULTCODE		Logout(const char* name) = 0;
 		virtual bool			IsLogined(const char* name) = 0;
 

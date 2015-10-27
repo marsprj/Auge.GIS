@@ -171,6 +171,8 @@ namespace auge
 		}
 
 		auge::WebContext* pWebContext = auge::augeGetWebContextInstance();
+		pWebContext->RecordUserRequest(pUser->GetName(), pWebRequest->GetRequest(), szService, pWebContext->GetQueryString());
+		
 		pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, pUser);
 		//pWebResponse = pWebEngine->Execute(pWebRequest, pWebContext, pUser);
 		pWebRequest->Release();
