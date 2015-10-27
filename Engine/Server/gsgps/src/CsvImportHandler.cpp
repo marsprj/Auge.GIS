@@ -110,16 +110,19 @@ namespace auge
 			pWebResponse =  pExpResponse;
 		}
 
+		char user_file_root[AUGE_PATH_MAX];
+		auge_make_user_file_root(user_file_root, AUGE_PATH_MAX, pWebContext->GetUserRoot(), pUser->GetName());
+
 		char csv_path[AUGE_PATH_MAX];
 		memset(csv_path, 0, AUGE_PATH_MAX);
 		if(pRequest->GetCsvPath()!=NULL)
 		{
 			const char* req_path = pRequest->GetCsvPath();
-			auge_make_path(csv_path, NULL, pWebContext->GetUploadPath(), req_path+1, NULL);
+			auge_make_path(csv_path, NULL, user_file_root, req_path+1, NULL);
 		}
 		else
 		{
-			strcpy(csv_path, pWebContext->GetUploadPath());
+			strcpy(csv_path, user_file_root);
 		}
 
 		char csv_ext[AUGE_EXT_MAX];

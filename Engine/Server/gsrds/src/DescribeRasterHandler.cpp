@@ -65,9 +65,10 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		DescribeRasterRequest* pRequest = static_cast<DescribeRasterRequest*>(pWebRequest);
 
-		const char* root_path = pWebContext->GetUploadPath();
 		const char* folder_path = pRequest->GetPath();
 		const char* raster_name=pRequest->GetRasterName();
+		char root_path[AUGE_PATH_MAX];
+		auge_make_user_raster_root(root_path, AUGE_PATH_MAX, pWebContext->GetUserRoot(), pUser->GetName());
 
 		if(raster_name==NULL)
 		{

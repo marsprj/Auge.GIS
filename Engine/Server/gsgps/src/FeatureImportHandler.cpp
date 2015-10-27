@@ -109,13 +109,16 @@ namespace auge
 			pWebResponse =  pExpResponse;
 		}
 
-		char user_root[AUGE_PATH_MAX];
-		memset(user_root, 0, AUGE_PATH_MAX);
-		auge_make_path(user_root, NULL, pWebContext->GetUserRoot(), pUser->GetName(), NULL);
+		//char user_root[AUGE_PATH_MAX];
+		//memset(user_root, 0, AUGE_PATH_MAX);
+		//auge_make_path(user_root, NULL, pWebContext->GetUserRoot(), pUser->GetName(), NULL);
+
+		//char user_file_root[AUGE_PATH_MAX];
+		//memset(user_file_root, 0, AUGE_PATH_MAX);
+		//auge_make_path(user_file_root, NULL, user_root, "upload", NULL);
 
 		char user_file_root[AUGE_PATH_MAX];
-		memset(user_file_root, 0, AUGE_PATH_MAX);
-		auge_make_path(user_file_root, NULL, user_root, "upload", NULL);
+		auge_make_user_file_root(user_file_root, AUGE_PATH_MAX, pWebContext->GetUserRoot(), pUser->GetName());
 
 		char shp_path[AUGE_PATH_MAX];
 		memset(shp_path, 0, AUGE_PATH_MAX);

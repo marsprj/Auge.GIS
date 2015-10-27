@@ -1,6 +1,7 @@
 #include "RemoveFileHandler.h"
 #include "RemoveFileRequest.h"
 
+#include "AugeUser.h"
 #include "AugeWebCore.h"
 
 #ifndef WIN32
@@ -66,8 +67,10 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		RemoveFileRequest* pRequest = static_cast<RemoveFileRequest*>(pWebRequest);
 
-		const char* root_path = pWebContext->GetUploadPath();
 		const char* rqut_path = pRequest->GetPath();
+		char root_path[AUGE_PATH_MAX];
+		auge_make_user_raster_root(root_path, AUGE_PATH_MAX, pWebContext->GetUserRoot(), pUser->GetName());
+
 		if(rqut_path==NULL)
 		{
 			const char* msg = "Parameter [Path] is NULL";

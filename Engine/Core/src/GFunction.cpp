@@ -875,5 +875,45 @@ namespace auge
 	{
 		return (AUGE_BYTE_MAX * value / AUGE_FLOAT_MAX);
 	}
+	
+	RESULTCODE auge_make_user_file_root(char* user_file_root, size_t size, const char* root_path, const char* user_name)
+	{
+		if(user_file_root==NULL||root_path==NULL||user_name==NULL)
+		{
+			return AG_FAILURE;
+		}
+		char user_root[AUGE_PATH_MAX];
+		memset(user_root, 0, AUGE_PATH_MAX);
+		auge_make_path(user_root, NULL, root_path, user_name, NULL);
 
+		memset(user_file_root, 0, size);
+		auge_make_path(user_file_root, NULL, user_root, "upload", NULL);
+		if(g_access(user_file_root, 4))
+		{
+			auge_mkdir(user_file_root);
+		}
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE	auge_make_user_raster_root(char* user_raster_root, size_t size, const char* root_path, const char* user_name)
+	{
+		if(user_raster_root==NULL||root_path==NULL||user_name==NULL)
+		{
+			return AG_FAILURE;
+		}
+		char user_root[AUGE_PATH_MAX];
+		memset(user_root, 0, AUGE_PATH_MAX);
+		auge_make_path(user_root, NULL, root_path, user_name, NULL);
+
+		memset(user_raster_root, 0, size);
+		auge_make_path(user_raster_root, NULL, user_root, "rds", NULL);
+
+		if(g_access(user_raster_root, 4))
+		{
+			auge_mkdir(user_raster_root);
+		}
+
+		return AG_SUCCESS;
+	}
 }

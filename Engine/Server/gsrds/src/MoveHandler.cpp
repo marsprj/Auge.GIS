@@ -1,6 +1,7 @@
 #include "MoveHandler.h"
 #include "MoveRequest.h"
 
+#include "AugeUser.h"
 #include "AugeWebCore.h"
 
 
@@ -62,9 +63,10 @@ namespace auge
 		GLogger* pLogger = augeGetLoggerInstance();
 		MoveRequest* pRequest = static_cast<MoveRequest*>(pWebRequest);
 
-		const char* root_path = pWebContext->GetUploadPath();
 		const char* rqut_src_path = pRequest->GetSrc();
 		const char* rqut_des_path = pRequest->GetDes();
+		char root_path[AUGE_PATH_MAX];
+		auge_make_user_raster_root(root_path, AUGE_PATH_MAX, pWebContext->GetUserRoot(), pUser->GetName());
 
 		if(rqut_src_path==NULL)
 		{

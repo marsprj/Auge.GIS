@@ -399,6 +399,9 @@ namespace auge
 		AUGE_API g_byte		auge_pixel_value_normalize_short(g_int16 value);
 		AUGE_API g_byte		auge_pixel_value_normalize_float(float value);
 
+		AUGE_API RESULTCODE	auge_make_user_file_root(char* user_file_root, size_t size, const char* root_path, const char* user_name);
+		AUGE_API RESULTCODE	auge_make_user_raster_root(char* user_raster_root, size_t size, const char* root_path, const char* user_name);
+
 		AUGE_API const char*	auge_encoding_convert(const char* from, const char* to, const char* instr, size_t instrlen);
 		AUGE_API size_t	auge_encoding_convert_2(const char* from, const char* to, const char* instr, size_t instrlen, char* outstr, size_t* outlen);
 	}
