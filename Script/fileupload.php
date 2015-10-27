@@ -57,11 +57,21 @@ if ( !empty($_REQUEST[ 'debug' ]) ) {
 // Settings
 // $targetDir = ini_get("upload_tmp_dir") . DIRECTORY_SEPARATOR . "plupload";
 $targetDir = 'upload_tmp';
-$uploadDir = '/opt/auge/upload';
+// $uploadDir = '/opt/auge/upload';
+$uploadRootDir = '/opt/auge/user/';
+$uploadDirName = 'upload';
 
 $cleanupTargetDir = true; // Remove old files
 $maxFileAge = 5 * 3600; // Temp file age in seconds
 
+// Get user name
+if (isset($_REQUEST["user"])){
+    $username = $_REQUEST["user"];
+}else{
+    die('{"jsonrpc" : "2.0", "error" : {"code": 104, "message": "username is null."}, "id" : "id"}');
+}
+
+$uploadDir = $uploadRootDir . $username . DIRECTORY_SEPARATOR . $uploadDirName;
 
 // Create target dir
 if (!file_exists($targetDir)) {
@@ -131,8 +141,7 @@ if ($cleanupTargetDir) {
 
 // Open temp file
 if (!$out = @fopen("{$filePath}_{$chunk}.parttmp", "wb")) {
-   die($filePath);  
-// die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
+    die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
 }
 
 if (!empty($_FILES)) {
@@ -169,7 +178,8 @@ for( $index = 0; $index < $chunks; $index++ ) {
 }
 if ( $done ) {
     if (!$out = @fopen($uploadPath, "wb")) {
-        die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
+        die($uploadPath);
+        // die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
     }
 
     if ( flock($out, LOCK_EX) ) {
@@ -193,3 +203,4 @@ if ( $done ) {
 
 // Return Success JSON-RPC response
 die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
+
