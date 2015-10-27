@@ -3,6 +3,7 @@
 #include "GProcessEngine.h"
 #include "AugeWebCore.h"
 #include "AugeProcessor.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -98,7 +99,6 @@ namespace auge
 		const char* shp_name = pRequest->GetShapeName();
 		const char* source_name = pRequest->GetSourceName();
 		const char* type_name = pRequest->GetTypeName();
-		const char* user_root = pWebContext->GetUserRoot();
 
 		if(shp_name==NULL)
 		{
@@ -109,16 +109,24 @@ namespace auge
 			pWebResponse =  pExpResponse;
 		}
 
+		char user_root[AUGE_PATH_MAX];
+		memset(user_root, 0, AUGE_PATH_MAX);
+		auge_make_path(user_root, NULL, pWebContext->GetUserRoot(), pUser->GetName(), NULL);
+
+		char user_file_root[AUGE_PATH_MAX];
+		memset(user_file_root, 0, AUGE_PATH_MAX);
+		auge_make_path(user_file_root, NULL, user_root, "upload", NULL);
+
 		char shp_path[AUGE_PATH_MAX];
 		memset(shp_path, 0, AUGE_PATH_MAX);
 		if(pRequest->GetShapePath()!=NULL)
 		{
-			const char* req_path = pRequest->GetShapePath();
-			auge_make_path(shp_path, NULL, user_root, req_path+1, NULL);
+			const char* req_path = pRequest->GetShapePath();			
+			auge_make_path(shp_path, NULL, user_file_root, req_path+1, NULL);
 		}
 		else
 		{
-			strcpy(shp_path, user_root);
+			strcpy(shp_path, user_file_root);
 		}
 
 		char shp_ext[AUGE_EXT_MAX];
