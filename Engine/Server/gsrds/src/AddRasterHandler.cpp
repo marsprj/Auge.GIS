@@ -146,12 +146,12 @@ namespace auge
 			return pExpResponse;
 		}
 
-		char user_raster_root[AUGE_PATH_MAX];
-		auge_make_user_raster_root(user_raster_root, AUGE_PATH_MAX, pWebContext->GetUserRoot(), pUser->GetName());
+		char user_file_root[AUGE_PATH_MAX];
+		auge_make_user_file_root(user_file_root, AUGE_PATH_MAX, pWebContext->GetUserRoot(), pUser->GetName());
 
 		char file_local_path[AUGE_PATH_MAX];
 		memset(file_local_path, 0, AUGE_PATH_MAX);
-		auge_make_path(file_local_path,  NULL, user_raster_root, file_path+1, NULL);
+		auge_make_path(file_local_path,  NULL, user_file_root, file_path+1, NULL);
 		if(g_access(file_local_path,4))
 		{
 			char msg[AUGE_MSG_MAX];
