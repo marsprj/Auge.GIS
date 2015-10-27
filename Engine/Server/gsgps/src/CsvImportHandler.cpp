@@ -99,6 +99,7 @@ namespace auge
 		const char* csv_name = pRequest->GetCsvName();
 		const char* source_name = pRequest->GetSourceName();
 		const char* type_name = pRequest->GetTypeName();
+		const char* user_root = pWebContext->GetUserRoot();
 
 		if(csv_name==NULL)
 		{

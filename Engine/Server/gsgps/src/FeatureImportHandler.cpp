@@ -98,6 +98,7 @@ namespace auge
 		const char* shp_name = pRequest->GetShapeName();
 		const char* source_name = pRequest->GetSourceName();
 		const char* type_name = pRequest->GetTypeName();
+		const char* user_root = pWebContext->GetUserRoot();
 
 		if(shp_name==NULL)
 		{
@@ -113,11 +114,11 @@ namespace auge
 		if(pRequest->GetShapePath()!=NULL)
 		{
 			const char* req_path = pRequest->GetShapePath();
-			auge_make_path(shp_path, NULL, pWebContext->GetUploadPath(), req_path+1, NULL);
+			auge_make_path(shp_path, NULL, user_root, req_path+1, NULL);
 		}
 		else
 		{
-			strcpy(shp_path, pWebContext->GetUploadPath());
+			strcpy(shp_path, user_root);
 		}
 
 		char shp_ext[AUGE_EXT_MAX];
