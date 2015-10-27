@@ -600,8 +600,8 @@ namespace auge
 			XElement* pxMatrixWidth = pxTileMatrix->AddChild("MatrixWidth", NULL);
 			pxMatrixWidth->AddChildText(str);
 
-			g_uint rows = pow(2.0f, (float)(i-1));
-			g_sprintf(str, "%d", rows < 1 ? 1 : rows);
+			g_uint rows = pow(2.0f, (float)i);
+			g_sprintf(str, "%d", rows);
 			XElement* pxMatrixHeight= pxTileMatrix->AddChild("MatrixHeight", NULL);
 			pxMatrixHeight->AddChildText(str);
 
