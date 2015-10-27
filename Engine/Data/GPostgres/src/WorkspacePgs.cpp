@@ -1220,7 +1220,7 @@ namespace auge
 			"	  uuid character varying(128)," \
 			"	  user_id integer DEFAULT (-1)," \
 			"	  CONSTRAINT g_feature_catalog_pk PRIMARY KEY (gid)" \
-			/*"	  CONSTRAINT g_feature_catalog_name_uk UNIQUE (name)" \*/
+			"	  CONSTRAINT g_feature_catalog_name_user_qk UNIQUE (name, user_id)" \
 			"	)";
 		g_sprintf(sql, format, g_feature_catalog_table.c_str());
 		return pgConnection->ExecuteSQL(sql);

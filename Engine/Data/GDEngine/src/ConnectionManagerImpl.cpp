@@ -883,7 +883,7 @@ namespace auge
 								"state character varying(8)," \
 								"type integer DEFAULT 1,"\
 								"CONSTRAINT g_data_source_pkey PRIMARY KEY (gid)," \
-								"CONSTRAINT g_data_source_name_key UNIQUE (name))";
+								"CONSTRAINT g_data_source_name_user_uk UNIQUE (name, user_id)";
 		if(m_pConnection->ExecuteSQL(sql)!=AG_SUCCESS)
 		{
 			return false;
