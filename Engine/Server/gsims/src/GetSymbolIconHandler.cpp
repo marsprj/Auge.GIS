@@ -86,28 +86,36 @@ namespace auge
 			return pExpResponse;
 		}
 
+		const char* name_encoded = NULL;
+		if(pWebContext->IsIE())
+			//name_encoded = auge_encoding_convert("GBK","UTF-8",name,strlen(name));
+			name_encoded = name;
+		else
+			//name_encoded = name;
+			name_encoded = auge_encoding_convert("UTF-8","GBK",name,strlen(name));
+
 		// GetSymbolIcon 
 		Symbol		*pSymbol  = NULL;
 		EnumSymbol	*pSymbols = NULL;
 		SymbolManager *pSymbolManager = augeGetSymbolManagerInstance();
 		if(g_stricmp(type, "Marker")==0)
 		{
-			if(name==NULL)
+			if(name_encoded==NULL)
 				pSymbols = pSymbolManager->GetMarkerSymbols();
 			else
 				//pSymbol = pSymbolManager->CreateMarkerSymbol(name);
-				pSymbol = pSymbolManager->GetMarker(name);
+				pSymbol = pSymbolManager->GetMarker(name_encoded);
 		}
 		else if(g_stricmp(type, "Line")==0)
 		{
-			if(name==NULL)
+			if(name_encoded==NULL)
 				pSymbols = pSymbolManager->GetLineSymbols();
 			else
-				pSymbol = pSymbolManager->CreateLineSymbol(name);
+				pSymbol = pSymbolManager->CreateLineSymbol(name_encoded);
 		}
 		else if(g_stricmp(type, "Fill")==0)
 		{
-			if(name==NULL)
+			if(name_encoded==NULL)
 				pSymbols = pSymbolManager->GetFillSymbols();
 			else
 				//pSymbol = pSymbolManager->CreateFillSymbol(name);
@@ -126,13 +134,13 @@ namespace auge
 		}
 
 		// check whether symbol is get correctly
-		if(name!=NULL)
+		if(name_encoded!=NULL)
 		{
 			if(pSymbol==NULL)
 			{
 				char msg[AUGE_MSG_MAX];
 				memset(msg, 0, AUGE_MSG_MAX);
-				g_sprintf(msg, "Invalid Symbol Name [%s]", name);
+				g_sprintf(msg, "Invalid Symbol Name [%s]", name_encoded);
 				pError->SetError(msg);
 				pLogger->Error(msg, __FILE__, __LINE__);
 				WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
