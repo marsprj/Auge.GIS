@@ -17,15 +17,29 @@ namespace auge
 
 	bool RegisterLayerRequest::Create(rude::CGI& cgi)
 	{
+		char str[AUGE_NAME_MAX];
+		WebContext* pWebContext = augeGetWebContextInstance();
+
 		SetType(cgi["type"]);
 		SetVersion(cgi["version"]);
-		SetMapName(cgi["mapName"]);
-		SetDataSource(cgi["datasource"]);
-		SetType(cgi["layerType"]);
-		SetLayerName(cgi["layerName"]);
-		SetTableName(cgi["tableName"]);
 
-		SetRasterName(cgi["rasterName"]);
+		auge_web_parameter_encoding(cgi["mapName"], str, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetMapName(str);
+
+		auge_web_parameter_encoding(cgi["datasource"], str, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetDataSource(str);
+
+		SetType(cgi["layerType"]);
+
+		auge_web_parameter_encoding(cgi["layerName"], str, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetLayerName(str);
+
+		auge_web_parameter_encoding(cgi["tableName"], str, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetTableName(str);
+
+		auge_web_parameter_encoding(cgi["rasterName"], str, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetRasterName(str);
+
 		SetRasterPath(cgi["rasterPath"]);
 		
 		 return true;
