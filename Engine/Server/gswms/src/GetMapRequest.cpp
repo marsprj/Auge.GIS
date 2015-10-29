@@ -1,4 +1,5 @@
 #include "GetMapRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -120,11 +121,13 @@ namespace auge
 			return;
 		}
 
+		WebContext* pWebContext = augeGetWebContextInstance();
+
 		char* str = strdup(value);
 		char* ptr = strtok(str, ",");
 		while(ptr!=NULL)
 		{
-			m_layers.push_back(ptr);
+			m_layers.push_back(pWebContext->ParameterEncoding(ptr));
 
 			ptr = strtok(NULL, ",");
 		}
