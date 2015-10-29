@@ -272,27 +272,27 @@ namespace auge
 		Layer* pLayer = NULL;
 		GLogger *pLogger = augeGetLoggerInstance();
 		GetFeatureRequest* pRequest = static_cast<GetFeatureRequest*>(pWebRequest);
-		const char* raw_typeName = pRequest->GetTypeName();
-		const char* raw_sourceName = pRequest->GetSourceName();
+		const char* typeName = pRequest->GetTypeName();
+		const char* sourceName = pRequest->GetSourceName();
 
-		if(raw_sourceName==NULL)
+		if(typeName==NULL)
 		{
 			GError* pError = augeGetErrorInstance();
 			pError->SetError("No Source is attached");
 			return NULL;
 		}
 
-		if(raw_typeName==NULL)
+		if(sourceName==NULL)
 		{
 			GError* pError = augeGetErrorInstance();
 			pError->SetError("Parameter [typeName] is NULL");
 			return NULL;
 		}
 
-		char sourceName[AUGE_NAME_MAX];	
-		auge_web_parameter_encoding(raw_sourceName,sourceName,AUGE_NAME_MAX,pWebContext->IsIE());
-		char typeName[AUGE_NAME_MAX];	
-		auge_web_parameter_encoding(raw_typeName,typeName,AUGE_NAME_MAX,pWebContext->IsIE());
+		//char sourceName[AUGE_NAME_MAX];	
+		//auge_web_parameter_encoding(raw_sourceName,sourceName,AUGE_NAME_MAX,pWebContext->IsIE());
+		//char typeName[AUGE_NAME_MAX];	
+		//auge_web_parameter_encoding(raw_typeName,typeName,AUGE_NAME_MAX,pWebContext->IsIE());
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 		Workspace* pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), sourceName);

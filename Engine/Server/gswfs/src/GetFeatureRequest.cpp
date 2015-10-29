@@ -80,9 +80,9 @@ namespace auge
 			const char* sep = strstr(value,":");			
 			const char* typeName = (sep==NULL ? value : sep+1);
 
-			WebContext* pWebContext = augeGetWebContextInstance();
-			m_full_name = pWebContext->ParameterEncoding(value);
-			m_type_name = pWebContext->ParameterEncoding(typeName);
+			//WebContext* pWebContext = augeGetWebContextInstance();
+			//m_full_name = pWebContext->ParameterEncoding(value);
+			//m_type_name = pWebContext->ParameterEncoding(typeName);
 
 		}
 	}
@@ -335,11 +335,19 @@ namespace auge
 
 	bool GetFeatureRequest::Create(rude::CGI& cgi, Map* pMap)
 	{
+		WebContext* pWebContext = augeGetWebContextInstance();
+		char parameter[AUGE_NAME_MAX];
+
 		SetVersion(cgi["version"]);
-		SetTypeName(cgi["typeName"]);
+
+		auge_web_parameter_encoding(cgi["typeName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetTypeName(parameter);
 		
-		SetSourceName(cgi["sourceName"]);
-		SetMapName(cgi["mapName"]);
+		auge_web_parameter_encoding(cgi["sourceName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetSourceName(parameter);
+
+		auge_web_parameter_encoding(cgi["mapName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetMapName(parameter);
 
 		SetOutputFormat(cgi["outputFormat"]);
 		SetMaxFeatures(cgi["maxFeatures"]);
