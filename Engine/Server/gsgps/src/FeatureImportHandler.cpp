@@ -98,8 +98,8 @@ namespace auge
 
 		const char* shp_name = pRequest->GetShapeName();
 		const char* source_name = pRequest->GetSourceName();
-		const char* type_name = pRequest->GetTypeName();
-
+		const char* raw_type_name = pRequest->GetTypeName();
+		
 		if(shp_name==NULL)
 		{
 			const char* msg = "Parameter [shpname] is NULL";
@@ -107,6 +107,27 @@ namespace auge
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
 			pWebResponse =  pExpResponse;
+		}
+		if(raw_type_name==NULL)
+		{
+			const char* msg = "Parameter [typename] is NULL";
+			pLogger->Error(msg, __FILE__, __LINE__);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pWebResponse =  pExpResponse;
+		}
+
+		char type_name[AUGE_NAME_MAX];
+		memset(type_name, 0, AUGE_NAME_MAX);
+
+		if(pWebContext->IsIE())
+		{
+			strcpy(type_name, raw_type_name);
+		}
+		else
+		{
+			size_t type_name_size = AUGE_NAME_MAX;
+			auge_encoding_convert_2(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, raw_type_name, strlen(raw_type_name), type_name, &type_name_size);
 		}
 
 		//char user_root[AUGE_PATH_MAX];

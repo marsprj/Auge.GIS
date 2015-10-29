@@ -2839,7 +2839,7 @@ namespace auge
 							"  CONSTRAINT g_map_user_fk FOREIGN KEY (user_id)" \
 							"  REFERENCES g_user (gid) MATCH SIMPLE " \
 							"  ON UPDATE NO ACTION ON DELETE NO ACTION," \
-							"  CONSTRAINT g_map_name_key UNIQUE (m_name )" \
+							"  CONSTRAINT g_map_name_uk UNIQUE (m_name, user_id)" \
 							")";
 
 		RESULTCODE rc = AG_SUCCESS;
