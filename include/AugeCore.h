@@ -403,7 +403,8 @@ namespace auge
 		AUGE_API RESULTCODE	auge_make_user_raster_root(char* user_raster_root, size_t size, const char* root_path, const char* user_name);
 
 		AUGE_API const char*	auge_encoding_convert(const char* from, const char* to, const char* instr, size_t instrlen);
-		AUGE_API size_t	auge_encoding_convert_2(const char* from, const char* to, const char* instr, size_t instrlen, char* outstr, size_t* outlen);
+		AUGE_API size_t		auge_encoding_convert_2(const char* from, const char* to, const char* instr, size_t instrlen, char* outstr, size_t* outlen);
+		AUGE_API bool		auge_web_parameter_encoding(const char* input, char* output, size_t output_size, bool isIE);
 	}
 }
 

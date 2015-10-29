@@ -61,10 +61,10 @@ namespace auge
 	{
 		RefreshDatasetRequest* pRequest = static_cast<RefreshDatasetRequest*>(pWebRequest);
 
-		const char* sourceName = pRequest->GetSourceName();
-		const char* dataSetName= pRequest->RefreshDatasetName();
+		const char* raw_sourceName = pRequest->GetSourceName();
+		const char* raw_dataSetName= pRequest->RefreshDatasetName();
 
-		if(sourceName==NULL)
+		if(raw_sourceName==NULL)
 		{
 			const char* msg = "Parameter [sourceName] is NULL";
 			GLogger* pLogger = augeGetLoggerInstance();
@@ -73,6 +73,21 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
+
+		if(raw_dataSetName==NULL)
+		{
+			const char* msg = "Parameter [datasetName] is NULL";
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		char sourceName[AUGE_NAME_MAX];
+		char dataSetName[AUGE_NAME_MAX];
+		auge_web_parameter_encoding(raw_sourceName, sourceName, AUGE_NAME_MAX, pWebContext->IsIE());
+		auge_web_parameter_encoding(raw_dataSetName, dataSetName, AUGE_NAME_MAX, pWebContext->IsIE());
 
 		Workspace* pWorkspace = NULL;
 		ConnectionManager* pConnectionManager = augeGetConnectionManagerInstance();

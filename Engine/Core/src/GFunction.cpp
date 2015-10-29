@@ -916,4 +916,21 @@ namespace auge
 
 		return AG_SUCCESS;
 	}
+
+	bool auge_web_parameter_encoding(const char* input, char* output, size_t output_size, bool isIE)
+	{
+		if(input==NULL||output==NULL||output_size==0)
+		{
+			return false;
+		}
+		if(isIE)
+		{
+			strcpy(output, input);
+		}
+		else
+		{
+			auge_encoding_convert_2(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, input, strlen(input), output, &output_size);
+		}
+		return true;
+	}
 }
