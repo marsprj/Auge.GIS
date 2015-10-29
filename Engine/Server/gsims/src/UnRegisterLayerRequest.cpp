@@ -1,4 +1,5 @@
 #include "UnRegisterLayerRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -16,9 +17,16 @@ namespace auge
 
 	bool UnRegisterLayerRequest::Create(rude::CGI& cgi)
 	{
+		char str[AUGE_NAME_MAX];
+		WebContext* pWebContext = augeGetWebContextInstance();
+
 		SetVersion(cgi["version"]);
-		SetMapName(cgi["mapName"]);
-		SetLayerName(cgi["layerName"]);
+
+		auge_web_parameter_encoding(cgi["mapName"], str, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetMapName(str);
+
+		auge_web_parameter_encoding(cgi["layerName"], str, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetLayerName(str);
 		 return true;
 	}
 

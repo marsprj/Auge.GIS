@@ -1,4 +1,5 @@
 #include "DescribeMapRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -17,7 +18,13 @@ namespace auge
 	bool DescribeMapRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetName(cgi["name"]);
+
+		char str[AUGE_NAME_MAX];
+		WebContext* pWebContext = augeGetWebContextInstance();
+
+		auge_web_parameter_encoding(cgi["name"], str, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetName(str);
+
 		return true;
 	}
 

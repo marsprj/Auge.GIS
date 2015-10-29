@@ -16,7 +16,7 @@ namespace auge
 
 	bool RegisterMapRequest::Create(rude::CGI& cgi)
 	{
-		SetVersion(cgi["version"]);
+		SetVersion(cgi["version"]);		
 		SetMapName(cgi["mapName"]);
 		SetServiceName(cgi["serviceName"]);
 		 return true;
