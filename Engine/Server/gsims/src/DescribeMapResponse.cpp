@@ -98,7 +98,7 @@ namespace auge
 		XElement* pxID = pxRoot->AddChild("ID", NULL);
 		pxID->SetChildText(str);
 		XElement* pxName = pxRoot->AddChild("Name", NULL);
-		pxName->SetChildText(pMap->GetName());
+		pxName->SetChildText(pMap->GetName(), true);
 		// SRID
 		g_sprintf(str, "%d", pMap->GetSRID());
 		pxNode = pxRoot->AddChild("Srid");
@@ -146,9 +146,9 @@ namespace auge
 				g_sprintf(str,"%d",pLayer->GetID());
 				pxLayer_2->SetAttribute("id", str,NULL);
 				pxNode = pxLayer_2->AddChild("Name",NULL);
-				pxNode->SetChildText(lname);
+				pxNode->SetChildText(lname, true);
 				pxNode = pxLayer_2->AddChild("Title",NULL);
-				pxNode->SetChildText(lname);
+				pxNode->SetChildText(lname, true);
 				pxNode = pxLayer_2->AddChild("Abstract",NULL);
 				g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
 				pxNode = pxLayer_2->AddChild("CRS",NULL);
