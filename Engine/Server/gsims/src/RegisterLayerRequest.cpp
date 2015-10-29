@@ -1,4 +1,5 @@
 #include "RegisterLayerRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
