@@ -80,6 +80,9 @@ namespace auge
 			const char* sep = strstr(value,":");			
 			const char* typeName = (sep==NULL ? value : sep+1);
 
+			m_full_name = value;
+			m_type_name = typeName;
+
 			//WebContext* pWebContext = augeGetWebContextInstance();
 			//m_full_name = pWebContext->ParameterEncoding(value);
 			//m_type_name = pWebContext->ParameterEncoding(typeName);
