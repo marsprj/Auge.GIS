@@ -929,6 +929,7 @@ namespace auge
 		}
 		else
 		{
+			memset(output,0,output_size);
 			auge_encoding_convert_2(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, input, strlen(input), output, &output_size);
 		}
 		return true;
