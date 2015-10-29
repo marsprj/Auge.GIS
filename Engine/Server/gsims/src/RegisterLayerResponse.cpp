@@ -90,9 +90,9 @@ namespace auge
 		g_sprintf(str,"%d",pLayer->GetID());
 		pxNode->SetChildText(str);
 		pxNode = pxRoot->AddChild("Name",NULL);
-		pxNode->SetChildText(lname);
+		pxNode->SetChildText(lname, true);
 		pxNode = pxRoot->AddChild("Title",NULL);
-		pxNode->SetChildText(lname);
+		pxNode->SetChildText(lname, true);
 		pxNode = pxRoot->AddChild("Abstract",NULL);
 		g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
 		pxNode = pxRoot->AddChild("CRS",NULL);
