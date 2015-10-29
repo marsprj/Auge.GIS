@@ -1430,7 +1430,9 @@ namespace auge
 			break;
 		case augeValueTypeBool:			 
 			{
-
+				sql.append("'");
+				sql.append(pValue->GetBool() ? "T" : "F");
+				sql.append("'");
 			}
 			break;
 		case augeValueTypeBLOB:			 
@@ -1587,12 +1589,16 @@ namespace auge
 				break;
 			case augeFieldTypeTime:	
 				{
-
+					TIME_STRU* tim = pValue->GetTime();
+					g_snprintf(str, AUGE_BUFFER_MAX,"'%d-%02d-%02d %02d:%02d:%02d'",tim->usYear, tim->usMonth, tim->usDay, tim->usHour, tim->usMinute, tim->usSecond);
+					values.append(str);
 				}
 				break;
 			case augeFieldTypeBool:			 
 				{
-
+					values.append("'");
+					values.append(pValue->GetBool() ? "T" : "F");
+					values.append("'");
 				}
 				break;
 			case augeFieldTypeBLOB:			 
