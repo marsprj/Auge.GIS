@@ -42,6 +42,8 @@ namespace auge
 			return;
 		}
 
+		GLogger* pLogger = augeGetLoggerInstance();
+		char str[AUGE_NAME_MAX];
 		const char* lname = NULL;
 		Layer* pLayer = NULL;
 		g_uint count = pMap->GetLayerCount();
@@ -51,6 +53,10 @@ namespace auge
 			if(pLayer!=NULL)
 			{
 				lname = pLayer->GetName();
+
+				g_sprintf(str, "[Layer]:%s", lname);
+				pLogger->Info(str, __FILE__, __LINE__);
+
 				if(pLayer->IsVisiable())
 				{
 					DrawLayer(pLayer);
