@@ -1591,11 +1591,13 @@ namespace auge
 				{
 					TIME_STRU* tim = pValue->GetTime();
 					g_snprintf(str, AUGE_BUFFER_MAX,"'%d-%02d-%02d %02d:%02d:%02d'",tim->usYear, tim->usMonth, tim->usDay, tim->usHour, tim->usMinute, tim->usSecond);
+					fields.append(fname);
 					values.append(str);
 				}
 				break;
 			case augeFieldTypeBool:			 
 				{
+					fields.append(fname);
 					values.append("'");
 					values.append(pValue->GetBool() ? "T" : "F");
 					values.append("'");
