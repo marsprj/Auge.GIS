@@ -208,13 +208,16 @@ namespace auge
 		GetFeatureRequest* pRequest = static_cast<GetFeatureRequest*>(pWebRequest);
 		typeName = pRequest->GetTypeName();
 
-		const char* mapName = pRequest->GetMapName();
-		if(mapName==NULL)
+		const char* raw_mapName = pRequest->GetMapName();
+		if(raw_mapName==NULL)
 		{
 			GError* pError = augeGetErrorInstance();
 			pError->SetError("No Map is attached");
 			return NULL;
 		}
+
+		char mapName[AUGE_NAME_MAX];	
+		auge_web_parameter_encoding(raw_mapName,mapName,AUGE_NAME_MAX,pWebContext->IsIE());
 
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
 		Map *pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
@@ -265,20 +268,31 @@ namespace auge
 	}
 
 	FeatureClass* GetFeatureHandler::GetFeatureClassBySource(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
-	{
-		const char* typeName = NULL;
+	{	
 		Layer* pLayer = NULL;
 		GLogger *pLogger = augeGetLoggerInstance();
 		GetFeatureRequest* pRequest = static_cast<GetFeatureRequest*>(pWebRequest);
-		typeName = pRequest->GetTypeName();
+		const char* raw_typeName = pRequest->GetTypeName();
+		const char* raw_sourceName = pRequest->GetSourceName();
 
-		const char* sourceName = pRequest->GetSourceName();
-		if(sourceName==NULL)
+		if(raw_sourceName==NULL)
 		{
 			GError* pError = augeGetErrorInstance();
 			pError->SetError("No Source is attached");
 			return NULL;
 		}
+
+		if(raw_typeName==NULL)
+		{
+			GError* pError = augeGetErrorInstance();
+			pError->SetError("Parameter [typeName] is NULL");
+			return NULL;
+		}
+
+		char sourceName[AUGE_NAME_MAX];	
+		auge_web_parameter_encoding(raw_sourceName,sourceName,AUGE_NAME_MAX,pWebContext->IsIE());
+		char typeName[AUGE_NAME_MAX];	
+		auge_web_parameter_encoding(raw_typeName,typeName,AUGE_NAME_MAX,pWebContext->IsIE());
 
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 		Workspace* pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), sourceName);
