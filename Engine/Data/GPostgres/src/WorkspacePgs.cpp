@@ -303,7 +303,7 @@ namespace auge
 	EnumDataSet* WorkspacePgs::GetFeatureClasses()
 	{
 		char sql[AUGE_SQL_MAX];
-		g_snprintf(sql, AUGE_SQL_MAX, "select name from g_feature_catalog where user_id=%d order by name", GetUser());
+		g_snprintf(sql, AUGE_SQL_MAX, "select name from g_feature_catalog where user_id in (-1, %d) order by name", GetUser());
 		//	const char* sql = "select f_table_name from geometry_columns order by f_table_name";
 
 		EnumDataSetImpl *pEnum = new EnumDataSetImpl();
