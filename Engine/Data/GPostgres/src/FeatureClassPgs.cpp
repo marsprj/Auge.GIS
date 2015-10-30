@@ -944,7 +944,7 @@ namespace auge
 
 	bool FeatureClassPgs::GetMetaInfo()
 	{
-		const char* format = "select gid, alias, count, minx, miny, maxx, maxy, uuid, user_id from %s where name='%s' and user_id=%d";
+		const char* format = "select gid, alias, count, minx, miny, maxx, maxy, uuid, user_id from %s where name='%s' and user_id in (-1, %d)";
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWorkspace->g_feature_catalog_table.c_str(), m_name.c_str(), m_pWorkspace->GetUser());
