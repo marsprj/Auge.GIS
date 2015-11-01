@@ -8,8 +8,8 @@ int main(int argc, char** argv)
 	const char* shpName = argv[1];
 	const char* className = shpName;
 
-	const char* pgs_constr = "SERVER=192.168.111.161;INSTANCE=5432;DATABASE=base;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* shp_constr = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=base;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* pgs_constr = "SERVER=172.32.8.1;INSTANCE=5432;DATABASE=base;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* shp_constr = "SERVER=192.168.111.151;INSTANCE=5432;DATABASE=gaode;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	
 	RESULTCODE rc = AG_SUCCESS;
 	auge::DataEngine* pshpEngine = NULL;
@@ -30,6 +30,7 @@ int main(int argc, char** argv)
 
 	pshpWorkspace->SetConnectionString(shp_constr);
 	ppgsWorkspace->SetConnectionString(pgs_constr);
+	pshpWorkspace->SetUser(2);
 
 	rc = pshpWorkspace->Open();
 	rc = ppgsWorkspace->Open();
