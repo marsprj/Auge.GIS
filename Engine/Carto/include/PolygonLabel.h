@@ -12,8 +12,16 @@ namespace auge
 		virtual ~PolygonLabel();
 	public:
 		virtual void		Draw(Renderer* pRenderer, Transformation* pTransformation);
+		virtual void		ComputePosition(Renderer* pRenderer, Transformation* pTransform);
 		//svirtual bool		IsCollision(GLabel* other);
 		virtual bool		IsVisible(int view_width, int view_height);
+
+	private:
+		void				ComputeCentroidPoint(double &x, double &y);
+
+	private:
+		WKBPoint			m_pos;
+		GEnvelope			m_text_extent;
 	};
 }
 

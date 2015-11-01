@@ -35,7 +35,6 @@ namespace auge
 		m_pGeometry->Centroid(x, y);
 		pTransform->ToScreenPoint(x, y, sx, sy);
 
-		
 		pRenderer->GetTextExtent((char*)m_wtext.c_str(), m_text_extent);
 
 		m_pos.point.x = sx;
@@ -95,7 +94,6 @@ namespace auge
 		case augeGTPolygon:
 			break;
 		}
-
 
 		return true;
 	}

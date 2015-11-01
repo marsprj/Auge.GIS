@@ -116,7 +116,7 @@ namespace auge
 
 	bool GLabel::IsCollision(GLabel* other)
 	{
-		return true;
+		return false;
 	}
 
 	bool GLabel::IsVisible(int view_width, int view_height)
