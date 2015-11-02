@@ -1,4 +1,5 @@
 #include "FeatureImportRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -95,7 +96,9 @@ namespace auge
 		}
 		else
 		{
-			m_shp_path = path;
+			WebContext* pWebContext = augeGetWebContextInstance();			
+			m_shp_path = pWebContext->ParameterEncoding(path);
+			//m_shp_path = path;
 		}
 	}
 
@@ -107,7 +110,9 @@ namespace auge
 		}
 		else
 		{
-			m_shp_name = name;
+			WebContext* pWebContext = augeGetWebContextInstance();		
+			m_shp_name = pWebContext->ParameterEncoding(name);
+			//m_shp_name = name;
 		}
 	}
 

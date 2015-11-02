@@ -15,6 +15,7 @@ namespace auge
 	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.159"
 	#define AUGE_WRITABLE_DB_SERVER	"127.0.0.1"
 	//#define AUGE_WRITABLE_DB_SERVER	"172.32.72.2"
+	//#define AUGE_WRITABLE_DB_SERVER	"172.32.8.1"
 	//#define AUGE_WRITABLE_DB_SERVER	"182.92.114.80"
 	
 	WorkspacePgs::WorkspacePgs():
@@ -224,14 +225,14 @@ namespace auge
 			return NULL;
 		}
 		pLogger->Info(name, __FILE__, __LINE__);
-		if(isdigit(name[0])!=0)
-		{
-			const char* msg = "The 1st character of dataset should not be a number";
-			
-			pError->SetError(msg);
-			pLogger->Error(msg, __FILE__, __LINE__);
-			return NULL;
-		}
+		//if(isdigit(name[0])!=0)
+		//{
+		//	const char* msg = "The 1st character of dataset should not be a number";
+		//	
+		//	pError->SetError(msg);
+		//	pLogger->Error(msg, __FILE__, __LINE__);
+		//	return NULL;
+		//}
 
 		g_int fid = AddMetaInfo(name);
 		if(fid<=0)
@@ -1184,7 +1185,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		char sql[AUGE_SQL_MAX];
+		char sql[AUGE_SQL_MAX]; 
 		const char* format = "CREATE TABLE %s(" \
 			"	gid serial NOT NULL," \
 			"	name character varying(32)," \

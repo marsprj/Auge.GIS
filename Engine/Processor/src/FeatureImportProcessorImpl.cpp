@@ -137,7 +137,7 @@ namespace auge
 		}
 
 		RESULTCODE rc = AG_SUCCESS;
-		char constr[AUGE_MSG_MAX];
+		char constr[AUGE_MSG_MAX]; 
 		g_sprintf(constr,"DATABASE=%s", shp_path);
 		FeatureWorkspace* pshpWorkspace = dynamic_cast<FeatureWorkspace*>(pshpEngine->CreateWorkspace());
 		pshpWorkspace->SetConnectionString(constr);

@@ -135,7 +135,8 @@ namespace auge
 	bool FeatureClassShp::OpenSHPFile(const char* name, WorkspaceShp* pWorkspace)
 	{
 		GError* pError = augeGetErrorInstance();
-
+		GLogger* pLogger = augeGetLoggerInstance();
+		
 		char shp_path[AUGE_PATH_MAX];
 		char dbf_path[AUGE_PATH_MAX];
 		const char* dir = pWorkspace->m_path.c_str();
@@ -154,6 +155,9 @@ namespace auge
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Cannot Open SHP file [%s].", shp_path);
 			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			pLogger->Debug(shp_path, __FILE__, __LINE__);
+
 			return false;
 		}
 		m_pdbfHandle = DBFOpen(dbf_path, "rb");
@@ -165,7 +169,8 @@ namespace auge
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Cannot Open DBF file [%s].", dbf_path);
 			pError->SetError(msg);
-			
+			pLogger->Error(msg, __FILE__, __LINE__);
+			pLogger->Debug(shp_path, __FILE__, __LINE__);
 			return false;
 		}
 
