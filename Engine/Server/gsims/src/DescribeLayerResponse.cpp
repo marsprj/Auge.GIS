@@ -85,9 +85,9 @@ namespace auge
 		g_sprintf(str,"%d",pLayer->GetID());
 		pxLayer->SetAttribute("id", str,NULL);
 		pxNode = pxLayer->AddChild("Name",NULL);
-		pxNode->SetChildText(lname);
+		pxNode->SetChildText(lname, true);
 		pxNode = pxLayer->AddChild("Title",NULL);
-		pxNode->SetChildText(lname);
+		pxNode->SetChildText(lname, true);
 		pxNode = pxLayer->AddChild("Abstract",NULL);
 		g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
 		pxNode = pxLayer->AddChild("CRS",NULL);
@@ -102,13 +102,16 @@ namespace auge
 				FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
 				// FeatureClass
 				FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-				srid = pFeatureClass->GetSRID();
-				AddFeatureNode(pxLayer, pFeatureClass);				
-				// Style
-				Style* pStyle = pFeatureLayer->GetStyle();
-				if(pStyle!=NULL)
+				if(pFeatureClass!=NULL)
 				{
-					AddStyleNode(pxLayer, pStyle);
+					srid = pFeatureClass->GetSRID();
+					AddFeatureNode(pxLayer, pFeatureClass);				
+					// Style
+					Style* pStyle = pFeatureLayer->GetStyle();
+					if(pStyle!=NULL)
+					{
+						AddStyleNode(pxLayer, pStyle);
+					}
 				}
 			}
 			break;
@@ -272,7 +275,7 @@ namespace auge
 
 		pxLayer = pxLayers->AddChild("Layer");
 		pxNode = pxLayer->AddChild("Name");
-		pxNode->AddChildText(pLayer->GetName());
+		pxNode->AddChildText(pLayer->GetName(), true);
 
 		AddBoundingBoxNode(pxLayer, pLayer->GetExtent()); 
 	}
@@ -294,7 +297,7 @@ namespace auge
 		}
 
 		XElement* pxNode = pxClass->AddChild("Name", NULL);
-		pxNode->AddChildText(pFeatureClass->GetName());
+		pxNode->AddChildText(pFeatureClass->GetName(), true);
 
 		pxNode = pxClass->AddChild("GeometryType", NULL);
 		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
@@ -323,7 +326,7 @@ namespace auge
 		char str[AUGE_NAME_MAX];
 		// Ãû³Æ
 		XElement* pXNode = pxRaster->AddChild("Name", NULL);
-		pXNode->AddChildText(pRaster->GetName());		
+		pXNode->AddChildText(pRaster->GetName(), true);		
 
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
 		//²¨¶Î

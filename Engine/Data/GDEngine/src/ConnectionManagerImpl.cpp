@@ -487,7 +487,7 @@ namespace auge
 				continue;
 			}
 
-			if(g_stricmp(pWorkspace->GetName(), name)==0)
+			if((g_stricmp(pWorkspace->GetName(), name)==0)&&(pWorkspace->GetUser()==user_id))
 			{
 				if(IsUpdated(pWorkspace))
 				{

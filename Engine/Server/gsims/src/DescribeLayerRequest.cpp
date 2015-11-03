@@ -1,4 +1,5 @@
 #include "DescribeLayerRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -76,7 +77,9 @@ namespace auge
 		}
 		else
 		{
-			m_map_name = name;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_map_name = pWebContext->ParameterEncoding(name);
+			//m_map_name = name;
 		}
 		
 	}
@@ -98,7 +101,9 @@ namespace auge
 		}
 		else
 		{
-			m_layer_name = name;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_layer_name = pWebContext->ParameterEncoding(name);
+			//m_layer_name = name;
 		}
 
 	}

@@ -82,7 +82,7 @@ namespace auge
 				pWebResponse = pExpResponse;
 			}
 			else
-			{
+			{ 
 				if(!pUser->IsAuthenticated())
 				{
 					char msg[AUGE_MSG_MAX];

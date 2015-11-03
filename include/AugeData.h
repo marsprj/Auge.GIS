@@ -109,6 +109,7 @@ namespace auge
 		virtual	DataEngine*		GetEngine() = 0;
 
 		virtual void			SetUser(g_uint user) = 0;
+		virtual g_int			GetUser() = 0;
 	};
 
 	class EnumWorkspace
