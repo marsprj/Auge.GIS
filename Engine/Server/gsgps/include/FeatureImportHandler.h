@@ -31,8 +31,8 @@ namespace auge
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
 
 	protected:
-		WebResponse*	ImportShapeFile(const char* shp_path, const char* shp_name, const char* source_name, const char* type_name);
-		WebResponse*	ImportZipedShapeFile(const char* zip_path, const char* zip_name, const char* source_name, const char* type_name);
+		WebResponse*	ImportShapeFile(const char* shp_path, const char* shp_name, const char* source_name, const char* type_name, User* pUser);
+		WebResponse*	ImportZipedShapeFile(const char* zip_path, const char* zip_name, const char* source_name, const char* type_name, User* pUser);
 	};
 }
 

@@ -167,12 +167,12 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			pWebResponse =  pExpResponse;
 #else
-			pWebResponse = ImportZipedShapeFile(shp_path, shp_name, source_name, type_name);
+			pWebResponse = ImportZipedShapeFile(shp_path, shp_name, source_name, type_name, pUser);
 #endif
 		}
 		else
 		{
-			pWebResponse = ImportShapeFile(shp_path, shp_name, source_name, type_name);
+			pWebResponse = ImportShapeFile(shp_path, shp_name, source_name, type_name, pUser);
 		}
 
 		End();
@@ -180,7 +180,7 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* FeatureImportHandler::ImportZipedShapeFile(const char* zip_path, const char* zip_name, const char* source_name, const char* type_name)
+	WebResponse* FeatureImportHandler::ImportZipedShapeFile(const char* zip_path, const char* zip_name, const char* source_name, const char* type_name, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 
@@ -211,9 +211,9 @@ namespace auge
 			char shp_path[AUGE_PATH_MAX];
 			auge_split_path(zip_name,NULL, NULL, shp_name, NULL);
 			//auge_make_path(shp_path, NULL, zip_path, shp_name, NULL);
-			//pWebResponse = ImportShapeFile(shp_path, shp_name, source_name, type_name);
+			//pWebResponse = ImportShapeFile(shp_path, shp_name, source_name, type_name, pUser);
 			auge_get_cwd(shp_path,AUGE_PATH_MAX);
-			pWebResponse = ImportShapeFile(shp_path, shp_name, source_name, type_name);
+			pWebResponse = ImportShapeFile(shp_path, shp_name, source_name, type_name, pUser);
 		}
 
 		return pWebResponse;
@@ -227,7 +227,7 @@ namespace auge
 	/// <param name="source_name">The source_name.</param>
 	/// <param name="type_name">The type_name.</param>
 	/// <returns></returns>
-	WebResponse* FeatureImportHandler::ImportShapeFile(const char* shp_path, const char* shp_name, const char* source_name, const char* type_name)
+	WebResponse* FeatureImportHandler::ImportShapeFile(const char* shp_path, const char* shp_name, const char* source_name, const char* type_name, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
 
@@ -237,6 +237,7 @@ namespace auge
 		GProcessorFactory* factory = augeGetGeoProcessorFactoryInstance();
 		FeatureImportProcessor* processor = factory->CreateFeatureImportProcessor();
 
+		processor->SetUser(pUser->GetID());
 		processor->SetShapePath(shp_path);
 		processor->SetShapeName(shp_name);
 		processor->SetDataSourceName(source_name);
