@@ -14,6 +14,7 @@
 #include "IsLoginedHandler.h"
 #include "GetLoginCountHandler.h"
 #include "GetOnlineUserHandler.h"
+#include "GetUserCountHandler.h"
 
 namespace auge
 {
@@ -21,7 +22,8 @@ namespace auge
 	{
 		static WAuthEngine g_webMapEngine;
 		return &g_webMapEngine;
-	}
+	} 
+
 
 	WAuthEngine::WAuthEngine()
 	{
@@ -30,6 +32,7 @@ namespace auge
 		m_handlers.push_back(new RemoveUserHandler());
 		m_handlers.push_back(new GetUserHandler());
 		m_handlers.push_back(new GetRoleHandler());
+		m_handlers.push_back(new GetUserCountHandler());
 
 		m_handlers.push_back(new LoginHandler());
 		m_handlers.push_back(new LogoutHandler());

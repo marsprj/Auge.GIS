@@ -97,6 +97,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetRoleHandler.h" />
     <ClInclude Include="..\include\GetRoleRequest.h" />
     <ClInclude Include="..\include\GetRoleResponse.h" />
+    <ClInclude Include="..\include\GetUserCountHandler.h" />
+    <ClInclude Include="..\include\GetUserCountRequest.h" />
+    <ClInclude Include="..\include\GetUserCountResponse.h" />
     <ClInclude Include="..\include\GetUserHandler.h" />
     <ClInclude Include="..\include\GetUserRequest.h" />
     <ClInclude Include="..\include\GetUserResponse.h" />
@@ -125,6 +128,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetRoleHandler.cpp" />
     <ClCompile Include="..\src\GetRoleRequest.cpp" />
     <ClCompile Include="..\src\GetRoleResponse.cpp" />
+    <ClCompile Include="..\src\GetUserCountHandler.cpp" />
+    <ClCompile Include="..\src\GetUserCountRequest.cpp" />
+    <ClCompile Include="..\src\GetUserCountResponse.cpp" />
     <ClCompile Include="..\src\GetUserHandler.cpp" />
     <ClCompile Include="..\src\GetUserRequest.cpp" />
     <ClCompile Include="..\src\GetUserResponse.cpp" />

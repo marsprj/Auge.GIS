@@ -95,11 +95,11 @@ namespace auge
 		XElement	*pxDataSource  = NULL;
 		pxDataSource = pxDoc->CreateRootNode("DataSource", NULL, NULL);
 		pxNode = pxDataSource->AddChild("Name");
-		pxNode->AddChildText(pWorkspace->GetName());
+		pxNode->AddChildText(pWorkspace->GetName(),true);
 		pxNode = pxDataSource->AddChild("Engine");
-		pxNode->AddChildText(pWorkspace->GetEngine()->GetID());
+		pxNode->AddChildText(pWorkspace->GetEngine()->GetID(),true);
 		pxNode = pxDataSource->AddChild("ConnectionString");
-		pxNode->AddChildText(pWorkspace->GetConnectionString());
+		pxNode->AddChildText(pWorkspace->GetConnectionString(),true);
 	}
 
 	void GetDataSourceResponse::SetUser(User* pUser)

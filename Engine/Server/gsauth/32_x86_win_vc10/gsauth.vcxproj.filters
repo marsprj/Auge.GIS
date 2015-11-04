@@ -93,6 +93,15 @@
     <ClInclude Include="..\include\GetOnlineUserResponse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\GetUserCountHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\GetUserCountRequest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\GetUserCountResponse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\CreateUserHandler.cpp">
@@ -171,6 +180,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GetOnlineUserResponse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GetUserCountHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GetUserCountRequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GetUserCountResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
