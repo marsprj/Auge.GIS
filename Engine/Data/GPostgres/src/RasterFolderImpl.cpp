@@ -43,13 +43,12 @@ namespace auge
 		memset(sql, 0, AUGE_PATH_MAX);		
 		g_snprintf(sql, AUGE_PATH_MAX, format, m_pWorkspace->g_raster_folder_table.c_str(), GetID(), m_user);
 
+		EnumRasterFolderImpl* pFolders = new EnumRasterFolderImpl();
 		GResultSet* pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
-			return false;
+			return pFolders;
 		}
-
-		EnumRasterFolderImpl* pFolders = new EnumRasterFolderImpl();
 
 		g_uint count = pResult->GetCount();
 		for(g_uint i=0; i<count; i++)
