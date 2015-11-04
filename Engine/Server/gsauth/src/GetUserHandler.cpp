@@ -9,7 +9,7 @@ namespace auge
 {
 	GetUserHandler::GetUserHandler()
 	{
-
+		
 	}
 
 	GetUserHandler::~GetUserHandler()
@@ -64,13 +64,15 @@ namespace auge
 	{	
 		GetUserRequest* pRequest = static_cast<GetUserRequest*>(pWebRequest);
 		const char* name = pRequest->GetName();
+		g_int count = pRequest->GetCount();
+		g_int offset= pRequest->GetOffset();
 
 		UserManager* pUserManager = augeGetUserManagerInstance();
 
 		WebResponse* pWebResponse = NULL;
 		if((name==NULL)||strlen(name)==0)
 		{
-			EnumUser* pUsers = pUserManager->GetUsers();
+			EnumUser* pUsers = pUserManager->GetUsers(count, offset);
 			GetUserResponse* pResponse = new GetUserResponse(pRequest);
 			pResponse->SetUsers(pUsers);
 			pWebResponse = pResponse;

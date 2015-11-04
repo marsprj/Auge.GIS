@@ -27,8 +27,13 @@ namespace auge
 	public:
 		const char*	GetName();
 
+		g_uint		GetCount();
+		g_uint		GetOffset();
+
 	public:
-		void	SetName(const char* name);
+		void		SetName(const char* name);
+		void		SetCount(const char* count);
+		void		SetOffset(const char* offset);
 
 	public:
 		bool		Create(rude::CGI& cgi);
@@ -39,6 +44,8 @@ namespace auge
 		std::string m_encoding;
 		
 		std::string m_name;
+		g_uint		m_count;
+		g_uint		m_offset;
 	};
 }
 

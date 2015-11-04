@@ -17,7 +17,7 @@ namespace auge
 		virtual User*			CreateUser(const char* name, const char* alias, const char* password, const char* email, const char* role);
 		virtual RESULTCODE		RemoveUser(const char* name);
 		virtual User*			GetUser(const char* name);
-		virtual EnumUser*		GetUsers();
+		virtual EnumUser*		GetUsers(g_uint count=0, g_uint offset=0);
 		virtual g_uint			GetUserCount();
 
 		virtual EnumUser*		GetLoginedUsers(g_uint count=0, g_uint offset=0);

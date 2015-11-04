@@ -147,9 +147,21 @@ namespace auge
 		return pUser;
 	}
 
-	EnumUser* UserManagerImpl::GetUsers()
+	EnumUser* UserManagerImpl::GetUsers(g_uint count/*=0*/, g_uint offset/*=0*/)
 	{
-		const char* sql ="select u.gid,u.name,u.alias,u.passwd,u.email,u.role, u.status, r.name,r.alias from g_user u, g_role r where u.role=r.gid";
+		//const char* sql ="select u.gid,u.name,u.alias,u.passwd,u.email,u.role, u.status, r.name,r.alias from g_user u, g_role r where u.role=r.gid";
+		char sql[AUGE_SQL_MAX];
+		if(count==0)
+		{
+			//const char* sql ="select u.gid,u.name,u.alias,u.passwd,u.email,u.role,u.status, r.name,r.alias from g_user u, g_role r where u.role=r.gid and status=1";
+			const char* format ="select u.gid,u.name,u.alias,u.passwd,u.email,u.role,u.status, r.name,r.alias from g_user u, g_role r where u.role=r.gid offset %d";
+			g_snprintf(sql, AUGE_SQL_MAX, format, offset);
+		}
+		else
+		{
+			const char* format ="select u.gid,u.name,u.alias,u.passwd,u.email,u.role,u.status, r.name,r.alias from g_user u, g_role r where u.role=r.gid limit %d offset %d";
+			g_snprintf(sql, AUGE_SQL_MAX, format, count, offset);
+		}
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -157,8 +169,8 @@ namespace auge
 		}
 
 		EnumUserImpl* pUsers = new EnumUserImpl();
-		int count = pResult->GetCount();
-		for(int i=0; i<count; i++)
+		int user_count = pResult->GetCount();
+		for(int i=0; i<user_count; i++)
 		{
 			int u_gid = pResult->GetInt(i,0);
 			const char* u_name = pResult->GetString(i,1);
