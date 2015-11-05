@@ -140,6 +140,18 @@ namespace auge
 		auge_make_path(user_folder, NULL, root, name, NULL);
 		auge_mkdir(user_folder);
 
+		//upload folder
+		char user_upload_folder[AUGE_PATH_MAX];
+		memset(user_upload_folder, 0, AUGE_PATH_MAX);
+		auge_make_path(user_upload_folder, NULL, user_folder, "upload", NULL);
+		auge_mkdir(user_upload_folder);
+
+		//rds folder
+		char user_rds_folder[AUGE_PATH_MAX];
+		memset(user_rds_folder, 0, AUGE_PATH_MAX);
+		auge_make_path(user_rds_folder, NULL, user_folder, "rds", NULL);
+		auge_mkdir(user_rds_folder);
+
 		return AG_SUCCESS;
 	}
 }
