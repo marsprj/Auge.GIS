@@ -275,6 +275,12 @@ namespace auge
 		return count;
 	}
 
+	RESULTCODE UserManagerImpl::Login()
+	{
+		const char* sql = "update g_user set status=1,login_time=now()"; 
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
 	RESULTCODE UserManagerImpl::Login(const char* name, const char* passwd)
 	{
 		if(name==NULL||passwd==NULL)

@@ -30,6 +30,8 @@ libgsauth_la_SOURCES=\
 		LoginRequest.cpp \
 		LogoutHandler.cpp \
 		LogoutRequest.cpp \
+		LoginAllHandler.cpp \
+		LoginAllRequest.cpp \
 		IsLoginedHandler.cpp \
 		IsLoginedRequest.cpp \
 		GetLoginCountHandler.cpp \

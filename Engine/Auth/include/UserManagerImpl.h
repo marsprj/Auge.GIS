@@ -23,6 +23,7 @@ namespace auge
 		virtual EnumUser*		GetLoginedUsers(g_uint count=0, g_uint offset=0);
 		virtual g_uint			GetLoginedUserCount();
 
+		virtual RESULTCODE		Login();
 		virtual RESULTCODE		Login(const char* name, const char* passwd);
 		virtual RESULTCODE		Login(const char* name, const char* passwd, const char* remote_address);
 		virtual RESULTCODE		Logout(const char* name);
