@@ -105,6 +105,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetUserResponse.h" />
     <ClInclude Include="..\include\IsLoginedHandler.h" />
     <ClInclude Include="..\include\IsLoginedRequest.h" />
+    <ClInclude Include="..\include\LoginAllHandler.h" />
+    <ClInclude Include="..\include\LoginAllRequest.h" />
     <ClInclude Include="..\include\LoginHandler.h" />
     <ClInclude Include="..\include\LoginRequest.h" />
     <ClInclude Include="..\include\LogoutHandler.h" />
@@ -136,6 +138,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetUserResponse.cpp" />
     <ClCompile Include="..\src\IsLoginedHandler.cpp" />
     <ClCompile Include="..\src\IsLoginedRequest.cpp" />
+    <ClCompile Include="..\src\LoginAllHandler.cpp" />
+    <ClCompile Include="..\src\LoginAllRequest.cpp" />
     <ClCompile Include="..\src\LoginHandler.cpp" />
     <ClCompile Include="..\src\LoginRequest.cpp" />
     <ClCompile Include="..\src\LogoutHandler.cpp" />

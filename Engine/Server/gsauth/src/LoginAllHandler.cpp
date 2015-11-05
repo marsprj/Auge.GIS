@@ -95,30 +95,6 @@ namespace auge
 			return pExpResponse;
 		}
 
-		char user_root[AUGE_PATH_MAX];
-		memset(user_root, 0, AUGE_PATH_MAX);
-		auge_make_path(user_root, NULL, pWebContext->GetUserRoot(), name, NULL);
-		if(g_access(user_root, 4))
-		{
-			auge_mkdir(user_root);
-		}
-
-		char user_file_root[AUGE_PATH_MAX];
-		memset(user_file_root, 0, AUGE_PATH_MAX);
-		auge_make_path(user_file_root, NULL, user_root, "upload", NULL);
-		if(g_access(user_file_root, 4))
-		{
-			auge_mkdir(user_file_root);
-		}
-
-		char user_raster_root[AUGE_PATH_MAX];
-		memset(user_raster_root, 0, AUGE_PATH_MAX);
-		auge_make_path(user_raster_root, NULL, user_root, "rds", NULL);
-		if(g_access(user_raster_root, 4))
-		{
-			auge_mkdir(user_raster_root);
-		}
-
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
 		return pSusResponse;

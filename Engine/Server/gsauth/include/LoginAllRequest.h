@@ -1,5 +1,5 @@
-#ifndef __AUGE_IMS_LOGIN_REQUEST_H__
-#define __AUGE_IMS_LOGIN_REQUEST_H__
+#ifndef __AUGE_IMS_LOGIN_ALL_REQUEST_H__
+#define __AUGE_IMS_LOGIN_ALL_REQUEST_H__
 
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
@@ -10,11 +10,11 @@
 
 namespace auge
 {
-	class LoginRequest : public WebRequest
+	class LoginAllRequest : public WebRequest
 	{
 	public:
-		LoginRequest();
-		virtual ~LoginRequest();
+		LoginAllRequest();
+		virtual ~LoginAllRequest();
 
 	public:
 		virtual const char*		GetEngine();
@@ -48,14 +48,14 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_IMS_LOGIN_REQUEST_H__
+#endif //__AUGE_IMS_LOGIN_ALL_REQUEST_H__
 
 /************************************************************************
 [ HTTP Get ]
-service=was&version=1.0.0&request=Login&name=user2&password=qwer1234
-http://127.0.0.1:8088/ows/mgr?service=was&version=1.0.0&request=Login&name=user2&password=qwer1234
+service=was&version=1.0.0&request=LoginAll&name=user2&password=qwer1234
+http://127.0.0.1:8088/ows/mgr?service=was&version=1.0.0&request=LoginAll&name=user2&password=qwer1234
 
-http://127.0.0.1:8088/ows/auth?request=Login&name=user2&password=qwer1234
+http://127.0.0.1:8088/ows/auth?request=LoginAll&name=user2&password=qwer1234
 
 
 ************************************************************************/
