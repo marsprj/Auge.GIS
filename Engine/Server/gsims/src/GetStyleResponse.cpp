@@ -58,7 +58,13 @@ namespace auge
 		pWriter->WriteHead(m_pRequest->GetMimeType());
 		if(m_style_text!=NULL)
 		{
-			pWriter->Write((g_uchar*)m_style_text, strlen(m_style_text));
+			size_t text_len = strlen(m_style_text);
+			size_t text_utf8_len = text_len << 1;
+			char* text_utf8 = (char*)malloc(text_utf8_len);
+			memset(text_utf8, 0, text_utf8_len);
+			auge_encoding_convert_2(AUGE_ENCODING_GBK, AUGE_ENCODING_UTF8, m_style_text, text_len, text_utf8, &text_utf8_len);
+			pWriter->Write((g_uchar*)text_utf8, strlen(text_utf8 ));
+			free(text_utf8);
 		}
 		else
 		{

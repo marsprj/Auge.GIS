@@ -66,7 +66,7 @@ namespace auge
 		if(gtype==augeGTNull)
 		{
 			char msg[AUGE_MSG_MAX];
-			g_sprintf(msg, "Ivalid Type [%s].", type);
+			g_sprintf(msg, "Invalid Type [%s].", type);
 			GError* pError = augeGetErrorInstance();
 			pError->SetError(msg);
 
@@ -77,6 +77,39 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
+
+		if(text==NULL)
+		{
+			const char* msg = "Parameter Style is NULL.";
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg,__FILE__,__LINE__);
+
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			return pExpResponse;
+		}
+
+		//size_t text_len = strlen(text);
+		//if(text_len==0)
+		//{
+		//	const char* msg = "Invalid Style Text.";
+		//	GError* pError = augeGetErrorInstance();
+		//	pError->SetError(msg);
+
+		//	GLogger* pLogger = augeGetLoggerInstance();
+		//	pLogger->Error(msg,__FILE__,__LINE__);
+
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	pExpResponse->SetMessage(msg);
+		//	return pExpResponse;
+		//}
+		//size_t text_gbk_len = text_len<<1;
+		//char *text_gbk = new char[text_gbk_len];
+		//memset(text_gbk, 0, text_gbk_len);
+		//auge_encoding_convert_2(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, text, text_len, text_gbk, text_gbk_len);
 
 		RESULTCODE rc = pCartoManager->CreateStyle(pUser->GetID(), name, text, gtype);
 		if(rc>0)
@@ -93,6 +126,8 @@ namespace auge
 			pExpResponse->SetMessage(pError->GetLastError());
 			pWebResponse = pExpResponse;			
 		}
+
+		//free(text_gbk);
 		return pWebResponse;
 	}
 

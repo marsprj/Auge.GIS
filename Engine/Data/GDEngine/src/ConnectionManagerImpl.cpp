@@ -477,6 +477,88 @@ namespace auge
 
 	Workspace* ConnectionManagerImpl::GetWorkspace(g_uint user_id, const char* name)
 	{
+		if(!IsRegistered(user_id, name))
+		{
+			char msg[AUGE_MSG_MAX];
+			g_snprintf(msg, AUGE_MSG_MAX, "数据源[%s]不存在", name);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return NULL;
+		}
+
+		Workspace* pWorkspace = FindWorkspace(user_id, name);
+		if(pWorkspace!=NULL)
+		{
+			return pWorkspace;
+		}
+
+		pWorkspace = LoadWorkspace(user_id, name);
+		if(pWorkspace==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_snprintf(msg, AUGE_MSG_MAX, "加载数据源[%s]失败", name);
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			return NULL;
+		}
+
+		if(!pWorkspace->IsOpen())
+		{
+			pWorkspace->Open();
+			pWorkspace->SetUser(user_id);
+		}
+		
+
+		m_connections.push_back(pWorkspace);
+
+		return pWorkspace;
+	}
+
+	//Workspace* ConnectionManagerImpl::GetWorkspace(g_uint user_id, const char* name)
+	//{
+	//	Workspace* pWorkspace = NULL;
+	//	std::vector<Workspace*>::iterator iter;
+	//	for(iter=m_connections.begin(); iter!=m_connections.end(); iter++)
+	//	{
+	//		pWorkspace = *iter;
+	//		if(pWorkspace==NULL)
+	//		{
+	//			continue;
+	//		}
+
+	//		if((g_stricmp(pWorkspace->GetName(), name)==0)&&(pWorkspace->GetUser()==user_id))
+	//		{
+	//			if(IsUpdated(pWorkspace))
+	//			{
+	//				Workspace* pnewWorkspace = LoadWorkspace(user_id, name);
+	//				pWorkspace->Close();
+	//				pWorkspace->Release();					
+	//				pWorkspace = pnewWorkspace;
+	//				pnewWorkspace->SetUser(user_id);
+	//				*iter = pnewWorkspace;
+	//			}
+	//			if(pWorkspace!=NULL)
+	//			{
+	//				if(!pWorkspace->IsOpen())
+	//				{
+	//					pWorkspace->Open();
+	//					pWorkspace->AddRef();
+	//					pWorkspace->SetUser(user_id);
+	//				}
+	//			}
+	//			return pWorkspace;
+	//		}
+	//	}
+
+	//	char msg[AUGE_MSG_MAX];
+	//	g_snprintf(msg, AUGE_MSG_MAX, "数据源[%s]不存在", name);
+	//	GError* pError = augeGetErrorInstance();
+	//	pError->SetError(msg);
+	//	return NULL;
+	//}
+
+	Workspace* ConnectionManagerImpl::FindWorkspace(g_uint user_id, const char* name)
+	{
 		Workspace* pWorkspace = NULL;
 		std::vector<Workspace*>::iterator iter;
 		for(iter=m_connections.begin(); iter!=m_connections.end(); iter++)
@@ -510,14 +592,8 @@ namespace auge
 				return pWorkspace;
 			}
 		}
-
-		char msg[AUGE_MSG_MAX];
-		g_snprintf(msg, AUGE_MSG_MAX, "数据源[%s]不存在", name);
-		GError* pError = augeGetErrorInstance();
-		pError->SetError(msg);
 		return NULL;
 	}
-
 
 	EnumWorkspace* ConnectionManagerImpl::GetWorkspaces(g_uint user_id)
 	{
@@ -813,6 +889,29 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_data_source (name, engine, uri, user_id, type) values('%s','%s','%s', %d, %d)", name, engine, uri, user_id, (int)type);
 		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	bool ConnectionManagerImpl::IsRegistered(g_uint user_id, const char* name)
+	{
+		if(name==NULL)
+		{
+			return NULL;
+		}
+		char sql[AUGE_SQL_MAX];
+		g_snprintf(sql, AUGE_SQL_MAX, "select count(*) from g_data_source where name='%s' and user_id=%d", name, user_id);
+
+		Workspace* pWorkspace = NULL;
+		GResultSet* pResultSet = NULL;
+		pResultSet = m_pConnection->ExecuteQuery(sql);
+		if(pResultSet==NULL)
+		{
+			return NULL;
+		}
+
+		g_uint count = pResultSet->GetInt(0,0);
+		pResultSet->Release();
+
+		return (count>0);
 	}
 
 	Workspace* ConnectionManagerImpl::LoadWorkspace(g_uint user_id, const char* name)

@@ -246,11 +246,13 @@ namespace auge
 		virtual Workspace*			GetWorkspace(g_uint user, const char* name) = 0;
 		virtual EnumWorkspace*		GetWorkspaces(g_uint user) = 0;
 		virtual EnumWorkspace*		GetWorkspaces(g_uint user_id, augeWorkspaceType type) = 0;
+		//virtual Workspace*			FindWorkspace(g_uint user_id, const char* name) = 0;
 
 		virtual Workspace*			NewWorkspace(g_uint user, const char* name) = 0;
 
 		virtual RESULTCODE			Register(g_uint user, const char* name, const char* engine, const char* constr, augeWorkspaceType type) = 0;
 		virtual RESULTCODE			Unregister(g_uint user, const char* name) = 0;
+		virtual bool				IsRegistered(g_uint user_id, const char* name) = 0;
 		//virtual RESULTCODE		Update(g_uint user,const char* name, const char* engine, const char* constr) = 0;
 		//virtual RESULTCODE		Update(g_uint user,g_uint gid, const char* name, const char* engine, const char* constr) = 0;
 

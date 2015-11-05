@@ -70,7 +70,6 @@ namespace auge
 			pxElement->SetChildText(augeGetDataSetType(pDataSet->GetType()));
 			augeGetLoggerInstance()->Fatal(pDataSet->GetName(), __FILE__, __LINE__);
 			
-			
 			switch(pDataSet->GetType())
 			{
 			case augeDataSetFeature:
