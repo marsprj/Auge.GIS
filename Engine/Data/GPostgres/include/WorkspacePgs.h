@@ -56,7 +56,7 @@ namespace auge
 		// Raster Begin
 		/*************************************************************************/
 		//virtual void			SetConnection(GConnection* pConnection);
-		virtual RasterFolder*	GetRootFolder();
+		virtual RasterFolder*	GetRootFolder();		
 		virtual RasterFolder*	GetFolder(const char* path);
 		virtual RasterFolder*	CreateFolder(const char* path);
 		virtual RESULTCODE		RemoveFolder(const char* path);
@@ -100,6 +100,8 @@ namespace auge
 		RESULTCODE				CreateFeatureCatalogTable();
 		RESULTCODE				CreateRasterTable();
 		RESULTCODE				CreateRasterFolderTable();
+		g_int					CreateRasterRootFolder();
+		g_int					GetRasterRootFolderID();
 
 		RESULTCODE				AddMetaInfo(const char* name);
 		RESULTCODE				RemoveMetaInfo(const char* name);

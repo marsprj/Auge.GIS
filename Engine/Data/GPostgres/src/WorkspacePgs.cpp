@@ -123,8 +123,21 @@ namespace auge
 		if(!pgConnection_w->HasTable(g_raster_table.c_str()))
 		{
 			CreateRasterTable();
+			g_int id = CreateRasterRootFolder();
+			if(id>0)
+			{
+				m_raster_root_folder.Create(id, "/", "/", "/", this, m_user);
+			}
 		}
-		m_raster_root_folder.Create(0, "/", "/", "/", this, m_user);
+		else
+		{
+			g_int id = GetRasterRootFolderID();
+			if(id<0)
+			{
+				id = CreateRasterRootFolder();
+			}
+			m_raster_root_folder.Create(id, "/", "/", "/", this, m_user);
+		}
 
 		char msg[AUGE_MSG_MAX];
 		g_sprintf(msg, "Wokspace [%s] is opened.", m_name.c_str());
@@ -1141,6 +1154,55 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, g_feature_catalog_table.c_str(), name, m_user);
 		return pgConnection->ExecuteSQL(sql);
+	}
+
+	RESULTCODE WorkspacePgs::CreateRasterRootFolder()
+	{
+		const char* format = "insert into g_raster_folder (name,alias,path,parent,user_id) values('/','/','/',0, %d) returning gid";
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, format, m_user);
+
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return -1;
+		}
+		GResultSet* pResult = pgConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return -1;
+		}
+		g_int id = pResult->GetInt(0,0);
+		pResult->Release();
+		return id;
+	}
+
+	g_int WorkspacePgs::GetRasterRootFolderID()
+	{
+		const char* format = "select gid from g_raster_folder where name='/' and user_id=%d";
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, format, m_user);
+
+		GConnection* pgConnection = GetConnectionW();
+		if(pgConnection==NULL)
+		{
+			return -1;
+		}
+		GResultSet* pResult = pgConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return -1;
+		}
+		if(pResult->GetCount()==0)
+		{
+			pResult->Release();
+			return -1;
+		}
+		g_int id = pResult->GetInt(0,0);
+		pResult->Release();
+		return id;
 	}
 
 	RESULTCODE WorkspacePgs::CreateRasterTable()
