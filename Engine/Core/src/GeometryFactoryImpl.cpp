@@ -37,14 +37,15 @@ namespace auge
 
 	GPoint* GeometryFactoryImpl::CeatePoint(double x, double y)
 	{
-		WKBPoint pt;
-		pt.point.x = x;
-		pt.point.y = y;
-		pt.wkbType = wkbPoint;
-		pt.byteOrder= wkbNDR;
+		WKBPoint* pt = (WKBPoint*)auge_malloc(sizeof(WKBPoint),1);
+		memset(pt, 0, sizeof(WKBPoint));
+		pt->point.x = x;
+		pt->point.y = y;
+		pt->wkbType = wkbPoint;
+		pt->byteOrder= wkbNDR;
 
 		GPointWKB* pPoint = new GPointWKB();
-		pPoint->Create((g_uchar*)(&(pt)), false);
+		pPoint->Create((g_uchar*)pt, false);
 		return pPoint;
 	}
 
