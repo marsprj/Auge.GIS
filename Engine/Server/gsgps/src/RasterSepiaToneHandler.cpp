@@ -108,6 +108,7 @@ namespace auge
 		auge::RasterSepiaToneEffectProcessor* pProcessor = NULL;
 		auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 		pProcessor = pFactory->CreateRasterSepiaToneEffectProcessor();
+
 		pProcessor->SetUser(pUser->GetID());
 		pProcessor->SetInputDataSource(input_source_name);
 		pProcessor->SetInputRaster(input_raster_name);

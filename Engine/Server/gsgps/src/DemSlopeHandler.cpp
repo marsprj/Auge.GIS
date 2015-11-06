@@ -4,6 +4,7 @@
 #include "AugeXML.h"
 #include "AugeWebCore.h"
 #include "AugeProcessor.h"
+#include "AugeUser.h"
 
 namespace auge
 {
@@ -108,6 +109,7 @@ namespace auge
 		auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 		pProcessor = pFactory->CreateDemSlopeProcessor();
 
+		pProcessor->SetUser(pUser->GetID());
 		pProcessor->SetInputDataSource(input_source_name);
 		pProcessor->SetInputRaster(input_raster_name);
 		pProcessor->SetInputPath(input_raster_path);

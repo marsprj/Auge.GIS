@@ -155,6 +155,7 @@ namespace auge
 		//pProcessor = pFactory->CreateTileStoreGenerator();
 		pProcessor = pFactory->CreateMongoTileStoreGenerator();
 
+		pProcessor->SetUser(pUser->GetID());
 		pProcessor->SetMap(pMap);
 		pProcessor->SetTileStore(pTileStore);
 		pProcessor->SetStartLevel(start_level);
