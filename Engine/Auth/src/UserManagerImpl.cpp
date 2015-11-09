@@ -496,7 +496,18 @@ namespace auge
 
 	RESULTCODE UserManagerImpl::CreateUserTable()
 	{
-		const char* sql = "CREATE TABLE g_user( gid serial NOT NULL, name character varying(32) NOT NULL, alias character varying(32) NOT NULL, passwd character varying(16), email character varying, role integer, status integer DEFAULT 0, CONSTRAINT user_pk PRIMARY KEY (gid), CONSTRAINT user_fk FOREIGN KEY (role) REFERENCES g_role (gid) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION)";
+		const char* sql = "CREATE TABLE g_user( gid serial NOT NULL," \
+											   "name character varying(32) NOT NULL," \
+											   "alias character varying(32) NOT NULL," \
+											   "passwd character varying(16)," \
+											   "email character varying," \
+											   "role integer," \
+											   "status integer DEFAULT 0," \
+											   "login_time timestamp without time zone," \
+											   "CONSTRAINT user_pk PRIMARY KEY (gid)," \
+											   "CONSTRAINT user_fk FOREIGN KEY (role) " \
+													"REFERENCES g_role (gid) MATCH SIMPLE ON UPDATE " \
+													"NO ACTION ON DELETE NO ACTION)";
 		return m_pConnection->ExecuteSQL(sql);
 	}
 
