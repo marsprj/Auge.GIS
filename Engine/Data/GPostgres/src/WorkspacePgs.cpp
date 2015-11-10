@@ -100,27 +100,27 @@ namespace auge
 			return rc;
 		}
 
-		ConnectionPgs*	pgConnection_w = GetConnectionW();
-		if(pgConnection_w==NULL)
-		{
-			return AG_FAILURE;
-		}
-		if(!pgConnection_w->IsOpen())
-		{
-			return AG_FAILURE;
-		}
+		//ConnectionPgs*	pgConnection_w = GetConnectionW();
+		//if(pgConnection_w==NULL)
+		//{
+		//	return AG_FAILURE;
+		//}
+		//if(!pgConnection_w->IsOpen())
+		//{
+		//	return AG_FAILURE;
+		//}
 
-		if(!pgConnection_w->HasTable(g_feature_catalog_table.c_str()))
+		if(!m_pgConnection_r.HasTable(g_feature_catalog_table.c_str()))
 		{
 			CreateFeatureCatalogTable();
 		}
 		
-		if(!pgConnection_w->HasTable(g_raster_folder_table.c_str()))
+		if(!m_pgConnection_r.HasTable(g_raster_folder_table.c_str()))
 		{
 			CreateRasterFolderTable();
 		}
 
-		if(!pgConnection_w->HasTable(g_raster_table.c_str()))
+		if(!m_pgConnection_r.HasTable(g_raster_table.c_str()))
 		{
 			CreateRasterTable();
 			g_int id = CreateRasterRootFolder();
