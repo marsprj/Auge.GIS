@@ -1185,12 +1185,13 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_user);
 
-		GConnection* pgConnection = GetConnectionW();
-		if(pgConnection==NULL)
-		{
-			return -1;
-		}
-		GResultSet* pResult = pgConnection->ExecuteQuery(sql);
+		//GConnection* pgConnection = GetConnectionW();
+		//if(pgConnection==NULL)
+		//{
+		//	return -1;
+		//}
+		
+		GResultSet* pResult = m_pgConnection_r.ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
 			return -1;
