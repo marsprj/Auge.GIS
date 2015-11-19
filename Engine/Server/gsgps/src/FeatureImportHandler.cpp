@@ -96,11 +96,12 @@ namespace auge
 		WebResponse* pWebResponse = NULL;
 		FeatureImportRequest* pRequest = static_cast<FeatureImportRequest*>(pWebRequest);
 
-		const char* shp_name = pRequest->GetShapeName();
+		const char* raw_shp_name = pRequest->GetShapeName();
 		const char* source_name = pRequest->GetSourceName();
-		const char* raw_type_name = pRequest->GetTypeName();
+		//const char* raw_type_name = pRequest->GetTypeName();
+		const char* type_name = pRequest->GetTypeName();
 		
-		if(shp_name==NULL)
+		if(raw_shp_name==NULL)
 		{
 			const char* msg = "Parameter [shpname] is NULL";
 			pLogger->Error(msg, __FILE__, __LINE__);
@@ -108,7 +109,7 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			pWebResponse =  pExpResponse;
 		}
-		if(raw_type_name==NULL)
+		if(type_name==NULL)
 		{
 			const char* msg = "Parameter [typename] is NULL";
 			pLogger->Error(msg, __FILE__, __LINE__);
@@ -117,18 +118,28 @@ namespace auge
 			pWebResponse =  pExpResponse;
 		}
 
-		char type_name[AUGE_NAME_MAX];
-		memset(type_name, 0, AUGE_NAME_MAX);
+		//char type_name[AUGE_NAME_MAX];
+		//memset(type_name, 0, AUGE_NAME_MAX);
+		//
+		//if(pWebContext->IsIE())
+		//{
+		//	strcpy(type_name, raw_type_name);
+		//}
+		//else
+		//{
+		//	size_t type_name_size = AUGE_NAME_MAX;
+		//	auge_encoding_convert_2(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, raw_type_name, strlen(raw_type_name), type_name, &type_name_size);
+		//}
 
-		if(pWebContext->IsIE())
-		{
-			strcpy(type_name, raw_type_name);
-		}
-		else
-		{
-			size_t type_name_size = AUGE_NAME_MAX;
-			auge_encoding_convert_2(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, raw_type_name, strlen(raw_type_name), type_name, &type_name_size);
-		}
+		char shp_name[AUGE_NAME_MAX];
+		memset(shp_name, 0, AUGE_NAME_MAX);
+#ifdef WIN32
+		strcpy(shp_name, raw_shp_name);
+#else
+		size_t shp_name_size = AUGE_NAME_MAX;
+		auge_encoding_convert_2(AUGE_ENCODING_GBK, AUGE_ENCODING_UTF8, raw_shp_name, strlen(raw_shp_name), shp_name, &shp_name_size);
+#endif
+		pLogger->Debug(shp_name, __FILE__, __LINE__);
 
 		//char user_root[AUGE_PATH_MAX];
 		//memset(user_root, 0, AUGE_PATH_MAX);

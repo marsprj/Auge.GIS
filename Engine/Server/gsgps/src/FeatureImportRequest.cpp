@@ -86,6 +86,10 @@ namespace auge
 		{
 			WebContext* pWebContext = augeGetWebContextInstance();			
 			m_type_name = pWebContext->ParameterEncoding(typeName);
+
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Debug(typeName, __FILE__, __LINE__);
+			pLogger->Debug(m_type_name.c_str(), __FILE__, __LINE__);
 			//m_type_name = typeName;
 		}
 	}
