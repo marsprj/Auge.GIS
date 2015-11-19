@@ -2,6 +2,7 @@
 #define __AUGE_WEB_CONTEXT_IMPL_H__
 
 #include "AugeWebCore.h"
+#include "AugeXML.h"
 #include <string>
 
 namespace auge
@@ -49,6 +50,8 @@ namespace auge
 
 	private:
 		RESULTCODE				LoadConfig(const char* config_path);
+		RESULTCODE				LoadStore(XNode* pxRoot);
+		RESULTCODE				LoadLog(XNode* pxRoot);
 		void					MakeConfigPath();
 		void					InitializeCache();
 
@@ -68,6 +71,8 @@ namespace auge
 		std::string m_data_uri;
 
 		std::string m_response_encoding;
+
+		bool		m_isRecordRequest;
 
 		GConnection	*m_pConnection;
 	};

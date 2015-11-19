@@ -18,6 +18,7 @@ namespace auge
 		m_pConnection = NULL;
 		m_response_encoding = "GBK";
 		m_uri = "http://www.radi.ac.cn";
+		m_isRecordRequest = true;
 	}
 
 	WebContextImpl::~WebContextImpl()
@@ -63,12 +64,20 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		LoadStore(pxRoot);
+		LoadLog(pxRoot);
+		
+		pxDoc->Close();
+		pxDoc->Release();
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE WebContextImpl::LoadStore(XNode* pxRoot)
+	{
 		XNode *pxStorage = NULL;
 		pxStorage = pxRoot->GetFirstChild("Store");
 		if(pxStorage==NULL)
 		{
-			pxDoc->Close();
-			pxDoc->Release();
 			return AG_FAILURE;
 		}
 
@@ -96,8 +105,37 @@ namespace auge
 				}
 			}
 		}
-		pxDoc->Close();
-		pxDoc->Release();
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE WebContextImpl::LoadLog(XNode* pxRoot)
+	{
+		XNode *pxLog = NULL;
+		pxLog = pxRoot->GetFirstChild("Log");
+		if(pxLog==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		const char* value = pxLog->GetContent();
+		if(value==NULL)
+		{
+			m_isRecordRequest = false;
+		}
+		if(strlen(value)==0)
+		{
+			m_isRecordRequest = false;
+		}
+		if(value[0]=='T'||value[0]=='t')
+		{
+			m_isRecordRequest = true;
+		}
+		else
+		{
+			m_isRecordRequest = false;
+		}
+		
 		return AG_SUCCESS;
 	}
 
@@ -391,6 +429,10 @@ namespace auge
 
 	 RESULTCODE	WebContextImpl::RecordUserRequest(const char* user_name, const char* user_request, const char* request_service, const char* http_request)
 	 {
+		 if(!m_isRecordRequest)
+		 {
+			 return AG_SUCCESS;
+		 }
 		 const char* http_method = GetRequestMethod();
 		 const char* http_client = GetHttpClient();
 		 const char* format = "insert into g_user_request (user_name,user_request,request_service, request_time,http_method,http_client,http_request) values('%s','%s','%s',now(),'%s','%s','%s')";

@@ -10,12 +10,12 @@
 
 namespace auge
 {
-	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.160"
+	#define AUGE_WRITABLE_DB_SERVER	"192.168.111.160"
 	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.161"
 	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.159"
 	//#define AUGE_WRITABLE_DB_SERVER	"127.0.0.1"
 	//#define AUGE_WRITABLE_DB_SERVER	"172.32.72.2"
-	#define AUGE_WRITABLE_DB_SERVER	"172.32.8.1"
+	//#define AUGE_WRITABLE_DB_SERVER	"172.32.8.1"
 	//#define AUGE_WRITABLE_DB_SERVER	"182.92.114.80"
 	
 	WorkspacePgs::WorkspacePgs():
@@ -265,6 +265,7 @@ namespace auge
 		rc = CreateTable(table_name, pFields);
 		if(rc!=AG_SUCCESS)
 		{
+			RemoveMetaInfo(name);
 			return NULL;
 		}
 		GField* pField = pFields->GetGeometryField();
