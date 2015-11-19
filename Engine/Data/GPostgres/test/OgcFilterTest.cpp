@@ -3,12 +3,13 @@
 #include "AugeCore.h"
 #include "AugeXML.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(OgcFilterTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(OgcFilterTest);
 
 void OgcFilterTest::setUp() 
 {
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=GISDB;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* path = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 
 	RESULTCODE rc = AG_FAILURE;
 	auge::DataEngine* pDataEngine = NULL;
@@ -19,6 +20,7 @@ void OgcFilterTest::setUp()
 
 	rc = m_pWorkspace->Open();
 	CPPUNIT_ASSERT(rc==AG_SUCCESS);
+	m_pWorkspace->SetUser(3);
 
 	printf("setUp\n");
 }
@@ -678,6 +680,7 @@ void OgcFilterTest::DWithinFilteTest()
 void OgcFilterTest::IntersectsFilterTest()
 {
 	const char* path = "E:\\Research\\Auge.GIS\\Engine\\Filter\\ogc\\BinarySpatial_Intersects_Geometry.xml";
+	//const char* path = "E:\\Research\\Auge.GIS\\Engine\\Filter\\ogc\\BinarySpatial_Intersects_Polygon.xml";
 	auge::FilterFactory* pFactory = auge::augeGetFilterFactoryInstance();
 	auge::FilterReader* pFilterReader = pFactory->CreateFilerReader(NULL);
 	auge::GFilter* pFilter = NULL;

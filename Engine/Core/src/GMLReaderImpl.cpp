@@ -750,9 +750,15 @@ namespace auge
 	}
 
 	bool GMLReaderImpl::CreateWKBFromGMLLinearRing(LinearRing* pLinearRing, XNode* pxLinearRing)
-	{
+	{	
+		XNode* pxCoordinates = pxLinearRing->GetFirstChild("coordinates");
+		if(pxCoordinates==NULL)
+		{
+			return false;
+		}
+
 		int numPoints = 0;
-		const char* coords = pxLinearRing->GetContent();
+		const char* coords = pxCoordinates->GetContent();
 		Point* pts = (Point*)(&(pLinearRing->points[0]));
 		numPoints = CreateWKBPointsFromGMLCoordinates(pts, coords);
 		pLinearRing->numPoints = numPoints;
@@ -768,21 +774,7 @@ namespace auge
 		pt = strtok(temp, " ");
 		while(pt!=NULL)
 		{
-			char* sx = pt;
-			char* sy = pt;
-			for(; *sy!='\0'; sy++)
-			{
-				if(*sy==',')
-				{	
-					*sy = '\0';
-					sy++;
-					break;
-				}
-			}
-
-			pts->x = atof(sx);
-			pts->y = atof(sy);
-
+			sscanf(pt, "%lf,%lf", &(pts->x), &(pts->y));
 			pt = strtok(NULL, " ");
 			pts++;
 			ptcount++;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml">
+	<ogc:Intersects>
+		<ogc:PropertyName>shape</ogc:PropertyName>
+			<gml:Polygon>
+				<gml:outerBoundaryIs>
+					<gml:LinearRing>
+						<gml:coordinates ts=" " cs="," decimal=".">
+							0,0 0,40 40,40 40,0 0,0
+						</gml:coordinates>
+					</gml:LinearRing>
+				</gml:outerBoundaryIs>
+			</gml:Polygon>
+	</ogc:Intersects>
+</ogc:Filter>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml">
 	<ogc:Intersects>
 		<ogc:PropertyName>shape</ogc:PropertyName>
 		<gml:Envelope xmlns:gml="http://www.opengis.net/gml">
