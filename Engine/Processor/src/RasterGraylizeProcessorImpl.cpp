@@ -146,6 +146,8 @@ namespace auge
 		RasterWorkspace* pinRasterWorkspace = NULL;
 		RasterWorkspace* poutRasterWorkspace = NULL;
 
+		GError*  pError  = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
 		pWorkspace = pConnManager->GetWorkspace(m_user, inSourceName);
@@ -183,6 +185,11 @@ namespace auge
 		g_uint band_count = pinRaster->GetBandCount();
 		if(band_count<3||band_count>4)
 		{
+			char msg[AUGE_MSG_MAX];
+			memset(msg, 0, AUGE_MSG_MAX);
+			g_sprintf(msg, "影像灰度化只支持3波段影像，当前输入影像波段为[%d]个", band_count);
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
 			pinFolder->Release();
 			return AG_FAILURE;
 		}
