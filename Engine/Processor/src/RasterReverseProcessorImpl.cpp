@@ -132,6 +132,9 @@ namespace auge
 		const char* outRasterName = GetOutputRaster();
 		const char* outRasterPath = GetOutputRasterPath();
 
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
 		Workspace* pWorkspace = NULL;
 		RasterWorkspace* pinRasterWorkspace = NULL;
 		RasterWorkspace* poutRasterWorkspace = NULL;
@@ -169,6 +172,11 @@ namespace auge
 		augePixelType pixelType =  pinRaster->GetPixelType();
 		if(pixelType != augePixelByte)
 		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "灰度反转仅支持Byte类型像元栅格数据,当前栅格数据像元宽度为%dByte", pinRaster->GetPixelSize());
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
 			pinFolder->Release();
 			return AG_FAILURE;
 		}
