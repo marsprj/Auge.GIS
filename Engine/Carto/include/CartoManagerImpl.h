@@ -44,6 +44,7 @@ namespace auge
 		virtual RESULTCODE		RemoveLayers(g_uint map_id);
 		virtual RESULTCODE		RemoveLayer(const char* mapName, const char* layerName);
 		virtual g_int			GetLayerID(const char* layerName, const char* mapName);
+		virtual g_int			GetLayerID(g_int user_id, const char* layerName, const char* mapName);
 
 		virtual bool			HasStyle(g_uint id);
 		virtual bool			HasStyle(const char* name);

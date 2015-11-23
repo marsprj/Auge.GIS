@@ -91,7 +91,7 @@ namespace auge
 		CartoManager* pCartoManager = NULL;
 		pCartoManager = augeGetCartoManagerInstance();
 		
-		g_int l_id = pCartoManager->GetLayerID(layerName, mapName);
+		g_int l_id = pCartoManager->GetLayerID(pUser->GetID(), layerName, mapName);
 		if(l_id < 0)
 		{
 			char msg[AUGE_MSG_MAX];
