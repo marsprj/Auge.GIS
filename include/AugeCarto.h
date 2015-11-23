@@ -308,7 +308,7 @@ namespace auge
 		virtual Map*			CreateMap(const char* name) = 0;
 		virtual Map*			CreateMap(const char* name, g_uint srid, double xmin, double ymin, double xmax, double ymax) = 0;
 		virtual RESULTCODE		RemoveMap(const char* name) = 0;
-		virtual g_int			GetMapID(const char* name) = 0;
+		//virtual g_int			GetMapID(const char* name) = 0;
 
 		virtual RESULTCODE		UpdateMapLayers(Map* pMap) = 0;
 		virtual RESULTCODE		UpdateMapLayers(g_uint mapID, const char* layers) = 0;
