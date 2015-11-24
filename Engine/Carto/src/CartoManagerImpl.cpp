@@ -825,7 +825,7 @@ namespace auge
 			return -1;
 		}
 
-		g_int map_id = GetMapID(mapName);
+		g_int map_id = GetMapID(user_id, mapName);
 		if(map_id<0)
 		{
 			return -1;
