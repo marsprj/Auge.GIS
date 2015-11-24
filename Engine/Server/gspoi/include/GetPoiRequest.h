@@ -36,6 +36,7 @@ namespace auge
 
 		void		SetVersion(const char* version);
 		void		SetName(const char* name);
+		void		SetNames(const char* name);
 		void		SetExtent(const char* extent);
 		void		SetLimit(const char* limit);
 		void		SetOffset(const char* offset);
@@ -46,6 +47,7 @@ namespace auge
 		std::string m_encoding;
 
 		std::string m_name;
+		std::vector<std::string> m_names;
 		std::string m_format;
 		GEnvelope	m_extent;
 		g_uint		m_limit;

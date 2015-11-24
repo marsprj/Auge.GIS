@@ -87,17 +87,9 @@ namespace auge
 			return pExpResponse;
 		}
 
-		WebResponse* pWebResponse = Execute(pWebRequest, pWebContext, pMap);
-		pMap->Release();
+		//SetStyleRequest* pRequest = static_cast<SetStyleRequest*>(pWebRequest);
 
-		return pWebResponse;
-	}
-
-	WebResponse* SetStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
-	{
-		SetStyleRequest* pRequest = static_cast<SetStyleRequest*>(pWebRequest);
-
-		const char* mapName = pMap->GetName();
+		//const char* mapName = pMap->GetName();
 		const char* layerName = pRequest->GetLayerName();
 		const char* styleName = pRequest->GetStyleName();
 
@@ -129,9 +121,9 @@ namespace auge
 			return pExpResponse;
 		}
 
-		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		//CartoManager* pCartoManager = augeGetCartoManagerInstance();
 
-		g_int l_id = pCartoManager->GetLayerID(layerName, mapName);
+		g_int l_id = pCartoManager->GetLayerID(pUser->GetID(),layerName, mapName);
 		if(l_id < 0)
 		{
 			char msg[AUGE_MSG_MAX];
@@ -166,8 +158,94 @@ namespace auge
 			return pExpResponse;
 		}
 
+		pMap->Release();
+
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
 		return pSusResponse;
+
+		//WebResponse* pWebResponse = Execute(pWebRequest, pWebContext, pMap);
+		//pMap->Release();
+
+		//return pWebResponse;
+	}
+
+	WebResponse* SetStyleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
+	{
+		return NULL;
+		//SetStyleRequest* pRequest = static_cast<SetStyleRequest*>(pWebRequest);
+
+		//const char* mapName = pMap->GetName();
+		//const char* layerName = pRequest->GetLayerName();
+		//const char* styleName = pRequest->GetStyleName();
+
+		//if(mapName==NULL)
+		//{
+		//	const char* msg = "Parameter map is null.";
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	GLogger* pLogger = augeGetLoggerInstance();
+		//	pLogger->Error(msg);
+		//	pExpResponse->SetMessage(msg);
+		//	return pExpResponse;
+		//}
+		//if(layerName==NULL)
+		//{
+		//	const char* msg = "Parameter layer is null.";
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	GLogger* pLogger = augeGetLoggerInstance();
+		//	pLogger->Error(msg);
+		//	pExpResponse->SetMessage(msg);
+		//	return pExpResponse;
+		//}
+		//if(styleName==NULL)
+		//{
+		//	const char* msg = "Parameter style is null.";
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	GLogger* pLogger = augeGetLoggerInstance();
+		//	pLogger->Error(msg);
+		//	pExpResponse->SetMessage(msg);
+		//	return pExpResponse;
+		//}
+
+		//CartoManager* pCartoManager = augeGetCartoManagerInstance();
+
+		//g_int l_id = pCartoManager->GetLayerID(layerName, mapName);
+		//if(l_id < 0)
+		//{
+		//	char msg[AUGE_MSG_MAX];
+		//	g_sprintf(msg, "No Layer %s in Map %s.", layerName, mapName);
+		//	GLogger* pLogger = augeGetLoggerInstance();
+		//	pLogger->Error(msg);
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	pExpResponse->SetMessage(msg);
+		//	return pExpResponse;
+		//}
+
+		//g_int s_id = pCartoManager->GetStyleID(styleName);
+		//if(s_id<0)
+		//{
+		//	char msg[AUGE_MSG_MAX];
+		//	g_sprintf(msg, "No Style %s.", styleName);
+		//	GLogger* pLogger = augeGetLoggerInstance();
+		//	pLogger->Error(msg);
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	pExpResponse->SetMessage(msg);
+		//	return pExpResponse;
+		//}
+
+		//RESULTCODE rc = pCartoManager->SetStyle(l_id, s_id);
+		//if(rc!=AG_SUCCESS)
+		//{
+		//	GError* pError = augeGetErrorInstance();
+		//	GLogger* pLogger = augeGetLoggerInstance();
+		//	pLogger->Error(pError->GetLastError());
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	pExpResponse->SetMessage(pError->GetLastError());
+		//	return pExpResponse;
+		//}
+
+		//WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
+		//pSusResponse->SetRequest(pRequest->GetRequest());
+		//return pSusResponse;
 	}
 }

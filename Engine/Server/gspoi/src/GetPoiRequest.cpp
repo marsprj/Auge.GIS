@@ -1,4 +1,5 @@
 #include "GetPoiRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -66,7 +67,18 @@ namespace auge
 		}
 		else
 		{
-			m_name = name;
+			const char* comma = strstr(name, ",");
+			if(comma==NULL)
+			{
+				WebContext* pWebContext = augeGetWebContextInstance();
+				m_name = pWebContext->ParameterEncoding(name);
+				m_names.clear();
+			}
+			else
+			{
+				SetNames(name);
+				m_name.clear();
+			}
 		}
 	}
 
@@ -140,4 +152,22 @@ namespace auge
 			m_offset = atoi(offset);
 		}
 	}
+
+	void GetPoiRequest::SetNames(const char* name)
+	{
+		WebContext* pWebContext = augeGetWebContextInstance();
+
+		char* ptr = NULL;
+		char* str = strdup(name);
+		ptr = strtok(str, ",");
+		while(ptr!=NULL)
+		{
+			m_names.push_back(pWebContext->ParameterEncoding(ptr));
+			ptr = strtok(NULL, ",");
+		}
+
+		free(str);
+
+	}
+
 }

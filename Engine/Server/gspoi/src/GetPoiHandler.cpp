@@ -85,7 +85,7 @@ namespace auge
 
 		if(name==NULL||strlen(name)==0)
 		{
-			const char* msg = "Parameter [Path] is NULL";
+			const char* msg = "Parameter [name] is NULL";
 			pError->SetError(msg);
 			pLogger->Error(msg, __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
@@ -118,30 +118,30 @@ namespace auge
 			return pExpResponse;
 		}
 
-		const char* name_encoded = NULL;
-		if(pWebContext->IsIE())
-			//name_encoded = auge_encoding_convert("GBK","UTF-8",name,strlen(name));
-			name_encoded = name;
-		else
-			//name_encoded = name;
-			name_encoded = auge_encoding_convert("UTF-8","GBK",name,strlen(name));
+		//const char* name_encoded = NULL;
+		//if(pWebContext->IsIE())
+		//	//name_encoded = auge_encoding_convert("GBK","UTF-8",name,strlen(name));
+		//	name_encoded = name;
+		//else
+		//	//name_encoded = name;
+		//	name_encoded = auge_encoding_convert("UTF-8","GBK",name,strlen(name));
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
 		if(extent.IsValid())
 		{
 			const char* format = "select gid,name,lat,lon,address,cdate,adcode,type from %s where tsv@@ to_tsquery('%s') limit %d  offset %d";
-			g_sprintf(sql, format, AUGE_POI_TABLE, name_encoded, limit, offset);
+			g_sprintf(sql, format, AUGE_POI_TABLE, name, limit, offset);
 		}
 		else
 		{
 			const char* format = "select gid,name,lat,lon,address,cdate,adcode,type from %s where tsv@@ to_tsquery('%s') limit %d  offset %d";
-			g_sprintf(sql, format, AUGE_POI_TABLE, name_encoded, limit, offset);
+			g_sprintf(sql, format, AUGE_POI_TABLE, name, limit, offset);
 		}
 
 		GResultSet* pResult = pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
-		{	
+		{
 			pLogger->Error(pError->GetLastError(), __FILE__, __LINE__);
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(pError->GetLastError());
