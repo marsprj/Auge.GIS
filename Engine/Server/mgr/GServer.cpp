@@ -106,6 +106,8 @@ namespace auge
 						break;
 					}
 				}
+
+				pUser->Release();
 			}
 
 			g_ulong ts_w = auge_get_time();		
