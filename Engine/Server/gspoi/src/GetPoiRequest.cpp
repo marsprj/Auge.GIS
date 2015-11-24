@@ -170,4 +170,18 @@ namespace auge
 
 	}
 
+	const char* GetPoiRequest::GetName(g_uint index)
+	{
+		if(index>=m_names.size())
+		{
+			return NULL;
+		}
+		return m_names[index].c_str();
+	}
+
+	g_uint GetPoiRequest::GetNameCount()
+	{
+		return m_names.size();
+	}
+
 }

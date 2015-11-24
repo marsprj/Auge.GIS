@@ -26,6 +26,8 @@ namespace auge
 
 	public:
 		const char* GetName();
+		const char* GetName(g_uint index);
+		g_uint		GetNameCount();
 		const char* GetFormat();
 		GEnvelope&	GetExtent();
 		g_uint		GetLimit();
@@ -62,6 +64,7 @@ namespace auge
 [ HTTP Post ]
 -------------------------------------------------------------------------
 service=poi&version=1.0.0&request=GetPoi&name=烤串
+user=user1&service=poi&version=1.0.0&request=GetPoi&name=银行,学校
 user=user1&service=poi&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Penguins.jpg&Path=/aaa
 
 http://127.0.0.1:8088/ows/user1/mgr?service=poi&version=1.0.0&request=GetPoi&name=烤串

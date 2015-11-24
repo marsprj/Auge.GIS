@@ -24,6 +24,10 @@ namespace auge
 
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, User* pUser);
 		virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
+
+	private:
+		WebResponse*			SearchByName(GetPoiRequest* pRequest, WebContext* pWebContext, User* pUser);
+		WebResponse*			SearchByNames(GetPoiRequest* pRequest, WebContext* pWebContext, User* pUser);
 	};
 }
 
