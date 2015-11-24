@@ -12,7 +12,10 @@ namespace auge
 	
 	GetMapResponse::~GetMapResponse()
 	{
-
+		if(m_pRequest!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pRequest);
+		}
 	}
 
 	RESULTCODE GetMapResponse::Write(WebWriter* pWriter)
