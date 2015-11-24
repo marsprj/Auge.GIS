@@ -78,8 +78,6 @@ libgsims_la_SOURCES=\
 		    SubscribeRequest.cpp \
 		    GetSubscriptionHandler.cpp \
 		    GetSubscriptionRequest.cpp \
-		    GetSubscriptionHandler.cpp \
-		    GetSubscriptionRequest.cpp \
 		    GetSubscriptionResponse.cpp \
 		    GetSubscriptionThemeHandler.cpp \
 		    GetSubscriptionThemeRequest.cpp \
