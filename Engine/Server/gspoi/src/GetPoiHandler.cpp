@@ -95,7 +95,8 @@ namespace auge
 
 		Workspace* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
-		pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), AUGE_POI_SOURCE);
+		//pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), AUGE_POI_SOURCE);
+		pWorkspace = pConnManager->GetWorkspace(-1, AUGE_POI_SOURCE);
 		if(pWorkspace==NULL)
 		{
 			const char* msg = "Fail to connect poi database";

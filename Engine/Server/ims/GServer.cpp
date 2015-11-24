@@ -419,6 +419,8 @@ namespace auge
 		LoadCartoPool();
 		LoadServicePool();
 
+		LoadSubscriptionManager();
+
 		m_pLogger->Info("-----------------------------------------------------------");
 		m_pLogger->Info("Internet Map Server Started.");
 		m_pLogger->Info("-----------------------------------------------------------");
@@ -570,6 +572,13 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	RESULTCODE GServer::LoadSubscriptionManager()
+	{
+		m_pSubscribeManager = augeGetSubscriptionManagerInstance();
+		m_pSubscribeManager->Initialize(m_pConnection);
+		return AG_SUCCESS;
+	}
+
 	//========================================================================
 	// Startup Server
 	//=======================================================================
@@ -612,6 +621,11 @@ namespace auge
 		if(m_pDataEngineManager!=NULL)
 		{
 			m_pDataEngineManager->Unload();
+		}
+
+		if(m_pSubscribeManager!=NULL)
+		{
+			m_pSubscribeManager->Unload();
 		}
 				
 		m_pLogger->Info("===========================================================");

@@ -61,6 +61,7 @@ namespace auge
 		RESULTCODE	LoadSymbolManager();
 		RESULTCODE	LoadCartoPool();
 		RESULTCODE	LoadServicePool();
+		RESULTCODE	LoadSubscriptionManager();
 
 	private:
 		WebResponse*	DoGet(rude::CGI& cgi, User* pUser, Service* pService);
@@ -87,6 +88,7 @@ namespace auge
 		JobManager			*m_pJobManager;
 
 		UserManager			*m_pUserManager;
+		SubscriptionManager *m_pSubscribeManager;
 
 		int					m_counter;
 	};

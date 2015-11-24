@@ -114,6 +114,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetStyleHandler.cpp" />
     <ClCompile Include="..\src\GetStyleRequest.cpp" />
     <ClCompile Include="..\src\GetStyleResponse.cpp" />
+    <ClCompile Include="..\src\GetSubscriptionHandler.cpp" />
+    <ClCompile Include="..\src\GetSubscriptionRequest.cpp" />
+    <ClCompile Include="..\src\GetSubscriptionResponse.cpp" />
+    <ClCompile Include="..\src\GetSubscriptionThemeHandler.cpp" />
+    <ClCompile Include="..\src\GetSubscriptionThemeRequest.cpp" />
+    <ClCompile Include="..\src\GetSubscriptionThemeResponse.cpp" />
     <ClCompile Include="..\src\GetSymbolHandler.cpp" />
     <ClCompile Include="..\src\GetSymbolIconHandler.cpp" />
     <ClCompile Include="..\src\GetSymbolIconRequest.cpp" />
@@ -136,6 +142,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\SaveMapRequest.cpp" />
     <ClCompile Include="..\src\SetStyleHandler.cpp" />
     <ClCompile Include="..\src\SetStyleRequest.cpp" />
+    <ClCompile Include="..\src\SubscribeHandler.cpp" />
+    <ClCompile Include="..\src\SubscribeRequest.cpp" />
     <ClCompile Include="..\src\UnRegisterLayerHandler.cpp" />
     <ClCompile Include="..\src\UnRegisterLayerRequest.cpp" />
     <ClCompile Include="..\src\UpdateMapLayerOrderHandler.cpp" />
@@ -176,6 +184,12 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetStyleHandler.h" />
     <ClInclude Include="..\include\GetStyleRequest.h" />
     <ClInclude Include="..\include\GetStyleResponse.h" />
+    <ClInclude Include="..\include\GetSubscriptionHandler.h" />
+    <ClInclude Include="..\include\GetSubscriptionRequest.h" />
+    <ClInclude Include="..\include\GetSubscriptionResponse.h" />
+    <ClInclude Include="..\include\GetSubscriptionThemeHandler.h" />
+    <ClInclude Include="..\include\GetSubscriptionThemeRequest.h" />
+    <ClInclude Include="..\include\GetSubscriptionThemeResponse.h" />
     <ClInclude Include="..\include\GetSymbolHandler.h" />
     <ClInclude Include="..\include\GetSymbolIconHandler.h" />
     <ClInclude Include="..\include\GetSymbolIconRequest.h" />
@@ -198,6 +212,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\SaveMapRequest.h" />
     <ClInclude Include="..\include\SetStyleHandler.h" />
     <ClInclude Include="..\include\SetStyleRequest.h" />
+    <ClInclude Include="..\include\SubscribeHandler.h" />
+    <ClInclude Include="..\include\SubscribeRequest.h" />
     <ClInclude Include="..\include\UnRegisterLayerHandler.h" />
     <ClInclude Include="..\include\UnRegisterLayerRequest.h" />
     <ClInclude Include="..\include\UpdateMapLayerOrderHandler.h" />

@@ -155,6 +155,45 @@ namespace auge
 		virtual RESULTCODE		Unload() = 0;
 	};
 
+	class SubscriptionTheme : public GObject
+	{
+	public:
+		SubscriptionTheme(){}
+		virtual ~SubscriptionTheme(){}
+	public:
+		virtual const char*			GetTheme() = 0;
+		virtual const char*			GetKeyword(g_uint index) = 0;
+		virtual g_uint				GetKeywordCount() = 0;
+
+	};
+
+	class EnumSubscriptionTheme : public GObject
+	{
+	public:
+		EnumSubscriptionTheme(){}
+		virtual ~EnumSubscriptionTheme(){}
+	public:
+		virtual bool				IsEOF() = 0;
+		virtual void				Reset() = 0;
+		virtual SubscriptionTheme*	Next() = 0;
+	};
+
+	class SubscriptionManager
+	{
+	public:
+		SubscriptionManager(){}
+		virtual ~SubscriptionManager(){}
+	public:
+		virtual bool				IsSubscribed(g_uint user, const char* theme, const char* keyword) = 0;
+		virtual RESULTCODE			Subscribe(g_uint user, const char* theme, const char* keyword) = 0;
+		virtual EnumSubscriptionTheme*	GetThemes(g_uint user) = 0;
+		virtual SubscriptionTheme*		GetTheme(g_uint user, const char* theme) = 0;
+
+		virtual RESULTCODE			Initialize(GConnection* pConnection) = 0;
+		virtual RESULTCODE			Unload() = 0;
+	};
+
+
 	extern "C"
 	{
 		AUGE_WEB_CORE_API WebWriter*			augeCreateWebWriter();
@@ -162,6 +201,7 @@ namespace auge
 		AUGE_WEB_CORE_API WebExceptionResponse*	augeCreateWebExceptionResponse();
 		AUGE_WEB_CORE_API WebContext*			augeGetWebContextInstance();
 		AUGE_WEB_CORE_API JobManager*			augeGetJobManagerInstance();
+		AUGE_WEB_CORE_API SubscriptionManager*  augeGetSubscriptionManagerInstance();
 	}
 
 }

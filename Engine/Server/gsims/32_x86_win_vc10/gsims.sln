@@ -2,10 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsims", "gsims.vcxproj", "{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A2755F3E-74F6-400D-A745-6BABA7BC3D05} = {A2755F3E-74F6-400D-A745-6BABA7BC3D05}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mgr", "..\..\mgr\32_x86_win_vc10\mgr.vcxproj", "{C315E5BD-713B-4812-9B05-8A0F6475DAB0}"
 	ProjectSection(ProjectDependencies) = postProject
-		{C6045F1B-77E7-4716-84F1-E8E0B8A70290} = {C6045F1B-77E7-4716-84F1-E8E0B8A70290}
 		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A} = {A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}
 	EndProjectSection
 EndProject
@@ -13,15 +15,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsvrs", "..\..\gsvrs\32_x86
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ims", "..\..\ims\32_x86_win_vc10\ims.vcxproj", "{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}"
 	ProjectSection(ProjectDependencies) = postProject
-		{C6045F1B-77E7-4716-84F1-E8E0B8A70290} = {C6045F1B-77E7-4716-84F1-E8E0B8A70290}
-		{685A4C3A-5188-487A-AC43-376EBCEC73C6} = {685A4C3A-5188-487A-AC43-376EBCEC73C6}
 		{D8C7BCA3-AADF-430D-BD10-6F771418F31B} = {D8C7BCA3-AADF-430D-BD10-6F771418F31B}
 		{A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A} = {A5C0CFD4-AFFB-4B32-B4F4-BF77B0351A9A}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswms", "..\..\gswms\32_x86_win_vc10\gswms.vcxproj", "{C6045F1B-77E7-4716-84F1-E8E0B8A70290}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gscore", "..\..\gscore\32_x86_win_vc10\gscore.vcxproj", "{A2755F3E-74F6-400D-A745-6BABA7BC3D05}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698} = {5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}
+	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gswfs", "..\..\gswfs\32_x86_win_vc10\gswfs.vcxproj", "{685A4C3A-5188-487A-AC43-376EBCEC73C6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GPostgres", "..\..\..\Data\GPostgres\32_x86_win_vc10\GPostgres.vcxproj", "{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gspoi", "..\..\gspoi\32_x86_win_vc10\gspoi.vcxproj", "{47DA87BD-34AC-41AC-B78E-9B85203F01FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,14 +50,18 @@ Global
 		{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}.Debug|Win32.Build.0 = Debug|Win32
 		{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}.Release|Win32.ActiveCfg = Release|Win32
 		{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}.Release|Win32.Build.0 = Release|Win32
-		{C6045F1B-77E7-4716-84F1-E8E0B8A70290}.Debug|Win32.ActiveCfg = Debug|Win32
-		{C6045F1B-77E7-4716-84F1-E8E0B8A70290}.Debug|Win32.Build.0 = Debug|Win32
-		{C6045F1B-77E7-4716-84F1-E8E0B8A70290}.Release|Win32.ActiveCfg = Release|Win32
-		{C6045F1B-77E7-4716-84F1-E8E0B8A70290}.Release|Win32.Build.0 = Release|Win32
-		{685A4C3A-5188-487A-AC43-376EBCEC73C6}.Debug|Win32.ActiveCfg = Debug|Win32
-		{685A4C3A-5188-487A-AC43-376EBCEC73C6}.Debug|Win32.Build.0 = Debug|Win32
-		{685A4C3A-5188-487A-AC43-376EBCEC73C6}.Release|Win32.ActiveCfg = Release|Win32
-		{685A4C3A-5188-487A-AC43-376EBCEC73C6}.Release|Win32.Build.0 = Release|Win32
+		{A2755F3E-74F6-400D-A745-6BABA7BC3D05}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A2755F3E-74F6-400D-A745-6BABA7BC3D05}.Debug|Win32.Build.0 = Debug|Win32
+		{A2755F3E-74F6-400D-A745-6BABA7BC3D05}.Release|Win32.ActiveCfg = Release|Win32
+		{A2755F3E-74F6-400D-A745-6BABA7BC3D05}.Release|Win32.Build.0 = Release|Win32
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Debug|Win32.Build.0 = Debug|Win32
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Release|Win32.ActiveCfg = Release|Win32
+		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}.Release|Win32.Build.0 = Release|Win32
+		{47DA87BD-34AC-41AC-B78E-9B85203F01FE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{47DA87BD-34AC-41AC-B78E-9B85203F01FE}.Debug|Win32.Build.0 = Debug|Win32
+		{47DA87BD-34AC-41AC-B78E-9B85203F01FE}.Release|Win32.ActiveCfg = Release|Win32
+		{47DA87BD-34AC-41AC-B78E-9B85203F01FE}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

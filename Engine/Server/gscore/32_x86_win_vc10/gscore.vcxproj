@@ -84,8 +84,11 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\EnumJobImpl.cpp" />
+    <ClCompile Include="..\src\EnumSubscriptionThemeImpl.cpp" />
     <ClCompile Include="..\src\JobImpl.cpp" />
     <ClCompile Include="..\src\JobManagerImpl.cpp" />
+    <ClCompile Include="..\src\SubscriptionManagerImpl.cpp" />
+    <ClCompile Include="..\src\SubscriptionThemeImpl.cpp" />
     <ClCompile Include="..\src\WebContextImpl.cpp" />
     <ClCompile Include="..\src\WebExceptionResponseImpl.cpp" />
     <ClCompile Include="..\src\WebSuccessResponseImpl.cpp" />
@@ -93,8 +96,11 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\EnumJobImpl.h" />
+    <ClInclude Include="..\include\EnumSubscriptionThemeImpl.h" />
     <ClInclude Include="..\include\JobImpl.h" />
     <ClInclude Include="..\include\JobManagerImpl.h" />
+    <ClInclude Include="..\include\SubscriptionManagerImpl.h" />
+    <ClInclude Include="..\include\SubscriptionThemeImpl.h" />
     <ClInclude Include="..\include\WebContextImpl.h" />
     <ClInclude Include="..\include\WebExceptionResponseImpl.h" />
     <ClInclude Include="..\include\WebSuccessResponseImpl.h" />

@@ -36,6 +36,10 @@
 
 #include "GetMapScaleHandler.h"
 
+#include "SubscribeHandler.h"
+#include "GetSubscriptionHandler.h"
+#include "GetSubscriptionThemeHandler.h"
+
 #include "AugeCore.h"
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
@@ -88,6 +92,10 @@ namespace auge
 		m_handlers.push_back(new GetSymbolIconHandler());
 
 		m_handlers.push_back(new GetMapScaleHandler());
+
+		m_handlers.push_back(new SubscribeHandler());
+		m_handlers.push_back(new GetSubscriptionHandler());
+		m_handlers.push_back(new GetSubscriptionThemeHandler());
 	}
 
 	WEngine::~WEngine()

@@ -74,5 +74,15 @@ libgsims_la_SOURCES=\
 		    GetMapScaleHandler.cpp \
 		    GetMapScaleRequest.cpp \
 		    GetMapScaleResponse.cpp \
+		    SubscribeHandler.cpp \
+		    SubscribeRequest.cpp \
+		    GetSubscriptionHandler.cpp \
+		    GetSubscriptionRequest.cpp \
+		    GetSubscriptionHandler.cpp \
+		    GetSubscriptionRequest.cpp \
+		    GetSubscriptionResponse.cpp \
+		    GetSubscriptionThemeHandler.cpp \
+		    GetSubscriptionThemeRequest.cpp \
+		    GetSubscriptionThemeResponse.cpp \
 		    WEngine.cpp
 

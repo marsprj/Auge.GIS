@@ -17,4 +17,7 @@ libgscore_la_SOURCES=\
 		JobManagerImpl.cpp \
 		JobImpl.cpp \
 		EnumJobImpl.cpp \
+		SubscriptionManagerImpl.cpp \
+		SubscriptionThemeImpl.cpp \
+		EnumSubscriptionThemeImpl.cpp \
 		WebWriterImpl.cpp
