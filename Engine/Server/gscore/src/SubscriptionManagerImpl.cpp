@@ -60,34 +60,33 @@ namespace auge
 
 	EnumSubscriptionTheme* SubscriptionManagerImpl::GetThemes(g_uint user)
 	{
+		EnumSubscriptionThemeImpl* pEnumTheme = new EnumSubscriptionThemeImpl(); 
+
 		const char* format = "select  distinct(theme) from g_subscribe where user_id=%d";
 		char sql[AUGE_SQL_MAX];
 		g_sprintf(sql, format, user);
 
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
-		if(pResult==NULL)
+		if(pResult!=NULL)
 		{
-			return false;
-		}
+			const char* theme = NULL;
+			SubscriptionThemeImpl* pTheme = NULL;
 
-		const char* theme = NULL;
-		SubscriptionThemeImpl* pTheme = NULL;
-		EnumSubscriptionThemeImpl* pEnumTheme = new EnumSubscriptionThemeImpl(); 
-
-		g_uint count = pResult->GetCount();
-		for(g_uint i=0; i<count; i++)
-		{
-			theme = pResult->GetString(i, 0);
-			if(theme!=NULL)
+			g_uint count = pResult->GetCount();
+			for(g_uint i=0; i<count; i++)
 			{
-				pTheme = new SubscriptionThemeImpl();
-				pTheme->SetUser(user);
-				pTheme->SetTheme(theme);
-				pEnumTheme->AddSubscriptionTheme(pTheme);
+				theme = pResult->GetString(i, 0);
+				if(theme!=NULL)
+				{
+					pTheme = new SubscriptionThemeImpl();
+					pTheme->SetUser(user);
+					pTheme->SetTheme(theme);
+					pEnumTheme->AddSubscriptionTheme(pTheme);
+				}
 			}
-		}
 
-		pResult->Release();
+			pResult->Release();
+		}
 
 		return pEnumTheme;
 	}
