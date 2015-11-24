@@ -349,7 +349,7 @@ namespace auge
 		UuidToString((uuid_t*)&uu, &buffer);
 		int len = strlen((char*)buffer);
 		memcpy(uuid, buffer, len);
-		RpcStringFree((RPC_CSTR *)buffer);
+		RpcStringFree((RPC_CSTR *)&(buffer));
 #else
 		uuid_t uid;
 	       	uuid_generate(uid);
