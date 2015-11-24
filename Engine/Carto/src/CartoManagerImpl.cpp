@@ -2175,7 +2175,7 @@ namespace auge
 		}
 		g_int mapID = -1;
 		char sql[AUGE_SQL_MAX] = {0};
-		g_sprintf(sql, "select gid from g_map where m_name='%s' and %d", name, user_id);
+		g_sprintf(sql, "select gid from g_map where m_name='%s' and user_id=%d", name, user_id);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
