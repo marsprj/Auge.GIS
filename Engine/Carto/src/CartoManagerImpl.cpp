@@ -821,7 +821,7 @@ namespace auge
 	g_int CartoManagerImpl::GetLayerID(g_int user_id, const char* layerName, const char* mapName)
 	{
 		if(layerName==NULL||mapName==NULL)
-		{
+		{ 
 			return -1;
 		}
 
@@ -833,7 +833,7 @@ namespace auge
 
 		g_int layer_id = -1;
 		char sql[AUGE_SQL_MAX] = {0};
-		g_sprintf(sql, "select gid from g_layer where m_id=%d and l_name='%s' and user_id=%d", map_id, layerName, user_id);
+		g_sprintf(sql, "select gid from g_layer where m_id=%d and l_name='%s'", map_id, layerName);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
