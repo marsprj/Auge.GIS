@@ -318,7 +318,7 @@ namespace auge
 		ptr = dlsym(handler, fname);
 #endif
 		if(ptr==NULL)
-		{
+		{ 
 			GError* pError = augeGetErrorInstance();
 #ifdef WIN32
 			DWORD dw = ::GetLastError();
@@ -349,6 +349,7 @@ namespace auge
 		UuidToString((uuid_t*)&uu, &buffer);
 		int len = strlen((char*)buffer);
 		memcpy(uuid, buffer, len);
+		RpcStringFree((RPC_CSTR *)buffer);
 #else
 		uuid_t uid;
 	       	uuid_generate(uid);
