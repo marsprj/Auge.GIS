@@ -58,6 +58,20 @@ namespace auge
 		return m_pConnection->ExecuteSQL(sql);
 	}
 
+	RESULTCODE SubscriptionManagerImpl::Unsubscribe(g_uint user, const char* theme, const char* keyword)
+	{
+		if(theme==NULL||keyword==NULL)
+		{
+			return false;
+		}
+
+		const char* format = "delete from g_subscribe where user_id=%d and theme='%s' and keyword='%s'";
+		char sql[AUGE_SQL_MAX];
+		g_sprintf(sql, format, user, theme, keyword);
+
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
 	EnumSubscriptionTheme* SubscriptionManagerImpl::GetThemes(g_uint user)
 	{
 		EnumSubscriptionThemeImpl* pEnumTheme = new EnumSubscriptionThemeImpl(); 

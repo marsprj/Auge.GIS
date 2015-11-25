@@ -76,6 +76,8 @@ libgsims_la_SOURCES=\
 		    GetMapScaleResponse.cpp \
 		    SubscribeHandler.cpp \
 		    SubscribeRequest.cpp \
+		    UnsubscribeHandler.cpp \
+		    UnsubscribeRequest.cpp \
 		    GetSubscriptionHandler.cpp \
 		    GetSubscriptionRequest.cpp \
 		    GetSubscriptionResponse.cpp \

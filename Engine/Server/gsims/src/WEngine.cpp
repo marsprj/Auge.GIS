@@ -37,6 +37,7 @@
 #include "GetMapScaleHandler.h"
 
 #include "SubscribeHandler.h"
+#include "UnsubscribeHandler.h"
 #include "GetSubscriptionHandler.h"
 #include "GetSubscriptionThemeHandler.h"
 
@@ -94,6 +95,7 @@ namespace auge
 		m_handlers.push_back(new GetMapScaleHandler());
 
 		m_handlers.push_back(new SubscribeHandler());
+		m_handlers.push_back(new UnsubscribeHandler());
 		m_handlers.push_back(new GetSubscriptionHandler());
 		m_handlers.push_back(new GetSubscriptionThemeHandler());
 	}
