@@ -186,6 +186,7 @@ namespace auge
 	public:
 		virtual bool				IsSubscribed(g_uint user, const char* theme, const char* keyword) = 0;
 		virtual RESULTCODE			Subscribe(g_uint user, const char* theme, const char* keyword) = 0;
+		virtual RESULTCODE			Unsubscribe(g_uint user, const char* theme, const char* keyword) = 0;
 		virtual EnumSubscriptionTheme*	GetThemes(g_uint user) = 0;
 		virtual SubscriptionTheme*		GetTheme(g_uint user, const char* theme) = 0;
 
