@@ -96,6 +96,7 @@ namespace auge
 		void			SetNamespace(const char* ns_prefix);
 
 		XNodeSet*		Find(const char* xpath);
+		bool			HasChildren();
 		XNodeSet*		GetChildren(const char* name = NULL);
 		XNode*			GetFirstChild(const char* name = NULL);
 
