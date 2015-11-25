@@ -182,6 +182,11 @@ namespace auge
 		return NULL;
 	}
 
+	bool XNode::HasChildren()
+	{
+		return (m_pxNode->children!=NULL);
+	}
+
 	XNodeSet* XNode::GetChildren(const char* name)
 	{
 		xmlNodePtr child = m_pxNode->children;
