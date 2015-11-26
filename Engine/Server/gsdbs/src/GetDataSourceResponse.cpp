@@ -15,6 +15,10 @@ namespace auge
 
 	GetDataSourceResponse::~GetDataSourceResponse()
 	{
+		if(m_pUser!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pUser);
+		}
 	}
 
 	RESULTCODE GetDataSourceResponse::Write(WebWriter* pWriter)
@@ -105,5 +109,6 @@ namespace auge
 	void GetDataSourceResponse::SetUser(User* pUser)
 	{
 		m_pUser = pUser;
+		m_pUser->AddRef();
 	}
 }
