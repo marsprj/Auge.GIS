@@ -498,11 +498,11 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE CartoManagerImpl::GetMapLayers(std::string& map_layers, g_uint mapID)
+	RESULTCODE CartoManagerImpl::GetMapLayers(std::string& map_layers, g_uint map_id)
 	{
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_sprintf(sql, "select m_layers from g_map where gid=%d", mapID);
+		g_sprintf(sql, "select m_layers from g_map where gid=%d", map_id);
 		
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
@@ -605,7 +605,7 @@ namespace auge
 		{
 			return -1;
 		}
-		g_int mapID = -1;
+		g_int map_id = -1;
 		char sql[AUGE_SQL_MAX] = {0};
 		g_sprintf(sql, "select gid from g_map where m_name='%s'", name);
 
@@ -620,10 +620,10 @@ namespace auge
 			return -1;
 		}
 
-		mapID = pResult->GetInt(0,0);
+		map_id = pResult->GetInt(0,0);
 		pResult->Release();
 
-		return mapID;
+		return map_id;
 	}
 
 	RESULTCODE CartoManagerImpl::SetMapThumbnail(g_uint user_id, g_uint map_id, const char* thumbnail)
@@ -850,7 +850,7 @@ namespace auge
 		return layer_id;
 	}
 
-	bool CartoManagerImpl::HasLayer(const char* layerName, int mapID)
+	bool CartoManagerImpl::HasLayer(const char* layerName, int map_id)
 	{
 		if(layerName==NULL)
 		{
@@ -859,7 +859,7 @@ namespace auge
 
 		g_int layer_id = -1;
 		char sql[AUGE_SQL_MAX] = {0};
-		g_sprintf(sql, "select gid from g_layer where m_id=%d and l_name='%s'", mapID, layerName);
+		g_sprintf(sql, "select gid from g_layer where m_id=%d and l_name='%s'", map_id, layerName);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -1135,12 +1135,12 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		g_int mapID = GetMapID(mapName);
-		if(mapID<0)
+		g_int map_id = GetMapID(mapName);
+		if(map_id<0)
 		{
 			return AG_FAILURE;
 		}
-		return RemoveLayers(mapID);
+		return RemoveLayers(map_id);
 	}
 
 	RESULTCODE CartoManagerImpl::UpdateMapLayers(Map* pMap)
@@ -1175,14 +1175,14 @@ namespace auge
 		return m_pConnection->ExecuteSQL(sql);
 	}
 
-	RESULTCODE CartoManagerImpl::UpdateMapLayers(g_uint mapID, const char* layers)
+	RESULTCODE CartoManagerImpl::UpdateMapLayers(g_uint map_id, const char* layers)
 	{
-		if(mapID<0||layers==NULL)
+		if(map_id<0||layers==NULL)
 		{
 			return AG_FAILURE;
 		}
 		char sql[AUGE_SQL_MAX];
-		sprintf(sql, "update g_map set m_layers='%s' where gid=%d", layers,mapID);
+		sprintf(sql, "update g_map set m_layers='%s' where gid=%d", layers,map_id);
 		return m_pConnection->ExecuteSQL(sql);
 	}
 
@@ -1197,14 +1197,14 @@ namespace auge
 		return m_pConnection->ExecuteSQL(sql);
 	}
 
-	RESULTCODE CartoManagerImpl::GetMapLayers(g_uint mapID, char* layers)
+	RESULTCODE CartoManagerImpl::GetMapLayers(g_uint map_id, char* layers)
 	{
 		if(layers==NULL)
 		{
 			return AG_FAILURE;
 		}
 		char sql[AUGE_SQL_MAX];
-		sprintf(sql, "select m_layers='%s' from g_map where gid=%d", mapID);
+		sprintf(sql, "select m_layers='%s' from g_map where gid=%d", map_id);
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -1231,8 +1231,8 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		g_int mapID = GetMapID(mapName);
-		if(mapID<0)
+		g_int map_id = GetMapID(mapName);
+		if(map_id<0)
 		{
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "Cannot find map [%s].", mapName);
@@ -1241,7 +1241,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX];
-		g_sprintf(sql, "delete from g_layer where m_id=%d and l_name='%s'", mapID, layerName);
+		g_sprintf(sql, "delete from g_layer where m_id=%d and l_name='%s'", map_id, layerName);
 
 		return m_pConnection->ExecuteSQL(sql);
 	}
@@ -1339,6 +1339,7 @@ namespace auge
 
 	Style* CartoManagerImpl::GetStyle(g_uint id, FeatureClass* pFeatureClass)
 	{	
+		Style* pStyle = NULL;
 		GResultSet* pResult = NULL;
 		char sql[AUGE_SQL_MAX] = {0};
 		g_snprintf(sql, AUGE_SQL_MAX,"select s_name,s_text,s_type from g_style where gid=%d", id);
@@ -1355,7 +1356,7 @@ namespace auge
 		const char* text = pResult->GetString(0,1);
 		const char* type = pResult->GetString(0,2);
 
-		Style* pStyle = NULL;
+		
 		StyleReaderImpl reader;
 
 		{
@@ -1404,6 +1405,7 @@ namespace auge
 			return NULL;
 		}
 
+		Style* pStyle = NULL;
 		GResultSet* pResult = NULL;
 		char sql[AUGE_SQL_MAX] = {0};
 		g_snprintf(sql, AUGE_SQL_MAX,"select gid,s_text,s_type from g_style where s_name='%s'", name);
@@ -1420,11 +1422,10 @@ namespace auge
 		const char* text = pResult->GetString(0,1);
 		const char* type = pResult->GetString(0,2);
 
-		Style* pStyle = NULL;
 		StyleReaderImpl reader;
 
 		{
-			size_t text_len = strlen(text);
+			size_t text_len = strlen(text); 
 			size_t buff_len = text_len << 1;
 			char* text_utf8 = (char*)malloc(buff_len);
 			memset(text_utf8, 0, buff_len);
@@ -1434,7 +1435,7 @@ namespace auge
 			free(text_utf8);
 		}
 		{	
-			//pStyle = reader.Read(text, strlen(text), pFeatureClass);
+			////pStyle = reader.Read(text, strlen(text), pFeatureClass);
 		}
 		
 
@@ -1445,7 +1446,7 @@ namespace auge
 			pStyle->SetID(id);
 			pStyle->SetName(name);
 
-			switch(pStyle->GetType())
+			switch(pStyle->GetType()) 
 			{
 			case augeStyleFeature:
 				{
@@ -1460,7 +1461,6 @@ namespace auge
 				break;
 			}
 		}
-
 		return pStyle;
 	}
 
@@ -2135,13 +2135,25 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		g_int map_id = GetMapID(user_id, name);
+		if(map_id<0)
+		{
+			char msg[AUGE_MSG_MAX];
+			memset(msg, 0, AUGE_MSG_MAX);
+			g_snprintf(msg, AUGE_MSG_MAX, "µØÍ¼[%s]²»´æÔÚ",name);			
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return AG_FAILURE;
+		}
+
+		RemoveLayers(map_id);
+
 		char sql[AUGE_SQL_MAX] = {0};
 		g_snprintf(sql, AUGE_SQL_MAX, "delete from g_map where m_name='%s' and user_id=%d", name,user_id);
 		RESULTCODE rc = m_pConnection->ExecuteSQL(sql);
-		if(rc==AG_SUCCESS)
-		{
-
-		}
 		return rc;
 	}
 
@@ -2173,7 +2185,7 @@ namespace auge
 		{
 			return -1;
 		}
-		g_int mapID = -1;
+		g_int map_id = -1;
 		char sql[AUGE_SQL_MAX] = {0};
 		g_sprintf(sql, "select gid from g_map where m_name='%s' and user_id=%d", name, user_id);
 
@@ -2188,10 +2200,10 @@ namespace auge
 			return -1;
 		}
 
-		mapID = pResult->GetInt(0,0);
+		map_id = pResult->GetInt(0,0);
 		pResult->Release();
 
-		return mapID;
+		return map_id;
 	}
 
 	Layer* CartoManagerImpl::CreateLayer(g_uint user_id, const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_id, g_uint style_id)
