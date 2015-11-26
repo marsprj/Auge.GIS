@@ -17,11 +17,23 @@ namespace auge
 
 	DescribeServiceResponse::~DescribeServiceResponse()
 	{
+		if(m_pUser!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pUser);
+		}
 	}
 
 	void DescribeServiceResponse::SetUser(User* pUser)
 	{
+		if(m_pUser!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pUser);
+		}
 		m_pUser = pUser;
+		if(m_pUser!=NULL)
+		{
+			m_pUser->AddRef();
+		}
 	}
 
 	RESULTCODE DescribeServiceResponse::Write(WebWriter* pWriter)
