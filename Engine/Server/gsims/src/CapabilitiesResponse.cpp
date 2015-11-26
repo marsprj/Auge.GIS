@@ -13,16 +13,28 @@ namespace auge
 	{
 		m_pRequest = pRequest;
 		m_pRequest->AddRef();
+		m_pUser = NULL;
 	}
 
 	CapabilitiesResponse::~CapabilitiesResponse()
 	{
-
+		if(m_pUser!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pUser);
+		}
 	}
 
 	void CapabilitiesResponse::SetUser(User* pUser)
 	{
+		if(m_pUser!=NULL)
+		{
+			AUGE_SAFE_RELEASE(m_pUser);
+		}
 		m_pUser = pUser;
+		if(m_pUser!=NULL)
+		{
+			m_pUser->AddRef();
+		}
 	}
 
 	RESULTCODE CapabilitiesResponse::Write(WebWriter* pWriter)
