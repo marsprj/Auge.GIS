@@ -328,6 +328,10 @@ namespace auge
 		pResult->Release();
 		if(count==0)
 		{
+			char msg[AUGE_MSG_MAX];
+			g_snprintf(msg, AUGE_MSG_MAX, "ÃÜÂë´íÎó");
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
 			return AG_FAILURE;
 		}
 
