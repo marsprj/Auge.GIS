@@ -84,6 +84,7 @@ namespace auge
 			return pExpResponse;
 		}
 
+		AUGE_SAFE_RELEASE(pnUser);
 		GetCatalogResponse* pResponse = new GetCatalogResponse(pRequest);
 		pResponse->SetUser(pUser);
 		return pResponse;

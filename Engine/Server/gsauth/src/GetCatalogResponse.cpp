@@ -51,11 +51,15 @@ namespace auge
 	
 	void GetCatalogResponse::SetUser(User* pUser)
 	{
-		if(pUser!=NULL)
+		if(m_pUser!=NULL)
 		{
 			AUGE_SAFE_RELEASE(m_pUser);
 		}
 		m_pUser = pUser;
+		if(m_pUser!=NULL)
+		{
+			m_pUser->AddRef();
+		}
 	}
 
 	XDocument* GetCatalogResponse::BuildDocument()
