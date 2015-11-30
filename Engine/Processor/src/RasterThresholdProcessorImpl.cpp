@@ -155,6 +155,9 @@ namespace auge
 		pWorkspace = pConnManager->GetWorkspace(m_user, outSourceName);
 		if(pWorkspace==NULL)
 		{
+			const char* msg = "无法连接到数据源";
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
 			return AG_FAILURE;
 		}
 		poutRasterWorkspace = dynamic_cast<RasterWorkspace*>(pWorkspace);
@@ -174,6 +177,19 @@ namespace auge
 		g_uint band_count = pinRaster->GetBandCount();
 		if(band_count<3||band_count>4)
 		{
+			const char* msg = "二值化仅支持3波段彩色栅格数据";
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
+
+		augePixelType pixelType = pinRaster->GetPixelType();
+		if(pixelType!=augePixelByte)
+		{
+			const char* msg = "二值化仅支持8位像素栅格数据";
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
 			pinFolder->Release();
 			return AG_FAILURE;
 		}
@@ -271,6 +287,35 @@ namespace auge
 		return pinRaster;
 	}
 
+	//Raster*	RasterThresholdProcessorImpl::Threshold_Average_Int16(Raster* pinRaster)
+	//{	
+	//	g_uint band_count = pinRaster->GetBandCount();
+	//	g_uint64 w = pinRaster->GetWidth();
+	//	g_uint64 h = pinRaster->GetHeight();
+	//	g_uint64 size = w * h * sizeof(g_int16);
+	//	g_int16* gray_data = (g_int16*)malloc(size);
+	//	memset(gray_data, 0, size);
+	//	auge_graylize_byte(gray_data, size, pinRaster);
+
+	//	g_byte average = 0;
+	//	//average = auge_average_int16(gray_data, size);
+
+	//	g_byte* ptr = gray_data;
+	//	for(g_uint64 i=0; i<size; i++, ptr++)
+	//	{
+	//		*ptr = *ptr < average ? 0 : 255;
+	//	}
+
+	//	pinRaster->GetBand(0)->SetData(gray_data);
+	//	pinRaster->GetBand(1)->SetData(gray_data);
+	//	pinRaster->GetBand(2)->SetData(gray_data);
+
+	//	free(gray_data);
+
+	//	pinRaster->AddRef();
+	//	return pinRaster;
+
+	//}
 
 	void auge_graylize_byte(g_byte* gray_data, g_uint64 size, Raster* pRaster)
 	{

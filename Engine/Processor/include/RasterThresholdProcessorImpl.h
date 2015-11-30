@@ -43,6 +43,7 @@ namespace auge
 
 	private:		
 		Raster*				Threshold_Average_Byte(Raster* pinRaster);
+		//Raster*				Threshold_Average_Int16(Raster* pinRaster);
 
 	private:
 		std::string	m_in_source_name;
