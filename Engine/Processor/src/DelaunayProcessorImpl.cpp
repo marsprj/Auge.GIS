@@ -188,6 +188,8 @@ namespace auge
 		GField* pField = pinFeatureClass->GetFields()->GetGeometryField();
 		if(pField==NULL)
 		{
+			const char* msg = "输入图层不包含几何字段";
+			pError->SetError(msg);
 			pinFeatureClass->Release();
 			poutWorkspace->Release();
 			return AG_FAILURE;
@@ -195,6 +197,8 @@ namespace auge
 		augeGeometryType type = pField->GetGeometryDef()->GeometryType();
 		if(type!=augeGTPoint)
 		{
+			const char* msg = "输入图层要求是Point类型图层";
+			pError->SetError(msg);
 			pinFeatureClass->Release();
 			poutWorkspace->Release();
 			return AG_FAILURE;
@@ -445,6 +449,9 @@ namespace auge
 		vertex_count = pinFeatureClass->GetCount();
 		if(vertex_count==0)
 		{
+			const char* msg = "输入点集中的顶点个数为零";
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
 			return false;
 		}
 
