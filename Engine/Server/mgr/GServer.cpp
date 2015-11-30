@@ -28,7 +28,7 @@ namespace auge
 	m_pWebContext(NULL),
 	m_pConnection(NULL),
 	m_pConnManager(NULL),
-	m_pCartoManager(NULL),
+	m_pCartoManager(NULL), 
 	m_pServiceManager(NULL),
 	m_pUserManager(NULL),
 	m_pJobManager(NULL),
@@ -160,7 +160,7 @@ namespace auge
 			pWebResponse = pExpResponse;
 			return pWebResponse;
 		}
-
+		
 		pWebRequest = pWebEngine->ParseRequest(cgi);
 		if(pWebRequest==NULL)
 		{
