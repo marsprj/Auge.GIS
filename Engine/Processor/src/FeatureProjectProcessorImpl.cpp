@@ -306,8 +306,8 @@ namespace auge
 		x *= DEG_TO_RAD;
 		y *= DEG_TO_RAD;
 		
-		x = 12913060.9320197;
-		y = 4721671.57258011;
+		//x = 12913060.9320197;
+		//y = 4721671.57258011;
 		int ret = pj_transform(i_pj, o_pj, 1, 1, &x, &y, NULL );
 		
 		pWKBPoint->point.x = x;
