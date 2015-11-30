@@ -104,6 +104,30 @@ namespace auge
 			return pExpResponse;
 		}
 
+		GField* pField = pinFeatureClass->GetFields()->GetGeometryField();
+		if(pField==NULL)
+		{
+			const char* msg = "输入图层不包含几何字段";
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pinFeatureClass->Release();
+			return pWebResponse;
+		}
+
+		augeGeometryType geomType = pField->GetGeometryDef()->GeometryType();
+		if(geomType==augeGTPoint)
+		{
+			const char* msg = "点图层无法计算凸包";
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(msg);
+			pinFeatureClass->Release();
+			return pWebResponse;
+		}
+
 		const char* outputSourceName = pRequest->GetOutputSourceName();
 		const char* outputTypeName = pRequest->GetOutputTypeName();
 		if(outputTypeName==NULL && outputSourceName==NULL)
