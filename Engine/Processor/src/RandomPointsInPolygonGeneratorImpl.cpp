@@ -175,6 +175,8 @@ namespace auge
 		augeGeometryType geoType = pField->GetGeometryDef()->GeometryType();
 		if(geoType!=augeGTMultiPolygon && geoType!=augeGTPolygon)
 		{
+			const char* msg = "输入数据集几何类型必须是多边形类型";
+			pError->SetError(msg);
 			pinFeatureClass->Release();
 			poutWorkspace->Release();
 			return AG_FAILURE;
