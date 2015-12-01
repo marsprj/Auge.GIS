@@ -480,8 +480,13 @@ namespace auge
 			return NULL;
 		}
 		const char* literal = pxLiteral->GetContent();
-		const char* gbk_literal = auge_encoding_convert("UTF-8","GBK",literal,strlen(literal));
+		const char* gbk_literal = auge_encoding_convert(AUGE_ENCODING_UTF8,AUGE_ENCODING_GBK,literal,strlen(literal));
 		Literal* pLiteral = pFactory->CreateLiteral(new GValue(gbk_literal));
+		if(gbk_literal!=NULL)
+		{
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Debug(gbk_literal, __FILE__, __LINE__);
+		}
 		
 		m_prop_name = pPropName->GetName();
 		pFilter = pFactory->CreateIsLikeFilter(pPropName, pLiteral);
