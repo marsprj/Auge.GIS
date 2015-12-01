@@ -480,6 +480,11 @@ namespace auge
 			return NULL;
 		}
 		const char* literal = pxLiteral->GetContent();
+		if(literal!=NULL)
+		{
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Debug(literal, __FILE__, __LINE__);
+		}
 		const char* gbk_literal = auge_encoding_convert(AUGE_ENCODING_UTF8,AUGE_ENCODING_GBK,literal,strlen(literal));
 		Literal* pLiteral = pFactory->CreateLiteral(new GValue(gbk_literal));
 		if(gbk_literal!=NULL)
