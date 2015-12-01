@@ -113,7 +113,7 @@ namespace auge
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
 			pinFeatureClass->Release();
-			return pWebResponse;
+			return pExpResponse;
 		}
 
 		augeGeometryType geomType = pField->GetGeometryDef()->GeometryType();
@@ -125,7 +125,7 @@ namespace auge
 			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
 			pExpResponse->SetMessage(msg);
 			pinFeatureClass->Release();
-			return pWebResponse;
+			return pExpResponse;
 		}
 
 		const char* outputSourceName = pRequest->GetOutputSourceName();
