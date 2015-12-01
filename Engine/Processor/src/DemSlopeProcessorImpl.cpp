@@ -166,6 +166,8 @@ namespace auge
 		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
 		if(pinRaster==NULL)
 		{
+			const char* msg = "无法打开输入栅格数据";
+			pError->SetError(msg);
 			pinFolder->Release();
 			return AG_FAILURE;
 		}
@@ -173,7 +175,7 @@ namespace auge
 		g_uint band_count = pinRaster->GetBandCount();
 		if(band_count!=1)
 		{
-			const char* msg = "Dem坡度计算仅支持单波段栅格数据";
+			const char* msg = "Dem坡度计算仅支持单波段Dem数据";
 			pError->SetError(msg);
 			pinFolder->Release();
 			return AG_FAILURE;

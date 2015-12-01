@@ -152,6 +152,8 @@ namespace auge
 		RasterWorkspace* pinRasterWorkspace = NULL;
 		RasterWorkspace* poutRasterWorkspace = NULL;
 
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
 		pWorkspace = pConnManager->GetWorkspace(m_user, inSourceName);
@@ -180,6 +182,22 @@ namespace auge
 			return AG_FAILURE;
 		}
 		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
+		if(pinRaster==NULL)
+		{
+			const char* msg = "无法打开输入栅格数据";
+			pError->SetError(msg);
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
+
+		g_uint band_count = pinRaster->GetBandCount();
+		if(band_count!=1)
+		{
+			const char* msg = "Dem山体阴影计算仅支持单波段Dem数据";
+			pError->SetError(msg);
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
 
 		poutRaster = Hillshade(pinRaster);
 
