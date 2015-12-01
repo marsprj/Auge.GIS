@@ -150,6 +150,8 @@ namespace auge
 		RasterWorkspace* pinRasterWorkspace = NULL;
 		RasterWorkspace* poutRasterWorkspace = NULL;
 
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
 		pWorkspace = pConnManager->GetWorkspace(m_user, inSourceName);
@@ -190,7 +192,7 @@ namespace auge
 		{
 			char msg[AUGE_MSG_MAX];
 			g_sprintf(msg, "直方图均衡化仅支持Byte类型像元栅格数据,当前栅格数据像元宽度为%dByte", pinRaster->GetPixelSize());
-			pinFolder->Release();
+			pError->SetError(msg);
 			pinFolder->Release();
 			return AG_FAILURE;
 		}
