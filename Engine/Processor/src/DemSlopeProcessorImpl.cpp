@@ -134,6 +134,8 @@ namespace auge
 		RasterWorkspace* pinRasterWorkspace = NULL;
 		RasterWorkspace* poutRasterWorkspace = NULL;
 
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 
 		pWorkspace = pConnManager->GetWorkspace(m_user, inSourceName);
@@ -164,6 +166,15 @@ namespace auge
 		pinRaster = pinFolder->GetRasterDataset()->GetRaster(inRasterName);
 		if(pinRaster==NULL)
 		{
+			pinFolder->Release();
+			return AG_FAILURE;
+		}
+
+		g_uint band_count = pinRaster->GetBandCount();
+		if(band_count!=1)
+		{
+			const char* msg = "Dem坡度计算仅支持单波段栅格数据";
+			pError->SetError(msg);
 			pinFolder->Release();
 			return AG_FAILURE;
 		}
