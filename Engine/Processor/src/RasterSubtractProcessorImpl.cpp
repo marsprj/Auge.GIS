@@ -352,6 +352,20 @@ namespace auge
 			return AG_FAILURE;
 		}
 
+		augePixelType type1 = pinRaster_1->GetPixelType();
+		augePixelType type2 = pinRaster_2->GetPixelType();
+		if(type1!=type2)
+		{
+			GError* pError = augeGetErrorInstance();
+			pError->SetError("两幅影像需要有相同的像素类型");
+
+			pinRaster_1->Release();
+			pinRaster_2->Release();
+			pinFolder_1->Release();
+			pinFolder_2->Release();
+			return AG_FAILURE;
+		}
+
 		poutRaster = Subtract(pinRaster_1, pinRaster_2);
 
 		if(poutRaster!=NULL)
@@ -412,6 +426,23 @@ namespace auge
 
 	RESULTCODE RasterSubtractProcessorImpl::Subtract(RasterBand* pinBand_1, RasterBand* pinBand_2)
 	{
+		RESULTCODE rc = AG_SUCCESS;
+		augePixelType type = pinBand_1->GetPixelType();
+		switch(type)
+		{
+		case augePixelByte:
+			rc = Subtract_Byte(pinBand_1, pinBand_2);
+			break;
+		case augePixelInt16:
+		case augePixelUInt16:
+			rc = Subtract_Int16(pinBand_1, pinBand_2);
+			break;
+		}
+		return rc;
+	}
+
+	RESULTCODE RasterSubtractProcessorImpl::Subtract_Byte(RasterBand* pinBand_1, RasterBand* pinBand_2)
+	{
 		g_uint width = pinBand_1->GetWidth();
 		g_uint height= pinBand_2->GetHeight();
 
@@ -421,6 +452,28 @@ namespace auge
 		g_byte* ptr_1 = data_1;
 		g_byte* ptr_2 = data_2;
 		
+		for(g_uint i=0; i<height; i++)
+		{	
+			for(g_uint j=0; j<width; j++, ptr_1++, ptr_2++)
+			{
+				*ptr_1 = *ptr_1 - *ptr_2;
+			}
+		}
+		pinBand_1->SetData(data_1);
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE RasterSubtractProcessorImpl::Subtract_Int16(RasterBand* pinBand_1, RasterBand* pinBand_2)
+	{
+		g_uint width = pinBand_1->GetWidth();
+		g_uint height= pinBand_2->GetHeight();
+
+		g_int16 v_h=0, v_v=0;
+		g_int16* data_1 = (g_int16*)pinBand_1->GetData();
+		g_int16* data_2 = (g_int16*)pinBand_2->GetData();
+		g_int16* ptr_1 = data_1;
+		g_int16* ptr_2 = data_2;
+
 		for(g_uint i=0; i<height; i++)
 		{	
 			for(g_uint j=0; j<width; j++, ptr_1++, ptr_2++)

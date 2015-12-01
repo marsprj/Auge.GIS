@@ -47,6 +47,8 @@ namespace auge
 	private:
 		Raster*				Subtract(Raster* pinRaster_1, Raster* pinRaster_2);
 		RESULTCODE			Subtract(RasterBand* pinBand_1, RasterBand* pinBand_2);
+		RESULTCODE			Subtract_Byte(RasterBand* pinBand_1, RasterBand* pinBand_2);
+		RESULTCODE			Subtract_Int16(RasterBand* pinBand_1, RasterBand* pinBand_2);
 
 	private:
 		std::string	m_in_source_name_1;
