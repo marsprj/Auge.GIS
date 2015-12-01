@@ -188,6 +188,8 @@ namespace auge
 		augePixelType pixelType = pinRaster->GetPixelType();
 		if(pixelType != augePixelByte)
 		{
+			char msg[AUGE_MSG_MAX];
+			g_sprintf(msg, "直方图均衡化仅支持Byte类型像元栅格数据,当前栅格数据像元宽度为%dByte", pinRaster->GetPixelSize());
 			pinFolder->Release();
 			pinFolder->Release();
 			return AG_FAILURE;
