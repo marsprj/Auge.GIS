@@ -480,18 +480,19 @@ namespace auge
 			return NULL;
 		}
 		const char* literal = pxLiteral->GetContent();
-		if(literal!=NULL)
-		{
-			GLogger* pLogger = augeGetLoggerInstance();
-			pLogger->Debug(literal, __FILE__, __LINE__);
-		}
-		const char* gbk_literal = auge_encoding_convert(AUGE_ENCODING_UTF8,AUGE_ENCODING_GBK,literal,strlen(literal));
-		Literal* pLiteral = pFactory->CreateLiteral(new GValue(gbk_literal));
-		if(gbk_literal!=NULL)
-		{
-			GLogger* pLogger = augeGetLoggerInstance();
-			pLogger->Debug(gbk_literal, __FILE__, __LINE__);
-		}
+		Literal* pLiteral = pFactory->CreateLiteral(new GValue(literal));
+		//if(literal!=NULL)
+		//{
+		//	GLogger* pLogger = augeGetLoggerInstance();
+		//	pLogger->Debug(literal, __FILE__, __LINE__);
+		//}
+		//const char* gbk_literal = auge_encoding_convert(AUGE_ENCODING_UTF8,AUGE_ENCODING_GBK,literal,strlen(literal));
+		//Literal* pLiteral = pFactory->CreateLiteral(new GValue(gbk_literal));
+		//if(gbk_literal!=NULL)
+		//{
+		//	GLogger* pLogger = augeGetLoggerInstance();
+		//	pLogger->Debug(gbk_literal, __FILE__, __LINE__);
+		//}
 		
 		m_prop_name = pPropName->GetName();
 		pFilter = pFactory->CreateIsLikeFilter(pPropName, pLiteral);
