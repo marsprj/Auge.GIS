@@ -159,6 +159,8 @@ namespace auge
 
 		if(pField->GetGeometryDef()->GeometryType()!=augeGTPoint)
 		{
+			const char* msg = "输入数据集几何类型必须是Point类型";
+			pError->SetError(msg);
 			poutWorkspace->Release();
 			return AG_FAILURE;
 		}
