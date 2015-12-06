@@ -225,6 +225,18 @@ namespace auge
 			}
 			sql.append(")");
 
+			g_snprintf(str,AUGE_BUFFER_MAX," ST_Intersects(pos, st_geomfromtext('POLYGON((%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f))',%d))==TRUE", 
+				extent.m_xmin, extent.m_ymin,
+				extent.m_xmin, extent.m_ymax,
+				extent.m_xmax, extent.m_ymax,
+				extent.m_xmax, extent.m_ymin,
+				extent.m_xmin, extent.m_ymin,
+				AUGE_DEFAULT_SRID);
+
+			sql.append(" and (");
+			sql.append(str);
+			sql.append(")");
+
 			g_snprintf(str, AUGE_SQL_MAX, " limit %d  offset %d", limit, offset);
 			sql.append(str);
 		}
