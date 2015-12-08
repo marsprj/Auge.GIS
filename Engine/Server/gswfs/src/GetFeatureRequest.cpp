@@ -244,6 +244,16 @@ namespace auge
 
 		}
 
+		XElement* pxOrderBy = (XElement*)pxQuery->GetFirstChild("OrderBy");
+		if(pxOrderBy!=NULL)
+		{
+			OrderBy* pOrderBy = ParserOrderBy(pxOrderBy);
+			if(pOrderBy!=NULL)
+			{
+				pQuery->SetOrderBy(pOrderBy);
+			}
+		}
+
 		//PropertyName
 		char field_name[AUGE_NAME_MAX];
 		const char* property_name;
@@ -601,6 +611,48 @@ namespace auge
 		else
 		{
 			g_snprintf(field_name,size,"%s", property_name);
+		}
+	}
+
+	OrderBy* GetFeatureRequest::ParserOrderBy(XElement* pxOrderBy)
+	{
+		OrderBy* pOrderBy = NULL;
+		FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
+
+		if(!pxOrderBy->HasChildren())
+		{
+			return NULL;
+		}
+
+		pOrderBy = pFilterFactory->CreateOrderBy();
+
+		const char* filedName = NULL;
+		XNode* pxNode = NULL;
+		XNodeSet* pxNodeSet = pxOrderBy->GetChildren("PropertyName");
+
+		pxNodeSet->Reset();
+		while((pxNode=pxNodeSet->Next())!=NULL)
+		{
+			filedName = pxNode->GetContent();
+			if(strlen(filedName)>0)
+			{
+				pOrderBy->AddField(filedName);
+			}
+		}
+		pxNodeSet->Release();
+
+		XAttribute* pxAttr = pxOrderBy->GetAttribute("order");
+		if(pxAttr!=NULL)
+		{
+			const char* order = pxAttr->GetValue();
+			if(order!=NULL)
+			{
+				if(g_stricmp(order,"desc")==0)
+				{
+					pOrderBy->SetOrder(augeOrderDesc);
+				}
+				//pxAttr->Release();
+			}
 		}
 	}
 

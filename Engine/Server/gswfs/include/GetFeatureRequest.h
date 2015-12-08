@@ -16,10 +16,12 @@ namespace auge
 	#define AUGE_WFS_OUTPUT_FORMAT_GML2		"GML2"
 
 	class Map;
+	class OrderBy;
 	class GFilter;
 	class GQuery;
 	class FeatureClass;
 	class XDocument;
+	class XElement;
 
 	class GetFeatureRequest : public WFeatureRequest
 	{
@@ -69,6 +71,7 @@ namespace auge
 		void		SetFields(GQuery* pQuery, const char* fields);
 		GQuery*		ParseXmlQuery(FeatureClass* pFeatureClass);
 		GQuery*		ParseKvpQuery(FeatureClass* pFeatureClass);
+		OrderBy*	ParserOrderBy(XElement* pxOrderBy);
 
 	private: 
 		//std::string m_version;
@@ -179,6 +182,26 @@ http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetF
 	<wfs:Query typeName="topp:states">
 		<ogc:Filter>
 			<ogc:FeatureId fid="states.3"/>
+		</ogc:Filter>
+	</wfs:Query>
+</wfs:GetFeature>
+
+<wfs:GetFeature service="WFS" version="1.0.0"
+	outputFormat="GML2"
+	sourceName="world"
+	xmlns:topp="http://www.openplans.org/topp"
+	xmlns:wfs="http://www.opengis.net/wfs"
+	xmlns:ogc="http://www.opengis.net/ogc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.opengis.net/wfs
+	http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd">
+	<wfs:Query typeName="topp:states">
+		<ogc:Filter>
+			<ogc:FeatureId fid="states.3"/>
+		</ogc:Filter>
+		<ogc:OrderBy order="asc">
+			<wfs:PropertyName>world:gid</wfs:PropertyName>
+			<wfs:PropertyName>world:name</wfs:PropertyName>
 		</ogc:Filter>
 	</wfs:Query>
 </wfs:GetFeature>
