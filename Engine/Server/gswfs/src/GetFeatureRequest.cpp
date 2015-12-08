@@ -626,17 +626,19 @@ namespace auge
 
 		pOrderBy = pFilterFactory->CreateOrderBy();
 
-		const char* filedName = NULL;
+		char field_name[AUGE_NAME_MAX];
+		const char* property_name = NULL;
 		XNode* pxNode = NULL;
 		XNodeSet* pxNodeSet = pxOrderBy->GetChildren("PropertyName");
 
 		pxNodeSet->Reset();
 		while((pxNode=pxNodeSet->Next())!=NULL)
 		{
-			filedName = pxNode->GetContent();
-			if(strlen(filedName)>0)
+			property_name = pxNode->GetContent();
+			if(strlen(property_name)>0)
 			{
-				pOrderBy->AddField(filedName);
+				ParseFieldName(property_name, field_name, AUGE_NAME_MAX);
+				pOrderBy->AddField(field_name);
 			}
 		}
 		pxNodeSet->Release();
@@ -654,6 +656,7 @@ namespace auge
 				//pxAttr->Release();
 			}
 		}
+		return pOrderBy;
 	}
 
 	//const char*	GetFeatureRequest::GetServiceName()

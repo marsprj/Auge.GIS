@@ -202,7 +202,7 @@ http://127.0.0.1:8088/ows/user1/world/ims?service=wfs&version=1.0.0&request=GetF
 		<ogc:OrderBy order="asc">
 			<wfs:PropertyName>world:gid</wfs:PropertyName>
 			<wfs:PropertyName>world:name</wfs:PropertyName>
-		</ogc:Filter>
+		</ogc:OrderBy>
 	</wfs:Query>
 </wfs:GetFeature>
 
