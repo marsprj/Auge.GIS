@@ -50,7 +50,8 @@ namespace auge
 			while((pValue=m_pValues->Next())!=NULL)
 			{
 				XElement* pxValue = pxRoot->AddChild("Value", "wfs");
-				switch(pValue->GetType())
+				augeValueType type = pValue->GetType();
+				switch(type)
 				{
 				case augeValueTypeInt:
 					{
