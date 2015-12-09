@@ -770,6 +770,15 @@ namespace auge
 			case augeFieldTypeString:
 				pValue = new GValue(pResult->GetString(0,i));
 				break;
+			case augeFieldTypeTime:
+				{
+					const char* value = pResult->GetString(0,i);
+					TIME_STRU tim;
+					memset(&tim,0, sizeof(TIME_STRU));
+					sscanf(value,"%d-%2d-%2d %2d:%2d:%2d",&(tim.usYear),&(tim.usMonth),&(tim.usDay),&(tim.usHour),&(tim.usMinute),&(tim.usSecond));
+					pValue = new GValue(&tim,true);
+				}
+				break;
 			}
 			if(pValue)
 			{
