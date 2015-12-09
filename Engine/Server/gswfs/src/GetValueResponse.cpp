@@ -71,6 +71,17 @@ namespace auge
 						const char* value = pValue->GetString();
 						pxValue->AddChildText(value,true);
 					}
+				case augeValueTypeTime:
+					{
+						TIME_STRU* tim = pValue->GetTime();
+						if(tim!=NULL)
+						{
+							char str[AUGE_NAME_MAX];
+							memset(str, 0, AUGE_NAME_MAX);
+							g_snprintf(str,AUGE_NAME_MAX,"%d-%2d-%2d %2d:%2d:%2d",tim->usYear,tim->usMonth,tim->usDay,tim->usHour,tim->usMinute,tim->usSecond);
+							pxValue->AddChildText(str);
+						}
+					}
 					break;
 				}
 			}
