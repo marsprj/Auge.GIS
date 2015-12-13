@@ -125,6 +125,7 @@ namespace auge
 		char str[AUGE_NAME_MAX];
 
 		const char* fname = NULL;
+		const char* alias = NULL;
 		XElement* pxNode = NULL;
 
 		RasterFolder* pFolder = NULL;
@@ -140,8 +141,8 @@ namespace auge
 			fname = auge_encoding_convert(AUGE_ENCODING_GBK,AUGE_ENCODING_UTF8,pFolder->GetName(), strlen(pFolder->GetName()));
 			pxNode->SetAttribute("name",fname,NULL);
 
-			//falias = auge_encoding_convert(AUGE_ENCODING_GBK,AUGE_ENCODING_UTF8,pFolder->getalias(), strlen(pFolder->GetName()));
-			pxNode->SetAttribute("alias",fname,NULL);
+			alias = auge_encoding_convert(AUGE_ENCODING_GBK,AUGE_ENCODING_UTF8,pFolder->GetAlias(), strlen(pFolder->GetAlias()));
+			pxNode->SetAttribute("alias",alias,NULL);
 
 			const char* fpath = pFolder->GetLocalPath();
 			if(!g_access(fpath,4))
