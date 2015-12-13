@@ -1,4 +1,5 @@
 #include "ListRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -59,7 +60,8 @@ namespace auge
 		}
 		else
 		{
-			m_path = path;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_path = pWebContext->ParameterEncoding(path);
 		}
 	}
 	
