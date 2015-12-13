@@ -25,6 +25,11 @@ namespace auge
 		return m_name.c_str();
 	}
 
+	const char*	RasterFolderImpl::GetAlias()
+	{
+		return m_alias.c_str();
+	}
+
 	const char*	RasterFolderImpl::GetPath()
 	{
 		return m_path.c_str();
