@@ -293,6 +293,7 @@ namespace auge
 		virtual ~RasterFolder(){}
 	public:
 		virtual const char*			GetName() = 0;
+		virtual const char*			GetAlias() = 0;
 		virtual EnumRasterFolder*	GetFolders() = 0;
 		virtual RasterFolder*		GetFolder(const char* name) = 0;
 		virtual RasterFolder*		CreateFolder(const char* name) = 0;
