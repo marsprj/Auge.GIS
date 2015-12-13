@@ -131,13 +131,17 @@ namespace auge
 		pFolders->Reset();
 		while((pFolder=pFolders->Next())!=NULL)
 		{
-			pxNode = pxFiles->AddChild("Folder", NULL);
-#ifdef WIN32
-			fname = auge_encoding_convert("GBK","UTF-8",pFolder->GetName(), strlen(pFolder->GetName()));
-#else
-			fname = pFolder->GetName();
-#endif
+			pxNode = pxFiles->AddChild("Folder", NULL);			
+//#ifdef WIN32
+//			fname = auge_encoding_convert(AUGE_ENCODING_GBK,AUGE_ENCODING_UTF8,pFolder->GetName(), strlen(pFolder->GetName()));
+//#else
+//			fname = pFolder->GetName();
+//#endif
+			fname = auge_encoding_convert(AUGE_ENCODING_GBK,AUGE_ENCODING_UTF8,pFolder->GetName(), strlen(pFolder->GetName()));
 			pxNode->SetAttribute("name",fname,NULL);
+
+			//falias = auge_encoding_convert(AUGE_ENCODING_GBK,AUGE_ENCODING_UTF8,pFolder->getalias(), strlen(pFolder->GetName()));
+			pxNode->SetAttribute("alias",fname,NULL);
 
 			const char* fpath = pFolder->GetLocalPath();
 			if(!g_access(fpath,4))
