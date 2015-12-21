@@ -1164,7 +1164,7 @@ namespace auge
 				sprintf(layge_id,"%d",pLayer->GetID());				
 				strcat(layers,layge_id);
 				strcat(layers,":");
-				strcat(layers,pLayer->IsVisible() ? "1" : "0");
+				strcat(layers,pLayer->IsVisiable() ? "1" : "0");
 				if(i)
 				{
 					strcat(layers,",");
