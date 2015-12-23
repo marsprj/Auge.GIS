@@ -1023,7 +1023,7 @@ namespace auge
 		virtual RandomPointsInPolygonGenerator* CreateRandomPointsInPolygonGenerator() = 0;
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor() = 0;
-		//virtual XYImportProcessor*			CreateXYImportProcessor() = 0;
+		virtual XYImportProcessor*			CreateXYImportProcessor() = 0;
 
 		// Geometry
 		virtual MultiPointToPointsProcessor* CreateMultiPointToPointsProcessor() = 0;
