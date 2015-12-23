@@ -24,6 +24,7 @@ libgprocessor_la_SOURCES=\
 		FeatureExportProcessorImpl.cpp \
 		ProcessorFactoryImpl.cpp \
 		CsvImportProcessorImpl.cpp \
+		XYImportProcessorImpl.cpp \
 		FeatureProjectProcessorImpl.cpp \
 		MultiPointToPointsProcessorImpl.cpp \
 		LineToPointsProcessorImpl.cpp \
