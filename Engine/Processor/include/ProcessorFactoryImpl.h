@@ -21,6 +21,7 @@ namespace auge
 		virtual RandomPointsInPolygonGenerator* CreateRandomPointsInPolygonGenerator();
 
 		virtual CsvImportProcessor*			CreateCsvImportProcessor();
+		virtual XYImportProcessor*			CreateXYImportProcessor();
 
 		// Geometry
 		virtual MultiPointToPointsProcessor* CreateMultiPointToPointsProcessor();

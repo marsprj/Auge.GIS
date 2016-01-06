@@ -457,6 +457,10 @@ namespace auge
 			for(g_uint j=0; j<width; j++, ptr_1++, ptr_2++)
 			{
 				*ptr_1 = *ptr_1 - *ptr_2;
+				if(*ptr_1<0)
+				{
+					*ptr_1+255;
+				}
 			}
 		}
 		pinBand_1->SetData(data_1);
@@ -479,6 +483,10 @@ namespace auge
 			for(g_uint j=0; j<width; j++, ptr_1++, ptr_2++)
 			{
 				*ptr_1 = *ptr_1 - *ptr_2;
+				if(*ptr_1<0)
+				{
+					*ptr_1 = -(*ptr_1);
+				}
 			}
 		}
 		pinBand_1->SetData(data_1);

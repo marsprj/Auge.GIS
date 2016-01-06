@@ -4,6 +4,7 @@
 #include "FeatureImportProcessorImpl.h"
 #include "FeatureExportProcessorImpl.h"
 #include "CsvImportProcessorImpl.h"
+#include "XYImportProcessorImpl.h"
 
 #include "KmeanProcessorImpl.h"
 #include "DBScanProcessorImpl.h"
@@ -118,6 +119,11 @@ namespace auge
 	CsvImportProcessor*	GProcessorFactoryImpl::CreateCsvImportProcessor()
 	{
 		return (new CsvImportProcessorImpl());
+	}
+
+	XYImportProcessor* GProcessorFactoryImpl::CreateXYImportProcessor()
+	{
+		return (new XYImportProcessorImpl());
 	}
 
 	KMeansProcessor* GProcessorFactoryImpl::CreateKMeansProcessor()

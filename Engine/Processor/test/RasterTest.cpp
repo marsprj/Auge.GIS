@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
 
 void RasterTest::setUp() 
 {
@@ -21,8 +21,8 @@ void RasterTest::setUp()
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
 	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
-	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
-	m_pConnection->SetConnectionString("SERVER=182.92.114.80;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=182.92.114.80;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -259,18 +259,18 @@ void RasterTest::Subtract()
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pProcessor = pFactory->CreateRasterSubtractProcessor();
 
-	pProcessor->SetUser(2);
-	pProcessor->SetInputDataSource_1("rsdb2");
-	pProcessor->SetInputRaster_1("Desert.jpg");
-	pProcessor->SetInputPath_1("/s1");
+	pProcessor->SetUser(100032);
+	pProcessor->SetInputDataSource_1("rsdb");
+	pProcessor->SetInputRaster_1("ASTGTM2_N34E110_dem.jpg");
+	pProcessor->SetInputPath_1("/");
 
-	pProcessor->SetInputDataSource_2("rsdb2");
-	pProcessor->SetInputRaster_2("Desert_mean.jpg");
-	pProcessor->SetInputPath_2("/s2/s_1_2");
+	pProcessor->SetInputDataSource_2("rsdb");
+	pProcessor->SetInputRaster_2("62.jpg");
+	pProcessor->SetInputPath_2("/r");
 
-	pProcessor->SetOutputDataSource("rsdb2");
-	pProcessor->SetOutputRaster("Subtract.jpg");
-	pProcessor->SetOutputPath("/s2/s_1_2");
+	pProcessor->SetOutputDataSource("rsdb");
+	pProcessor->SetOutputRaster("73_126.jpg");
+	pProcessor->SetOutputPath("/r");
 
 	RESULTCODE rc = pProcessor->Execute();
 

@@ -1,4 +1,4 @@
-#include "CsvImportProcessorImpl.h"
+#include "XYImportProcessorImpl.h"
 #include "AugeData.h"
 #include "AugeCore.h"
 #include "AugeFeature.h"
@@ -7,29 +7,29 @@
 
 namespace auge
 {
-	CsvImportProcessorImpl::CsvImportProcessorImpl()
+	XYImportProcessorImpl::XYImportProcessorImpl()
 	{
 		m_user = 0;
 	}
 
-	CsvImportProcessorImpl::~CsvImportProcessorImpl()
+	XYImportProcessorImpl::~XYImportProcessorImpl()
 	{
 
 	}
 
-	void CsvImportProcessorImpl::SetCsvPath(const char* path)
+	void XYImportProcessorImpl::SetXYPath(const char* path)
 	{
 		if(path==NULL)
 		{
-			m_csv_path.clear();
+			m_xy_path.clear();
 		}
 		else
 		{
-			m_csv_path = path;
+			m_xy_path = path;
 		}
 	}
 
-	void CsvImportProcessorImpl::SetDataSource(const char* sourceName)
+	void XYImportProcessorImpl::SetDataSource(const char* sourceName)
 	{
 		if(sourceName==NULL)
 		{
@@ -41,7 +41,7 @@ namespace auge
 		}
 	}
 
-	void CsvImportProcessorImpl::SetDatasetName(const char* datasetName)
+	void XYImportProcessorImpl::SetDatasetName(const char* datasetName)
 	{
 		if(datasetName==NULL)
 		{
@@ -53,25 +53,49 @@ namespace auge
 		}
 	}
 
-	RESULTCODE CsvImportProcessorImpl::Execute()
+	void XYImportProcessorImpl::SetX(const char* fname)
+	{
+		if(fname==NULL)
+		{
+			m_x_field.clear();
+		}
+		else
+		{
+			m_x_field = fname;
+		}
+	}
+
+	void XYImportProcessorImpl::SetY(const char* fname)
+	{
+		if(fname==NULL)
+		{
+			m_y_field.clear();
+		}
+		else
+		{
+			m_y_field = fname;
+		}
+	}
+
+	RESULTCODE XYImportProcessorImpl::Execute()
 	{
 		GError	*pError  = augeGetErrorInstance();
 		GLogger	*pLogger = augeGetLoggerInstance();
 
-		char csvDrv[AUGE_DRV_MAX];
-		char csvDir[AUGE_PATH_MAX];
-		char csvName[AUGE_NAME_MAX];
-		char csvPath[AUGE_PATH_MAX];
+		char xyDrv[AUGE_DRV_MAX];
+		char xyDir[AUGE_PATH_MAX];
+		char xyName[AUGE_NAME_MAX];
+		char xyPath[AUGE_PATH_MAX];
 		char constr[AUGE_PATH_MAX];
-		memset(csvDrv, 0, AUGE_DRV_MAX);
-		memset(csvDir, 0, AUGE_PATH_MAX);
-		memset(csvName, 0, AUGE_NAME_MAX);
-		memset(csvPath, 0, AUGE_PATH_MAX);
+		memset(xyDrv, 0, AUGE_DRV_MAX);
+		memset(xyDir, 0, AUGE_PATH_MAX);
+		memset(xyName, 0, AUGE_NAME_MAX);
+		memset(xyPath, 0, AUGE_PATH_MAX);
 		memset(constr,0,AUGE_PATH_MAX);
 
-		auge_split_path(m_csv_path.c_str(), csvDrv, csvDir,csvName,NULL);
-		auge_make_path(csvPath, csvDrv,csvDir,NULL,NULL);
-		g_sprintf(constr,"DATABASE=%s",csvPath);
+		auge_split_path(m_xy_path.c_str(), xyDrv, xyDir,xyName,NULL);
+		auge_make_path(xyPath, xyDrv,xyDir,NULL,NULL);
+		g_sprintf(constr,"DATABASE=%s",xyPath);
 
 		DataEngine* pDataEngine = NULL;
 		DataEngineManager* pDataEngineManager = augeGetDataEngineManagerInstance();
@@ -83,14 +107,14 @@ namespace auge
 		}
 		
 		RESULTCODE rc = AG_FAILURE;
-		Workspace* pcsvWorkspace = pDataEngine->CreateWorkspace();
-		pcsvWorkspace->SetConnectionString(constr);
-		rc = pcsvWorkspace->Open();
+		Workspace* pxyWorkspace = pDataEngine->CreateWorkspace();
+		pxyWorkspace->SetConnectionString(constr);
+		rc = pxyWorkspace->Open();
 		if(rc!=AG_SUCCESS)
 		{
 			pLogger->Error(pError->GetLastError(),__FILE__,__LINE__);
 
-			pcsvWorkspace->Release();
+			pxyWorkspace->Release();
 			return AG_FAILURE;
 		}
 
@@ -101,7 +125,7 @@ namespace auge
 		{
 			pLogger->Error(pError->GetLastError(),__FILE__,__LINE__);
 
-			pcsvWorkspace->Release();
+			pxyWorkspace->Release();
 			return AG_FAILURE;
 		}
 
@@ -110,29 +134,29 @@ namespace auge
 		if(pFeatureClass==NULL)
 		{
 			pLogger->Error(pError->GetLastError(),__FILE__,__LINE__);
-			pcsvWorkspace->Release();
+			pxyWorkspace->Release();
 			return AG_FAILURE;
 		}
 
-		AttributeDataSet* pcsvDataset = static_cast<AttributeDataSet*>(pcsvWorkspace->OpenDataSet(csvName));
-		GFields* pcsvFields = pcsvDataset->GetFields();
+		AttributeDataSet* pxyDataset = static_cast<AttributeDataSet*>(pxyWorkspace->OpenDataSet(xyName));
+		GFields* pxyFields = pxyDataset->GetFields();
 		GFields* pobjFields = pFeatureClass->GetFields();
-		if(!IsMatch(pcsvFields,pobjFields))
+		if(!IsMatch(pxyFields,pobjFields))
 		{
 			const char* msg = "Field is not matched";
 			pError->SetError(msg);
 			pLogger->Error(msg, __FILE__, __LINE__);
 
 			pFeatureClass->Release();
-			pcsvDataset->Release();
-			pcsvWorkspace->Release();
+			pxyDataset->Release();
+			pxyWorkspace->Release();
 			return AG_FAILURE;
 		}
 
 		FeatureInsertCommand* cmd = pFeatureClass->CreateInsertCommand();
 
 		Row* pRow = NULL;
-		Cursor* pCursor = pcsvDataset->GetRows();
+		Cursor* pCursor = pxyDataset->GetRows();
 		while((pRow=pCursor->NextRow())!=NULL)
 		{
 			AddFeature(pRow, pFeatureClass,cmd);
@@ -145,30 +169,30 @@ namespace auge
 
 		pFeatureClass->Refresh();
 		pFeatureClass->Release();
-		pcsvDataset->Release();
-		pcsvWorkspace->Release();
+		pxyDataset->Release();
+		pxyWorkspace->Release();
 
 		return AG_SUCCESS;
 	}
 
-	void CsvImportProcessorImpl::Release()
+	void XYImportProcessorImpl::Release()
 	{
 		delete this;
 	}
 
-	bool CsvImportProcessorImpl::IsMatch(GFields* pcsvFields, GFields* pobjFields)
+	bool XYImportProcessorImpl::IsMatch(GFields* pxyFields, GFields* pobjFields)
 	{
-		g_uint csv_count = pcsvFields->Count();
+		g_uint xy_count = pxyFields->Count();
 		g_uint obj_count = pobjFields->Count();
-		if(csv_count!=(obj_count-1))
-		{
-			return false;
-		}
+		//if(xy_count!=(obj_count-1))
+		//{
+		//	return false;
+		//}
 
 		GField* pField = NULL;
-		for(g_uint i=0; i<csv_count; i++)
+		for(g_uint i=0; i<xy_count; i++)
 		{
-			pField = pcsvFields->GetField(i);
+			pField = pxyFields->GetField(i);
 			if(pobjFields->FindField(pField->GetName())<0)
 			{
 				return false;
@@ -178,7 +202,7 @@ namespace auge
 		return true;
 	}
 
-	bool CsvImportProcessorImpl::AddFeature(Row* pRow, FeatureClass* pFeatureClass, FeatureInsertCommand* cmd)
+	bool XYImportProcessorImpl::AddFeature(Row* pRow, FeatureClass* pFeatureClass, FeatureInsertCommand* cmd)
 	{
 		GField*	 pField  = NULL;
 		GFields* pFields = pFeatureClass->GetFields();
@@ -186,6 +210,9 @@ namespace auge
 		GValue* pValue = NULL;
 		const char* fname = NULL;
 		augeFieldType ftype = augeFieldTypeNone;
+		double x = 0.0f;
+		double y = 0.0f;
+		bool hasx=false, hasy=false;
 		
 		const char* str = NULL;
 		
@@ -201,6 +228,17 @@ namespace auge
 			{
 				continue;
 			}
+			if(g_stricmp(fname, m_x_field.c_str())==0)
+			{
+				x = (double)atof(str);
+				hasx = true;
+			}
+			else if(g_stricmp(fname, m_y_field.c_str())==0)
+			{
+				y = (double)atof(str);
+				hasy = true;
+			}
+
 			switch(ftype)
 			{
 			case augeFieldTypeShort:
@@ -227,6 +265,28 @@ namespace auge
 			}
 			pFeature->SetValue(fname, pValue);
 		}
+
+		if(hasx&&hasy)
+		{
+			pField = pFields->GetGeometryField();
+			if(pField!=NULL)
+			{
+				unsigned char wkb[AUGE_NAME_MAX];
+				memset(wkb, 0, AUGE_NAME_MAX);
+				WKBPoint*pWKBPoint = (WKBPoint*)wkb;
+				pWKBPoint->byteOrder = coDefaultByteOrder;
+				pWKBPoint->wkbType = wkbPoint;
+				pWKBPoint->point.x = x;
+				pWKBPoint->point.y = y;
+				GeometryFactory* pGeometryFactory = augeGetGeometryFactoryInstance();
+				Geometry*pGeometry = pGeometryFactory->CreateGeometryFromWKB(wkb, true);
+				if(pGeometry!=NULL)
+				{
+					GValue* pValue = new GValue(pGeometry);
+					pFeature->SetValue(pField->GetName(), pValue);
+				}
+			}
+		}
 		
 		RESULTCODE rc = cmd->Insert(pFeature);
 		pFeature->Release();
@@ -234,7 +294,7 @@ namespace auge
 		return (rc==AG_SUCCESS);
 	}
 
-	void CsvImportProcessorImpl::SetUser(g_uint user)
+	void XYImportProcessorImpl::SetUser(g_uint user)
 	{
 		m_user = user;
 	}

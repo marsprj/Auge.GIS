@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(FeatureTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(FeatureTest);
 
 void FeatureTest::setUp() 
 {
@@ -213,6 +213,106 @@ void FeatureTest::CsvImportTest()
 	pcsvImporter->Execute();
 
 	pcsvImporter->Release();
+}
+
+void FeatureTest::XYImportTest()
+{
+	auge::ConnectionManager* pConnManager = NULL;
+	pConnManager = auge::augeGetConnectionManagerInstance();
+	auge::DataEngineManager* pEngineManager = NULL;
+	pEngineManager = auge::augeGetDataEngineManagerInstance();
+
+	const char* className = "º£Ñó¸¡±ê";
+	auge::FeatureClass* pFeatureClass = NULL;
+	auge::FeatureWorkspace* pFeatureWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace("base"));
+	pFeatureWorkspace->SetUser(2);
+	pFeatureClass = pFeatureWorkspace->OpenFeatureClass(className);
+	if(pFeatureClass==NULL)
+	{
+		auge::GField* pField = NULL;
+		auge::GField_2* pField_2 = NULL;
+		auge::GFields* pFields = NULL;
+		auge::FieldFactory* pFieldFactory = auge::augeGetFieldFactoryInstance();
+
+		pFields = pFieldFactory->CreateFields();
+
+		pField = pFieldFactory->CreateField();
+		pField_2 = pField->Field_2();
+		pField_2->SetName("PPT");
+		pField_2->SetType(augeFieldTypeInt);
+		pField_2->SetLength(32);
+		pFields->Add(pField);
+
+		pField = pFieldFactory->CreateField();
+		pField_2 = pField->Field_2();
+		pField_2->SetName("WMO");
+		pField_2->SetType(augeFieldTypeInt);
+		pFields->Add(pField);
+
+		pField = pFieldFactory->CreateField();
+		pField_2 = pField->Field_2();
+		pField_2->SetName("FLOAT_TYPE");
+		pField_2->SetType(augeFieldTypeString);
+		pField_2->SetLength(32);
+		pFields->Add(pField);
+
+		pField = pFieldFactory->CreateField();
+		pField_2 = pField->Field_2();
+		pField_2->SetName("DATE");
+		pField_2->SetType(augeFieldTypeInt);
+		pFields->Add(pField);
+
+		pField = pFieldFactory->CreateField();
+		pField_2 = pField->Field_2();
+		pField_2->SetName("X");
+		pField_2->SetType(augeFieldTypeDouble);
+		pFields->Add(pField);
+
+		pField = pFieldFactory->CreateField();
+		pField_2 = pField->Field_2();
+		pField_2->SetName("Y");
+		pField_2->SetType(augeFieldTypeDouble);
+		pFields->Add(pField);
+
+		pField = pFieldFactory->CreateField();
+		pField_2 = pField->Field_2();
+		pField_2->SetName("status");
+		pField_2->SetType(augeFieldTypeString);
+		pField_2->SetLength(16);
+		pFields->Add(pField);
+
+		pField = pFieldFactory->CreateField();
+		pField_2 = pField->Field_2();
+		pField_2->SetName("pos");
+		pField_2->SetType(augeFieldTypeGeometry);
+		auge::GeometryDef* pGeometryDef = pField->GetGeometryDef();
+		auge::GeometryDef_2* pGeometryDef_2 = pGeometryDef->GetGeometryDef_2();
+		pGeometryDef_2->SetDefault(true);
+		pGeometryDef_2->SetDimension(2);
+		pGeometryDef_2->SetGeometryType(auge::augeGTPoint);
+		pGeometryDef_2->SetSRID(4326);
+		pGeometryDef_2->SetM(false);
+		pGeometryDef_2->SetZ(false);
+		pFields->Add(pField);
+
+		pFeatureClass = pFeatureWorkspace->CreateFeatureClass(className,pFields);
+	}
+	pFeatureClass->Release();
+
+	auge::XYImportProcessor* pxyImporter = NULL;
+	auge::GProcessorFactory* pProcessorFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pxyImporter = pProcessorFactory->CreateXYImportProcessor();
+
+	pxyImporter->SetUser(2);
+	pxyImporter->SetXYPath("E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\user\\user1\\agro.csv");
+	pxyImporter->SetDataSource("base");
+	pxyImporter->SetDatasetName(className);
+	pxyImporter->SetX("X");
+	pxyImporter->SetY("Y");
+
+	pxyImporter->Execute();
+
+	pxyImporter->Release();
 }
 
 void FeatureTest::ProjectTest()

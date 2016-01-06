@@ -33,7 +33,7 @@ namespace auge
 		}
 	}
 
-	void Delaunay::SetVertex(delaunay_vertext_t* vertexes, g_uint count)
+	void Delaunay::SetVertex(delaunay_node_t* vertexes, g_uint count)
 	{
 		m_vertexes = vertexes;
 		m_vertex_count = count;
@@ -346,7 +346,7 @@ namespace auge
 		drsqr = dx*dx + dy*dy;
 
 		// Original
-		//return((drsqr <= *rsqr) ? TRUE : FALSE);
+		// return((drsqr <= *rsqr) ? TRUE : FALSE);
 		// Proposed by Chuck Morris
 		return((drsqr - *rsqr) <= AUGE_EPSILON);
 	}
@@ -384,7 +384,7 @@ namespace auge
 		return m_triangle_count;
 	}
 
-	delaunay_vertext_t* Delaunay::GetVertex()
+	delaunay_node_t* Delaunay::GetVertex()
 	{
 		return m_vertexes;
 	}

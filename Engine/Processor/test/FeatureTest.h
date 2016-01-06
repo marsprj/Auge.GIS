@@ -7,7 +7,8 @@
 class FeatureTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(FeatureTest);
-	CPPUNIT_TEST(FeatureImportTest);
+	//CPPUNIT_TEST(FeatureImportTest);
+	CPPUNIT_TEST(XYImportTest);
 	//CPPUNIT_TEST(FeatureExportTest);
 	//CPPUNIT_TEST(CsvImportTest);
 
@@ -33,6 +34,7 @@ private:
 	void	FeatureExportTest();
 
 	void	CsvImportTest();
+	void	XYImportTest();
 
 	void	ProjectTest();
 

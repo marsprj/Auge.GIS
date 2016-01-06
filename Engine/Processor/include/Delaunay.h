@@ -11,7 +11,7 @@ namespace auge
 		double	x;
 		double	y;
 		double	z;
-	}delaunay_vertext_t;
+	}delaunay_node_t;
 
 	typedef struct  
 	{
@@ -32,11 +32,11 @@ namespace auge
 		Delaunay();
 		virtual ~Delaunay();
 	public:
-		void	SetVertex(delaunay_vertext_t* vertexes, g_uint count);
+		void	SetVertex(delaunay_node_t* vertexes, g_uint count);
 		g_uint	GetVertexCount();
 		g_uint	GetEdgeCount();
 		g_uint	GetTriangleCount();
-		delaunay_vertext_t*	 GetVertex();
+		delaunay_node_t*	 GetVertex();
 		delaunay_edge_t*	 GetEdge();
 		delaunay_triangle_t* GetTriangle();
 
@@ -50,7 +50,7 @@ namespace auge
 
 	private:
 		g_uint				m_vertex_count;
-		delaunay_vertext_t*	m_vertexes;
+		delaunay_node_t*	m_vertexes;
 
 		g_uint				m_edge_count;
 		delaunay_edge_t*	m_edges;
