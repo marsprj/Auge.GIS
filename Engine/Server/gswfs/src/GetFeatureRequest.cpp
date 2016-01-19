@@ -61,7 +61,7 @@ namespace auge
 	//	m_version = value;
 	//}
 
-	void GetFeatureRequest::SetTypeName(const char* value)
+	void GetFeatureRequest::SetTypeName(const char* value,bool encoding)
 	{
 		//if(value==NULL)
 		//{
@@ -82,11 +82,18 @@ namespace auge
 
 			//m_full_name = value;
 			//m_type_name = typeName;
-
-			WebContext* pWebContext = augeGetWebContextInstance();
-			m_full_name = pWebContext->ParameterEncoding(value);
-			m_type_name = pWebContext->ParameterEncoding(typeName);
-
+			if(encoding)
+			{
+				WebContext* pWebContext = augeGetWebContextInstance();
+				m_full_name = pWebContext->ParameterEncoding(value);
+				m_type_name = pWebContext->ParameterEncoding(typeName);
+			}
+			else
+			{
+				m_full_name = value;
+				m_type_name = typeName;
+			}
+			
 		}
 	}
 
@@ -443,7 +450,7 @@ namespace auge
 		{
 			return false;
 		}
-		SetTypeName(pxAttr->GetValue());
+		SetTypeName(pxAttr->GetValue(), false);
 		if(m_type_name.empty())
 		{
 			return false;
