@@ -61,7 +61,7 @@ namespace auge
 		const char*			GetOutputZField();
 		
 	private:
-		bool				LoadVertex(FeatureClass* pinFeatureClass, delaunay_vertext_t** vertexes, g_uint& vertex_count);
+		bool				LoadVertex(FeatureClass* pinFeatureClass, delaunay_node_t** vertexes, g_uint& vertex_count);
 		bool				WriteEdges(Delaunay& delaunay, const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid);
 		FeatureClass*		CreateEdgeFeatureClass(const char* outClassName, FeatureWorkspace* poutWorkspace, g_uint srid);
 

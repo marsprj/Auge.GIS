@@ -220,7 +220,7 @@ namespace auge
 		//}
 
 		g_uint vertex_count = 0;
-		delaunay_vertext_t* vertexes = NULL;
+		delaunay_node_t* vertexes = NULL;
 		if(!LoadVertex(pinFeatureClass, &vertexes, vertex_count))
 		{
 			pinFeatureClass->Release();
@@ -294,7 +294,7 @@ namespace auge
 
 		g_uint count = delaunay.GetTriangleCount();
 		delaunay_triangle_t* triangles = delaunay.GetTriangle();
-		delaunay_vertext_t*  vertexes = delaunay.GetVertex();
+		delaunay_node_t*  vertexes = delaunay.GetVertex();
 
 		size_t wkbSize = sizeof(WKBPolygon) + sizeof(auge::Point) * 3;
 		WKBPolygon* pWKBPolygon = NULL;
@@ -389,7 +389,7 @@ namespace auge
 
 		g_uint count = delaunay.GetEdgeCount();
 		delaunay_edge_t* edges = delaunay.GetEdge();
-		delaunay_vertext_t*  vertexes = delaunay.GetVertex();
+		delaunay_node_t*  vertexes = delaunay.GetVertex();
 
 		size_t wkbSize = sizeof(WKBLineString) + sizeof(auge::Point);
 		WKBLineString* pWKBLineString = NULL;
@@ -435,7 +435,7 @@ namespace auge
 		return true;
 	}
 
-	bool DelaunayProcessorImpl::LoadVertex(FeatureClass* pinFeatureClass, delaunay_vertext_t** vertexes, g_uint& vertex_count)
+	bool DelaunayProcessorImpl::LoadVertex(FeatureClass* pinFeatureClass, delaunay_node_t** vertexes, g_uint& vertex_count)
 	{
 		double zvalue = 0.0f;
 		GField* pField = NULL;
@@ -455,10 +455,10 @@ namespace auge
 			return false;
 		}
 
-		*vertexes = (delaunay_vertext_t*)malloc((vertex_count+3) * sizeof(delaunay_vertext_t));		
-		//delaunay_vertext_t* ptsss = (delaunay_vertext_t*)malloc((vertex_count+3) * sizeof(delaunay_vertext_t));	
-		memset(*vertexes, 0, (vertex_count+3) * sizeof(delaunay_vertext_t));
-		delaunay_vertext_t* ptr = *vertexes;
+		*vertexes = (delaunay_node_t*)malloc((vertex_count+3) * sizeof(delaunay_node_t));		
+		//delaunay_node_t* ptsss = (delaunay_node_t*)malloc((vertex_count+3) * sizeof(delaunay_node_t));	
+		memset(*vertexes, 0, (vertex_count+3) * sizeof(delaunay_node_t));
+		delaunay_node_t* ptr = *vertexes;
 
 		pField = pinFeatureClass->GetField(m_in_z_field.c_str());
 		if(pField!=NULL)
