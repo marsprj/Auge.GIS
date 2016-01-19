@@ -51,7 +51,7 @@ namespace auge
 		//void		SetVersion(const char* value);
 		//void		SetServiceName(const char* name);
 		//void		SetServiceURI(const char* uri);
-		void		SetTypeName(const char* typeName,bool encoding);
+		void		SetTypeName(const char* typeName,bool encoding=true);
 		void		SetOutputFormat(const char* format);
 		void		SetMaxFeatures(const char* maxFeatures);
 		void		SetOffset(const char* offset);
