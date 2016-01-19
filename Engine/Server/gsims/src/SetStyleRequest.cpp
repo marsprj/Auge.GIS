@@ -1,4 +1,5 @@
 #include "SetStyleRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
