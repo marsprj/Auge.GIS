@@ -66,7 +66,9 @@ namespace auge
 		}
 		else
 		{
-			m_map_name = mapName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_map_name = pWebContext->ParameterEncoding(mapName);
+			//m_map_name = mapName;
 		}
 	}
 	
@@ -78,7 +80,9 @@ namespace auge
 		}
 		else
 		{
-			m_layer_name = layerName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_layer_name = pWebContext->ParameterEncoding(layerName);
+			//m_layer_name = layerName;
 		}
 	}
 
@@ -90,7 +94,9 @@ namespace auge
 		}
 		else
 		{
-			m_style_name = styleName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_style_name = pWebContext->ParameterEncoding(styleName);
+			//m_style_name = styleName;
 		}
 	}
 
