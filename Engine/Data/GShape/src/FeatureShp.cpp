@@ -285,7 +285,7 @@ namespace auge
 		{
 			return -1;
 		}
-		if(pField->GetType()!=augeFieldTypeLong)
+		if(pField->GetType()!=augeFieldTypeFloat)
 		{
 			return -1;
 		}
@@ -299,7 +299,7 @@ namespace auge
 		{
 			return -1;
 		}
-		if(pField->GetType()!=augeFieldTypeLong)
+		if(pField->GetType()!=augeFieldTypeDouble)
 		{
 			return -1;
 		}
@@ -313,7 +313,7 @@ namespace auge
 		{
 			return -1;
 		}
-		if(pField->GetType()!=augeFieldTypeLong)
+		if(pField->GetType()!=augeFieldTypeInt64)
 		{
 			return -1;
 		}
