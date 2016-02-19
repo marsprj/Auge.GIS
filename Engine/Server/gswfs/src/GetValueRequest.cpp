@@ -1,4 +1,5 @@
 #include "GetValueRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -82,14 +83,21 @@ namespace auge
 
 	bool GetValueRequest::Create(rude::CGI& cgi)
 	{
+		WebContext* pWebContext = augeGetWebContextInstance();
+		char parameter[AUGE_NAME_MAX];
+		
 		const char* val = NULL;
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
 		//SetServiceName(cgi["servicename"]);
+		auge_web_parameter_encoding(cgi["typeName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
 		SetTypeName(cgi["typeName"]);
+		auge_web_parameter_encoding(cgi["field"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
 		SetField(cgi["field"]);
 		SetOrder(cgi["order"]);
+		auge_web_parameter_encoding(cgi["mapName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
 		SetMapName(cgi["mapName"]);
+		auge_web_parameter_encoding(cgi["sourceName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
 		SetSourceName(cgi["sourceName"]);
 		SetEncoding(cgi["encoding"]);
 		SetType(cgi["type"]);
