@@ -91,14 +91,14 @@ namespace auge
 		SetUser(cgi["user"]);
 		//SetServiceName(cgi["servicename"]);
 		auge_web_parameter_encoding(cgi["typeName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetTypeName(cgi["typeName"]);
+		SetTypeName(parameter);
 		auge_web_parameter_encoding(cgi["field"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetField(cgi["field"]);
+		SetField(parameter);
 		SetOrder(cgi["order"]);
 		auge_web_parameter_encoding(cgi["mapName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetMapName(cgi["mapName"]);
+		SetMapName(parameter);
 		auge_web_parameter_encoding(cgi["sourceName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetSourceName(cgi["sourceName"]);
+		SetSourceName(parameter);
 		SetEncoding(cgi["encoding"]);
 		SetType(cgi["type"]);
 		return true;
