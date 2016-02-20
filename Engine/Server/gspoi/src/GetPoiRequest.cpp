@@ -6,7 +6,7 @@ namespace auge
 	GetPoiRequest::GetPoiRequest()
 	{
 		m_version = "1.0.0";
-		m_encoding = "UTF-8"//;AUGE_DEFAULT_ENCODING;
+		m_encoding = "UTF-8";//;AUGE_DEFAULT_ENCODING;
 	}
 
 	GetPoiRequest::~GetPoiRequest()

@@ -16,7 +16,8 @@
 namespace auge
 {
 //#define AUGE_POI_TABLE	"poi_51ditu"
-#define AUGE_POI_TABLE	"poi_146m"
+//#define AUGE_POI_TABLE	"poi_146m"
+#define AUGE_POI_TABLE	"poi_cams"
 #define AUGE_POI_SOURCE	"poi"
 
 	GetPoiHandler::GetPoiHandler()
