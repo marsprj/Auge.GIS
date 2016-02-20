@@ -396,7 +396,8 @@ namespace auge
 
 		GFilter* pViewFilter = CreateViewFilter(pFilter, pFeatureClass);
 		
-		const char* label_text = NULL;
+		const char* text = NULL;
+		char label_text[AUGE_NAME_MAX];
 		g_uchar* wkb = NULL;
 		auge::Geometry	*pGeometry = NULL;
 		auge::Feature	*pFeature = NULL;
@@ -428,19 +429,52 @@ namespace auge
 				pLabel = CreateLabel(pGeometry->GeometryType());
 				pLabel->SetGeometry(pGeometry);
 				pLabel->SetSymbolizer(pSymbolizer);
-				label_text = pSymbolizer->GetLabelText();
-				if((label_text==NULL)||(strlen(label_text)==0))
+				text = pSymbolizer->GetLabelText();
+				if((text==NULL)||(strlen(text)==0))
 				{
 					const char* fname = pSymbolizer->GetLabel();
-					label_text = pFeature->GetString(fname);
-					if(label_text!=NULL)
-					{						
-						pLabel->SetText(label_text);
+					GField* pField = pFeatureClass->GetField(fname);
+					if(pField!=NULL)
+					{
+						augeFieldType ftype = pField->GetType();
+						switch(ftype)
+						{
+						case augeFieldTypeInt:
+							{
+								g_int value = pFeature->GetInt(fname);
+								g_snprintf(label_text, AUGE_NAME_MAX, "%d", value);
+								pLabel->SetText(label_text);
+							}
+							break;
+						case augeFieldTypeFloat:
+							{
+								float value = pFeature->GetFloat(fname);
+								g_snprintf(label_text, AUGE_NAME_MAX, "%f", value);
+								pLabel->SetText(label_text);
+							}
+							break;
+						case augeFieldTypeDouble:
+							{
+								double value = pFeature->GetDouble(fname);
+								g_snprintf(label_text, AUGE_NAME_MAX, "%f", value);
+								pLabel->SetText(label_text);
+							}
+							break;
+						case augeFieldTypeString:
+							{
+								text = pFeature->GetString(fname);
+								if(text!=NULL)
+								{						
+									pLabel->SetText(text);
+								}
+							}
+							break;
+						}
 					}
 				}
 				else
 				{
-					pLabel->SetText(label_text);
+					pLabel->SetText(text);
 				}
 				pLabel->ComputePosition(m_pRenderer, &m_transform);				
 				//if(pLabel->IsVisible(m_width, m_height))
