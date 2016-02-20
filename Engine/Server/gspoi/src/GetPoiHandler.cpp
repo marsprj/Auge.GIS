@@ -142,7 +142,10 @@ namespace auge
 		memset(sql, 0, AUGE_SQL_MAX);
 		if(extent.IsValid())
 		{
-			const char* format = "select gid,name,lat,lon,address,cdate,adcode,type from %s where tsv@@ to_tsquery('%s') limit %d  offset %d";
+			//const char* format = "select gid,name,lat,lon,address,cdate,adcode,type from %s where tsv@@ to_tsquery('%s') limit %d  offset %d";
+			//g_sprintf(sql, format, AUGE_POI_TABLE, name, limit, offset);
+
+			const char* format = "select gid,name,lat,lon,address,cdate,adcode,type from %s where tsv@@ to_tsquery('%s') and  ST_Intersects(pos, st_geomfromtext('POLYGON((%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f))',%d))==TRUE limit %d  offset %d";
 			g_sprintf(sql, format, AUGE_POI_TABLE, name, limit, offset);
 		}
 		else

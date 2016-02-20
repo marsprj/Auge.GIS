@@ -67,13 +67,8 @@ service=poi&version=1.0.0&request=GetPoi&name=烤串
 user=user1&service=poi&version=1.0.0&request=GetPoi&name=银行,学校
 user=user1&service=poi&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Penguins.jpg&Path=/aaa
 
+user=user1&service=poi&version=1.0.0&request=GetPoi&name=银行,学校&extent=116,39,117,40
+
 http://127.0.0.1:8088/ows/user1/mgr?service=poi&version=1.0.0&request=GetPoi&name=烤串
-http://127.0.0.1:8088/ows/user1/mgr?service=poi&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/ccc
-
-http://127.0.0.1:8088/ows/user1/mgr?service=poi&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/ds1&extent=0,0,500,500&bands=3,2,1
-
-
-service=poi&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/&bands=3,2,1
-http://127.0.0.1:8088/ows/user1/mgr?service=poi&version=1.0.0&request=GetPoi&sourceName=rsdb&rasterName=Koala.png&Path=/&bands=3,2,1
 
 ************************************************************************/
