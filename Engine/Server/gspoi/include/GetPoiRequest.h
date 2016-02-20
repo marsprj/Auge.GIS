@@ -42,6 +42,7 @@ namespace auge
 		void		SetExtent(const char* extent);
 		void		SetLimit(const char* limit);
 		void		SetOffset(const char* offset);
+		void		SetEncoding(const char* encodig);
 		
 	private:
 		std::string m_version;

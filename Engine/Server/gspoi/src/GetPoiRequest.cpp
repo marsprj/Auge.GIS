@@ -6,7 +6,7 @@ namespace auge
 	GetPoiRequest::GetPoiRequest()
 	{
 		m_version = "1.0.0";
-		m_encoding = AUGE_DEFAULT_ENCODING;
+		m_encoding = "UTF-8"//;AUGE_DEFAULT_ENCODING;
 	}
 
 	GetPoiRequest::~GetPoiRequest()
@@ -182,6 +182,18 @@ namespace auge
 	g_uint GetPoiRequest::GetNameCount()
 	{
 		return m_names.size();
+	}
+
+	void GetPoiRequest::SetEncoding(const char* encodig)
+	{
+		if(encodig==NULL)
+		{
+			m_encoding = AUGE_DEFAULT_ENCODING;
+		}
+		else
+		{
+			m_encoding = encodig;
+		}
 	}
 
 }
