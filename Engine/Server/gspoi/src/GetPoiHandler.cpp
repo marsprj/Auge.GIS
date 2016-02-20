@@ -147,16 +147,16 @@ namespace auge
 			//const char* format = "select gid,name,lat,lon,address,cdate,adcode,type from %s where tsv@@ to_tsquery('%s') limit %d  offset %d";
 			//g_sprintf(sql, format, AUGE_POI_TABLE, name, limit, offset);
 
-			const char* format = "select gid,name,lat,lon,address,cdate,adcode,type from %s where tsv@@ to_tsquery('%s') and  ST_Intersects(pos, st_geomfromtext('POLYGON((%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f))',%d))==TRUE limit %d  offset %d";
+			const char* format = "select gid,name,lat,lon,address,cdate,adcode,type from %s where tsv@@ to_tsquery('%s') and  ST_Intersects(pos, st_geomfromtext('POLYGON((%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f))',%d)) limit %d  offset %d";
 			g_sprintf(sql, format, AUGE_POI_TABLE, 
-									name, 
-									limit,
+									name,
 									extent.m_ymin,extent.m_xmin,
 									extent.m_ymin,extent.m_xmax,
 									extent.m_ymax,extent.m_xmax,
 									extent.m_ymax,extent.m_xmin,
 									extent.m_ymin,extent.m_xmin,
-									srid, 
+									srid,
+									limit, 
 									offset);
 		}
 		else
