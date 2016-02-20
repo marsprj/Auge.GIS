@@ -114,6 +114,8 @@ namespace auge
 		g_uint limit = pRequest->GetLimit();
 		g_uint offset = pRequest->GetOffset();
 
+		g_uint srid = AUGE_DEFAULT_SRID;
+
 		Workspace* pWorkspace = NULL;
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 		//pWorkspace = pConnManager->GetWorkspace(pUser->GetID(), AUGE_POI_SOURCE);
@@ -146,7 +148,16 @@ namespace auge
 			//g_sprintf(sql, format, AUGE_POI_TABLE, name, limit, offset);
 
 			const char* format = "select gid,name,lat,lon,address,cdate,adcode,type from %s where tsv@@ to_tsquery('%s') and  ST_Intersects(pos, st_geomfromtext('POLYGON((%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f))',%d))==TRUE limit %d  offset %d";
-			g_sprintf(sql, format, AUGE_POI_TABLE, name, limit, offset);
+			g_sprintf(sql, format, AUGE_POI_TABLE, 
+									name, 
+									limit,
+									extent.m_ymin,extent.m_xmin,
+									extent.m_ymin,extent.m_xmax,
+									extent.m_ymax,extent.m_xmax,
+									extent.m_ymax,extent.m_xmin,
+									extent.m_ymin,extent.m_xmin,
+									srid, 
+									offset);
 		}
 		else
 		{
