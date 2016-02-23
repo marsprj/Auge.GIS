@@ -1433,6 +1433,10 @@ namespace auge
 			memset(text_utf8, 0, buff_len);
 			auge_encoding_convert_2("GBK", "UTF-8", text, text_len, text_utf8, &buff_len);			
 
+			GLogger *pLogger = augeGetLoggerInstance();
+			pLogger->Debug(text,__FILE__,__LINE__);
+			pLogger->Debug(text_utf8,__FILE__,__LINE__);
+
 			pStyle = reader.Read(text_utf8, strlen(text_utf8), pFeatureClass);		
 			free(text_utf8);
 		}

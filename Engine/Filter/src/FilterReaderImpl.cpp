@@ -685,7 +685,13 @@ namespace auge
 			return NULL;
 		}
 
-		const char* gbk_content = auge_encoding_convert("UTF-8","GBK",content, strlen(content));
+		const char* gbk_content = content;//auge_encoding_convert("UTF-8","GBK",content, strlen(content));
+		//const char* gbk_content = auge_encoding_convert("UTF-8","GBK",content, strlen(content));
+
+		//GLogger* pLogger = augeGetLoggerInstance();
+		//pLogger->Debug(content,__FILE__,__LINE__);
+		//pLogger->Debug(gbk_content,__FILE__,__LINE__);
+
 		FilterFactory* pFactory = augeGetFilterFactoryInstance();
 		PropertyName* pPropName = pFactory->CreatePropertyName(gbk_content);
 		m_prop_name = content;
