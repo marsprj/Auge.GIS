@@ -240,7 +240,7 @@ namespace auge
 			}
 			sql.append(")");
 
-			g_snprintf(str,AUGE_BUFFER_MAX," ST_Intersects(pos, st_geomfromtext('POLYGON((%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f))',%d))", 
+			g_snprintf(str,AUGE_SQL_MAX," ST_Intersects(pos, st_geomfromtext('POLYGON((%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f,%.7f %.7f))',%d))", 
 				extent.m_ymin,extent.m_xmin,
 				extent.m_ymin,extent.m_xmax,
 				extent.m_ymax,extent.m_xmax,
