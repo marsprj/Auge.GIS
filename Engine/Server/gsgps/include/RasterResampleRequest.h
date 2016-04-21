@@ -1,5 +1,5 @@
-#ifndef __AUGE_GPS_RASTER_REVERSE_REQUEST_H__
-#define __AUGE_GPS_RASTER_REVERSE_REQUEST_H__
+#ifndef __AUGE_GPS_RASTER_RESAMPLEE_REQUEST_H__
+#define __AUGE_GPS_RASTER_RESAMPLEE_REQUEST_H__
 
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
@@ -10,11 +10,11 @@
 
 namespace auge
 {
-	class RasterReverseRequest : public WebRequest
+	class RasterResampleRequest : public WebRequest
 	{
 	public:
-		RasterReverseRequest();
-		virtual ~RasterReverseRequest();
+		RasterResampleRequest();
+		virtual ~RasterResampleRequest();
 
 	public:
 		virtual const char*		GetUser();
@@ -86,14 +86,14 @@ namespace auge
 
 }
 
-#endif //__AUGE_GPS_RASTER_REVERSE_REQUEST_H__
+#endif //__AUGE_GPS_RASTER_RESAMPLEE_REQUEST_H__
 
 /************************************************************************
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
 1)
-service=gps&version=1.0.0&request=RasterReverse&inputSourceName=rsdb&inputRasterName=Koala.png&outputSourceName=rsdb&outputRasterName=Koala_900913.png&extent=100,100,500,500
-http://182.92.114.80:8088/ows/admin/mgr?service=gps&version=1.0.0&request=RasterReverse&inputSourceName=rsdb2&inputRasterName=Koala.jpg&outputSourceName=rsdb2&outputRasterName=Koala_reverse.png
+service=gps&version=1.0.0&request=RasterResample&inputSourceName=rsdb&inputRasterName=Koala.png&outputSourceName=rsdb&outputRasterName=Koala_900913.png&extent=100,100,500,500
+http://182.92.114.80:8088/ows/admin/mgr?service=gps&version=1.0.0&request=RasterResample&inputSourceName=rsdb2&inputRasterName=Koala.jpg&outputSourceName=rsdb2&outputRasterName=Koala_reverse.png
 
 ************************************************************************/

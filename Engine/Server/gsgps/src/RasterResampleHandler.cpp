@@ -1,5 +1,5 @@
-#include "RasterReverseHandler.h"
-#include "RasterReverseRequest.h"
+#include "RasterResampleHandler.h"
+#include "RasterResampleRequest.h"
 #include "GProcessEngine.h"
 #include "AugeXML.h"
 #include "AugeWebCore.h"
@@ -8,29 +8,29 @@
 
 namespace auge
 {
-	RasterReverseHandler::RasterReverseHandler()
+	RasterResampleHandler::RasterResampleHandler()
 	{
 
 	}
 
-	RasterReverseHandler::~RasterReverseHandler()
+	RasterResampleHandler::~RasterResampleHandler()
 	{
 
 	}
 
-	const char*	RasterReverseHandler::GetName()
+	const char*	RasterResampleHandler::GetName()
 	{
-		return "RasterReverse";
+		return "RasterResample";
 	}
 
-	const char*	RasterReverseHandler::GetDescription()
+	const char*	RasterResampleHandler::GetDescription()
 	{
 		return "栅格重采样";
 	}
 
-	WebRequest*	RasterReverseHandler::ParseRequest(rude::CGI& cgi)
+	WebRequest*	RasterResampleHandler::ParseRequest(rude::CGI& cgi)
 	{
-		RasterReverseRequest* pRequest = new RasterReverseRequest();
+		RasterResampleRequest* pRequest = new RasterResampleRequest();
 		if(!pRequest->Create(cgi))
 		{
 			GLogger* pLogger = augeGetLoggerInstance();
@@ -42,14 +42,14 @@ namespace auge
 		return pRequest;
 	}
 
-	WebRequest*	RasterReverseHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
+	WebRequest*	RasterResampleHandler::ParseRequest(rude::CGI& cgi, const char* mapName)
 	{
 		return ParseRequest(cgi);
 	}
 
-	WebRequest*	RasterReverseHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
+	WebRequest*	RasterResampleHandler::ParseRequest(XDocument* pxDoc, const char* mapName)
 	{
-		RasterReverseRequest* pRequest = new RasterReverseRequest();
+		RasterResampleRequest* pRequest = new RasterResampleRequest();
 		//if(!pRequest->Create(pxDoc, pMap))
 		if(!pRequest->Create(pxDoc))
 		{
@@ -66,10 +66,10 @@ namespace auge
 		return pRequest;
 	}
 
-	WebResponse* RasterReverseHandler::Execute(WebRequest* pWebRequest, User* pUser)
+	WebResponse* RasterResampleHandler::Execute(WebRequest* pWebRequest, User* pUser)
 	{
 		WebResponse* pWebResponse = NULL;
-		RasterReverseRequest* pRequest = static_cast<RasterReverseRequest*>(pWebRequest);
+		RasterResampleRequest* pRequest = static_cast<RasterResampleRequest*>(pWebRequest);
 
 		const char* version = pRequest->GetVersion();
 		if(strcmp(version,"1.0.0")==0)
@@ -92,11 +92,11 @@ namespace auge
 		return pWebResponse;
 	}
 
-	WebResponse* RasterReverseHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
+	WebResponse* RasterResampleHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
 	{
 		Begin(pUser);
 
-		RasterReverseRequest* pRequest = static_cast<RasterReverseRequest*>(pWebRequest);
+		RasterResampleRequest* pRequest = static_cast<RasterResampleRequest*>(pWebRequest);
 
 		const char* input_source_name  = pRequest->GetInputDataSource();
 		const char* input_raster_name  = pRequest->GetInputRaster();
@@ -105,30 +105,32 @@ namespace auge
 		const char* output_raster_name = pRequest->GetOutputRaster();
 		const char* output_raster_path = pRequest->GetOutputPath();
 
-		auge::RasterReverseProcessor* pProcessor = NULL;
-		auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
-		pProcessor = pFactory->CreateRasterReverseProcessor();
+		RESULTCODE rc = AG_SUCCESS;
 
-		pProcessor->SetUser(pUser->GetID());
-		pProcessor->SetInputDataSource(input_source_name);
-		pProcessor->SetInputRaster(input_raster_name);
-		pProcessor->SetInputPath(input_raster_path);
+		//auge::RasterResampleProcessor* pProcessor = NULL;
+		//auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+		//pProcessor = pFactory->CreateRasterResampleProcessor();
 
-		pProcessor->SetOutputDataSource(output_source_name);
-		pProcessor->SetOutputRaster(output_raster_name);
-		pProcessor->SetOutputPath(output_raster_path);
+		//pProcessor->SetUser(pUser->GetID());
+		//pProcessor->SetInputDataSource(input_source_name);
+		//pProcessor->SetInputRaster(input_raster_name);
+		//pProcessor->SetInputPath(input_raster_path);
 
-		RESULTCODE rc = pProcessor->Execute();
-		pProcessor->Release();
+		//pProcessor->SetOutputDataSource(output_source_name);
+		//pProcessor->SetOutputRaster(output_raster_name);
+		//pProcessor->SetOutputPath(output_raster_path);
 
-		if(rc != AG_SUCCESS)
-		{
-			GError* pError = augeGetErrorInstance();
-			augeGetLoggerInstance()->Error(pError->GetLastError(),__FILE__, __LINE__);
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(pError->GetLastError());
-			return pExpResponse;
-		}
+		//RESULTCODE rc = pProcessor->Execute();
+		//pProcessor->Release();
+
+		//if(rc != AG_SUCCESS)
+		//{
+		//	GError* pError = augeGetErrorInstance();
+		//	augeGetLoggerInstance()->Error(pError->GetLastError(),__FILE__, __LINE__);
+		//	WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+		//	pExpResponse->SetMessage(pError->GetLastError());
+		//	return pExpResponse;
+		//}
 		WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		pSusResponse->SetRequest(pRequest->GetRequest());
 

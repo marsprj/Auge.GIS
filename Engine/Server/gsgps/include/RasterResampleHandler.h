@@ -1,5 +1,5 @@
-#ifndef __AUGE_GPS_RASTER_REVERSE_HANDLER_H__
-#define __AUGE_GPS_RASTER_REVERSE_HANDLER_H__
+#ifndef __AUGE_GPS_RASTER_RESAMPLEE_HANDLER_H__
+#define __AUGE_GPS_RASTER_RESAMPLEE_HANDLER_H__
 
 #include "AugeCore.h"
 #include "AugeWebEngine.h"
@@ -12,13 +12,13 @@
 namespace auge
 {
 	class WebContext;
-	class RasterReverseRequest;
+	class RasterResampleRequest;
 
-	class RasterReverseHandler : public GProcessHandler
+	class RasterResampleHandler : public GProcessHandler
 	{
 	public:
-		RasterReverseHandler();
-		virtual ~RasterReverseHandler();
+		RasterResampleHandler();
+		virtual ~RasterResampleHandler();
 	public:
 		virtual const char*		GetName();
 		virtual const char*		GetDescription();
@@ -31,4 +31,4 @@ namespace auge
 	};
 }
 
-#endif //__AUGE_GPS_RASTER_REVERSE_HANDLER_H__
+#endif //__AUGE_GPS_RASTER_RESAMPLEE_HANDLER_H__
