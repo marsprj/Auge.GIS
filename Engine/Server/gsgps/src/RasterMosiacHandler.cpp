@@ -107,26 +107,28 @@ namespace auge
 		const char* output_source_name  = pRequest->GetOutputDataSource();
 		const char* output_raster_name  = pRequest->GetOutputRaster();
 		const char* output_raster_path = pRequest->GetOutputPath();
+		
+		RESULTCODE rc = AG_SUCCESS;
 
-		auge::RasterMosiacProcessor* pProcessor = NULL;
-		auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
-		pProcessor = pFactory->CreateRasterMosiacProcessor();
+		//auge::RasterMosiacProcessor* pProcessor = NULL;
+		//auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+		//pProcessor = pFactory->CreateRasterMosiacProcessor();
 
-		pProcessor->SetUser(pUser->GetID());
-		pProcessor->SetInputDataSource_1(input_source_name_1);
-		pProcessor->SetInputRaster_1(input_raster_name_1);
-		pProcessor->SetInputPath_1(input_raster_path_1);
+		//pProcessor->SetUser(pUser->GetID());
+		//pProcessor->SetInputDataSource_1(input_source_name_1);
+		//pProcessor->SetInputRaster_1(input_raster_name_1);
+		//pProcessor->SetInputPath_1(input_raster_path_1);
 
-		pProcessor->SetInputDataSource_2(input_source_name_2);
-		pProcessor->SetInputRaster_2(input_raster_name_2);
-		pProcessor->SetInputPath_2(input_raster_path_2);
+		//pProcessor->SetInputDataSource_2(input_source_name_2);
+		//pProcessor->SetInputRaster_2(input_raster_name_2);
+		//pProcessor->SetInputPath_2(input_raster_path_2);
 
-		pProcessor->SetOutputDataSource(output_source_name);
-		pProcessor->SetOutputRaster(output_raster_name);
-		pProcessor->SetOutputPath(output_raster_path);
+		//pProcessor->SetOutputDataSource(output_source_name);
+		//pProcessor->SetOutputRaster(output_raster_name);
+		//pProcessor->SetOutputPath(output_raster_path);
 
-		RESULTCODE rc = pProcessor->Execute();
-		pProcessor->Release();
+		//RESULTCODE rc = pProcessor->Execute();
+		//pProcessor->Release();
 
 		if(rc != AG_SUCCESS)
 		{
