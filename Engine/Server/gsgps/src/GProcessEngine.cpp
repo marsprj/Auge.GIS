@@ -29,6 +29,7 @@
 
 #include "RasterEdgeDetectHandler.h"
 #include "RasterExtractByRectangleHandler.h"
+#include "RasterExtractByPolygonHandler.h"
 #include "RasterReverseHandler.h"
 #include "RasterGraylizeHandler.h"
 #include "RasterSmoothHandler.h"
@@ -88,6 +89,7 @@ namespace auge
 
 		m_raster_handlers.push_back(new RasterEdgeDetectHandler());
 		m_raster_handlers.push_back(new RasterExtractByRectangleHandler());
+		m_raster_handlers.push_back(new RasterExtractByPolygonHandler());
 		m_raster_handlers.push_back(new RasterReverseHandler());
 		m_raster_handlers.push_back(new RasterGraylizeHandler());
 		m_raster_handlers.push_back(new RasterSmoothHandler());
