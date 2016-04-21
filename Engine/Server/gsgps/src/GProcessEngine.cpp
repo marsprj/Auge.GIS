@@ -39,6 +39,8 @@
 #include "RasterThresholdHandler.h"
 #include "RasterHistogramEqualizationHandler.h"
 #include "RasterMosiacHandler.h"
+#include "RasterMaskHandler.h"
+#include "RasterResampleHandler.h"
 
 #include "RasterSepiaToneHandler.h"
 
@@ -100,6 +102,8 @@ namespace auge
 		m_raster_handlers.push_back(new RasterThresholdHandler());
 		m_raster_handlers.push_back(new RasterHistogramEqualizationHandler());
 		m_raster_handlers.push_back(new RasterMosiacHandler());
+		m_raster_handlers.push_back(new RasterMaskHandler());
+		m_raster_handlers.push_back(new RasterResampleHandler());
 
 		m_raster_handlers.push_back(new RasterSepiaToneHandler());
 		

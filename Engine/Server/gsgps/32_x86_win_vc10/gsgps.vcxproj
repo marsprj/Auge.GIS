@@ -154,6 +154,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterGraylizeRequest.cpp" />
     <ClCompile Include="..\src\RasterHistogramEqualizationHandler.cpp" />
     <ClCompile Include="..\src\RasterHistogramEqualizationRequest.cpp" />
+    <ClCompile Include="..\src\RasterMaskHandler.cpp" />
+    <ClCompile Include="..\src\RasterMaskRequest.cpp" />
     <ClCompile Include="..\src\RasterMosiacHandler.cpp" />
     <ClCompile Include="..\src\RasterMosiacRequest.cpp" />
     <ClCompile Include="..\src\RasterPixelBlendHandler.cpp" />
@@ -248,6 +250,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RasterGraylizeRequest.h" />
     <ClInclude Include="..\include\RasterHistogramEqualizationHandler.h" />
     <ClInclude Include="..\include\RasterHistogramEqualizationRequest.h" />
+    <ClInclude Include="..\include\RasterMaskHandler.h" />
+    <ClInclude Include="..\include\RasterMaskRequest.h" />
     <ClInclude Include="..\include\RasterMosiacHandler.h" />
     <ClInclude Include="..\include\RasterMosiacRequest.h" />
     <ClInclude Include="..\include\RasterPixelBlendHandler.h" />

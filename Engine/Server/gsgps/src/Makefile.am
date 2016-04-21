@@ -60,6 +60,10 @@ libgsgps_la_SOURCES=\
 		RasterPixelBlendRequest.cpp \
 		RasterMosiacHandler.cpp \
 		RasterMosiacRequest.cpp \
+		RasterMaskHandler.cpp \
+		RasterMaskRequest.cpp \
+		RasterResampleHandler.cpp \
+		RasterResampleRequest.cpp \
 		RasterThresholdHandler.cpp \
 		RasterThresholdRequest.cpp \
 		RasterHistogramEqualizationHandler.cpp \
