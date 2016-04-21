@@ -107,6 +107,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\DemAspectRequest.cpp" />
     <ClCompile Include="..\src\DemHillshadeHandler.cpp" />
     <ClCompile Include="..\src\DemHillshadeRequest.cpp" />
+    <ClCompile Include="..\src\DemInundationHandler.cpp" />
+    <ClCompile Include="..\src\DemInundationRequest.cpp" />
     <ClCompile Include="..\src\DemSlopeHandler.cpp" />
     <ClCompile Include="..\src\DemSlopeRequest.cpp" />
     <ClCompile Include="..\src\DemStretchHandler.cpp" />
@@ -205,6 +207,8 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\DemAspectRequest.h" />
     <ClInclude Include="..\include\DemHillshadeHandler.h" />
     <ClInclude Include="..\include\DemHillshadeRequest.h" />
+    <ClInclude Include="..\include\DemInundationHandler.h" />
+    <ClInclude Include="..\include\DemInundationRequest.h" />
     <ClInclude Include="..\include\DemSlopeHandler.h" />
     <ClInclude Include="..\include\DemSlopeRequest.h" />
     <ClInclude Include="..\include\DemStretchHandler.h" />
