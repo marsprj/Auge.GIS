@@ -55,6 +55,12 @@ namespace auge
 
 	bool UserImpl::Create(int gid, const char* name, const char* alias, const char* passwd, const char* email, g_int logined)
 	{
+		
+		char userid[AUGE_PATH_MAX];
+		memset(userid, 0, AUGE_PATH_MAX);
+		g_sprintf(userid,"[user]:%d", gid);
+		augeGetLoggerInstance()->Debug(userid, __FILE__, __LINE__);
+
 		SetID(gid);
 		SetName(name);
 		SetAlias(alias);

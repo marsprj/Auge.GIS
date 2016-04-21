@@ -232,6 +232,8 @@ namespace auge
 		OrderBy* pOrderBy = pQuery->GetOrderBy();
 		if(pOrderBy!=NULL)
 		{
+
+			augeGetLoggerInstance()->Fatal("SSSSSSSSSS",__FILE__,__LINE__);
 			int count = pOrderBy->GetFieldCount();
 			if(count>0)
 			{

@@ -362,7 +362,7 @@ namespace auge
 		SetVersion(cgi["version"]);
 
 		auge_web_parameter_encoding(cgi["typeName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetTypeName(parameter);
+		SetTypeName(parameter,false);
 		
 		auge_web_parameter_encoding(cgi["sourceName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
 		SetSourceName(parameter);
