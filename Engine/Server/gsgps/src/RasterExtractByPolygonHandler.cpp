@@ -26,7 +26,7 @@ namespace auge
 
 	const char*	RasterExtractByPolygonHandler::GetDescription()
 	{
-		return "Ó°Ïñ²Ã¼ô";
+		return "Ó°Ïñ²Ã¼ô(¾ØÐÎ)";
 	}
 
 	WebRequest*	RasterExtractByPolygonHandler::ParseRequest(rude::CGI& cgi)

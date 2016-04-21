@@ -26,7 +26,7 @@ namespace auge
 
 	const char*	RasterExtractByRectangleHandler::GetDescription()
 	{
-		return "Ó°Ïñ²Ã¼ô";
+		return "Ó°Ïñ²Ã¼ô(¶à±ßÐÎ)";
 	}
 
 	WebRequest*	RasterExtractByRectangleHandler::ParseRequest(rude::CGI& cgi)

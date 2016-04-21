@@ -58,6 +58,8 @@ libgsgps_la_SOURCES=\
 		RasterSepiaToneRequest.cpp \
 		RasterPixelBlendHandler.cpp \
 		RasterPixelBlendRequest.cpp \
+		RasterMosiacHandler.cpp \
+		RasterMosiacRequest.cpp \
 		RasterThresholdHandler.cpp \
 		RasterThresholdRequest.cpp \
 		RasterHistogramEqualizationHandler.cpp \
