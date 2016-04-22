@@ -458,6 +458,8 @@ namespace auge
 		virtual void		SetOutputPath(const char* rasterPath) = 0;
 	};
 
+
+
 	class RasterStretchProcessor : public GProcessor
 	{
 	protected:
@@ -813,6 +815,31 @@ namespace auge
 	};
 
 	/**
+	 * DemInundationProcessor
+	 *
+	 * DEM坡向
+	 */
+	class DemInundationProcessor : public GProcessor
+	{
+	protected:
+		DemInundationProcessor(){}
+		virtual ~DemInundationProcessor(){}
+	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual void		SetHeight(float height) = 0;
+
+		virtual Raster*		Inundate(Raster* pinRaster, float height) = 0;
+
+	};
+
+	/**
 	 * DemHillshadeProcessor
 	 *
 	 * DEM山体阴影
@@ -1073,6 +1100,7 @@ namespace auge
 		virtual DemSlopeProcessor*					CreateDemSlopeProcessor() = 0;
 		virtual DemAspectProcessor*					CreateDemAspectProcessor() = 0;
 		virtual DemHillshadeProcessor*				CreateDemHillshadeProcessor() = 0;
+		virtual DemInundationProcessor*				CreateDemInundationProcessor() = 0;
 	};
 	
 	extern "C"

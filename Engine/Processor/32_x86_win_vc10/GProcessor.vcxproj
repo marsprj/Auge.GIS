@@ -90,6 +90,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\DelaunayProcessorImpl.cpp" />
     <ClCompile Include="..\src\DemAspectProcessorImpl.cpp" />
     <ClCompile Include="..\src\DemHillshadeProcessorImpl.cpp" />
+    <ClCompile Include="..\src\DemInundationProcessorImpl.cpp" />
     <ClCompile Include="..\src\DemSlopeProcessorImpl.cpp" />
     <ClCompile Include="..\src\FeatureExportProcessorImpl.cpp" />
     <ClCompile Include="..\src\FeatureIDWProcessorImpl.cpp" />
@@ -136,6 +137,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\DelaunayProcessorImpl.h" />
     <ClInclude Include="..\include\DemAspectProcessorImpl.h" />
     <ClInclude Include="..\include\DemHillshadeProcessorImpl.h" />
+    <ClInclude Include="..\include\DemInundationProcessorImpl.h" />
     <ClInclude Include="..\include\DemSlopeProcessorImpl.h" />
     <ClInclude Include="..\include\FeatureExportProcessorImpl.h" />
     <ClInclude Include="..\include\FeatureIDWProcessorImpl.h" />

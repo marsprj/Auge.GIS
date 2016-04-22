@@ -222,8 +222,9 @@ namespace auge
 	{
 		Raster* poutRaster = NULL;
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
+		augePixelType pixelType = pinRaster->GetPixelType();
 		//poutRaster = pRasterFactory->CreateRaster("", augePixelDouble, 1, pinRaster->GetExtent(), pinRaster->GetWidth(), pinRaster->GetHeight(), pinRaster->GetSpatialReference());
-		poutRaster = pRasterFactory->CreateRaster("", augePixelFloat32, 1, pinRaster->GetExtent(), pinRaster->GetWidth(), pinRaster->GetHeight(), pinRaster->GetSpatialReference());
+		poutRaster = pRasterFactory->CreateRaster("", pixelType, 1, pinRaster->GetExtent(), pinRaster->GetWidth(), pinRaster->GetHeight(), pinRaster->GetSpatialReference());
 		if(poutRaster==NULL)
 		{
 			return NULL;

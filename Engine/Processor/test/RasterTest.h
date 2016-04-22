@@ -14,7 +14,7 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(ToJPG);
 	//CPPUNIT_TEST(Reverse);
 	//CPPUNIT_TEST(Smooth);
-	 CPPUNIT_TEST(Subtract);
+	//CPPUNIT_TEST(Subtract);
 	//CPPUNIT_TEST(PixelBlend);
 	//CPPUNIT_TEST(HistgramEqualization);
 	//CPPUNIT_TEST(Threshold);
@@ -28,6 +28,7 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(DEMAspect_2);
 	//CPPUNIT_TEST(DEMHillShade);
 	//CPPUNIT_TEST(DEMStretch);
+	CPPUNIT_TEST(DemInundation);
 
 	CPPUNIT_TEST_SUITE_END();
 public:
@@ -57,6 +58,7 @@ private:
 	void	DEMAspect_2();
 	void	DEMHillShade();
 	void	DEMStretch();
+	void	DemInundation();
 
 private:
 	auge::GConnection	*m_pConnection;

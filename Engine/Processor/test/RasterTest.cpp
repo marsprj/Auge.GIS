@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
 
 void RasterTest::setUp() 
 {
@@ -549,6 +549,31 @@ void RasterTest::DEMStretch()
 
 	poutRaster = pProcessor->Stretch(pinRaster);
 	poutRaster->Save("E:/Research/Auge.GIS/Dist/32_x86_win_vc10/binD/user/user1/rds/dem/xz_stretched.tif");
+
+	pProcessor->Release();
+
+	DWORD te = GetTickCount();
+	printf("[Ê±¼ä]:%dºÁÃë\n", te-ts);
+}
+
+void RasterTest::DemInundation()
+{
+	DWORD ts = GetTickCount();
+	 
+	auge::DemInundationProcessor* pProcessor = NULL;
+	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+	pProcessor = pFactory->CreateDemInundationProcessor();
+
+	auge::RasterIO* pRasterIO = auge::augeGetRasterIOInstance();
+	auge::Raster* pinRaster = NULL;
+	auge::Raster* poutRaster= NULL;
+
+	//pinRaster = pRasterIO->Read("E:/Research/Auge.GIS/Dist/32_x86_win_vc10/binD/user/user1/rds/dem/xz_aspect.tif");
+	pinRaster = pRasterIO->Read("E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\user\\user1\\rds\\dem\\ASTGTM2_N29E082_dem.tif");
+
+	float water_height = 4000.0f;
+	poutRaster = pProcessor->Inundate(pinRaster, 4000);
+	poutRaster->Save("E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\user\\user1\\rds\\dem\\inundation.tif");
 
 	pProcessor->Release();
 

@@ -33,6 +33,7 @@
 #include "DemSlopeProcessorImpl.h"
 #include "DemAspectProcessorImpl.h"
 #include "DemHillshadeProcessorImpl.h"
+#include "DemInundationProcessorImpl.h"
 
 #include "MultiPointToPointsProcessorImpl.h"
 #include "LineToPointsProcessorImpl.h"
@@ -219,6 +220,11 @@ namespace auge
 	DemHillshadeProcessor* GProcessorFactoryImpl::CreateDemHillshadeProcessor()
 	{
 		return (new DemHillshadeProcessorImpl());
+	}
+
+	DemInundationProcessor* GProcessorFactoryImpl::CreateDemInundationProcessor()
+	{
+		return (new DemInundationProcessorImpl());
 	}
 
 	RandomPointsGenerator* GProcessorFactoryImpl::CreateRandomPointsGenerator()

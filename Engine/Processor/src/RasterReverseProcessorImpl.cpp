@@ -239,12 +239,14 @@ namespace auge
 		g_byte* ptr = data;
 		
 		for(g_uint i=0; i<height; i++)
-		{	
+		{
+			#pragma omp parallel for
 			for(g_uint j=0; j<width; j++, ptr++)
 			{
 				*ptr = 255 - *ptr;
 			}
 		}
+
 		Band->SetData(data);
 		return AG_SUCCESS;
 	}
