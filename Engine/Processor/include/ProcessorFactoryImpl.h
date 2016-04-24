@@ -61,6 +61,7 @@ namespace auge
 		virtual RasterPixelBlendProcessor*			CreateRasterPixelBlendProcessor();
 		// Í¼Ïñ·Ö¸î
 		virtual RasterThresholdProcessor*			CreateRasterThresholdProcessor();
+		virtual RasterMosiacProcessor*				CreateRasterMosiacProcessor();
 
 		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor();
 		// Í¼ÏñÌØÐ§

@@ -115,6 +115,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterFormatConvertToJPEGProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterGraylizeProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterHistogramEqualizationProcessorImpl.cpp" />
+    <ClCompile Include="..\src\RasterMosiacProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterPenEffectProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterPixelBlendProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterReverseProcessorImpl.cpp" />
@@ -162,6 +163,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RasterFormatConvertToJPEGProcessorImpl.h" />
     <ClInclude Include="..\include\RasterGraylizeProcessorImpl.h" />
     <ClInclude Include="..\include\RasterHistogramEqualizationProcessorImpl.h" />
+    <ClInclude Include="..\include\RasterMosiacProcessorImpl.h" />
     <ClInclude Include="..\include\RasterPenEffectProcessorImpl.h" />
     <ClInclude Include="..\include\RasterPixelBlendProcessorImpl.h" />
     <ClInclude Include="..\include\RasterReverseProcessorImpl.h" />

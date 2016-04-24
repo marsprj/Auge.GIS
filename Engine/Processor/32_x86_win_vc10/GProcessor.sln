@@ -31,6 +31,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GShape", "..\..\Data\GShape
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GTileMgo", "..\..\Data\GTileMongo\32_x86_win_vc10\GTileMgo.vcxproj", "{483450F0-61B4-49A8-BF5C-0358B6C38E25}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCarto", "..\..\Carto\32_x86_win_vc10\GCarto.vcxproj", "{B6F892A7-59B5-48D6-A97C-8BC432B49E92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -77,6 +79,10 @@ Global
 		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Debug|Win32.Build.0 = Debug|Win32
 		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Release|Win32.ActiveCfg = Release|Win32
 		{483450F0-61B4-49A8-BF5C-0358B6C38E25}.Release|Win32.Build.0 = Release|Win32
+		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Debug|Win32.Build.0 = Debug|Win32
+		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Release|Win32.ActiveCfg = Release|Win32
+		{B6F892A7-59B5-48D6-A97C-8BC432B49E92}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,6 +23,7 @@
 
 #include "RasterThumbnailProcessorImpl.h"
 #include "RasterThresholdProcessorImpl.h"
+#include "RasterMosiacProcessorImpl.h"
 
 #include "RasterHistogramEqualizationProcessorImpl.h"
 #include "RasterFormatConvertToJPEGProcessorImpl.h"
@@ -205,6 +206,11 @@ namespace auge
 	RasterThresholdProcessor* GProcessorFactoryImpl::CreateRasterThresholdProcessor()
 	{
 		return (new RasterThresholdProcessorImpl());
+	}
+
+	RasterMosiacProcessor* GProcessorFactoryImpl::CreateRasterMosiacProcessor()
+	{
+		return (new RasterMosiacProcessorImpl());
 	}
 
 	DemSlopeProcessor* GProcessorFactoryImpl::CreateDemSlopeProcessor()
