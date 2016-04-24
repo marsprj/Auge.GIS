@@ -2,11 +2,8 @@
 #include <stdlib.h>
 #include "AugeTile.h"
 #include "AugeCore.h"
-#include "AugeField.h"
-#include "AugeData.h"
 #include "AugeCarto.h"
 #include "AugeProcessor.h"
-#include <iostream>
 
 void startup();
 void cleanup();
