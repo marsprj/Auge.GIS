@@ -34,7 +34,6 @@ int main()
 	//pCanvas->SetViewer(viewer);
 	//pCanvas->Draw(pMap);
 
-	DWORD ts = GetTickCount();
 
 	auge::MapTileStoreGenerator* pProcessor = NULL;
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
@@ -76,10 +75,6 @@ int main()
 	//		}
 	//	}
 	//}
-
-	DWORD te = GetTickCount();
-	printf("[时间]:%d毫秒\n", te-ts);
-	printf("[时间/tile]:%8.3f毫秒\n", (float)(te-ts)/(float)counter);
 
 	AUGE_SAFE_RELEASE(pMap);
 
