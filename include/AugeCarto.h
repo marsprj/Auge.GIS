@@ -412,6 +412,7 @@ namespace auge
 		virtual GraphicLayer*		CreateGraphicLayer() = 0;
 		virtual RasterLayer*		CreateRasterLayer() = 0;
 		virtual QuadServerLayer*	CreateQuadServerLayer() = 0;
+		virtual WMTSLayer*			CreateWMTSLayer() = 0;
 
 		virtual Canvas*				CreateCanvas2D(g_uint width, g_uint height) = 0;
 		virtual Renderer*			CreateRenderer2D(g_uint width, g_uint height) = 0;
