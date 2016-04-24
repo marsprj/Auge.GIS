@@ -186,6 +186,15 @@ namespace auge
 						AddWebURLNode(pxLayer_2, pQuadServerLayer->GetURL());
 					}
 					break;
+				case augeLayerWMTS:
+					{
+						XElement* pxLayerType = pxLayer_2->AddChild("Type");
+						pxLayerType->AddChildText("WMTS");
+
+						QuadServerLayer* pQuadServerLayer = static_cast<QuadServerLayer*>(pLayer);
+						AddWebURLNode(pxLayer_2, pQuadServerLayer->GetURL());
+					}
+					break;
 				}
 				extent = pLayer->GetExtent();
 				if(!extent.IsValid())

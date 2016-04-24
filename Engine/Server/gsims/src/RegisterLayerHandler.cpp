@@ -111,6 +111,9 @@ namespace auge
 		case augeLayerQuadServer:
 			pWebResponse = RegisterQuadServerLayer(pRequest, pMap, pUser);
 			break;
+		case augeLayerWMTS:
+			pWebResponse = RegisterWMTSLayer(pRequest, pMap, pUser);
+			break;
 		}
 		//Workspace *pWorkspace = NULL;
 		//ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
@@ -264,6 +267,49 @@ namespace auge
 			return pExpResponse;
 		}
 		
+		Layer* pLayer = NULL;
+		CartoManager* pCartoManager = augeGetCartoManagerInstance();
+		pLayer = pCartoManager->CreateWebLayer(layerName, layerType, weburl, pMap->GetID());
+		if(pLayer==NULL)
+		{
+			GError* pError = augeGetErrorInstance();
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(pError->GetLastError());
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			return pExpResponse;
+		}
+		pMap->AddLayer(pLayer);
+		pCartoManager->UpdateMapLayers(pMap);
+
+		//WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
+		//pSusResponse->SetRequest(pRequest->GetRequest());
+		//return pSusResponse;
+
+		RegisterLayerResponse* pResponse = new RegisterLayerResponse(pRequest);
+		pResponse->SetLayer(pLayer);
+		pLayer->AddRef();
+		return pResponse;
+	}
+
+	WebResponse* RegisterLayerHandler::RegisterWMTSLayer(RegisterLayerRequest* pRequest, Map* pMap, User* pUser)
+	{
+		const char* layerName = pRequest->GetLayerName();
+		augeLayerType layerType = pRequest->GetType();
+		const char* weburl = pRequest->GetWebURL();		
+
+		if(weburl==NULL)
+		{
+			const char* msg = "Parameter [URL] is NULL";
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(pError->GetLastError());
+			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
+			pExpResponse->SetMessage(pError->GetLastError());
+			return pExpResponse;
+		}
+
 		Layer* pLayer = NULL;
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
 		pLayer = pCartoManager->CreateWebLayer(layerName, layerType, weburl, pMap->GetID());
