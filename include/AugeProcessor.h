@@ -736,6 +736,26 @@ namespace auge
 		virtual void		Release() = 0;
 	};
 
+	class RasterMosiacProcessor  : public GProcessor
+	{
+	public:
+		RasterMosiacProcessor(){}
+		virtual ~RasterMosiacProcessor(){}
+	public:
+		virtual void		SetUser(g_uint user) = 0;
+
+		virtual void		AddInputRaster(const char* sourceName, const char* rasterPath, const char* rasterName) = 0;
+
+		virtual void		SetOutpuRasteraSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual RESULTCODE	Execute() = 0;
+		virtual void		Release() = 0;
+
+		virtual Raster*		Mosiac(char** rasters, g_uint count, const char* poutRasterPath) = 0;
+	};
+
 	class RasterFormatConvertToJPEGProcessor : public GProcessor
 	{
 	protected:
@@ -1090,6 +1110,7 @@ namespace auge
 		virtual RasterPixelBlendProcessor*			CreateRasterPixelBlendProcessor() = 0;
 		// Í¼Ïñ·Ö¸î
 		virtual RasterThresholdProcessor*			CreateRasterThresholdProcessor() = 0;
+		virtual RasterMosiacProcessor*				CreateRasterMosiacProcessor() = 0;
 
 		virtual RasterFormatConvertToJPEGProcessor*	CreateRasterFormatConvertToJPEGProcessor() = 0;
 		// Í¼ÏñÌØÐ§
