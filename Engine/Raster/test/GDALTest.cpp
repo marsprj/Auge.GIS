@@ -329,3 +329,16 @@ bool IsPointInPolgyon(float x, float y, WKBMultiPolygon* pWKBMultiPolygon)
 	}
 	return (counter%2);
 }
+
+void GDALTest::Show_Drivers()
+{
+	GDALAllRegister();
+	GDALDriverManager* manager = GetGDALDriverManager();
+	int count = manager->GetDriverCount();
+	for(int i=0; i<count; i++)
+	{
+		GDALDriver* driver = manager->GetDriver(i);
+		const char* can_create = driver->GetMetadataItem(GDAL_DCAP_CREATE);
+		printf("[%s]:%s\n", driver->GetDescription(), can_create);
+	}
+}

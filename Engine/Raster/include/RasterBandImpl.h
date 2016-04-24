@@ -41,6 +41,9 @@ namespace auge
 		virtual bool			GetMinMaxValue(double& minv, double& maxv);
 		
 		virtual RESULTCODE		Read(void* buffer, g_uint x, g_uint y, g_int width, g_uint height);
+		virtual RESULTCODE		Write(void* buffer, g_uint x, g_uint y, g_int width, g_uint height);
+
+		virtual g_uint			GetPixelSize(GDALDataType type);
 
 		virtual void			Release();
 
@@ -48,7 +51,7 @@ namespace auge
 		void	Create(GDALRasterBand*	poRasterBand, RasterImpl* pRaster);
 
 	private:
-		g_uint	GetPixelSize(GDALDataType type);
+		
 
 	private:
 		RasterImpl*		m_pRaster;

@@ -8,7 +8,8 @@ class GDALTest : public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(GDALTest);
 	//CPPUNIT_TEST(Read_shp);
-	CPPUNIT_TEST(Read_tif);
+	//CPPUNIT_TEST(Read_tif);
+	CPPUNIT_TEST(Show_Drivers);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -17,6 +18,7 @@ public:
 private:
 	void	Read_shp();
 	void	Read_tif();
+	void	Show_Drivers();
 
 
 private:

@@ -21,9 +21,15 @@
     <ClCompile Include="RasterTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GDALTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RasterTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GDALTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

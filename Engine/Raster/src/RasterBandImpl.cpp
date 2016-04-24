@@ -122,11 +122,17 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
+		
+		int xsize = GetWidth();
+		int ysize = GetHeight();
 		int x = rect.m_xmin;
 		int y = rect.m_ymin;
 		int width = rect.GetWidth();
 		int height= rect.GetHeight();
 		GDALDataType type = m_poRasterBand->GetRasterDataType();
+		int pixelSize = GetPixelSize();
+		int nLineSpace = pixelSize * width;
+
 		CPLErr err = m_poRasterBand->RasterIO(	GF_Read, 
 			x, y,
 			width, height, 
@@ -134,8 +140,13 @@ namespace auge
 			width, height,
 			type, 
 			0, 0);
+			//pixelSize, nLineSpace);
 		if(err!=CE_None)
 		{
+			const char* msg = CPLGetLastErrorMsg();
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+
 			return AG_FAILURE;
 		}
 
@@ -259,6 +270,8 @@ namespace auge
 		m_pRaster = pRaster;
 		m_poRasterBand = poRasterBand;
 		m_pixel_size = GetPixelSize(poRasterBand->GetRasterDataType());
+		int xszie = poRasterBand->GetXSize();
+		int ysize = poRasterBand->GetYSize();
 		m_data_size = poRasterBand->GetXSize() * poRasterBand->GetYSize() * m_pixel_size;
 	}
 
@@ -318,6 +331,29 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
+
+		return AG_SUCCESS;
+	}
+
+	RESULTCODE RasterBandImpl::Write(void* buffer, g_uint x, g_uint y, g_int width, g_uint height)
+	{
+		//height = 500;
+		int nPixelSpace = GetPixelSize();
+		int nLineSpace = width * nPixelSpace;
+		GDALDataType type = m_poRasterBand->GetRasterDataType();
+		CPLErr err = m_poRasterBand->RasterIO(	GF_Write, 
+			x, y,
+			width, height, 
+			buffer,
+			width, height,
+			type, 
+			nPixelSpace, 
+			nLineSpace );
+		if(err!=CE_None)
+		{
+			return AG_FAILURE;
+		}
+		m_poRasterBand->FlushCache();
 
 		return AG_SUCCESS;
 	}

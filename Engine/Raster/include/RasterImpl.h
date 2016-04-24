@@ -57,6 +57,7 @@ namespace auge
 	public:
 		bool	Create(const char* name, const char* path);
 		bool	Create(const char* name, GDALDataset* poDataset);
+		bool	Create(const char* name, GDALDataset* poDataset, GDALDataType pixelType);
 		//void	Create(const char* name, GDALDataset* poDataset, WorkspaceRaster* pWorkspace, const char* path);
 		g_uint	GetPixelSize(GDALDataType type);
 
