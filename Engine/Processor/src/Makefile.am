@@ -51,6 +51,7 @@ libgprocessor_la_SOURCES=\
 		RasterFormatConvertToJPEGProcessorImpl.cpp \
 		RasterSepiaToneEffecProcessorImpl.cpp \
 		RasterPenEffectProcessorImpl.cpp \
+		RasterMosiacProcessorImpl.cpp \
 		DemAspectProcessorImpl.cpp \
 		DemSlopeProcessorImpl.cpp \
 		DemHillshadeProcessorImpl.cpp \
