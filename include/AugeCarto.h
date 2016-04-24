@@ -173,6 +173,13 @@ namespace auge
 		virtual ~WMSLayer(){}
 	};
 
+	class WMTSLayer : public WebLayer
+	{
+	protected:
+		WMTSLayer(){}
+		virtual ~WMTSLayer(){}
+	};
+
 	class QuadServerLayer : public WebLayer
 	{
 	protected:
