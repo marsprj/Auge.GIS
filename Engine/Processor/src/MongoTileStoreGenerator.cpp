@@ -77,9 +77,13 @@ namespace auge
 		RESULTCODE rc = AG_FAILURE;
 		GLogger* pLogger = augeGetLoggerInstance();
 
+		char temp[AUGE_PATH_MAX];
+		memset(temp, 0, AUGE_PATH_MAX);
 		auge_get_cwd(t_cwd, AUGE_PATH_MAX);
+		auge_make_path(temp, NULL, t_cwd, "temp", NULL);
+		auge_mkdir(temp);
 		auge_generate_uuid(t_uuid, AUGE_PATH_MAX);
-		auge_make_path(t_path, NULL, t_cwd, t_uuid,"png");
+		auge_make_path(t_path, NULL, temp, t_uuid,"png");
 
 		auge::GColor bgColor(255,255,255,255);		
 		for(g_uint l=m_start_level; l<=m_end_level; l++)
@@ -94,7 +98,7 @@ namespace auge
 					rc = m_pTileStore->GetTileExtent(viewer, l, r,c);
 					if(rc==AG_SUCCESS)
 					{
-						//printf("\r[%d]:%d-%d-%d",counter++,l,r,c);
+						printf("\r[%d]:%d-%d-%d",counter++,l,r,c);
 						sprintf(str,"[%d]:%d-%d-%d",counter++,l,r,c);
 						pLogger->Info(str, __FILE__, __LINE__);
 

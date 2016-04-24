@@ -2,7 +2,6 @@
 <Engines>
 	<Engine description="PostgreSQL Data Engine" path="" id="Postgres"/>
 	<Engine description="Shape file Data Engine" path="" id="Shape"/>
-	<Engine description="BeyonDB Data Engine" path="" id="Beyond"/>
 	<Engine description="Tile Storage Engine" path="" id="TileFS"/>
 	<Engine description="Mongo Tile Storage Engine" path="" id="TileMgo"/>
 	<Engine description="CSV File Engine" path="" id="CsvFile"/>

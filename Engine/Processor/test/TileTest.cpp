@@ -34,6 +34,9 @@ void TileTest::setUp()
 	pCartoManager = auge::augeGetCartoManagerInstance();
 	pCartoManager->Initialize(m_pConnection);
 
+	auge::SymbolManager* pSymbolManager = auge::augeGetSymbolManagerInstance();
+	pSymbolManager->Initialize(m_pConnection);
+
 	//const char* path = "DATABASE=G:\\temp\\quad";	
 	//pEngine = pEngineManager->GetEngine("TileFS");
 	
@@ -82,7 +85,7 @@ void TileTest::WriteTest()
 	auge::CartoManager* pCartoManager = auge::augeGetCartoManagerInstance();
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
-	pMap = pCartoManager->LoadMap(2,"earthquake");
+	pMap = pCartoManager->LoadMap(2,"country");
 	auge::Canvas* pCanvas = NULL;//pCartoFactory->CreateCanvas2D(256,256);
 	
 	char t_path[AUGE_PATH_MAX] = {0};
@@ -90,7 +93,7 @@ void TileTest::WriteTest()
 	//auge::TileStore *pTileStore = m_pWorkspace->GetTileStore(NULL);
 	//m_pWorkspace->CreateTileStore(NULL,auge::augeTilePGIS,1,5,pMap->GetExtent());
 
-	const char* tn = "t2";
+	const char* tn = "t4";
 	m_pWorkspace->CreateTileStore(tn,auge::augeTileGoogleCRS84Quad,1,8,pMap->GetExtent());
 	auge::TileStore *pTileStore = m_pWorkspace->OpenTileStore(tn);
 	auge::GEnvelope viewer = pTileStore->GetExtent();

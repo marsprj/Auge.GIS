@@ -12,7 +12,7 @@
 class CairoTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(CairoTest);
-	//CPPUNIT_TEST(DrawPNG);
+	CPPUNIT_TEST(DrawPNG);
 	//CPPUNIT_TEST(ReadPNG);
 	//CPPUNIT_TEST(TranslateImage);
 	//CPPUNIT_TEST(DrawData_ARGB32);
@@ -21,7 +21,7 @@ class CairoTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(DrawRailway_2);
 
 	//CPPUNIT_TEST(DrawMatrix);
-	CPPUNIT_TEST(ClipImage);
+	//CPPUNIT_TEST(ClipImage);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
