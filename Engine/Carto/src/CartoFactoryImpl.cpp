@@ -4,6 +4,7 @@
 #include "GraphicLayerImpl.h"
 #include "RasterLayerImpl.h"
 #include "QuadServerLayerImpl.h"
+#include "WMTSLayerImpl.h"
 
 #include "CanvasImpl.h"
 #include "RendererCairo.h"
@@ -49,6 +50,11 @@ namespace auge
 	QuadServerLayer* CartoFactoryImpl::CreateQuadServerLayer()
 	{
 		return (new QuadServerLayerImpl());
+	}
+
+	WMTSLayer* CartoFactoryImpl::CreateWMTSLayer()
+	{
+		return (new WMTSLayerImpl());
 	}
 
 	Canvas*	CartoFactoryImpl::CreateCanvas2D(g_uint width, g_uint height)

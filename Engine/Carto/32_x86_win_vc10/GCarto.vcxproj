@@ -139,6 +139,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\TextSymbolizerImpl.cpp" />
     <ClCompile Include="..\src\TransformImpl.cpp" />
     <ClCompile Include="..\src\TriangleMarkerImpl.cpp" />
+    <ClCompile Include="..\src\WMTSLayerImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\AugeCarto.h" />
@@ -202,6 +203,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\TextSymbolizerImpl.h" />
     <ClInclude Include="..\include\TransformImpl.h" />
     <ClInclude Include="..\include\TriangleMarkerImpl.h" />
+    <ClInclude Include="..\include\WMTSLayerImpl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -758,12 +758,14 @@ namespace auge
 		case augeLayerWMS:
 			break;
 		case augeLayerWMTS:
+			pWebLayer = pCartoFactory->CreateWMTSLayer();
 			break;
 		case augeLayerWFS:
 			break;
 		case augeLayerQuadServer:
 			pWebLayer = pCartoFactory->CreateQuadServerLayer();
 			break;
+			
 		}
 		if(pWebLayer==NULL)
 		{
@@ -980,6 +982,10 @@ namespace auge
 			break;
 		case augeLayerQuadServer:
 			pLayer = CreateQuadServerLayer(id, name, web_url, version, visible);
+			break;
+		case augeLayerWMTS:
+			pLayer = CreateWMTSLayer(id, name, web_url, version, visible);
+			break;
 		}
 
 		return pLayer;
@@ -1117,6 +1123,24 @@ namespace auge
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
 
 		QuadServerLayer* pLayer = pCartoFactory->CreateQuadServerLayer();
+		if(pLayer==NULL)
+		{
+			return NULL;
+		}
+
+		pLayer->SetName(name);
+		pLayer->SetID(id);
+		pLayer->SetVersion(version);
+		pLayer->SetVisiable(visible);
+		pLayer->SetURL(url);
+		return pLayer;
+	}
+
+	WMTSLayer* CartoManagerImpl::CreateWMTSLayer(int id, const char* name, const char* url, int version, bool visible)
+	{
+		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance(); 
+
+		WMTSLayer* pLayer = pCartoFactory->CreateWMTSLayer();
 		if(pLayer==NULL)
 		{
 			return NULL;

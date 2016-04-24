@@ -39,7 +39,7 @@ namespace auge
 		virtual Layer*			CreateLayer(const char* name, augeLayerType type, const char* f_name, g_uint map_id, g_uint source_id, g_uint style_id);
 		virtual Layer*			CreateRasterLayer(const char* name, const char* rasterName, const char* rasterPath, g_uint map_id, g_uint source_id);
 		virtual Layer*			CreateWebLayer(const char* name, augeLayerType type, const char* url, g_uint map_id);
-
+		
 		virtual RESULTCODE		RemoveLayers(const char* mapName);
 		virtual RESULTCODE		RemoveLayers(g_uint map_id);
 		virtual RESULTCODE		RemoveLayer(const char* mapName, const char* layerName);
@@ -123,6 +123,7 @@ namespace auge
 
 		GraphicLayer*			CreateGraphicLayer(const char* name, const char* f_name, g_uint source_id);		
 		QuadServerLayer*		CreateQuadServerLayer(int id, const char* name, const char* url, int version, bool visible);
+		WMTSLayer*				CreateWMTSLayer(int id, const char* name, const char* url, int version, bool visible);
 
 		FeatureLayer*			CreateFeatureLayer(const char* name, const char* f_name,g_uint source_id);
 		RasterLayer*			CreateRasterLayer(const char* name, const char* r_name, const char* r_path, g_uint source_id);

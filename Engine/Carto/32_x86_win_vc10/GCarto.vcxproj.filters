@@ -201,6 +201,9 @@
     <ClCompile Include="..\src\PentagonMarkerImpl.cpp">
       <Filter>Source Files\Marker</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\WMTSLayerImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\CanvasImpl.h">
@@ -385,6 +388,9 @@
     </ClInclude>
     <ClInclude Include="..\include\TriangleMarkerImpl.h">
       <Filter>Header Files\Marker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\WMTSLayerImpl.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
