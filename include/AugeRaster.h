@@ -108,6 +108,7 @@ namespace auge
 		virtual bool			GetMinMaxValue(double& minv, double& maxv) = 0;
 
 		virtual RESULTCODE		Read(void* buffer, g_uint x, g_uint y, g_int width, g_uint height) = 0;
+		virtual RESULTCODE		Write(void* buffer, g_uint x, g_uint y, g_int width, g_uint height) = 0;
 	};
 
 	class RasterIO
@@ -129,6 +130,7 @@ namespace auge
 		virtual Raster*			CreateRaster(const char* name, GEnvelope& extent, Raster* pinRaster) = 0;
 		virtual Raster*			CreateRaster(const char* name, augePixelType pixelType, GEnvelope& extent, Raster* pinRaster) = 0;
 		virtual Raster*			CreateRaster(const char* name, augePixelType pixelType, g_uint bands, GEnvelope& extent, g_uint width, g_uint height, const char*  spatialRef) = 0;
+		virtual Raster*			CreateRaster(const char* name, const char* path, const char* format, augePixelType pixelType, g_uint bands, GEnvelope& extent, g_uint width, g_uint height, const char*  spatialRef) = 0;
 
 		virtual Raster*			CreateRasterPNG(const char* name, g_uint width, g_uint height) = 0;
 		virtual Raster*			CreateRasterJPG(const char* name, g_uint width, g_uint height) = 0;
