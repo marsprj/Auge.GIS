@@ -90,8 +90,9 @@ void TileTest::WriteTest()
 	//auge::TileStore *pTileStore = m_pWorkspace->GetTileStore(NULL);
 	//m_pWorkspace->CreateTileStore(NULL,auge::augeTilePGIS,1,5,pMap->GetExtent());
 
-	m_pWorkspace->CreateTileStore(NULL,auge::augeTileGoogleCRS84Quad,1,8,pMap->GetExtent());
-	auge::TileStore *pTileStore = m_pWorkspace->OpenTileStore("store1");
+	const char* tn = "t2";
+	m_pWorkspace->CreateTileStore(tn,auge::augeTileGoogleCRS84Quad,1,8,pMap->GetExtent());
+	auge::TileStore *pTileStore = m_pWorkspace->OpenTileStore(tn);
 	auge::GEnvelope viewer = pTileStore->GetExtent();
 	//pCanvas->SetViewer(viewer);
 	//pCanvas->Draw(pMap);
