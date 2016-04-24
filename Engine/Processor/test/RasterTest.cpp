@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
 
 void RasterTest::setUp() 
 {
@@ -20,8 +20,8 @@ void RasterTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
-	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	//m_pConnection->SetConnectionString("SERVER=182.92.114.80;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
@@ -602,4 +602,26 @@ void RasterTest::Thumbnail()
 
 	DWORD te = GetTickCount();
 	printf("[Ê±¼ä]:%dºÁÃë\n", te-ts);
+}
+
+void RasterTest::RasterMosiac()
+{
+	const char* inpaths[] = {
+							//"H:\\temp\\dem\\ASTGTM2_N41E115_dem.tif",
+							"H:\\temp\\dem\\ASTGTM2_N41E116_dem.tif",
+							"H:\\temp\\dem\\ASTGTM2_N40E116_dem.tif"
+	};
+	const char* outpath = "H:\\temp\\result\\result.tif";
+
+	auge::Raster* poutRaster = NULL;
+	auge::RasterMosiacProcessor* processor = NULL;
+	auge::GProcessorFactory* factory = auge::augeGetGeoProcessorFactoryInstance();
+	processor = factory->CreateRasterMosiacProcessor();
+	poutRaster = processor->Mosiac((char**)inpaths, sizeof(inpaths)/sizeof(char*), outpath);
+
+	//poutRaster->Save(outpath);
+	poutRaster->Release();
+
+	processor->Release();
+
 }

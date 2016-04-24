@@ -19,6 +19,7 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(HistgramEqualization);
 	//CPPUNIT_TEST(Threshold);
 	//CPPUNIT_TEST(Thumbnail);
+	CPPUNIT_TEST(RasterMosiac);
 
 	//CPPUNIT_TEST(SepiaTone);
 	//CPPUNIT_TEST(PenEffect);
@@ -28,7 +29,7 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(DEMAspect_2);
 	//CPPUNIT_TEST(DEMHillShade);
 	//CPPUNIT_TEST(DEMStretch);
-	CPPUNIT_TEST(DemInundation);
+	//CPPUNIT_TEST(DemInundation);
 
 	CPPUNIT_TEST_SUITE_END();
 public:
@@ -48,6 +49,7 @@ private:
 	void	HistgramEqualization();
 	void	Threshold();
 	void	Thumbnail();
+	void	RasterMosiac();
 
 	void	SepiaTone();
 	void	PenEffect();
