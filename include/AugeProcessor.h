@@ -1007,6 +1007,18 @@ namespace auge
 		virtual void		Release() = 0;
 	};
 
+	class RasterProjectProcessor : public GProcessor
+	{
+	protected:
+		RasterProjectProcessor(){}
+		virtual~ RasterProjectProcessor(){}
+	public:
+		virtual RESULTCODE	Execute() = 0;
+		virtual void		Release() = 0;
+
+		virtual Raster*		Project(Raster* pRaster, g_uint srid) = 0;
+	};
+
 	//////////////////////////////////////////////////////////////////////////
 	// Projection Processor
 	//////////////////////////////////////////////////////////////////////////
