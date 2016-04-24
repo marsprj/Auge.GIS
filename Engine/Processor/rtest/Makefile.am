@@ -6,11 +6,13 @@ AM_CPPFLAGS=\
 
 rtest_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
-		-L$(top_srcdir)/Engine/Processor/GDEngine/src \
+		-L$(top_srcdir)/Engine/Data/GDEngine/src \
+		-L$(top_srcdir)/Engine/Processor/src \
 		-L$(top_srcdir)/Engine/Carto/src 
 	
 rtest_LDADD=	-lgcore \
 		-lgcarto \
-		-lgprocessor
+		-lgprocessor \
+		-lgdengine
 
 rtest_SOURCES=main.cpp
