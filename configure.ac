@@ -95,6 +95,7 @@ AC_CONFIG_FILES([Dist/32_x86_win_vc10/Makefile
                  Engine/Data/Makefile
                  Engine/Processor/Makefile
                  Engine/Processor/src/Makefile
+		 Engine/Processor/rtest/Makefile
                  Engine/Filter/Makefile
                  Engine/Auth/src/Makefile
 		 Engine/Auth/Makefile
