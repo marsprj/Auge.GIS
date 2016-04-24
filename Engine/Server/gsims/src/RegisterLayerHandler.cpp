@@ -250,8 +250,7 @@ namespace auge
 	{
 		const char* layerName = pRequest->GetLayerName();
 		augeLayerType layerType = pRequest->GetType();
-		const char* weburl = pRequest->GetWebURL();
-		
+		const char* weburl = pRequest->GetWebURL();		
 		
 		if(weburl==NULL)
 		{
@@ -278,6 +277,7 @@ namespace auge
 			return pExpResponse;
 		}
 		pMap->AddLayer(pLayer);
+		pCartoManager->UpdateMapLayers(pMap);
 
 		//WebSuccessResponse* pSusResponse = augeCreateWebSuccessResponse();
 		//pSusResponse->SetRequest(pRequest->GetRequest());

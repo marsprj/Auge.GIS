@@ -34,6 +34,7 @@ namespace auge
 		const char* GetTableName();
 		const char* GetRasterName();
 		const char* GetRasterPath();
+		const char* GetWebName();
 		const char* GetWebURL();
 		augeLayerType GetType();
 
@@ -43,6 +44,7 @@ namespace auge
 		void		SetDataSource(const char* dataSource);
 		void		SetLayerName(const char* layerName);
 		void		SetTableName(const char* tableName);
+		void		SetWebName(const char* webName);
 		void		SetWebURL(const char* url);
 
 		void		SetRasterName(const char* rasterName);
@@ -58,6 +60,7 @@ namespace auge
 		std::string m_table_name;
 		std::string m_raster_name;
 		std::string m_raster_path;
+		std::string m_web_name;
 		std::string m_web_url;
 		std::string m_encoding;
 	};
@@ -78,6 +81,10 @@ http://192.168.111.160:8088/ows/user1/mgr?service=ims&version=1.0.0&request=Regi
 user=user1&service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=rsdb2&layerName=world&rasterName=world&rasterPath=/&layerType=Raster
 http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&datasource=rsdb2&layerName=world&rasterName=world&rasterPath=/&layerType=Raster
 
+
+// Regisger QuadServer Layer
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&layerName=world_image&weburl=http://127.0.0.1/QuadServer/maprequest?services=world_image&layerType=QuadServer
+user=user1&service=ims&version=1.0.0&request=RegisterLayer&mapName=world&layerName=world_image&layerType=QuadServer&webName=world_image&weburl=http://127.0.0.1/QuadServer/maprequest?
 
 [ HTP Post ]
 -------------------------------------------------------------------------

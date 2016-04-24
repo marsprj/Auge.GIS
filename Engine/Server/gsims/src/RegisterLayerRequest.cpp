@@ -41,6 +41,12 @@ namespace auge
 		auge_web_parameter_encoding(cgi["rasterName"], str, AUGE_NAME_MAX, pWebContext->IsIE());
 		SetRasterName(str);
 
+		auge_web_parameter_encoding(cgi["webName"], str, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetWebName(str);
+
+		auge_web_parameter_encoding(cgi["webURL"], str, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetWebURL(str);
+
 		SetRasterPath(cgi["rasterPath"]);
 		
 		 return true;
@@ -88,6 +94,10 @@ namespace auge
 		else if(g_stricmp(type,"QuadServer")==0)
 		{
 			m_type = augeLayerQuadServer;
+		}
+		else if(g_stricmp(type,"WMTS")==0)
+		{
+			m_type = augeLayerWMTS;
 		}
 		else
 		{
@@ -192,6 +202,23 @@ namespace auge
 		else
 		{
 			m_web_url = url;
+		}
+	}
+
+	const char* RegisterLayerRequest::GetWebName()
+	{
+		return m_web_name.c_str();
+	}
+
+	void RegisterLayerRequest::SetWebName(const char* name)
+	{
+		if(name==NULL)
+		{
+			m_web_name.clear();
+		}
+		else
+		{
+			m_web_name = name;
 		}
 	}
 
