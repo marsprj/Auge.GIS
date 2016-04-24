@@ -5,7 +5,7 @@
 #include "AugeFeature.h"
 #include "AugeData.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(MapTest);
 
 auge::Map*	CreateMapObj();
 auge::Map*	CreateMapObj_SLD();
@@ -31,6 +31,9 @@ void MapTest::setUp()
 	auge::CartoManager* pCartoManager = NULL;
 	pCartoManager = auge::augeGetCartoManagerInstance();
 	pCartoManager->Initialize(m_pConnection);
+
+	auge::SymbolManager* pSymbolManager = auge::augeGetSymbolManagerInstance();
+	pSymbolManager->Initialize(m_pConnection);
 
 }
 
@@ -80,12 +83,12 @@ void MapTest::DrawMap()
 	pCanvas->DrawBackground(bgColor);
 
 	int i=0;
-	while(true)
+	//while(true)
 	{
 		printf("\r%d",i++);
 
 		auge::Map* pMap = NULL;
-		pMap = pCartoManager->LoadMap(2, "dem");
+		pMap = pCartoManager->LoadMap(2, "world");
 
 		pCanvas->SetViewer(pMap->GetViewer());
 		pCanvas->Draw(pMap);

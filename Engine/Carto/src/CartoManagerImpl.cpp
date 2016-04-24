@@ -771,7 +771,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_layer (l_name,l_type,f_name,m_id,d_id,s_id, web_url) values('%s',%d,'%s',%d,%d,%d,'%s') returning gid", name, type, "", map_id, "", "", url);
+		g_snprintf(sql, AUGE_SQL_MAX, "insert into g_layer (l_name,l_type,f_name,m_id,d_id,s_id, web_url) values('%s',%d,'%s',%d,%d,%d,'%s') returning gid", name, type, name, map_id, 1, -1, url);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -783,6 +783,8 @@ namespace auge
 		pResult->Release();
 
 		pWebLayer->SetID(gid);
+		pWebLayer->SetName(name);
+		pWebLayer->SetURL(url);
 		return pWebLayer;
 	}
 
