@@ -12,6 +12,7 @@
 #include "RandomPointsGeneratorImpl.h"
 #include "RandomPointsInPolygonGeneratorImpl.h"
 
+#include "RasterProjectProcessorImpl.h"
 #include "RasterExtractByRectangleProcessorImpl.h"
 #include "RasterStretchProcessorImpl.h"
 #include "RasterEdgeDetectProcessorImpl.h"
@@ -261,5 +262,10 @@ namespace auge
 	RasterThumbnailProcessor* GProcessorFactoryImpl::CreateRasterThumbnailProcessor()
 	{
 		return (new RasterThumbnailProcessorImpl());
+	}
+
+	RasterProjectProcessor*	GProcessorFactoryImpl::CreateRasterProjectProcessor()
+	{
+		return (new RasterProjectProcessorImpl());
 	}
 }

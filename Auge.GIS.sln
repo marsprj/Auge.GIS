@@ -81,10 +81,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCsvFile", "Engine\Data\GCsvFile\32_x86_win_vc10\GCsvFile.vcxproj", "{972649C7-4098-4683-8335-93AABEB2C453}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mgr", "Engine\Server\mgr\32_x86_win_vc10\mgr.vcxproj", "{C315E5BD-713B-4812-9B05-8A0F6475DAB0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D8C7BCA3-AADF-430D-BD10-6F771418F31B} = {D8C7BCA3-AADF-430D-BD10-6F771418F31B}
-		{961093B5-A829-41C7-87A1-6CE75B065B5C} = {961093B5-A829-41C7-87A1-6CE75B065B5C}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ims", "Engine\Server\ims\32_x86_win_vc10\ims.vcxproj", "{479FAB6D-86C5-43C2-B8D0-E8F167A8D56C}"
 EndProject

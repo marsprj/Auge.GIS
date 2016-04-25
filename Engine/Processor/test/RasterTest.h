@@ -19,7 +19,8 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(HistgramEqualization);
 	//CPPUNIT_TEST(Threshold);
 	//CPPUNIT_TEST(Thumbnail);
-	CPPUNIT_TEST(RasterMosiac);
+	//CPPUNIT_TEST(RasterMosiac);
+	CPPUNIT_TEST(RasterProj);
 
 	//CPPUNIT_TEST(SepiaTone);
 	//CPPUNIT_TEST(PenEffect);
@@ -50,6 +51,7 @@ private:
 	void	Threshold();
 	void	Thumbnail();
 	void	RasterMosiac();
+	void	RasterProj();
 
 	void	SepiaTone();
 	void	PenEffect();

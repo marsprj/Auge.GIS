@@ -40,8 +40,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)D</TargetName>
-    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;E:\DevEnv\proj4-.7.0\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include</IncludePath>
-    <LibraryPath>%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;E:\DevEnv\proj4-.7.0\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <IncludePath>../include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;E:\DevEnv\proj4-.7.0\include;E:\DevEnv\gdal-1.11.1\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include</IncludePath>
+    <LibraryPath>%AUGE_GIS_HOME%/Dist/32_x86_win_vc10/lib;E:\DevEnv\proj4-.7.0\lib;E:\DevEnv\gdal-1.11.1\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -57,7 +57,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>proj_i.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>proj_i.lib;gdal_i.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(OutDir)\$(TargetName).dll %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\binD
@@ -118,6 +118,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterMosiacProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterPenEffectProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterPixelBlendProcessorImpl.cpp" />
+    <ClCompile Include="..\src\RasterProjectProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterReverseProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterSepiaToneEffecProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterSmoothProcessorImpl.cpp" />
@@ -166,6 +167,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\RasterMosiacProcessorImpl.h" />
     <ClInclude Include="..\include\RasterPenEffectProcessorImpl.h" />
     <ClInclude Include="..\include\RasterPixelBlendProcessorImpl.h" />
+    <ClInclude Include="..\include\RasterProjectProcessorImpl.h" />
     <ClInclude Include="..\include\RasterReverseProcessorImpl.h" />
     <ClInclude Include="..\include\RasterSepiaToneEffecProcessorImpl.h" />
     <ClInclude Include="..\include\RasterSmoothProcessorImpl.h" />

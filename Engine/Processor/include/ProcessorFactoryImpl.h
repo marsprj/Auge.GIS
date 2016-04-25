@@ -44,6 +44,7 @@ namespace auge
 		virtual DelaunayProcessor*			CreateDelaunayProcessor();
 
 		// Raster
+		virtual RasterProjectProcessor*				CreateRasterProjectProcessor();
 		virtual RasterGraylizeProcessor*			CreateRasterGraylizeProcessor();
 		virtual RasterReverseProcessor*				CreateRasterReverseProcessor();
 		virtual RasterThumbnailProcessor*			CreateRasterThumbnailProcessor();

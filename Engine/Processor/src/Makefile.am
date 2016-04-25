@@ -38,6 +38,7 @@ libgprocessor_la_SOURCES=\
 		DBScan.cpp \
 		SrsBase.cpp \
 		sqlite3.c \
+		RasterProjectProcessorImpl.cpp \
 		RasterExtractByRectangleProcessorImpl.cpp \
 		RasterEdgeDetectProcessorImpl.cpp \
 		RasterStretchProcessorImpl.cpp \

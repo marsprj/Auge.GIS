@@ -150,6 +150,9 @@
     <ClCompile Include="..\src\RasterMosiacProcessorImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\RasterProjectProcessorImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ProcessorFactoryImpl.h">
@@ -285,6 +288,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\RasterMosiacProcessorImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\RasterProjectProcessorImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

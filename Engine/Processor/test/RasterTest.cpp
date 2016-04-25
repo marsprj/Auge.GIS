@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
 
 void RasterTest::setUp() 
 {
@@ -621,6 +621,21 @@ void RasterTest::RasterMosiac()
 
 	//poutRaster->Save(outpath);
 	poutRaster->Release();
+
+	processor->Release();
+
+}
+
+void RasterTest::RasterProj()
+{
+	auge::RasterProjectProcessor* processor = NULL;
+	auge::GProcessorFactory* factory = auge::augeGetGeoProcessorFactoryInstance();
+	processor = factory->CreateRasterProjectProcessor();
+
+	const char* i_path = "H:\\Data\\DEM\\aster_gdem\\xz\\ASTGTM2_N29E082_dem.tif";
+	const char* o_path = "H:\\temp\\result\\dem_900913_3.jpg";
+
+	processor->Project(i_path, o_path, 900913);
 
 	processor->Release();
 
