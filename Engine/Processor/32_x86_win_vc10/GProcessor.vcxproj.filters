@@ -153,7 +153,7 @@
     <ClCompile Include="..\src\RasterProjectProcessorImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\RasterResampeProcessorImpl.cpp">
+    <ClCompile Include="..\src\RasterResampleProcessorImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

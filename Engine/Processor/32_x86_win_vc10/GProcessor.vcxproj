@@ -119,7 +119,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\RasterPenEffectProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterPixelBlendProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterProjectProcessorImpl.cpp" />
-    <ClCompile Include="..\src\RasterResampeProcessorImpl.cpp" />
+    <ClCompile Include="..\src\RasterResampleProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterReverseProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterSepiaToneEffecProcessorImpl.cpp" />
     <ClCompile Include="..\src\RasterSmoothProcessorImpl.cpp" />

@@ -45,7 +45,7 @@ libgprocessor_la_SOURCES=\
 		RasterHistogramEqualizationProcessorImpl.cpp \
 		RasterGraylizeProcessorImpl.cpp \
 		RasterReverseProcessorImpl.cpp \
-		RasterResampleProcessorImpl.cpp \
+		RasterResampeProcessorImpl.cpp \
 		RasterSmoothProcessorImpl.cpp \
 		RasterSubtractProcessorImpl.cpp \
 		RasterPixelBlendProcessorImpl.cpp \
