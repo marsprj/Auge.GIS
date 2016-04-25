@@ -640,3 +640,20 @@ void RasterTest::RasterProj()
 	processor->Release();
 
 }
+
+void RasterTest::RasterResample()
+{
+	auge::RasterResampleProcessor* processor = NULL;
+	auge::GProcessorFactory* factory = auge::augeGetGeoProcessorFactoryInstance();
+	processor = factory->CreateRasterResampleProcessor();
+
+	//const char* i_path = "H:\\Data\\DEM\\aster_gdem\\xz\\ASTGTM2_N29E082_dem.tif";
+	//const char* o_path = "H:\\temp\\result\\dem_900913_3.jpg";
+
+	const char* i_path = "H:\\Data\\raster\\tif\\world.tif";
+	const char* o_path = "H:\\temp\\result\\resample.tif";
+	
+	processor->Resample(i_path, o_path, 0.25);
+
+	processor->Release();
+}

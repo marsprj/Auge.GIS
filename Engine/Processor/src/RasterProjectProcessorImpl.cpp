@@ -14,11 +14,14 @@
 
 namespace auge
 {
-	void make_raster_path(const char* rpath, const char* rsize const char* repository,  const char* raster_path, const char* raster_name);
+	void make_raster_path(char* rpath, g_uint rsize, const char* repository,  const char* raster_path, const char* raster_name);
 
 	RasterProjectProcessorImpl::RasterProjectProcessorImpl()
 	{
 		m_user = 0;
+		m_in_raster_path = "/";
+		m_out_raster_path = "/";
+		m_out_srid = AUGE_DEFAULT_SRID;
 	}
 
 	RasterProjectProcessorImpl::~RasterProjectProcessorImpl()
@@ -465,7 +468,7 @@ namespace auge
 	//	m_srsbase.Close();
 	//}
 
-	void make_raster_path(const char* rpath, const char* rsize const char* repository,  const char* raster_path, const char* raster_name)
+	void make_raster_path(char* rpath, g_uint rsize, const char* repository,  const char* raster_path, const char* raster_name)
 	{
 		char temp[AUGE_PATH_MAX];
 		memset(temp, 0 ,AUGE_PATH_MAX);

@@ -153,6 +153,9 @@
     <ClCompile Include="..\src\RasterProjectProcessorImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\RasterResampeProcessorImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ProcessorFactoryImpl.h">
@@ -291,6 +294,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\RasterProjectProcessorImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\RasterResampleProcessorImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

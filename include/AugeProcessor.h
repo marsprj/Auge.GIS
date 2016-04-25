@@ -561,6 +561,8 @@ namespace auge
 		virtual void		SetOutputDataSource(const char* sourceName) = 0;
 		virtual void		SetOutputRaster(const char* rasterName) = 0;
 		virtual void		SetOutputPath(const char* rasterPath) = 0;
+
+		virtual	RESULTCODE	Resample(const char* inpath, const char* outpath, float scale=1.0) = 0;
 	};
 
 	/**
@@ -1013,10 +1015,20 @@ namespace auge
 		RasterProjectProcessor(){}
 		virtual~ RasterProjectProcessor(){}
 	public:
+		virtual void		SetInputDataSource(const char* sourceName) = 0;
+		virtual void		SetInputRaster(const char* rasterName) = 0;
+		virtual void		SetInputPath(const char* rasterPath) = 0;
+
+		virtual void		SetOutputDataSource(const char* sourceName) = 0;
+		virtual void		SetOutputRaster(const char* rasterName) = 0;
+		virtual void		SetOutputPath(const char* rasterPath) = 0;
+		virtual	void		SetOutputSrid(g_uint srid) = 0;
+
 		virtual RESULTCODE	Execute() = 0;
 		virtual void		Release() = 0;
 
 		virtual Raster*		Project(Raster* pRaster, g_uint srid) = 0;
+		virtual RESULTCODE	Project(const char* inpath, const char* outpath, g_uint out_sird) = 0;
 	};
 
 	//////////////////////////////////////////////////////////////////////////
@@ -1105,9 +1117,11 @@ namespace auge
 		virtual DelaunayProcessor*			CreateDelaunayProcessor() = 0;
 
 		// Raster
+		virtual RasterProjectProcessor*				CreateRasterProjectProcessor() = 0;
 		virtual RasterGraylizeProcessor*			CreateRasterGraylizeProcessor() = 0;
 		virtual RasterReverseProcessor*				CreateRasterReverseProcessor() = 0;
 		virtual RasterThumbnailProcessor*			CreateRasterThumbnailProcessor() = 0;
+		virtual RasterResampleProcessor*			CreateRasterResampleProcessor() = 0;
 
 		virtual RasterExtractByRectangleProcessor*	CreateRasterExtractByRectangleProcessor() = 0;
 

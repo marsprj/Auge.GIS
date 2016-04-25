@@ -21,6 +21,7 @@
 #include "RasterSmoothProcessorImpl.h"
 #include "RasterSubtractProcessorImpl.h"
 #include "RasterPixelBlendProcessorImpl.h"
+#include "RasterResampleProcessorImpl.h"
 
 #include "RasterThumbnailProcessorImpl.h"
 #include "RasterThresholdProcessorImpl.h"
@@ -268,4 +269,10 @@ namespace auge
 	{
 		return (new RasterProjectProcessorImpl());
 	}
+
+	RasterResampleProcessor* GProcessorFactoryImpl::CreateRasterResampleProcessor()
+	{
+		return (new RasterResampleProcessorImpl());
+	}
+
 }
