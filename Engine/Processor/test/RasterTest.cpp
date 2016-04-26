@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
 
 void RasterTest::setUp() 
 {

@@ -409,6 +409,12 @@ namespace auge
 
 	RESULTCODE GoogleCRS84QuadTileStore::GetBoundingBox(GEnvelope& viewer, g_uint level, g_uint& r_min, g_uint& r_max, g_uint& c_min, g_uint& c_max)
 	{
+		double resolution = m_full_extent.GetHeight() / pow(2.0f,(float)(level-1));
+		c_min = floor(viewer.m_xmin-m_full_extent.m_xmin) / resolution;
+		c_max = ceil (viewer.m_xmax-m_full_extent.m_xmin) / resolution;
+		r_min = floor(viewer.m_ymin-m_full_extent.m_ymin) / resolution;
+		r_max = ceil (viewer.m_ymax-m_full_extent.m_ymin) / resolution;
+
 		return AG_SUCCESS;
 	}
 

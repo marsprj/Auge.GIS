@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(TileTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(TileTest);
 
 void TileTest::setUp() 
 {
@@ -14,7 +14,7 @@ void TileTest::setUp()
 
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
 	pLogger->Initialize();
-
+	
 	auge::DataEngine	*pEngine = NULL;
 	auge::DataEngineManager* pEngineManager = NULL;
 	pEngineManager = auge::augeGetDataEngineManagerInstance();
@@ -22,8 +22,8 @@ void TileTest::setUp()
 
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
-	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -40,7 +40,8 @@ void TileTest::setUp()
 	//const char* path = "DATABASE=G:\\temp\\quad";	
 	//pEngine = pEngineManager->GetEngine("TileFS");
 	
-	const char* path = "SERVER=192.168.111.160;INSTANCE=27017;DATABASE=tfss;USER=user;PASSWORD=qwer1234";
+	//const char* path = "SERVER=192.168.111.160;INSTANCE=27017;DATABASE=tfss;USER=user;PASSWORD=qwer1234";
+	const char* path = "SERVER=127.0.0.1;INSTANCE=27017;DATABASE=tfss;USER=user;PASSWORD=qwer1234";
 	pEngine = pEngineManager->GetEngine("TileMGO");
 	m_pWorkspace = dynamic_cast<auge::TileWorkspace*>(pEngine->CreateWorkspace());
 	m_pWorkspace->SetConnectionString(path);
@@ -85,7 +86,7 @@ void TileTest::WriteTest()
 	auge::CartoManager* pCartoManager = auge::augeGetCartoManagerInstance();
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
-	pMap = pCartoManager->LoadMap(2,"country");
+	pMap = pCartoManager->LoadMap(2,"world");
 	auge::Canvas* pCanvas = NULL;//pCartoFactory->CreateCanvas2D(256,256);
 	
 	char t_path[AUGE_PATH_MAX] = {0};
@@ -93,10 +94,12 @@ void TileTest::WriteTest()
 	//auge::TileStore *pTileStore = m_pWorkspace->GetTileStore(NULL);
 	//m_pWorkspace->CreateTileStore(NULL,auge::augeTilePGIS,1,5,pMap->GetExtent());
 
-	const char* tn = "t4";
-	m_pWorkspace->CreateTileStore(tn,auge::augeTileGoogleCRS84Quad,1,8,pMap->GetExtent());
+	const char* tn = "t10";
+	auge::GEnvelope viewer(0,0,180,90);
+	m_pWorkspace->CreateTileStore(tn,auge::augeTileGoogleCRS84Quad,1,8,viewer);
 	auge::TileStore *pTileStore = m_pWorkspace->OpenTileStore(tn);
-	auge::GEnvelope viewer = pTileStore->GetExtent();
+	//auge::GEnvelope viewer = pTileStore->GetExtent();
+	
 	//pCanvas->SetViewer(viewer);
 	//pCanvas->Draw(pMap);
 
@@ -109,10 +112,10 @@ void TileTest::WriteTest()
 
 	pProcessor->SetMap(pMap);
 	pProcessor->SetTileStore(pTileStore);
-	pProcessor->SetStartLevel(1);
-	pProcessor->SetEndLevel(8);
+	pProcessor->SetStartLevel(3);
+	pProcessor->SetEndLevel(5);
 	pProcessor->SetViewer(viewer);
-
+	
 	g_uint counter = pProcessor->Execute();
 
 	pProcessor->Release();
