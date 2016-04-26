@@ -202,7 +202,7 @@ namespace auge
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
-			return NULL;
+			return 0;
 		}
 		g_uint count = pResult->GetInt(0, 0);
 		pResult->Release();
@@ -267,7 +267,7 @@ namespace auge
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
-			return NULL;
+			return 0;
 		}
 		g_uint count = pResult->GetInt(0, 0);
 		pResult->Release();
