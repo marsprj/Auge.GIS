@@ -190,10 +190,7 @@ namespace auge
 		make_raster_path( inpath, AUGE_PATH_MAX,  pinRasterWorkspace->GetRepository(),  inRasterPath,  inRasterName);
 		make_raster_path(outpath, AUGE_PATH_MAX, poutRasterWorkspace->GetRepository(), outRasterPath, outRasterName);
 
-		
-
-
-		return rc;
+		return Resample(inpath, outpath, 0.5);
 	}
 
 	void RasterResampleProcessorImpl::Release()

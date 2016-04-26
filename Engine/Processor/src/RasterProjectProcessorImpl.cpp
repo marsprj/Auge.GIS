@@ -256,6 +256,8 @@ namespace auge
 			// to destination georeferenced coordinates (not destination 
 			// pixel line).  We do that by omitting the destination dataset
 			// handle (setting it to NULL). 
+
+
 			void *hTransformArg;
 			hTransformArg = 
 				GDALCreateGenImgProjTransformer( hSrcDS, pszSrcWKT, NULL, pszDstWKT, 
@@ -268,6 +270,7 @@ namespace auge
 			eErr = GDALSuggestedWarpOutput( hSrcDS, 
 				GDALGenImgProjTransform, hTransformArg, 
 				adfDstGeoTransform, &nPixels, &nLines );
+
 			CPLAssert( eErr == CE_None );
 			GDALDestroyGenImgProjTransformer( hTransformArg );
 			// Create the output file.
@@ -323,9 +326,11 @@ namespace auge
 			// Initialize and execute the warp operation. 
 			GDALWarpOperation oOperation;
 			oOperation.Initialize( psWarpOptions );
+
 			oOperation.ChunkAndWarpImage( 0, 0, 
 				GDALGetRasterXSize( hDstDS ), 
 				GDALGetRasterYSize( hDstDS ) );
+
 			GDALDestroyGenImgProjTransformer( psWarpOptions->pTransformerArg );
 			GDALDestroyWarpOptions( psWarpOptions );
 			GDALClose( hDstDS );
