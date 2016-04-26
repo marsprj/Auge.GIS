@@ -11,9 +11,10 @@ libgprocessor_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
 		-L$(top_srcdir)/Engine/Raster/src \
 		-L$(ARCHIVE_HOME)/lib \
-		-L$(PROJ4_HOME)/lib
+		-L$(PROJ4_HOME)/lib \
+		-I/opt/gdal-1.11.12/include
 
-libgprocessor_la_LIBADD=-lgcore -larchive -lgraster -lproj
+libgprocessor_la_LIBADD=-lgcore -larchive -lgraster -lproj -lgdal
 
 libgprocessor_la_SOURCES=\
 		BufferProcessorImpl.cpp \
