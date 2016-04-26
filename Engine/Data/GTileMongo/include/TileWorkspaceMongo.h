@@ -52,7 +52,7 @@ namespace auge
 
 	private:
 		bool					FindTileStore(const char* name);
-		RESULTCODE				InsertTileStoreMeta(const char* name, const char* type, g_uint start_level, g_uint end_level, GEnvelope& extent);
+		RESULTCODE				InsertTileStoreMeta(const char* name, const char* type, g_uint srid, g_uint start_level, g_uint end_level, GEnvelope& extent);
 		
 	private:
 

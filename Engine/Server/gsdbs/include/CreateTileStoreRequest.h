@@ -28,11 +28,18 @@ namespace auge
 		augeTileType			GetType();
 	public:
 		bool		Create(rude::CGI& cgi);
-
+		
 		void		SetVersion(const char* value);
 		void		SetSourceName(const char* name);
 		void		SetStoreName(const char* name);
 		void		SetType(const char* type);
+		void		SetExtent(const char* extent);
+		void		SetStartLevel(const char* level);
+		void		SetEndLevel(const char* level);
+
+		GEnvelope&	GetExtent();
+		g_uint		GetStartLevel();
+		g_uint		GetEndLevel();
 
 	private:
 		std::string m_version;
@@ -40,7 +47,10 @@ namespace auge
 		std::string m_source_name;
 		std::string m_store_name;
 		std::string m_encoding;
+		g_uint		m_start_level;
+		g_uint		m_end_level;
 		augeTileType m_type;
+		GEnvelope	m_extent;
 	};
 }
 
@@ -52,5 +62,6 @@ namespace auge
 -------------------------------------------------------------------------
 user=user1&service=dbs&version=1.0.0&request=CreateTileStore&sourceName=tfs&storeName=google&type=GoogleCRS84Quad
 http://127.0.0.1:8088/ows/user1/mgr?service=dbs&version=1.0.0&request=CreateTileStore&sourceName=tfs&storeName=google&type=GoogleCRS84Quad
+http://127.0.0.1:8088/ows/user1/mgr?service=dbs&version=1.0.0&request=CreateTileStore&sourceName=tfs&storeName=google&type=GoogleCRS84Quad&extent=0,0,180,90
 
 ************************************************************************/

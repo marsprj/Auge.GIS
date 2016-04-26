@@ -101,6 +101,14 @@ namespace auge
 		XElement* pxAbstract = pxTileStore->AddChild("Abstract",NULL);
 		pxAbstract->AddChildText(tile_name);
 
+		XElement* pxLevel = pxTileStore->AddChild("Level",NULL);
+		XElement* pxStart = pxLevel->AddChild("Start", NULL);
+		g_snprintf(str, AUGE_PATH_MAX, "%d", pTileStore->GetStartLevel());
+		pxStart->AddChildText(str);
+		XElement* pxEnd = pxLevel->AddChild("End", NULL);
+		g_snprintf(str, AUGE_PATH_MAX, "%d", pTileStore->GetEndLevel());
+		pxEnd->AddChildText(str);
+
 		GEnvelope& extent = pTileStore->GetExtent();
 		XElement* pxWGS84BoundingBox = pxTileStore->AddChild("WGS84BoundingBox", NULL);
 		pxWGS84BoundingBox->SetAttribute("crs","urn:ogc:def:crs:OGC:2:84",NULL);

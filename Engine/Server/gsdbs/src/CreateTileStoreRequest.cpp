@@ -8,6 +8,8 @@ namespace auge
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
 		m_encoding = AUGE_DEFAULT_ENCODING;
+		m_start_level = 1;
+		m_end_level = 18;
 	}
 
 	CreateTileStoreRequest::~CreateTileStoreRequest()
@@ -20,7 +22,10 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetSourceName(cgi["sourceName"]);
 		SetStoreName(cgi["storeName"]);
+		SetStartLevel(cgi["startLevel"]);
+		SetEndLevel(cgi["endLevel"]);
 		SetType(cgi["type"]);
+		SetExtent(cgi["extent"]);
 		return true;
 	}
 
@@ -137,9 +142,55 @@ namespace auge
 		}
 	}
 
+	void CreateTileStoreRequest::SetExtent(const char* extent)
+	{
+		if(extent==NULL||strlen(extent)==0)
+		{
+			return;
+		}
+		
+		double xmin, ymin, xmax, ymax;
+		int ret = sscanf(extent, "%lf,%lf,%lf,%lf,",&xmin, &ymin, &xmax, &ymax);
+		if(ret<4)
+		{
+			return;
+		}
+		m_extent.Set(xmin, ymin, xmax, ymax);
+	}
+
 	augeTileType CreateTileStoreRequest::GetType()
 	{
 		return m_type;
 	}
 
+	GEnvelope& CreateTileStoreRequest::GetExtent()
+	{
+		return m_extent;
+	}
+
+	void CreateTileStoreRequest::SetStartLevel(const char* level)
+	{
+		if(level!=NULL)
+		{
+			m_start_level = atoi(level);
+		}
+	}
+
+	void CreateTileStoreRequest::SetEndLevel(const char* level)
+	{
+		if(level!=NULL)
+		{
+			m_end_level = atoi(level);
+		}
+	}
+
+	g_uint CreateTileStoreRequest::GetStartLevel()
+	{
+		return m_start_level;
+	}
+
+	g_uint CreateTileStoreRequest::GetEndLevel()
+	{
+		return m_end_level;
+	}
 }

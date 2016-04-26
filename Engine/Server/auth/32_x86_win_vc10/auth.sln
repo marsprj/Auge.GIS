@@ -3,10 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "auth", "auth.vcxproj", "{07E3BF81-BF92-49F5-A943-A410D508DF0D}"
 	ProjectSection(ProjectDependencies) = postProject
+		{E361D34C-1E89-48C1-AC90-D60721C7D06A} = {E361D34C-1E89-48C1-AC90-D60721C7D06A}
 		{D8C7BCA3-AADF-430D-BD10-6F771418F31B} = {D8C7BCA3-AADF-430D-BD10-6F771418F31B}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsvrs", "..\..\gsvrs\32_x86_win_vc10\gsvrs.vcxproj", "{D8C7BCA3-AADF-430D-BD10-6F771418F31B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gsauth", "..\..\gsauth\32_x86_win_vc10\gsauth.vcxproj", "{E361D34C-1E89-48C1-AC90-D60721C7D06A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +25,10 @@ Global
 		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Debug|Win32.Build.0 = Debug|Win32
 		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Release|Win32.ActiveCfg = Release|Win32
 		{D8C7BCA3-AADF-430D-BD10-6F771418F31B}.Release|Win32.Build.0 = Release|Win32
+		{E361D34C-1E89-48C1-AC90-D60721C7D06A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E361D34C-1E89-48C1-AC90-D60721C7D06A}.Debug|Win32.Build.0 = Debug|Win32
+		{E361D34C-1E89-48C1-AC90-D60721C7D06A}.Release|Win32.ActiveCfg = Release|Win32
+		{E361D34C-1E89-48C1-AC90-D60721C7D06A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

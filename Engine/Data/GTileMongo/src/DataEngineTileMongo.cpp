@@ -8,7 +8,7 @@ namespace auge
 		static DataEngineTileMongo g_mongoTileEngine;
 		return &g_mongoTileEngine;
 	}
-
+	 
 	DataEngineTileMongo::DataEngineTileMongo():
 	m_handler(NULL)
 	{

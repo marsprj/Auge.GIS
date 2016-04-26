@@ -70,6 +70,8 @@ namespace auge
 		virtual GEnvelope&		GetExtent() = 0;
 		virtual GEnvelope&		GetFullExtent() = 0;
 		virtual void			GetTopLeftCorner(double &x, double &y) = 0;
+		virtual g_uint			GetStartLevel() = 0;
+		virtual g_uint			GetEndLevel() = 0;
 
 		virtual g_uint64		GetRows(g_uint level) = 0;
 		virtual g_uint64		GetCols(g_uint level) = 0;

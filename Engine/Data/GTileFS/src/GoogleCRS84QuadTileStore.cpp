@@ -64,6 +64,16 @@ namespace auge
 		y = -90;
 	}
 
+	g_uint GoogleCRS84QuadTileStore::GetStartLevel()
+	{
+		return m_start_level;
+	}
+
+	g_uint GoogleCRS84QuadTileStore::GetEndLevel()
+	{
+		return m_end_level;
+	}
+
 	g_uint64 GoogleCRS84QuadTileStore::GetRows(g_uint level)
 	{
 		float l = level > 20 ? 20 : level;

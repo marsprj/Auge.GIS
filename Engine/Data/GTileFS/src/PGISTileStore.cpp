@@ -44,6 +44,16 @@ namespace auge
 		y = -256;
 	}
 
+	g_uint PGISTileStore::GetStartLevel()
+	{
+		return m_start_level;
+	}
+
+	g_uint PGISTileStore::GetEndLevel()
+	{
+		return m_end_level;
+	}
+
 	g_uint64 PGISTileStore::GetRows(g_uint level)
 	{
 		float l = level > 20 ? 20 : level;

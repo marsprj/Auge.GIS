@@ -25,6 +25,8 @@ namespace auge
 		virtual GEnvelope&		GetExtent();
 		virtual GEnvelope&		GetFullExtent();
 		virtual void			GetTopLeftCorner(double &x, double &y);
+		virtual g_uint			GetStartLevel();
+		virtual g_uint			GetEndLevel();
 
 		virtual g_uint64		GetRows(g_uint level);
 		virtual g_uint64		GetCols(g_uint level);
@@ -52,6 +54,7 @@ namespace auge
 
 	public:
 		RESULTCODE		Create(TileWorkspaceMongo* pWorkspace, mongoc_gridfs_t *mgo_gridfs, const char* name);
+		RESULTCODE		Create(TileWorkspaceMongo* pWorkspace, mongoc_gridfs_t *mgo_gridfs, const char* name, g_uint start_level, g_uint end_level, GEnvelope& extent);
 		RESULTCODE		Create(TileWorkspaceMongo* pWorkspace, const char* name, g_uint start_level, g_uint end_level, GEnvelope& extent);
 
 	private:

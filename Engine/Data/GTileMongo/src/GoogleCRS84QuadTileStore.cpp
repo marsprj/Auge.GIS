@@ -28,7 +28,7 @@ namespace auge
 	}
 
 	bool GoogleCRS84QuadTileStore::IsEmpty()
-	{
+	{ 
 		return true;
 	}
 
@@ -46,6 +46,16 @@ namespace auge
 	{
 		x = -180;
 		y = -90;
+	}
+
+	g_uint GoogleCRS84QuadTileStore::GetStartLevel()
+	{
+		return m_start_level;
+	}
+
+	g_uint GoogleCRS84QuadTileStore::GetEndLevel()
+	{
+		return m_end_level;
 	}
 
 	g_uint64 GoogleCRS84QuadTileStore::GetRows(g_uint level)
@@ -367,9 +377,21 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	RESULTCODE GoogleCRS84QuadTileStore::Create(TileWorkspaceMongo* pWorkspace, mongoc_gridfs_t *mgo_gridfs, const char* name, g_uint start_level, g_uint end_level, GEnvelope& extent)
+	{
+		m_pWorkspace = pWorkspace;
+		m_gridfs = mgo_gridfs;
+		m_name = name;
+		m_start_level = start_level;
+		m_end_level = end_level;
+		m_extent = extent;
+		return AG_SUCCESS;
+	}
+
 	RESULTCODE GoogleCRS84QuadTileStore::Create(TileWorkspaceMongo* pWorkspace, const char* name, g_uint start_level, g_uint end_level, GEnvelope& extent)
 	{
 		m_pWorkspace = pWorkspace;
+		m_name = name;
 		m_start_level = start_level;
 		m_end_level = end_level;
 		m_extent = extent;

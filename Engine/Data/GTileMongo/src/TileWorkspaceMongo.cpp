@@ -166,14 +166,17 @@ namespace auge
 
 	RESULTCODE	TileWorkspaceMongo::CreateTileStore(const char* name, augeTileType type, g_uint start_level, g_uint end_level, GEnvelope& extent)
 	{
+		int srid = 0;
 		const char* store_type = NULL;
 		switch(type)
 		{
 		case augeTileGoogleCRS84Quad:
 			store_type = "GoogleCRS84Quad";
+			srid = 4326;
 			break;
 		case augeTilePGIS:
 			store_type = "PGIS";
+			srid = 4326;
 			break;
 		}
 		if(store_type==NULL)
@@ -190,7 +193,7 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		return InsertTileStoreMeta(name, store_type, start_level, end_level, extent);
+		return InsertTileStoreMeta(name, store_type, srid, start_level, end_level, extent);
 	}
 	
 	TileStore* TileWorkspaceMongo::OpenTileStore(const char* name)
@@ -202,6 +205,10 @@ namespace auge
 
 		char type[AUGE_NAME_MAX];
 		memset(type, 0, AUGE_NAME_MAX);
+		g_uint start_level = 0;
+		g_uint end_level = 0;
+		g_uint srid = 4326;
+		GEnvelope extent;
 
 		bson_t m_query;
 		bson_init (&m_query);
@@ -230,9 +237,33 @@ namespace auge
 		bson_iter_t bson_iter;
 		bson_iter_init(&bson_iter, bson);
 
+		//BSON_APPEND_INT32(b_doc, "srid", srid);
+		//BSON_APPEND_INT32(b_doc, "level_min", start_level);
+		//BSON_APPEND_INT32(b_doc, "level_max", end_level);
+		//BSON_APPEND_DOUBLE(b_doc, "xmin", extent.m_xmin);
+		//BSON_APPEND_DOUBLE(b_doc, "xmax", extent.m_xmax);
+		//BSON_APPEND_DOUBLE(b_doc, "ymin", extent.m_ymin);
+		//BSON_APPEND_DOUBLE(b_doc, "ymax", extent.m_ymax);
+
 		bson_iter_find(&bson_iter, "type");
 		value = bson_iter_utf8(&bson_iter, &length);
 		memcpy(type, value, length);
+
+		bson_iter_find(&bson_iter, "level_min");
+		start_level = bson_iter_int32(&bson_iter);
+
+		bson_iter_find(&bson_iter, "level_max");
+		end_level = bson_iter_int32(&bson_iter);
+
+		bson_iter_find(&bson_iter, "xmin");
+		extent.m_xmin = bson_iter_double(&bson_iter);
+		bson_iter_find(&bson_iter, "xmax");
+		extent.m_xmax = bson_iter_double(&bson_iter);
+
+		bson_iter_find(&bson_iter, "ymin");
+		extent.m_ymin = bson_iter_double(&bson_iter);
+		bson_iter_find(&bson_iter, "ymax");
+		extent.m_ymax = bson_iter_double(&bson_iter);
 		
 		mongoc_cursor_destroy (m_cursor);
 		bson_destroy (&m_query);
@@ -254,7 +285,7 @@ namespace auge
 		else if(g_stricmp(type, "GoogleCRS84Quad")==0)
 		{
 			GoogleCRS84QuadTileStore *pTileStoreGoogle = new GoogleCRS84QuadTileStore();
-			pTileStoreGoogle->Create(this, mgo_gridfs, name);
+			pTileStoreGoogle->Create(this, mgo_gridfs, name, start_level, end_level, extent);
 			pTileStore = pTileStoreGoogle;
 		}		
 		
@@ -299,8 +330,6 @@ namespace auge
 		}
 
 		bson_destroy(filter);
-
-		return AG_SUCCESS;
 
 		return AG_SUCCESS;
 	}
@@ -428,11 +457,10 @@ namespace auge
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	RESULTCODE TileWorkspaceMongo::InsertTileStoreMeta(const char* name, const char* type, g_uint start_level, g_uint end_level, GEnvelope& extent)
+	RESULTCODE TileWorkspaceMongo::InsertTileStoreMeta(const char* name, const char* type, g_uint srid, g_uint start_level, g_uint end_level, GEnvelope& extent)
 	{
-
 		bson_t *b_doc = NULL;
-		bson_oid_t b_oid;
+		bson_oid_t b_oid; 
 		bson_error_t b_error;
 		RESULTCODE rc = AG_SUCCESS;
 
@@ -441,8 +469,13 @@ namespace auge
 		BSON_APPEND_OID(b_doc, "_oid", &b_oid);
 		BSON_APPEND_UTF8(b_doc, "name", name);
 		BSON_APPEND_UTF8(b_doc, "type", type);
+		BSON_APPEND_INT32(b_doc, "srid", srid);
 		BSON_APPEND_INT32(b_doc, "level_min", start_level);
 		BSON_APPEND_INT32(b_doc, "level_max", end_level);
+		BSON_APPEND_DOUBLE(b_doc, "xmin", extent.m_xmin);
+		BSON_APPEND_DOUBLE(b_doc, "xmax", extent.m_xmax);
+		BSON_APPEND_DOUBLE(b_doc, "ymin", extent.m_ymin);
+		BSON_APPEND_DOUBLE(b_doc, "ymax", extent.m_ymax);
 
 		if(!mongoc_collection_insert(m_mongo_meta, MONGOC_INSERT_NONE, b_doc, NULL, &b_error))
 		{

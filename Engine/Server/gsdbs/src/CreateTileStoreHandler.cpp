@@ -62,6 +62,10 @@ namespace auge
 
 		const char* sourceName = pRequest->GetSourceName();
 		const char* storeName= pRequest->GetStoreName();
+		GEnvelope& extent = pRequest->GetExtent();
+		g_uint	start_level = pRequest->GetStartLevel();
+		g_uint	end_level = pRequest->GetEndLevel();
+		
 		augeTileType type = pRequest->GetType();
 
 		if(sourceName==NULL)
@@ -112,7 +116,7 @@ namespace auge
 		TileWorkspace* pTileWorkspace = dynamic_cast<TileWorkspace*>(pWorkspace);
 		if(pTileWorkspace==NULL)
 		{
-			char msg[AUGE_MSG_MAX];
+			char msg[AUGE_MSG_MAX]; 
 			g_sprintf(msg, "[%s] is not a Tile Workspace", sourceName);
 			GLogger* pLogger = augeGetLoggerInstance();
 			pLogger->Error(msg, __FILE__, __LINE__);
@@ -121,7 +125,8 @@ namespace auge
 			return pExpResponse;
 		}
 
-		RESULTCODE rc = pTileWorkspace->CreateTileStore(storeName, type);
+		//RESULTCODE rc = pTileWorkspace->CreateTileStore(storeName, type);
+		RESULTCODE rc = pTileWorkspace->CreateTileStore(storeName, type, start_level, end_level, extent);
 		if(rc!=AG_SUCCESS)
 		{
 			GError* pError = augeGetErrorInstance();
