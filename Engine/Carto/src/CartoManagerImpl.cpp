@@ -1986,7 +1986,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX];
-		sprintf(sql, "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy from g_map where user_id=%d", user);
+		sprintf(sql, "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy from g_map where user_id=%d order by uptime desc", user);
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
