@@ -8,9 +8,9 @@
 #include "proj_api.h"
 #include "SrsBase.h"
 
-#include "gdal/gdalwarper.h"
-#include "gdal/cpl_conv.h"
-#include "gdal/ogr_spatialref.h"
+#include <gdal/gdalwarper.h>
+#include <gdal/cpl_conv.h>
+#include <gdal/ogr_spatialref.h>
 
 namespace auge
 {

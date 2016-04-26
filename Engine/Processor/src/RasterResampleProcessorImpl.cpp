@@ -3,10 +3,10 @@
 #include "AugeRaster.h"
 #include "AugeUser.h"
 
-#include "gdal/gdalwarper.h"
-#include "gdal/cpl_conv.h"
-#include "gdal/gdal_priv.h"
-#include "gdal/ogr_spatialref.h"
+#include <gdal/gdalwarper.h>
+#include <gdal/cpl_conv.h>
+#include <gdal/gdal_priv.h>
+#include <gdal/ogr_spatialref.h>
 
 #include <math.h>
 
