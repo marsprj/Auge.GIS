@@ -140,7 +140,20 @@ namespace auge
 			if(pLayer!=NULL)
 			{
 				const char* lname = pLayer->GetName();
-				XElement* pxLayer_2 = pxLayer->AddChild("Layer", NULL);				
+
+				XElement* pxLayer_2 = NULL;
+				switch(pLayer->GetType())
+				{
+				case augeLayerFeature:
+				case augeLayerRaster:
+					pxLayer_2 = pxLayer->AddChild("Layer", NULL);
+					break;
+				case augeLayerQuadServer:
+				case augeLayerWMTS:
+					pxLayer_2 = pxCapability->AddChild("Layer", NULL);
+					break;
+				}
+							
 				pxLayer_2->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
 				pxLayer_2->SetAttribute("visible", pLayer->IsVisiable()?"1":"0", NULL);
 				g_sprintf(str,"%d",pLayer->GetID());
@@ -157,6 +170,7 @@ namespace auge
 				{
 				case augeLayerFeature:
 					{
+
 						XElement* pxLayerType = pxLayer_2->AddChild("Type");
 						pxLayerType->AddChildText("Feature");
 
@@ -170,7 +184,7 @@ namespace auge
 					}
 					break;
 				case augeLayerRaster:
-					{
+					{						 
 						XElement* pxLayerType = pxLayer_2->AddChild("Type");
 						pxLayerType->AddChildText("Raster");
 
@@ -191,8 +205,8 @@ namespace auge
 						XElement* pxLayerType = pxLayer_2->AddChild("Type");
 						pxLayerType->AddChildText("WMTS");
 
-						QuadServerLayer* pQuadServerLayer = static_cast<QuadServerLayer*>(pLayer);
-						AddWebURLNode(pxLayer_2, pQuadServerLayer->GetURL());
+						WMTSLayer* pWMTSLayer = static_cast<WMTSLayer*>(pLayer);
+						AddWebURLNode(pxLayer_2, pWMTSLayer->GetURL());
 					}
 					break;
 				}

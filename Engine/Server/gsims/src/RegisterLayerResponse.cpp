@@ -121,10 +121,18 @@ namespace auge
 				pxNode->AddChildText("Raster");
 			}
 			break;
+		case augeLayerWMTS:
+			{
+				pxNode = pxRoot->AddChild("Type",NULL);
+				pxNode->AddChildText("WMTS");
+				WMTSLayer* pWMTSLayer = static_cast<WMTSLayer*>(pLayer);
+				AddWebURLNode(pxRoot, pWMTSLayer->GetURL());
+			}
+			break;
 		case augeLayerQuadServer:
 			{
 				pxNode = pxRoot->AddChild("Type",NULL);
-				pxNode->AddChildText("Tile");
+				pxNode->AddChildText("QuadServer");
 				QuadServerLayer* pQuadServerLayer = static_cast<QuadServerLayer*>(pLayer);
 				AddWebURLNode(pxRoot, pQuadServerLayer->GetURL());
 			}
