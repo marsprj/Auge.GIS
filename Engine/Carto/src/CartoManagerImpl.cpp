@@ -140,7 +140,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy,m_uuid from g_map where gid=%d", mid);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid, m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy,m_uuid from g_map where gid=%d order by uptime desc", mid);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -635,7 +635,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, "update g_map set thumbnail='%s' where gid=%d", thumbnail, map_id);
+		g_snprintf(sql, AUGE_SQL_MAX, "update g_map set thumbnail='%s', uptime=now() where gid=%d", thumbnail, map_id);
 		return m_pConnection->ExecuteSQL(sql);
 	}
 
@@ -1160,7 +1160,7 @@ namespace auge
 		{
 			return AG_FAILURE;
 		}
-
+		
 		g_int map_id = GetMapID(mapName);
 		if(map_id<0)
 		{
@@ -2911,6 +2911,7 @@ namespace auge
 							"  v_maxy double precision DEFAULT  90," \
 							"  thumbnail character varying(128) DEFAULT ''::character varying," \
 							"  m_uuid character varying(128) DEFAULT ''::character varying," \
+							"  uptime timestamp without time zone,"
 							"  CONSTRAINT g_map_pkey PRIMARY KEY (gid )," \
 							"  CONSTRAINT g_map_user_fk FOREIGN KEY (user_id)" \
 							"  REFERENCES g_user (gid) MATCH SIMPLE " \

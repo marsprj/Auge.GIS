@@ -118,14 +118,14 @@ namespace auge
 			nodeName = pxNode->GetName();
 			if(g_stricmp(nodeName, "Name")==0)
 			{
-				if(pxNode->GetChildren()!=NULL)
+				if(pxNode->HasChildren())
 				{
 					name = pxNode->GetContent();
 				}
 			}
 			else if(g_stricmp(nodeName, "Title")==0)
 			{
-				if(pxNode->GetChildren()!=NULL)
+				if(pxNode->HasChildren())
 				{
 					title = pxNode->GetContent();
 				}
@@ -165,7 +165,7 @@ namespace auge
 			pxNode = pxNodeSet->Next();
 			if(pxNode!=NULL)
 			{
-				nodeName = pxNode->GetName();
+				nodeName = pxNode->GetName(); 
 				if(g_stricmp(nodeName, "Name")==0)
 				{
 					pFStyle->SetName(pxNode->GetContent());
@@ -219,7 +219,7 @@ namespace auge
 				else if(g_stricmp(nodeName, AUGE_SLD_POINT_SYMBOLIZER)==0)
 				{
 					PointSymbolizer* pSymbolizer = NULL;
-					pSymbolizer = ReadPointSymbolizer(pxNode);
+					pSymbolizer = ReadPointSymbolizer(pxNode); 
 					if(pSymbolizer!=NULL)
 					{
 						pRule->SetSymbolizer(pSymbolizer);
@@ -264,15 +264,15 @@ namespace auge
 				}
 				else if(g_stricmp(nodeName, "Filter")==0)
 				{
-					if(m_pFeatureClass!=NULL)
-					{
-						FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
-						GFields* pFields = m_pFeatureClass->GetFields();
-						FilterReader* reader = pFilterFactory->CreateFilerReader(pFields);
-						pFilter = reader->Read((XElement*)pxNode);
-						AUGE_SAFE_RELEASE(reader);
-						pRule->SetFilter(pFilter);
-					}
+					//if(m_pFeatureClass!=NULL)
+					//{
+					//	FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
+					//	GFields* pFields = m_pFeatureClass->GetFields();
+					//	FilterReader* reader = pFilterFactory->CreateFilerReader(pFields);
+					//	pFilter = reader->Read((XElement*)pxNode);
+					//	AUGE_SAFE_RELEASE(reader);
+					//	pRule->SetFilter(pFilter);
+					//}
 				}
 			}
 		}
@@ -466,7 +466,7 @@ namespace auge
 		if(pxFill==NULL)
 		{
 			// Not a GraphicFill Symbol
-			pFillSymbol = ReadFillSymbol(pxSymbolizerNode);
+			//pFillSymbol = ReadFillSymbol(pxSymbolizerNode);
 		}
 		else
 		{
@@ -474,17 +474,18 @@ namespace auge
 			if(pxGraphicFill==NULL)
 			{
 				// Not a GraphicFill Symbol 
-				pFillSymbol = ReadFillSymbol(pxSymbolizerNode);
+				//pFillSymbol = ReadFillSymbol(pxSymbolizerNode);
 			}
 			else
 			{
 				// GraphicFill Symbol 
-				pFillSymbol = ReadGraphicFillSymbol(pxSymbolizerNode);
+				//pFillSymbol = ReadGraphicFillSymbol(pxSymbolizerNode);
 			}
 		}
 		pSymbolizer->SetSymbol(pFillSymbol);
 
 		return pSymbolizer;
+		//return NULL;
 	}
 
 	FillSymbol* StyleReader_1_0_0::ReadFillSymbol(XNode* pxSymbolizerNode)
