@@ -7,6 +7,7 @@ namespace auge
 		m_srid = AUGE_DEFAULT_SRID;
 		m_min_scale = -1.0;
 		m_max_scale = -1.0;
+		m_visible = true;
 	}
 
 	QuadServerLayerImpl::~QuadServerLayerImpl()
