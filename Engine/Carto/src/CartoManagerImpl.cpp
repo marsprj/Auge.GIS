@@ -196,7 +196,7 @@ namespace auge
 			return NULL;
 		}
 
-		const char* sql = "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy from g_map";
+		const char* sql = "select gid,m_name,m_uri,version,minx,miny,maxx,maxy,srid,thumbnail,v_minx,v_miny,v_maxx,v_maxy from g_map order by uptime desc";
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
