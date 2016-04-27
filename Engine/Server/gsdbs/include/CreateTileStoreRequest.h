@@ -62,6 +62,6 @@ namespace auge
 -------------------------------------------------------------------------
 user=user1&service=dbs&version=1.0.0&request=CreateTileStore&sourceName=tfs&storeName=google&type=GoogleCRS84Quad
 http://127.0.0.1:8088/ows/user1/mgr?service=dbs&version=1.0.0&request=CreateTileStore&sourceName=tfs&storeName=google&type=GoogleCRS84Quad
-http://127.0.0.1:8088/ows/user1/mgr?service=dbs&version=1.0.0&request=CreateTileStore&sourceName=tfs&storeName=google&type=GoogleCRS84Quad&extent=0,0,180,90
+http://127.0.0.1:8088/ows/user1/mgr?service=dbs&version=1.0.0&request=CreateTileStore&sourceName=tfs&storeName=google&type=GoogleCRS84Quad&extent=0,0,180,90&startlevel=3&endlevel=5
 
 ************************************************************************/

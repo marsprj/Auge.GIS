@@ -41,7 +41,7 @@ void TileTest::setUp()
 	//pEngine = pEngineManager->GetEngine("TileFS");
 	
 	//const char* path = "SERVER=192.168.111.160;INSTANCE=27017;DATABASE=tfss;USER=user;PASSWORD=qwer1234";
-	const char* path = "SERVER=127.0.0.1;INSTANCE=27017;DATABASE=tfss;USER=user;PASSWORD=qwer1234";
+	const char* path = "SERVER=127.0.0.1;INSTANCE=27017;DATABASE=tfs;USER=user;PASSWORD=qwer1234";
 	pEngine = pEngineManager->GetEngine("TileMGO");
 	m_pWorkspace = dynamic_cast<auge::TileWorkspace*>(pEngine->CreateWorkspace());
 	m_pWorkspace->SetConnectionString(path);
@@ -86,7 +86,7 @@ void TileTest::WriteTest()
 	auge::CartoManager* pCartoManager = auge::augeGetCartoManagerInstance();
 	auge::CartoFactory* pCartoFactory = auge::augeGetCartoFactoryInstance();
 
-	pMap = pCartoManager->LoadMap(2,"world");
+	pMap = pCartoManager->LoadMap(2,"china");
 	auge::Canvas* pCanvas = NULL;//pCartoFactory->CreateCanvas2D(256,256);
 	
 	char t_path[AUGE_PATH_MAX] = {0};
@@ -94,8 +94,8 @@ void TileTest::WriteTest()
 	//auge::TileStore *pTileStore = m_pWorkspace->GetTileStore(NULL);
 	//m_pWorkspace->CreateTileStore(NULL,auge::augeTilePGIS,1,5,pMap->GetExtent());
 
-	const char* tn = "t10";
-	auge::GEnvelope viewer(0,0,180,90);
+	const char* tn = "t16";
+	auge::GEnvelope viewer = pMap->GetExtent();
 	m_pWorkspace->CreateTileStore(tn,auge::augeTileGoogleCRS84Quad,1,8,viewer);
 	auge::TileStore *pTileStore = m_pWorkspace->OpenTileStore(tn);
 	//auge::GEnvelope viewer = pTileStore->GetExtent();
@@ -112,7 +112,7 @@ void TileTest::WriteTest()
 
 	pProcessor->SetMap(pMap);
 	pProcessor->SetTileStore(pTileStore);
-	pProcessor->SetStartLevel(3);
+	pProcessor->SetStartLevel(1);
 	pProcessor->SetEndLevel(5);
 	pProcessor->SetViewer(viewer);
 	

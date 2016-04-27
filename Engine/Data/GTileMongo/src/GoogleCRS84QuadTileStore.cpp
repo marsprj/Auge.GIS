@@ -418,8 +418,8 @@ namespace auge
 		double resolution = m_full_extent.GetHeight() / pow(2.0f,(float)(level-1));
 		c_min = floor((viewer.m_xmin-m_full_extent.m_xmin) / resolution);
 		c_max = ceil ((viewer.m_xmax-m_full_extent.m_xmin) / resolution);
-		r_min = floor((viewer.m_ymin-m_full_extent.m_ymin) / resolution);
-		r_max = ceil ((viewer.m_ymax-m_full_extent.m_ymin) / resolution);
+		r_min = floor((m_full_extent.m_ymax - viewer.m_ymax) / resolution); 
+		r_max = ceil ((m_full_extent.m_ymax - viewer.m_ymin) / resolution);
 
 		c_min = c_min < 0 ? 0 : c_min;
 		c_max = c_max < 0 ? 0 : c_max;
