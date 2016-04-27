@@ -14,6 +14,7 @@ namespace auge
 		m_full_extent.Set(-180.0f,-90.0f,180.0f,90.0f);
 		m_extent = m_full_extent;
 		m_pWorkspace = NULL;
+		m_srid = 4326;
 
 		m_gridfs = NULL;
 	}
@@ -56,6 +57,11 @@ namespace auge
 	g_uint GoogleCRS84QuadTileStore::GetEndLevel()
 	{
 		return m_end_level;
+	}
+
+	g_uint GoogleCRS84QuadTileStore::GetSRID()
+	{
+		return m_srid;
 	}
 
 	g_uint64 GoogleCRS84QuadTileStore::GetRows(g_uint level)

@@ -24,6 +24,7 @@ namespace auge
 		virtual void			GetTopLeftCorner(double &x, double &y);
 		virtual g_uint			GetStartLevel();
 		virtual g_uint			GetEndLevel();
+		virtual g_uint			GetSRID();
 
 		virtual g_uint64		GetRows(g_uint level);
 		virtual g_uint64		GetCols(g_uint level);
@@ -62,6 +63,7 @@ namespace auge
 		std::string		m_connstring;
 		std::string		m_tile_format;
 		augeTileType	m_tile_type;
+		g_uint			m_srid;
 
 		GEnvelope		m_extent;
 		GEnvelope		m_full_extent;

@@ -72,6 +72,7 @@ namespace auge
 		virtual void			GetTopLeftCorner(double &x, double &y) = 0;
 		virtual g_uint			GetStartLevel() = 0;
 		virtual g_uint			GetEndLevel() = 0;
+		virtual g_uint			GetSRID() = 0;
 
 		virtual g_uint64		GetRows(g_uint level) = 0;
 		virtual g_uint64		GetCols(g_uint level) = 0;

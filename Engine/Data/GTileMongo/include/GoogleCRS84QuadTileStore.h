@@ -27,6 +27,7 @@ namespace auge
 		virtual void			GetTopLeftCorner(double &x, double &y);
 		virtual g_uint			GetStartLevel();
 		virtual g_uint			GetEndLevel();
+		virtual g_uint			GetSRID();
 
 		virtual g_uint64		GetRows(g_uint level);
 		virtual g_uint64		GetCols(g_uint level);
@@ -72,6 +73,8 @@ namespace auge
 
 		g_uint			m_start_level;
 		g_uint			m_end_level;
+
+		g_uint			m_srid;
 
 		TileWorkspaceMongo* m_pWorkspace;
 		//mongoc_collection_t* m_collection;

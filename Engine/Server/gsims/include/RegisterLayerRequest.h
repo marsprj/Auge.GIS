@@ -83,7 +83,8 @@ http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLa
 
 
 // Regisger QuadServer Layer
-http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&layerName=world_image&weburl=http://127.0.0.1/QuadServer/maprequest?services=world_image&layerType=QuadServer
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&layerName=world_image&weburl=service=ims&version=1.0.0&request=RegisterLayer&mapName=world&layerName=world_image&layerType=QuadServer&webName=world_image&layerType=QuadServer&weburl=http://127.0.0.1/QuadServer/maprequest?
+http://192.168.111.156:8080/ows/user1/mgr?service=ims&version=1.0.0&request=RegisterLayer&mapName=world&layerName=world_imagelayerType=QuadServer&webName=world_image&layerType=QuadServer&weburl=http://192.168.111.156:8080/QuadServer/maprequest?
 user=user1&service=ims&version=1.0.0&request=RegisterLayer&mapName=world&layerName=world_image&layerType=QuadServer&webName=world_image&weburl=http://127.0.0.1/QuadServer/maprequest?
 
 [ HTP Post ]

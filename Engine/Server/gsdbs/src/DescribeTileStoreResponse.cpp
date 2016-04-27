@@ -101,6 +101,10 @@ namespace auge
 		XElement* pxAbstract = pxTileStore->AddChild("Abstract",NULL);
 		pxAbstract->AddChildText(tile_name);
 
+		g_snprintf(str, AUGE_PATH_MAX, "%d", pTileStore->GetSRID());
+		XElement* pxSRID = pxTileStore->AddChild("SRID",NULL);
+		pxSRID->AddChildText(str);
+
 		XElement* pxLevel = pxTileStore->AddChild("Level",NULL);
 		XElement* pxStart = pxLevel->AddChild("Start", NULL);
 		g_snprintf(str, AUGE_PATH_MAX, "%d", pTileStore->GetStartLevel());
