@@ -474,12 +474,12 @@ namespace auge
 			if(pxGraphicFill==NULL)
 			{
 				// Not a GraphicFill Symbol 
-				//pFillSymbol = ReadFillSymbol(pxSymbolizerNode);
+				pFillSymbol = ReadFillSymbol(pxSymbolizerNode);
 			}
 			else
 			{
 				// GraphicFill Symbol 
-				//pFillSymbol = ReadGraphicFillSymbol(pxSymbolizerNode);
+				pFillSymbol = ReadGraphicFillSymbol(pxSymbolizerNode);
 			}
 		}
 		pSymbolizer->SetSymbol(pFillSymbol);

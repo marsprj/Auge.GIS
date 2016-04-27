@@ -89,7 +89,8 @@ namespace auge
 
 	void CanvasImpl::DrawLayer(FeatureLayer* pLayer)
 	{
-		DrawLayer(pLayer, static_cast<FeatureStyle*>(pLayer->GetStyle()));
+		Style *pStyle = pLayer->GetStyle();
+		DrawLayer(pLayer, static_cast<FeatureStyle*>(pStyle));
 	}
 
 	void CanvasImpl::DrawLayer(RasterLayer* pLayer)

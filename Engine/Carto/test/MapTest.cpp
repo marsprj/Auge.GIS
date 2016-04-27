@@ -20,8 +20,8 @@ void MapTest::setUp()
 	pEngineManager->Load();
 	pEngine = pEngineManager->GetEngine("Postgres");
 	m_pConnection = pEngine->CreateConnection();
-	m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
-	//m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	//m_pConnection->SetConnectionString("SERVER=127.0.0.1;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
+	m_pConnection->SetConnectionString("SERVER=192.168.111.160;INSTANCE=5432;DATABASE=auge;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK");
 	m_pConnection->Open();
 
 	auge::ConnectionManager* pConnManager = NULL;
@@ -88,7 +88,7 @@ void MapTest::DrawMap()
 		printf("\r%d",i++);
 
 		auge::Map* pMap = NULL;
-		pMap = pCartoManager->LoadMap(2, "world");
+		pMap = pCartoManager->LoadMap(2, "country");
 
 		pCanvas->SetViewer(pMap->GetViewer());
 		pCanvas->Draw(pMap);
