@@ -71,8 +71,13 @@ namespace auge
 		g_sprintf(str,"%d", pRaster->GetHeight());
 		pxNode = pxRoot->AddChild("Height",NULL);
 		pxNode->AddChildText(str);
-
 		//PixelType
+		pxNode = pxRoot->AddChild("PixelType",NULL);
+		pxNode->AddChild(augeGetPixelType(pRaster->GetPixelType()));
+		//PixelSize
+		g_sprintf(str,"%d", augeGetPixelSize(pRaster->GetPixelType()));
+		pxNode = pxRoot->AddChild("PixelSize",NULL);
+		pxNode->AddChildText(str);
 		
 		//extent
 		GEnvelope& extent = pRaster->GetExtent();
@@ -84,6 +89,10 @@ namespace auge
 		g_sprintf(str,"%f %f",extent.m_xmax,extent.m_ymax);
 		pxNode = pxBounding->AddChild("UpperRight");
 		pxNode->AddChildText(str);
+
+		//uuid
+		pxNode = pxRoot->AddChild("UUID", NULL);
+		pxNode->AddChildText(pRaster->GetUUID());
 
 		//// path
 		//pxNode = pxRoot->AddChild("Path",NULL);

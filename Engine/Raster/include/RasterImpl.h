@@ -49,6 +49,8 @@ namespace auge
 		virtual bool			GetRasterPosition(double mx, double my, g_int& rx, g_int& ry);
 		virtual bool			GetRasterRect(GRect& rect, GEnvelope& extent);
 
+		virtual const char*		GetUUID();
+
 		virtual const char*		GetPath();
 		virtual void			SetPath(const char* path);
 
@@ -61,6 +63,7 @@ namespace auge
 		//void	Create(const char* name, GDALDataset* poDataset, WorkspaceRaster* pWorkspace, const char* path);
 		g_uint	GetPixelSize(GDALDataType type);
 
+		void	SetUUID(const char* uuid);
 	private:
 		void	Cleanup();
 
@@ -70,6 +73,7 @@ namespace auge
 		std::string  m_path;
 		std::string	 m_full_path;
 		std::string  m_format;
+		std::string	 m_uuid;
 
 		GDALDataset* m_poDataset;
 		GEnvelope	 m_extent;

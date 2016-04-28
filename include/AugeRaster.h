@@ -69,6 +69,8 @@ namespace auge
 		virtual bool			GetRasterPosition(double mx, double my, g_int& rx, g_int& ry) = 0;
 		virtual bool			GetRasterRect(GRect& rect, GEnvelope& extent) = 0;
 
+		virtual const char*		GetUUID() = 0;
+
 		virtual const char*		GetPath() = 0;
 		virtual void			SetPath(const char* path) = 0;
 		

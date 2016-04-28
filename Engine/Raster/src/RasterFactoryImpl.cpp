@@ -330,6 +330,7 @@ namespace auge
 			pRaster->Release();
 			return NULL;
 		}
+		pRaster->SetUUID(uuid);
 		//pRaster->SetName(name);
 		//pRaster->SetAlias(alias);
 		//pRaster->SetPath(path);

@@ -511,6 +511,15 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
+	void RasterImpl::SetUUID(const char* uuid)
+	{
+		m_uuid;
+	}
+
+	const char* RasterImpl::GetUUID()
+	{
+		return m_uuid.c_str();
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 	const char* auge_raster_get_driver(const char* ext)
