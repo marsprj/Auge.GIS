@@ -299,7 +299,7 @@ namespace auge
 		//g_snprintf(thumbnail, AUGE_PATH_MAX, "http://%s:%s/ows/thumbnail/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), pMap->GetThumbnail());
 		g_snprintf(thumbnail, AUGE_PATH_MAX, "/ows/thumbnail/%s", pMap->GetThumbnail());
 		XElement* pxThumbnail = pxParent->AddChild("Thumbnail");
-		pxThumbnail->SetChildText(thumbnail);
+		pxThumbnail->AddChildText(thumbnail);
 	}
 
 	void DescribeServiceResponse::AddOperations(XElement* pxService)
