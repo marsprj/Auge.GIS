@@ -69,10 +69,11 @@ namespace auge
 
 			if(!f->isfolder) 
 			{ 
-				// file size
-				memset(str, 0, AUGE_NAME_MAX);
-				g_sprintf(str, "%d KB", (int)((f->fstat.st_size>>10))+1);
-				pxNode->SetAttribute("size",str,NULL);
+				AddFileSizeAttribute(pxNode, (int)((f->fstat.st_size>>10))+1);
+				//// file size
+				//memset(str, 0, AUGE_NAME_MAX);
+				//g_sprintf(str, "%d KB", (int)((f->fstat.st_size>>10))+1);
+				//pxNode->SetAttribute("size",str,NULL);
 			}
 		}
 
@@ -106,4 +107,23 @@ namespace auge
 
 		m_files.push_back(f);
 	}
+
+	void ListResponse::AddFileSizeAttribute(XElement* pxNode, g_uint64 size)
+	{
+		static char* g_s_size_quota[] = {"KB", "MB","GB","TB","PB"};
+		char str[AUGE_NAME_MAX];
+		memset(str, 0, AUGE_NAME_MAX);
+
+		int i=0;
+		float fsize=size;
+		g_uint64 temp = size>>10;
+		for(i=0; temp>0; i++)
+		{
+			temp = temp >> 10;
+			fsize /= 1024;
+		}
+
+		g_sprintf(str, "%3.2f %s", fsize, g_s_size_quota[i]);
+		pxNode->SetAttribute("size",str,NULL);
+	} 
 }

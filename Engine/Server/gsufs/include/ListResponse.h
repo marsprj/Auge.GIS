@@ -38,6 +38,9 @@ namespace auge
 		void	SetPath(const char* path);
 
 	private:
+		void ListResponse::AddFileSizeAttribute(XElement* pxNode, g_uint64 size);
+
+	private:
 		ListRequest				*m_pRequest;
 		std::vector<g_file_t*>	m_files;	
 		std::string				m_path;
