@@ -127,15 +127,15 @@ namespace auge
 			g_uint srid = pMap->GetSRID();
 			char temp[AUGE_MSG_MAX];
 			g_snprintf(temp, AUGE_MSG_MAX, "%d", srid);
-			XElement* pxSrid = pxMap->AddChild("SRID");
+			XElement* pxSrid = pxService->AddChild("SRID");
 			pxSrid->SetChildText(temp);
 
 			const char* thumbnail = pMap->GetThumbnail();
-			XElement* pxThumbnail = pxMap->AddChild("Thumbnail");
+			XElement* pxThumbnail = pxService->AddChild("Thumbnail");
 			pxThumbnail->AddChildText(thumbnail);
 
 			GEnvelope& extent = pMap->GetExtent();
-			AddLayerBoundingNode(pxMap, extent, srid);
+			AddLayerBoundingNode(pxService, extent, srid);
 		}
 		return true;
 	}
