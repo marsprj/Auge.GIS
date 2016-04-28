@@ -123,6 +123,19 @@ namespace auge
 			const char* name = pMap->GetName();
 			//pxMap->SetAttribute("name", name, NULL);
 			pxMap->SetChildText(name, true);
+
+			g_uint srid = pMap->GetSRID();
+			char temp[AUGE_MSG_MAX];
+			g_snprintf(temp, AUGE_MSG_MAX, "%d", srid);
+			XElement* pxSrid = pxMap->AddChild("SRID");
+			pxSrid->SetChildText(temp);
+
+			const char* thumbnail = pMap->GetThumbnail();
+			XElement* pxThumbnail = pxMap->AddChild("Thumbnail");
+			pxThumbnail->AddChildText(thumbnail);
+
+			GEnvelope& extent = pMap->GetExtent();
+			AddLayerBoundingNode(pxMap, extent, srid);
 		}
 		return true;
 	}
@@ -192,15 +205,15 @@ namespace auge
 						RasterLayer* pRasterLayer = static_cast<RasterLayer*>(pLayer);
 					}
 					break;
-				//case augeLayerQuadServer:
-				//	{
-				//		XElement* pxLayerType = pxLayer_2->AddChild("Type");
-				//		pxLayerType->AddChildText("QuadServer");
+				case augeLayerQuadServer:
+					{
+						XElement* pxLayerType = pxLayer_2->AddChild("Type");
+						pxLayerType->AddChildText("QuadServer");
 
-				//		QuadServerLayer* pQuadServerLayer = static_cast<QuadServerLayer*>(pLayer);
-				//		AddWebURLNode(pxLayer_2, pQuadServerLayer->GetURL());
-				//	}
-				//	break;
+						QuadServerLayer* pQuadServerLayer = static_cast<QuadServerLayer*>(pLayer);
+						//AddWebURLNode(pxLayer_2, pQuadServerLayer->GetURL());
+					}
+					break;
 				}
 				GEnvelope& extent = pLayer->GetExtent();
 				if(!extent.IsValid())
@@ -274,5 +287,14 @@ namespace auge
 				pxGeomType->AddChildText(type);
 			}
 		}
+	}
+
+	void DescribeServiceResponse::AddThumbnailNode(XElement* pxThumbnail, Map* pMap)
+	{
+		char thumbnail[AUGE_PATH_MAX];
+		memset(thumbnail,0,AUGE_PATH_MAX);
+		//g_snprintf(thumbnail, AUGE_PATH_MAX, "http://%s:%s/ows/thumbnail/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), pMap->GetThumbnail());
+		g_snprintf(thumbnail, AUGE_PATH_MAX, "/ows/thumbnail/%s", pMap->GetThumbnail());
+		pxThumbnail->SetAttribute("xlink",thumbnail,NULL);
 	}
 }
