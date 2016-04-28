@@ -110,7 +110,7 @@ namespace auge
 
 	void ListResponse::AddFileSizeAttribute(XElement* pxNode, g_uint64 size)
 	{
-		static char* g_s_size_quota[] = {"KB", "MB","GB","TB","PB"};
+		static const char* g_s_size_quota[] = {"KB", "MB","GB","TB","PB"};
 		char str[AUGE_NAME_MAX];
 		memset(str, 0, AUGE_NAME_MAX);
 
