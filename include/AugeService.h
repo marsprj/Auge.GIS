@@ -68,6 +68,7 @@ namespace auge
 	public:
 		virtual g_uint			GetCount() = 0;
 		virtual Service*		GetService(g_uint user_id, const char* szName) = 0;
+		virtual Service*		LoadService(g_uint user_id, const char* szName) = 0;
 		virtual EnumService*	GetServices(g_uint user_id) = 0;
 		virtual g_int			GetServiceID(g_uint user_id, const char* szName) = 0;
 		virtual bool			Has(g_uint user_id, const char* szName) = 0;

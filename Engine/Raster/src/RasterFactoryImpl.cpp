@@ -542,4 +542,26 @@ namespace auge
 		}
 		return 0;
 	}
+
+	const char*	augeGetPixelType(augePixelType type)
+	{
+		switch(type)
+		{
+		case augePixelByte:
+			return "Bype";
+		case augePixelUInt16:
+			return "UInt16";
+		case augePixelInt16:
+			return "Int16";
+		case augePixelUInt32:
+			return "UInt32";
+		case augePixelInt32:
+			return "Int32";
+		case augePixelFloat32:
+			return "Float";
+		case augePixelDouble:
+			return "Double";
+		}
+		return "Unknown";
+	}
 }

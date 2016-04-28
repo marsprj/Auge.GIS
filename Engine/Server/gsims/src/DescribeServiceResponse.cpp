@@ -74,11 +74,12 @@ namespace auge
 		{
 			
 
-			pService = pServiceManager->GetService(user_id, name);
+			pService = pServiceManager->LoadService(user_id, name);
 			if(pService!=NULL)
 			{
 				XElement *pxService = pxDoc->CreateRootNode("Service", NULL, NULL);
 				AddServiceNode(pxService, pService);
+				pService->Release();
 			}
 		}
 

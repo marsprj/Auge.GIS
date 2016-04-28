@@ -71,6 +71,8 @@ namespace auge
 		g_sprintf(str,"%d", pRaster->GetHeight());
 		pxNode = pxRoot->AddChild("Height",NULL);
 		pxNode->AddChildText(str);
+
+		//PixelType
 		
 		//extent
 		GEnvelope& extent = pRaster->GetExtent();

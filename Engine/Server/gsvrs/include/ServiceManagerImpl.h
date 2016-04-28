@@ -15,6 +15,7 @@ namespace auge
 	public:
 		virtual g_uint			GetCount();
 		virtual Service*		GetService(g_uint user_id, const char* szName);
+		virtual Service*		LoadService(g_uint user_id, const char* szName);
 		virtual EnumService*	GetServices(g_uint user_id);
 		virtual g_int			GetServiceID(g_uint user_id, const char* szName);
 		virtual bool			Has(g_uint user_id, const char* szName);
@@ -38,7 +39,7 @@ namespace auge
 		void		Cleanup();
 		bool		CreateServiceTable();
 
-		Service*	LoadService(g_uint s_id, const char* szName);
+		
 	private:
 		GConnection* m_pConnection;
 
