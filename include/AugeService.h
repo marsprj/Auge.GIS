@@ -47,6 +47,7 @@ namespace auge
 		virtual RESULTCODE		Shutdown() = 0;
 		virtual	RESULTCODE		Pause() = 0;
 		virtual RESULTCODE		Resume() = 0;
+		virtual bool			IsStarted() = 0;
 	};
 
 	class EnumService : public GObject
