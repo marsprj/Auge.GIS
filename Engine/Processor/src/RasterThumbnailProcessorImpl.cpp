@@ -8,6 +8,7 @@ namespace auge
 		m_red = 0;
 		m_green = 0;
 		m_blue = 0;
+		m_thumbnail_size = AUGE_THUMBNAIL_SIZE;
 	}
 
 	RasterThumbnailProcessorImpl::~RasterThumbnailProcessorImpl()
@@ -47,6 +48,11 @@ namespace auge
 	const char*	RasterThumbnailProcessorImpl::GetOutputRaster()
 	{
 		return m_out_raster_path.empty() ? NULL : m_out_raster_path.c_str();
+	}
+
+	void RasterThumbnailProcessorImpl::SetThumbSize(g_uint size)
+	{
+		m_thumbnail_size = size;
 	}
 
 	RESULTCODE RasterThumbnailProcessorImpl::Execute()
@@ -417,9 +423,9 @@ namespace auge
 	{
 		float scale = 0.0f;
 		if(w>h)
-			scale = AUGE_THUMBNAIL_SIZE / (float)w ;
+			scale = m_thumbnail_size / (float)w ;
 		else
-			scale = AUGE_THUMBNAIL_SIZE / (float)h;
-		return scale;
+			scale = m_thumbnail_size / (float)h;
+		return (scale<1 ? scale : 1);
 	}
-}
+} 

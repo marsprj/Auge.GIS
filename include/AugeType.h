@@ -93,6 +93,7 @@ typedef unsigned long int  g_uint64;
 #define AUGE_THUMBNAIL_SIZE		256
 #define AUGE_THUMBNAIL_WIDTH	512
 #define AUGE_THUMBNAIL_HEIGHT	384
+#define AUGE_THUMBNAIL_SUFFIX	"jpg"
 
 #define AUGE_EARTH_RADIUS	6378137	//meter
 #define AUGE_PIXEL_WIDTH	0.028	//cm

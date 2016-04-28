@@ -22,6 +22,8 @@ namespace auge
 		virtual Raster*				GetRaster(const char* name);
 		virtual RESULTCODE			AddRaster(const char* name, Raster* pRaster);
 		virtual RESULTCODE			AddRaster(const char* name, const char* file_path);
+		virtual RESULTCODE			AddRaster(const char* name, Raster* pRaster, const char* uuid);
+		virtual RESULTCODE			AddRaster(const char* name, const char* raster_path, const char* uuid);
 		virtual RESULTCODE			RemoveRaster(const char* name);
 		virtual RESULTCODE			RemoveAllRaster();
 		

@@ -787,6 +787,7 @@ namespace auge
 	public:
 		virtual void		SetInputRaster(const char* rasterPath) = 0;
 		virtual void		SetOutputRaster(const char* rasterPath) = 0;
+		virtual void		SetThumbSize(g_uint size) = 0;
 		virtual RESULTCODE	Execute() = 0;
 		virtual void		Release() = 0;
 	};

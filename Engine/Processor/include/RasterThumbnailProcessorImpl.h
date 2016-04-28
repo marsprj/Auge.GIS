@@ -17,6 +17,7 @@ namespace auge
 		virtual void		SetUser(g_uint user);
 		virtual void		SetInputRaster(const char* rasterPath);
 		virtual void		SetOutputRaster(const char* rasterPath);
+		virtual void		SetThumbSize(g_uint size);
 		virtual RESULTCODE	Execute();
 		virtual void		Release();
 
@@ -49,6 +50,7 @@ namespace auge
 		g_uint		m_blue;
 
 		float		m_step;
+		g_uint		m_thumbnail_size;
 
 		g_uint		m_user;
 	};

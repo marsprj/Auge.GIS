@@ -366,6 +366,136 @@ namespace auge
 		return rc;
 	}
 
+	RESULTCODE RasterDatasetImpl::AddRaster(const char* name, Raster* pRaster, const char* uuid)
+	{
+		if(name==NULL||pRaster==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		//check whether raster existed
+		if(HasRaster(name))
+		{
+			char msg[AUGE_MSG_MAX];
+			g_snprintf(msg, AUGE_MSG_MAX, "Raster [%s] has existed", name);
+			augeGetErrorInstance()->SetError(msg);
+			return AG_FAILURE;
+		}
+
+		char raster_path[AUGE_PATH_MAX];
+		memset(raster_path, 0, AUGE_PATH_MAX);
+		auge_make_path(raster_path, NULL, m_pFolder->GetLocalPath(), name,NULL);
+		if(g_access(raster_path, 4))
+		{
+			pRaster->Save(raster_path);
+			//auge_move(file_lo
+		}
+
+		//char uuid[AUGE_PATH_MAX] = {0};
+		//auge_generate_uuid(uuid, AUGE_PATH_MAX);
+
+		//const char* path	= pRaster->GetPath();
+		const char* alias	= pRaster->GetAlias()==NULL ? name : pRaster->GetAlias();
+		const char* fmt		= pRaster->GetFormat();
+
+		g_int		srid	= pRaster->GetSRID();
+		g_uint		width	= pRaster->GetWidth();
+		g_uint		height	= pRaster->GetHeight();
+		g_uint		nband	= pRaster->GetBandCount(); 
+		GEnvelope& extent	= pRaster->GetExtent();
+
+		char sql[AUGE_SQL_MAX] = {0};
+		const char* format = "insert into g_raster (name,alias,format,dataset,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid) values('%s','%s','%s',%d,'%s',%d,%d,%d,%d,%f,%f,%f,%f,'%s')";
+		g_snprintf(sql, AUGE_SQL_MAX, format,	name,
+			alias,
+			fmt,
+			m_pFolder->GetID(),
+			raster_path,//raster_path,
+			nband,
+			srid,
+			width,
+			height,
+			extent.m_xmin,
+			extent.m_ymin,
+			extent.m_xmax,
+			extent.m_ymax,
+			uuid);
+		return m_pWoskspace->m_pgConnection_r.ExecuteSQL(sql);
+	}
+
+	RESULTCODE RasterDatasetImpl::AddRaster(const char* name, const char* file_path, const char* uuid)
+	{
+		if(name==NULL||file_path==NULL)
+		{
+			return AG_FAILURE;
+		}
+
+		if(HasRaster(name))
+		{
+			char msg[AUGE_MSG_MAX];
+			g_snprintf(msg, AUGE_MSG_MAX, "Raster [%s] has existed", name);
+			augeGetErrorInstance()->SetError(msg);
+			return AG_FAILURE;
+		}
+
+		RasterIO* io = augeGetRasterIOInstance();
+		Raster* pinRaster = io->Read(file_path);
+		if(pinRaster==NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_snprintf(msg, AUGE_MSG_MAX, "Fail to open file [%s]", file_path);
+			augeGetErrorInstance()->SetError(msg);
+			return AG_FAILURE;
+		}
+
+		char raster_local_path[AUGE_PATH_MAX];
+		memset(raster_local_path, 0, AUGE_PATH_MAX);
+		auge_make_path(raster_local_path, NULL, m_pFolder->GetLocalPath(), name,NULL);
+		if(g_access(raster_local_path, 4))
+		{
+			//pRaster->Save(raster_path);			
+		}
+
+		//char uuid[AUGE_PATH_MAX] = {0};
+		//auge_generate_uuid(uuid, AUGE_PATH_MAX);
+
+		//const char* path	= pRaster->GetPath();
+		const char* alias	= pinRaster->GetAlias()==NULL ? name : pinRaster->GetAlias();
+		const char* fmt		= pinRaster->GetFormat();
+
+		g_int		srid	= pinRaster->GetSRID();
+		g_uint		width	= pinRaster->GetWidth();
+		g_uint		height	= pinRaster->GetHeight();
+		g_uint		nband	= pinRaster->GetBandCount(); 
+		GEnvelope& extent	= pinRaster->GetExtent();
+
+		char sql[AUGE_SQL_MAX] = {0};
+		const char* format = "insert into g_raster (name,alias,format,dataset,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid) values('%s','%s','%s',%d,'%s',%d,%d,%d,%d,%f,%f,%f,%f,'%s')";
+		g_snprintf(sql, AUGE_SQL_MAX, format,	name,
+			alias,
+			fmt,
+			m_pFolder->GetID(),
+			raster_local_path,//raster_path,
+			nband,
+			srid,
+			width,
+			height,
+			extent.m_xmin,
+			extent.m_ymin,
+			extent.m_xmax,
+			extent.m_ymax,
+			uuid);
+		pinRaster->Release();
+
+		RESULTCODE rc = m_pWoskspace->m_pgConnection_r.ExecuteSQL(sql);
+		if(rc==AG_SUCCESS)
+		{
+			auge_move(file_path, raster_local_path);
+		}
+
+		return rc;
+	}
+
 	RESULTCODE RasterDatasetImpl::RemoveRaster(const char* name)
 	{
 		if(name==NULL)

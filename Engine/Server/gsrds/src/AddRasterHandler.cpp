@@ -5,6 +5,7 @@
 #include "AugeData.h"
 #include "AugeRaster.h"
 #include "AugeWebCore.h"
+#include "AugeProcessor.h"
 
 #ifndef WIN32
 #include <sys/types.h>
@@ -163,9 +164,12 @@ namespace auge
 			return pExpResponse;
 		}
 
+		char uuid[AUGE_PATH_MAX] = {0};
+		auge_generate_uuid(uuid, AUGE_PATH_MAX);
+
 		RESULTCODE rc = AG_FAILURE;
 		RasterDataset* pRasterDataset = pFolder->GetRasterDataset();
-		rc = pRasterDataset->AddRaster(raster_name, file_local_path);
+		rc = pRasterDataset->AddRaster(raster_name, file_local_path, uuid);
 		if(rc != AG_SUCCESS )
 		{
 			pFolder->Release();
@@ -180,6 +184,19 @@ namespace auge
 
 		pFolder->Release();
 
+		//生成thumbnail
+		char thumbnail_path[AUGE_PATH_MAX];
+		memset(thumbnail_path, 0, AUGE_PATH_MAX);
+		auge_make_path(thumbnail_path, NULL, pWebContext->GetThumbnailPath(), uuid, AUGE_THUMBNAIL_SUFFIX);
+
+		RasterThumbnailProcessor* pProcessor = NULL;
+		GProcessorFactory* pFactory = augeGetGeoProcessorFactoryInstance();
+		pProcessor = pFactory->CreateRasterThumbnailProcessor();
+		pProcessor->SetInputRaster(file_local_path);
+		pProcessor->SetOutputRaster(thumbnail_path);
+		pProcessor->SetThumbSize(512);
+		pProcessor->Execute();
+		pProcessor->Release();
 
 		////计算raster的根目录
 		//char raster_repository[AUGE_PATH_MAX];
