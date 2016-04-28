@@ -142,6 +142,10 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\SaveMapRequest.cpp" />
     <ClCompile Include="..\src\SetStyleHandler.cpp" />
     <ClCompile Include="..\src\SetStyleRequest.cpp" />
+    <ClCompile Include="..\src\StartServiceHandler.cpp" />
+    <ClCompile Include="..\src\StartServiceRequest.cpp" />
+    <ClCompile Include="..\src\StopServiceHandler.cpp" />
+    <ClCompile Include="..\src\StopServiceRequest.cpp" />
     <ClCompile Include="..\src\SubscribeHandler.cpp" />
     <ClCompile Include="..\src\SubscribeRequest.cpp" />
     <ClCompile Include="..\src\UnRegisterLayerHandler.cpp" />
@@ -214,6 +218,10 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\SaveMapRequest.h" />
     <ClInclude Include="..\include\SetStyleHandler.h" />
     <ClInclude Include="..\include\SetStyleRequest.h" />
+    <ClInclude Include="..\include\StartServiceHandler.h" />
+    <ClInclude Include="..\include\StartServiceRequest.h" />
+    <ClInclude Include="..\include\StopServiceHandler.h" />
+    <ClInclude Include="..\include\StopServiceRequest.h" />
     <ClInclude Include="..\include\SubscribeHandler.h" />
     <ClInclude Include="..\include\SubscribeRequest.h" />
     <ClInclude Include="..\include\UnRegisterLayerHandler.h" />

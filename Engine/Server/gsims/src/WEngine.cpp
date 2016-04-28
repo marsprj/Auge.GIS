@@ -3,6 +3,8 @@
 #include "CreateServiceHandler.h"
 #include "RemoveServiceHandler.h"
 #include "DescribeServiceHandler.h"
+#include "StartServiceHandler.h"
+#include "StopServiceHandler.h"
 //#include "RegisterHandlerHandler.h"
 
 //#include "RegisterDataSourceHandler.h"

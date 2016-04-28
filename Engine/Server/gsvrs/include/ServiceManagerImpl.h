@@ -23,6 +23,9 @@ namespace auge
 		virtual RESULTCODE		Register(g_uint user_id, const char* szName, const char* mapName, const char* szURI);
 		virtual RESULTCODE		Unregister(g_uint user_id, const char* szName);
 
+		virtual RESULTCODE		Start(g_uint user_id, const char* szName);
+		virtual RESULTCODE		Stop(g_uint user_id, const char* szName);
+
 		virtual RESULTCODE		RegisterMap(g_uint s_id, g_uint m_id);
 
 		virtual RESULTCODE		Remove(g_uint user_id, const char* szName);

@@ -350,6 +350,64 @@ namespace auge
 		return rc;
 	}
 
+	RESULTCODE ServiceManagerImpl::Start(g_uint user_id, const char* szName)
+	{	
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		if(szName==NULL)
+		{
+			const char* msg = "Service Name is NULL";
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return AG_FAILURE;
+		}
+		if(!Has(user_id, szName))
+		{
+			char msg[AUGE_MSG_MAX];
+			memset(msg, 0, AUGE_MSG_MAX);
+			g_snprintf(msg, AUGE_MSG_MAX, "Cannot find Service [%s]");
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return AG_FAILURE;
+		}
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, "update g_service set state=0 where user_id=%d and s_name='%s'", user_id, szName);
+
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
+	RESULTCODE ServiceManagerImpl::Stop(g_uint user_id, const char* szName)
+	{
+		GError* pError = augeGetErrorInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
+
+		if(szName==NULL)
+		{
+			const char* msg = "Service Name is NULL";
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return AG_FAILURE;
+		}
+		if(!Has(user_id, szName))
+		{
+			char msg[AUGE_MSG_MAX];
+			memset(msg, 0, AUGE_MSG_MAX);
+			g_snprintf(msg, AUGE_MSG_MAX, "Cannot find Service [%s]");
+			pError->SetError(msg);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return AG_FAILURE;
+		}
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, "update g_service set state=1 where user_id=%d and s_name='%s'", user_id, szName);
+
+		return m_pConnection->ExecuteSQL(sql);
+	}
+
 	void ServiceManagerImpl::Cleanup()
 	{
 		Service* pService = NULL;
