@@ -55,7 +55,7 @@ namespace auge
 
 	bool ServiceImpl::IsStarted()
 	{
-		return (m_state==0);
+		return (m_state ==0);
 	}
 
 	WebResponse* ServiceImpl::Execute(WebRequest* pRequest)
