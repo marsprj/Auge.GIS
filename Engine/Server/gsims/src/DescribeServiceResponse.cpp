@@ -292,13 +292,14 @@ namespace auge
 		}
 	}
 
-	void DescribeServiceResponse::AddThumbnailNode(XElement* pxThumbnail, Map* pMap)
+	void DescribeServiceResponse::AddThumbnailNode(XElement* pxParent, Map* pMap)
 	{
 		char thumbnail[AUGE_PATH_MAX];
 		memset(thumbnail,0,AUGE_PATH_MAX);
 		//g_snprintf(thumbnail, AUGE_PATH_MAX, "http://%s:%s/ows/thumbnail/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), pMap->GetThumbnail());
 		g_snprintf(thumbnail, AUGE_PATH_MAX, "/ows/thumbnail/%s", pMap->GetThumbnail());
-		pxThumbnail->SetAttribute("xlink",thumbnail,NULL);
+		XElement* pxThumbnail = pxParent->AddChild("Thumbnail");
+		pxThumbnail->SetChildText(thumbnail);
 	}
 
 	void DescribeServiceResponse::AddOperations(XElement* pxService)
