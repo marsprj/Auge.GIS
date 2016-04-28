@@ -32,9 +32,9 @@ libgsims_la_SOURCES=\
 		    DescribeServiceRequest.cpp \
 		    DescribeServiceResponse.cpp \
 		    StartServiceRequest.cpp \
-		    StartServiceResponse.cpp \
+		    StartServiceHandler.cpp \
 		    StopServiceRequest.cpp \
-		    StopServiceResponse.cpp \
+		    StopServiceHandler.cpp \
     		    DescribeMapHandler.cpp \
 		    DescribeMapRequest.cpp \
 		    DescribeMapResponse.cpp \
