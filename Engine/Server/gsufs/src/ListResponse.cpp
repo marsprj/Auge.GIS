@@ -69,7 +69,7 @@ namespace auge
 
 			if(!f->isfolder) 
 			{ 
-				AddFileSizeAttribute(pxNode, (int)((f->fstat.st_size>>10))+1);
+				AddFileSizeAttribute(pxNode, (g_int64)((f->fstat.st_size>>10))+1);
 				//// file size
 				//memset(str, 0, AUGE_NAME_MAX);
 				//g_sprintf(str, "%d KB", (int)((f->fstat.st_size>>10))+1);

@@ -207,9 +207,10 @@ namespace auge
 			//pxNode->SetAttribute("last_modified_time",ctime((const time_t *)&(f->fstat.st_mtime)),NULL);
 			
 			// file size
-			memset(str, 0, AUGE_NAME_MAX);
-			g_sprintf(str, "%d KB", (int)((fstat.st_size>>10))+1);
-			pxNode->SetAttribute("size",str,NULL);
+			AddFileSizeAttribute(pxNode, (g_uint64)((fstat.st_size>>10))+1);
+			//memset(str, 0, AUGE_NAME_MAX);
+			//g_sprintf(str, "%d KB", (int)((fstat.st_size>>10))+1);
+			//pxNode->SetAttribute("size",str,NULL);
 		}
 	}
 
