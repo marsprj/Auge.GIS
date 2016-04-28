@@ -513,7 +513,7 @@ namespace auge
 
 	void RasterImpl::SetUUID(const char* uuid)
 	{
-		m_uuid;
+		m_uuid = uuid;
 	}
 
 	const char* RasterImpl::GetUUID()
