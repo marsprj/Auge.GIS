@@ -29,6 +29,7 @@ namespace auge
 		void	AddLayerBoundingNode(XElement* pxParent, GEnvelope& extent, int srid);
 		void	AddLayerGeomTypeNode(XElement* pxLayer, FeatureLayer* pFeatureLayer);
 		void	AddThumbnailNode(XElement* pxThumbnail, Map* pMap);
+		void	AddOperations(XElement* pxService);
 		
 	private:
 		User*	m_pUser;

@@ -109,6 +109,7 @@ namespace auge
 		XElement* pxNode = pxService->AddChild("Name");
 		pxNode->SetChildText(name);
 
+		AddOperations(pxService);
 		AddMapNode(pxService, pService->GetMap());
 		DescribeMap(pxService, pService->GetMap());
 
@@ -130,9 +131,7 @@ namespace auge
 			XElement* pxSrid = pxService->AddChild("SRID");
 			pxSrid->SetChildText(temp);
 
-			const char* thumbnail = pMap->GetThumbnail();
-			XElement* pxThumbnail = pxService->AddChild("Thumbnail");
-			pxThumbnail->AddChildText(thumbnail);
+			AddThumbnailNode(pxService, pMap);
 
 			GEnvelope& extent = pMap->GetExtent();
 			AddLayerBoundingNode(pxService, extent, srid);
@@ -296,5 +295,20 @@ namespace auge
 		//g_snprintf(thumbnail, AUGE_PATH_MAX, "http://%s:%s/ows/thumbnail/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), pMap->GetThumbnail());
 		g_snprintf(thumbnail, AUGE_PATH_MAX, "/ows/thumbnail/%s", pMap->GetThumbnail());
 		pxThumbnail->SetAttribute("xlink",thumbnail,NULL);
+	}
+
+	void DescribeServiceResponse::AddOperations(XElement* pxService)
+	{
+		XElement* pxOperation = NULL;
+		XElement* pxOperations = NULL;
+		pxOperations = pxService->AddChild("Operations");
+		pxOperation = pxOperations->AddChild("Operation");
+		pxOperation->AddChildText("WMS");
+		pxOperation = pxOperations->AddChild("Operation");
+		pxOperation->AddChildText("WFS");
+		pxOperation = pxOperations->AddChild("Operation");
+		pxOperation->AddChildText("WMTS");
+		pxOperation = pxOperations->AddChild("Operation");
+		pxOperation->AddChildText("WPS");
 	}
 }
