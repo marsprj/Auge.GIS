@@ -15,6 +15,7 @@ namespace auge
 	public:
 		virtual const char*		GetName();
 		virtual const char*		GetURI();
+		
 
 		virtual WebResponse*	Execute(WebRequest* pRequest);
 
@@ -27,6 +28,7 @@ namespace auge
 		virtual RESULTCODE		Shutdown();
 		virtual	RESULTCODE		Pause();
 		virtual RESULTCODE		Resume();
+		virtual bool			IsStarted();
 
 		virtual void			Release();
 
@@ -35,7 +37,7 @@ namespace auge
 		void	SetMapName(const char* name);
 		void	SetName(const char* name);
 		void	SetURI(const char* uri);
-		
+		void	SetState(g_uint state);
 
 	private:
 		bool	Support(const char* engine);
@@ -43,6 +45,7 @@ namespace auge
 	private:
 		std::string m_name;
 		std::string m_uri;
+		g_uint		m_state;
 		
 		std::string m_engines;
 		WebContext* m_pContext;

@@ -109,6 +109,8 @@ namespace auge
 		XElement* pxNode = pxService->AddChild("Name");
 		pxNode->SetChildText(name);
 
+		XElement* pxState = pxService->AddChild("State");
+		pxState->SetChildText(pService->IsStarted() ? "Started" : "Stopped");
 		
 		AddMapNode(pxService, pService->GetMap());
 		AddOperations(pxService);

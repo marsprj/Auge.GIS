@@ -48,6 +48,16 @@ namespace auge
 		}
 	}
 
+	void ServiceImpl::SetState(g_uint state)
+	{
+		m_state = state;
+	}
+
+	bool ServiceImpl::IsStarted()
+	{
+		return (!m_state);
+	}
+
 	WebResponse* ServiceImpl::Execute(WebRequest* pRequest)
 	{
 		const char* engine = pRequest->GetEngine();

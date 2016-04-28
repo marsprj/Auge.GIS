@@ -108,15 +108,28 @@ namespace auge
 					}
 					else
 					{
-						switch(GetMethod())
-							//switch(augeHttpPost)
+						if(!pService->IsStarted())
 						{
-						case augeHttpGet:
-							pWebResponse = DoGet(cgi, pUser, pService);
-							break;
-						case augeHttpPost:
-							pWebResponse = DoPost(cgi, pUser, pService);
-							break;
+							char msg[AUGE_MSG_MAX];
+							g_sprintf(msg, "Service [%s] is stopped", serviceName);
+							pLogger->Error(msg, __FILE__, __LINE__);
+							auge::WebExceptionResponse *pExpResponse = NULL;
+							pExpResponse = auge::augeCreateWebExceptionResponse();
+							pExpResponse->SetMessage(msg);
+							pWebResponse = pExpResponse;
+						}
+						else
+						{
+							switch(GetMethod())
+								//switch(augeHttpPost)
+							{
+							case augeHttpGet:
+								pWebResponse = DoGet(cgi, pUser, pService);
+								break;
+							case augeHttpPost:
+								pWebResponse = DoPost(cgi, pUser, pService);
+								break;
+							}
 						}
 					}
 				}

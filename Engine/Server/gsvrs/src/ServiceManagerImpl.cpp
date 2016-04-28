@@ -223,13 +223,15 @@ namespace auge
 
 		ServiceImpl* pService = NULL;
 		g_uint s_id = pResult->GetInt(0,0);
-		g_int m_id = pResult->GetInt(0,1);
+		g_int m_id = pResult->GetInt(0,1);		
 		const char* uri = pResult->GetString(0,2);
+		g_uint state = pResult->GetInt(0,4);
 
 		pService = new ServiceImpl();
 		pService->SetID(s_id);
 		pService->SetName(szName);
 		pService->SetURI(uri);
+		pService->SetState(state);
 		if(m_id>0)
 		{
 			Map* pMap = NULL;
