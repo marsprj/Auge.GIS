@@ -64,6 +64,8 @@ namespace auge
 		m_handlers.push_back(new CreateServiceHandler());
 		m_handlers.push_back(new RemoveServiceHandler());
 		m_handlers.push_back(new DescribeServiceHandler());
+		m_handlers.push_back(new StartServiceHandler());
+		m_handlers.push_back(new StopServiceHandler());
 
 		//m_handlers.push_back(new RegisterDataSourceHandler());
 		//m_handlers.push_back(new UnRegisterDataSourceHandler());
