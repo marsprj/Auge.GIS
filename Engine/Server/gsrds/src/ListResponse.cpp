@@ -213,6 +213,24 @@ namespace auge
 		}
 	}
 
+	void ListResponse::AddFileSizeAttribute(XElement* pxNode, g_uint64 size)
+	{
+		char str[AUGE_NAME_MAX];
+		memset(str, 0, AUGE_NAME_MAX);
+
+		int i=0;
+		float fsize=size;
+		g_uint64 temp = size>>10;
+		for(i=0; temp>0; i++)
+		{
+			temp = temp >> 10;
+			fsize /= 1024;
+		}
+
+		g_sprintf(str, "%3.2f %s", fsize, AUGE_SIZE_QUOTA[i]);
+		pxNode->SetAttribute("size",str,NULL);
+	} 
+
 //	RESULTCODE ListResponse::Write(WebWriter* pWriter)
 //	{
 //		if(pWriter==NULL)

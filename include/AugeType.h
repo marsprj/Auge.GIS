@@ -233,6 +233,8 @@ typedef struct  tagTIME_STRU
 	unsigned short usMilliseconds;
 } TIME_STRU;
 
+static const char* AUGE_SIZE_QUOTA[] = {"KB", "MB","GB","TB","PB"};
+
 //==============================================================================
 
 #define AUGE_SAFE_RELEASE(p) {if((p)!=NULL){(p)->Release(); (p)=NULL;}} 

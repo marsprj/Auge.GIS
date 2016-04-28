@@ -33,7 +33,7 @@ namespace auge
 		void		WriteRasters(XElement* pxFiles, EnumRaster* pRasters);
 		void		WriteFolders(XElement* pxFiles, EnumRasterFolder* pFolders);
 		
-
+		void		AddFileSizeAttribute(XElement* pxNode, g_uint64 size);
 	private:
 		ListRequest		*m_pRequest;
 		RasterFolder	*m_pFolder;
