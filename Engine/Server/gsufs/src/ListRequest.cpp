@@ -77,11 +77,11 @@ namespace auge
 	{
 		if(encoding==NULL)
 		{
-			m_encoding = AUGE_DEFAULT_ENCODING;
+			m_encoding = "UTF-8";
 		}
 		else if(strlen(encoding)==0)
 		{
-			m_encoding = AUGE_DEFAULT_ENCODING;
+			m_encoding = "UTF-8";
 		}
 		else
 		{
