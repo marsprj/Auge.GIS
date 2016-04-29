@@ -5,7 +5,8 @@ namespace auge
 	ListRequest::ListRequest()
 	{
 		m_version = "1.0.0";
-		m_encoding = "GBK";
+		//m_encoding = "GBK";
+		m_encoding = "UTF-8";
 	}
 
 	ListRequest::~ListRequest()
@@ -17,6 +18,7 @@ namespace auge
 	{
 		SetVersion(cgi["version"]);
 		SetPath(cgi["path"]);
+		SetEncoding(cgi["encoding"]);
 		return true;
 	}
 
@@ -71,4 +73,8 @@ namespace auge
 		return m_encoding.c_str();
 	}
 
+	void ListRequest::SetEncoding(const char* encoding)
+	{
+		m_encoding = encoding;
+	}
 }
