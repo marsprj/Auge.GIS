@@ -122,6 +122,21 @@ namespace auge
 			pProcessor->Execute();
 			pProcessor->Release();
 		}
+		else
+		{
+			if(m_pRequest->IsRefresh())
+			{
+				const char* file_local_path = pRaster->GetPath();
+				RasterThumbnailProcessor* pProcessor = NULL;
+				GProcessorFactory* pFactory = augeGetGeoProcessorFactoryInstance();
+				pProcessor = pFactory->CreateRasterThumbnailProcessor();
+				pProcessor->SetInputRaster(file_local_path);
+				pProcessor->SetOutputRaster(thumbnail_path);
+				pProcessor->SetThumbSize(AUGE_THUMBNAIL_SIZE);
+				pProcessor->Execute();
+				pProcessor->Release();
+			}
+		}
 
 		XElement*	pxName = pxRaster->AddChild("Name",NULL);
 		pxName->AddChildText(pRaster->GetName());

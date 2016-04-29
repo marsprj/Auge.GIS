@@ -25,6 +25,7 @@ namespace auge
 		const char* GetRasterName();
 		const char*	GetPath();
 		const char* GetSourceName();
+		bool		IsRefresh();
 
 	public:
 		bool		Create(rude::CGI& cgi);
@@ -33,15 +34,18 @@ namespace auge
 		void		SetPath(const char* path);
 		void		SetRasterName(const char* name);
 		void		SetSourceName(const char* sourceName);
+		void		SetRefresh(const char* refresh);
 
 	private:
 		std::string m_version;
 		std::string m_mime_type;
 		std::string m_encoding;
-
+		
 		std::string m_name;
 		std::string m_path;
 		std::string m_source_name;
+
+		bool		m_refresh;
 	};
 }
 

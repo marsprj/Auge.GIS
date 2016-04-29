@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_encoding = "GBK";
+		m_refresh = false;
 	}
 
 	GetThumbnailRequest::~GetThumbnailRequest()
@@ -19,6 +20,7 @@ namespace auge
 		SetPath(cgi["Path"]);
 		SetRasterName(cgi["rasterName"]);
 		SetSourceName(cgi["sourceName"]);
+		SetRefresh(cgi["refresh"]);
 		return true;
 	}
 
@@ -105,5 +107,29 @@ namespace auge
 	const char* GetThumbnailRequest::GetSourceName()
 	{
 		return m_source_name.empty() ? NULL : m_source_name.c_str();
+	}
+
+	void GetThumbnailRequest::SetRefresh(const char* refresh)
+	{
+		if(refresh==NULL)
+		{
+			m_refresh = false;
+		}
+		else
+		{
+			if(g_stricmp(refresh,"TRUE")==0)
+			{
+				m_refresh = true;
+			}
+			else
+			{
+				m_refresh = false;
+			}
+		}
+	}
+
+	bool GetThumbnailRequest::IsRefresh()
+	{
+		return m_refresh;
 	}
 }
