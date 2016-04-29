@@ -38,9 +38,10 @@ namespace auge
 		{
 			return;
 		}
+		WebContext* pWebContext = augeGetWebContextInstance();
 		const char* sep = strstr(value,":");
-		m_full_name = value;
-		m_type_name = sep==NULL ? value : sep+1;
+		m_full_name = pWebContext->ParameterEncoding(value);
+		m_type_name = pWebContext->ParameterEncoding(sep==NULL ? value : sep+1);
 	}
 	
 	GEnvelope& GetCountRequest::GetBBox()
