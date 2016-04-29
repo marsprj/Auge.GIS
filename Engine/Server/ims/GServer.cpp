@@ -95,7 +95,8 @@ namespace auge
 				}
 				else
 				{
-					Service* pService = m_pServiceManager->GetService(pUser->GetID(), serviceName);
+					//Service* pService = m_pServiceManager->GetService(pUser->GetID(), serviceName);
+					Service* pService = m_pServiceManager->LoadService(pUser->GetID(), serviceName);
 					if(pService==NULL)
 					{
 						char msg[AUGE_MSG_MAX];
@@ -131,6 +132,7 @@ namespace auge
 								break;
 							}
 						}
+						pService->Release();
 					}
 				}
 			}
