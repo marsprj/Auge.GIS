@@ -129,7 +129,7 @@ namespace auge
 			EnumRaster* pRasters = pRasterDataset->GetRasters();
 			GetThumbnailResponse* pGetThumbnailResponse = new GetThumbnailResponse(pRequest);
 			pGetThumbnailResponse->SetRasters(pRasters);
-			pWebResponse = pWebResponse;
+			pWebResponse = pGetThumbnailResponse;
 		}
 		else
 		{
@@ -148,7 +148,7 @@ namespace auge
 			{
 				GetThumbnailResponse* pGetThumbnailResponse = new GetThumbnailResponse(pRequest);
 				pGetThumbnailResponse->SetRaster(pRaster);
-				pWebResponse = pWebResponse;
+				pWebResponse = pGetThumbnailResponse;
 			}
 		}
 		pFolder->Release();		
