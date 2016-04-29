@@ -5,8 +5,8 @@ namespace auge
 	ListRequest::ListRequest()
 	{
 		m_version = "1.0.0";
-		//m_encoding = "GBK";
-		m_encoding = "UTF-8";
+		m_encoding = "GBK";
+		//m_encoding = "UTF-8";
 	}
 
 	ListRequest::~ListRequest()
