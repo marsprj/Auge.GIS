@@ -26,8 +26,8 @@ namespace auge
 		void SetRasters(EnumRaster* pRasters);
 
 	private:
-		void WriteRaster(XElement* pxParent);
-		void WriteRasters(XElement* pxParent);
+		void WriteRaster(XDocument* pxDoc);
+		void WriteRasters(XDocument* pxDoc);
 		void AddRasterNode(XElement* pxRaster, Raster* pRaster);
 
 	private:

@@ -201,7 +201,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX] = {0};
 		//g_sprintf(sql, "select s.gid, m.m_name, s.version, s.state from g_service s, g_map m where s.name='%s' and s.m_id=m.gid", szName);
-		g_sprintf(sql, "select gid, m_id, s_name, s_uri, version, state from g_service where user_id=%d", user_id);
+		g_sprintf(sql, "select gid, m_id, s_name, s_uri, version, state from g_service where user_id=%d order by s_name asc", user_id);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
@@ -214,11 +214,11 @@ namespace auge
 		for(int i=0; i<count; i++)
 		{
 			ServiceImpl* pService = NULL;
-			g_uint s_id = pResult->GetInt(0,0);
-			g_int m_id = pResult->GetInt(0,1);
+			g_uint s_id = pResult->GetInt(i,0);
+			g_int m_id = pResult->GetInt(i,1);
 			const char* name = pResult->GetString(i,2);
-			const char* uri = pResult->GetString(0,3);
-			g_uint state = pResult->GetInt(0,5);
+			const char* uri = pResult->GetString(i,3);
+			g_uint state = pResult->GetInt(i,5);
 
 			pService = new ServiceImpl();
 			pService->SetID(s_id);

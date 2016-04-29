@@ -54,15 +54,14 @@ namespace auge
 		Raster* pRaster = m_pRaster;
 
 		XDocument	*pxDoc = new XDocument();
-		XElement	*pxRoot = pxDoc->CreateRootNode("Rasters",NULL,NULL);
-
+		
 		if(m_pRasters!=NULL)
 		{
-			WriteRasters(pxRoot);
+			WriteRasters(pxDoc);
 		}
 		else
 		{
-			WriteRaster(pxRoot);
+			WriteRaster(pxDoc);
 		}
 		
 		int len = 0;
@@ -81,17 +80,19 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	void GetThumbnailResponse::WriteRaster(XElement* pxParent)
+	void GetThumbnailResponse::WriteRaster(XDocument* pxDoc)
 	{
+		XElement* pxRaster = pxDoc->CreateRootNode("Raster",NULL,NULL);
 		if(m_pRaster!=NULL)
-		{
-			XElement* pxRaster = pxParent->AddChild("Raster", NULL);
+		{	
 			AddRasterNode(pxRaster, m_pRaster);
 		}
 	}
 
-	void GetThumbnailResponse::WriteRasters(XElement* pxParent)
+	void GetThumbnailResponse::WriteRasters(XDocument* pxDoc)
 	{
+		XElement* pxParent = pxDoc->CreateRootNode("Rasters",NULL,NULL);
+
 		Raster* pRaster = NULL;
 		m_pRasters->Reset();
 		while((pRaster=m_pRasters->Next())!=NULL)
