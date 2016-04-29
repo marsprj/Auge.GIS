@@ -243,6 +243,7 @@ namespace auge
 				GLogger	*pLogger = augeGetLoggerInstance();
 				pLogger->Info(msg, __FILE__, __LINE__);
 			}
+			pServices->Add(pService);
 		}
 
 		pResult->Release();
