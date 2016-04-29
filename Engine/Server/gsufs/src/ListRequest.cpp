@@ -75,6 +75,17 @@ namespace auge
 
 	void ListRequest::SetEncoding(const char* encoding)
 	{
-		m_encoding = encoding;
+		if(encoding==NULL)
+		{
+			m_encoding = AUGE_DEFAULT_ENCODING;
+		}
+		else if(strlen(encoding)==0)
+		{
+			m_encoding = AUGE_DEFAULT_ENCODING;
+		}
+		else
+		{
+			m_encoding = encoding;
+		}
 	}
 }
