@@ -70,15 +70,6 @@ namespace auge
 		char root_path[AUGE_PATH_MAX];
 		auge_make_user_raster_root(root_path, AUGE_PATH_MAX, pWebContext->GetUserRoot(), pUser->GetName());
 
-		if(raster_name==NULL)
-		{
-			const char* msg = "Parameter [Name] is NULL";
-			WebExceptionResponse* pExpResponse = augeCreateWebExceptionResponse();
-			pExpResponse->SetMessage(msg);
-			pLogger->Error(msg,__FILE__,__LINE__);
-
-			return pExpResponse;
-		}
 		const char* sourceName = pRequest->GetSourceName();
 		if(sourceName==NULL)
 		{
