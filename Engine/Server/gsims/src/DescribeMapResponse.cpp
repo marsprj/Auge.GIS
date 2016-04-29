@@ -108,6 +108,8 @@ namespace auge
 		//AddBoundingBoxNode(pxMap, pMap->GetExtent());		
 		AddLayerBoundingNode(pxRoot, pMap->GetExtent(), pMap->GetSRID());
 		AddViewerNode(pxRoot, pMap->GetViewer(), pMap->GetSRID());
+		XElement* pxThumbnail = pxRoot->AddChild("Thumbnail");
+		AddThumbnailNode(pxThumbnail, pMap); 
 
 		// WMS_Capabilities-->Capability
 		XElement* pxCapability = pxRoot->AddChild("Capability", NULL);

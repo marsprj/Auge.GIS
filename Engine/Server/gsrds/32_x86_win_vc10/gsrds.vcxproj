@@ -93,6 +93,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetRasterHandler.cpp" />
     <ClCompile Include="..\src\GetRasterRequest.cpp" />
     <ClCompile Include="..\src\GetRasterResponse.cpp" />
+    <ClCompile Include="..\src\GetThumbnailHandler.cpp" />
+    <ClCompile Include="..\src\GetThumbnailRequest.cpp" />
+    <ClCompile Include="..\src\GetThumbnailResponse.cpp" />
     <ClCompile Include="..\src\GetValueHandler.cpp" />
     <ClCompile Include="..\src\GetValueRequest.cpp" />
     <ClCompile Include="..\src\GetValueResponse.cpp" />
@@ -120,6 +123,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetRasterHandler.h" />
     <ClInclude Include="..\include\GetRasterRequest.h" />
     <ClInclude Include="..\include\GetRasterResponse.h" />
+    <ClInclude Include="..\include\GetThumbnailHandlerl.h" />
+    <ClInclude Include="..\include\GetThumbnailRequest.h" />
+    <ClInclude Include="..\include\GetThumbnailResponse.h" />
     <ClInclude Include="..\include\GetValueHandler.h" />
     <ClInclude Include="..\include\GetValueRequest.h" />
     <ClInclude Include="..\include\GetValueResponse.h" />

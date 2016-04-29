@@ -3,6 +3,7 @@
 #include "AugeService.h"
 #include "AugeData.h"
 #include "AugeXML.h"
+#include "AugeProcessor.h"
 
 namespace auge
 {
@@ -89,7 +90,7 @@ namespace auge
 		}
 	}
 
-	void GetThumbnailResponse::WriteRasters(XElement* pxParent);
+	void GetThumbnailResponse::WriteRasters(XElement* pxParent)
 	{
 		Raster* pRaster = NULL;
 		m_pRasters->Reset();
@@ -109,8 +110,9 @@ namespace auge
 		memset(thumbnail_path, 0, AUGE_PATH_MAX);
 		auge_make_path(thumbnail_path, NULL, pWebContext->GetThumbnailPath(), raster_uuid, AUGE_THUMBNAIL_SUFFIX);
 
-		if(g_access(file_local_path,4))
+		if(g_access(thumbnail_path,4))
 		{	//如果文件不存在
+			const char* file_local_path = pRaster->GetPath();
 			RasterThumbnailProcessor* pProcessor = NULL;
 			GProcessorFactory* pFactory = augeGetGeoProcessorFactoryInstance();
 			pProcessor = pFactory->CreateRasterThumbnailProcessor();
@@ -121,10 +123,14 @@ namespace auge
 			pProcessor->Release();
 		}
 
+		XElement*	pxName = pxRaster->AddChild("Name",NULL);
+		pxName->AddChildText(pRaster->GetName());
 
-		XElement*	pxNode = pxRaster->AddChild("Name",NULL);
-		pxNode->AddChildText(pRaster->GetName());
-
+		char web_path[AUGE_PATH_MAX];
+		memset(web_path,0,AUGE_PATH_MAX);
+		g_snprintf(web_path, AUGE_PATH_MAX, "/ows/thumbnail/%s.%s", raster_uuid, AUGE_THUMBNAIL_SUFFIX);
+		XElement*	pxThumbnail = pxRaster->AddChild("Thumbnail",NULL);
+		pxThumbnail->SetAttribute("xlink",web_path,NULL);
 	}
 
 }
