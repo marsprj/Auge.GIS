@@ -118,7 +118,7 @@ namespace auge
 			pProcessor = pFactory->CreateRasterThumbnailProcessor();
 			pProcessor->SetInputRaster(file_local_path);
 			pProcessor->SetOutputRaster(thumbnail_path);
-			pProcessor->SetThumbSize(512);
+			pProcessor->SetThumbSize(AUGE_THUMBNAIL_SIZE);
 			pProcessor->Execute();
 			pProcessor->Release();
 		}

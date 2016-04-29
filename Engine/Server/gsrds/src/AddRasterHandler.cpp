@@ -185,18 +185,18 @@ namespace auge
 		pFolder->Release();
 
 		//生成thumbnail
-		char thumbnail_path[AUGE_PATH_MAX];
-		memset(thumbnail_path, 0, AUGE_PATH_MAX);
-		auge_make_path(thumbnail_path, NULL, pWebContext->GetThumbnailPath(), uuid, AUGE_THUMBNAIL_SUFFIX);
+		//char thumbnail_path[AUGE_PATH_MAX];
+		//memset(thumbnail_path, 0, AUGE_PATH_MAX);
+		//auge_make_path(thumbnail_path, NULL, pWebContext->GetThumbnailPath(), uuid, AUGE_THUMBNAIL_SUFFIX);
 
-		RasterThumbnailProcessor* pProcessor = NULL;
-		GProcessorFactory* pFactory = augeGetGeoProcessorFactoryInstance();
-		pProcessor = pFactory->CreateRasterThumbnailProcessor();
-		pProcessor->SetInputRaster(file_local_path);
-		pProcessor->SetOutputRaster(thumbnail_path);
-		pProcessor->SetThumbSize(512);
-		pProcessor->Execute();
-		pProcessor->Release();
+		//RasterThumbnailProcessor* pProcessor = NULL;
+		//GProcessorFactory* pFactory = augeGetGeoProcessorFactoryInstance();
+		//pProcessor = pFactory->CreateRasterThumbnailProcessor();
+		//pProcessor->SetInputRaster(file_local_path);
+		//pProcessor->SetOutputRaster(thumbnail_path);
+		//pProcessor->SetThumbSize(512);
+		//pProcessor->Execute();
+		//pProcessor->Release();
 
 		////计算raster的根目录
 		//char raster_repository[AUGE_PATH_MAX];
