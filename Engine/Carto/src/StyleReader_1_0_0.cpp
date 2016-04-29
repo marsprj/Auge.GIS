@@ -264,15 +264,15 @@ namespace auge
 				}
 				else if(g_stricmp(nodeName, "Filter")==0)
 				{
-					//if(m_pFeatureClass!=NULL)
-					//{
-					//	FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
-					//	GFields* pFields = m_pFeatureClass->GetFields();
-					//	FilterReader* reader = pFilterFactory->CreateFilerReader(pFields);
-					//	pFilter = reader->Read((XElement*)pxNode);
-					//	AUGE_SAFE_RELEASE(reader);
-					//	pRule->SetFilter(pFilter);
-					//}
+					if(m_pFeatureClass!=NULL)
+					{
+						FilterFactory* pFilterFactory = augeGetFilterFactoryInstance();
+						GFields* pFields = m_pFeatureClass->GetFields();
+						FilterReader* reader = pFilterFactory->CreateFilerReader(pFields);
+						pFilter = reader->Read((XElement*)pxNode);
+						AUGE_SAFE_RELEASE(reader);
+						pRule->SetFilter(pFilter);
+					}
 				}
 			}
 		}
