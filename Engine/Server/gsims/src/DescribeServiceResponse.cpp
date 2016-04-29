@@ -60,7 +60,7 @@ namespace auge
 			XElement	*pxServices = NULL;
 			XElement	*pxService = NULL;
 
-			pServices = pServiceManager->GetServices(user_id);
+			pServices = pServiceManager->LoadServices(user_id);
 			pServices->Reset();
 
 			while((pService=pServices->Next())!=NULL)

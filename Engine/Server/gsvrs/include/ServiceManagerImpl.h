@@ -17,6 +17,7 @@ namespace auge
 		virtual Service*		GetService(g_uint user_id, const char* szName);
 		virtual Service*		LoadService(g_uint user_id, const char* szName);
 		virtual EnumService*	GetServices(g_uint user_id);
+		virtual EnumService*	LoadServices(g_uint user_id);
 		virtual g_int			GetServiceID(g_uint user_id, const char* szName);
 		virtual bool			Has(g_uint user_id, const char* szName);
 		

@@ -187,6 +187,69 @@ namespace auge
 		return pServices;
 	}
 
+	EnumService* ServiceManagerImpl::LoadServices(g_uint user_id)
+	{
+		EnumServiceImpl* pServices = new EnumServiceImpl();
+
+		if(m_pConnection==NULL)
+		{
+			GLogger	*pLogger = augeGetLoggerInstance();
+			pLogger->Error("Service Name is NULL", __FILE__, __LINE__);
+
+			return NULL;
+		}
+
+		char sql[AUGE_SQL_MAX] = {0};
+		//g_sprintf(sql, "select s.gid, m.m_name, s.version, s.state from g_service s, g_map m where s.name='%s' and s.m_id=m.gid", szName);
+		g_sprintf(sql, "select gid, m_id, m_name, s_uri, version, state from g_service and user_id=%d", user_id);
+
+		GResultSet* pResult = NULL;
+		pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return NULL;
+		}
+		
+		int count = pResult->GetCount();
+		for(int i=0; i<count; i++)
+		{
+			ServiceImpl* pService = NULL;
+			g_uint s_id = pResult->GetInt(0,0);
+			g_int m_id = pResult->GetInt(0,1);
+			const char* name = pResult->GetString(i,2);
+			const char* uri = pResult->GetString(0,3);
+			g_uint state = pResult->GetInt(0,5);
+
+			pService = new ServiceImpl();
+			pService->SetID(s_id);
+			pService->SetName(name);
+			pService->SetURI(uri);
+			pService->SetState(state);
+			if(m_id>0)
+			{
+				Map* pMap = NULL;
+				CartoManager* pCartoManager = augeGetCartoManagerInstance();
+				pMap = pCartoManager->LoadMap(m_id);
+				if(pMap!=NULL)
+				{
+					pService->SetMapName(name);
+					pService->SetMap(pMap);
+				}
+			}
+			else
+			{
+				char msg[AUGE_MSG_MAX] = {0};
+				g_sprintf(msg, "Service [%s] does not attach Map.", name);
+				GLogger	*pLogger = augeGetLoggerInstance();
+				pLogger->Info(msg, __FILE__, __LINE__);
+			}
+		}
+
+		pResult->Release();
+		
+		return pServices;
+	}
+
 	Service* ServiceManagerImpl::LoadService(g_uint user_id, const char* szName)
 	{
 		if(szName==NULL||m_pConnection==NULL)
