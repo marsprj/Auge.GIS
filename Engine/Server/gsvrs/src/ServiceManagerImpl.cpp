@@ -201,7 +201,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX] = {0};
 		//g_sprintf(sql, "select s.gid, m.m_name, s.version, s.state from g_service s, g_map m where s.name='%s' and s.m_id=m.gid", szName);
-		g_sprintf(sql, "select gid, m_id, m_name, s_uri, version, state from g_service user_id=%d", user_id);
+		g_sprintf(sql, "select gid, m_id, m_name, s_uri, version, state from g_service where user_id=%d", user_id);
 
 		GResultSet* pResult = NULL;
 		pResult = m_pConnection->ExecuteQuery(sql);
