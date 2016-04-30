@@ -365,7 +365,7 @@ namespace auge
 		XElement *pxExtent = NULL;
 		XElement *pxMap  = pxRoot->AddChild("Map", NULL);
 		pxNode = pxMap->AddChild("Name");
-		pxNode->AddChildText(pMap->GetName());
+		pxNode->AddChildText(pMap->GetName(),true);
 
 		// SRID
 		g_sprintf(str, "%d", pMap->GetSRID());
