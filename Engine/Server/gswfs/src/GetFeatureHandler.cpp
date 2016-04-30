@@ -208,16 +208,17 @@ namespace auge
 		GetFeatureRequest* pRequest = static_cast<GetFeatureRequest*>(pWebRequest);
 		typeName = pRequest->GetTypeName();
 
-		const char* raw_mapName = pRequest->GetMapName();
-		if(raw_mapName==NULL)
-		{
-			GError* pError = augeGetErrorInstance();
-			pError->SetError("No Map is attached");
-			return NULL;
-		}
+		const char* mapName = pRequest->GetMapName();
+		//const char* raw_mapName = pRequest->GetMapName();
+		//if(raw_mapName==NULL)
+		//{
+		//	GError* pError = augeGetErrorInstance();
+		//	pError->SetError("No Map is attached");
+		//	return NULL;
+		//}
 
-		char mapName[AUGE_NAME_MAX];	
-		auge_web_parameter_encoding(raw_mapName,mapName,AUGE_NAME_MAX,pWebContext->IsIE());
+		//char mapName[AUGE_NAME_MAX];	
+		//auge_web_parameter_encoding(raw_mapName,mapName,AUGE_NAME_MAX,pWebContext->IsIE());
 
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
 		Map *pMap = pCartoManager->LoadMap(pUser->GetID(), mapName);
