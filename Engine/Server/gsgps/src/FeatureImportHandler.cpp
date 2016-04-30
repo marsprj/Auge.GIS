@@ -163,7 +163,7 @@ namespace auge
 			strcpy(req_path, raw_req_path);
 #else
 			size_t req_path_size = AUGE_NAME_MAX;
-			auge_encoding_convert_2(AUGE_ENCODING_GBK, AUGE_ENCODING_UTF8, raw_req_path, req_path, &req_path_size);
+			auge_encoding_convert_2(AUGE_ENCODING_GBK, AUGE_ENCODING_UTF8, raw_req_path, strlen(raw_req_path), req_path, &req_path_size);
 #endif
 			auge_make_path(shp_path, NULL, user_file_root, req_path+1, NULL);
 		}
