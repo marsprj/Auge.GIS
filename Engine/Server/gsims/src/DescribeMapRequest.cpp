@@ -22,8 +22,9 @@ namespace auge
 		char str[AUGE_NAME_MAX];
 		WebContext* pWebContext = augeGetWebContextInstance();
 
-		auge_web_parameter_encoding(cgi["name"], str, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetName(str);
+		const char* name = pWebContext->ParameterEncoding(cgi["name"]);
+		//auge_web_parameter_encoding(cgi["name"], str, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetName(name);
 
 		return true;
 	}
