@@ -363,12 +363,13 @@ namespace auge
 
 		auge_web_parameter_encoding(cgi["typeName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
 		SetTypeName(parameter,false);
+		SetMapName(pWebContext->ParameterEncoding(cgi["mapName"]));
 		
 		auge_web_parameter_encoding(cgi["sourceName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
 		SetSourceName(parameter);
 
 		//auge_web_parameter_encoding(cgi["mapName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetMapName(pWebContext->ParameterEncoding(cgi["mapName"]));
+		SetMapName(cgi["mapName"]);
 
 		SetOutputFormat(cgi["outputFormat"]);
 		SetMaxFeatures(cgi["maxFeatures"]);
