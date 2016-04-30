@@ -65,7 +65,7 @@ namespace auge
 		XDocument *pxDoc = new XDocument();
 
 		pxRoot = pxDoc->CreateRootNode("Count", NULL, NULL);
-		pxRoot->SetAttribute("typeName", type_name, NULL);
+		pxRoot->SetAttribute("typeName", type_name, NULL, true);
 		pxRoot->AddChildText(str);
 
 		return pxDoc; 

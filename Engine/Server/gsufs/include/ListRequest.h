@@ -30,6 +30,7 @@ namespace auge
 
 		void		SetVersion(const char* value);
 		void		SetPath(const char* path);
+		void		SetEncoding(const char* encoding);
 
 	private:
 		std::string m_version;
