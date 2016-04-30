@@ -88,8 +88,9 @@ namespace auge
 
 	bool GetMapRequest::Create(rude::CGI& cgi)
 	{
+		WebContext* pWebContext = augeGetWebContextInstance();
 		SetVersion(cgi["version"]);
-		SetMapName(cgi["mapName"]);
+		SetMapName(pWebContext->ParameterEncoding(cgi["mapName"]));
 		SetLayers(cgi["layers"]);
 		SetStyles(cgi["styles"]);
 		SetBBox(cgi["bbox"]);
