@@ -173,6 +173,7 @@ namespace auge
 			const char* msg = "Cannot Open Shapefile Database";
 			pError->SetError(msg);
 			pLogger->Error(msg, __FILE__, __LINE__);
+			pLogger->Error(shp_path, __FILE__, __LINE__);
 			return AG_FAILURE;
 		}
 
