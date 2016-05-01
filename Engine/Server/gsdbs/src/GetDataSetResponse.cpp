@@ -256,7 +256,8 @@ namespace auge
 		auge_make_path(thumbnail, NULL, NULL, pFeatureClass->GetUUID(), "png");
 		char xlink[AUGE_PATH_MAX];
 		memset(xlink,0,AUGE_PATH_MAX);
-		g_snprintf(xlink, AUGE_PATH_MAX, "http://%s:%s/ows/thumbnail/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), thumbnail);
+		//g_snprintf(xlink, AUGE_PATH_MAX, "http://%s:%s/ows/thumbnail/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), thumbnail);
+		g_snprintf(xlink, AUGE_PATH_MAX, "/ows/thumbnail/%s", thumbnail);
 		XElement* pxThumbnail = pxClass->AddChild("Thumbnail", NULL);
 		pxThumbnail->SetAttribute("xlink",xlink,NULL);
 	}
