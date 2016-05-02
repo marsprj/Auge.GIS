@@ -490,7 +490,8 @@ namespace auge
 		RESULTCODE rc = m_pWoskspace->m_pgConnection_r.ExecuteSQL(sql);
 		if(rc==AG_SUCCESS)
 		{
-			auge_move(file_path, raster_local_path);
+			//auge_move(file_path, raster_local_path);
+			MoveRaster(file_path, raster_local_path);
 		}
 
 		return rc;
@@ -575,5 +576,57 @@ namespace auge
 			delete this;
 		}
 	}
+
+	void RasterDatasetImpl::MoveRaster(const char* from_file_path, const char* to_file_path)
+	{
+		char from_drv[AUGE_DRV_MAX];
+		char from_dir[AUGE_PATH_MAX];
+		char from_name[AUGE_NAME_MAX];
+		char from_ext[AUGE_EXT_MAX];
+		char from_full_name[AUGE_NAME_MAX];
+		memset(from_drv, 0, AUGE_DRV_MAX);
+		memset(from_dir, 0, AUGE_PATH_MAX);
+		memset(from_name,0, AUGE_NAME_MAX);
+		memset(from_ext, 0, AUGE_EXT_MAX);
+		memset(from_full_name, 0, AUGE_NAME_MAX);
+
+		char to_drv[AUGE_DRV_MAX];
+		char to_dir[AUGE_PATH_MAX];
+		char to_name[AUGE_NAME_MAX];
+		char to_ext[AUGE_EXT_MAX];
+		char to_full_name[AUGE_NAME_MAX];
+		memset(to_drv, 0, AUGE_DRV_MAX);
+		memset(to_dir, 0, AUGE_PATH_MAX);
+		memset(to_name,0, AUGE_NAME_MAX);
+		memset(to_ext, 0, AUGE_EXT_MAX);
+		memset(to_full_name, 0, AUGE_NAME_MAX);
+
+		auge_split_path(from_file_path, from_drv, from_dir, from_name, from_ext);
+		auge_make_path(from_full_name, NULL, NULL, from_name, from_ext);
+
+		auge_split_path(to_file_path, to_drv, to_dir, to_name, to_ext);
+		auge_make_path(to_full_name, NULL, NULL, to_name, to_ext);
+
+		char from[AUGE_PATH_MAX];
+		char to[AUGE_PATH_MAX];
+
+		//move raster file
+		auge_move(from_file_path, to_file_path);
+
+		//move aux.xml file
+		memset(from, 0, AUGE_PATH_MAX);
+		auge_make_path(from, from_drv, from_dir, from_full_name, "aux.xml");
+		memset(to, 0, AUGE_PATH_MAX);
+		auge_make_path(to, to_drv, to_dir, to_full_name, "aux.xml");
+		auge_move(from, to);
+
+		//move xml file
+		memset(from, 0, AUGE_PATH_MAX);
+		auge_make_path(from, from_drv, from_dir, from_full_name, "xml");
+		memset(to, 0, AUGE_PATH_MAX);
+		auge_make_path(to, to_drv, to_dir, to_full_name, "xml");
+		auge_move(from, to);
+	}
+
 
 }
