@@ -246,9 +246,18 @@ namespace auge
 		char img_local_path[AUGE_PATH_MAX] = {0};
 		memset(img_local_path, 0, AUGE_PATH_MAX);		
 		auge_make_path(img_local_path, NULL, m_pWebContext->GetThumbnailPath(), pFeatureClass->GetUUID(), "png");
-		if(g_access(img_local_path, 4))
+
+		bool force = m_pRequest->GetForce();
+		if(force)
 		{
 			DrawThumbnail(pFeatureClass, img_local_path);
+		}
+		else
+		{
+			if(g_access(img_local_path, 4))
+			{
+				DrawThumbnail(pFeatureClass, img_local_path);
+			}
 		}
 
 		char thumbnail[AUGE_PATH_MAX];

@@ -31,6 +31,8 @@ namespace auge
 		void		SetVersion(const char* value);
 		void		SetSourceName(const char* name);
 		void		SetDataSetName(const char* name);
+		void		SetForce(const char* force);
+		bool		GetForce();
 
 	private:
 		std::string m_version;
@@ -38,6 +40,7 @@ namespace auge
 		std::string m_source_name;
 		std::string m_dataset_name;
 		std::string m_encoding;
+		bool		m_force;
 	};
 }
 
