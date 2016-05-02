@@ -626,6 +626,13 @@ namespace auge
 		memset(to, 0, AUGE_PATH_MAX);
 		auge_make_path(to, to_drv, to_dir, to_full_name, "xml");
 		auge_move(from, to);
+
+		//move xml file
+		memset(from, 0, AUGE_PATH_MAX);
+		auge_make_path(from, from_drv, from_dir, from_full_name, "jgw");
+		memset(to, 0, AUGE_PATH_MAX);
+		auge_make_path(to, to_drv, to_dir, to_full_name, "jgw");
+		auge_move(from, to);
 	}
 
 
