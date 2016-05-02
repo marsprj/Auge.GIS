@@ -288,10 +288,10 @@ namespace auge
 		pFeatureLayer = pCartoFactory->CreateFeatureLayer();
 		pFeatureLayer->SetFeatureClass(pFeatureClass);
 
-		bool limites = m_pRequest->GetForce() ? 0 : 5000;
+		bool limits = m_pRequest->GetForce() ? 0 : 5000;
 		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
 		augeGeometryType type = pField->GetGeometryDef()->GeometryType();
-		pStyle = pStyleFactory->CreateFeatureStyle(type, 5000);		
+		pStyle = pStyleFactory->CreateFeatureStyle(type, limits);		
 
 		GColor bgColor(255,255,255,255);
 		pCanvas = pCartoFactory->CreateCanvas2D(width, height);
