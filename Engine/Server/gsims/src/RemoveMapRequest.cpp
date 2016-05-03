@@ -1,4 +1,5 @@
 #include "RemoveMapRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
