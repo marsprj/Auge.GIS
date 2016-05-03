@@ -1,5 +1,6 @@
 #include "ClusterKmeanRequest.h"
 #include "AugeFilter.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -203,19 +204,23 @@ namespace auge
 		}
 		else
 		{
-			m_in_source_name = sourceName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_in_source_name = pWebContext->ParameterEncoding(sourceName);
+			//m_in_source_name = sourceName;
 		}
 	}
 
-	void KMeanRequest::SetInputFeatureClass(const char* rasterName)
+	void KMeanRequest::SetInputFeatureClass(const char* typeName)
 	{
-		if(rasterName==NULL)
+		if(typeName==NULL)
 		{
 			m_in_class_name.clear();
 		}
 		else
 		{
-			m_in_class_name = rasterName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_in_class_name = pWebContext->ParameterEncoding(typeName);
+			//m_in_class_name = typeName;
 		}
 	}
 
@@ -227,19 +232,23 @@ namespace auge
 		}
 		else
 		{
-			m_out_source_name = sourceName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_out_source_name = pWebContext->ParameterEncoding(sourceName);
+			//m_out_source_name = sourceName;
 		}
 	}
 
-	void KMeanRequest::SetOutputFeatureClass(const char* rasterName)
+	void KMeanRequest::SetOutputFeatureClass(const char* typeName)
 	{
-		if(rasterName==NULL)
+		if(typeName==NULL)
 		{
 			m_out_class_name.clear();
 		}
 		else
 		{
-			m_out_class_name = rasterName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_out_class_name = pWebContext->ParameterEncoding(typeName);
+			//m_out_class_name = typeName;
 		}
 	}
 
