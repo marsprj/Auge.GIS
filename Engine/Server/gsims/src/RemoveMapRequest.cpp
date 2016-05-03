@@ -74,7 +74,9 @@ namespace auge
 		}
 		else
 		{
-			m_name = name;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_name = pWebContext->ParameterEncoding(name);
+			//m_name = name;
 		}
 	}
 
