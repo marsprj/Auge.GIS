@@ -46,7 +46,8 @@ namespace auge
 		}
 		else
 		{
-			m_service_name = serviceName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_service_name = pWebContext->ParameterEncoding(serviceName);
 		}
 	}
 
@@ -90,15 +91,15 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
 		//SetServiceName(cgi["servicename"]);
-		auge_web_parameter_encoding(cgi["typeName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetTypeName(parameter);
-		auge_web_parameter_encoding(cgi["field"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetField(parameter);
+		//auge_web_parameter_encoding(cgi["typeName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetTypeName(cgi["typeName"]);
+		//auge_web_parameter_encoding(cgi["field"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetField(cgi["field"]);
 		SetOrder(cgi["order"]);
-		auge_web_parameter_encoding(cgi["mapName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetMapName(parameter);
-		auge_web_parameter_encoding(cgi["sourceName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetSourceName(parameter);
+		//auge_web_parameter_encoding(cgi["mapName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetMapName(cgi["mapName"]);
+		//auge_web_parameter_encoding(cgi["sourceName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
+		SetSourceName(cgi["sourceName"]);
 		SetEncoding(cgi["encoding"]);
 		SetType(cgi["type"]);
 		return true;
@@ -112,7 +113,8 @@ namespace auge
 		}
 		else
 		{
-			m_field = field;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_field = pWebContext->ParameterEncoding(field);
 		}
 	}
 
@@ -150,7 +152,8 @@ namespace auge
 		}
 		else
 		{
-			m_type_name = typeName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_type_name = pWebContext->ParameterEncoding(typeName);
 		}
 	}
 
