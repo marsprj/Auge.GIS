@@ -1,4 +1,5 @@
 #include "BuildPyramidRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -147,7 +148,8 @@ namespace auge
 		}
 		else
 		{
-			m_type_name = typeName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+ 			m_type_name = pWebContext->ParameterEncoding(typeName);
 		}
 	}
 
@@ -164,7 +166,8 @@ namespace auge
 		}
 		else
 		{
-			m_source_name = sourceName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_source_name = pWebContext->ParameterEncoding(sourceName);
 		}
 	}
 
@@ -177,7 +180,8 @@ namespace auge
 	{
 		if(mapName)
 		{
-			m_map_name = mapName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_map_name = pWebContext->ParameterEncoding(mapName);
 		}
 		else
 		{
@@ -193,7 +197,8 @@ namespace auge
 		}
 		else
 		{
-			m_tile_store_name = tileStoreName;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_tile_store_name = pWebContext->ParameterEncoding(tileStoreName);
 		}
 	}
 
