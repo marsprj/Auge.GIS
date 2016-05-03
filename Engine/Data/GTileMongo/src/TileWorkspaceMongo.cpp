@@ -210,9 +210,11 @@ namespace auge
 		g_uint srid = 4326;
 		GEnvelope extent;
 
+		const char* name_utf8 = auge_encoding_convert(AUGE_ENCODING_UTF8, AUGE_ENCODING_GBK, name, strlen(name));
+
 		bson_t m_query;
 		bson_init (&m_query);
-		bson_append_utf8 (&m_query, "name", -1, name, -1);
+		bson_append_utf8 (&m_query, "name", -1, name_utf8, -1);
 
 		mongoc_cursor_t *m_cursor = NULL;
 		m_cursor = mongoc_collection_find ( m_mongo_meta,
