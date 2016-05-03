@@ -186,7 +186,7 @@ namespace auge
 				g_sprintf(str,"%d",pLayer->GetID());
 				pxLayer_2->SetAttribute("id", str,NULL);
 				pxNode = pxLayer_2->AddChild("Name",NULL);
-				pxNode->SetChildText(lname);
+				pxNode->SetChildText(lname, true);
 				g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
 				pxNode = pxLayer_2->AddChild("CRS",NULL);
 				pxNode->SetChildText(str);
