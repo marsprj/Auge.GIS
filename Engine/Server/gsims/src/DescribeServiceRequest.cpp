@@ -43,7 +43,7 @@ namespace auge
 		return m_encoding.c_str();
 	}
 
-	void DescribeServiceRequest::SetEncoding(const char encoding)
+	void DescribeServiceRequest::SetEncoding(const char* encoding)
 	{
 		if(encoding==NULL)
 		{
