@@ -97,7 +97,7 @@ namespace auge
 		SetField(cgi["field"]);
 		SetOrder(cgi["order"]);
 		//auge_web_parameter_encoding(cgi["mapName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetMapName(cgi["mapName"]);
+		SetMapName(cgi["mapName"],true);
 		//auge_web_parameter_encoding(cgi["sourceName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
 		SetSourceName(cgi["sourceName"]);
 		SetEncoding(cgi["encoding"]);

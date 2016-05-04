@@ -55,7 +55,7 @@ namespace auge
 			pRequest->Release();
 			pRequest = NULL;
 		}
-		pRequest->SetMapName(mapName);
+		pRequest->SetMapName(mapName,true);
 		pRequest->Info();
 		return pRequest;
 	}

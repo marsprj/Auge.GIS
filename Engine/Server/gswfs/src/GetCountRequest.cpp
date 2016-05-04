@@ -141,7 +141,7 @@ namespace auge
 		SetTypeName(cgi["typeName"]);
 		
 		SetSourceName(cgi["sourceName"]);
-		SetMapName(cgi["mapName"]);
+		SetMapName(cgi["mapName"],true);
 
 		SetBBox(cgi["bbox"]);
 		m_filter = cgi["filter"];
@@ -166,7 +166,7 @@ namespace auge
 		pxAttr = pxRoot->GetAttribute("mapName");
 		if(pxAttr!=NULL)
 		{
-			SetMapName(pxAttr->GetValue());
+			SetMapName(pxAttr->GetValue(),false);
 		}
 
 		pxAttr = pxRoot->GetAttribute("sourceName");

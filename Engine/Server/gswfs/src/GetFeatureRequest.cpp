@@ -368,7 +368,7 @@ namespace auge
 		SetSourceName(parameter);
 
 		//auge_web_parameter_encoding(cgi["mapName"], parameter, AUGE_NAME_MAX, pWebContext->IsIE());
-		SetMapName(cgi["mapName"]);
+		SetMapName(cgi["mapName"], true);
 
 		SetOutputFormat(cgi["outputFormat"]);
 		SetMaxFeatures(cgi["maxFeatures"]);
@@ -404,7 +404,7 @@ namespace auge
 		pxAttr = pxRoot->GetAttribute("mapName");
 		if(pxAttr!=NULL)
 		{
-			SetMapName(pxAttr->GetValue());
+			SetMapName(pxAttr->GetValue(),false);
 		}
 
 		pxAttr = pxRoot->GetAttribute("sourceName");
