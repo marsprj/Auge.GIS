@@ -125,7 +125,7 @@ namespace auge
 
 		return pWebResponse;
 	}
-
+	
 	WebResponse* GetMapHandler::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)
 	{
 		GetMapRequest* pRequest = static_cast<GetMapRequest*>(pWebRequest);
@@ -135,6 +135,7 @@ namespace auge
 
 		Canvas* pCanvas = NULL;
 		CartoFactory* pCartoFactory = augeGetCartoFactoryInstance();
+		GLogger* pLogger = augeGetLoggerInstance();
 
 		pCanvas = pCartoFactory->CreateCanvas2D(width, height);
 
@@ -142,7 +143,6 @@ namespace auge
 		//GColor bgColor(255,0,0,255);
 		char temp[AUGE_NAME_MAX];
 		g_sprintf(temp, "[Alpha]:%d", bgColor.GetAlpha());
-		GLogger* pLogger = augeGetLoggerInstance();
 		pLogger->Info(temp, __FILE__, __LINE__);
 		pCanvas->DrawBackground(bgColor);
 
@@ -170,7 +170,7 @@ namespace auge
 
 		g_uint lc = pRequest->GetLayerCount();
 		for(g_int i=lc-1; i>=0; i--)
-		{
+		{ 
 			lname = pRequest->GetLayer(i);
 			sname = pRequest->GetStyle(i);
 
@@ -191,7 +191,6 @@ namespace auge
 					}
 					ts = auge_get_time();
 					pCanvas->DrawLayer(pLayer, pStyle);
-					//DrawNamedLayer(pCanvas, pLayer, sname);
 					te = auge_get_time();
 				}
 				else
@@ -210,7 +209,7 @@ namespace auge
 		pLogger->Debug(msg, __FILE__, __LINE__);
 
 		ts = auge_get_time();
-		pCanvas->Label();
+		pCanvas->Label();  
 		te = auge_get_time();
 		g_sprintf(msg, "[MapLabel]:%ld ms", te-ts);
 		pLogger->Debug(msg, __FILE__, __LINE__);
@@ -227,9 +226,11 @@ namespace auge
 		ts = auge_get_time();
 		pCanvas->Save(img_path);
 		te = auge_get_time();
-		g_sprintf(msg, "[MapSave]:%ld ms", te-ts);
+		g_sprintf(msg, "[MapSave]:%ld ms", te-ts); 
 		pLogger->Debug(msg, __FILE__, __LINE__);
 
+		//strcpy(img_path,"E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\cache\\thumbnail\\ef9fe87a-c7be-4c2e-8a0a-db6a4fc53707.png");
+		//const char* img_path = "E:\\Research\\Auge.GIS\\Dist\\32_x86_win_vc10\\binD\\cache\\thumbnail\\ef9fe87a-c7be-4c2e-8a0a-db6a4fc53707.png";		
 		pCanvas->Release();
 		GetMapResponse* pMapResponse = new GetMapResponse(pRequest);
 		pMapResponse->SetPath(img_path);
@@ -362,7 +363,7 @@ namespace auge
 
 		switch(pLayer->GetType())
 		{
-		case augeLayerFeature:
+		case augeLayerFeature: 
 			{
 				FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
 				FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();				
@@ -370,13 +371,14 @@ namespace auge
 				if(pStyle!=NULL)
 				{
 					pCanvas->DrawLayer(pLayer, pStyle);
+					pStyle->Release();
 				}
 				else
 				{
-					char msg[AUGE_MSG_MAX];
-					g_sprintf(msg, "Style [%s] Not Defined", style_name);
-					GLogger* pLogger = augeGetLoggerInstance();
-					pLogger->Info(msg, __FILE__, __LINE__);
+					//char msg[AUGE_MSG_MAX];
+					//g_sprintf(msg, "Style [%s] Not Defined", style_name);
+					//GLogger* pLogger = augeGetLoggerInstance();
+					//pLogger->Info(msg, __FILE__, __LINE__);
 				}
 			}
 			break;
