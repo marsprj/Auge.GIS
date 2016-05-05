@@ -150,6 +150,10 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	void DescribeServiceResponse::DescribeMap(XElement* pxService, Map* pMap)
 	{
+		if(pMap==NULL)
+		{
+			return;
+		}
 		XElement  *pxNode = NULL;
 		XElement  *pxRoot = NULL;
 		char str[AUGE_MSG_MAX];
