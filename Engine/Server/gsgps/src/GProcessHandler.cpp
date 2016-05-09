@@ -64,8 +64,9 @@ namespace auge
 		const char* client = "";
 		const char* server = pWebContext->GetServer();
 		const char* operation= GetName();
+		const char* service = "gps";
 		const char* params = "";
-		m_pJob = pJobmanager->AddJob(pUser->GetID(), operation, params, client, server);
+		m_pJob = pJobmanager->AddJob(pUser->GetID(), operation, operation, params, client, server);
 	}
 
 	void GProcessHandler::End()

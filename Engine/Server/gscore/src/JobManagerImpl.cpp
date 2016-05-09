@@ -24,15 +24,15 @@ namespace auge
 		m_pConnection = NULL;
 	}
 
-	Job* JobManagerImpl::AddJob(g_uint user, const char* operation, const char* params, const char* client, const char* server)
+	Job* JobManagerImpl::AddJob(g_uint user, const char* service, const char* operation, const char* params, const char* client, const char* server)
 	{
-		const char* format = "insert into %s (uuid,operation,params,user_id,client,server,start_time,state) values('%s','%s','%s',%d,'%s','%s','%s',%d)";
+		const char* format = "insert into %s (uuid,service, operation,params,user_id,client,server,start_time,state) values('%s','%s','%s','%s',%d,'%s','%s','%s',%d)";
 		//const char* format = "insert into %s (uuid,operation,params,user_id,client,server) values('%s','%s','%s',%d,'%s','%s')";
 
 		char uuid[AUGE_PATH_MAX];
 		memset(uuid, 0, AUGE_PATH_MAX);
 		auge_generate_uuid(uuid, AUGE_PATH_MAX);
-
+		//const char* service, 
 		TIME_STRU start_time, end_time;
 		auge_get_time_struct(&start_time);
 		char time_str[AUGE_NAME_MAX];
@@ -53,7 +53,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, format, AUGE_JOB_TABLE, uuid, operation, params,user, client, server,time_str,0);
+		g_snprintf(sql, AUGE_SQL_MAX, format, AUGE_JOB_TABLE, uuid, service, operation, params,user, client, server,time_str,0);
 
 		RESULTCODE rc = m_pConnection->ExecuteSQL(sql);
 		if(rc!=AG_SUCCESS)
@@ -71,10 +71,10 @@ namespace auge
 		return pJob;
 	}
 
-	Job* JobManagerImpl::AddJob(const char* user, const char* operation, const char* params, const char* client, const char* server)
+	Job* JobManagerImpl::AddJob(const char* user, const char* service, const char* operation, const char* params, const char* client, const char* server)
 	{
 		//const char* format = "insert into %s (uuid,operation,params,user_id,client,server,start_time,end_time,state) values('%s','%s','%s',%d,'%s','%s','%s','%s',%d) returning gid";
-		const char* format = "insert into %s (uuid,operation,params,user_id,client,server) values('%s','%s','%s',%d,'%s','%s') returning gid";
+		const char* format = "insert into %s (uuid,service,operation,params,user_id,client,server) values('%s','%s','%s','%s',%d,'%s','%s') returning gid";
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
@@ -91,7 +91,7 @@ namespace auge
 			return NULL;
 		}
 
-		const char* format = "select gid,uuid,operation,params,user_id,client,server,start_time,end_time,state from %s where uuid='%s'";
+		const char* format = "select gid,uuid,service,operation,params,user_id,client,server,start_time,end_time,state from %s where uuid='%s'";
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, AUGE_JOB_TABLE, uuid);
@@ -117,7 +117,7 @@ namespace auge
 
 	EnumJob* JobManagerImpl::GetJob(User* pUser, augeProcssState state ,g_int maxJobs/*=20*/, g_uint offset/*=0*/)
 	{
-		const char* format = "select gid,uuid,operation,params,user_id,client,server,start_time,end_time,state from %s where user_id=%d and state=%d limit %d offset %d";
+		const char* format = "select gid,uuid,service, operation,params,user_id,client,server,start_time,end_time,state from %s where user_id=%d and state=%d limit %d offset %d";
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
 		g_snprintf(sql, AUGE_SQL_MAX, format, AUGE_JOB_TABLE, pUser->GetID(), state, maxJobs, offset);
@@ -150,18 +150,20 @@ namespace auge
 		g_uint gid = pResult->GetInt(i, 0);
 		const char* uuid = pResult->GetString(i,1);
 		const char* operation = pResult->GetString(i, 2);
-		const char* params = pResult->GetString(i, 3);
-		g_uint user_id = pResult->GetInt(i, 4);
-		const char* client = pResult->GetString(i, 5);
-		const char* server = pResult->GetString(i, 6);
-		const char* start = pResult->GetString(i, 7);
-		const char* end = pResult->GetString(i, 8);
-		g_uint state = pResult->GetInt(i, 9);
+		const char* service = pResult->GetString(i, 3);
+		const char* params = pResult->GetString(i, 4);
+		g_uint user_id = pResult->GetInt(i, 5);
+		const char* client = pResult->GetString(i, 7);
+		const char* server = pResult->GetString(i, 8);
+		const char* start = pResult->GetString(i, 9);
+		const char* end = pResult->GetString(i, 0);
+		g_uint state = pResult->GetInt(i, 10);
 		TIME_STRU tim;
 
 		JobImpl* pJob = new JobImpl();
 		pJob->SetUUID(uuid);
 		pJob->SetOperation(operation);
+		pJob->SetService(service);
 		pJob->SetParams(params);
 		pJob->SetClient(client);
 		pJob->SetServer(server);

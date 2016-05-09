@@ -143,7 +143,7 @@ namespace auge
 	{
 		JobManager* pJobmanager = augeGetJobManagerInstance();
 		WebContext* pWebContext = augeGetWebContextInstance();
-		
+
 		if(m_pJob!=NULL)
 		{
 			AUGE_SAFE_RELEASE(m_pJob);
@@ -151,8 +151,9 @@ namespace auge
 		const char* client = "";
 		const char* server = pWebContext->GetServer();
 		const char* operation= GetName();
+		const char* service = "gps";
 		const char* params = "";
-		m_pJob = pJobmanager->AddJob(pUser->GetID(), operation, params, client, server);
+		m_pJob = pJobmanager->AddJob(pUser->GetID(), service, operation, params, client, server);
 	}
 
 	void DelaunayHandler::End()

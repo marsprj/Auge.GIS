@@ -55,7 +55,7 @@
 
 #include "GetSpatialReferenceHandler.h"
 #include "GetSpatialReferenceCountHandler.h"
-#include "GetJobHandler.h"
+//#include "GetJobHandler.h"
 
 namespace auge
 {
@@ -119,7 +119,6 @@ namespace auge
 
 		m_misc_handlers.push_back(new GetSpatialReferenceHandler());
 		m_misc_handlers.push_back(new GetSpatialReferenceCountHandler());
-		m_misc_handlers.push_back(new GetJobHandler());
 	}
 
 	GeoProcessingEngine::~GeoProcessingEngine()

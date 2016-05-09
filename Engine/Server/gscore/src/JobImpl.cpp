@@ -144,4 +144,21 @@ namespace auge
 	{
 		m_state = (augeProcssState)state;
 	}
+
+	void JobImpl::SetService(const char* service)
+	{
+		if(service==NULL)
+		{
+			m_service = "";
+		}
+		else
+		{
+			m_service = service;
+		}
+	}
+
+	const char* JobImpl::GetService()
+	{
+		return m_service.c_str();
+	}
 }

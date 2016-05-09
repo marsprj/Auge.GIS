@@ -19,6 +19,7 @@ namespace auge
 		virtual const char* GetServer();
 
 		virtual const char*	GetOperation();	
+		virtual const char* GetService();
 		virtual const char*	GetParams();		
 		virtual bool		GetStartTime(TIME_STRU* start);
 		virtual bool		GetEndTime(TIME_STRU* end);
@@ -27,6 +28,7 @@ namespace auge
 
 	public:
 		void SetUUID(const char* uuid);
+		void SetService(const char* service);
 		void SetUser(const char* user);
 		void SetClient(const char* client);
 		void SetServer(const char* server);
@@ -43,6 +45,7 @@ namespace auge
 		std::string		m_client;
 		std::string		m_server;
 		std::string		m_operation;
+		std::string		m_service;
 		std::string		m_params;
 		TIME_STRU		m_start;
 		TIME_STRU		m_end;

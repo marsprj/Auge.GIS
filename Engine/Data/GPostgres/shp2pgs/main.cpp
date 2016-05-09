@@ -69,7 +69,7 @@ char* files[] = {
 		//const char* className = argv[2];
 
 		//const char* shp_constr = "DATABASE=G:\\Data\\shape\\osm";
-		const char* shp_constr = "DATABASE=D:\\GeoBeans\\data\\world";
+		const char* shp_constr = "DATABASE=E:\\DAta\\osm";
 		//const char* shp_constr = "DATABASE=H:\\Data\\data\\中国_WGS84\\全国_shap\\行政区划 - 副本";
 		//const char* shp_constr = "DATABASE=G:\\temp\\全国_shap";
 		//const char* shp_constr = "DATABASE=G:\\Data\\shape\\tianjin\\建筑物";
@@ -78,12 +78,12 @@ char* files[] = {
 		//const char* pgs_constr = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=ourgis;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 		//const char* pgs_constr = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=osm;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 		//const char* pgs_constr = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=tianjin;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-		//const char* pgs_constr = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gaode;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-		const char* pgs_constr = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+		const char* pgs_constr = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=base;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+		//const char* pgs_constr = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 
 		RESULTCODE rc = AG_FAILURE;
-		const char* shpName = "cities";
-		const char* className = "城市";
+		const char* shpName = "osm_water_bodies";
+		const char* className = "osm_water_bodies";
 		//const char* className = "rivers";
 		//const char* className = "country";
 		//const char* shpName = "cities";
@@ -129,7 +129,7 @@ char* files[] = {
 		pshpFeatureClass = pshpWorkspace->OpenFeatureClass(shpName);
 		pFields = pshpFeatureClass->GetFields();
 
-		ppgsWorkspace->RemoveFeatureClass(className);
+ 		ppgsWorkspace->RemoveFeatureClass(className);
 		ppgsFeatureClass = ppgsWorkspace->OpenFeatureClass(className);
 		if(ppgsFeatureClass==NULL)
 		{

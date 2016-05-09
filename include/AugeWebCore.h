@@ -120,7 +120,8 @@ namespace auge
 		virtual const char* GetServer() = 0;
 
 		virtual const char*	GetOperation() = 0;	
-		virtual const char*	GetParams() = 0;		
+		virtual const char*	GetParams() = 0;
+		virtual const char* GetService() = 0;
 		virtual bool		GetStartTime(TIME_STRU* time) = 0;
 		virtual bool		GetEndTime(TIME_STRU* time) = 0;
 		virtual	bool		IsFinished() = 0;
@@ -144,8 +145,8 @@ namespace auge
 		JobManager(){}
 		virtual ~JobManager(){}
 	public:
-		virtual	Job*			AddJob(g_uint user, const char* operation, const char* params, const char* client, const char* server) = 0;
-		virtual	Job*			AddJob(const char* user, const char* operation, const char* params, const char* client, const char* server) = 0;
+		virtual	Job*			AddJob(g_uint user, const char* service, const char* operation, const char* params, const char* client, const char* server) = 0;
+		virtual	Job*			AddJob(const char* user, const char* service, const char* operation, const char* params, const char* client, const char* server) = 0;
 		virtual RESULTCODE		SetEndTime(const char* uuid) = 0;
 
 		virtual Job*			GetJob(const char* uuid) = 0;

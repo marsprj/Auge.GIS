@@ -88,5 +88,8 @@ libgsims_la_SOURCES=\
 		    GetSubscriptionThemeHandler.cpp \
 		    GetSubscriptionThemeRequest.cpp \
 		    GetSubscriptionThemeResponse.cpp \
+	    	    GetJobHandler.cpp \
+		    GetJobRequest.cpp \
+		    GetJobResponse.cpp \
 		    WEngine.cpp
 

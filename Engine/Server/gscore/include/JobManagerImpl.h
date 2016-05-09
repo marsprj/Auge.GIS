@@ -12,8 +12,8 @@ namespace auge
 		JobManagerImpl();
 		virtual ~JobManagerImpl();
 	public:
-		virtual	Job*			AddJob(g_uint user, const char* operation, const char* params, const char* client, const char* server);
-		virtual	Job*			AddJob(const char* user, const char* operation, const char* params, const char* client, const char* server);		
+		virtual	Job*			AddJob(g_uint user, const char* service, const char* operation, const char* params, const char* client, const char* server);
+		virtual	Job*			AddJob(const char* user, const char* service, const char* operation, const char* params, const char* client, const char* server);		
 		virtual RESULTCODE		SetEndTime(const char* uuid);
 
 		virtual Job*			GetJob(const char* uuid);
