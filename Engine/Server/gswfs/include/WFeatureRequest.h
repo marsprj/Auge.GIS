@@ -31,7 +31,7 @@ namespace auge
 	public:
 		void		SetVersion(const char* value);
 		void		SetUser(const char* user);
-		void		SetMapName(const char* mapName);
+		void		SetMapName(const char* mapName,bool encoding);
 		void		SetSourceName(const char* sourcName);
 
 		void		SetHost(const char* host);

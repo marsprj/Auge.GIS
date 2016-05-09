@@ -1,4 +1,5 @@
 #include "DescribeServiceRequest.h"
+#include "AugeWebCore.h"
 
 namespace auge
 {
@@ -18,6 +19,7 @@ namespace auge
 	{
 		SetVersion(cgi["version"]);
 		SetName(cgi["name"]);
+		SetEncoding(cgi["encoding"]);
 		return true;
 	}
 
@@ -39,6 +41,25 @@ namespace auge
 	const char* DescribeServiceRequest::GetEncoding()
 	{
 		return m_encoding.c_str();
+	}
+
+	void DescribeServiceRequest::SetEncoding(const char* encoding)
+	{
+		if(encoding==NULL)
+		{
+			m_encoding = AUGE_ENCODING_UTF8;
+		}
+		else
+		{
+			if(strlen(encoding)==0)
+			{
+				m_encoding = AUGE_ENCODING_UTF8;
+			}
+			else
+			{
+				m_encoding = AUGE_ENCODING_GBK;
+			}
+		}
 	}
 
 	void DescribeServiceRequest::SetVersion(const char* value)
@@ -75,7 +96,8 @@ namespace auge
 		}
 		else
 		{
-			m_name = name;
+			WebContext* pWebContext = augeGetWebContextInstance();
+			m_name = pWebContext->ParameterEncoding(name);
 		}
 		
 	}

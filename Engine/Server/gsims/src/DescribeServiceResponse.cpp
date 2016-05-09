@@ -46,6 +46,8 @@ namespace auge
 		g_uint user_id = m_pUser->GetID();
 		GLogger* pLogger = augeGetLoggerInstance();
 
+		const char* encoding = m_pRequest->GetEncoding();
+
 		Service* pService = NULL;
 		EnumService *pServices = NULL;
 		ServiceManager* pServiceManager = augeGetServiceManagerInstance();
@@ -85,7 +87,7 @@ namespace auge
 
 		int len = 0;
 		g_uchar* buffer = NULL;
-		pxDoc->WriteToString(&buffer, len, "GBK",0);
+		pxDoc->WriteToString(&buffer, len, encoding,0);
 
 		pWriter->WriteHead(m_pRequest->GetMimeType());
 		pWriter->Write(buffer, len);
@@ -108,7 +110,7 @@ namespace auge
 
 		const char* name = pService->GetName();
 		XElement* pxNode = pxService->AddChild("Name");
-		pxNode->SetChildText(name);
+		pxNode->SetChildText(name,true);
 
 		XElement* pxState = pxService->AddChild("State");
 		pxState->SetChildText(pService->IsStarted() ? "Started" : "Stopped");
@@ -148,6 +150,10 @@ namespace auge
 	//////////////////////////////////////////////////////////////////////////
 	void DescribeServiceResponse::DescribeMap(XElement* pxService, Map* pMap)
 	{
+		if(pMap==NULL)
+		{
+			return;
+		}
 		XElement  *pxNode = NULL;
 		XElement  *pxRoot = NULL;
 		char str[AUGE_MSG_MAX];
@@ -184,7 +190,7 @@ namespace auge
 				g_sprintf(str,"%d",pLayer->GetID());
 				pxLayer_2->SetAttribute("id", str,NULL);
 				pxNode = pxLayer_2->AddChild("Name",NULL);
-				pxNode->SetChildText(lname);
+				pxNode->SetChildText(lname, true);
 				g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
 				pxNode = pxLayer_2->AddChild("CRS",NULL);
 				pxNode->SetChildText(str);

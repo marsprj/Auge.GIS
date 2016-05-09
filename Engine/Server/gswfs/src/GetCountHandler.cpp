@@ -53,7 +53,7 @@ namespace auge
 			pRequest->Release();
 			pRequest = NULL;
 		}
-		pRequest->SetMapName(mapName);
+		pRequest->SetMapName(mapName,true);
 		return pRequest;
 	}
 	
@@ -83,7 +83,7 @@ namespace auge
 		}
 		if(pRequest->GetMapName()==NULL)
 		{
-			pRequest->SetMapName(mapName);
+			pRequest->SetMapName(mapName,false);
 		}
 		return pRequest;
 	}

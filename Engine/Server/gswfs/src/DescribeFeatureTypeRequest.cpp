@@ -69,7 +69,7 @@ namespace auge
 	bool DescribeFeatureTypeRequest::Create(rude::CGI& cgi)
 	{
 		SetVersion(cgi["version"]);
-		SetMapName(cgi["mapName"]);
+		SetMapName(cgi["mapName"],true);
 		SetTypeName(cgi["typeName"]);
 		SetSourceName(cgi["sourceName"]);
 		return true;

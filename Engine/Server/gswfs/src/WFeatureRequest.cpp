@@ -63,7 +63,7 @@ namespace auge
 		return m_map_name.c_str();
 	}
 
-	void WFeatureRequest::SetMapName(const char* mapName)
+	void WFeatureRequest::SetMapName(const char* mapName,bool encoding)
 	{
 		if((mapName==NULL)||(strlen(mapName)==0))
 		{
@@ -71,8 +71,16 @@ namespace auge
 		}
 		else
 		{
-			WebContext* pWebContext = augeGetWebContextInstance();
-			m_map_name = pWebContext->ParameterEncoding(mapName);
+			if(encoding)
+			{
+				WebContext* pWebContext = augeGetWebContextInstance();
+				m_map_name = pWebContext->ParameterEncoding(mapName);
+			}
+			else
+			{
+				m_map_name = mapName;
+			}
+			
 		}
 	}
 

@@ -263,9 +263,9 @@ namespace auge
 				XElement* pxLayer_2 = pxLayer->AddChild("Layer", NULL);
 				pxLayer_2->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
 				pxNode = pxLayer_2->AddChild("Name",NULL);
-				pxNode->SetChildText(lname);
+				pxNode->SetChildText(lname, true);
 				pxNode = pxLayer_2->AddChild("Title",NULL);
-				pxNode->SetChildText(lname);
+				pxNode->SetChildText(lname, true);
 				pxNode = pxLayer_2->AddChild("Abstract",NULL);
 				g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
 				pxNode = pxLayer_2->AddChild("CRS",NULL);
@@ -458,9 +458,9 @@ namespace auge
 				XElement* pxLayer_2 = pxLayer->AddChild("Layer", NULL);
 				pxLayer_2->SetAttribute("queryable", pLayer->IsQueryable()?"1":"0", NULL);
 				pxNode = pxLayer_2->AddChild("Name",NULL);
-				pxNode->SetChildText(lname);
+				pxNode->SetChildText(lname, true);
 				pxNode = pxLayer_2->AddChild("Title",NULL);
-				pxNode->SetChildText(lname);
+				pxNode->SetChildText(lname, true);
 				pxNode = pxLayer_2->AddChild("Abstract",NULL);
 				g_sprintf(str, "EPSG:%d", pLayer->GetSRID());
 				pxNode = pxLayer_2->AddChild("CRS",NULL);

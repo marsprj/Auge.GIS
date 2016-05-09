@@ -83,7 +83,9 @@ namespace auge
 			}
 			else
 			{
-				const char* serviceName = cgi["ServiceName"];
+				//const char* serviceName = cgi["ServiceName"];
+				WebContext* pWebContext = augeGetWebContextInstance();
+				const char* serviceName = pWebContext->ParameterEncoding(cgi["ServiceName"]); 
 				if(serviceName==NULL)
 				{
 					const char* msg = "Invalid Service Name";					

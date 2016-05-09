@@ -57,7 +57,7 @@ namespace auge
 		}
 		pRequest->SetHost(getenv("HTTP_HOST"));
 		pRequest->SetRequestMethod(getenv("REQUEST_METHOD"));
-		pRequest->SetMapName(mapName);
+		pRequest->SetMapName(mapName,true);
 		return pRequest;
 	}
 

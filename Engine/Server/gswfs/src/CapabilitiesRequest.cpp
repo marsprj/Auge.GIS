@@ -84,7 +84,7 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
 		SetSourceName(cgi["sourceName"]);
-		SetMapName(cgi["mapName"]);
+		SetMapName(cgi["mapName"],true);
 		return true;
 	}
 

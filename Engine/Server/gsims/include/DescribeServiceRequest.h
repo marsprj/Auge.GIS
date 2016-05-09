@@ -29,6 +29,7 @@ namespace auge
 
 		void		SetVersion(const char* value);
 		void		SetName(const char* name);
+		void		SetEncoding(const char* encoding);
 		
 	private:
 		std::string m_version;

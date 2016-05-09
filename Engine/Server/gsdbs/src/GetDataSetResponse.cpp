@@ -246,9 +246,18 @@ namespace auge
 		char img_local_path[AUGE_PATH_MAX] = {0};
 		memset(img_local_path, 0, AUGE_PATH_MAX);		
 		auge_make_path(img_local_path, NULL, m_pWebContext->GetThumbnailPath(), pFeatureClass->GetUUID(), "png");
-		if(g_access(img_local_path, 4))
+
+		bool force = m_pRequest->GetForce();
+		if(force)
 		{
 			DrawThumbnail(pFeatureClass, img_local_path);
+		}
+		else
+		{
+			if(g_access(img_local_path, 4))
+			{
+				DrawThumbnail(pFeatureClass, img_local_path);
+			}
 		}
 
 		char thumbnail[AUGE_PATH_MAX];
@@ -256,7 +265,8 @@ namespace auge
 		auge_make_path(thumbnail, NULL, NULL, pFeatureClass->GetUUID(), "png");
 		char xlink[AUGE_PATH_MAX];
 		memset(xlink,0,AUGE_PATH_MAX);
-		g_snprintf(xlink, AUGE_PATH_MAX, "http://%s:%s/ows/thumbnail/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), thumbnail);
+		//g_snprintf(xlink, AUGE_PATH_MAX, "http://%s:%s/ows/thumbnail/%s", m_pWebContext->GetServer(), m_pWebContext->GetPort(), thumbnail);
+		g_snprintf(xlink, AUGE_PATH_MAX, "/ows/thumbnail/%s", thumbnail);
 		XElement* pxThumbnail = pxClass->AddChild("Thumbnail", NULL);
 		pxThumbnail->SetAttribute("xlink",xlink,NULL);
 	}
@@ -278,9 +288,10 @@ namespace auge
 		pFeatureLayer = pCartoFactory->CreateFeatureLayer();
 		pFeatureLayer->SetFeatureClass(pFeatureClass);
 
+		bool limits = m_pRequest->GetForce() ? 0 : 5000;
 		GField* pField = pFeatureClass->GetFields()->GetGeometryField();
 		augeGeometryType type = pField->GetGeometryDef()->GeometryType();
-		pStyle = pStyleFactory->CreateFeatureStyle(type, 5000);		
+		pStyle = pStyleFactory->CreateFeatureStyle(type, limits);		
 
 		GColor bgColor(255,255,255,255);
 		pCanvas = pCartoFactory->CreateCanvas2D(width, height);

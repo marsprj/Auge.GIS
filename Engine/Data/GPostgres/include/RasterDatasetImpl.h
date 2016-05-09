@@ -62,6 +62,9 @@ namespace auge
 		//				double		ymax,
 		//				const char* uuid);
 
+	private:
+		void		MoveRaster(const char* from_file_path, const char* to_file_path);
+
 	public:
 		//Raster*	m_pRaster;
 

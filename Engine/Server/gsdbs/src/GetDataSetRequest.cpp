@@ -8,6 +8,7 @@ namespace auge
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
 		m_encoding = AUGE_DEFAULT_ENCODING;
+		m_force = false;
 	}
 
 	GetDataSetRequest::~GetDataSetRequest()
@@ -20,6 +21,7 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetSourceName(cgi["sourceName"]);
 		SetDataSetName(cgi["dataSetName"]);
+		SetForce(cgi["force"]);
 		return true;
 	}
 
@@ -111,6 +113,30 @@ namespace auge
 	const char* GetDataSetRequest::GetEncoding()
 	{
 		return m_encoding.c_str();
+	}
+
+	void GetDataSetRequest::SetForce(const char* force)
+	{
+		if(force==NULL)
+		{
+			m_force = false;
+		}
+		else
+		{
+			if(strlen(force)==0)
+			{
+				m_force = false;
+			}
+			else
+			{
+				m_force = true;
+			}
+		}
+	}
+
+	bool GetDataSetRequest::GetForce()
+	{
+		return m_force;
 	}
 
 }
