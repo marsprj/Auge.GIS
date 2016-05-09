@@ -3,6 +3,7 @@
 #include "AugeCore.h"
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
+#include "AugeUser.h"
 
 #include "ListHandler.h"
 #include "CreateFolderHandler.h"
@@ -295,7 +296,32 @@ namespace auge
 			return pExpResopnse;
 		}
 
-		return handler->Execute(pWebRequest, pWebContext, pUser);
+		Begin(pWebRequest, pWebContext, pUser);
+		WebResponse* pWebResponse = handler->Execute(pWebRequest, pWebContext, pUser);
+		End();
+		return pWebResponse;
+	}
+
+	void WFileSystemEngine::Begin(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
+	{ 
+		JobManager* pJobmanager = augeGetJobManagerInstance(); 
+
+		const char* client = "";
+		const char* server = pWebContext->GetServer();
+		const char* operation= pWebRequest->GetRequest();
+		const char* service = GetType();
+		const char* params = "";
+		m_pJob = pJobmanager->AddJob(pUser->GetID(), service, operation, params, client, server);
+	}
+
+	void WFileSystemEngine::End()
+	{
+		JobManager* pJobmanager = augeGetJobManagerInstance();
+		if(m_pJob!=NULL)
+		{
+			pJobmanager->SetEndTime(m_pJob->GetUUID());
+			AUGE_SAFE_RELEASE(m_pJob);
+		}
 	}
 
 	bool make_user_path(char* user_path, size_t size, const char* root_path, const char* user_name)

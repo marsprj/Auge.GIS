@@ -19,6 +19,7 @@ namespace auge
 		//! @return	×Ö¶Î±ğÃû
 		virtual const char*		GetAlias();
 		virtual augeRoleType	GetType();
+		virtual bool			IsAdmin();
 		virtual void			Release();
 
 	public:

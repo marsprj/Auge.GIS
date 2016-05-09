@@ -2,6 +2,7 @@
 #include "AugeCore.h"
 #include "AugeCarto.h"
 #include "AugeWebCore.h"
+#include "AugeUser.h"
 
 #include "WMapRequest.h"
 #include "CapabilitiesHandler.h"
@@ -237,7 +238,32 @@ namespace auge
 			pExpResopnse->SetMessage(msg);
 			return pExpResopnse;
 		}
-		return handler->Execute(pWebRequest, pWebContext, pUser);
+		Begin(pWebRequest, pWebContext, pUser);
+		WebResponse* pWebResponse = handler->Execute(pWebRequest, pWebContext, pUser);
+		End();
+		return pWebResponse;
+	}
+
+	void WMapEngine::Begin(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser)
+	{ 
+		JobManager* pJobmanager = augeGetJobManagerInstance(); 
+
+		const char* client = "";
+		const char* server = pWebContext->GetServer();
+		const char* operation= pWebRequest->GetRequest();
+		const char* service = GetType();
+		const char* params = "";
+		m_pJob = pJobmanager->AddJob(pUser->GetID(), service, operation, params, client, server);
+	}
+
+	void WMapEngine::End()
+	{
+		JobManager* pJobmanager = augeGetJobManagerInstance();
+		if(m_pJob!=NULL)
+		{
+			pJobmanager->SetEndTime(m_pJob->GetUUID());
+			AUGE_SAFE_RELEASE(m_pJob);
+		}
 	}
 
 	//WebResponse* WMapEngine::Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap)

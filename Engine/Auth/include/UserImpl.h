@@ -23,6 +23,7 @@ namespace auge
 
 		virtual bool			IsAuthenticated();
 		virtual bool			IsLogined();
+		virtual bool			IsAdmin();
 
 		virtual void			Release();
 
@@ -39,6 +40,7 @@ namespace auge
 		std::string m_alias;
 		std::string m_passwd;
 		std::string m_email;
+		g_uint		m_role;
 		Role*		m_pRole;
 		bool		m_logined;
 	};

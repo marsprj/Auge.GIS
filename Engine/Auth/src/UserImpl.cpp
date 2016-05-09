@@ -5,6 +5,7 @@ namespace auge
 	UserImpl::UserImpl()
 	{
 		m_pRole = NULL;
+		m_role = 0;
 	}
 
 	UserImpl::~UserImpl()
@@ -43,6 +44,11 @@ namespace auge
 	bool UserImpl::IsAuthenticated()
 	{
 		return true;
+	}
+
+	bool UserImpl::IsAdmin()
+	{
+		return (m_role==1);
 	}
 
 	void UserImpl::Release()

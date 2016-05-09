@@ -78,6 +78,8 @@ namespace auge
 		WebResponse* pWebResponse = NULL;
 		JobStatisticsRequest* pRequest = static_cast<JobStatisticsRequest*>(pWebRequest);
 		GLogger* pLogger = augeGetLoggerInstance();
+
+		g_int user_id = pUser->GetRole()->IsAdmin() ? -1 : pUser->GetID();
 		
 		const char* field = pRequest->GetField();
 		if(field==NULL)
@@ -96,11 +98,11 @@ namespace auge
 		JobManager* pJobManager = augeGetJobManagerInstance();
 		if(start_time!=NULL&&end_time!=NULL)
 		{
-			pStatistics = pJobManager->Statistics(field, start_time, end_time);
+			pStatistics = pJobManager->Statistics(user_id, field, start_time, end_time);
 		}
 		else
 		{
-			pStatistics = pJobManager->Statistics(field);
+			pStatistics = pJobManager->Statistics(user_id, field);
 		}
 
 		JobStatisticsResponse* pResponse = new JobStatisticsResponse(pRequest);

@@ -112,7 +112,7 @@ namespace auge
 			return NULL;
 		}
 		char sql[AUGE_SQL_MAX];
-		g_sprintf(sql, "select u.gid,u.name,u.alias,u.passwd,u.email,u.role, u.status,r.name,r.alias from g_user u, g_role r where u.role=r.gid and u.name='%s'",name);
+		g_sprintf(sql, "select u.gid,u.name,u.alias,u.passwd,u.email,u.status,u.role,r.name,r.alias from g_user u, g_role r where u.role=r.gid and u.name='%s'",name);
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -131,7 +131,7 @@ namespace auge
 		const char* u_passwd = pResult->GetString(0,3);
 		const char* u_email = pResult->GetString(0,4);
 		g_int logined = pResult->GetInt(0, 5);
-
+		
 		int r_gid = pResult->GetInt(0,6);
 		const char* r_name = pResult->GetString(0,7);
 		const char* r_alias = pResult->GetString(0,8);

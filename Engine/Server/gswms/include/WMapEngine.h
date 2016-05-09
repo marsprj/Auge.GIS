@@ -7,6 +7,8 @@
 
 namespace auge
 {
+	class Job;
+
 	class WMapEngine : public WebEngine
 	{
 		friend class CapabilitiesHandler;
@@ -38,9 +40,13 @@ namespace auge
 		void					CleanupHandlers();
 		WebHandler*				GetHandler(const char* name);
 
+		void			Begin(WebRequest* pWebRequest, WebContext* pWebContext, User* pUser);
+		void			End();
+
 	protected:
 		void*	m_handler;
 		std::vector<WebHandler*>	m_handlers;
+		Job*	m_pJob;
 	};
 }
 

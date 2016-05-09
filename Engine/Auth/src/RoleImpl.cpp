@@ -25,6 +25,11 @@ namespace auge
 		return augeRoleNormal;
 	}
 
+	bool RoleImpl::IsAdmin()
+	{
+		return (m_id==1);
+	}
+
 	bool RoleImpl::Create(int gid, const char* name, const char* alias)
 	{
 		SetID(gid);

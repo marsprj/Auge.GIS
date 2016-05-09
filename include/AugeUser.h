@@ -38,6 +38,7 @@ namespace auge
 		virtual	const char*		GetName() = 0;
 		virtual const char*		GetAlias() = 0;
 		virtual augeRoleType	GetType() = 0;
+		virtual bool			IsAdmin() = 0;
 		virtual void			Release() = 0;
 	};
 
@@ -64,6 +65,7 @@ namespace auge
 
 		virtual bool			IsAuthenticated() = 0;
 		virtual bool			IsLogined() = 0;
+		virtual bool			IsAdmin() = 0;
 
 		virtual void			Release() = 0;
 	};

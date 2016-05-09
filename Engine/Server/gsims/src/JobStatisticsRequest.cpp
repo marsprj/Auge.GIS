@@ -118,11 +118,19 @@ namespace auge
 	
 	const char*	JobStatisticsRequest::GetStartTime()
 	{
+		if(m_start_time.empty())
+		{
+			return NULL;
+		}
 		return m_start_time.c_str();
 	}
 
 	const char*	JobStatisticsRequest::GetEndTime()
 	{
+		if(m_end_time.empty())
+		{
+			return NULL;
+		}
 		return m_end_time.c_str();
 	}
 

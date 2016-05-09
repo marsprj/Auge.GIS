@@ -328,7 +328,7 @@ namespace auge
 		}
 		else
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where user_id=%d group by %s", field, user_id field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where user_id=%d group by %s", field, user_id, field);
 		}
 		
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);

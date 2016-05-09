@@ -21,6 +21,7 @@ namespace auge
 		SetExtent(cgi["extent"]);
 		SetLimit(cgi["limit"]);
 		SetOffset(cgi["offset"]);
+		SetEncoding(cgi["encoding"]);
 		return true;
 	}
 
