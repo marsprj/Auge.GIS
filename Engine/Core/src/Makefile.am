@@ -48,4 +48,5 @@ libgcore_la_SOURCES=\
 		GMLWriterImpl.cpp \
 		GMLReaderImpl.cpp \
 		EnumValueImpl.cpp \
-		EnumStringImpl.cpp
+		EnumStringImpl.cpp \
+		Statistics.cpp
