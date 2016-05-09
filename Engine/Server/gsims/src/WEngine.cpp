@@ -44,6 +44,7 @@
 #include "GetSubscriptionThemeHandler.h"
 
 #include "GetJobHandler.h"
+#include "JobStatisticsHandler.h"
 
 #include "AugeCore.h"
 #include "AugeCarto.h"
@@ -106,6 +107,7 @@ namespace auge
 		m_handlers.push_back(new GetSubscriptionThemeHandler());
 
 		m_handlers.push_back(new GetJobHandler());
+		m_handlers.push_back(new JobStatisticsHandler());
 	}
 
 	WEngine::~WEngine()

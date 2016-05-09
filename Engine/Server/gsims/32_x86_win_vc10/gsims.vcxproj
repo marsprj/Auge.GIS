@@ -129,6 +129,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GetSymbolIconResponse.cpp" />
     <ClCompile Include="..\src\GetSymbolRequest.cpp" />
     <ClCompile Include="..\src\GetSymbolResponse.cpp" />
+    <ClCompile Include="..\src\JobStatisticsHandler.cpp" />
+    <ClCompile Include="..\src\JobStatisticsRequest.cpp" />
+    <ClCompile Include="..\src\JobStatisticsResponse.cpp" />
     <ClCompile Include="..\src\RegisterLayerHandler.cpp" />
     <ClCompile Include="..\src\RegisterLayerRequest.cpp" />
     <ClCompile Include="..\src\RegisterLayerResponse.cpp" />
@@ -208,6 +211,9 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClInclude Include="..\include\GetSymbolIconResponse.h" />
     <ClInclude Include="..\include\GetSymbolRequest.h" />
     <ClInclude Include="..\include\GetSymbolResponse.h" />
+    <ClInclude Include="..\include\JobStatisticsHandler.h" />
+    <ClInclude Include="..\include\JobStatisticsRequest.h" />
+    <ClInclude Include="..\include\JobStatisticsResponse.h" />
     <ClInclude Include="..\include\RegisterLayerHandler.h" />
     <ClInclude Include="..\include\RegisterLayerRequest.h" />
     <ClInclude Include="..\include\RegisterLayerResponse.h" />

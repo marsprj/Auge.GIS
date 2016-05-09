@@ -315,6 +315,31 @@ namespace auge
 		std::vector<GValue*>::iterator m_iter;
 	};
 
+	class AUGE_API GStatistics
+	{
+	private:
+		typedef struct
+		{
+			char	item[NAME_SHORT];
+			g_uint	count;
+		}Item;
+	public:
+		GStatistics();
+		virtual ~GStatistics();
+	public:
+		virtual	const char*		GetKey(g_uint i);
+		virtual	g_uint			GetValue(g_uint i);
+		virtual	g_uint			GetCount();
+		virtual	bool			Add(const char* key, g_uint count);
+
+		virtual void			SetCount(g_uint count);
+		virtual bool			SetValue(g_uint i, const char* key, g_uint count);
+
+		virtual void			Release();
+	private:
+		std::vector<Item>		m_items;
+	};
+
 	class GError
 	{
 	protected:

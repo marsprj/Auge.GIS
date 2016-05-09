@@ -91,5 +91,8 @@ libgsims_la_SOURCES=\
 	    	    GetJobHandler.cpp \
 		    GetJobRequest.cpp \
 		    GetJobResponse.cpp \
+	    	    JobStatisticsHandler.cpp \
+		    JobStatisticsRequest.cpp \
+		    JobStatisticsResponse.cpp \
 		    WEngine.cpp
 

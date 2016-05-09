@@ -11,6 +11,7 @@
 #	define AUGE_WEB_CORE_API
 #endif
 
+#include "AugeCore.h"
 #include "AugeWebEngine.h"
 //#include "AugeData.h"
 
@@ -151,6 +152,12 @@ namespace auge
 
 		virtual Job*			GetJob(const char* uuid) = 0;
 		virtual EnumJob*		GetJob(User* pUser, augeProcssState state ,g_int maxJobs=20, g_uint offset=0) = 0;
+
+		virtual GStatistics*	Statistics(const char* field) = 0;
+		virtual GStatistics*	Statistics(const char* field, const char* start_time, const char* end_time) = 0;
+		
+		virtual GStatistics*	Statistics(g_int user_id, const char* field) = 0;
+		virtual GStatistics*	Statistics(g_int user_id, const char* field, const char* start_time, const char* end_time) = 0;
 
 		virtual RESULTCODE		Initialize(GConnection* pConnection) = 0;
 		virtual RESULTCODE		Unload() = 0;

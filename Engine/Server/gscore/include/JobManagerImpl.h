@@ -1,4 +1,4 @@
-#ifndef __AUGE_JOB_MANAGER_IMPL_H__
+#ifndef __AUGE_JOB_MANAGER_IMPL_H
 #define __AUGE_JOB_MANAGER_IMPL_H__
 
 #include "AugeWebCore.h"
@@ -18,6 +18,12 @@ namespace auge
 
 		virtual Job*			GetJob(const char* uuid);
 		virtual EnumJob*		GetJob(User* pUser, augeProcssState state ,g_int maxJobs=20, g_uint offset=0);
+
+		virtual GStatistics*	Statistics(const char* field);
+		virtual GStatistics*	Statistics(const char* field, const char* start_time, const char* end_time);
+
+		virtual GStatistics*	Statistics(g_int user_id, const char* field);
+		virtual GStatistics*	Statistics(g_int user_id, const char* field, const char* start_time, const char* end_time);
 
 		virtual RESULTCODE		Initialize(GConnection* pConnection);
 		virtual RESULTCODE		Unload();

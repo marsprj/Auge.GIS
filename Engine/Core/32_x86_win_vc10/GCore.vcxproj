@@ -144,6 +144,7 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
     <ClCompile Include="..\src\GPolygonWKB.cpp" />
     <ClCompile Include="..\src\GPropertySet.cpp" />
     <ClCompile Include="..\src\GValue.cpp" />
+    <ClCompile Include="..\src\Statistics.cpp" />
     <ClCompile Include="..\src\StringTokenizer.cpp" />
     <ClCompile Include="..\src\WKTReader.cpp" />
     <ClCompile Include="..\src\WKTWriter.cpp" />

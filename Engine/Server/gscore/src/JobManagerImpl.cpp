@@ -240,6 +240,162 @@ namespace auge
 		return AG_FAILURE;
 	}
 
+	GStatistics* JobManagerImpl::Statistics(const char* field)
+	{
+		if(field==NULL)
+		{
+			return NULL;
+		}
+
+		GStatistics* pStatistics = new GStatistics();
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job group by %s", field, field);
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult!=NULL)
+		{
+			g_uint count = 0;
+			g_uint item_count = 0;
+			const char* item = NULL;
+
+			count = pResult->GetCount();
+			pStatistics->SetCount(count);
+
+			for(g_uint i=0; i<count; i++)
+			{
+				item = pResult->GetString(i, 0);
+				item_count = pResult->GetInt(i, 1);
+				pStatistics->SetValue(i,item, item_count);
+			}
+
+			pResult->Release();
+		}
+
+		return pStatistics;
+	}
+
+	GStatistics* JobManagerImpl::Statistics(const char* field, const char* start_time, const char* end_time)
+	{
+		if(field==NULL)
+		{
+			return NULL;
+		}
+
+		GStatistics* pStatistics = new GStatistics();
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where start_time>'%s' and start_time<'%s' group by %s", field, start_time, end_time, field);
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult!=NULL)
+		{
+			g_uint count = 0;
+			g_uint item_count = 0;
+			const char* item = NULL;
+
+			count = pResult->GetCount();
+			pStatistics->SetCount(count);
+
+			for(g_uint i=0; i<count; i++)
+			{
+				item = pResult->GetString(i, 0);
+				item_count = pResult->GetInt(i, 1);
+				pStatistics->SetValue(i,item, item_count);
+			}
+
+			pResult->Release();
+		}
+
+		return pStatistics;
+	}
+
+	GStatistics* JobManagerImpl::Statistics(g_int user_id, const char* field)
+	{
+		if(field==NULL)
+		{
+			return NULL;
+		}
+
+		GStatistics* pStatistics = new GStatistics();
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+
+		if(user_id<1)
+		{
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job group by %s", field, field);
+		}
+		else
+		{
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where user_id=%d group by %s", field, user_id field);
+		}
+		
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult!=NULL)
+		{
+			g_uint count = 0;
+			g_uint item_count = 0;
+			const char* item = NULL;
+
+			count = pResult->GetCount();
+			pStatistics->SetCount(count);
+
+			for(g_uint i=0; i<count; i++)
+			{
+				item = pResult->GetString(i, 0);
+				item_count = pResult->GetInt(i, 1);
+				pStatistics->SetValue(i,item, item_count);
+			}
+
+			pResult->Release();
+		}
+
+		return pStatistics;
+	}
+
+	GStatistics* JobManagerImpl::Statistics(g_int user_id, const char* field, const char* start_time, const char* end_time)
+	{
+		if(field==NULL)
+		{
+			return NULL;
+		}
+
+		GStatistics* pStatistics = new GStatistics();
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+
+		if(user_id<=0)
+		{
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where start_time>'%s' and start_time<'%s' group by %s", field, start_time, end_time, field);
+		}
+		else
+		{
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where user_id=%d and start_time>'%s' and start_time<'%s' group by %s", field, user_id, start_time, end_time, field);
+		}
+		
+		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
+		if(pResult!=NULL)
+		{
+			g_uint count = 0;
+			g_uint item_count = 0;
+			const char* item = NULL;
+
+			count = pResult->GetCount();
+			pStatistics->SetCount(count);
+
+			for(g_uint i=0; i<count; i++)
+			{
+				item = pResult->GetString(i, 0);
+				item_count = pResult->GetInt(i, 1);
+				pStatistics->SetValue(i,item, item_count);
+			}
+
+			pResult->Release();
+		}
+	}
+
 	RESULTCODE JobManagerImpl::CreateJobTable()
 	{
 		const char* sql = "CREATE TABLE g_job " \

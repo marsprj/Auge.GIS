@@ -106,6 +106,10 @@ typedef unsigned long int  g_uint64;
 #	define NAME_MAX	256
 #endif
 
+#ifndef NAME_SHORT
+#	define NAME_SHORT	256
+#endif
+
 #ifdef WIN32
 #define S_ISREG(m) (((m) & 0170000) == (0100000))   
 #define S_ISDIR(m) (((m) & 0170000) == (0040000))  

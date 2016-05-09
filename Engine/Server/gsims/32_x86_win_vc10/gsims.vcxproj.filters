@@ -246,6 +246,15 @@
     <ClCompile Include="..\src\GetJobResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\JobStatisticsHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\JobStatisticsRequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\JobStatisticsResponse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\WEngine.h">
@@ -477,6 +486,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\GetJobResponse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\JobStatisticsHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\JobStatisticsRequest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\JobStatisticsResponse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
