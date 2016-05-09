@@ -11,7 +11,7 @@ namespace auge
 		WebWriterImpl();
 		virtual ~WebWriterImpl();
 	public:
-		virtual RESULTCODE		WriteHead(const char* content_type);
+		virtual RESULTCODE		WriteHead(const char* content_type, bool gzip=false);
 		virtual void			WriteTail();
 		virtual RESULTCODE		Write(g_uchar* data, g_uint size);
 	};

@@ -41,7 +41,7 @@ namespace auge
 		return AG_SUCCESS;
 	}
 
-	RESULTCODE WebWriterImpl::WriteHead(const char* content_type)
+	RESULTCODE WebWriterImpl::WriteHead(const char* content_type, bool gzip/*=false*/)
 	{
 		if(content_type==NULL)
 		{
