@@ -117,10 +117,18 @@ namespace auge
 
 	EnumJob* JobManagerImpl::GetJob(User* pUser, augeProcssState state ,g_int maxJobs/*=20*/, g_uint offset/*=0*/)
 	{
-		const char* format = "select gid,uuid,service, operation,params,user_id,client,server,start_time,end_time,state from %s where user_id=%d and state=%d limit %d offset %d";
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, format, AUGE_JOB_TABLE, pUser->GetID(), state, maxJobs, offset);
+		if(state==augeStateUnknown)
+		{
+			const char* format = "select gid,uuid,service, operation,params,user_id,client,server,start_time,end_time,state from %s where user_id=%d limit %d offset %d";
+			g_snprintf(sql, AUGE_SQL_MAX, format, AUGE_JOB_TABLE, pUser->GetID(), maxJobs, offset);
+		}
+		else
+		{
+			const char* format = "select gid,uuid,service, operation,params,user_id,client,server,start_time,end_time,state from %s where user_id=%d and state=%d limit %d offset %d";
+			g_snprintf(sql, AUGE_SQL_MAX, format, AUGE_JOB_TABLE, pUser->GetID(), state, maxJobs, offset);
+		}
 
 		Job* pJob = NULL;
 		EnumJobImpl* pJobs = new EnumJobImpl();
@@ -136,7 +144,7 @@ namespace auge
 				if(pJob!=NULL)
 				{
 					pJobs->Add(pJob);
-				}
+				} 
 			}
 
 			pResult->Release();

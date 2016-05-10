@@ -7,6 +7,7 @@ namespace auge
 		m_version = "1.0.0";
 		m_mime_type = "text/xml";
 		m_encoding = AUGE_DEFAULT_ENCODING;
+		m_state = augeStateUnknown;
 	}
 
 	GetJobRequest::~GetJobRequest()
@@ -87,7 +88,7 @@ namespace auge
 	const char*	GetJobRequest::GetUser()
 	{
 		if(m_user.empty())
-		{
+		{ 
 			return NULL;
 		}
 		return m_user.c_str();
