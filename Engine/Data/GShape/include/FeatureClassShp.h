@@ -31,6 +31,8 @@ namespace auge
 		virtual g_uint				GetCount(GEnvelope& extent);
 		virtual g_uint				GetCount(GFilter* pFilter);
 
+		virtual const char*			GetSize();
+
 		virtual GFields*			GetFields();
 		virtual GField*				GetField(const char* name);
 		virtual RESULTCODE			AddField(const char* name, augeFieldType type, g_uint width=32);

@@ -39,6 +39,8 @@ namespace auge
 		virtual g_uint				GetCount(GEnvelope& extent);
 		virtual g_uint				GetCount(GFilter* pFilter);
 
+		virtual const char*			GetSize();
+
 		virtual FeatureCursor*		Query(augeCursorType type=augeStaticCursor);
 		virtual FeatureCursor*		Query(GEnvelope& extent, augeCursorType type=augeStaticCursor);
 		virtual FeatureCursor*		Query(GFilter* pFilter, augeCursorType type=augeStaticCursor);

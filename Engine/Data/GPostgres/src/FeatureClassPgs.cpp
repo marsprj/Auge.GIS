@@ -1000,4 +1000,20 @@ namespace auge
 	{
 		return AG_SUCCESS;
 	}
+
+	const char*	FeatureClassPgs::GetSize()
+	{
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, "select pg_size_pretty(pg_relation_size('%s'))", GetAlias());
+		
+		GResultSet* pResult = m_pWorkspace->m_pgConnection_r.ExecuteQuery(sql);
+		if(pResult==NULL)
+		{
+			return "0 MB";
+		}
+		m_disk_size = pResult->GetString(0,0);
+		pResult->Release();
+		return m_disk_size.c_str();;
+	}
 }

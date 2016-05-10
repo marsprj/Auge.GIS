@@ -208,9 +208,10 @@ namespace auge
 				g_sprintf(str, "%d", pGeometryDef->GetSRID());
 				pxNode = pxGeometry->AddChild("SRID");
 				pxNode->AddChildText(str);
-
-				AddThumbnailNode(pxClass, pFeatureClass);
 			}
+			AddThumbnailNode(pxClass, pFeatureClass);
+			pxNode = pxClass->AddChild("Size");
+			pxNode->SetChildText(pFeatureClass->GetSize());
 			
 		}
 

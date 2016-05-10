@@ -370,4 +370,9 @@ namespace auge
 	{
 		return AG_SUCCESS;
 	}
+
+	const char*	FeatureClassShp::GetSize()
+	{
+		return "0 MB";
+	}
 }

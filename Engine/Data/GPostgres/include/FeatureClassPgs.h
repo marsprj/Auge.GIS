@@ -32,6 +32,8 @@ namespace auge
 		virtual g_uint				GetCount(GEnvelope& extent);
 		virtual g_uint				GetCount(GFilter* pFilter);
 
+		virtual const char*			GetSize();
+
 		virtual GFields*			GetFields();
 		virtual GField*				GetField(const char* name);
 		virtual RESULTCODE			AddField(const char* name, augeFieldType type, g_uint width=32);
@@ -90,6 +92,7 @@ namespace auge
 		std::string			m_schema;
 		std::string			m_geom_filed_name;
 		std::string			m_uuid;
+		std::string			m_disk_size;
 		augeGeometryType	m_geom_type;
 		WorkspacePgs*		m_pWorkspace;
 		GFields*			m_pFields;

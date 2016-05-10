@@ -527,4 +527,9 @@ namespace auge
 
 		return m_pWorkspace->ExecuteSQL(sql.c_str());
 	}
+
+	const char*	FeatureClassByd::GetSize()
+	{
+		return "0 MB";
+	}
 }
