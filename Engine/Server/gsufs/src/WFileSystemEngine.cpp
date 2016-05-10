@@ -306,7 +306,7 @@ namespace auge
 	{ 
 		JobManager* pJobmanager = augeGetJobManagerInstance(); 
 
-		const char* client = "";
+		const char* client = pWebContext->GetHttpClient();
 		const char* server = pWebContext->GetServer();
 		const char* operation= pWebRequest->GetRequest();
 		const char* service = GetType();
