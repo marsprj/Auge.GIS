@@ -93,17 +93,36 @@ namespace auge
 
 		const char* start_time	= pRequest->GetStartTime();
 		const char* end_time	= pRequest->GetEndTime();
+		const char* server = pRequest->GetServer();
+		
 
 		GStatistics* pStatistics = NULL;
 		JobManager* pJobManager = augeGetJobManagerInstance();
-		if(start_time!=NULL&&end_time!=NULL)
+
+		if(server!=NULL)
 		{
-			pStatistics = pJobManager->Statistics(user_id, field, start_time, end_time);
+			if(start_time!=NULL&&end_time!=NULL)
+			{
+				pStatistics = pJobManager->StatisticsByServer(user_id, server, field, start_time, end_time);
+			}
+			else
+			{
+				pStatistics = pJobManager->StatisticsByServer(user_id, server, field);
+			}
 		}
 		else
 		{
-			pStatistics = pJobManager->Statistics(user_id, field);
+			if(start_time!=NULL&&end_time!=NULL)
+			{
+				pStatistics = pJobManager->Statistics(user_id, field, start_time, end_time);
+			}
+			else
+			{
+				pStatistics = pJobManager->Statistics(user_id, field);
+			}
 		}
+
+		
 
 		JobStatisticsResponse* pResponse = new JobStatisticsResponse(pRequest);
 		pResponse->SetStatistics(pStatistics);

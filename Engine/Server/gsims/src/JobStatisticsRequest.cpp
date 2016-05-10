@@ -19,6 +19,7 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
 		SetField(cgi["field"]);
+		SetServer(cgi["server"]);
 		SetStartTime(cgi["startTime"]);
 		SetEndTime(cgi["endTime"]);
 		return true;
@@ -164,6 +165,27 @@ namespace auge
 		{
 			m_end_time = endTime;
 		}
+	}
+
+	void JobStatisticsRequest::SetServer(const char* server)
+	{
+		if(server==NULL)
+		{
+			m_server.clear();
+		}
+		else if(strlen(server)==0)
+		{
+			m_server.clear();
+		}
+		else
+		{
+			m_server = server;
+		}
+	}
+
+	const char*	JobStatisticsRequest::GetServer()
+	{
+		return m_server.c_str();
 	}
 
 }

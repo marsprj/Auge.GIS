@@ -25,6 +25,9 @@ namespace auge
 		virtual GStatistics*	Statistics(g_int user_id, const char* field);
 		virtual GStatistics*	Statistics(g_int user_id, const char* field, const char* start_time, const char* end_time);
 
+		virtual GStatistics*	StatisticsByServer(g_int user_id, const char* server, const char* field);
+		virtual GStatistics*	StatisticsByServer(g_int user_id, const char* server, const char* field, const char* start_time, const char* end_time);
+
 		virtual RESULTCODE		Initialize(GConnection* pConnection);
 		virtual RESULTCODE		Unload();
 

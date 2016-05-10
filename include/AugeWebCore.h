@@ -159,6 +159,9 @@ namespace auge
 		virtual GStatistics*	Statistics(g_int user_id, const char* field) = 0;
 		virtual GStatistics*	Statistics(g_int user_id, const char* field, const char* start_time, const char* end_time) = 0;
 
+		virtual GStatistics*	StatisticsByServer(g_int user_id, const char* server, const char* field) = 0;
+		virtual GStatistics*	StatisticsByServer(g_int user_id, const char* server, const char* field, const char* start_time, const char* end_time) = 0;
+
 		virtual RESULTCODE		Initialize(GConnection* pConnection) = 0;
 		virtual RESULTCODE		Unload() = 0;
 	};
