@@ -598,7 +598,7 @@ namespace auge
 		struct timezone tz;  
 		gettimeofday(&tv, &tz);  
 
-		time_stru->usYear = t_tm->tm_year;
+		time_stru->usYear = t_tm->tm_year < 1900 ? t_tm->tm_year+1900 : t_tm->tm_year;
 		time_stru->usMonth = t_tm->tm_mon;
 		time_stru->usDay = t_tm->tm_mday;
 		time_stru->usHour = t_tm->tm_hour;
