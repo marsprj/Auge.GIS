@@ -394,6 +394,7 @@ namespace auge
 
 			pResult->Release();
 		}
+		return pStatistics;
 	}
 
 	GStatistics* JobManagerImpl::StatisticsByClient(g_int user_id, const char* client, const char* field)
@@ -480,6 +481,7 @@ namespace auge
 
 			pResult->Release();
 		}
+		return pStatistics;
 	}
 
 	GStatistics* JobManagerImpl::StatisticsByServer(g_int user_id, const char* server, const char* field)
@@ -566,6 +568,8 @@ namespace auge
 
 			pResult->Release();
 		}
+
+		return pStatistics;
 	}
 
 	RESULTCODE JobManagerImpl::CreateJobTable()

@@ -71,6 +71,8 @@ http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=JobStatist
 
 http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=JobStatistics&field=operation&server=192.168.111.156
 
+http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=JobStatistics&field=operation&server=192.168.111.156&starttime=2016-01-01 00:00:00&endtime=2016-05-01 12:00:30
+
 user=user1&service=ims&version=1.0.0&request=JobStatistics&fields=client&start_time=2015-01-01 00:00:00&end_time=2016-1-01 00:00:00
 http://192.168.111.152:8088/ows/user1/mgr?service=ims&version=1.0.0&request=JobStatistics&state=Running&maxJobs=20&offset=0
 
