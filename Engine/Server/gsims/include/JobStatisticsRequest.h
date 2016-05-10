@@ -30,6 +30,7 @@ namespace auge
 	public:
 		const char*		GetUser();
 		const char*		GetField();
+		const char*		GetClient();
 		const char*		GetServer();
 		const char*		GetStartTime();
 		const char*		GetEndTime();
@@ -40,6 +41,7 @@ namespace auge
 		void		SetVersion(const char* value);
 		void		SetUser(const char* user);
 		void		SetField(const char* field);
+		void		SetClient(const char* client);
 		void		SetServer(const char* server);
 		void		SetStartTime(const char* startTime);
 		void		SetEndTime(const char* endTime);
@@ -50,6 +52,7 @@ namespace auge
 		std::string m_user;
 		std::string m_field;
 		std::string m_server;
+		std::string m_client;
 
 		std::string m_encoding;
 		std::string m_start_time;

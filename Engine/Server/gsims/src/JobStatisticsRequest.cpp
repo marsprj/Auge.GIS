@@ -19,6 +19,7 @@ namespace auge
 		SetVersion(cgi["version"]);
 		SetUser(cgi["user"]);
 		SetField(cgi["field"]);
+		SetClient(cgi["client"]);
 		SetServer(cgi["server"]);
 		SetStartTime(cgi["startTime"]);
 		SetEndTime(cgi["endTime"]);
@@ -185,7 +186,35 @@ namespace auge
 
 	const char*	JobStatisticsRequest::GetServer()
 	{
+		if(m_server.empty())
+		{
+			return NULL;
+		}
 		return m_server.c_str();
 	}
 
+	void JobStatisticsRequest::SetClient(const char* client)
+	{
+		if(client==NULL)
+		{
+			m_client.clear();
+		}
+		else if(strlen(client)==0)
+		{
+			m_client.clear();
+		}
+		else
+		{
+			m_client = client;
+		}
+	}
+
+	const char*	JobStatisticsRequest::GetClient()
+	{
+		if(m_client.empty())
+		{
+			return NULL;
+		}
+		return m_client.c_str();
+	}
 }

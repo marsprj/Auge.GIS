@@ -94,6 +94,7 @@ namespace auge
 		const char* start_time	= pRequest->GetStartTime();
 		const char* end_time	= pRequest->GetEndTime();
 		const char* server = pRequest->GetServer();
+		const char* client = pRequest->GetClient();
 		
 
 		GStatistics* pStatistics = NULL;
@@ -108,6 +109,17 @@ namespace auge
 			else
 			{
 				pStatistics = pJobManager->StatisticsByServer(user_id, server, field);
+			}
+		}
+		else if(client!=NULL)
+		{
+			if(start_time!=NULL&&end_time!=NULL)
+			{
+				pStatistics = pJobManager->StatisticsByClient(user_id, client, field, start_time, end_time);
+			}
+			else
+			{
+				pStatistics = pJobManager->StatisticsByClient(user_id, client, field);
 			}
 		}
 		else
