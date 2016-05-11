@@ -100,6 +100,10 @@ namespace auge
 		{
 			m_state = augeStateUnknown;
 		}
+		else if(strlen(state)==0)
+		{
+			m_state = augeStateUnknown;
+		}
 		else
 		{
 			if(g_stricmp(state,"Running")==0)
