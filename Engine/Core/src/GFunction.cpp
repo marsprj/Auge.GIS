@@ -645,7 +645,7 @@ namespace auge
 #ifdef WIN32
 		SYSTEMTIME now;
 		GetSystemTime(&now);
-		sprintf(sztime, "%d-%2d-%2d %2d:%2d:%2d",now.wYear,
+		sprintf(sztime, "%d-%02d-%02d %02d:%02d:%02d",now.wYear,
 			now.wMonth,
 			now.wDay,
 			now.wHour,
@@ -658,7 +658,7 @@ namespace auge
 		struct tm* t_tm;   
 		t_tm = localtime(&now);
 		t_tm->tm_sec;
-		sprintf(sztime, "%d-%2d-%2d %2d:%2d:%2d",t_tm->tm_year < 1900 ? t_tm->tm_year+1900 : t_tm->tm_year,
+		sprintf(sztime, "%d-%02d-%02d %02d:%02d:%02d",t_tm->tm_year < 1900 ? t_tm->tm_year+1900 : t_tm->tm_year,
 			t_tm->tm_mon + 1,
 			t_tm->tm_mday,
 			t_tm->tm_hour,
