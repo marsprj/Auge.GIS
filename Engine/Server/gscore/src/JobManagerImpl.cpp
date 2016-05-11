@@ -157,14 +157,14 @@ namespace auge
 	{
 		g_uint gid = pResult->GetInt(i, 0);
 		const char* uuid = pResult->GetString(i,1);
-		const char* operation = pResult->GetString(i, 2);
-		const char* service = pResult->GetString(i, 3);
+		const char* service = pResult->GetString(i, 2);
+		const char* operation = pResult->GetString(i, 3);
 		const char* params = pResult->GetString(i, 4);
 		g_uint user_id = pResult->GetInt(i, 5);
-		const char* client = pResult->GetString(i, 7);
-		const char* server = pResult->GetString(i, 8);
-		const char* start = pResult->GetString(i, 9);
-		const char* end = pResult->GetString(i, 0);
+		const char* client = pResult->GetString(i, 6);
+		const char* server = pResult->GetString(i, 7);
+		const char* start = pResult->GetString(i, 8);
+		const char* end = pResult->GetString(i, 9);
 		g_uint state = pResult->GetInt(i, 10);
 		TIME_STRU tim;
 
