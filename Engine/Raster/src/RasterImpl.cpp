@@ -65,46 +65,55 @@ namespace auge
 
 	const char* RasterImpl::GetFormat()
 	{
+		Init();
 		return m_format.c_str();
 	}
 
 	g_uint RasterImpl::GetWidth()
 	{
+		Init();
 		return m_poDataset->GetRasterXSize();
 	}
 
 	g_uint RasterImpl::GetHeight()
 	{
+		Init();
 		return m_poDataset->GetRasterYSize();
 	}
 
 	double	RasterImpl::GetResolution_X()
 	{
+		Init();
 		return  m_geo_transform[1];
 	}
 
 	double	RasterImpl::GetResolution_Y()
 	{
+		Init();
 		return m_geo_transform[5];
 	}
 
 	g_int RasterImpl::GetSRID()
 	{
+		Init();
 		return m_srid;
 	}
 
 	const char* RasterImpl::GetSpatialReference()
 	{
+		Init();
 		return m_poDataset->GetProjectionRef();
 	}
 
 	g_uint RasterImpl::GetBandCount()
 	{
+		Init();
 		return m_poDataset->GetRasterCount();
 	}
 
 	augePixelType RasterImpl::GetPixelType()
 	{
+		Init();
 		if(m_poDataset==NULL)
 		{
 			return augePixelUnknown;
@@ -123,16 +132,19 @@ namespace auge
 
 	g_uint RasterImpl::GetPixelSize()
 	{
+		Init();
 		return m_pixel_size;
 	}
 
 	GEnvelope& RasterImpl::GetExtent()
 	{
+		Init();
 		return m_extent;
 	}
 
 	RasterBand* RasterImpl::GetBand(g_uint i)
 	{
+		Init();
 		if(i>=m_bands.size())
 		{
 			return NULL;
@@ -155,6 +167,7 @@ namespace auge
 
 	bool RasterImpl::GetMapPosition(g_uint rx, g_uint ry, double& mx, double& my)
 	{
+		Init();
 		g_uint w = m_poDataset->GetRasterXSize();
 		g_uint h = m_poDataset->GetRasterYSize();
 		if((rx>w) || (ry>h))
@@ -170,6 +183,7 @@ namespace auge
 
 	bool RasterImpl::GetRasterPosition(double mx, double my, g_int& rx, g_int& ry)
 	{
+		Init();
 		if(!m_extent.Contain(mx,my))
 		{
 			return false;
@@ -189,6 +203,7 @@ namespace auge
 
 	bool RasterImpl::GetRasterRect(GRect& rect, GEnvelope& extent)
 	{
+		Init();
 		g_int r_xmin=0, r_ymin=0;
 		g_int r_xmax=0, r_ymax=0;
 		this->GetRasterPosition(extent.m_xmin, extent.m_ymin, r_xmin, r_ymax);
@@ -203,6 +218,7 @@ namespace auge
 
 	bool RasterImpl::GetMinMaxValue(short& minv, short& maxv)
 	{
+		Init();
 		short r_minv = AUGE_INT_MAX;
 		short r_maxv = AUGE_INT_MIN;
 		short b_minv = AUGE_INT_MAX;
@@ -227,6 +243,7 @@ namespace auge
 
 	bool RasterImpl::GetMinMaxValue(int& minv, int& maxv)
 	{
+		Init();
 		int r_minv = AUGE_INT_MAX;
 		int r_maxv = AUGE_INT_MIN;
 		int b_minv = AUGE_INT_MAX;
@@ -251,6 +268,7 @@ namespace auge
 
 	bool RasterImpl::GetMinMaxValue(double& minv, double& maxv)
 	{
+		Init();
 		return true;
 	}
 
@@ -260,46 +278,46 @@ namespace auge
 		m_alias= name;
 		m_full_path = path;
 
-		GDALDataset* poDataset = (GDALDataset*)GDALOpen(path, GA_ReadOnly);	
-		if(poDataset==NULL)
-		{
-			const char* msg = CPLGetLastErrorMsg();
-			GError* pError = augeGetErrorInstance();
-			pError->SetError(msg);
-			GLogger* pLogger = augeGetLoggerInstance();
-			pLogger->Error(msg, __FILE__, __LINE__);
-			return false;
-		}
-		m_poDataset = poDataset;
+		//GDALDataset* poDataset = (GDALDataset*)GDALOpen(path, GA_ReadOnly);	
+		//if(poDataset==NULL)
+		//{
+		//	const char* msg = CPLGetLastErrorMsg();
+		//	GError* pError = augeGetErrorInstance();
+		//	pError->SetError(msg);
+		//	GLogger* pLogger = augeGetLoggerInstance();
+		//	pLogger->Error(msg, __FILE__, __LINE__);
+		//	return false;
+		//}
+		//m_poDataset = poDataset;
 
-		// raster format 
-		char ext[AUGE_EXT_MAX] = {0};
-		auge_split_path(path, NULL, NULL, NULL, ext);
-		m_format = ext+1;
+		//// raster format 
+		//char ext[AUGE_EXT_MAX] = {0};
+		//auge_split_path(path, NULL, NULL, NULL, ext);
+		//m_format = ext+1;
 
-		// extent
-		poDataset->GetGeoTransform(m_geo_transform);
-		double x0 = m_geo_transform[0];
-		double y0 = m_geo_transform[3];
-		double x1 = x0 + m_geo_transform[1] * poDataset->GetRasterXSize();
-		double y1 = y0 + m_geo_transform[5] * poDataset->GetRasterYSize();
-		m_extent.Set(x0,y0,x1,y1);
+		//// extent
+		//poDataset->GetGeoTransform(m_geo_transform);
+		//double x0 = m_geo_transform[0];
+		//double y0 = m_geo_transform[3];
+		//double x1 = x0 + m_geo_transform[1] * poDataset->GetRasterXSize();
+		//double y1 = y0 + m_geo_transform[5] * poDataset->GetRasterYSize();
+		//m_extent.Set(x0,y0,x1,y1);
 
-		// pixel size
-		m_pixel_size = GetPixelSize((GDALDataType)GetPixelType());
+		//// pixel size
+		//m_pixel_size = GetPixelSize((GDALDataType)GetPixelType());
 
-		// spatial reference
-		const char* proj = poDataset->GetProjectionRef();
-		const char* gproj= poDataset->GetGCPProjection();
+		//// spatial reference
+		//const char* proj = poDataset->GetProjectionRef();
+		//const char* gproj= poDataset->GetGCPProjection();
 
-		// set bands
-		int bands = poDataset->GetRasterCount();
-		Cleanup();
-		m_bands.resize(bands);
-		for(int i=0; i<bands; i++)
-		{
-			m_bands[i] = NULL;
-		}
+		//// set bands
+		//int bands = poDataset->GetRasterCount();
+		//Cleanup();
+		//m_bands.resize(bands);
+		//for(int i=0; i<bands; i++)
+		//{
+		//	m_bands[i] = NULL;
+		//}
 		
 		return true;
 	}
@@ -409,6 +427,7 @@ namespace auge
 
 	const char*	RasterImpl::GetPath()
 	{
+		Init();
 		//return m_path.empty() ? NULL : m_path.c_str();
 		return m_full_path.empty() ? NULL : m_full_path.c_str();
 	}
@@ -476,6 +495,7 @@ namespace auge
 
 	RESULTCODE RasterImpl::Save(const char* path, const char* format/*=NULL*/)
 	{
+		Init();
 		//if(m_path.empty())
 		{
 			if(format==NULL)
@@ -519,6 +539,55 @@ namespace auge
 	const char* RasterImpl::GetUUID()
 	{
 		return m_uuid.c_str();
+	}
+
+	bool RasterImpl::Init()
+	{
+		if(m_poDataset!=NULL)
+		{
+			return true;
+		}
+		GDALDataset* poDataset = (GDALDataset*)GDALOpen(m_path.c_str(), GA_ReadOnly);	
+		if(poDataset==NULL)
+		{
+			const char* msg = CPLGetLastErrorMsg();
+			GError* pError = augeGetErrorInstance();
+			pError->SetError(msg);
+			GLogger* pLogger = augeGetLoggerInstance();
+			pLogger->Error(msg, __FILE__, __LINE__);
+			return false;
+		}
+		m_poDataset = poDataset;
+
+		// raster format 
+		char ext[AUGE_EXT_MAX] = {0};
+		auge_split_path(m_path.c_str(), NULL, NULL, NULL, ext);
+		m_format = ext+1;
+
+		// extent
+		poDataset->GetGeoTransform(m_geo_transform);
+		double x0 = m_geo_transform[0];
+		double y0 = m_geo_transform[3];
+		double x1 = x0 + m_geo_transform[1] * poDataset->GetRasterXSize();
+		double y1 = y0 + m_geo_transform[5] * poDataset->GetRasterYSize();
+		m_extent.Set(x0,y0,x1,y1);
+
+		// pixel size
+		m_pixel_size = GetPixelSize((GDALDataType)GetPixelType());
+
+		// spatial reference
+		const char* proj = poDataset->GetProjectionRef();
+		const char* gproj= poDataset->GetGCPProjection();
+
+		// set bands
+		int bands = poDataset->GetRasterCount();
+		Cleanup();
+		m_bands.resize(bands);
+		for(int i=0; i<bands; i++)
+		{
+			m_bands[i] = NULL;
+		}
+		return true;
 	}
 
 	//////////////////////////////////////////////////////////////////////////

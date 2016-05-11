@@ -66,6 +66,7 @@ namespace auge
 		void	SetUUID(const char* uuid);
 	private:
 		void	Cleanup();
+		bool	Init();
 
 	private:
 		std::string  m_name;
