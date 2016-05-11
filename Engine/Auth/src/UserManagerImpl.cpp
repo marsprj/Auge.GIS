@@ -337,7 +337,7 @@ namespace auge
 
 		char now[AUGE_NAME_MAX];
 		memset(now, 0, AUGE_NAME_MAX);
-		auge_get_sys_time_as_string(now, AUGE_NAME_MAX);
+		auge_get_sys_time_as_format_string(now, AUGE_NAME_MAX);
 		g_sprintf(sql, "update g_user set status=1,login_time='%s' where name='%s'", now, name);
 		RESULTCODE rc = m_pConnection->ExecuteSQL(sql);
 		if(rc!=AG_SUCCESS)

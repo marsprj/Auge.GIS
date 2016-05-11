@@ -415,6 +415,7 @@ namespace auge
 		AUGE_API g_ulong	auge_get_time();
 		AUGE_API void		auge_get_time_struct(TIME_STRU* time_stru);
 		AUGE_API void		auge_get_sys_time_as_string(char* sztime, size_t size);
+		AUGE_API void		auge_get_sys_time_as_format_string(char* sztime, size_t size);
 
 		AUGE_API g_byte		auge_get_median(g_byte* values, g_uint size);
 		AUGE_API g_byte		auge_average_byte(g_byte* data, g_uint64 count);

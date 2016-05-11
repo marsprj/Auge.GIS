@@ -640,6 +640,34 @@ namespace auge
 #endif
 	}
 
+	void auge_get_sys_time_as_format_string(char* sztime, size_t size)
+	{
+#ifdef WIN32
+		SYSTEMTIME now;
+		GetSystemTime(&now);
+		sprintf(sztime, "%d%-d%-d% 2d%:2d%:2d",now.wYear,
+			now.wMonth,
+			now.wDay,
+			now.wHour,
+			now.wMinute,
+			now.wSecond);
+
+#else
+		time_t now;
+		time(&now);
+		struct tm* t_tm;   
+		t_tm = localtime(&now);
+		t_tm->tm_sec;
+		sprintf(sztime, "%d%-d%-d% 2d%:2d%:2d",t_tm->tm_year < 1900 ? t_tm->tm_year+1900 : t_tm->tm_year,
+			t_tm->tm_mon + 1,
+			t_tm->tm_mday,
+			t_tm->tm_hour,
+			t_tm->tm_min,
+			t_tm->tm_sec);
+
+#endif
+	}
+
 	bool auge_unzip(const char* zip_path, const char* dest_path)
 	{
 		return true;
