@@ -59,7 +59,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX];
-		g_sprintf(sql, "insert into g_user (name,alias,passwd,email,role) values('%s','%s','%s','%s',%d) returning gid", name, alias, password, email, pRole->GetID());
+		g_sprintf(sql, "insert into g_user (name,alias,passwd,email,role) values('%s','%s',md5('%s'),'%s',%d) returning gid", name, alias, password, email, pRole->GetID());
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -289,7 +289,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX];
-		g_sprintf(sql, "select count(*) from g_user where name='%s' and passwd='%s'", name, passwd);
+		g_sprintf(sql, "select count(*) from g_user where name='%s' and passwd=md5('%s')", name, passwd);
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -318,7 +318,7 @@ namespace auge
 		}
 
 		char sql[AUGE_SQL_MAX];
-		g_sprintf(sql, "select count(*) from g_user where name='%s' and passwd='%s'", name, passwd);
+		g_sprintf(sql, "select count(*) from g_user where name='%s' and passwd=md5('%s')", name, passwd);
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult==NULL)
 		{
@@ -335,15 +335,18 @@ namespace auge
 			return AG_FAILURE;
 		}
 
-		g_sprintf(sql, "update g_user set status=1,login_time=now() where name='%s'", name);
+		char now[AUGE_NAME_MAX];
+		memset(now, 0, AUGE_NAME_MAX);
+		auge_get_sys_time_as_string(now, AUGE_NAME_MAX);
+		g_sprintf(sql, "update g_user set status=1,login_time='%s' where name='%s'", now, name);
 		RESULTCODE rc = m_pConnection->ExecuteSQL(sql);
 		if(rc!=AG_SUCCESS)
 		{
 			return rc;
 		}
 
-		g_sprintf(sql, "insert into g_user_login (user_name, login_time, remote_address) values('%s',now(),'%s')", name, remote_address);
-		return m_pConnection->ExecuteSQL(sql);;
+		g_sprintf(sql, "insert into g_user_login (user_name, login_time, remote_address, success) values('%s','%s','%s', 1)", name, now, remote_address);
+		return m_pConnection->ExecuteSQL(sql);
 	}
 
 	bool UserManagerImpl::IsLogined(const char* name)
@@ -507,7 +510,7 @@ namespace auge
 		const char* sql = "CREATE TABLE g_user( gid serial NOT NULL," \
 											   "name character varying(32) NOT NULL," \
 											   "alias character varying(32) NOT NULL," \
-											   "passwd character varying(16)," \
+											   "passwd character varying(128)," \
 											   "email character varying," \
 											   "role integer," \
 											   "status integer DEFAULT 0," \

@@ -630,8 +630,8 @@ namespace auge
 		struct tm* t_tm;   
 		t_tm = localtime(&now);
 		t_tm->tm_sec;
-		sprintf(sztime, "%d%d%d%d%d%d",t_tm->tm_year,
-			t_tm->tm_mon,
+		sprintf(sztime, "%d%d%d%d%d%d",t_tm->tm_year < 1900 ? t_tm->tm_year+1900 : t_tm->tm_year;,
+			t_tm->tm_mon + 1,
 			t_tm->tm_mday,
 			t_tm->tm_hour,
 			t_tm->tm_min,
