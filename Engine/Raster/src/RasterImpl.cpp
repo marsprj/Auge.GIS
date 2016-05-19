@@ -276,6 +276,7 @@ namespace auge
 	{
 		m_name = name;
 		m_alias= name;
+		m_path = path;
 		m_full_path = path;
 
 		//GDALDataset* poDataset = (GDALDataset*)GDALOpen(path, GA_ReadOnly);	

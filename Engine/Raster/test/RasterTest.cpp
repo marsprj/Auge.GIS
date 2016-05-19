@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
 
 void RasterTest::setUp() 
 {
@@ -118,4 +118,16 @@ void RasterTest::Create_Raster()
 	poutRaster->Save(o_path);
 
 	pinRaster->Release();
+}
+
+void RasterTest::Read_jpg()
+{
+	const char* path = "H:\\Data\\raster\\jpg\\world.jpg";
+
+	auge::Raster* pRaster = NULL;
+	auge::RasterIO* io = auge::augeGetRasterIOInstance();
+	pRaster = io->Read(path);
+
+	pRaster->Save("G:\\temp\\map\\w.jpg");
+	pRaster->Release();
 }

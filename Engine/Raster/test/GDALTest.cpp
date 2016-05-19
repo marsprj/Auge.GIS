@@ -9,7 +9,7 @@
 
 using namespace auge;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(GDALTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(GDALTest);
 
 bool IsNoDataPixel(float v);
 bool IsPointInPolgyon(float x, float y, WKBPolygon* pWKBPolygon);
