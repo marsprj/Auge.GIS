@@ -259,7 +259,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job group by %s", field, field);
+		g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job group by %s order by count desc", field, field);
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult!=NULL)
 		{
@@ -294,7 +294,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where start_time>'%s' and start_time<'%s' group by %s", field, start_time, end_time, field);
+		g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job where start_time>'%s' and start_time<'%s' group by %s order by count desc", field, start_time, end_time, field);
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
 		if(pResult!=NULL)
 		{
@@ -332,11 +332,11 @@ namespace auge
 
 		if(user_id<1)
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job group by %s", field, field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job group by %s order by count desc", field, field);
 		}
 		else
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where user_id=%d group by %s", field, user_id, field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job where user_id=%d group by %s order by count desc", field, user_id, field);
 		}
 		
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
@@ -376,11 +376,11 @@ namespace auge
 
 		if(user_id<=0)
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where start_time>'%s' and start_time<'%s' group by %s", field, start_time, end_time, field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job where start_time>'%s' and start_time<'%s' group by %s order by count desc", field, start_time, end_time, field);
 		}
 		else
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where user_id=%d and start_time>'%s' and start_time<'%s' group by %s", field, user_id, start_time, end_time, field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job where user_id=%d and start_time>'%s' and start_time<'%s' group by %s order by count desc", field, user_id, start_time, end_time, field);
 		}
 		
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
@@ -419,11 +419,11 @@ namespace auge
 
 		if(user_id<1)
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where client='%s' group by %s", field, client, field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job where client='%s' group by %s order by count desc", field, client, field);
 		}
 		else
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where user_id=%d and client='%s' group by %s", field, user_id, client, field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job where user_id=%d and client='%s' group by %s order by count desc", field, user_id, client, field);
 		}
 
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
@@ -463,11 +463,11 @@ namespace auge
 
 		if(user_id<=0)
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where (client='%s' and start_time>'%s' and start_time<'%s') group by %s", field, client, start_time, end_time, field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job where (client='%s' and start_time>'%s' and start_time<'%s') group by %s order by count desc", field, client, start_time, end_time, field);
 		}
 		else
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where (client='%s' and user_id=%d and start_time>'%s' and start_time<'%s') group by %s", field, client, user_id, start_time, end_time, field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job where (client='%s' and user_id=%d and start_time>'%s' and start_time<'%s') group by %s order by count desc", field, client, user_id, start_time, end_time, field);
 		}
 
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
@@ -506,11 +506,11 @@ namespace auge
 
 		if(user_id<1)
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where server='%s' group by %s", field, server, field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job where server='%s' group by %s  order by count desc", field, server, field);
 		}
 		else
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where user_id=%d and server='%s' group by %s", field, user_id, server, field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job where user_id=%d and server='%s' group by %s order by count desc", field, user_id, server, field);
 		}
 
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
@@ -550,11 +550,11 @@ namespace auge
 
 		if(user_id<=0)
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where (server='%s' and start_time>'%s' and start_time<'%s') group by %s", field, server, start_time, end_time, field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job where (server='%s' and start_time>'%s' and start_time<'%s') group by %s order by count desc", field, server, start_time, end_time, field);
 		}
 		else
 		{
-			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) from g_job where (server='%s' and user_id=%d and start_time>'%s' and start_time<'%s') group by %s", field, server, user_id, start_time, end_time, field);
+			g_snprintf(sql, AUGE_SQL_MAX, "select %s, count(*) as count from g_job where (server='%s' and user_id=%d and start_time>'%s' and start_time<'%s') group by %s order by count desc", field, server, user_id, start_time, end_time, field);
 		}
 
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);
