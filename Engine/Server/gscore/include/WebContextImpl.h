@@ -67,6 +67,8 @@ namespace auge
 		std::string m_upload_path;
 		std::string m_user_root;
 
+		std::string m_client_ip;
+
 		std::string m_data_engine;
 		std::string m_data_uri;
 
