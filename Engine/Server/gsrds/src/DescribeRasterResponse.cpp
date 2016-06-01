@@ -87,6 +87,11 @@ namespace auge
 		pxNode->AddChildText(str);
 		 
 		g_sprintf(str,"%f %f",extent.m_xmax,extent.m_ymax);
+		pxNode = pxBounding->AddChild("Size");
+		pxNode->AddChildText(str);
+
+		//Size
+		g_sprintf(str,"%3.2f %s",pRaster->GetSize(),pRaster->GetUnit());
 		pxNode = pxBounding->AddChild("UpperRight");
 		pxNode->AddChildText(str);
 
