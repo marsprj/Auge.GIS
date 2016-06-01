@@ -491,12 +491,12 @@ namespace auge
 	}
 	void RasterImpl::SetWidth(g_uint width)
 	{
-		m_width;
+		m_width = width;
 	}
 
 	void RasterImpl::SetHeight(g_uint height)
 	{
-		m_height;
+		m_height = height;
 	}
 
 	void RasterImpl::SetExtent(double xmin,double ymin,double xmax,double ymax)
