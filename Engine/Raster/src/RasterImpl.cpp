@@ -73,14 +73,14 @@ namespace auge
 
 	g_uint RasterImpl::GetWidth()
 	{
-		Init();
-		return m_poDataset->GetRasterXSize();
+		Init();		
+		return m_poDataset==NULL ? 0 : m_poDataset->GetRasterXSize();
 	}
 
 	g_uint RasterImpl::GetHeight()
 	{
 		Init();
-		return m_poDataset->GetRasterYSize();
+		return m_poDataset==NULL ? 0 : m_poDataset->GetRasterYSize();
 	}
 
 	double	RasterImpl::GetResolution_X()
@@ -104,13 +104,13 @@ namespace auge
 	const char* RasterImpl::GetSpatialReference()
 	{
 		Init();
-		return m_poDataset->GetProjectionRef();
+		return m_poDataset==NULL ? "" : m_poDataset->GetProjectionRef();
 	}
 
 	g_uint RasterImpl::GetBandCount()
 	{
 		Init();
-		return m_poDataset->GetRasterCount();
+		return m_poDataset==NULL ? 0 : m_poDataset->GetRasterCount();
 	}
 
 	augePixelType RasterImpl::GetPixelType()
@@ -135,7 +135,7 @@ namespace auge
 	g_uint RasterImpl::GetPixelSize()
 	{
 		Init();
-		return m_pixel_size;
+		return m_poDataset==NULL ? 0 : m_pixel_size;
 	}
 
 	GEnvelope& RasterImpl::GetExtent()
@@ -147,6 +147,11 @@ namespace auge
 	RasterBand* RasterImpl::GetBand(g_uint i)
 	{
 		Init();
+		if(m_poDataset==NULL)
+		{
+			return NULL;
+		}
+
 		if(i>=m_bands.size())
 		{
 			return NULL;
@@ -170,6 +175,12 @@ namespace auge
 	bool RasterImpl::GetMapPosition(g_uint rx, g_uint ry, double& mx, double& my)
 	{
 		Init();
+		mx = my = 0.0;
+		if(m_poDataset==NULL)
+		{
+			return false;
+		}
+
 		g_uint w = m_poDataset->GetRasterXSize();
 		g_uint h = m_poDataset->GetRasterYSize();
 		if((rx>w) || (ry>h))
@@ -186,6 +197,14 @@ namespace auge
 	bool RasterImpl::GetRasterPosition(double mx, double my, g_int& rx, g_int& ry)
 	{
 		Init();
+		
+		rx = ry = 0;
+
+		if(m_poDataset==NULL)
+		{
+			return false;
+		}
+
 		if(!m_extent.Contain(mx,my))
 		{
 			return false;
@@ -206,6 +225,12 @@ namespace auge
 	bool RasterImpl::GetRasterRect(GRect& rect, GEnvelope& extent)
 	{
 		Init();
+		if(m_poDataset==NULL)
+		{
+			extent.Set(0,0,0,0);
+			return false;
+		}
+
 		g_int r_xmin=0, r_ymin=0;
 		g_int r_xmax=0, r_ymax=0;
 		this->GetRasterPosition(extent.m_xmin, extent.m_ymin, r_xmin, r_ymax);
@@ -221,6 +246,11 @@ namespace auge
 	bool RasterImpl::GetMinMaxValue(short& minv, short& maxv)
 	{
 		Init();
+		if(m_poDataset==NULL)
+		{
+			minv = maxv = 0;
+			return false;
+		}
 		short r_minv = AUGE_INT_MAX;
 		short r_maxv = AUGE_INT_MIN;
 		short b_minv = AUGE_INT_MAX;
@@ -246,6 +276,11 @@ namespace auge
 	bool RasterImpl::GetMinMaxValue(int& minv, int& maxv)
 	{
 		Init();
+		minv = maxv = 0;
+		if(m_poDataset==NULL)
+		{
+			return false;
+		}
 		int r_minv = AUGE_INT_MAX;
 		int r_maxv = AUGE_INT_MIN;
 		int b_minv = AUGE_INT_MAX;
