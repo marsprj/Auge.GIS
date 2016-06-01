@@ -62,7 +62,7 @@ namespace auge
 
 [ HTTP Get ]
 -------------------------------------------------------------------------
-user=user1&service=gps&version=1.0.0&request=GetJob&state=Running&maxJobs=20&offset=0
-http://192.168.111.152:8088/ows/user1/mgr?service=gps&version=1.0.0&request=GetJob&state=Running&maxJobs=20&offset=0
+user=user1&service=ims&version=1.0.0&request=GetJob&state=Running&maxJobs=20&offset=0
+http://192.168.111.152:8088/ows/user1/mgr?service=ims&version=1.0.0&request=GetJob&state=Running&maxJobs=20&offset=0
 
 ************************************************************************/

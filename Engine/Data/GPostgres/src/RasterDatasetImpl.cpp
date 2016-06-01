@@ -94,7 +94,7 @@ namespace auge
 
 			Raster* pRaster = NULL;
 			RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
-			pRaster = pRasterFactory->CreateRaster(name, alias, format, raster_path, nband, srid, width, height, xmin, ymin, xmax, ymax, uuid,size,unit);
+			pRaster = pRasterFactory->CreateRaster(name, alias, fmt, raster_path, nband, srid, width, height, xmin, ymin, xmax, ymax, uuid,size,unit);
 
 			if(pRaster!=NULL)
 			{
