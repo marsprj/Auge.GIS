@@ -14,6 +14,9 @@ namespace auge
 		memset(m_geo_transform, 0, sizeof(double)*6);
 		m_size = 0;
 		m_unit = "MB";
+		m_nbands = 0;
+		m_width = 0;
+		m_height = 0;
 	}
 
 	RasterImpl::~RasterImpl()
@@ -140,7 +143,7 @@ namespace auge
 
 	GEnvelope& RasterImpl::GetExtent()
 	{
-		Init();
+		Init();		
 		return m_extent;
 	}
 
@@ -480,6 +483,35 @@ namespace auge
 		{
 			m_path = path;
 		}
+	}
+
+	void RasterImpl::SetFormat(const char* format)
+	{
+		m_format = format;
+	}
+	void RasterImpl::SetWidth(g_uint width)
+	{
+		m_width;
+	}
+
+	void RasterImpl::SetHeight(g_uint height)
+	{
+		m_height;
+	}
+
+	void RasterImpl::SetExtent(double xmin,double ymin,double xmax,double ymax)
+	{
+		m_extent.Set(xmin, ymin, xmax, ymax);
+	}
+
+	void RasterImpl::SetBands(g_uint bands)
+	{
+		m_nbands = bands;
+	}
+
+	void RasterImpl::SetSRID(g_uint srid)
+	{
+		m_srid = srid;
 	}
 
 	g_uint RasterImpl::GetPixelSize(GDALDataType type)

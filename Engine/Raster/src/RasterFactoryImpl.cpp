@@ -349,6 +349,12 @@ namespace auge
 
 		pRaster->SetSize(size);
 		pRaster->SetUnit(unit);
+		pRaster->SetFormat(format);
+		pRaster->SetWidth(width);
+		pRaster->SetHeight(height);
+		pRaster->SetExtent(xmin,ymin,xmax,ymax);
+		pRaster->SetBands(bands);
+		pRaster->SetSRID(srid);
 		//pRaster->SetName(name);
 		//pRaster->SetAlias(alias);
 		//pRaster->SetPath(path);
