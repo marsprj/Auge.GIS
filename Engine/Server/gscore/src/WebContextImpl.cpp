@@ -322,8 +322,36 @@ namespace auge
 
 	const char* WebContextImpl::GetHttpClient()
 	{
-		const char* val = getenv("HTTP_X_FORWARDED_FOR");
-		return (val==NULL) ? "127.0.0.1" : val;
+		//const char* val = getenv("HTTP_X_FORWARDED_FOR");
+		//return (val==NULL) ? "127.0.0.1" : val;
+
+		const char* remote_addr = getenv("HTTP_X_FORWARDED_FOR");//getenv("REMOTE_ADDR");
+		if(remote_addr==NULL)
+		{
+			m_client_ip = "127.0.0.1" ;
+		}
+		else
+		{
+			if(strlen(remote_addr)==0)
+			{
+				m_client_ip = "127.0.0.1";
+			}
+			else
+			{
+				const char *ptr = strstr(remote_addr, ",");
+				if(ptr==NULL)
+				{
+					m_client_ip = remote_addr;
+				}
+				else
+				{
+					std::string str = remote_addr;
+					m_client_ip = str.substr(0,str.find_first_of(","));
+				}
+
+			}
+		}
+		return m_client_ip.c_str();
 	}
 
 	void WebContextImpl::InitializeCache()

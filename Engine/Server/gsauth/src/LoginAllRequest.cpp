@@ -107,7 +107,17 @@ namespace auge
 			}
 			else
 			{
-				m_remote_address = remote_addr;
+				const char *ptr = strstr(remote_addr, ",");
+				if(ptr==NULL)
+				{
+					m_remote_address = remote_addr;
+				}
+				else
+				{
+					std::string str = remote_addr;
+					m_remote_address = str.substr(0,str.find_first_of(","));
+				}
+				
 			}
 		}
 		

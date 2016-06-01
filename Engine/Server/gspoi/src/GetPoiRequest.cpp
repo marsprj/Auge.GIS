@@ -57,6 +57,10 @@ namespace auge
 
 	const char*	GetPoiRequest::GetEncoding()
 	{
+		if(m_encoding.empty())
+		{
+			return NULL;
+		}
 		return m_encoding.c_str();
 	}
 
