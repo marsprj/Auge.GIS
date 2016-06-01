@@ -77,13 +77,13 @@ namespace auge
 	g_uint RasterImpl::GetWidth()
 	{
 		//Init();		
-		return m_poDataset==NULL ? 0 : m_poDataset->GetRasterXSize();
+		return m_width;
 	}
 
 	g_uint RasterImpl::GetHeight()
 	{
 		//Init();
-		return m_poDataset==NULL ? 0 : m_poDataset->GetRasterYSize();
+		return m_height;
 	}
 
 	double	RasterImpl::GetResolution_X()
@@ -113,7 +113,7 @@ namespace auge
 	g_uint RasterImpl::GetBandCount()
 	{
 		//Init();
-		return m_poDataset==NULL ? 0 : m_poDataset->GetRasterCount();
+		return m_nbands;
 	}
 
 	augePixelType RasterImpl::GetPixelType()
@@ -138,7 +138,7 @@ namespace auge
 	g_uint RasterImpl::GetPixelSize()
 	{
 		//Init();
-		return m_poDataset==NULL ? 0 : m_pixel_size;
+		return m_pixel_size;
 	}
 
 	GEnvelope& RasterImpl::GetExtent()
