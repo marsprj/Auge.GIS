@@ -175,20 +175,71 @@ namespace auge
 		char str[AUGE_NAME_MAX];
 
 		const char* fname = NULL;
+		XElement* pxRaster = NULL;
 		XElement* pxNode = NULL;
 
 		Raster* pRaster = NULL;
 		pRasters->Reset();
 		while((pRaster=pRasters->Next())!=NULL)
 		{
-			pxNode = pxFiles->AddChild("File", NULL);
+			pxRaster = pxFiles->AddChild("File", NULL);
 #ifdef WIN32
 			fname = auge_encoding_convert("GBK","UTF-8",pRaster->GetName(), strlen(pRaster->GetName()));
 #else
 			fname = pRaster->GetName();
 #endif
-			pxNode->SetAttribute("name",fname,NULL);
+			pxRaster->SetAttribute("name",fname,NULL);
 
+			pxNode = pxRaster->AddChild("Alias",NULL);
+			pxNode->AddChildText(pRaster->GetAlias());
+
+			pxNode = pxRaster->AddChild("Format",NULL);
+			pxNode->AddChildText(pRaster->GetFormat());
+
+			// BandCount
+			g_sprintf(str,"%d",pRaster->GetBandCount());
+			pxNode = pxRaster->AddChild("Bands",NULL);
+			pxNode->AddChildText(str);
+
+			//srid
+			g_sprintf(str,"%d", pRaster->GetSRID()); 
+			pxNode = pxRaster->AddChild("SRID",NULL);
+			pxNode->AddChildText(str);
+			//Width
+			g_sprintf(str,"%d", pRaster->GetWidth());
+			pxNode = pxRaster->AddChild("Width",NULL);
+			pxNode->AddChildText(str);
+			//Height
+			g_sprintf(str,"%d", pRaster->GetHeight());
+			pxNode = pxRaster->AddChild("Height",NULL);
+			pxNode->AddChildText(str);
+			//PixelType
+			pxNode = pxRaster->AddChild("PixelType",NULL);
+			pxNode->AddChild(augeGetPixelType(pRaster->GetPixelType()));
+			//PixelSize
+			g_sprintf(str,"%d", augeGetPixelSize(pRaster->GetPixelType()));
+			pxNode = pxRaster->AddChild("PixelSize",NULL);
+			pxNode->AddChildText(str);
+
+			//extent
+			GEnvelope& extent = pRaster->GetExtent();
+			XElement* pxBounding = pxRaster->AddChild("Boundingbox",NULL);
+			g_sprintf(str,"%f %f",extent.m_xmin,extent.m_ymin);
+			pxNode = pxBounding->AddChild("LowerLeft");
+			pxNode->AddChildText(str);
+
+			g_sprintf(str,"%f %f",extent.m_xmax,extent.m_ymax);
+			pxNode = pxBounding->AddChild("UpperRight");
+			pxNode->AddChildText(str);
+
+			//Size
+			g_sprintf(str,"%3.2f %s",pRaster->GetSize(),pRaster->GetUnit());
+			pxNode = pxRaster->AddChild("Size");
+			pxNode->AddChildText(str);
+
+			//uuid
+			pxNode = pxRaster->AddChild("UUID", NULL);
+			pxNode->AddChildText(pRaster->GetUUID());
 
 
 		}
