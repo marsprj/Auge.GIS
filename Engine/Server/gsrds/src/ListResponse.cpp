@@ -189,30 +189,58 @@ namespace auge
 #endif
 			pxNode->SetAttribute("name",fname,NULL);
 
-			const char* fpath = pRaster->GetPath();
-#ifdef WIN32
-			struct _stat fstat;
-			_stat(fpath, &fstat);
-#else
-			struct stat fstat;
-			stat(fpath, &fstat);
-#endif
-			//last access time
-			strftime(str,AUGE_NAME_MAX,"%Y-%m-%d %H:%M:%S", localtime((const time_t *)&(fstat.st_atime)));
-			pxNode->SetAttribute("access_time",str,NULL);
-			//pxNode->SetAttribute("access_time",ctime((const time_t *)&(f->fstat.st_atime)),NULL);
-			// last modified time
-			strftime(str,AUGE_NAME_MAX,"%Y-%m-%d %H:%M:%S", localtime((const time_t *)&(fstat.st_mtime)));
-			pxNode->SetAttribute("last_modified_time",str,NULL);
-			//pxNode->SetAttribute("last_modified_time",ctime((const time_t *)&(f->fstat.st_mtime)),NULL);
-			
-			// file size
-			AddFileSizeAttribute(pxNode, (g_uint64)((fstat.st_size>>10))+1);
-			//memset(str, 0, AUGE_NAME_MAX);
-			//g_sprintf(str, "%d KB", (int)((fstat.st_size>>10))+1);
-			//pxNode->SetAttribute("size",str,NULL);
+
+
 		}
 	}
+
+//	void ListResponse::WriteRasters(XElement* pxFiles, EnumRaster* pRasters)
+//	{
+//		if(pRasters==NULL)
+//		{
+//			return;
+//		}
+//		char str[AUGE_NAME_MAX];
+//
+//		const char* fname = NULL;
+//		XElement* pxNode = NULL;
+//
+//		Raster* pRaster = NULL;
+//		pRasters->Reset();
+//		while((pRaster=pRasters->Next())!=NULL)
+//		{
+//			pxNode = pxFiles->AddChild("File", NULL);
+//#ifdef WIN32
+//			fname = auge_encoding_convert("GBK","UTF-8",pRaster->GetName(), strlen(pRaster->GetName()));
+//#else
+//			fname = pRaster->GetName();
+//#endif
+//			pxNode->SetAttribute("name",fname,NULL);
+//
+//			const char* fpath = pRaster->GetPath();
+//#ifdef WIN32
+//			struct _stat fstat;
+//			_stat(fpath, &fstat);
+//#else
+//			struct stat fstat;
+//			stat(fpath, &fstat);
+//#endif
+//			//last access time
+//			strftime(str,AUGE_NAME_MAX,"%Y-%m-%d %H:%M:%S", localtime((const time_t *)&(fstat.st_atime)));
+//			pxNode->SetAttribute("access_time",str,NULL);
+//			//pxNode->SetAttribute("access_time",ctime((const time_t *)&(f->fstat.st_atime)),NULL);
+//			// last modified time
+//			strftime(str,AUGE_NAME_MAX,"%Y-%m-%d %H:%M:%S", localtime((const time_t *)&(fstat.st_mtime)));
+//			pxNode->SetAttribute("last_modified_time",str,NULL);
+//			//pxNode->SetAttribute("last_modified_time",ctime((const time_t *)&(f->fstat.st_mtime)),NULL);
+//			
+//			// file size
+//			AddFileSizeAttribute(pxNode, (g_uint64)((fstat.st_size>>10))+1);
+//			//memset(str, 0, AUGE_NAME_MAX);
+//			//g_sprintf(str, "%d KB", (int)((fstat.st_size>>10))+1);
+//			//pxNode->SetAttribute("size",str,NULL);
+//		}
+//	}
 
 	void ListResponse::AddFileSizeAttribute(XElement* pxNode, g_uint64 size)
 	{

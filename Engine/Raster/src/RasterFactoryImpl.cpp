@@ -336,6 +336,24 @@ namespace auge
 		//pRaster->SetPath(path);
 		return pRaster;
 	}
+
+	Raster*	RasterFactoryImpl::CreateRaster(const char* name, const char* alias, const char* format, const char* path, g_uint bands, g_int srid, g_uint width, g_uint height, double xmin, double ymin, double xmax, double ymax, const char* uuid,double size, const char* unit)
+	{
+		RasterImpl* pRaster = new RasterImpl();
+		if(!pRaster->Create(name, path))
+		{
+			pRaster->Release();
+			return NULL;
+		}
+		pRaster->SetUUID(uuid);
+
+		pRaster->SetSize(size);
+		pRaster->SetUnit(unit);
+		//pRaster->SetName(name);
+		//pRaster->SetAlias(alias);
+		//pRaster->SetPath(path);
+		return pRaster;
+	}
 	
 	Raster*	RasterFactoryImpl::CreateRasterPNG(const char* name, g_uint width, g_uint height)
 	{

@@ -12,6 +12,8 @@ namespace auge
 		m_poDataset = NULL;
 		//m_pWorkspace = NULL;
 		memset(m_geo_transform, 0, sizeof(double)*6);
+		m_size = 0;
+		m_unit = "MB";
 	}
 
 	RasterImpl::~RasterImpl()
@@ -539,6 +541,26 @@ namespace auge
 	const char* RasterImpl::GetUUID()
 	{
 		return m_uuid.c_str();
+	}
+
+	double RasterImpl::GetSize()
+	{
+		return m_size;
+	}
+
+	const char* RasterImpl::GetUnit()
+	{
+		return m_unit.c_str();
+	}
+
+	void RasterImpl::SetSize(double size)
+	{
+		m_size = size;
+	}
+
+	void RasterImpl::SetUnit(const char* unit)
+	{
+		m_unit = unit;
 	}
 
 	bool RasterImpl::Init()

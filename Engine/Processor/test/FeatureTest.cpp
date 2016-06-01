@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(FeatureTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(FeatureTest);
 
 void FeatureTest::setUp() 
 {
@@ -323,13 +323,13 @@ void FeatureTest::ProjectTest()
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pProcessor = pFactory->CreateFeatureProjectProcessor();
 
-	pProcessor->SetUser(2);
-	pProcessor->SetInputDataSource("test");
-	pProcessor->SetInputFeatureClass("cities_900913");
+	pProcessor->SetUser(-1);
+	pProcessor->SetInputDataSource("base");
+	pProcessor->SetInputFeatureClass("china_railway_line");
 
 	pProcessor->SetOutputDataSource("test");
-	pProcessor->SetOutputFeatureClass("cities_4326");
-	pProcessor->SetOutputSRID(4326);
+	pProcessor->SetOutputFeatureClass("china_railway_line_900913");
+	pProcessor->SetOutputSRID(900913);
 	
 	RESULTCODE rc = pProcessor->Execute();
 

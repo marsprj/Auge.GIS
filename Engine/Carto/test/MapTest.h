@@ -9,7 +9,8 @@
 class MapTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(MapTest);
-	CPPUNIT_TEST(DrawMap);
+	//CPPUNIT_TEST(DrawMap);
+	CPPUNIT_TEST(DrawMap2);
 	//CPPUNIT_TEST(Create_Map_Point_Label);
 
 	//CPPUNIT_TEST(Draw_Map_Point_Label);
@@ -45,6 +46,7 @@ public:
 
 private:
 	void		DrawMap();
+	void		DrawMap2();
 	void		DrawMapObj();
 	void		DrawMapSLD();
 	void		CreateMap();
