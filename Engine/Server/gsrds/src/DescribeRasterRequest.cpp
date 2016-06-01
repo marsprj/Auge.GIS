@@ -6,6 +6,7 @@ namespace auge
 	{
 		m_version = "1.0.0";
 		m_encoding = "GBK";
+		m_mime_type = "text/xml";
 	}
 
 	DescribeRasterRequest::~DescribeRasterRequest()
