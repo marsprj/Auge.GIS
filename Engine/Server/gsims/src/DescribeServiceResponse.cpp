@@ -74,8 +74,6 @@ namespace auge
 		}
 		else
 		{
-			
-
 			pService = pServiceManager->LoadService(user_id, name);
 			if(pService!=NULL)
 			{

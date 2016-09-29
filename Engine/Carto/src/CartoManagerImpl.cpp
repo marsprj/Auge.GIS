@@ -250,54 +250,7 @@ namespace auge
 			return NULL;
 		}
 
-		char sql[AUGE_SQL_MAX] = {0};
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid,l_name,l_type,f_name,d_id,s_id,version,visible,r_b,w_b,q_b,f_path,web_url,min_scale,max_scale from g_layer where m_id=%d order by gid", mid);
-		
-		GResultSet* pResult = NULL;
-		pResult = m_pConnection->ExecuteQuery(sql);
-		if(pResult==NULL)
-		{
-			return NULL;
-		}
-
-		Layer* pLayer = NULL;
-		int gid, d_id,s_id,l_type, version, visible;
-		double min_scale, max_scale;
-		const char* l_name, *f_name, *f_path, *web_url;
-		g_int count = pResult->GetCount();
-		for(g_int i=0; i<count; i++)
-		{
-			gid = pResult->GetInt(i, 0);
-			l_name = pResult->GetString(i, 1);
-			l_type = pResult->GetInt(i, 2);
-			f_name = pResult->GetString(i, 3);
-			f_path = pResult->GetString(i, 11);
-			d_id   = pResult->GetInt(i, 4);
-			s_id   = pResult->GetInt(i, 5);
-			version= pResult->GetInt(i, 6);
-			visible= pResult->GetInt(i, 7);
-			web_url= pResult->GetString(i,12);
-			min_scale = pResult->GetDouble(i,13);
-			max_scale = pResult->GetDouble(i,14);
-
-			pLayer = CreateLayer(gid, l_name, (augeLayerType)l_type, f_name, f_path, d_id, s_id, version,visible, web_url, min_scale, max_scale);
-			if(pLayer!=NULL)
-			{
-				pMap->AddLayer(pLayer);
-				//switch(pLayer->GetType())
-				//{
-				//case augeLayerFeature:
-				//	{
-				//		FeatureLayer* pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
-				//		FeatureClass* pFeatureClass = pFeatureLayer->GetFeatureClass();
-				//		Style* pStyle = GetStyle(s_id, pFeatureClass);
-				//		pFeatureLayer->SetStyle(pStyle);
-				//	}
-				//	break;
-				//}
-			}
-		}
-		pResult->Release();
+		LoadLayers(pMap);
 		return pMap;
 	}
 
