@@ -188,11 +188,13 @@ namespace auge
 	}
 
 	XNodeSet* XNode::GetChildren(const char* name)
-	{
+	{	
+		XNodeSet* pagNodeSet = new XNodeSet();
+
 		xmlNodePtr child = m_pxNode->children;
 		if(!child)
 		{
-			return NULL;
+			return pagNodeSet;
 		}
 
 		const char *name_utf8 = NULL;
@@ -200,8 +202,6 @@ namespace auge
 		{
 			name_utf8 = auge_encoding_convert("GBK","UTF-8",name,strlen(name));
 		}
-
-		XNodeSet* pagNodeSet = new XNodeSet();
 
 		do
 		{
