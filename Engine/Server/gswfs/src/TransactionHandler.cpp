@@ -421,23 +421,32 @@ namespace auge
 			break;
 		case augeFieldTypeGeometry:
 			{
-				/*Geometry *pGeometry = pFeature->GetGeometry();
-				if(pGeometry!=NULL)
+				XNode* pxGeometry = pxNode->GetFirstChild();
+				if(pxGeometry==NULL)
 				{
-					const char* wkt = pGeometry->AsText(true);
-					if(wkt!=NULL)
-					{
-						g_snprintf(str, AUGE_BUFFER_MAX,"%d",srid);
+					const char* msg = "Geometry Node is NULL";
+					augeGetLoggerInstance()->Error(msg,__FILE__,__LINE__);		
+				}
+				else
+				{
+					Geometry* pGeometry = NULL;
+					GeometryFactory* factory = augeGetGeometryFactoryInstance();
+					GMLReader* reader = factory->CreateGMLReader();
+					pGeometry = reader->Read(static_cast<XElement*>(pxGeometry));
+					reader->Release();
 
-						fields.append(fname);
-						values.append("st_geomfromtext(");
-						values.append("'");
-						values.append(wkt);
-						values.append("',");
-						values.append(str);
-						values.append(")");
+					if(pGeometry==NULL)
+					{
+						const char* msg = "Invalid Geometry";
+						augeGetLoggerInstance()->Error(msg,__FILE__,__LINE__);	
+						const char* text = pxGeometry->ToString();
+						augeGetLoggerInstance()->Error(text,__FILE__,__LINE__);	
 					}
-				}*/
+					else
+					{
+						pValue = new GValue(pGeometry);
+					}	
+				}
 			}
 			break;
 		}
@@ -613,11 +622,20 @@ namespace auge
 		{
 			return false;
 		}
+
+		GLogger* pLogger = augeGetLoggerInstance();
+		GError*  pError  = augeGetErrorInstance();
+		RESULTCODE rc = AG_FAILURE;
+
 		const char* name = pxType->GetName();
 		FeatureClass* pFeatureClass = NULL;
 		pFeatureClass = pWorkspace->OpenFeatureClass(name);
 		if(pFeatureClass==NULL)
 		{
+			char msg[AUGE_MSG_MAX];
+			g_snprintf(msg, AUGE_MSG_MAX, "Fail to get FeatureClass [%s]", name);
+			pLogger->Error(msg, __FILE__, __LINE__);
+			pError->SetError(msg);
 			return false;
 		}
 
@@ -630,6 +648,7 @@ namespace auge
 		GField	*pField  = NULL;
 		GFields	*pFields = pFeatureClass->GetFields();
 		const char* fname = NULL;
+		bool ok = true;
 
 		GValue* pValue = NULL;
 		XNode* pxNode = NULL;
@@ -646,15 +665,38 @@ namespace auge
 				{
 					pFeature->SetValue(fname, pValue);
 				}
+				else
+				{
+					char msg[AUGE_MSG_MAX];
+					g_snprintf(msg, AUGE_MSG_MAX, "Field [%s]: Invalid Value", fname);
+					pLogger->Error(msg, __FILE__, __LINE__);
+					pError->SetError(msg);
+
+					ok = false;
+					break;
+				}
+			}
+			else
+			{
+				char msg[AUGE_MSG_MAX];
+				g_snprintf(msg, AUGE_MSG_MAX, "FeatureClss does not have Field [%s]", fname);
+				pLogger->Error(msg, __FILE__, __LINE__);
+				pError->SetError(msg);
+				
+				ok = false;
+				break;
 			}
 		}
 		pxNodeSet->Release();
 
-		FeatureInsertCommand* cmd = pFeatureClass->CreateInsertCommand();
-		RESULTCODE rc = cmd->Insert(pFeature);
+		if(ok)
+		{
+			FeatureInsertCommand* cmd = pFeatureClass->CreateInsertCommand();
+			rc = cmd->Insert(pFeature);
+			AUGE_SAFE_RELEASE(cmd);	
+		}		
 
-		AUGE_SAFE_RELEASE(pFeature);
-		AUGE_SAFE_RELEASE(cmd);
+		AUGE_SAFE_RELEASE(pFeature);		
 		AUGE_SAFE_RELEASE(pFeatureClass);
 
 		return !rc;

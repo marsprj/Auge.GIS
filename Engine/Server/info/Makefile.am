@@ -8,6 +8,6 @@ AM_CPPFLAGS=-I$(top_srcdir)/include
 info_cgi_LDFLAGS= 
 
 	
-info_cgi_LDADD=	-lfcgi
+info_cgi_LDADD=	-lfcgi -lrudecgi
 		
 info_cgi_SOURCES=main.cpp
