@@ -814,7 +814,16 @@ namespace auge
 				break;
 			case augeFieldTypeString:
 				{
-					pValue = new GValue(pxValue->GetContent());
+					const char* text = pxValue->GetContent();
+					if(text==NULL)
+					{
+						pValue = new GValue("");
+					}
+					else
+					{
+						pValue = new GValue(text);
+					}
+					
 				}
 				break;
 			case augeFieldTypeTime:	
