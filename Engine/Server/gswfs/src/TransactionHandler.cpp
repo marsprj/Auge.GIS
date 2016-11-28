@@ -170,6 +170,7 @@ namespace auge
 			pExpResponse->SetMessage(msg);
 			return pExpResponse;
 		}
+
 		ConnectionManager* pConnManager = augeGetConnectionManagerInstance();
 		FeatureWorkspace* pWorkspace = dynamic_cast<FeatureWorkspace*>(pConnManager->GetWorkspace(pUser->GetID(), sourceName));
 		if(pWorkspace==NULL)
@@ -194,6 +195,7 @@ namespace auge
 			pExpResponse->SetMessage("transaction xml parse error");
 			return pExpResponse;
 		}
+
 
 		XNodeSet	*pxNodeSet = NULL;
 		XElement	*pxRoot = pxDoc->GetRootNode();
@@ -406,7 +408,14 @@ namespace auge
 			break;
 		case augeFieldTypeTime:	
 			{
-
+				str = pxNode->GetContent();
+				if(str!=NULL)
+				{
+					TIME_STRU tim;
+					memset(&tim,0, sizeof(TIME_STRU));
+					sscanf(str,"%d-%2d-%2d %2d:%2d:%2d",&(tim.usYear),&(tim.usMonth),&(tim.usDay),&(tim.usHour),&(tim.usMinute),&(tim.usSecond));
+					pValue = new GValue(&tim,true);
+				}
 			}
 			break;
 		case augeFieldTypeBool:			 
@@ -729,7 +738,7 @@ namespace auge
 			FilterReader  *reader  = factory->CreateFilerReader(pFeatureClass->GetFields());
 			pFilter = reader->Read((XElement*)pxFilter);
 		}
-
+		
 		XNodeSet* pxPropertySet = NULL;
 		pxPropertySet = pxUpdate->GetChildren("Property");
 		if(pxPropertySet==NULL)
@@ -742,7 +751,7 @@ namespace auge
 			pFeatureClass->Release();
 			return AG_FAILURE;
 		}
-
+		
 		const char* str= NULL;
 		const char* fname = NULL;
 		augeFieldType ftype = augeFieldTypeNone;
@@ -828,7 +837,14 @@ namespace auge
 				break;
 			case augeFieldTypeTime:	
 				{
-
+					const char* text = pxValue->GetContent();
+					if(text!=NULL)
+					{
+						TIME_STRU tim;
+						memset(&tim,0, sizeof(TIME_STRU));
+						sscanf(text,"%d-%2d-%2d %2d:%2d:%2d",&(tim.usYear),&(tim.usMonth),&(tim.usDay),&(tim.usHour),&(tim.usMinute),&(tim.usSecond));
+						pValue = new GValue(&tim,true);
+					}
 				}
 				break;
 			case augeFieldTypeBool:			 

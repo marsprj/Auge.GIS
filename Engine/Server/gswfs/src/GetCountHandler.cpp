@@ -131,23 +131,6 @@ namespace auge
 			GFilter* pFilter = pRequest->GetFilter(pFeatureClass); 
 			fcount = pFeatureClass->GetCount(pFilter);
 		}
-		// GFilter* pFilter = pRequest->GetFilter(pFeatureClass); 
-		// if(pFilter!=NULL)
-		// { 
-		// 	fcount = pFeatureClass->GetCount(pFilter);
-		// }
-		// else
-		// {
-		// 	GEnvelope& bbox = pRequest->GetBBox(); 
-		// 	if(bbox.IsValid()) 
-		// 	{
-		// 		fcount = pFeatureClass->GetCount(bbox);
-		// 	}
-		// 	else
-		// 	{
-		// 		fcount = pFeatureClass->GetCount();
-		// 	}
-		// }
 
 		WebResponse* pWebResponse = NULL; 
 		GetCountResponse *pResponse = new GetCountResponse(pRequest);
