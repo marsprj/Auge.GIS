@@ -474,10 +474,7 @@ namespace auge
 		pxNodeSet->Reset();
 		while((pxNode=pxNodeSet->Next()))
 		{
-			//if(Insert(pxNode, pWebContext, pMap))
-			//{
-			//	count++;
-			//}
+			count += Update(pxNode, pWebContext, pMap);
 		}
 		return count;
 	}
@@ -715,6 +712,232 @@ namespace auge
 		return !rc;
 	}
 
+	g_int TransactionHandler::Update(XNode* pxUpdate, WebContext* pWebContext, Map* pMap)
+	{
+		int count = 0;
+
+		XAttribute* pxAttr = ((XElement*)pxUpdate)->GetAttribute("name");
+		if(pxAttr==NULL)
+		{
+			return false;
+		}
+		const char* name = pxAttr->GetValue();
+		Layer *pLayer = pMap->GetLayer(name);
+		if(pLayer==NULL)
+		{
+			return false;
+		}
+
+		augeLayerType ltype = pLayer->GetType();
+		if(ltype != augeLayerFeature)
+		{
+			return false;
+		}
+
+		FeatureLayer* pFeatureLayer = NULL;
+		pFeatureLayer = static_cast<FeatureLayer*>(pLayer);
+
+		FeatureClass* pFeatureClass = NULL;
+		pFeatureClass = pFeatureLayer->GetFeatureClass();
+		if(pFeatureClass==NULL)
+		{
+			return false;
+		}
+
+		return Update(pxUpdate, pWebContext, pFeatureClass);
+	}
+
+	// g_int TransactionHandler::Update(XNode* pxUpdate, WebContext* pWebContext, FeatureWorkspace* pWorkspace)
+	// {
+	// 	int count = 0;
+
+	// 	XAttribute* pxAttr = ((XElement*)pxUpdate)->GetAttribute("name");
+	// 	if(pxAttr==NULL)
+	// 	{
+	// 		return 0;
+	// 	}
+	// 	const char* name = pxAttr->GetValue();
+	// 	GField	*pField  = NULL;
+	// 	GFields	*pFields = NULL;
+	// 	FeatureClass* pFeatureClass = NULL;
+	// 	pFeatureClass = pWorkspace->OpenFeatureClass(name);
+	// 	if(pFeatureClass==NULL)
+	// 	{
+	// 		return 0;
+	// 	}
+
+	// 	GFilter* pFilter = NULL;
+	// 	XNode* pxFilter = pxUpdate->GetFirstChild("Filter");
+	// 	if(pxFilter!=NULL)
+	// 	{
+	// 		FilterFactory *factory = augeGetFilterFactoryInstance();
+	// 		FilterReader  *reader  = factory->CreateFilerReader(pFeatureClass->GetFields());
+	// 		pFilter = reader->Read((XElement*)pxFilter);
+	// 	}
+		
+	// 	XNodeSet* pxPropertySet = NULL;
+	// 	pxPropertySet = pxUpdate->GetChildren("Property");
+	// 	if(pxPropertySet==NULL)
+	// 	{
+	// 		if(pFilter!=NULL)
+	// 		{
+	// 			pFilter->Release();
+	// 			pFilter = NULL;
+	// 		}
+	// 		pFeatureClass->Release();
+	// 		return AG_FAILURE;
+	// 	}
+		
+	// 	const char* str= NULL;
+	// 	const char* fname = NULL;
+	// 	augeFieldType ftype = augeFieldTypeNone;
+
+	// 	GValue* pValue = NULL;
+	// 	EnumString* pFieldNames = new EnumString();
+	// 	EnumValue*  pValues = new EnumValue();
+
+	// 	XNode* pxName = NULL;
+	// 	XNode* pxValue = NULL;
+	// 	XNode* pxProp = NULL;
+	// 	pxPropertySet->Reset();
+	// 	while((pxProp = pxPropertySet->Next())!=NULL)
+	// 	{
+	// 		pxName = pxProp->GetFirstChild("Name");
+	// 		pxValue= pxProp->GetFirstChild("Value");
+	// 		fname = pxName->GetContent();
+
+	// 		pField = pFeatureClass->GetField(fname);
+	// 		if(pField==NULL)
+	// 		{
+	// 			continue;
+	// 		}
+
+	// 		ftype = pField->GetType();
+	// 		switch(ftype)
+	// 		{					 
+	// 		case augeFieldTypeShort:
+	// 			{
+	// 				str = pxValue->GetContent();
+	// 				pValue = new GValue((short)atoi(str));
+	// 			}
+	// 			break;
+	// 		case augeFieldTypeInt:
+	// 			{
+	// 				str = pxValue->GetContent();
+	// 				pValue = new GValue((int)atoi(str));
+	// 			}
+	// 			break;
+	// 		case augeFieldTypeLong:
+	// 			{
+	// 				str = pxValue->GetContent();
+	// 				pValue = new GValue((long)atoi(str));
+	// 			}
+	// 			break;
+	// 		case augeFieldTypeInt64:
+	// 			{
+	// 				str = pxValue->GetContent();
+	// 				pValue = new GValue((int64)atoi(str));
+	// 			}
+	// 			break;
+	// 		case augeFieldTypeFloat:
+	// 			{
+	// 				str = pxValue->GetContent();
+	// 				pValue = new GValue((float)atof(str));
+	// 			}
+	// 			break;
+	// 		case augeFieldTypeDouble:
+	// 			{
+	// 				str = pxValue->GetContent();
+	// 				pValue = new GValue((double)atof(str));
+	// 			}
+	// 			break;
+	// 		case augeFieldTypeChar:			 
+	// 			{
+	// 				str = pxValue->GetContent();
+	// 				pValue = new GValue(str[0]);
+	// 			}
+	// 			break;
+	// 		case augeFieldTypeString:
+	// 			{
+	// 				const char* text = pxValue->GetContent();
+	// 				if(text==NULL)
+	// 				{
+	// 					pValue = new GValue("");
+	// 				}
+	// 				else
+	// 				{
+	// 					pValue = new GValue(text);
+	// 				}
+					
+	// 			}
+	// 			break;
+	// 		case augeFieldTypeTime:	
+	// 			{
+	// 				const char* text = pxValue->GetContent();
+	// 				if(text!=NULL)
+	// 				{
+	// 					TIME_STRU tim;
+	// 					memset(&tim,0, sizeof(TIME_STRU));
+	// 					sscanf(text,"%d-%2d-%2d %2d:%2d:%2d",&(tim.usYear),&(tim.usMonth),&(tim.usDay),&(tim.usHour),&(tim.usMinute),&(tim.usSecond));
+	// 					pValue = new GValue(&tim,true);
+	// 				}
+	// 			}
+	// 			break;
+	// 		case augeFieldTypeBool:			 
+	// 			{
+
+	// 			}
+	// 			break;
+	// 		case augeFieldTypeBLOB:			 
+	// 			{
+
+	// 			}
+	// 			break;
+	// 		case augeFieldTypeGeometry:
+	// 			{
+	// 				/*Geometry *pGeometry = pFeature->GetGeometry();
+	// 				if(pGeometry!=NULL)
+	// 				{
+	// 					const char* wkt = pGeometry->AsText(true);
+	// 					if(wkt!=NULL)
+	// 					{
+	// 						g_snprintf(str, AUGE_BUFFER_MAX,"%d",srid);
+
+	// 						fields.append(fname);
+	// 						values.append("st_geomfromtext(");
+	// 						values.append("'");
+	// 						values.append(wkt);
+	// 						values.append("',");
+	// 						values.append(str);
+	// 						values.append(")");
+	// 					}
+	// 				}*/
+	// 			}
+	// 			break;
+	// 		}
+
+	// 		if(pValue!=NULL)
+	// 		{
+	// 			pFieldNames->Add(fname);
+	// 			pValues->Add(pValue);
+	// 		}
+	// 	}
+	// 	count = pFeatureClass->UpdateFeature(pFieldNames, pValues, pFilter);
+		
+	// 	pxPropertySet->Release();
+	// 	pFieldNames->Release();
+	// 	pValues->Release();
+	// 	if(pFilter!=NULL)
+	// 	{
+	// 		pFilter->Release();
+	// 		pFilter = NULL;
+	// 	}
+	// 	pFeatureClass->Release();
+
+	// 	return AG_SUCCESS;
+	// }
+
+
 	g_int TransactionHandler::Update(XNode* pxUpdate, WebContext* pWebContext, FeatureWorkspace* pWorkspace)
 	{
 		int count = 0;
@@ -733,6 +956,16 @@ namespace auge
 		{
 			return 0;
 		}
+
+		count = Update(pxUpdate, pWebContext, pFeatureClass);
+		pFeatureClass->Release();
+
+		return count;
+	}
+
+	g_int TransactionHandler::Update(XNode* pxUpdate, WebContext* pWebContext, FeatureClass* pFeatureClass)
+	{
+		int count = 0;
 
 		GFilter* pFilter = NULL;
 		XNode* pxFilter = pxUpdate->GetFirstChild("Filter");
@@ -760,6 +993,7 @@ namespace auge
 		const char* fname = NULL;
 		augeFieldType ftype = augeFieldTypeNone;
 
+		GField* pField = NULL;
 		GValue* pValue = NULL;
 		EnumString* pFieldNames = new EnumString();
 		EnumValue*  pValues = new EnumValue();
@@ -900,8 +1134,8 @@ namespace auge
 			pFilter->Release();
 			pFilter = NULL;
 		}
-		pFeatureClass->Release();
 
-		return AG_SUCCESS;
+		//return AG_SUCCESS;
+		return 1;//count;
 	}
 }
