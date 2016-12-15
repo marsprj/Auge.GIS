@@ -51,7 +51,11 @@ namespace auge
 			pRequest->Release();
 			return NULL;
 		}
-		pRequest->SetMapName(mapName,false);
+		if((mapName!=NULL) && (strlen(mapName)>0))
+		{
+			pRequest->SetMapName(mapName,false);
+		}
+		
 		return pRequest;
 	}
 
