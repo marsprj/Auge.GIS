@@ -1977,7 +1977,7 @@ namespace auge
 		case augeFieldTypeString:
 			return "character varying";
 		case augeFieldTypeTime:
-			return "date";
+			return "timestamp";//"date";
 		case augeFieldTypeBLOB:
 			return "blob";
 		case augeFieldTypeGeometry:
