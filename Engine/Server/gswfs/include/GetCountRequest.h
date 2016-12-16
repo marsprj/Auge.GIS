@@ -33,7 +33,7 @@ namespace auge
 		GEnvelope&				GetBBox();
 		GFilter*				GetFilter(FeatureClass* pFeatureClass);
 
-		void					SetTypeName(const char* typeName);
+		void					SetTypeName(const char* typeName,bool encoding=true);
 		void					SetBBox(const char* bbox);
 		
 		bool					Create(rude::CGI& cgi, Map* pMap);
