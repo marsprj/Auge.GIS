@@ -77,7 +77,7 @@ void MapTest::DrawMap()
 	//auge::GEnvelope viewer(-180.f,-90.f,180.f,90.f);
 	//auge::GEnvelope viewer(90.46,22.41,127.08,41.15);
 	//auge::GEnvelope viewer(82.41,18.29,135.14,45.27);
-	pCanvas = pCartoFactory->CreateCanvas2D(800, 600);
+	pCanvas = pCartoFactory->CreateCanvas2D(1600, 1200);
 	
 	auge::GColor bgColor(255,0,0,0);
 	pCanvas->DrawBackground(bgColor);
@@ -99,6 +99,46 @@ void MapTest::DrawMap()
 	}
 
 
+	AUGE_SAFE_RELEASE(pCanvas);
+}
+
+void MapTest::DrawMap2()
+{
+	auge::GConnection	*m_pConnection = NULL;
+	auge::DataEngine	*pEngine = NULL;
+	auge::DataEngineManager* pEngineManager = NULL;
+	pEngineManager = auge::augeGetDataEngineManagerInstance();
+	auge::ConnectionManager* pConnManager = NULL;
+	pConnManager = auge::augeGetConnectionManagerInstance();
+	auge::FeatureWorkspace* pWorkspace = NULL;
+	pWorkspace = dynamic_cast<auge::FeatureWorkspace*>(pConnManager->GetWorkspace(2, "base"));
+
+	auge::FeatureClass* pFeatureClass = NULL;
+	pFeatureClass = pWorkspace->OpenFeatureClass("poi_cams");
+	//pFeatureClass = pWorkspace->OpenFeatureClass("china_china");
+	//pFeatureClass = pWorkspace->OpenFeatureClass("osm_highway_2");
+	//pFeatureClass = pWorkspace->OpenFeatureClass("osm_poi_os");
+
+	auge::CartoFactory* factory = auge::augeGetCartoFactoryInstance();
+	auge::Map* pMap = factory->CreateMap();
+	auge::FeatureLayer* pFeatureLayer = factory->CreateFeatureLayer();
+	pFeatureLayer->SetFeatureClass(pFeatureClass);
+	pMap->AddLayer(pFeatureLayer);
+
+	auge::Canvas* pCanvas = NULL;
+	pCanvas = factory->CreateCanvas2D(1600, 1600);
+
+	auge::GEnvelope& viewer = pFeatureClass->GetExtent();
+	auge::GColor bgColor(255,0,0,0);
+	pCanvas->DrawBackground(bgColor);	
+	pCanvas->SetViewer(viewer);
+	pCanvas->Draw(pMap);
+	//pCanvas->Save("g:\\temp\\map\\osm_highway.png");
+	//pCanvas->Save("g:\\temp\\map\\osm_poi_os.png");
+	pCanvas->Save("g:\\temp\\map\\poi_cams.png");
+	
+	
+	AUGE_SAFE_RELEASE(pMap);
 	AUGE_SAFE_RELEASE(pCanvas);
 }
 
@@ -993,3 +1033,4 @@ void MapTest::DrawLayerStar()
 	AUGE_SAFE_RELEASE(pMap);
 	AUGE_SAFE_RELEASE(pCanvas);
 }
+

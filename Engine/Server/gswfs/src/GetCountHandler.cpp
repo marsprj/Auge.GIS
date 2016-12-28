@@ -121,23 +121,15 @@ namespace auge
 		}
 		
 		g_uint fcount = 0;
-		FeatureCursor *pCursor = NULL; 
-		GFilter* pFilter = pRequest->GetFilter(pFeatureClass); 
-		if(pFilter!=NULL)
-		{ 
-			fcount = pFeatureClass->GetCount(pFilter);
+		GEnvelope& bbox = pRequest->GetBBox(); 
+		if(bbox.IsValid()) 
+		{
+			fcount = pFeatureClass->GetCount(bbox);
 		}
 		else
 		{
-			GEnvelope& bbox = pRequest->GetBBox(); 
-			if(bbox.IsValid()) 
-			{
-				fcount = pFeatureClass->GetCount(bbox);
-			}
-			else
-			{
-				fcount = pFeatureClass->GetCount();
-			}
+			GFilter* pFilter = pRequest->GetFilter(pFeatureClass); 
+			fcount = pFeatureClass->GetCount(pFilter);
 		}
 
 		WebResponse* pWebResponse = NULL; 

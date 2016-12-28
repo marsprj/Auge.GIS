@@ -21,7 +21,7 @@ class PgsTest : public CppUnit::TestFixture
 //	CPPUNIT_TEST(GetNullValue);
 //	CPPUNIT_TEST(GetAQI);
 //	CPPUNIT_TEST(GetAQIQuery);
-//	CPPUNIT_TEST(RefreshFeatureClass);
+	CPPUNIT_TEST(RefreshFeatureClass);
 	CPPUNIT_TEST(UpdatePOI);
 	CPPUNIT_TEST_SUITE_END();
 public:

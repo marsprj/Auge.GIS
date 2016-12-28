@@ -12,6 +12,11 @@ namespace auge
 		m_poDataset = NULL;
 		//m_pWorkspace = NULL;
 		memset(m_geo_transform, 0, sizeof(double)*6);
+		m_size = 0;
+		m_unit = "MB";
+		m_nbands = 0;
+		m_width = 0;
+		m_height = 0;
 	}
 
 	RasterImpl::~RasterImpl()
@@ -65,55 +70,55 @@ namespace auge
 
 	const char* RasterImpl::GetFormat()
 	{
-		Init();
+		////Init();
 		return m_format.c_str();
 	}
 
 	g_uint RasterImpl::GetWidth()
 	{
-		Init();
-		return m_poDataset->GetRasterXSize();
+		//Init();		
+		return m_width;
 	}
 
 	g_uint RasterImpl::GetHeight()
 	{
-		Init();
-		return m_poDataset->GetRasterYSize();
+		//Init();
+		return m_height;
 	}
 
 	double	RasterImpl::GetResolution_X()
 	{
-		Init();
+		//Init();
 		return  m_geo_transform[1];
 	}
 
 	double	RasterImpl::GetResolution_Y()
 	{
-		Init();
+		//Init();
 		return m_geo_transform[5];
 	}
 
 	g_int RasterImpl::GetSRID()
 	{
-		Init();
+		//Init();
 		return m_srid;
 	}
 
 	const char* RasterImpl::GetSpatialReference()
 	{
-		Init();
-		return m_poDataset->GetProjectionRef();
+		//Init();
+		return m_poDataset==NULL ? "" : m_poDataset->GetProjectionRef();
 	}
 
 	g_uint RasterImpl::GetBandCount()
 	{
-		Init();
-		return m_poDataset->GetRasterCount();
+		//Init();
+		return m_nbands;
 	}
 
 	augePixelType RasterImpl::GetPixelType()
 	{
-		Init();
+		//Init();
 		if(m_poDataset==NULL)
 		{
 			return augePixelUnknown;
@@ -132,19 +137,24 @@ namespace auge
 
 	g_uint RasterImpl::GetPixelSize()
 	{
-		Init();
+		//Init();
 		return m_pixel_size;
 	}
 
 	GEnvelope& RasterImpl::GetExtent()
 	{
-		Init();
+		//Init();		
 		return m_extent;
 	}
 
 	RasterBand* RasterImpl::GetBand(g_uint i)
 	{
-		Init();
+		//Init();
+		if(m_poDataset==NULL)
+		{
+			return NULL;
+		}
+
 		if(i>=m_bands.size())
 		{
 			return NULL;
@@ -167,7 +177,13 @@ namespace auge
 
 	bool RasterImpl::GetMapPosition(g_uint rx, g_uint ry, double& mx, double& my)
 	{
-		Init();
+		//Init();
+		mx = my = 0.0;
+		if(m_poDataset==NULL)
+		{
+			return false;
+		}
+
 		g_uint w = m_poDataset->GetRasterXSize();
 		g_uint h = m_poDataset->GetRasterYSize();
 		if((rx>w) || (ry>h))
@@ -183,7 +199,15 @@ namespace auge
 
 	bool RasterImpl::GetRasterPosition(double mx, double my, g_int& rx, g_int& ry)
 	{
-		Init();
+		//Init();
+		
+		rx = ry = 0;
+
+		if(m_poDataset==NULL)
+		{
+			return false;
+		}
+
 		if(!m_extent.Contain(mx,my))
 		{
 			return false;
@@ -203,7 +227,13 @@ namespace auge
 
 	bool RasterImpl::GetRasterRect(GRect& rect, GEnvelope& extent)
 	{
-		Init();
+		//Init();
+		if(m_poDataset==NULL)
+		{
+			extent.Set(0,0,0,0);
+			return false;
+		}
+
 		g_int r_xmin=0, r_ymin=0;
 		g_int r_xmax=0, r_ymax=0;
 		this->GetRasterPosition(extent.m_xmin, extent.m_ymin, r_xmin, r_ymax);
@@ -218,7 +248,12 @@ namespace auge
 
 	bool RasterImpl::GetMinMaxValue(short& minv, short& maxv)
 	{
-		Init();
+		//Init();
+		if(m_poDataset==NULL)
+		{
+			minv = maxv = 0;
+			return false;
+		}
 		short r_minv = AUGE_INT_MAX;
 		short r_maxv = AUGE_INT_MIN;
 		short b_minv = AUGE_INT_MAX;
@@ -243,7 +278,12 @@ namespace auge
 
 	bool RasterImpl::GetMinMaxValue(int& minv, int& maxv)
 	{
-		Init();
+		//Init();
+		minv = maxv = 0;
+		if(m_poDataset==NULL)
+		{
+			return false;
+		}
 		int r_minv = AUGE_INT_MAX;
 		int r_maxv = AUGE_INT_MIN;
 		int b_minv = AUGE_INT_MAX;
@@ -268,7 +308,7 @@ namespace auge
 
 	bool RasterImpl::GetMinMaxValue(double& minv, double& maxv)
 	{
-		Init();
+		//Init();
 		return true;
 	}
 
@@ -428,7 +468,7 @@ namespace auge
 
 	const char*	RasterImpl::GetPath()
 	{
-		Init();
+		//Init();
 		//return m_path.empty() ? NULL : m_path.c_str();
 		return m_full_path.empty() ? NULL : m_full_path.c_str();
 	}
@@ -443,6 +483,35 @@ namespace auge
 		{
 			m_path = path;
 		}
+	}
+
+	void RasterImpl::SetFormat(const char* format)
+	{
+		m_format = format;
+	}
+	void RasterImpl::SetWidth(g_uint width)
+	{
+		m_width = width;
+	}
+
+	void RasterImpl::SetHeight(g_uint height)
+	{
+		m_height = height;
+	}
+
+	void RasterImpl::SetExtent(double xmin,double ymin,double xmax,double ymax)
+	{
+		m_extent.Set(xmin, ymin, xmax, ymax);
+	}
+
+	void RasterImpl::SetBands(g_uint bands)
+	{
+		m_nbands = bands;
+	}
+
+	void RasterImpl::SetSRID(g_uint srid)
+	{
+		m_srid = srid;
 	}
 
 	g_uint RasterImpl::GetPixelSize(GDALDataType type)
@@ -496,7 +565,7 @@ namespace auge
 
 	RESULTCODE RasterImpl::Save(const char* path, const char* format/*=NULL*/)
 	{
-		Init();
+		//Init();
 		//if(m_path.empty())
 		{
 			if(format==NULL)
@@ -540,6 +609,26 @@ namespace auge
 	const char* RasterImpl::GetUUID()
 	{
 		return m_uuid.c_str();
+	}
+
+	double RasterImpl::GetSize()
+	{
+		return m_size;
+	}
+
+	const char* RasterImpl::GetUnit()
+	{
+		return m_unit.c_str();
+	}
+
+	void RasterImpl::SetSize(double size)
+	{
+		m_size = size;
+	}
+
+	void RasterImpl::SetUnit(const char* unit)
+	{
+		m_unit = unit;
 	}
 
 	bool RasterImpl::Init()

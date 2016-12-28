@@ -32,7 +32,7 @@ namespace auge
 		return "GetCount";
 	}
 
-	void GetCountRequest::SetTypeName(const char* value)
+	void GetCountRequest::SetTypeName(const char* value, bool encoding)
 	{
 		if(value==NULL)
 		{
@@ -40,8 +40,16 @@ namespace auge
 		}
 		WebContext* pWebContext = augeGetWebContextInstance();
 		const char* sep = strstr(value,":");
-		m_full_name = pWebContext->ParameterEncoding(value);
-		m_type_name = pWebContext->ParameterEncoding(sep==NULL ? value : sep+1);
+		if(encoding)
+		{
+			m_full_name = pWebContext->ParameterEncoding(value);
+			m_type_name = pWebContext->ParameterEncoding(sep==NULL ? value : sep+1);
+		}
+		else
+		{
+			m_full_name = value;
+			m_type_name = sep==NULL ? value : sep+1;
+		}
 	}
 	
 	GEnvelope& GetCountRequest::GetBBox()
@@ -186,7 +194,7 @@ namespace auge
 		{
 			return false;
 		}
-		SetTypeName(pxAttr->GetValue());
+		SetTypeName(pxAttr->GetValue(),false);
 		if(m_type_name.empty())
 		{
 			return false;

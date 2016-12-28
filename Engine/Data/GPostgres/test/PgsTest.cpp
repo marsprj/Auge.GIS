@@ -458,15 +458,20 @@ void PgsTest::GetAQIQuery()
 
 void PgsTest::RefreshFeatureClass()
 {
-	auge::FeatureClass* pClass = NULL;
-	auge::EnumDataSet* pFeatureClasses = m_pWorkspace->GetFeatureClasses();
+	//auge::FeatureClass* pClass = NULL;
+	//auge::EnumDataSet* pFeatureClasses = m_pWorkspace->GetFeatureClasses();
 
-	pFeatureClasses->Reset();
-	while((pClass=(auge::FeatureClass*)(pFeatureClasses->Next()))!=NULL)
-	{
-		pClass->Refresh();
-	}
-	pFeatureClasses->Release();
+	//pFeatureClasses->Reset();
+	//while((pClass=(auge::FeatureClass*)(pFeatureClasses->Next()))!=NULL)
+	//{
+	//	pClass->Refresh();
+	//}
+	//pFeatureClasses->Release();
+
+	auge::FeatureClass* pFeatureClass = NULL;
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("poi_cams");
+	pFeatureClass->Refresh();
+	pFeatureClass->Release();
 }
 
 void PgsTest::UpdatePOI()

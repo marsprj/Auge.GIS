@@ -1260,10 +1260,10 @@ namespace auge
 		const char* wkt = pGeometry->AsText(true);
 
 		char srid[AUGE_NAME_MAX] = {0};
-		g_snprintf(srid, AUGE_BUFFER_MAX,"%d",pField->GetGeometryDef()->GetSRID());
+		g_snprintf(srid, AUGE_NAME_MAX,"%d",pField->GetGeometryDef()->GetSRID());
 
 		char distance[AUGE_NAME_MAX] = {0};
-		g_snprintf(distance, AUGE_BUFFER_MAX,"%f",pFilter->GetDistance());
+		g_snprintf(distance, AUGE_NAME_MAX,"%f",pFilter->GetDistance());
 		//sboolean ST_DWithin(geometry g1, geometry g2, double precision distance_of_srid);
 
 		sql = "st_dwithin(";
@@ -1977,7 +1977,7 @@ namespace auge
 		case augeFieldTypeString:
 			return "character varying";
 		case augeFieldTypeTime:
-			return "date";
+			return "timestamp";//"date";
 		case augeFieldTypeBLOB:
 			return "blob";
 		case augeFieldTypeGeometry:

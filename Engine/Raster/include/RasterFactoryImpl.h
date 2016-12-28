@@ -20,6 +20,7 @@ namespace auge
 		virtual Raster*			CreateRasterJPG(const char* name, g_uint width, g_uint height);
 		virtual Raster*			CreateRaster(const char* name, augePixelType pixelType, g_uint width, g_uint height, g_int bands, g_uint srid, GEnvelope& extent);
 		virtual Raster*			CreateRaster(const char* name, const char* alias, const char* format, const char* path, g_uint bands, g_int srid, g_uint width, g_uint height, double xmin, double ymin, double xmax, double ymax, const char* uuid);
+		virtual Raster*			CreateRaster(const char* name, const char* alias, const char* format, const char* path, g_uint bands, g_int srid, g_uint width, g_uint height, double xmin, double ymin, double xmax, double ymax, const char* uuid,double size, const char* unit);
 		
 
 		virtual const char*		Encoding(augePixelType type);

@@ -18,6 +18,7 @@ namespace auge
 	class XNode;
 	class GField;
 	class FeatureWorkspace;
+	class FeatureClass;
 
 	class TransactionHandler : public WebHandler
 	{
@@ -42,6 +43,7 @@ namespace auge
 		g_uint			Delete(XNodeSet* pxNodeSet, WebContext* pWebContext, Map* pMap);
 
 		bool			Insert(XNode* pxInsert, WebContext* pWebContext, Map* pMap);
+		g_int			Update(XNode* pxUpdate, WebContext* pWebContext, Map* pMap);
 		g_int			Delete(XNode* pxDelete, WebContext* pWebContext, Map* pMap);
 
 
@@ -51,6 +53,8 @@ namespace auge
 		bool			Insert(XNode* pxInsert, WebContext* pWebContext, FeatureWorkspace* pWorkspace);
 		g_int			Update(XNode* pxUpdate, WebContext* pWebContext, FeatureWorkspace* pWorkspace);
 		g_int			Delete(XNode* pxDelete, WebContext* pWebContext, FeatureWorkspace* pWorkspace);
+
+		g_int			Update(XNode* pxUpdate, WebContext* pWebContext, FeatureClass* pFeatureClass);
 
 		GValue*			CreateValue(XNode* pxNode, GField* pField);
 

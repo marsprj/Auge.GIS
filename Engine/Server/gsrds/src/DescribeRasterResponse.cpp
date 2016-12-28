@@ -90,6 +90,11 @@ namespace auge
 		pxNode = pxBounding->AddChild("UpperRight");
 		pxNode->AddChildText(str);
 
+		//Size
+		g_sprintf(str,"%3.2f %s",pRaster->GetSize(),pRaster->GetUnit());
+		pxNode = pxRoot->AddChild("Size");
+		pxNode->AddChildText(str);
+
 		//uuid
 		pxNode = pxRoot->AddChild("UUID", NULL);
 		pxNode->AddChildText(pRaster->GetUUID());

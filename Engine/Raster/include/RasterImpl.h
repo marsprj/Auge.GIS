@@ -40,6 +40,9 @@ namespace auge
 		virtual augePixelType	GetPixelType();
 		virtual g_uint			GetPixelSize();
 
+		virtual double			GetSize();
+		virtual const char*		GetUnit();
+
 		virtual bool			GetMinMaxValue(short& minv, short& maxv);
 		virtual bool			GetMinMaxValue(int& minv, int& maxv);
 		virtual bool			GetMinMaxValue(double& minv, double& maxv);
@@ -64,6 +67,15 @@ namespace auge
 		g_uint	GetPixelSize(GDALDataType type);
 
 		void	SetUUID(const char* uuid);
+		void	SetSize(double size);
+		void	SetUnit(const char* unit);
+
+		void	SetFormat(const char* format);
+		void	SetWidth(g_uint width);
+		void	SetHeight(g_uint height);
+		void	SetExtent(double xmin,double ymin,double xmax,double ymax);
+		void	SetBands(g_uint bands);
+		void	SetSRID(g_uint srid);
 	private:
 		void	Cleanup();
 		bool	Init();
@@ -80,9 +92,14 @@ namespace auge
 		GEnvelope	 m_extent;
 		//WorkspaceRaster* m_pWorkspace;
 
+		g_uint		 m_nbands;
+		g_uint		 m_width;
+		g_uint		 m_height;
 		g_int		 m_srid;
 		g_uint		 m_pixel_size;
 		double		 m_geo_transform[6];
+		double		 m_size;
+		std::string	 m_unit;
 
 		std::vector<RasterBandImpl*>	m_bands;
 	};

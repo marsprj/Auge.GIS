@@ -54,7 +54,7 @@ namespace auge
 
 	EnumRaster*	RasterDatasetImpl::GetRasters()
 	{
-		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid,dataset from %s where dataset=%d";
+		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid,dataset,size,unit from %s where dataset=%d";
 
 		char sql[AUGE_SQL_MAX] = {0};
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWoskspace->g_raster_table.c_str(), m_pFolder->GetID());
@@ -85,6 +85,8 @@ namespace auge
 			double		ymax = pResult->GetDouble(i,12);
 			const char* uuid = pResult->GetString(i,13);
 			g_uint	dataset  = pResult->GetInt(i,14);
+			double		size = pResult->GetDouble(i,15);
+			const char*	unit = pResult->GetString(i, 16);
 
 			char raster_path[AUGE_PATH_MAX];
 			memset(raster_path, 0, AUGE_PATH_MAX);
@@ -92,7 +94,7 @@ namespace auge
 
 			Raster* pRaster = NULL;
 			RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
-			pRaster = pRasterFactory->CreateRaster(name, alias, format, raster_path, nband, srid, width, height, xmin, ymin, xmax, ymax, uuid);
+			pRaster = pRasterFactory->CreateRaster(name, alias, fmt, raster_path, nband, srid, width, height, xmin, ymin, xmax, ymax, uuid,size,unit);
 
 			if(pRaster!=NULL)
 			{
@@ -112,7 +114,7 @@ namespace auge
 			return NULL;
 		}
 
-		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid,dataset from %s where name='%s' and dataset=%d";
+		const char* format = "select gid,name,alias,format,path,band_count,srid,width,height,minx,miny,maxx,maxy,uuid,dataset,size,unit from %s where name='%s' and dataset=%d";
 
 		char sql[AUGE_SQL_MAX] = {0};
 		g_snprintf(sql, AUGE_SQL_MAX, format, m_pWoskspace->g_raster_table.c_str(), name, m_pFolder->GetID());
@@ -144,6 +146,8 @@ namespace auge
 		double		ymax = pResult->GetDouble(0,12);
 		const char* uuid = pResult->GetString(0,13);
 		g_uint	dataset  = pResult->GetInt(0,14);
+		double		size = pResult->GetDouble(0,15);
+		const char*	unit = pResult->GetString(0, 16);
 
 		char raster_path[AUGE_PATH_MAX];
 		memset(raster_path, 0, AUGE_PATH_MAX);
@@ -151,7 +155,7 @@ namespace auge
 
 		Raster* pRaster = NULL;
 		RasterFactory* pRasterFactory = augeGetRasterFactoryInstance();
-		pRaster = pRasterFactory->CreateRaster(name, alias, format, raster_path, nband, srid, width, height, xmin, ymin, xmax, ymax, uuid);
+		pRaster = pRasterFactory->CreateRaster(name, alias, fmt, raster_path, nband, srid, width, height, xmin, ymin, xmax, ymax, uuid, size, unit);
 
 		pResult->Release();
 		
