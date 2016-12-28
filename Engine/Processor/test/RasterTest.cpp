@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RasterTest);
 
 void RasterTest::setUp() 
 {
@@ -504,33 +504,71 @@ void RasterTest::DEMAspect_2()
 	printf("[时间]:%d毫秒\n", te-ts);
 }
 
+//void RasterTest::DEMHillShade()
+//{
+//	DWORD ts = GetTickCount();
+//
+//	auge::DemHillshadeProcessor* pProcessor = NULL;
+//	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
+//	pProcessor = pFactory->CreateDemHillshadeProcessor();
+//
+//	pProcessor->SetUser(2);
+//	pProcessor->SetInputDataSource("rsdb2");
+//	pProcessor->SetInputRaster("ASTGTM2_N29E082_dem.tif");
+//	pProcessor->SetInputPath("/dem");
+//
+//	pProcessor->SetOutputDataSource("rsdb2");
+//	pProcessor->SetOutputRaster("n39_hillshade_7.tif");
+//	pProcessor->SetOutputPath("/dem_result");
+//
+//	pProcessor->SetAzimuth(135);
+//	pProcessor->SetZenith(45);
+//	pProcessor->SetZFactor(5.0);
+//
+//	RESULTCODE rc = pProcessor->Execute();
+//
+//	pProcessor->Release();
+//
+//	DWORD te = GetTickCount();
+//	printf("[时间]:%d毫秒\n", te-ts);
+//}
+
 void RasterTest::DEMHillShade()
 {
-	DWORD ts = GetTickCount();
+	//DWORD ts = GetTickCount();
 
 	auge::DemHillshadeProcessor* pProcessor = NULL;
 	auge::GProcessorFactory* pFactory = auge::augeGetGeoProcessorFactoryInstance();
 	pProcessor = pFactory->CreateDemHillshadeProcessor();
 
-	pProcessor->SetUser(2);
-	pProcessor->SetInputDataSource("rsdb2");
-	pProcessor->SetInputRaster("ASTGTM2_N29E082_dem.tif");
-	pProcessor->SetInputPath("/dem");
+	//pProcessor->SetUser(2);
+	//pProcessor->SetInputDataSource("rsdb2");
+	//pProcessor->SetInputRaster("ASTGTM2_N29E082_dem.tif");
+	//pProcessor->SetInputPath("/dem");
 
-	pProcessor->SetOutputDataSource("rsdb2");
-	pProcessor->SetOutputRaster("n39_hillshade_7.tif");
-	pProcessor->SetOutputPath("/dem_result");
+	//pProcessor->SetOutputDataSource("rsdb2");
+	//pProcessor->SetOutputRaster("n39_hillshade_7.tif");
+	//pProcessor->SetOutputPath("/dem_result");
 
 	pProcessor->SetAzimuth(135);
 	pProcessor->SetZenith(45);
 	pProcessor->SetZFactor(5.0);
-
-	RESULTCODE rc = pProcessor->Execute();
+	
+	auge::Raster* pinRaster = NULL;
+	auge::Raster* poutRaster = NULL;
+	auge::RasterIO* io = auge::augeGetRasterIOInstance();
+	pinRaster = io->Read("H:\\Data\\DEM\\aster_gdem\\xz\\ASTGTM2_N29E082_dem.tif");
+	DWORD ts = GetTickCount();
+	poutRaster = pProcessor->Hillshade(pinRaster);
+	DWORD te = GetTickCount();
+	printf("[时间]:%d	毫秒",(te-ts));
+	poutRaster->Save("H:\\temp\\aa\\hillshade.tif");
+	//RESULTCODE rc = pProcessor->Execute();
 
 	pProcessor->Release();
 
-	DWORD te = GetTickCount();
-	printf("[时间]:%d毫秒\n", te-ts);
+	//DWORD te = GetTickCount();
+	//printf("[时间]:%d毫秒\n", te-ts);
 }
 
 void RasterTest::DEMStretch()

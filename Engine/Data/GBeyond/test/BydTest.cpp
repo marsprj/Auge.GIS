@@ -8,10 +8,10 @@ CPPUNIT_TEST_SUITE_REGISTRATION(BydTest);
 
 void BydTest::setUp() 
 {
-	const char* path = "SERVER=127.0.0.1;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
+	//const char* path = "SERVER=127.0.0.1;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
 	//const char* path = "SERVER=192.168.111.150;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
 	//const char* path = "SERVER=192.168.111.151;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
-	//const char* path = "SERVER=192.168.111.172;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
+	const char* path = "SERVER=192.168.111.172;INSTANCE=II;DATABASE=gisdb;USER=gisdb;PASSWORD=qwer1234";
 
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
 	pLogger->Initialize();
@@ -39,7 +39,7 @@ void BydTest::tearDown()
 void BydTest::ReadTest()
 {
 	auge::FeatureClass* pFeatureClass = NULL;
-	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities_3");
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("cities");
 	//pFeatureClass = m_pWorkspace->OpenFeatureClass("rivers");
 	//pFeatureClass = m_pWorkspace->OpenFeatureClass("gc_aqi");
 	//pFeatureClass = m_pWorkspace->OpenFeatureClass("高等院校");

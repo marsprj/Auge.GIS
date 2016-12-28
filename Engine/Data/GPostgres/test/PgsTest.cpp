@@ -4,15 +4,20 @@
 
 #include "AugeTile.h"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
+#include <libpq-fe.h>
+#include <proj_api.h>
+#pragma comment(lib, "libpq.lib")
+#pragma comment(lib, "proj_i.lib")
+
+CPPUNIT_TEST_SUITE_REGISTRATION(PgsTest);
 
 void PgsTest::setUp() 
 {
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=GISDB;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 	//const char* path = "SERVER=127.0.0.1;INSTANCE=5432;DATABASE=gaode;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	//const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
-	const char* path = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	const char* path = "SERVER=192.168.111.160;INSTANCE=5432;DATABASE=base;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
+	//const char* path = "SERVER=182.92.114.80;INSTANCE=5432;DATABASE=gisdb;USER=postgres;PASSWORD=qwer1234;ENCODING=GBK";
 
 	auge::GLogger	*pLogger = auge::augeGetLoggerInstance();
 	pLogger->Initialize();
@@ -462,4 +467,82 @@ void PgsTest::RefreshFeatureClass()
 		pClass->Refresh();
 	}
 	pFeatureClasses->Release();
+}
+
+void PgsTest::UpdatePOI()
+{
+	const char* conn_str = "hostaddr=192.168.111.160 port=5432 dbname=base user=postgres password=qwer1234";
+	const char* update_format = "update poi_146m set lon=%f, lat=%f, pos=st_geomfromtext('POINT(%f %f)',4326) where gid=%d";
+	//const char* update_format = "update poi_146m set pos=st_geomfromtext('POINT(%f %f)',4326) where gid=%d";
+	char sql[1024];
+
+	PGconn* conn_u = NULL;
+	PGresult *rst_u = NULL;
+	conn_u = PQconnectdb(conn_str);
+
+	const char* o_pj_str = "+proj=longlat +datum=WGS84 +no_defs";
+	const char* i_pj_str = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
+	
+	projPJ i_pj = pj_init_plus(i_pj_str);
+	projPJ o_pj = pj_init_plus(o_pj_str);
+
+	auge::FeatureClass* pFeatureClass = NULL;
+	pFeatureClass = m_pWorkspace->OpenFeatureClass("poi_146m");
+	CPPUNIT_ASSERT(pFeatureClass!=NULL);
+
+	double v = 180.0;
+	auge::BinaryComparisonFilter* pFilter = NULL;
+	auge::FilterFactory* pFactory = auge::augeGetFilterFactoryInstance();
+
+	auge::PropertyName* pProp = pFactory->CreatePropertyName("lat");
+	auge::Literal* pLiteral = pFactory->CreateLiteral(new auge::GValue(v));
+
+	pFilter = pFactory->CreateBinaryComparisonFilter();
+	pFilter->SetExpression1(pProp);
+	pFilter->SetExpression2(pLiteral);
+	pFilter->SetOperator(auge::augeComOprGreaterThan);
+
+	auge::FeatureCursor* pCursor = NULL;
+	pCursor = pFeatureClass->Query(pFilter);
+	CPPUNIT_ASSERT(pCursor!=NULL);
+
+	int counter = 1;
+	int gid = 0;
+	double lon, lat;
+	double x, y;
+	auge::Geometry	*pGeometry = NULL;
+	auge::Feature	*pFeature = NULL;
+	while((pFeature=pCursor->NextFeature())!=NULL)
+	{	
+		gid = pFeature->GetFID();
+		lon = pFeature->GetDouble("lon");
+		lat = pFeature->GetDouble("lat");
+
+		x = lon;
+		y = lat;
+
+		int ret = pj_transform(i_pj, o_pj, 1, 1, &x, &y, NULL );
+
+		x *= RAD_TO_DEG;
+		y *= RAD_TO_DEG;
+
+		sprintf(sql, update_format, x, y, x, y, gid);
+		//sprintf(sql, update_format,  x, y, gid);
+		printf("%s\n", sql);
+		rst_u = PQexec(conn_u, sql);
+		ExecStatusType status = PQresultStatus(rst_u);
+		if(status!=PGRES_COMMAND_OK)
+		{
+			printf("%s\n",PQerrorMessage(conn_u));
+		}
+		PQclear(rst_u);
+
+		pFeature->Release();
+	}
+	printf("\n");
+
+	PQfinish(conn_u);
+	AUGE_SAFE_RELEASE(pFilter);
+	AUGE_SAFE_RELEASE(pCursor);
+	AUGE_SAFE_RELEASE(pFeatureClass);
 }

@@ -342,6 +342,70 @@ namespace auge
 		return ret;
 	}
 
+	//RESULTCODE FeatureProjectProcessorImpl::Project_From_WGS84(WKBLineString* pWKBLineString, projPJ i_pj, projPJ o_pj)
+	//{
+	//	int ret = 0;
+
+	//	int numPoints = pWKBLineString->numPoints;
+	//	auge::Point *pt = (auge::Point*)(&(pWKBLineString->points[0]));
+
+	//	for(int i=0; i<numPoints; i++, pt++)
+	//	{
+	//		double *x = &(pt->x);
+	//		double *y = &(pt->y);
+
+	//		*x *= DEG_TO_RAD;
+	//		*y *= DEG_TO_RAD;
+
+	//		ret = pj_transform(i_pj, o_pj, 1, 1, x, y, NULL );
+	//		if(ret!=0)
+	//		{
+	//			break;
+	//		}
+	//	}
+	//	return ret;
+	//}
+
+	//RESULTCODE FeatureProjectProcessorImpl::Project_From_WGS84(WKBMultiLineString* pWKBMultiLineString, projPJ i_pj, projPJ o_pj)
+	//{
+	//	int ret = 0;
+	//	int numPoints = 0;
+	//	int numLineStings = 0;
+	//	auge::Point *pt = NULL;
+	//	WKBLineString* pWKBLineString = NULL;
+
+	//	numLineStings = pWKBMultiLineString->numLineStrings;
+	//	pWKBLineString = (WKBLineString*)(&(pWKBMultiLineString->lineStrings[0]));
+
+	//	for(int i=0; i<numLineStings; i++)
+	//	{
+	//		numPoints = pWKBLineString->numPoints;
+	//		pt = (auge::Point*)(&(pWKBLineString->points[0]));
+
+	//		for(int j=0; j<numPoints; j++, pt++)
+	//		{
+	//			double *x = &(pt->x);
+	//			double *y = &(pt->y);
+
+	//			*x *= DEG_TO_RAD;
+	//			*y *= DEG_TO_RAD;
+
+	//			ret = pj_transform(i_pj, o_pj, 1, 1, x, y, NULL );
+	//			if(ret!=0)
+	//			{
+	//				break;
+	//			}
+	//		}
+	//		pWKBLineString = (WKBLineString*)(pt);
+	//		if(ret!=0)
+	//		{
+	//			break;
+	//		}
+	//	}
+
+	//	return ret;
+	//}
+
 	RESULTCODE FeatureProjectProcessorImpl::Project_From_WGS84(WKBLineString* pWKBLineString, projPJ i_pj, projPJ o_pj)
 	{
 		int ret = 0;
@@ -349,10 +413,10 @@ namespace auge
 		int numPoints = pWKBLineString->numPoints;
 		auge::Point *pt = (auge::Point*)(&(pWKBLineString->points[0]));
 
-		for(int i=0; i<numPoints; i++, pt++)
+		for(int i=0; i<numPoints; i++)
 		{
-			double *x = &(pt->x);
-			double *y = &(pt->y);
+			double *x = &(pt[i].x);
+			double *y = &(pt[i].y);
 
 			*x *= DEG_TO_RAD;
 			*y *= DEG_TO_RAD;

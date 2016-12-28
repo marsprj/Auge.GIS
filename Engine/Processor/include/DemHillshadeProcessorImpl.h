@@ -31,6 +31,8 @@ namespace auge
 		virtual RESULTCODE	Execute();
 		virtual void		Release();
 
+		virtual Raster*		Hillshade(Raster* pinRaster);
+
 	private:
 		const char*			GetInputDataSource();
 		const char*			GetInputRaster();
@@ -41,7 +43,7 @@ namespace auge
 		const char*			GetOutputRasterPath();
 
 	private:
-		Raster*				Hillshade(Raster* pinRaster);
+		
 		RESULTCODE			Hillshade_Byte(RasterBand* pinBand, RasterBand* poutBand);
 		RESULTCODE			Hillshade_Short(RasterBand* pinBand, RasterBand* poutBand);
 		RESULTCODE			Hillshade_Double(RasterBand* pinBand, RasterBand* poutBand);

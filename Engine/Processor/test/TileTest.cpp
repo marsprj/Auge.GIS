@@ -6,7 +6,7 @@
 #include "AugeProcessor.h"
 #include <iostream>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(TileTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(TileTest);
 
 void TileTest::setUp() 
 {

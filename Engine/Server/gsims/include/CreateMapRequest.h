@@ -67,6 +67,7 @@ http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=CreateMap&
 		<ymax>90</ymax>
 	</Extent>
 	<Srid>4326</Srid>
+	<Description>this is my map.</Description>
 </CreateMap>
 
 ************************************************************************/

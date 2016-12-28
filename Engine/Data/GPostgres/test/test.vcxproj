@@ -39,8 +39,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\DevEnv\cppunit-1.13.2\include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\DevEnv\cppunit-1.13.2\lib;%AUGE_GIS_HOME%/Dist\32_x86_win_vc10\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\DevEnv\cppunit-1.13.2\include;%AUGE_GIS_HOME%/include;E:\DevEnv\GnuWin32\include;E:\DevEnv\proj4-.7.0\include;D:\Program Files %28x86%29\PostgreSQL\9.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\DevEnv\cppunit-1.13.2\lib;%AUGE_GIS_HOME%/Dist\32_x86_win_vc10\lib;E:\DevEnv\proj4-.7.0\lib;D:\Program Files %28x86%29\PostgreSQL\9.4\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

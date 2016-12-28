@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pgs2shp", "..\pgs2shp\pgs2s
 		{5B62A6CC-CEAB-47C8-B6E3-4028CE69D698} = {5B62A6CC-CEAB-47C8-B6E3-4028CE69D698}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GCore", "..\..\..\Core\32_x86_win_vc10\GCore.vcxproj", "{175ED294-86C6-45A1-9E7A-770AE765EB23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -38,6 +40,10 @@ Global
 		{D7F174D4-E1D9-4966-9973-B68B40A85379}.Debug|Win32.Build.0 = Debug|Win32
 		{D7F174D4-E1D9-4966-9973-B68B40A85379}.Release|Win32.ActiveCfg = Release|Win32
 		{D7F174D4-E1D9-4966-9973-B68B40A85379}.Release|Win32.Build.0 = Release|Win32
+		{175ED294-86C6-45A1-9E7A-770AE765EB23}.Debug|Win32.ActiveCfg = Debug|Win32
+		{175ED294-86C6-45A1-9E7A-770AE765EB23}.Debug|Win32.Build.0 = Debug|Win32
+		{175ED294-86C6-45A1-9E7A-770AE765EB23}.Release|Win32.ActiveCfg = Release|Win32
+		{175ED294-86C6-45A1-9E7A-770AE765EB23}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

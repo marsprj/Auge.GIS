@@ -280,9 +280,9 @@ namespace auge
 	FeatureStyle* CreatePointStyle()
 	{
 		// Point Symbol 
-		Fill *pFill = new FillImpl();
+		//Fill *pFill = new FillImpl();
 
-		Stroke *pStroke = new StrokeImpl();
+		//Stroke *pStroke = new StrokeImpl();
 
 		PointSymbolizer *pPointSymbolizer = NULL;
 		pPointSymbolizer = CreatePointSymbolizer();
@@ -303,9 +303,9 @@ namespace auge
 	FeatureStyle* CreateLineStyle()
 	{
 		// Polygon Symbol 
-		Fill *pFill = new FillImpl();
+		//Fill *pFill = new FillImpl();
 
-		Stroke *pStroke = new StrokeImpl();
+		//Stroke *pStroke = new StrokeImpl();
 
 		LineSymbolizer *pSymbolizer = NULL;
 		pSymbolizer = CreateLineSymbolizer();
@@ -326,9 +326,9 @@ namespace auge
 	FeatureStyle* CreatePolygonStyle()
 	{
 		// Polygon Symbol 
-		Fill *pFill = new FillImpl();
+		//Fill *pFill = new FillImpl();
 
-		Stroke *pStroke = new StrokeImpl();
+		//Stroke *pStroke = new StrokeImpl();
 
 		PolygonSymbolizer *pSymbolizer = NULL;
 		pSymbolizer = CreatePolygonSymbolizer();
@@ -349,9 +349,9 @@ namespace auge
 	FeatureStyle* CreatePointStyle(g_uint limit)
 	{
 		// Point Symbol 
-		Fill *pFill = new FillImpl();
+		//Fill *pFill = new FillImpl();
 
-		Stroke *pStroke = new StrokeImpl();
+		//Stroke *pStroke = new StrokeImpl();
 
 		PointSymbolizer *pPointSymbolizer = NULL;
 		pPointSymbolizer = CreatePointSymbolizer();
@@ -374,9 +374,9 @@ namespace auge
 	FeatureStyle* CreateLineStyle(g_uint limit)
 	{
 		// Polygon Symbol 
-		Fill *pFill = new FillImpl();
+		//Fill *pFill = new FillImpl();
 
-		Stroke *pStroke = new StrokeImpl();
+		//Stroke *pStroke = new StrokeImpl();
 
 		LineSymbolizer *pSymbolizer = NULL;
 		pSymbolizer = CreateLineSymbolizer();
@@ -398,9 +398,9 @@ namespace auge
 	FeatureStyle* CreatePolygonStyle(g_uint limit)
 	{
 		// Polygon Symbol 
-		Fill *pFill = new FillImpl();
+		//Fill *pFill = new FillImpl();
 
-		Stroke *pStroke = new StrokeImpl();
+		//Stroke *pStroke = new StrokeImpl();
 
 		PolygonSymbolizer *pSymbolizer = NULL;		
 		pSymbolizer = CreatePolygonSymbolizer();

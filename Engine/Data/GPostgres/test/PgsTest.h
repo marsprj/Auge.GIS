@@ -9,7 +9,7 @@
 class PgsTest : public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(PgsTest);
-	CPPUNIT_TEST(ReadTest);
+//	CPPUNIT_TEST(ReadTest);
 //	CPPUNIT_TEST(QueryExent);
 //	CPPUNIT_TEST(QueryBinaryComparision);
 //	CPPUNIT_TEST(QueryBetween);
@@ -22,6 +22,7 @@ class PgsTest : public CppUnit::TestFixture
 //	CPPUNIT_TEST(GetAQI);
 //	CPPUNIT_TEST(GetAQIQuery);
 //	CPPUNIT_TEST(RefreshFeatureClass);
+	CPPUNIT_TEST(UpdatePOI);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -46,6 +47,8 @@ private:
 	void GetAQIQuery();
 
 	void RefreshFeatureClass();
+
+	void UpdatePOI();
 
 private:
 	auge::FeatureWorkspace* m_pWorkspace;

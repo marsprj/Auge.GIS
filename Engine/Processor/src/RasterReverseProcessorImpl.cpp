@@ -240,8 +240,8 @@ namespace auge
 		
 		for(g_uint i=0; i<height; i++)
 		{
-			#pragma omp parallel for
-			for(g_uint j=0; j<width; j++, ptr++)
+			//#pragma omp parallel for
+			for(g_int j=0; j<width; j++, ptr++)
 			{
 				*ptr = 255 - *ptr;
 			}

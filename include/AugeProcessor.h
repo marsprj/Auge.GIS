@@ -884,6 +884,8 @@ namespace auge
 		virtual void		SetAzimuth(float azimuth) = 0;		//太阳方位角
 		virtual void		SetZenith(float zenith) = 0;		//太阳高度角
 		virtual void		SetZFactor(float zscale) = 0;		//Z比例因子
+
+		virtual Raster*		Hillshade(Raster* pinRaster) = 0;
 	};
 
 	/**

@@ -10,10 +10,10 @@
 
 namespace auge
 {
-	#define AUGE_WRITABLE_DB_SERVER	"192.168.111.160"
+	#define AUGE_WRITABLE_DB_SERVER		"192.168.111.160"
 	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.161"
 	//#define AUGE_WRITABLE_DB_SERVER	"192.168.111.159"
-	//#define AUGE_WRITABLE_DB_SERVER	"127.0.0.1"
+	//#define AUGE_WRITABLE_DB_SERVER	"127.0.0.1" 
 	//#define AUGE_WRITABLE_DB_SERVER	"172.32.72.2"
 	//#define AUGE_WRITABLE_DB_SERVER	"172.32.8.1"
 	//#define AUGE_WRITABLE_DB_SERVER	"182.92.114.80"
@@ -472,9 +472,10 @@ namespace auge
 
 		char constr[AUGE_PATH_MAX];
 		memset(constr, 0, AUGE_PATH_MAX);		
-		g_snprintf(constr, AUGE_PATH_MAX, "server=%s;instance=5432;database=%s;user=postgres;password=qwer1234;encoding=GBK",
+		g_snprintf(constr, AUGE_PATH_MAX, "server=%s;instance=5432;database=%s;user=postgres;password=qwer1234;encoding=%s",
 											AUGE_WRITABLE_DB_SERVER,
-											m_pgConnection_r.m_props.GetValue(AUGE_DB_DATABASE));
+											m_pgConnection_r.m_props.GetValue(AUGE_DB_DATABASE),
+											m_pgConnection_r.m_props.GetValue(AUGE_DB_ENCODING));
 		m_pgConnection_w.SetConnectionString(constr);
 		RESULTCODE rc = m_pgConnection_w.Open();
 		if(rc!=AG_SUCCESS)
@@ -1284,7 +1285,7 @@ namespace auge
 			"	  maxy double precision," \
 			"	  uuid character varying(128)," \
 			"	  user_id integer DEFAULT (-1)," \
-			"	  CONSTRAINT g_feature_catalog_pk PRIMARY KEY (gid)" \
+			"	  CONSTRAINT g_feature_catalog_pk PRIMARY KEY (gid)," \
 			"	  CONSTRAINT g_feature_catalog_name_user_qk UNIQUE (name, user_id)" \
 			"	)";
 		g_sprintf(sql, format, g_feature_catalog_table.c_str());

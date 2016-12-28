@@ -21,7 +21,7 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(Thumbnail);
 	//CPPUNIT_TEST(RasterMosiac);
 	//CPPUNIT_TEST(RasterProj);
-	CPPUNIT_TEST(RasterResample);
+	//CPPUNIT_TEST(RasterResample);
 
 	//CPPUNIT_TEST(SepiaTone);
 	//CPPUNIT_TEST(PenEffect);
@@ -29,7 +29,7 @@ class RasterTest : public CppUnit::TestFixture
 	//CPPUNIT_TEST(DEMSlope_2);
 	//CPPUNIT_TEST(DEMAspect);
 	//CPPUNIT_TEST(DEMAspect_2);
-	//CPPUNIT_TEST(DEMHillShade);
+	CPPUNIT_TEST(DEMHillShade);
 	//CPPUNIT_TEST(DEMStretch);
 	//CPPUNIT_TEST(DemInundation);
 
