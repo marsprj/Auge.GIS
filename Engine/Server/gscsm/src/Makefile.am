@@ -7,23 +7,19 @@ AM_CPPFLAGS=-I../include \
 
 libgscsm_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
-		-L$(top_srcdir)/Engine/Carto/src \
 		-L$(top_srcdir)/Engine/Server/gscore/src
 
-libgscsm_la_LIBADD=-lgcore -lgcarto -lgscore
+libgscsm_la_LIBADD=-lgcore -lgscore
 
 libgscsm_la_SOURCES=\
-		CapabilitiesHandler.cpp \
-		CapabilitiesRequest.cpp \
-		CapabilitiesResponse.cpp \
-		GetFeatureInfoHandler.cpp \
-		GetFeatureInfoRequest.cpp \
-		GetFeatureInfoResponse.cpp \
-		GetMapHandler.cpp \
-		GetMapRequest.cpp \
-		GetMapResponse.cpp \
-		WMapEngine.cpp \
-		SetStyleHandler.cpp \
-		WMapRequest.cpp \
-		SetStyleRequest.cpp
-
+		CreateTaskHandler.cpp \
+		CreateTaskRequest.cpp \
+		CsTask.cpp \
+		CsTaskManager.cpp \
+		DescribeTaskHandler.cpp \
+		DescribeTaskRequest.cpp \
+		DescribeTaskResponse.cpp \
+		EnumTask.cpp \
+		JoinTaskHandler.cpp \
+		JoinTaskRequest.cpp \
+		WCSMapEngine.cpp

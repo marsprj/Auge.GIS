@@ -88,7 +88,7 @@ namespace auge
 		if(role<0)
 		{
 			//g_snprintf(sql, AUGE_SQL_MAX, "select gid, name, description, map_id, create_time from cs_task where owner=%d", user_id);
-			g_snprintf(sql, AUGE_SQL_MAX, "select t.gid, t.name, t.description, t.map_id, t.owner, t.create_time, from cs_task t,cs_task_join j where j.user_id=%d and j.task_id=t.gid", user_id);
+			g_snprintf(sql, AUGE_SQL_MAX, "select t.gid, t.name, t.description, t.map_id, t.owner, t.create_time from cs_task t,cs_task_join j where j.user_id=%d and j.task_id=t.gid", user_id);
 		}
 		else
 		{
@@ -134,7 +134,7 @@ namespace auge
 		GResultSet* rst = m_pConnection->ExecuteQuery(sql);
 		if(rst==NULL)
 		{
-			return false;
+			return NULL;
 		}
 
 		if(!rst->GetCount())
