@@ -26,21 +26,30 @@ namespace auge
 
 	WebEngine* WebEngineManagerImpl::GetEngine(const char* type)
 	{
-		if(type==NULL)
-		{
-			return NULL;
-		}
-		WebEngine* pEngine = NULL;
-		std::vector<WebEngine*>::iterator iter;
-		for(iter=m_engines.begin(); iter!=m_engines.end(); iter++)
-		{
-			pEngine = *iter;
-			if(g_stricmp(pEngine->GetType(), type)==0)
-			{
-				return pEngine;
-			}
-		}
-		return NULL;
+		return m_engines.GetEngine(type);
+
+		//if(type==NULL)
+		//{
+		//	return NULL;
+		//}
+		//
+		//WebEngine* pEngine = NULL;
+		//std::vector<WebEngine*>::iterator iter;
+		//for(iter=m_engines.begin(); iter!=m_engines.end(); iter++)
+		//{
+		//	pEngine = *iter;
+		//	if(g_stricmp(pEngine->GetType(), type)==0)
+		//	{
+		//		return pEngine;
+		//	}
+		//}
+		//return NULL;
+	}
+
+	EnumWebEngine* WebEngineManagerImpl::GetEngines()
+	{
+		m_engines.AddRef();
+		return &m_engines;
 	}
 
 	WebEngine* WebEngineManagerImpl::Register(const char* path)
@@ -53,7 +62,8 @@ namespace auge
 		WebEngine* pEngine = LoadEngine(path);
 		if(pEngine!=NULL)
 		{
-			m_engines.push_back(pEngine);
+			m_engines.Add(pEngine);
+			//m_engines.push_back(pEngine);
 			Save();
 		}
 		return pEngine;
@@ -77,15 +87,26 @@ namespace auge
 		pxRoot = pxDoc->CreateRootNode("Engines", NULL, NULL);
 
 		WebEngine* pEngine = NULL;
-		std::vector<WebEngine*>::iterator iter;
-		for(iter=m_engines.begin(); iter!=m_engines.end(); iter++)
+		g_uint count = m_engines.GetCount();
+		for(g_uint i=0; i<count; i++)
 		{
-			pEngine = *iter;
+			pEngine = m_engines.GetEngine(i);
 			pxNode = pxRoot->AddChild("Engine", NULL);
 			pxNode->SetAttribute("description", pEngine->GetDescription(), NULL);
 			pxNode->SetAttribute("path", "", NULL);
 			pxNode->SetAttribute("id", pEngine->GetID(), NULL);
 		}
+
+		//WebEngine* pEngine = NULL;
+		//std::vector<WebEngine*>::iterator iter;
+		//for(iter=m_engines.begin(); iter!=m_engines.end(); iter++)
+		//{
+		//	pEngine = *iter;
+		//	pxNode = pxRoot->AddChild("Engine", NULL);
+		//	pxNode->SetAttribute("description", pEngine->GetDescription(), NULL);
+		//	pxNode->SetAttribute("path", "", NULL);
+		//	pxNode->SetAttribute("id", pEngine->GetID(), NULL);
+		//}
 
 		pxDoc->Save(m_path.c_str());
 		pxDoc->Release();
@@ -95,23 +116,24 @@ namespace auge
 
 	WebEngine* WebEngineManagerImpl::Find(const char* id)
 	{
-		if(id==NULL)
-		{
-			return NULL;
-		}
+		return m_engines.GetEngineById(id);
+		//if(id==NULL)
+		//{
+		//	return NULL;
+		//}
 
-		WebEngine* pEngine = NULL;
-		std::vector<WebEngine*>::iterator iter;
-		for(iter=m_engines.begin(); iter!=m_engines.end(); iter++)
-		{
-			pEngine = (*iter);
-			if(strcmp(pEngine->GetID(), id)==0)
-			{
-				return pEngine;
-			}
-		}
+		//WebEngine* pEngine = NULL;
+		//std::vector<WebEngine*>::iterator iter;
+		//for(iter=m_engines.begin(); iter!=m_engines.end(); iter++)
+		//{
+		//	pEngine = (*iter);
+		//	if(strcmp(pEngine->GetID(), id)==0)
+		//	{
+		//		return pEngine;
+		//	}
+		//}
 
-		return NULL;
+		//return NULL;
 	}
 
 	WebEngine*	WebEngineManagerImpl::LoadEngine(const char* path)
@@ -188,7 +210,7 @@ namespace auge
 		pEngine = LoadEngine(libpath);
 		if(pEngine!=NULL)
 		{
-			m_engines.push_back(pEngine);
+			m_engines.Add(pEngine);
 		}
 
 		return pEngine;
@@ -243,15 +265,15 @@ namespace auge
 
 	void WebEngineManagerImpl::Unload()
 	{
-		WebEngine* pEngine = NULL;
-		std::vector<WebEngine*>::iterator iter;
-		for(iter=m_engines.begin(); iter!=m_engines.end(); iter++)
-		{
-			pEngine = *iter;
-			// some bug here, unknown reason!!!!
-			//auge_free_library(pEngine->GetHandler());
-		}
-		m_engines.clear();
+		//WebEngine* pEngine = NULL;
+		//std::vector<WebEngine*>::iterator iter;
+		//for(iter=m_engines.begin(); iter!=m_engines.end(); iter++)
+		//{
+		//	pEngine = *iter;
+		//	// some bug here, unknown reason!!!!
+		//	//auge_free_library(pEngine->GetHandler());
+		//}
+		//m_engines.clear();
 	}
 
 	void WebEngineManagerImpl::MakeConfigPath()

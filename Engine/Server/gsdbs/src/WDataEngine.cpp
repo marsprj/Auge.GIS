@@ -113,6 +113,11 @@ namespace auge
 		return NULL;
 	}
 
+	RESULTCODE WDataEngine::Initialize(void *pParam)
+	{
+		return AG_SUCCESS;
+	}
+
 	WebRequest*	WDataEngine::ParseRequest(const char* url)
 	{
 		GPropertySet props;

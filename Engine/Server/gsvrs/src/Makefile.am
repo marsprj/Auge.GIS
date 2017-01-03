@@ -16,4 +16,5 @@ libgsvrs_la_SOURCES=\
 		EnumServiceImpl.cpp \
 		ServiceImpl.cpp  \
 		ServiceManagerImpl.cpp \
-		WebEngineManagerImpl.cpp
+		WebEngineManagerImpl.cpp \
+		EnumWebEngineImpl.cpp

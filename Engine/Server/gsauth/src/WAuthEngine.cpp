@@ -106,6 +106,11 @@ namespace auge
 		return NULL;
 	}
 
+	RESULTCODE WAuthEngine::Initialize(void *pParam)
+	{
+		return AG_SUCCESS;
+	}
+
 	WebRequest*	WAuthEngine::ParseRequest(const char* url)
 	{
 		//GPropertySet props;

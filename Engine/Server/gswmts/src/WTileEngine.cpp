@@ -85,6 +85,11 @@ namespace auge
 		return NULL;
 	}
 
+	RESULTCODE WTileEngine::Initialize(void *pParam)
+	{
+		return AG_SUCCESS;
+	}
+
 	WebRequest*	WTileEngine::ParseRequest(const char* url)
 	{
 		//GPropertySet props;

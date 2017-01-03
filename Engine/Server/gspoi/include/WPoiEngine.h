@@ -22,6 +22,8 @@ namespace auge
 		virtual WebRequest*		ParseRequest(rude::CGI& cgi, const char* mapName);
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc, const char* mapName);
 
+		virtual RESULTCODE		Initialize(void *pParam);
+
 	public:
 		virtual const char*		GetID();
 		virtual const char*		GetType();

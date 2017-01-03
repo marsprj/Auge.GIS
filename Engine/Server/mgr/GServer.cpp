@@ -554,9 +554,9 @@ namespace auge
 		LoadConfig();
 
 		LoadDataEngine();
-		LoadServiceEngine();
+		OpenServerBase();
 
-		OpenServerBase();		
+		LoadServiceEngine();		
 		LoadServerConfig();
 
 		LoadUserManager();		
@@ -622,6 +622,15 @@ namespace auge
 		{
 			m_pLogger->Error(m_pError->GetLastError(), __FILE__, __LINE__);
 			return false;
+		}
+
+		EnumWebEngine* pEngines = m_pWebEngineManager->GetEngines();
+		pEngines->Reset();
+
+		WebEngine* pWebEngine = NULL;
+		while((pWebEngine=pEngines->Next())!=NULL)
+		{
+			pWebEngine->Initialize(m_pConnection);
 		}
 		return rc;
 	}

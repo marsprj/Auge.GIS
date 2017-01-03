@@ -68,7 +68,7 @@ namespace auge
 		//virtual WebResponse*	Execute(WebRequest* pWebRequest, WebContext* pWebContext, Map* pMap) = 0;
 	};
 
-	class WebEngine
+	class WebEngine : public GObject
 	{
 	protected:
 		WebEngine(){}
@@ -84,6 +84,8 @@ namespace auge
 
 		virtual WebRequest*		ParseRequest(XDocument* pxDoc, const char* mapName) = 0;
 
+		virtual RESULTCODE		Initialize(void *pParam) = 0;
+
 	public:
 		virtual const char*		GetID() = 0;
 		virtual const char*		GetType() = 0;
@@ -93,6 +95,17 @@ namespace auge
 		virtual void			SetHandler(void* handler) = 0;
 
 		virtual const char*		GetLibraryPath() = 0;
+	};
+
+	class EnumWebEngine : public GObject
+	{
+	protected:
+		EnumWebEngine(){}
+		virtual ~EnumWebEngine(){}
+
+	public:
+		virtual void			Reset() = 0;
+		virtual WebEngine*		Next() = 0;
 	};
 
 	extern "C"

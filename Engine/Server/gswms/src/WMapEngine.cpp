@@ -87,6 +87,11 @@ namespace auge
 		return NULL;
 	}
 
+	RESULTCODE WMapEngine::Initialize(void *pParam)
+	{
+		return AG_SUCCESS;
+	}
+
 	WebRequest*	WMapEngine::ParseRequest(const char* url)
 	{
 		//GPropertySet props;

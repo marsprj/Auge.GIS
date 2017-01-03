@@ -92,6 +92,11 @@ namespace auge
 		return NULL;
 	}
 
+	RESULTCODE WFileSystemEngine::Initialize(void *pParam)
+	{
+		return AG_SUCCESS;
+	}
+
 	WebRequest*	WFileSystemEngine::ParseRequest(const char* url)
 	{
 		//GPropertySet props;

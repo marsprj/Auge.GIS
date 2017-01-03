@@ -88,12 +88,14 @@ copy $(OutDir)\$(TargetName).lib %AUGE_GIS_HOME%\Dist\32_x86_win_vc10\lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\EnumServiceImpl.cpp" />
+    <ClCompile Include="..\src\EnumWebEngineImpl.cpp" />
     <ClCompile Include="..\src\ServiceImpl.cpp" />
     <ClCompile Include="..\src\ServiceManagerImpl.cpp" />
     <ClCompile Include="..\src\WebEngineManagerImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\EnumServiceImpl.h" />
+    <ClInclude Include="..\include\EnumWebEngineImpl.h" />
     <ClInclude Include="..\include\ServiceImpl.h" />
     <ClInclude Include="..\include\ServiceManagerImpl.h" />
     <ClInclude Include="..\include\WebEngineManagerImpl.h" />

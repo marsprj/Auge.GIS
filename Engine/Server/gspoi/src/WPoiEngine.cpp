@@ -81,6 +81,11 @@ namespace auge
 		return NULL;
 	}
 
+	RESULTCODE WPoiEngine::Initialize(void *pParam)
+	{
+		return AG_SUCCESS;
+	}
+
 	WebRequest*	WPoiEngine::ParseRequest(const char* url)
 	{
 		return NULL;

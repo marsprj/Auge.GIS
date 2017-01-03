@@ -97,6 +97,7 @@ namespace auge
 	public:
 		virtual g_uint			GetCount() = 0;
 		virtual WebEngine*		GetEngine(const char* id) = 0;
+		virtual EnumWebEngine*	GetEngines() = 0;
 
 		virtual WebEngine*		Register(const char* path) = 0;
 		virtual RESULTCODE		Unregister(const char* id) = 0;

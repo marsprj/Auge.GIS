@@ -95,6 +95,11 @@ namespace auge
 		return NULL;
 	}
 
+	RESULTCODE WFeatureEngine::Initialize(void *pParam)
+	{
+		return AG_SUCCESS;
+	}
+
 	WebRequest*	WFeatureEngine::ParseRequest(const char* url)
 	{
 		//GPropertySet props;

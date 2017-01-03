@@ -105,6 +105,11 @@ namespace auge
 		return NULL;
 	}
 
+	RESULTCODE WRasterEngine::Initialize(void *pParam)
+	{
+		return AG_SUCCESS;
+	}
+
 	WebRequest*	WRasterEngine::ParseRequest(const char* url)
 	{
 		return NULL;

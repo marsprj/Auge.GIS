@@ -241,6 +241,11 @@ namespace auge
 		return NULL;
 	}
 
+	RESULTCODE GeoProcessingEngine::Initialize(void *pParam)
+	{
+		return AG_SUCCESS;
+	}
+
 	WebRequest*	GeoProcessingEngine::ParseRequest(const char* url)
 	{
 		GPropertySet props;

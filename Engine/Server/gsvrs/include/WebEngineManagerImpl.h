@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 
+#include "EnumWebEngineImpl.h"
+
 namespace auge
 {
 	class WebEngineManagerImpl : public WebEngineManager
@@ -18,6 +20,7 @@ namespace auge
 
 		virtual g_uint			GetCount();
 		virtual WebEngine*		GetEngine(const char* type);
+		virtual EnumWebEngine*	GetEngines();
 
 		virtual WebEngine*		Register(const char* path);
 		virtual RESULTCODE		Unregister(const char* id);
@@ -38,7 +41,8 @@ namespace auge
 		void		MakeLibraryPath(char* libpath, const char* dir, const char* id);
 
 	private:
-		std::vector<WebEngine*>	m_engines;
+		//std::vector<WebEngine*>	m_engines;
+		EnumWebEngineImpl		m_engines;
 		std::string m_path;
 	};
 }
