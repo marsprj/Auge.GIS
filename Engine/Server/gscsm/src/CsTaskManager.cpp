@@ -155,6 +155,40 @@ namespace auge
 		return pTask;
 	}
 
+	EnumTask* TaskManager::GetTask()
+	{
+		EnumTask* pTasks = new EnumTask();
+
+		char sql[AUGE_SQL_MAX];
+		memset(sql, 0, AUGE_SQL_MAX);
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid, description, map_id, owner, create_time from cs_task order by gid desc limit 20 offset 0");
+
+		GResultSet* rst = m_pConnection->ExecuteQuery(sql);
+		if(rst==NULL)
+		{
+			return pTasks;
+		}
+
+		g_uint count = rst->GetCount();
+		for(g_uint i=0; i<count; i++)
+		{
+			g_int		tid  = rst->GetInt(i, 0);
+			const char* name = rst->GetString(i, 1);
+			const char* desc = rst->GetString(i, 2);
+			g_int		mapid= rst->GetInt(i, 3);
+			g_uint		owner= rst->GetInt(i, 4);
+
+			CsTask* pTask = new CsTask();
+			pTask->Create(tid, name, desc, mapid, owner);
+
+			pTasks->Add(pTask);
+		}
+
+		rst->Release();
+
+		return pTasks;	
+	}
+
 	bool TaskManager::Joined(g_uint task, g_uint user)
 	{
 		char sql[AUGE_SQL_MAX];

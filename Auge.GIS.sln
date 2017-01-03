@@ -105,6 +105,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Performance1.psess = Performance1.psess
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gscsm", "Engine\Server\gscsm\32_x86_win_vc10\gscsm.vcxproj", "{ED947040-96FD-48FC-B212-3BF69323D012}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -219,6 +221,10 @@ Global
 		{04DA4924-594B-4A93-801F-F260E486F28D}.Debug|Win32.Build.0 = Debug|Win32
 		{04DA4924-594B-4A93-801F-F260E486F28D}.Release|Win32.ActiveCfg = Release|Win32
 		{04DA4924-594B-4A93-801F-F260E486F28D}.Release|Win32.Build.0 = Release|Win32
+		{ED947040-96FD-48FC-B212-3BF69323D012}.Debug|Win32.ActiveCfg = Debug|Win32
+		{ED947040-96FD-48FC-B212-3BF69323D012}.Debug|Win32.Build.0 = Debug|Win32
+		{ED947040-96FD-48FC-B212-3BF69323D012}.Release|Win32.ActiveCfg = Release|Win32
+		{ED947040-96FD-48FC-B212-3BF69323D012}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

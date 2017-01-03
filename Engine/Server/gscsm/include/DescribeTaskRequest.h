@@ -54,6 +54,6 @@ user=user1&service=ims&version=1.0.0&request=DescribeTask&name=world
 http://127.0.0.1:8088/ows/user1/mgr?service=ims&version=1.0.0&request=DescribeTask&name=world
 http://127.0.0.1:8088/ows/user1/mgr?service=csm&version=1.0.0&request=DescribeTask
 http://127.0.0.1:8088/ows/user1/mgr?service=csm&version=1.0.0&request=DescribeTask&role=owner
-http://127.0.0.1:8088/ows/user1/mgr?service=csm&version=1.0.0&request=DescribeTask&role=joiner
+http://127.0.0.1:8088/ows/user1/mgr?service=csm&version=1.0.0&request=DescribeTask&role=joined
 
 ************************************************************************/

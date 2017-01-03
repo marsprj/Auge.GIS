@@ -22,11 +22,15 @@ namespace auge
 	{
 		m_pConnection = NULL;
 		m_pUser = new UserImpl();
+		m_pPublic = new UserImpl();
+		m_pPublic->SetName("public");
+		
 	}
 
 	UserManagerImpl::~UserManagerImpl()
 	{
 		m_pUser->Release();
+		m_pPublic->Release();
 	}
 
 	User* UserManagerImpl::CreateUser(const char* name, const char* alias, const char* password, const char* email, const char* role)
@@ -111,6 +115,12 @@ namespace auge
 		{
 			return NULL;
 		}
+		if(g_stricmp(name,"public")==0)
+		{
+			m_pPublic->AddRef();
+			return m_pPublic;
+		}
+
 		char sql[AUGE_SQL_MAX];
 		g_sprintf(sql, "select u.gid,u.name,u.alias,u.passwd,u.email,u.status,u.role,r.name,r.alias from g_user u, g_role r where u.role=r.gid and u.name='%s'",name);
 		GResultSet* pResult = m_pConnection->ExecuteQuery(sql);

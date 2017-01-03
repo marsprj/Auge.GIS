@@ -42,7 +42,8 @@ namespace auge
 
 	private:
 		GConnection	*m_pConnection;
-		UserImpl	*m_pUser;	
+		UserImpl	*m_pUser;
+		UserImpl	*m_pPublic;
 	};
 }
 

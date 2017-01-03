@@ -51,6 +51,11 @@ namespace auge
 		return (m_role==1);
 	}
 
+	bool UserImpl::IsPublic()
+	{
+		return !strcmp(m_name.c_str(), "public");
+	}
+
 	void UserImpl::Release()
 	{
 		if(!ReleaseRef())

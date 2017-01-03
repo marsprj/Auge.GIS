@@ -88,7 +88,15 @@ namespace auge
 		g_int role = pRequest->GetRole();
 		if(name==NULL)
 		{
-			EnumTask* pTasks = pTaskManager->GetTask(pUser->GetID(), role);
+			EnumTask* pTasks = NULL;
+			if(pUser->IsPublic())
+			{
+				pTasks = pTaskManager->GetTask();
+			}
+			else
+			{
+				pTasks = pTaskManager->GetTask(pUser->GetID(), role);
+			}
 
 			DescribeTaskResponse* pResponse = new DescribeTaskResponse(pRequest);
 			pResponse->SetTasks(pTasks);

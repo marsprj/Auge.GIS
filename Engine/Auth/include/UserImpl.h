@@ -24,6 +24,7 @@ namespace auge
 		virtual bool			IsAuthenticated();
 		virtual bool			IsLogined();
 		virtual bool			IsAdmin();
+		virtual bool			IsPublic();
 
 		virtual void			Release();
 

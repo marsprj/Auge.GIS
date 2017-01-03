@@ -24,6 +24,7 @@ namespace auge
 		CsTask*		GetTask(g_uint tid);
 		CsTask*		GetTask(g_uint user, const char* task);
 		EnumTask*	GetTask(g_uint user_id, g_int role);
+		EnumTask*	GetTask();
 
 	private:
 		GConnection	*m_pConnection;
