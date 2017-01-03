@@ -161,7 +161,7 @@ namespace auge
 
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, "select gid, description, map_id, owner, create_time from cs_task order by gid desc limit 20 offset 0");
+		g_snprintf(sql, AUGE_SQL_MAX, "select gid, name, description, map_id, owner, create_time from cs_task order by gid desc limit 20 offset 0");
 
 		GResultSet* rst = m_pConnection->ExecuteQuery(sql);
 		if(rst==NULL)
