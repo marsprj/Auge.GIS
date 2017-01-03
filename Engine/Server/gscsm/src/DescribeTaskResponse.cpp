@@ -415,6 +415,15 @@ namespace auge
 		if(pMap!=NULL)
 		{
 			XElement *pxMap  = pxTask->AddChild("Map", NULL);
+			// ID
+			g_sprintf(str, "%d", pMap->GetID());
+			pxNode = pxMap->AddChild("ID");
+			pxNode->AddChildText(str);
+
+			// Name
+			pxNode = pxMap->AddChild("Name");
+			pxNode->AddChildText(pMap->GetName());
+
 			// SRID
 			g_sprintf(str, "%d", pMap->GetSRID());
 			pxNode = pxMap->AddChild("Srid");
@@ -459,6 +468,12 @@ namespace auge
 		XElement *pxNode = NULL;
 		XElement *pxExtent = NULL;
 		XElement *pxMap  = pxDoc->CreateRootNode("Map", NULL, NULL);
+
+		// ID
+		g_sprintf(str, "%d", pMap->GetID());
+		pxNode = pxMap->AddChild("ID");
+		pxNode->AddChildText(str);
+
 		pxNode = pxMap->AddChild("Name");
 		pxNode->AddChildText(pMap->GetName());
 
