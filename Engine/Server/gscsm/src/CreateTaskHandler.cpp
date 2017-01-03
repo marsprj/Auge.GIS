@@ -82,7 +82,7 @@ namespace auge
 		GError* pError = augeGetErrorInstance();
 
 		const char* name = pRequest->GetName();
-		if(name==NULL)
+		if(name==NULL||(strlen(name)==0))
 		{
 			const char* msg = "[Task Name] is null";
 			pLogger->Error(msg, __FILE__, __LINE__);
@@ -125,7 +125,20 @@ namespace auge
 			return pResponse;
 		}
 
+		CsTask* pTask = NULL;
 		TaskManager* pManager = augeGetTaskManagerInstance();
+		pTask = pManager->GetTask(pUser->GetID(), name);
+		if(pTask!=NULL)
+		{
+			char msg[AUGE_MSG_MAX];
+			g_snprintf(msg, AUGE_MSG_MAX, "Task [%s] has already existed", name);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			WebExceptionResponse* pResponse = augeCreateWebExceptionResponse();
+			pResponse->SetMessage(msg);
+			return pResponse;
+		}
+
 		g_int tid = pManager->CreateTask(name, description, mapID, pUser->GetID());
 		if(tid<0)
 		{
