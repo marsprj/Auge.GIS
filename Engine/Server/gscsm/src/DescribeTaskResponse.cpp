@@ -402,7 +402,7 @@ namespace auge
 		g_uint user_id = pTask->GetOwner();
 		UserManager* pUserManager = augeGetUserManagerInstance();
 		User* pUser = pUserManager->GetUser(user_id);
-		pxNode = pxRoot->AddChild("Owner");	
+		pxNode = pxTask->AddChild("Owner");	
 		if(pUser!=NULL)
 		{
 			pxNode->AddChildText(pUser->GetName());
