@@ -399,7 +399,7 @@ namespace auge
 
 		// ID
 		g_snprintf(str,AUGE_MSG_MAX,"%d",pTask->GetID());
-		pxNode = pxRoot->AddChild("ID");
+		pxNode = pxTask->AddChild("ID");
 		pxNode->AddChildText(str,true);
 
 		// Name
