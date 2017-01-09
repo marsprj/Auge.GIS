@@ -201,7 +201,7 @@ namespace auge
 			return false;
 		}
 
-		g_uint count = rst->GetCount();		
+		g_uint count = rst->GetInt(0,0);	
 		rst->Release();
 
 		return (count>0);	
