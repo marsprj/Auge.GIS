@@ -105,7 +105,7 @@ namespace auge
 
 		// Name
 		pxNode = pxRoot->AddChild("Name");
-		pxNode->AddChildText(pxRoot->GetName(),true);
+		pxNode->AddChildText(pTask->GetName(),true);
 		// description
 		pxNode = pxRoot->AddChild("Description");
 		pxNode->AddChildText(pTask->GetDescription(),true);
