@@ -66,6 +66,17 @@ namespace auge
 		TaskManager* pTaskManager = augeGetTaskManagerInstance();
 
 		g_int tid = pRequest->GetTaskID();
+		if(pTaskManager->Joined(tid, pUser->GetID()))
+		{
+			char msg[AUGE_MSG_MAX];
+			g_snprintf(msg, AUGE_MSG_MAX, "User [%s] has already joined Task [%d]", pUser->GetName(),tid);
+			pLogger->Error(msg, __FILE__, __LINE__);
+
+			WebExceptionResponse* pResponse = augeCreateWebExceptionResponse();
+			pResponse->SetMessage(msg);
+			return pResponse;
+		}
+
 		RESULTCODE rc = pTaskManager->Join(tid, pUser->GetID(), false);
 		if(rc!=AG_SUCCESS)
 		{
