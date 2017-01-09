@@ -122,7 +122,8 @@ namespace auge
 		// Map
 		g_uint map_id = pTask->GetMapID();
 		CartoManager* pCartoManager = augeGetCartoManagerInstance();
-		Map* pMap = pCartoManager->GetMap(map_id);
+		//Map* pMap = pCartoManager->GetMap(map_id);
+		Map* pMap = pCartoManager->LoadMap(map_id);
 
 		XElement* pxMap = pxRoot->AddChild("Map");
 
