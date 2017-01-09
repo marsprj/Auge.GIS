@@ -193,7 +193,7 @@ namespace auge
 	{
 		char sql[AUGE_SQL_MAX];
 		memset(sql, 0, AUGE_SQL_MAX);
-		g_snprintf(sql, AUGE_SQL_MAX, "select count(*) from cs_task where user_id=%d and task_id=%d", user, task);
+		g_snprintf(sql, AUGE_SQL_MAX, "select count(*) from cs_task_join where user_id=%d and task_id=%d", user, task);
 
 		GResultSet* rst = m_pConnection->ExecuteQuery(sql);
 		if(rst==NULL)
