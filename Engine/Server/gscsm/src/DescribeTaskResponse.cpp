@@ -98,6 +98,11 @@ namespace auge
 		pxRoot->SetNamespaceDeclaration("http://www.w3.org/2001/XMLSchema-instance","xsi");
 		pxRoot->SetAttribute("version", "1.0.0", NULL);
 
+		// ID
+		g_snprintf(str,AUGE_MSG_MAX,"%d",pTask->GetID());
+		pxNode = pxRoot->AddChild("ID");
+		pxNode->AddChildText(str,true);
+
 		// Name
 		pxNode = pxRoot->AddChild("Name");
 		pxNode->AddChildText(pxRoot->GetName(),true);
@@ -391,6 +396,11 @@ namespace auge
 		XElement *pxNode = NULL;
 		XElement *pxExtent = NULL;
 		XElement *pxTask  = pxRoot->AddChild("Task", NULL);
+
+		// ID
+		g_snprintf(str,AUGE_MSG_MAX,"%d",pTask->GetID());
+		pxNode = pxRoot->AddChild("ID");
+		pxNode->AddChildText(str,true);
 
 		// Name
 		pxNode = pxTask->AddChild("Name");
