@@ -1,19 +1,19 @@
 AUTOMAKE_OPTION=foreign
 lib_LTLIBRARIES=libgprocessor.la
-AM_CXXFLAGS=-D_LINUX
+AM_CXXFLAGS=-D_LINUX -std=c++11
 
 AM_CPPFLAGS=-I../include \
 		-I$(top_srcdir)/include \
 		-I$(ARCHIVE_HOME)/include \
 		-I$(PROJ4_HOME)/include \
-		-I/opt/gdal-1.11.12/include
+		-I$(GDAL_HOME)/include
 
 libgprocessor_la_LDFLAGS=\
 		-L$(top_srcdir)/Engine/Core/src \
 		-L$(top_srcdir)/Engine/Raster/src \
 		-L$(ARCHIVE_HOME)/lib \
 		-L$(PROJ4_HOME)/lib \
-		-L/opt/gdal-1.11.12/lib
+		-L$(GDAL_HOME)/lib
 
 libgprocessor_la_LIBADD=-lgcore -larchive -lgraster -lproj -lgdal
 

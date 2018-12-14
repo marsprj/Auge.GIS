@@ -1,12 +1,12 @@
 AUTOMAKE_OPTION=foreign
 lib_LTLIBRARIES=libgraster.la
-AM_CXXFLAGS=-D_LINUX
+AM_CXXFLAGS=-D_LINUX  -std=c++11
 
 AM_CPPFLAGS=-I../include \
 		-I$(top_srcdir)/include \
-		-I/opt/gdal-1.11.12/include
+		-I$(GDAL_HOME)include
 
-libgraster_la_LDFLAGS=-L/opt/gdal-1.11.12/lib
+libgraster_la_LDFLAGS=-L$(GDAL_HOME)/lib
 
 libgraster_la_LIBADD=-lgdal
 
